@@ -1,0 +1,21 @@
+.form-type-vatfield{
+
+}
+
+.form-type-vatfield .control{
+  display:inline-block;
+}
+
+.form-type-vatfield .control .vatcountry{
+  float:left;
+  margin-right:10px;
+
+}
+.form-type-vatfield .control .vatcountry .form-text{
+  width:20px;
+  min-width:20px;
+}
+
+.form-type-vatfield .control .vatnumber{
+  float:left;
+}

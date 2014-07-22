@@ -1,0 +1,12 @@
+name = bPost
+description = bPost shipping integration
+package = printconnect
+core = 7.x
+
+dependencies[] = fancybox
+
+stylesheets[all][] = pcbpost.css
+
+scripts[] = pcbpost.js
+
+

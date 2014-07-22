@@ -1,0 +1,214 @@
+<?php
+
+function pcdesigner_menu() {
+  $items['upload-design/%'] = array(
+      'title' => 'Upload design',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pcdesigner_upload_form', 1),
+      'access arguments' => array('access content'),
+      'file' => 'pcdesigner.forms.inc',
+  );
+  $items['upload-design/callback'] = array(
+      'title' => 'Designtool callback',
+      'page callback' => '_pcdesigner_designtool_callback',
+      'page arguments' => array(),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+
+  $items['js/upload-design/designer/email/%'] = array(
+      'title' => 'Designtool callback',
+      'page callback' => '_pcdesigner_email_callback',
+      'page arguments' => array(4),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+function _pcdesigner_email_callback($email) {
+
+  $_SESSION['pcdesigner']['email'] = $email;
+  return drupal_json_output(valid_email_address($form_state['values']['cart']['designer']['email']));
+}
+
+function _pcdesigner_designtool_callback() {
+  $file = $_GET['fileid'];
+  $thumbnail = $_GET['thumbid'];
+  $id = $_GET['id'];
+  $jobId = $_GET['jobid'];
+
+
+  $upload = \printconnect\Designer\Upload\Factory::Get($id);
+
+  $upload->EnsureLoaded();
+  $upload->file = $file;
+  $upload->thumbnail = $thumbnail;
+  $upload->design_tool_job_id = $jobId;
+
+  \printconnect\Designer\Upload\Factory::Save($upload);
+
+  print '<script type="text/javascript">top.location = top.location;</script>';
+  exit;
+}
+
+function pcdesigner_form_alter(&$form, $form_state, $form_id) {
+
+  switch ($form_id) {
+    case 'pccart_cart_form2':
+
+    case 'pccheckout_upload_form':
+      $cart = $form_state['storage']['cart'];
+      $checkableItems = array();
+      $emailDesigner = FALSE;
+      if ($cart && count($cart->productItems)) {
+
+        foreach ($cart->productItems as $item) {
+          if (!count($item->files)) {
+            if (isset($_SESSION['pcdesigner']['email'])) {
+              $emailDesigner = $_SESSION['pcdesigner']['email'];
+            } elseif (isset($item->emailDesigner)) {
+              $emailDesigner = $item->emailDesigner;
+            }
+
+            $form['cart']['items'][$item->id]['designer']['check'] = array(
+                '#type' => 'checkbox',
+                '#title' => t('I will not upload a design. My designer will do it for me.'),
+                '#default_value' => isset($item->emailDesigner),
+                    /* '#ajax' => array(
+                      'callback' => 'pcdesigner_designer_email_callback',
+                      'wrapper' => 'designer',
+                      'method' => 'replace',
+                      //'effect' => 'fade',
+                      'progress' => array(
+                      'message' => NULL,
+                      'type' => NULL,
+                      ),
+                      ), */
+            );
+
+            $checkableItems[] = $item->id;
+          }
+
+
+          if (count($checkableItems) > 0) {
+            $visible = array();
+            foreach ($checkableItems as $item) {
+              $visible[] = array(
+                  'input[name="cart[items][' . $item . '][designer][check]"]' => array('checked' => true)
+              );
+            }
+
+            $form['cart']['designer'] = array(
+                '#type' => 'container',
+                '#attributes' => array('class' => array('clearfix')),
+                '#states' => array(
+                    'invisible' => $visible,
+                ),
+                '#weight' => 40,
+            );
+            $form['cart']['designer']['email'] = array(
+                '#type' => 'textfield',
+                '#title' => t('Email address designer'),
+                '#required' => FALSE,
+                '#states' => array(
+                    'required' => $visible,
+                ),
+                '#default_value' => $emailDesigner,
+//              '#ajax' => array(
+//                  'callback' => 'pcdesigner_designer_email_callback',
+//                  'wrapper' => 'designer',
+//                  'method' => 'replace',
+//                  'effect' => 'fade',
+//                  'progress' => array(
+//                      'message' => NULL,
+//                      'type' => NULL,
+//                  ),
+//              ),
+            );
+            $form['cart']['designer']['warning'] = array(
+                '#type' => 'item',
+                '#id' => 'edit-cart-designer-warning',
+                '#markup' => t('Attention! If you don`t upload your files now, we cannot guarantee the estimated delivery date. You will be informed when your designer uploads the file.'),
+            );
+          }
+
+          $validate = $form['#validate'];
+          array_unshift($validate, 'pcdesigner_form_validate');
+          $form['#validate'] = $validate;
+
+          $submit = $form['#submit'];
+          array_unshift($submit, 'pcdesigner_form_submit');
+          $form['#submit'] = $submit;
+        }
+      }
+
+      break;
+  }
+}
+
+function pcdesigner_form_submit($form, &$form_state) {
+  $cart = $form_state['storage']['cart'];
+  foreach (element_children($form_state['values']['cart']['items']) as $key) {
+    $item = \printconnect\Carts\Factory::GetItem($cart, $key);
+    $item->EnsureLoaded();
+    if (isset($form_state['values']['cart']['items'][$key]['designer']) && $form_state['values']['cart']['items'][$key]['designer']['check']) {
+      $item->emailDesigner = $form_state['values']['cart']['designer']['email'];
+    } else {
+      $item->Remove('emailDesigner');
+    }
+
+    \printconnect\Carts\Factory::SaveItem($item);
+  }
+  unset($_SESSION['pcdesigner']['email']);
+}
+
+function pcdesigner_form_validate($form, &$form_state) {
+  $cart = $form_state['storage']['cart'];
+
+  $checkEmailIsValid = false;
+  foreach ($cart->productItems as $item) {
+    if (array_key_exists($item->id, $form_state['values']['cart']['items'])
+            && isset($form_state['values']['cart']['items'][$item->id]['designer']) 
+            && $form_state['values']['cart']['items'][$item->id]['designer']['check']
+    ) {
+      $checkEmailIsValid = true;
+    }
+  }
+
+  if ($checkEmailIsValid && !valid_email_address($form_state['values']['cart']['designer']['email'])) {
+    form_set_error('cart][designer][email', t('Email is not valid'));
+  }
+}
+
+function pcdesigner_form_pccart_cart_form2_alter(&$form, $form_state, $form_id) {
+  
+}
+
+function pcdesigner_designer_email_callback($form, &$form_state) {
+//  $cart = $form_state['storage']['cart'];
+//  foreach (element_children($form_state['values']['cart']['items']) as $key) {
+//    $item = \printconnect\Carts\Factory::GetItem($cart, $key);
+//    $item->EnsureLoaded();
+//    if ($form_state['values']['cart']['items'][$key]['designer']['check']) {
+//      $item->emailDesigner = $form_state['values']['cart']['designer']['email'];
+//    } else {
+//      $item->Remove('emailDesigner');
+//    }
+//
+//    ///\printconnect\Carts\Factory::SaveItem($item);
+//    
+//    
+// 
+//  
+//  }
+  // do not save yet!
+  $_SESSION['pcdesigner']['email'] = $form_state['values']['cart']['designer']['email'];
+
+  return $form['cart']['designer'];
+}
+
+function pcdesigner_form_pccheckout_upload_form_alter(&$form, $form_state, $form_id) {
+  
+}
+

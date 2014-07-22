@@ -1,0 +1,159 @@
+<?php
+
+function pccobranding_boot() {
+    global $conf;
+    global $copartner;
+    global $pc_apikey;
+    $host = $_SERVER['HTTP_HOST'];
+    $parts = explode('.', $host);
+    $subdomain = $parts[0];
+    $copartner = FALSE;
+
+    if (isset($conf['cobrandedshops']) && array_key_exists($subdomain, $conf['cobrandedshops'])) {
+        foreach ($conf['cobrandedshops'][$subdomain] as $key => $value) {
+            $conf['orig'][$key] = $conf[$key];
+            $conf[$key] = $value;
+        }
+        $pc_apikey = $conf['pc_apikey'];
+        $copartner = $subdomain;
+        $conf['site_frontpage'] = 'cobranding/' . $copartner;
+    }
+}
+
+function pccobranding_language_init() {
+  global $conf;
+  global $copartner;
+  if ($copartner) {
+    $conf['site_frontpage'] = 'cobranding/' . $copartner;
+  }
+}
+
+function pccobranding_init() {
+  global $copartner;
+  global $copartnerLoggedIn;
+  global $copartnerRequirePassword;
+  printconnect_ensureinitialized();
+
+  $copartnerRequirePassword = FALSE;
+
+  if ($copartner) {
+    $currentPath = current_path();
+    $shop = \printconnect\Shop\Configuration\Factory::Current();
+    $pwd = $shop->password;
+    if ($pwd) {
+      if (!$_SESSION['cobranding'][$copartner]['loggedin'] && $currentPath != 'cobranding/login' && !drupal_is_front_page() && arg(0) != 'file') {
+        drupal_goto('cobranding/login', array('query' => array('r' => $currentPath)));
+      }
+      $copartnerLoggedIn = $_SESSION['cobranding'][$copartner]['loggedin'];
+      $copartnerRequirePassword = TRUE;
+    }
+  }
+}
+
+function pccobranding_menu() {
+  $items['cobranding/%'] = array(
+      'page callback' => '_pccobranding_callback',
+      'page arguments' => array(1),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+
+  $items['cobranding/login'] = array(
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pccobranding_login_form'),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+      'file' => 'pccobranding.forms.inc',
+  );
+  return $items;
+}
+
+function _pccobranding_callback($partnerId) {
+  global $copartnerRequirePassword;
+  $shop = \printconnect\Shop\Configuration\Factory::Current();
+
+  drupal_set_title($shop->description);
+  module_load_include('inc', 'pccobranding', 'pccobranding.forms');
+
+  if ($copartnerRequirePassword) {
+    $items[] = drupal_render(drupal_get_form('pccobranding_login_form'));
+  }
+
+  $background = url('file/' . $shop->background . '/' . variable_get('css_js_query_string', '0'));
+
+  $build = array(
+      'content' => array(
+          'image' => array(
+              '#type' => 'container',
+              '#attributes' => array('class' => array('image')),
+              'content' => array('#markup' => theme('image', array('path' => $background))),
+          ),
+          'text' => array(
+              '#type' => 'container',
+              '#attributes' => array('class' => array('text')),
+              'content' => array(
+                  '#markup' => $shop->homePageText,
+              ),
+          ),
+      ),
+  );
+  return $build;
+}
+
+function pccobranding_preprocess_page(&$vars) {
+  global $copartner;
+  if ($copartner) {
+
+    if ($vars['is_front']) {
+      $vars['theme_hook_suggestions'][] = 'page__cobranding';
+    }
+
+    $shop = \printconnect\Shop\Configuration\Factory::Current();
+
+    $logo = url('file/' . $shop->logo . '/' . variable_get('css_js_query_string', '0'), array('absolute' => TRUE));
+
+    $vars['logo'] = $logo;
+
+    $vars['by'] = t('By flyer');
+    $vars['by'] = theme('image', array('path' => drupal_get_path('module', 'pccobranding') . '/by_printconcept.jpg'));
+  }
+}
+
+function pccobranding_block_view_pcsegments_products_alter(&$data, $block)
+{
+    global $copartner;
+    if ($copartner) {
+        $topProducts = \printconnect\Products\Factory::GetTop();
+        $products = array();
+        $productsByName = array();
+        foreach ($topProducts as $product) {
+            $products[$product->id] = $product;
+            $productsByName[$product->name] = array(
+                'data' => l($product->name, 'templates', array('query' => array('products' => $product->id))),
+            );
+        }
+
+        $tabs = array(
+            l(t('A-Z'), '', array('fragment' => 'pcsegments_products_products', 'external' => true)),
+        );
+
+        ksort($productsByName);
+
+        $data['content']['tabs']['#items'] = $tabs;
+        $data['content']['products']['items'] = array(
+            '#theme' => 'item_list',
+            '#items' => $productsByName,
+        );
+    }
+
+    return $data;
+}
+
+function pccobranding_preprocess_html(&$vars) {
+  global $copartner;
+
+  if ($copartner) {
+    $vars['classes_array'][] = 'page-cobranding';
+    $vars['classes_array'][] = 'page-cobranding-' . $copartner;
+  }
+}

@@ -1,0 +1,14 @@
+Installation of seo_checker 1.0
+-------------------------------
+
+1. Place the xmlsitemap directory in sites/all/modules.
+
+2. Enable the module at /admin/build/modules
+
+3. Enable the SEO compliance check for the desired content types 
+	 at their configuration page.
+
+4. The module comes with a submodule that includes some basic checks. 
+   Install or write further submodules that implement more such checks.
+
+5. Configure the thresholds and other settings at admin/settings/seo_checker

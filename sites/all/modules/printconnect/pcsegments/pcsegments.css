@@ -1,0 +1,317 @@
+
+#block-pcsegments-products{
+  background:#FF6600;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  color:white;
+}
+
+#block-pcsegments-products .content{
+  background:inherit;
+  border:none;
+  padding:0;
+  font-size:inherit;
+
+}
+
+#block-pcsegments-products .content .tabs{
+  background:#DB5800;
+  border:none;
+  margin:0;
+  padding:0;
+  -moz-border-radius: 4px 4px 0 0;
+  border-radius: 4px 4px 0 0 ;
+}
+
+#block-pcsegments-products .content .tabs li{
+  border:0;
+  /*width:50%;*/
+  float:left;
+  padding:0;
+  background:none;
+  margin:0;
+  -moz-border-radius: 4px 4px 0 0;
+  border-radius: 4px 4px 0 0 ;
+  top:0;
+}
+
+
+#block-pcsegments-products .ui-tabs .ui-tabs-panel {
+  padding:0;
+  margin:0;
+}
+#block-pcsegments-products .content .tabs li.ui-tabs-selected {
+  background:#FF6600;
+}
+
+#block-pcsegments-products ul{
+  margin:0;
+  padding:0;
+}
+
+#block-pcsegments-products li{
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+
+#block-pcsegments-products li a{
+  color: white;
+  text-decoration:none;
+  padding:5px 10px;
+  display:block;
+}
+
+#block-pcsegments-products ul li ul{
+  background:#DB5800;
+  font-size:smaller;
+}
+
+#block-pcsegments-menu{
+  position: relative;
+  height:40px;
+}
+
+#block-pcsegments-menu h2{
+  display:block;
+  height:40px;
+  float:left;
+}
+
+
+#block-pcsegments-menu .dropdown{
+  background:#FF6600;
+  z-index:100;
+  position:absolute;
+  width:100%;
+  top:40px;
+  left:0;
+  display:none;
+}
+
+#block-pcsegments-menu .dropdown.open{
+  display:block;
+}
+
+#block-pcsegments-menu .dropdown > div{
+  float:left;
+  width:36%;
+  padding:2%;
+}
+
+#block-pcsegments-menu .dropdown > div:first-child{
+  float:left;
+  width:26%;
+}
+
+#block-pcsegments-menu .dropdown > div:last-child{
+  float:left;
+  width:26%;
+}
+
+#block-pcsegments-menu .dropdown .templates li{
+  float:left;
+  width:33%;
+  margin:0;
+  padding:0;
+}
+#block-pcsegments-menu .dropdown .templates li:nth-child(3n+1){
+  clear:left;
+}
+#block-pcsegments-menu .dropdown .templates li img{
+  width:100%;
+}
+
+
+.page-segments .region-content fieldset .item-list li{
+/*  float:left; */
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  margin:0;
+  width:150px;
+  list-style:none;
+}
+
+.page-segments .region-content fieldset .item-list li:nth-child(4n+1){
+ /* clear:left;*/
+}
+
+.page-segments .region-content fieldset .item-list li img{
+  width:100%;
+  display: block;
+}
+#pcsegments_products_products li .itemClass-item50 {
+	 background-position: -489px bottom;
+}
+#pcsegments_products_products li .itemClass-item38 {
+	 background-position: -449px bottom;
+}
+#pcsegments_products_products li .itemClass-item32 {
+	 background-position: -469px bottom;
+}
+#pcsegments_products_products li .itemClass-item31 {
+	 background-position: -308px bottom;
+}
+
+#pcsegments_products_products li .itemClass-item30 {
+	 background-position: -58px bottom;
+}
+
+#pcsegments_products_products li .itemClass-item41{
+    background-position: 0px bottom;
+	
+}
+#pcsegments_products_products li .itemClass-item28{
+    background-position: -431px bottom;
+	
+}
+#pcsegments_products_products li .itemClass-item29{
+    background-position: -155px bottom;
+	
+}
+#pcsegments_products_products li .itemClass-item27 {
+    background-position: -174px bottom;
+	
+}
+#pcsegments_products_products li .itemClass-item26 {
+    background-position: -287px bottom;
+	
+}
+
+#pcsegments_products_products li .itemClass-item25 {
+    background-position: -19px bottom;
+	
+}
+#pcsegments_products_products li .itemClass-item24 {
+    background-position: -98px bottom;
+	
+}
+#pcsegments_products_products li .itemClass-item23 {
+    background-position: -469px  bottom;
+	
+}
+#pcsegments_products_products li .itemClass-item22 {
+    background-position: -136px bottom;
+	
+}
+
+#pcsegments_products_products li .itemClass-item21 {
+    background-position: -136px bottom;
+	
+}
+
+#pcsegments_products_products li .itemClass-item20 {
+    background-position: -546px bottom;
+	
+}
+
+#pcsegments_products_products li .itemClass-item19 {
+    background-position: -527px bottom;
+	
+}
+
+#pcsegments_products_products li .itemClass-item18 {
+    background-position: -212px bottom;
+	
+}
+
+#pcsegments_products_products li .itemClass-item17 {
+    background-position: -368px bottom;
+	
+}
+
+#pcsegments_products_products li .itemClass-item16 {
+    background-position: -348px bottom;
+	
+}
+
+#pcsegments_products_products li .itemClass-item15 {
+    background-position: -411px bottom;
+	
+}
+
+#pcsegments_products_products li .itemClass-item14 {
+    background-position: -117px bottom;
+	
+}
+
+#pcsegments_products_products li .itemClass-item13 {
+    background-position: -98px bottom;
+	
+}
+
+#pcsegments_products_products li .itemClass-item12 {
+    background-position: -389px bottom;
+	
+}
+
+#pcsegments_products_products li .itemClass-item11 {
+    background-position: -348px bottom;
+	
+}
+
+#pcsegments_products_products li .itemClass-item10 {
+    background-position: -368px bottom;
+	
+}
+
+#pcsegments_products_products li .itemClass-item9 {
+    background-position: -508px bottom;
+	
+}
+
+#pcsegments_products_products li .itemClass-item8 {
+    background-position: -193px bottom;
+	
+}
+
+#pcsegments_products_products li .itemClass-item7 {
+    background-position: -328px bottom;
+	
+}
+#pcsegments_products_products li .itemClass-item6 {
+    background-position: -212px bottom;
+	
+}
+#pcsegments_products_products li .itemClass-item5 {
+    background-position: -174px bottom;
+	
+}
+#pcsegments_products_products li .itemClass-item4 {
+    background-position: -38px bottom;
+	
+}
+#pcsegments_products_products li .itemClass-item3 {
+    background-position: -508px bottom;
+	
+}
+#pcsegments_products_products li .itemClass-item2 {
+    background-position: -527px bottom;
+	
+}
+
+#pcsegments_products_products li .itemClass-item1{
+    background-position: -249px bottom;
+	
+}
+#pcsegments_products_products li .itemClass-item61{
+    background-position: -268px bottom;
+	
+}
+#pcsegments_products_products li .itemClass-item63{
+    background-position: -566px bottom;
+  
+}
+#pcsegments_products_products li .itemClass-item80{
+    background-position: -586px bottom;
+  
+}
+#pcsegments_products_products li .itemClass-item69{
+    background-position: -604px bottom;
+	
+}
+.item27 ,.item6, .item26, .item31 , .item9, .item19{
+	position:relative;
+	top:8px;	
+}

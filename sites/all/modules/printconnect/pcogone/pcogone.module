@@ -1,0 +1,559 @@
+<?php
+
+use \printconnect\Drupal\Functions;
+use \printconnect\Payments;
+use \printconnect\Carts;
+
+function pcogone_menu() {
+  /*
+    $items['admin/printconnect/ogone'] = array(
+    'title' => t('Ogone'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('pcogone_admin_form'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_LOCAL_TASK,
+    );¨ */
+  $items['ogone/redirect/%'] = array(
+      'title' => 'Payment',
+      'page callback' => '_pcogone_callback',
+      'page arguments' => array('redirect', 2),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+  $items['ogone/redirect/%/%'] = array(
+      'title' => 'Payment',
+      'page callback' => '_pcogone_redirect',
+      'page arguments' => array(2, 3),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+  $items['ogone/accept'] = array(
+      'title' => 'Payment accept',
+      'page callback' => '_pcogone_callback',
+      'page arguments' => array('accept'),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+  $items['ogone/decline'] = array(
+      'title' => 'Payment decline',
+      'page callback' => '_pcogone_callback',
+      'page arguments' => array('decline'),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+  $items['ogone/exception'] = array(
+      'title' => t('Payment exception'),
+      'page callback' => '_pcogone_callback',
+      'page arguments' => array('exception'),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+  $items['ogone/cancel'] = array(
+      'title' => t('Payment cancel'),
+      'page callback' => '_pcogone_callback',
+      'page arguments' => array('cancel'),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+  $items['ogone/template'] = array(
+      'title' => 'Payment',
+      'page callback' => '_pcogone_callback',
+      'page arguments' => array('template'),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+function pcogone_admin_form() {
+  $form['ogone_url'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Ogone URL'),
+      '#default_value' => variable_get('ogone_url', 'https://secure.ogone.com/ncol/test/orderstandard.asp'),
+      '#description' => t('The URL for the Ogone PSP service. Use https://secure.ogone.com/ncol/test/orderstandard.asp for testpurposes, https://secure.ogone.com/ncol/prod/orderstandard.asp for production use.'),
+  );
+  $form['ogone_catalog_url'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Merchant catalog URL'),
+      '#default_value' => variable_get('ogone_catalog_url', 'catalog'),
+      '#description' => t('The relative path to your catalog page. For instance if your catalog page is www.yourdomain.com/catalog enter catalog'),
+  );
+  $form['ogone_pspid_id'] = array(
+      '#type' => 'textfield',
+      '#title' => t('pspid'),
+      '#default_value' => variable_get('ogone_pspid_id', ''),
+      '#description' => t('The login username for the Ogone PSP service.'),
+  );
+  $form['ogone_currency'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Currency'),
+      '#default_value' => variable_get('ogone_currency', 'EUR'),
+      '#description' => t('Use "EUR", "USD" or "GBP" for currency. See Ogone documentation for details.'),
+  ); /*
+    $form['ogone_language'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Language'),
+    '#default_value' => variable_get('ogone_language', 'nl_NL'),
+    '#description' => t('Use "en_US" notation for language. See Ogone documentation for details.'),
+    ); */
+  //Layout
+  /*
+    $form['ogone_layout_title'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Title'),
+    '#default_value' => variable_get('ogone_layout_title', 'Secure Checkout'),
+    '#description' => t('Shown in payment page.'),
+    ); */
+  $form['ogone_layout_bgcolor'] = array(
+      '#type' => 'textfield',
+      '#title' => t('BG Color'),
+      '#default_value' => variable_get('ogone_layout_bgcolor', ''),
+      '#description' => t('Background color payment page.(empty for default)'),
+  );
+  $form['ogone_layout_txtcolor'] = array(
+      '#type' => 'textfield',
+      '#title' => t('text Color'),
+      '#default_value' => variable_get('ogone_layout_txtcolor', ''),
+      '#description' => t('Text color payment page.(empty for default)'),
+  );
+  $form['ogone_layout_tblbgcolor'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Table BG Color'),
+      '#default_value' => variable_get('ogone_layout_tblbgcolor', ''),
+      '#description' => t('Background color tables in payment page.(empty for default)'),
+  );
+  $form['ogone_layout_tbltxtcolor'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Table Text Color'),
+      '#default_value' => variable_get('ogone_layout_tbltxtcolor', ''),
+      '#description' => t('Text color tables in payment page.(empty for default)'),
+  );
+  $form['ogone_layout_buttonbgcolor'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Button Color'),
+      '#default_value' => variable_get('ogone_layout_buttonbgcolor', ''),
+      '#description' => t('Button color in payment page.(empty for default)'),
+  );
+  $form['ogone_layout_buttontxtcolor'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Button Text Color'),
+      '#default_value' => variable_get('ogone_layout_buttontxtcolor', ''),
+      '#description' => t('Button text color in payment page.(empty for default)'),
+  );
+  $form['ogone_layout_logo'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Logo Path'),
+      '#default_value' => variable_get('ogone_layout_logo', ''),
+      '#description' => t('Logo to use on payment page.(empty for none)'),
+  );
+  $form['ogone_layout_fonttype'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Fonttype'),
+      '#default_value' => variable_get('ogone_layout_fonttype', ''),
+  );
+  $form['ogone_sha1_signature_pre'] = array(
+      '#type' => 'textfield',
+      '#title' => t('SHA-1 Signature pre'),
+      '#default_value' => variable_get('ogone_sha1_signature_pre', ''),
+      '#description' => t('SHA-1 signature for pre payment verification.'),
+  );
+  $form['ogone_sha1_signature_post'] = array(
+      '#type' => 'textfield',
+      '#title' => t('SHA-1 Signature post'),
+      '#default_value' => variable_get('ogone_sha1_signature_post', ''),
+      '#description' => t('SHA-1 signature for post payment verification.'),
+  );
+
+  return system_settings_form($form);
+}
+
+function pcogone_processpayment($paymentMethodId, $customerName, $orderId, $amount, $params = array()) {
+  $rid = $orderId . '_' . substr(uniqid(), 9);
+
+  if (isset($params['paymentRequest'])) {
+    // $request = \printconnectP\Payments\Requests\Factory::GetByKey($orderId);
+    $request = \printconnect\Payments\Requests\Info\Factory::Get($orderId, $paymentMethodId);
+
+    $rid = $request->orderid;
+  } else {
+    $request = \printconnect\Payments\Requests\Info\Factory::CreateCart($orderId, $paymentMethodId);
+    $rid = $request->orderid;
+  }
+
+  $request->paymentmethod = $paymentMethodId;
+
+  $_SESSION[$rid] = json_encode($request->properties);
+
+
+  //$params['callback'] = $callback;
+  //$rid = $request->key;
+  $params['customerName'] = $customerName;
+
+//  db_insert('ogone_payment')
+//          ->fields(array(
+//              'rid' => $rid,
+//              'payment_method' => $paymentMethodId,
+//              'requested' => time(),
+//              'amount' => $amount,
+//              'order_id' => $orderId,
+//              'params' => serialize($params),
+//          ))
+//          ->execute();
+//  $_SESSION['ogone'] = array(
+//      'paymentMethodId' => $paymentMethodId,
+//      'rid' => $rid,
+//      'customerName' => $customerName,
+//      'amount' => $amount,
+//  );
+//
+  //drupal_goto('ogone/redirect/' . $rid);
+
+
+  return 'ogone/redirect/' . $rid . '/' . $paymentMethodId;
+}
+
+function _pcogone_callback() {
+//  try {
+
+  $args = func_get_args();
+  $page = array_shift($args);
+  switch ($page) {
+    case 'redirect':
+      return _pcogone_redirect(array_shift($args));
+    case 'accept':
+      return _pcogone_accept($_GET);
+    case 'decline':
+    case 'exception':
+    case 'cancel':
+      return _pcogone_cancel($_GET);
+    case 'template':
+      drupal_set_title(utf8_decode(t('Payment')));
+      drupal_set_breadcrumb(array());
+      return '$$$PAYMENT ZONE$$$';
+  }
+  // } catch (Exception $ex) {
+  //   return Functions::HandleException($ex);
+  // }
+}
+
+function _pcogone_redirect($rid, $paymentMethodId = FALSE) {
+  global $base_url;
+  global $language;
+  //$variables = $_SESSION['ogone'];
+
+  $shop = \printconnect\Shop\Configuration\Factory::Current();
+  $shop->EnsureLoaded();
+
+  /*
+    $request = \printconnect\Payments\Requests\Factory::GetByKey($rid);
+    $request->EnsureLoaded();
+
+    if (!$paymentMethodId) {
+    $result = db_select('ogone_payment', 'p')
+    ->fields('p', array('rid', 'payment_method', 'order_id', 'amount', 'params'))
+    ->condition('p.rid', $rid)
+    ->execute()
+    ->fetchAssoc();
+
+    $params = unserialize($result['params']);
+    $paymentMethodId = $result['payment_method'];
+    }
+
+    $paymentMethod = \printconnect\PaymentMethods\Factory::Get($paymentMethodId);
+
+    $confStrings = explode(',', $paymentMethod->paymentMethod->configuration);
+    $conf = array();
+    foreach ($confStrings as $confString) {
+    $parts = explode('=', $confString);
+    if (count($parts) > 1) {
+    $conf[trim($parts[0])] = $parts[1];
+    }
+    }
+
+    if (empty($conf['PM']) || empty($conf['brand'])) {
+    Throw new Exception('Missing payment method configuration');
+    }
+
+    $customerName = substr($params['customerName'], 0, 35);
+    $amount = $result['amount'];
+    $amount = $request->amount; // * (1 + $request->vat);
+    $brand = $conf['brand'];
+
+    $paymentMethod = $conf['PM'];
+
+    //$paymentMethod = 'CreditCard';
+    //$brand = 'Visa';
+    // $params['callback'] = $callback;
+    $amount = (string) round($amount * 100);
+   */
+  $ogone_url = filter_xss(variable_get('ogone_url', 'https://secure.ogone.com/ncol/test/orderstandard_utf8.asp'));
+
+  $languageCode = 'en_US';
+  if (isset($language->locale)) {
+    $languageCode = $language->locale;
+  }
+
+  $title = t('Veilig betalen');
+
+  $pspid = filter_xss(variable_get('ogone_pspid_id', 'edewreede'));
+  $currency = filter_xss(variable_get('ogone_currency', 'EUR'));
+  $currency = variable_get('currency_code', 'EUR');
+  //$language = filter_xss(variable_get('ogone_language', 'en_US'));
+  $catalog_url = filter_xss(variable_get('ogone_catalog_url', TRUE));
+  // $layout_title = filter_xss(variable_get('ogone_layout_title', TRUE));
+  $layout_bgcolor = filter_xss(variable_get('ogone_layout_bgcolor', TRUE));
+  $layout_txtcolor = filter_xss(variable_get('ogone_layout_txtcolor', TRUE));
+  $layout_tblbgcolor = filter_xss(variable_get('ogone_layout_tblbgcolor', TRUE));
+  $layout_tbltxtcolor = filter_xss(variable_get('ogone_layout_tbltxtcolor', TRUE));
+  $layout_buttonbgcolor = filter_xss(variable_get('ogone_layout_buttonbgcolor', TRUE));
+  $layout_buttontxtcolor = filter_xss(variable_get('ogone_layout_buttontxtcolor', TRUE));
+  $layout_logo = filter_xss(variable_get('ogone_layout_logo', TRUE));
+  $layout_fonttype = filter_xss(variable_get('ogone_layout_fonttype', TRUE));
+  
+  //$layout_logo = theme_get_setting('logo');
+
+
+  $host = $_SERVER['HTTP_HOST'];
+  switch ($host) {
+    case 'www.printconcept.be':
+    case 'www.printconcept.nl':
+    case 'www.printconcept.fr':
+      $layout_template = url('ogone/template', array('absolute' => TRUE, 'https' => TRUE));
+      break;
+    default:
+      $layout_template = false;
+  }
+
+  //$layout_template = $base_url . '/ogone/template';
+  //$layout_template = 'https://secure.ogone.com/ncol/template_standard.htm';
+
+  $redirect_accepturl = url('ogone/accept', array('absolute' => TRUE));
+  $redirect_declineurl = url('ogone/decline', array('absolute' => TRUE));
+  $redirect_exceptionurl = url('ogone/exception', array('absolute' => TRUE));
+  $redirect_cancelurl = url('ogone/cancel', array('absolute' => TRUE));
+  $back_url = url('ogone/cancel', array('absolute' => TRUE));
+  // $base_url = url('<front>', array('absolute' =>TRUE));
+
+  $catalog_url = url('products', array('absolute' => TRUE));
+
+
+
+  $order_description = variable_get('uc_store_name', 'Webshop') . ' order: ' . $rid;
+
+//  $sha_suffix = variable_get('ogone_sha1_signature_pre', 'printconnectxedr386');
+
+//  $pspid = $shop->ogoneAccount;
+//  $pspid = 'wenoyu';
+//  $sha_suffix = $shop->ogoneSignatureOut;
+//  $sha_suffix = '44l9s63AL8Kh8c4568rCJGDeZ2ZH6M37';
+//
+//
+//  $sha1_signature = $rid . $amount . $currency . $pspid . $sha_suffix;
+//  $sha1_signature = sha1($sha1_signature);
+
+  // $requestInfo = \printconnect\Payments\Requests\Info\Factory::Get($request->id, $paymentMethodId);
+
+  $requestInfo = json_decode($_SESSION[$rid]);
+  // $requestInfo->EnsureLoaded();
+
+  $pspid = $requestInfo->pspid;
+  $currency = $requestInfo->currency;
+  $rid = $requestInfo->orderid;
+  $languageCode = $requestInfo->language;
+  $customerName = $requestInfo->cn;
+  $paymentMethod = $requestInfo->pm;
+  $brand = $requestInfo->brand;
+  $sha1_signature = $requestInfo->shaSign;
+  $amount = $requestInfo->amount;
+  $ogone_url = $requestInfo->ogoneUri;
+  $paramPlus = $requestInfo->paramplus;
+  $owneraddress = $requestInfo->owneraddress;
+  $ownertown = $requestInfo->ownertown;
+  $ownerzip = $requestInfo->ownerzip;
+  $ownercty = $requestInfo->ownercty;
+
+
+  //$ogone_url = 'https://secure.ogone.com/ncol/test/orderstandard_utf8.asp';
+
+  $redirect_message1 = t('One moment please, you will automaticaly be redirected to the payment gateway...');
+  $redirect_message2 = t('Popupblockers might stop the paymentpage from opening, please click the button to open the payment page if it does not open automaticaly.');
+  $ogone_button_text = t('Click here to go to payment page manually');
+
+  $form = '
+  <div class="ogone_redirect_message_top">
+  ' . $redirect_message1 . '
+  </div>
+  <div class="ogone_redirect_container">
+  <div align="center" class="ogone_redirect_form">
+  <form METHOD="post" ACTION="' . $ogone_url . '" id="ogone_form" name="ogone_form"  ' . /* target="ogone_popup" */ 'onsubmit="">
+  <input type="hidden" NAME="PSPID" value="' . $pspid . '" />
+  <input type="hidden" NAME="orderID" VALUE="' . $rid . '" />
+  <input type="hidden" NAME="amount" VALUE="' . $amount . '" />
+  <input type="hidden" NAME="currency" VALUE="' . $currency . '" />
+  <input type="hidden" NAME="language" VALUE="' . $languageCode . '" />
+  <!-- sha1_signature -->
+  <input type="hidden" NAME="SHASign" VALUE="' . $sha1_signature . '" />
+  <!-- lay out information -->
+  <!-- <input type="hidden" NAME="TITLE" VALUE="' . $title . '" />-->
+  <!--<input type="hidden" NAME="BGCOLOR" VALUE="' . $layout_bgcolor . '" />-->
+  <!--<input type="hidden" NAME="TXTCOLOR" VALUE="' . $layout_tbltxtcolor . '" />-->
+  <!--<input type="hidden" NAME="TBLBGCOLOR" VALUE="' . $layout_tblbgcolor . '" />-->
+  <!--<input type="hidden" NAME="TBLTXTCOLOR" VALUE="' . $layout_tbltxtcolor . '" />-->
+  <!--<input type="hidden" NAME="BUTTONBGCOLOR" VALUE="' . $layout_buttonbgcolor . '" />--> 
+  <!--<input type="hidden" NAME="BUTTONTXTCOLOR" VALUE="' . $layout_buttontxtcolor . '" />-->
+  <!--<input type="hidden" NAME="LOGO" VALUE="' . $layout_logo . '" />-->
+  <!--<input type="hidden" NAME="FONTTYPE" VALUE="' . $layout_fonttype . '" />-->
+
+    <!--
+  <input type="hidden" NAME="HOMEURL" VALUE="' . $base_url . '" />
+  <input type="hidden" NAME="CATALOGURL" VALUE="' . $catalog_url . '" />
+    -->
+  <input type="hidden" name="BACKURL" value="' . $back_url . '">
+  <!-- or dynamic template page -->';
+
+  if ($layout_template) {
+    $form .= '<input type="hidden" NAME="TP" VALUE="' . $layout_template . '" />';
+  }
+
+  $form .= '
+  <!-- post-payment redirection -->
+  <input type="hidden" NAME="ACCEPTURL" VALUE="' . $redirect_accepturl . '" />
+  <input type="hidden" NAME="declineurl" VALUE="' . $redirect_declineurl . '" />
+  <input type="hidden" NAME="exceptionurl" VALUE="' . $redirect_exceptionurl . '" />
+  <input type="hidden" NAME="cancelurl" VALUE="' . $redirect_cancelurl . '" />
+  <!-- miscellanous -->
+  <input type="hidden" NAME="COM" VALUE="' . $order_description . '" />
+  <input type="hidden" NAME="CN" VALUE="' . $customerName . '" />
+  <input type="hidden" name="EMAIL" value="" />
+  <input type="hidden" NAME="PM" VALUE="' . $paymentMethod . '" />
+  <input type="hidden" NAME="BRAND" VALUE="' . $brand . '" />
+ <!--
+  <input type="hidden" NAME="owneraddress" VALUE="' . $owneraddress . '" />
+    <input type="hidden" NAME="ownertown" VALUE="' . $ownertown . '" />
+      <input type="hidden" NAME="ownerzip" VALUE="' . $ownerzip . '" />
+        <input type="hidden" NAME="ownercty" VALUE="' . $ownercty . '" />
+          -->
+  <input type="hidden" name="paramplus" value="' . $paramPlus . '"/>
+  <input type="submit" value="' . $ogone_button_text . '" id="submit2" name="submit2" class="button" />
+  </form>
+  <script language="JavaScript">
+   document.ogone_form.submit();
+  </script>
+  </div>
+  <div class="ogone_redirect_message_bottom">
+  ' . $redirect_message2 . '
+  </div>
+  </div>'
+  ;
+
+  return $form;
+  exit;
+}
+
+function _pcogone_cancel($args) {
+  $result = db_select('ogone_payment', 'p')
+          ->fields('p', array('rid', 'payment_method', 'order_id', 'params', 'received'))
+          ->condition('p.rid', $args['orderID'])
+          ->execute()
+          ->fetchAssoc();
+
+  if ($result) {
+    $params = unserialize($result['params']);
+    $callback = $params['cancel'];
+  } else {
+    $callback = 'checkout/payment';
+  }
+  
+  drupal_goto($callback);
+
+  print '
+  <script language="JavaScript">
+    top.location = "' . $callback . '";
+  </script>';
+  exit;
+}
+
+function _pcogone_accept($args) {
+  $rid = $args['orderID'];
+  $pm = $args['PM'];
+  $brand = $args['BRAND'];
+  $amount = $args['amount'];
+  //$orderId = $args['order'];
+  /*
+    $request = \printconnect\Payments\Requests\Factory::GetByKey($rid);
+    $request->EnsureLoaded();
+
+    $orderId = $request->order;
+   */
+
+  $parts = explode('_', $rid);
+
+  $orderId = $parts[0];
+
+//  $paymentMethodId = $args['paymentMethod'];
+//  if ($paymentMethodId) {
+//    $payment = \printconnect\Payments\Factory::Create($rid, $amount, $paymentMethodId, $rid);
+//
+//    \printconnect\Payments\Factory::Save($payment);
+//  }
+
+  drupal_goto('myprintconnect/orders/' . $orderId . '/confirmation');
+  exit;
+
+  $result = db_select('ogone_payment', 'p')
+          ->fields('p', array('rid', 'payment_method', 'order_id', 'params', 'received'))
+          ->condition('p.rid', $args['orderID'])
+          ->execute()
+          ->fetchAssoc();
+
+  if ($result) {
+    $id = $result['order_id'];
+    $params = unserialize($result['params']);
+
+    $callback = $params['accept'];
+
+    if (!$result['received']) {
+
+      $payment = Payments\Factory::Create($id, $args['amount'], $result['payment_method'], $args['orderID']);
+
+      $payment->paymentRequest = $id;
+
+      if (isset($params['paymentRequest'])) {
+        $payment->paymentRequest = $params['paymentRequest'];
+      } else {
+        Carts\Factory::Delete();
+      }
+
+      Payments\Factory::Save($payment);
+
+      db_update('ogone_payment')
+              ->fields(array(
+                  'received' => time(),
+              ))
+              ->condition('rid', $args['orderID'])
+              ->execute();
+
+      // if (function_exists($requestParams['callback'])) {
+      //call_user_func($requestParams['callback'], $params['PAYID'], $params['amount'], $requestParams);
+      // }
+    }
+
+    drupal_goto($callback);
+    print'
+     <script language="JavaScript">
+    top.location = "' . $callback . '";
+  </script>';
+
+
+    print t('Payment received...');
+
+    exit;
+    drupal_goto('myprintconnect/orders/' . $id . '/confirmation');
+  } else {
+    drupal_goto('myprintconnect/orders');
+  }
+}
+
+function pcogone_paymentgateway_info() {
+  return array('pcogone' => 'Ogone');
+}

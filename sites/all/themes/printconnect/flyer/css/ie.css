@@ -1,0 +1,48 @@
+/* CSS Document */
+
+#block-pccustomers-profile .item-list li.first a{
+
+		
+}
+#block-pccustomers-profile .item-list li {
+	line-height:18px !important;
+}
+
+#pccustomers-newaddress-form .form-item-city {
+	position:absolute;
+	left:282px;
+	top:198px;
+	
+}
+
+ 
+#pccustomers-address-form .form-item-city {
+	position:absolute;
+	left:282px;
+	top:188px;
+
+	
+}
+
+#pccustomers-newaddress-form .form-item-postalCode{
+	float:none !important;	
+}
+
+#pccustomers-address-form .form-item-postalCode{
+	float:none !important;	
+}
+
+#pccustomers-address-form {
+	position:relative;	
+}
+
+.page-myprintconnect-addresses #pccustomers-address-form input[type="submit"]{
+    margin-left: 0!important;
+background-image: url(images/button_continue.png);
+background-repeat:no-repeat;
+background-position:3px center;
+background-color:-webkit-linear-gradient(top, #77B800 0%, #669C02 100%) ;
+padding-left: 61px;
+}
+
+

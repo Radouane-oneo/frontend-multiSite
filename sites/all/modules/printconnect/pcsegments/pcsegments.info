@@ -1,0 +1,13 @@
+name = Segment
+description = Provides blocks for products segmentation
+package = printconnect
+core = 7.x
+
+stylesheets[all][] = pcsegments.css
+stylesheets[all][] = jquery.qtip.css
+
+
+scripts[] = jquery.qtip.min.js
+scripts[] = pcsegments.js
+
+dependencies[] = pcproducts

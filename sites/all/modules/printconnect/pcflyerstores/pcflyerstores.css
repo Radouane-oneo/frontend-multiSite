@@ -1,0 +1,1449 @@
+body.page-stores-picker {
+    background: #F1F1F1;
+    overflow:hidden;
+}
+.vacations{
+    left: 168px;
+    top: 164px;
+    position: inherit;
+}
+
+#pcflyerstores-picker-form .countries li{
+    float:left;
+    list-style:none;
+    margin:0;
+    padding:2px;
+}
+#pcflyerstores-picker-form .selection{
+    float:left;
+    width:45%;
+    margin:0;
+    background-color:#F1F1F1;
+    padding: 2%;
+    margin-right:1%;
+    border-radius: 4px 4px 4px 4px;
+}
+
+#pcflyerstores-picker-form .selection .item-list{
+    overflow:auto;
+}
+
+#pcflyerstores-picker-form .detail .default{ 
+    height: 100%;
+}
+
+#pcflyerstores-picker-form .detail{
+    float:right;
+    width:45%;
+    margin:0;
+    margin-left:1%;
+    background-color:#F1F1F1;
+    padding: 2%;
+    border-radius: 4px 4px 4px 4px;
+}
+
+#pcflyerstores-picker-form .detail .default img{
+    display:block;
+    margin:0 auto; 
+}
+
+#pcflyerstores-picker-form .detail .map {
+    width:100%;
+}
+
+.store{
+
+}
+
+.store img.thumb{
+    max-width: 100px;
+}
+
+.store .description{
+    float:left;
+    width:50%;
+}
+
+.store .description .address {
+    max-width:150px;
+}
+
+.store .info{
+    float:left;
+    width:50%;
+}
+
+.store .map{
+    clear:both;
+    width:100%;
+}
+
+.store .openinghours tbody{
+    font-size:smaller; 
+    background:none;
+    color:inherit;
+}
+.store .openinghours tr{
+    height: inherit;
+    color:inherit;
+}
+
+.pcflyerstores-store-link .place{
+    font-weight:bold;
+}
+
+
+
+/* ---- Flyer Store Box ---------------- */
+body.page-stores-picker{
+    background: #f1f1f1;	
+}
+
+.page-stores-picker .whitebox{
+    background: #fff;
+    border-radius: 4px 4px 4px 4px;
+    margin: 10px;
+    min-height: 610px;
+    padding: 10px;
+    width: 940px;
+}
+
+.page-stores-picker .fieldset-legend{
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.page-stores-picker .whitebox h1{
+    line-height: 20px;
+    margin-bottom: 10px;
+}
+
+#pcflyerstores-picker-form .selection{
+    background: #f1f1f1;
+    border-radius: 4px 4px 4px 4px;
+    float: left;
+    margin: 0 10px 0 0;
+    height: 560px;
+    overflow: auto;
+    padding: 10px;
+    width: 295px;
+}
+
+#pcflyerstores-picker-form .detail{
+    background: #f1f1f1;
+    border-radius: 4px 4px 4px 4px;
+    float: right;
+    margin: 0;
+    height: 560px;
+    overflow: auto;
+    padding: 10px;
+    width: 595px;
+}
+
+#pcflyerstores-picker-form .detail .default{
+    text-align: center;
+}
+
+#pcflyerstores-picker-form .detail .default img{
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    width: inherit;
+}
+
+#pcflyerstores-picker-form .region{
+    height: 340px;	
+}
+
+#pcflyerstores-picker-form .results .fieldset-wrapper{
+    padding: 0;
+    height: 190px;
+    overflow: auto;
+}
+
+#pcflyerstores-picker-form .results .item-list ul,
+#pcflyerstores-picker-form .results .item-list ul li{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#pcflyerstores-picker-form .results .item-list ul li{
+    margin-bottom: 5px;	
+}
+
+#pcflyerstores-picker-form .results .item-list ul li a{
+    background: url('images/store-item.png') no-repeat left;
+    color: #646464; /* maincolor */
+    display: block;
+    line-height: 16px;
+    padding-left: 34px;
+}
+
+.store caption,
+.store h3{
+    font-weight: 600;
+}
+
+.store .description{
+    width: 48%;
+    margin-right: 2%;
+}
+
+
+.store img.thumb{
+    max-width: 100%;
+    max-height: 100px;
+}
+
+.store table.openinghours{
+    margin: 10px 0;
+    width: 100%;
+}
+
+.store table.openinghours caption{
+    font-size: 14px;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.store table.openinghours tr.even,
+.store table.openinghours tr.odd{
+    border-bottom: 0 none;	
+}
+
+.store table.openinghours tr td:last-child{
+    text-align: right;	
+}
+
+.store .info{
+    width: 48%;
+    margin-left: 2%;
+}
+
+
+#pcflyerstores-picker-form .openinghours {
+    margin: 0px;
+    width: 98% !important;
+    float:left;   
+}
+
+#pcflyerstores-picker-form .openinghours td{
+    font-size: 12px !important;
+    font-family: 'Open Sans' !important;
+}
+#pcflyerstores-picker-form .vacations caption{
+    font-size: 14px;
+    text-align: left;
+    text-transform: uppercase;
+    color: #FF6600;
+    margin-bottom: -3px;
+}
+#pcflyerstores-picker-form .vacations tr {
+    background-color: #F1F1F1 !important;
+}
+
+#pcflyerstores-picker-form .vacations td {
+    color: #656565;
+}
+
+.storeLogo {
+    width:111px;
+    height:55px;
+    background:url(images/logo.png) no-repeat;
+    margin-top: -116px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+
+}
+.version_FR{
+    position: absolute;
+    top: 208px;
+}
+.version_LU{
+    position: absolute;
+    top: 211px;
+    left:193px;
+}
+.version_NL{
+    position: absolute;
+    top: 443px;
+
+}
+#pcflyerstores-picker-form .results .fieldset-wrapper {
+    overflow:hidden !important;
+
+}
+
+#pcflyerstores-picker-form .results legend{
+    margin-bottom:15px;
+}
+
+#pcflyerstores-picker-form .results{
+    position:relative;	
+}
+
+#pcflyerstores-picker-form .selection{
+    overflow:hidden !important;
+}
+
+
+.store .description > div {
+    width: 100%;
+    float: left;
+}
+
+.store .description h2 {
+    font-size: 14px !important;
+    padding-left: 29px;
+    padding-top: 8px;
+    background: url('images/store-item.png') no-repeat left;
+
+}
+
+/* basic scrollbar styling */
+/* vertical scrollbar */
+.mCSB_container{
+    width:auto;
+    margin-right:30px;
+    overflow:hidden;
+    width: 94%;
+    text-align: justify;
+}
+.mCSB_container.mCS_no_scrollbar{
+    margin-right:0;
+}
+.mCS_disabled>.mCustomScrollBox>.mCSB_container.mCS_no_scrollbar,
+.mCS_destroyed>.mCustomScrollBox>.mCSB_container.mCS_no_scrollbar{
+    margin-right:30px;
+}
+.mCustomScrollBox>.mCSB_scrollTools{
+    width:16px;
+    top:0;
+    right:0;
+    display:block !important;
+    height: 105px;
+}
+.mCSB_scrollTools .mCSB_draggerContainer{
+    position:absolute;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0; 
+    height:auto;
+    display:none;
+}
+.mCSB_scrollTools a+.mCSB_draggerContainer{
+    margin:20px 0;
+}
+.mCSB_scrollTools .mCSB_draggerRail{
+    width:2px;
+    height:100%;
+    margin:0 auto;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    border-radius:10px;
+}
+.mCSB_scrollTools .mCSB_dragger{
+    cursor:pointer;
+    width:100%;
+    height:30px;
+}
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+    width:4px;
+    height:100%;
+    margin:0 auto;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    border-radius:10px;
+    text-align:center;
+}
+.mCSB_scrollTools .mCSB_buttonUp,
+.mCSB_scrollTools .mCSB_buttonDown{
+    display:block;
+    position:relative;
+    height:20px;
+    overflow:hidden;
+    margin:0 auto;
+    cursor:pointer;
+}
+.mCSB_scrollTools .mCSB_buttonDown{
+    top:100%;
+    margin-top:-40px;
+}
+/* horizontal scrollbar */
+.mCSB_horizontal>.mCSB_container{
+    height:auto;
+    margin-right:0;
+    margin-bottom:30px;
+    overflow:hidden;
+}
+.mCSB_horizontal>.mCSB_container.mCS_no_scrollbar{
+    margin-bottom:0;
+}
+.mCS_disabled>.mCSB_horizontal>CSB_container.mCS_no_scrollbar,
+.mCS_destroyed>.mCSB_horizontal>.mCSB_container.mCS_no_scrollbar{
+    margin-right:0;
+    margin-bottom:30px;
+}
+.mCSB_horizontal.mCustomScrollBox>.mCSB_scrollTools{
+    width:100%;
+    height:16px;
+    top:auto;
+    right:auto;
+    bottom:0;
+    left:0;
+    overflow:hidden;
+}
+.mCSB_horizontal>.mCSB_scrollTools a+.mCSB_draggerContainer{
+    margin:0 20px;
+}
+.mCSB_horizontal>.mCSB_scrollTools .mCSB_draggerRail{
+    width:100%;
+    height:2px;
+    margin:7px 0;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    border-radius:10px;
+}
+.mCSB_horizontal>.mCSB_scrollTools .mCSB_dragger{
+    width:30px;
+    height:100%;
+}
+.mCSB_horizontal>.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+    width:100%;
+    height:4px;
+    margin:6px auto;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    border-radius:10px;
+}
+.mCSB_horizontal>.mCSB_scrollTools .mCSB_buttonLeft,
+.mCSB_horizontal>.mCSB_scrollTools .mCSB_buttonRight{
+    display:block;
+    position:relative;
+    width:20px;
+    height:100%;
+    overflow:hidden;
+    margin:0 auto;
+    cursor:pointer;
+    float:left;
+}
+.mCSB_horizontal>.mCSB_scrollTools .mCSB_buttonRight{
+    margin-left:-40px;
+    float:right;
+}
+.mCustomScrollBox{
+    -ms-touch-action:none; /*MSPointer events - direct all pointer events to js*/
+}
+
+/* default scrollbar colors and backgrounds (default theme) */
+.mCustomScrollBox>.mCSB_scrollTools{
+    opacity:0.75;
+    filter:"alpha(opacity=75)"; -ms-filter:"alpha(opacity=75)"; /* old ie */
+}
+.mCustomScrollBox:hover>.mCSB_scrollTools{
+    opacity:1;
+    filter:"alpha(opacity=100)"; -ms-filter:"alpha(opacity=100)"; /* old ie */
+}
+.mCSB_scrollTools .mCSB_draggerRail{
+    background:#000; /* rgba fallback */
+    background:rgba(0,0,0,0.4);
+    filter:"alpha(opacity=40)"; -ms-filter:"alpha(opacity=40)"; /* old ie */
+}
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+    background:#fff; /* rgba fallback */
+    background:rgba(255,255,255,0.75);
+    filter:"alpha(opacity=75)"; -ms-filter:"alpha(opacity=75)"; /* old ie */
+}
+.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar{
+    background:rgba(255,255,255,0.85);
+    filter:"alpha(opacity=85)"; -ms-filter:"alpha(opacity=85)"; /* old ie */
+}
+.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
+.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
+    background:rgba(255,255,255,0.9);
+    filter:"alpha(opacity=90)"; -ms-filter:"alpha(opacity=90)"; /* old ie */
+}
+
+
+.mCSB_scrollTools .mCSB_buttonUp{
+    background-position:0 0;
+    /* 
+    sprites locations are 0 0/-16px 0/-32px 0/-48px 0 (light) and -80px 0/-96px 0/-112px 0/-128px 0 (dark) 
+    */
+}
+.mCSB_scrollTools .mCSB_buttonDown{
+    background-position:0 -20px;
+    /* 
+    sprites locations are 0 -20px/-16px -20px/-32px -20px/-48px -20px (light) and -80px -20px/-96px -20px/-112px -20px/-128px -20px (dark) 
+    */
+}
+.mCSB_scrollTools .mCSB_buttonLeft{
+    background-position:0 -40px;
+    /* 
+    sprites locations are 0 -40px/-20px -40px/-40px -40px/-60px -40px (light) and -80px -40px/-100px -40px/-120px -40px/-140px -40px (dark) 
+    */
+}
+.mCSB_scrollTools .mCSB_buttonRight{
+    background-position:0 -56px;
+    /* 
+    sprites locations are 0 -56px/-20px -56px/-40px -56px/-60px -56px (light) and -80px -56px/-100px -56px/-120px -56px/-140px -56px (dark) 
+    */
+}
+.mCSB_scrollTools .mCSB_buttonUp:hover,
+.mCSB_scrollTools .mCSB_buttonDown:hover,
+.mCSB_scrollTools .mCSB_buttonLeft:hover,
+.mCSB_scrollTools .mCSB_buttonRight:hover{
+    opacity:0.75;
+    filter:"alpha(opacity=75)"; -ms-filter:"alpha(opacity=75)"; /* old ie */
+}
+.mCSB_scrollTools .mCSB_buttonUp:active,
+.mCSB_scrollTools .mCSB_buttonDown:active,
+.mCSB_scrollTools .mCSB_buttonLeft:active,
+.mCSB_scrollTools .mCSB_buttonRight:active{
+    opacity:0.9;
+    filter:"alpha(opacity=90)"; -ms-filter:"alpha(opacity=90)"; /* old ie */
+}
+
+/*scrollbar themes*/
+/*dark (dark colored scrollbar)*/
+.mCS-dark>.mCSB_scrollTools .mCSB_draggerRail{
+    background:#000; /* rgba fallback */
+    background:rgba(0,0,0,0.15);
+}
+.mCS-dark>.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+    background:#000; /* rgba fallback */
+    background:rgba(0,0,0,0.75);
+}
+.mCS-dark>.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar{
+    background:rgba(0,0,0,0.85);
+}
+.mCS-dark>.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
+.mCS-dark>.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
+    background:rgba(0,0,0,0.9);
+}
+.mCS-dark>.mCSB_scrollTools .mCSB_buttonUp{
+    background-position:-80px 0;
+}
+.mCS-dark>.mCSB_scrollTools .mCSB_buttonDown{
+    background-position:-80px -20px;
+}
+.mCS-dark>.mCSB_scrollTools .mCSB_buttonLeft{
+    background-position:-80px -40px;
+}
+.mCS-dark>.mCSB_scrollTools .mCSB_buttonRight{
+    background-position:-80px -56px;
+}
+/*light-2*/
+.mCS-light-2>.mCSB_scrollTools .mCSB_draggerRail{
+    width:4px;
+    background:#fff; /* rgba fallback */
+    background:rgba(255,255,255,0.1);
+    -webkit-border-radius:1px;
+    -moz-border-radius:1px;
+    border-radius:1px;
+}
+.mCS-light-2>.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+    width:4px;
+    background:#fff; /* rgba fallback */
+    background:rgba(255,255,255,0.75);
+    -webkit-border-radius:1px;
+    -moz-border-radius:1px;
+    border-radius:1px;
+}
+.mCS-light-2.mCSB_horizontal>.mCSB_scrollTools .mCSB_draggerRail{
+    width:100%;
+    height:4px;
+    margin:6px 0;
+}
+.mCS-light-2.mCSB_horizontal>.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+    width:100%;
+    height:4px;
+    margin:6px auto;
+}
+.mCS-light-2>.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar{
+    background:rgba(255,255,255,0.85);
+}
+.mCS-light-2>.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
+.mCS-light-2>.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
+    background:rgba(255,255,255,0.9);
+}
+.mCS-light-2>.mCSB_scrollTools .mCSB_buttonUp{
+    background-position:-32px 0;
+}
+.mCS-light-2>.mCSB_scrollTools .mCSB_buttonDown{
+    background-position:-32px -20px;
+}
+.mCS-light-2>.mCSB_scrollTools .mCSB_buttonLeft{
+    background-position:-40px -40px;
+}
+.mCS-light-2>.mCSB_scrollTools .mCSB_buttonRight{
+    background-position:-40px -56px;
+}
+/*dark-2*/
+.mCS-dark-2>.mCSB_scrollTools .mCSB_draggerRail{
+    width:4px;
+    background:#000; /* rgba fallback */
+    background:rgba(0,0,0,0.1);
+    -webkit-border-radius:1px;
+    -moz-border-radius:1px;
+    border-radius:1px;
+}
+.mCS-dark-2>.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+    width:4px;
+    background:#000; /* rgba fallback */
+    background:rgba(0,0,0,0.75);
+    -webkit-border-radius:1px;
+    -moz-border-radius:1px;
+    border-radius:1px;
+}
+.mCS-dark-2.mCSB_horizontal>.mCSB_scrollTools .mCSB_draggerRail{
+    width:100%;
+    height:4px;
+    margin:6px 0;
+}
+.mCS-dark-2.mCSB_horizontal>.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+    width:100%;
+    height:4px;
+    margin:6px auto;
+}
+.mCS-dark-2>.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar{
+    background:rgba(0,0,0,0.85);
+}
+.mCS-dark-2>.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
+.mCS-dark-2>.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
+    background:rgba(0,0,0,0.9);
+}
+.mCS-dark-2>.mCSB_scrollTools .mCSB_buttonUp{
+    background-position:-112px 0;
+}
+.mCS-dark-2>.mCSB_scrollTools .mCSB_buttonDown{
+    background-position:-112px -20px;
+}
+.mCS-dark-2>.mCSB_scrollTools .mCSB_buttonLeft{
+    background-position:-120px -40px;
+}
+.mCS-dark-2>.mCSB_scrollTools .mCSB_buttonRight{
+    background-position:-120px -56px;
+}
+/*light-thick*/
+.mCS-light-thick>.mCSB_scrollTools .mCSB_draggerRail{
+    width:4px;
+    background:#fff; /* rgba fallback */
+    background:rgba(255,255,255,0.1);
+    -webkit-border-radius:2px;
+    -moz-border-radius:2px;
+    border-radius:2px;
+}
+.mCS-light-thick>.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+    width:6px;
+    background:#fff; /* rgba fallback */
+    background:rgba(255,255,255,0.75);
+    -webkit-border-radius:2px;
+    -moz-border-radius:2px;
+    border-radius:2px;
+}
+.mCS-light-thick.mCSB_horizontal>.mCSB_scrollTools .mCSB_draggerRail{
+    width:100%;
+    height:4px;
+    margin:6px 0;
+}
+.mCS-light-thick.mCSB_horizontal>.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+    width:100%;
+    height:6px;
+    margin:5px auto;
+}
+.mCS-light-thick>.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar{
+    background:rgba(255,255,255,0.85);
+}
+.mCS-light-thick>.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
+.mCS-light-thick>.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
+    background:rgba(255,255,255,0.9);
+}
+.mCS-light-thick>.mCSB_scrollTools .mCSB_buttonUp{
+    background-position:-16px 0;
+}
+.mCS-light-thick>.mCSB_scrollTools .mCSB_buttonDown{
+    background-position:-16px -20px;
+}
+.mCS-light-thick>.mCSB_scrollTools .mCSB_buttonLeft{
+    background-position:-20px -40px;
+}
+.mCS-light-thick>.mCSB_scrollTools .mCSB_buttonRight{
+    background-position:-20px -56px;
+}
+/*dark-thick*/
+.mCS-dark-thick>.mCSB_scrollTools .mCSB_draggerRail{
+    width:4px;
+    background:#000; /* rgba fallback */
+    background:rgba(0,0,0,0.1);
+    -webkit-border-radius:2px;
+    -moz-border-radius:2px;
+    border-radius:2px;
+}
+.mCS-dark-thick>.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+    width:6px;
+    background:#000; /* rgba fallback */
+    background:rgba(0,0,0,0.75);
+    -webkit-border-radius:2px;
+    -moz-border-radius:2px;
+    border-radius:2px;
+}
+.mCS-dark-thick.mCSB_horizontal>.mCSB_scrollTools .mCSB_draggerRail{
+    width:100%;
+    height:4px;
+    margin:6px 0;
+}
+.mCS-dark-thick.mCSB_horizontal>.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+    width:100%;
+    height:6px;
+    margin:5px auto;
+}
+.mCS-dark-thick>.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar{
+    background:rgba(0,0,0,0.85);
+}
+.mCS-dark-thick>.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
+.mCS-dark-thick>.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
+    background:rgba(0,0,0,0.9);
+}
+.mCS-dark-thick>.mCSB_scrollTools .mCSB_buttonUp{
+    background-position:-96px 0;
+}
+.mCS-dark-thick>.mCSB_scrollTools .mCSB_buttonDown{
+    background-position:-96px -20px;
+}
+.mCS-dark-thick>.mCSB_scrollTools .mCSB_buttonLeft{
+    background-position:-100px -40px;
+}
+.mCS-dark-thick>.mCSB_scrollTools .mCSB_buttonRight{
+    background-position:-100px -56px;
+}
+/*light-thin*/
+.mCS-light-thin>.mCSB_scrollTools .mCSB_draggerRail{
+    background:#fff; /* rgba fallback */
+    background:rgba(255,255,255,0.1);
+}
+.mCS-light-thin>.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+    width:2px;
+}
+.mCS-light-thin.mCSB_horizontal>.mCSB_scrollTools .mCSB_draggerRail{
+    width:100%;
+}
+.mCS-light-thin.mCSB_horizontal>.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+    width:100%;
+    height:2px;
+    margin:7px auto;
+}
+/*dark-thin*/
+.mCS-dark-thin>.mCSB_scrollTools .mCSB_draggerRail{
+    background:#000; /* rgba fallback */
+    background:rgba(0,0,0,0.15);
+}
+.mCS-dark-thin>.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+    width:2px;
+    background:#000; /* rgba fallback */
+    background:rgba(0,0,0,0.75);
+}
+.mCS-dark-thin.mCSB_horizontal>.mCSB_scrollTools .mCSB_draggerRail{
+    width:100%;
+}
+.mCS-dark-thin.mCSB_horizontal>.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+    width:100%;
+    height:2px;
+    margin:7px auto;
+}
+.mCS-dark-thin>.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar{
+    background:rgba(0,0,0,0.85);
+}
+.mCS-dark-thin>.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
+.mCS-dark-thin>.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
+    background:rgba(0,0,0,0.9);
+}
+.mCS-dark-thin>.mCSB_scrollTools .mCSB_buttonUp{
+    background-position:-80px 0;
+}
+.mCS-dark-thin>.mCSB_scrollTools .mCSB_buttonDown{
+    background-position:-80px -20px;
+}
+.mapContainer img {
+    height:125px;
+}
+
+
+/** gmap **/
+
+#pcflyerstores-picker-form .form-item {
+    display: inline-block;
+}
+
+#account {
+    color: #78B800;
+    font-size: 52px;
+    font-weight: bold;
+    position: relative;
+    top: -116px;;
+    left: 516px;
+}
+
+#itemtext {
+    color: #838383;
+    font-size: 29px;
+    font-weight: bold;
+    position: relative;
+    top: -132px;
+    left: 624px;
+    font-family: 'same_same_but_differentRg';
+}
+
+#pcflyerstores-picker-form #edit-search {
+    padding-left: 9px;
+    padding-right: 9px;
+    margin-bottom: 13px;
+    background: #f1f1f1;
+    border-radius: 4px 4px 4px 4px;
+    width: 934px;
+    height: 79px;
+}
+
+
+#pcflyerstores-picker-form .form-submit, #pccart-cart-form #edit-search .form-submit {
+    width: 231px;
+    display: block;
+    text-align: center;
+    bottom: 8px;
+    float: right;
+    position: relative;
+    top: 14px;
+    left: inherit;
+}
+
+
+#pcflyerstores-picker-form .form-submit{
+    width: 231px;
+    display: block;
+    text-align: center;
+    bottom: 8px;
+    float: right;
+    position: relative;
+    top: 15px;
+}
+#pccart-cart-form #edit-search .form-submit{
+    width: 231px;
+    display: block;
+    text-align: center;
+    bottom: 8px;
+}
+
+
+#pcflyerstores-detail-form #allresault{
+    height: 438px;
+}
+#pcflyerstores-picker-form #result {
+    background: #f1f1f1;
+    border-radius: 4px 4px 4px 4px;
+    height: 438px;
+}
+#pcflyerstores-picker-form #gmap {
+    border-radius: 4px 4px 4px 4px;
+    width: 95%;
+    height: 50%;
+    margin: 22px;
+}
+
+#pcflyerstores-picker-form .results .fieldset-wrapper,
+#pcflyerstores-picker-form .results .fieldset-wrapper .item-list {
+    padding: 0;
+    height: 372px !important;
+    overflow: auto;
+}
+#pcflyerstores-picker-form #edit-search{
+    padding-left: 9px;
+    padding-right: 9px;
+    margin-bottom: 13px;
+    background: #f1f1f1;
+    border-radius: 4px 4px 4px 4px;
+    width: 933px;
+    height: 72px
+}
+#pcflyerstores-picker-form label{
+    display: inline-block;
+}
+#pcflyerstores-picker-form .stordescription {
+    position: absolute;
+    background: #FFFFFF;
+    border-radius: 4px 4px 4px 4px;
+    padding-left: 7px;
+    padding-right: 7px;
+    margin-right: 11px;
+    width: 672px;
+    top: 396px;
+    height: 235px;
+}
+#pccart-cart-form #Mapstor{
+    display: none;
+}
+#pcflyerstores-picker-form #infoStor{
+    width: 217px;
+    position: fixed;
+    bottom: 84px;
+    top: 438px;
+    padding-left: 246px;
+}
+#pcflyerstores-picker-form .separateur {
+    width: 233px;
+    padding-right: 3px;
+    height: 154px;
+    float: right;
+    margin-top: -75px;
+}
+#pccart-cart-form #infoStor{
+    display: none;
+}
+#pcflyerstores-picker-form #storethumb{
+    height: 56px;
+    width: 111px;
+    background: url('images/logo.png') no-repeat left;
+    float: left;
+}
+
+#pcflyerstores-picker-form #urlStores{
+    position: absolute;
+    left: 512px;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+#pcflyerstores-flyerstores-form #Mapstor, 
+#pcflyerstores-flyerstores-form #urlStores,
+#pccart-cart-form #h2title,
+#pcflyerstores-picker-form #Mapimg{
+    display: none;
+}
+
+#pccart-cart-form #Mapimg{
+    width: 530px;
+}
+#pcflyerstores-landingpage-form #storethumb{
+    margin-top: 14px;
+    margin-bottom: 14px;
+    width: 111px;
+    height: 57px;
+    background: url('images/logo.png') no-repeat left;
+}
+#pcflyerstores-landingpage-form #storethumbok{
+    margin-top: 14px;
+    margin-bottom: 14px;
+    width: 111px;
+    height: 57px;
+}
+
+
+#pcflyerstores-flyerstores-form .openinghours{
+    width: 42%;
+    font-size: 14px;
+    float: left;
+}
+#pcflyerstores-flyerstores-form #infoStor{
+    margin: 5px;
+}
+
+#pcflyerstores-flyerstores-form  h2 {
+    font-size: 16px !important;
+    padding-left: 29px;
+    background: url('images/store-item.png') no-repeat left;
+    padding-top: 9px;
+}
+
+
+/*
+ * Lean Slider v1.0
+*/
+
+.lean-slider { 
+    position: relative; 
+}
+.lean-slider:before,
+.lean-slider:after {
+    content: " ";
+    display: table;
+}
+.lean-slider:after {
+    clear: both;
+}
+
+.lean-slider-slide { 
+    float: left;
+    width: 100%;
+    margin-right: -100%;
+    display: none; 
+}
+.lean-slider-slide.current { display: block; }
+
+
+.slider-wrapper { 
+    position: relative; 
+    background: #fff url(images/loading.gif) no-repeat 50% 50%;
+    -moz-box-shadow: 0 0 3px rgba(0,0,0,0.4);
+    -webkit-box-shadow: 0 0 3px rgba(0,0,0,0.4);
+    box-shadow: 0 0 3px rgba(0,0,0,0.4);
+
+}
+.lean-slider { overflow: hidden; }
+.lean-slider-slide {
+    display: block;
+    position: relative;
+    opacity: 0;
+    -webkit-transition: opacity 0.6s linear;
+    -moz-transition: opacity 0.6s linear;
+    -ms-transition: opacity 0.6s linear;
+    -o-transition: opacity 0.6s linear;
+    transition: opacity 0.6s linear;
+}
+.lean-slider-slide.current { opacity: 1; }
+.lean-slider-slide img { 
+    display: block;
+    width: 100%; 
+}
+
+#slider-direction-nav {
+    position: absolute;
+    left: 0;
+    top: 47%;
+    width: 100%;
+    -webkit-transition: opacity 0.2s linear;
+    -moz-transition: opacity 0.2s linear;
+    -ms-transition: opacity 0.2s linear;
+    -o-transition: opacity 0.2s linear;
+    transition: opacity 0.2s linear;
+    opacity: 0.2;
+}
+.slider-wrapper:hover #slider-direction-nav { opacity: 1; }
+#slider-direction-nav a {
+    float: left;
+    display: block;
+    width: 26px;
+    height: 37px;
+    background: url(images/arrows.png) no-repeat 0 0;
+    text-indent: -9999px;
+}
+#slider-direction-nav .lean-slider-next {
+    float: right;
+    background-position: 100% 0;
+}
+
+#slider-control-nav {
+    position: absolute;
+    left: 0;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    -webkit-transition: opacity 0.2s linear;
+    -moz-transition: opacity 0.2s linear;
+    -ms-transition: opacity 0.2s linear;
+    -o-transition: opacity 0.2s linear;
+    transition: opacity 0.2s linear;
+    opacity: 0.2;
+}
+.slider-wrapper:hover #slider-control-nav { opacity: 1; }
+#slider-control-nav a {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: url(images/bullets.png) no-repeat 0 0;
+    text-indent: -9999px;
+    margin: 0 3px;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+#slider-control-nav a.active { background-position: 100% 0; }
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen 
+and (min-device-width : 320px) 
+and (max-width : 480px) {
+
+    #slider-direction-nav,
+    #slider-control-nav { opacity: 1; }
+
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) {
+
+    #slider-direction-nav,
+    #slider-control-nav { opacity: 1; }
+
+}
+
+#BttSearch{
+    width: 214px;
+    text-align: center;
+    float: right;
+    position: relative;
+    top: -50px;
+}
+#result{
+    margin-top: 77px;
+    clear: both;
+}
+
+
+
+#pcflyerstores-picker-form #storethumb2{
+    height: 56px;
+    width: 111px;
+    float: left;
+}
+
+#infopic{
+    float: right;
+    margin-left: 234px;
+    margin-top: -351px;
+}
+
+#replace_stores {
+    padding-left: 9px;
+    padding-right: 9px;
+    margin-bottom: 13px;
+    background: #F1F1F1;
+    border-radius: 4px 4px 4px 4px;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    width: 642px;
+    height: 573px;
+}
+
+
+
+
+
+.spanstotal {
+    font-size: 12px;
+    color: #646464;
+    padding-bottom: 16px;
+    height: 26px;
+    display: block;
+    text-align: center;
+}
+
+#discriptinstore {
+    width: 473px;
+}
+
+
+#edit-hr{
+    color: #DFDFDF;
+    background-color: #DFDFDF;
+    height: 1px;
+}
+
+#pccart-cart-form #allresault {
+    height: 100%;
+}
+#pcflyerstores-flyerstores-form #DetailStor {
+    float: right;
+    margin-right: 41px;
+    margin-top: 29px;
+}
+#defaltslaid{
+    margin-left: -10px;
+    width: 659px;
+}
+
+#pcflyerstores-picker-form #detail{
+    float: left;
+    clear: both;
+    padding-top: 30px;
+}
+
+#fontstore{
+    font-family: 'same_same_but_differentRg';
+    color: #78b800;
+    font-size: 30px;
+    float: left;
+    margin-top: -74px;
+    width: 317px;
+    line-height: 1.2;
+}
+#gostor{
+    background: url(images/popup2.png) no-repeat !important;
+    height: 41px !important;
+    width: 212px !important;
+    display: block;
+    text-align: center;
+    margin: auto;
+    top: 582px;
+    position: relative;
+}
+.gostor a{
+    padding-top: 8px;
+    color: #FFF !important;
+    text-transform: uppercase;
+}
+
+#divcont{
+    background: url(images/stores_picker_mini.png) no-repeat !important;
+    width: 646px;
+    height: 567px;
+}
+
+#errepostalcode{
+    /*background: url(images/stores_picker_popup3back.png) no-repeat !important;*/
+    width: 646px;
+    height: 567px; 
+    padding-top: 193px;
+}
+
+#popup3arag{
+    background: url(images/alert.png) no-repeat !important;
+    height: 39px;
+    padding-left: 56px;
+    width: 400px;
+    margin-left: 108px;
+}
+
+#description{
+    float: right;
+    width: 490px;
+    margin-bottom: 21px;
+}
+
+#gostor a {
+    color: #fff;
+}
+
+#pcflyerstores-picker-form .stordescription .vacations{
+    left: 444px;
+}
+
+#pcflyerstores-picker-form #allresault > div.description.stordescription > div.info_vacations {
+    width: 35%;
+    float: left;
+    margin-top: -105px;
+    margin-left: 186px;
+    height: 45%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: pre-wrap;
+}
+
+#pcflyerstores-landingpage-form  .store table.openinghours {
+margin: 10px 0;
+width: 195px !important;
+float: left;
+clear: both;
+}
+
+#pcflyerstores-landingpage-form  div#DetailStor {
+height: 84px;
+float: left;
+}
+#pcflyerstores-landingpage-form div#Mapimg {
+float: right;
+margin-top: -110px;
+}
+
+#pcflyerstores-landingpage-form  td.first-child {
+color:#f60 !important;
+}
+#pcflyerstores-landingpage-form .landingmap{
+clear: both;
+width: 400px;
+height: 300px;
+}
+
+/* pcflyerstores-search-form */
+#pcflyerstores-search-form #edit-search {
+    padding-left: 9px;
+    padding-right: 9px;
+    margin-bottom: 13px;
+    background: #f1f1f1;
+    border-radius: 4px 4px 4px 4px;
+    height: 72px;
+}
+
+#pcflyerstores-search-form .form-item {
+    display: inline-block;
+}
+#pcflyerstores-search-form .form-submit {
+    width: 231px;
+    display: block;
+    text-align: center;
+    bottom: 8px;
+    float: right;
+    position: relative;
+    top: 15px;
+}
+
+#pcflyerstores-search-form #result {
+    background: #f1f1f1;
+    margin-top: 0px;
+    border-radius: 4px 4px 4px 4px;
+    height: 417px;
+    width: 220px;
+    float: left;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+#pcflyerstores-search-form .results {
+    position: relative;
+}
+#pcflyerstores-search-form .results .fieldset-wrapper, 
+#pcflyerstores-search-form .results .fieldset-wrapper .item-list {
+    padding: 0;
+    height: 372px !important;
+    overflow: auto;
+}
+
+#pcflyerstores-search-form .results .fieldset-wrapper, 
+#pcflyerstores-search-form .results .fieldset-wrapper .item-list {
+    padding: 0;
+    height: 410px !important;
+    overflow: hidden !important;
+}
+
+#pcflyerstores-search-form .results .item-list ul li {
+    margin-bottom: 5px;
+}
+
+#pcflyerstores-search-form .results .item-list ul li {
+    margin-bottom: 5px;
+}
+
+#pcflyerstores-search-form .results .item-list ul li a {
+    background: url('images/store-item.png') no-repeat left;
+    color: #646464;
+    display: block;
+    line-height: 16px;
+    padding-left: 34px;
+}
+#pcflyerstores-search-form .selection {
+    overflow: hidden !important;
+}
+
+#pcflyerstores-search-form .detail {
+    background: #f1f1f1;
+    border-radius: 4px 4px 4px 4px;
+    float: right;
+    margin: 0;
+    height: 418px;
+    overflow: auto;
+    padding: 10px;
+    width: 416px;
+}
+
+#pcflyerstores-search-form #edit-stores{
+    clear: both;
+}
+#pcflyerstores-search-form #edit-title{
+    float: left;
+    clear: both;
+}
+
+#pcflyerstores-search-form #count {
+float: right;
+font-size: 14px;
+font-weight: bold;
+background: #f1f1f1;
+width: 131px;
+height: 133px;
+padding: 10px;
+text-align: center;
+border-radius: 4px 4px 4px 4px;
+}
+
+#pcflyerstores-search-form #count #number {
+color: #f60;
+font-size: 68px;
+margin: 10px;
+padding-top: 10px;
+padding-bottom: 10px;
+}
+
+#pcflyerstores-search-form .stores-form{
+    float: left;
+    width: 110px;
+}
+#pcflyerstores-search-form #edit-stores ul{
+padding-left: 0;
+
+}
+
+#pcflyerstores-search-form #edit-stores ul li {
+list-style: none;
+
+}
+
+
+
+/*
+start carousel.
+*/
+.jcarousel {
+    position: relative;
+    overflow: hidden;
+}
+.jcarousel ul {
+    width: 20000em;
+    position: relative;
+
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.jcarousel li {
+    float: left;
+    height: 300px;
+    width: 660px;
+}
+
+.jcarousel-control-next {
+right: 22px;
+}
+.jcarousel-control-prev{
+ left: 22px; 
+}
+
+.jcarousel-control-prev, 
+.jcarousel-control-next {
+position: absolute;
+top: 133px;
+width: 30px;
+height: 30px;
+text-align: center;
+background: #FFFFFF;
+color: #000;
+text-decoration: none;
+text-shadow: 0 0 1px #000;
+font: 24px/27px Arial, sans-serif;
+-webkit-border-radius: 30px;
+-moz-border-radius: 30px;
+border-radius: 30px;
+-webkit-box-shadow: 0 0 2px #999;
+-moz-box-shadow: 0 0 2px #999;
+box-shadow: 0 0 2px #999;
+}
+
+
+/*end carousel */
+#searchtitle{
+    float: left;
+    margin-top: 20px;
+}
+
+/*#edit-search .form-item-postal{
+    float: right;
+    
+}*/
+
+#pcflyerstores-search-form span.Slink {
+margin-right: 15px;
+}

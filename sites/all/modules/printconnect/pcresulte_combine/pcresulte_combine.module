@@ -1,0 +1,207 @@
+<?php
+
+/**
+ Search all module Products & node. 
+ **/
+
+/**
+ * Implements hook_permission().
+ */
+function pcresulte_combine_permission() {
+  return array(
+    'access search all' =>  array(
+      'title' => t('Use can display resulte combine search'),
+      'restrict access' => TRUE,
+    ),
+  );
+}
+
+/**
+ * Implements hook_search_info().
+ */
+function pcresulte_combine_search_info() {
+  return array(
+    'title' => 'Search',
+    'path' => 'all',
+    'conditions_callback' => 'pcresulte_combine_conditions_callback',
+  );
+}
+
+/**
+ * Conditions callback function for all search.
+ */
+function pcresulte_combine_conditions_callback($keys) {
+  $conditions = array();
+  foreach (_pcresulte_combine_get_modules('search_info') as $module) {
+    $info = module_invoke($module, 'search_info');
+    if (isset($info['conditions_callback'])) {
+      $conditions = array_merge($conditions, call_user_func_array($info['conditions_callback'], $keys));
+    }
+  }
+  
+  return $conditions;
+}
+
+
+/**
+ * Implements hook_search_access().
+ */
+function pcresulte_combine_search_access() {
+  if (!user_access('access search all')) {
+    return FALSE;
+  }
+  foreach (_pcresulte_combine_get_modules('search_access') as $module) {
+    if (!module_invoke($module, 'search_access')) {
+      return FALSE;
+    }
+  }
+  return TRUE;
+}
+
+
+/**
+ * Implements hook_search_reset().
+ */
+function pcresulte_combine_search_reset() {
+  _pcresulte_combine_invoke_all('search_reset');
+}
+
+/**
+ * Implements hook_search_status().
+ */
+function pcresulte_combine_search_status() {
+  $remaining = 0;
+  $total = 0;
+  foreach (_pcresulte_combine_get_modules('search_status') as $module) {
+    $result = module_invoke($module, 'search_status');
+    $remaining += $result['remaining'];
+    $total += $result['total'];
+  }
+  return array('remaining' => $remaining, 'total' => $total);
+}
+
+/**
+ * Implements hook_search_admin().
+ */
+function pcresulte_combine_search_admin() {
+  $form['pcresulte_combine'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Search all'),
+    'pcresulte_combine_modules' => array(
+      '#type' => 'checkboxes',
+      '#options' => _search_get_module_names(),
+      '#default_value' => variable_get('pcresulte_combine_modules', array('node', 'user')),
+      '#description' => t('Choose which modules  to combine resulte search.'),
+    ),
+  );
+  unset($form['pcresulte_combine']['pcresulte_combine_modules']['#options']['pcresulte_combine']);
+  // Per module settings
+  $form += _pcresulte_combine_invoke_all('search_admin');
+  return $form;
+}
+
+
+
+/**
+ * Implements hook_search_execute().
+ */
+function pcresulte_combine_search_execute($keys = NULL, $conditions = NULL) {
+  return _pcresulte_combine_invoke_all('search_execute', $keys, $conditions);
+}
+
+function pcresulte_combine_search_page($results) {
+$url_comp = explode('/', request_uri());
+$textproduct = t("Your search - @name - did not match any Product", array('@name' => $url_comp[count($url_comp)-1]));
+$textContent = t("Your search - @name - did not match any Content", array('@name' => $url_comp[count($url_comp)-1]));   
+   
+$Prodactresolt =array();
+$Contentresolt =array();
+
+foreach ($results as $key => $value) {
+    if ($value['type']== "pcproducts_product,"){
+        $Prodactresolt[] = $value;
+    } elseif($value['type']== "Page"){
+        $Contentresolt[] = $value;
+    }
+}
+    
+/*product*/
+
+$output['produits'] = array( '#markup' => '<div class="title-search">'.t('Nos produits').'</div>',);
+$output['prefix']['#markup'] = '<ol class="search-results"><div class="results-produits">';
+  foreach ($Prodactresolt as $entry) {
+
+      if ($entry['type']== "pcproducts_product,"){
+            $output[] = array(
+              '#theme' => 'search_result',
+              '#result' => $entry,
+              '#module' => 'pcresulte_combine',
+            );
+      }    
+  }
+  
+   if(count($Prodactresolt)==0){
+          $output[] = array(
+ '#markup' => '<div class="searcheresolte"><h2>'.$textproduct.'</h2></div>',
+            );
+      }
+
+ $output['suffix']['#markup'] = '</div></ol>' . theme('pager');
+   
+/*page*/
+ 
+$output['Contenu'] = array('#markup' => '<div class="title-search">'.t('Contenu').'</div>',);
+$output['prefix']['#markup'] = '<ol class="search-results"><div class="results-Contenu">';
+
+  foreach ($Contentresolt as $entry) {
+  if ($entry[type]== "Page"){
+    $output[] = array(
+      '#theme' => 'search_result',
+      '#result' => $entry,
+      '#module' => 'pcresulte_combine',
+    );
+      } 
+  }
+   if(count($Contentresolt)==0){
+          $output[] = array(
+              '#markup' => '<div class="searcheresolte"><h2>'.$textContent.'</h2></div>',
+            );
+      }
+  $output['suffix']['#markup'] = '</div></ol>' . theme('pager');
+  return $output;
+}
+
+/**
+ * Invoke a hook on all active search modules.
+ */
+function _pcresulte_combine_invoke_all($hook) {
+  $results = array();
+  $args = func_get_args();
+  $hook = $args[0];
+  unset($args[0]);
+  
+  foreach (_pcresulte_combine_get_modules($hook) as $module) {
+    if (module_hook($module, $hook)) {
+      $results_merge = call_user_func_array($module . '_' . $hook, $args);
+    if (is_array($results_merge)) {         
+        $results = array_merge($results, $results_merge);
+       }
+    }
+  }
+  return $results;
+}
+/**
+ * Get all active search modules implementing a hook.
+ */
+function _pcresulte_combine_get_modules($hook) {
+  $modules= array();
+  $modulesHook = array();
+  foreach (variable_get('pcresulte_combine_modules', array('pcproducts', 'node')) as $module) {
+    if (module_hook($module, $hook) && $module != 'pcresulte_combine') {
+      $modulesHook[] = $module;
+    }
+  }
+  $modules[0]=$modulesHook[1];
+  $modules[1]=$modulesHook[0];
+  return $modules;
+}

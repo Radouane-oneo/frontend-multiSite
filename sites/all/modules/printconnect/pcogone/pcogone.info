@@ -1,0 +1,8 @@
+name = Ogone (TODELETE?)
+description = Ogone integration
+package = printconnect
+core = 7.x
+files[] = pcogone.install
+
+
+

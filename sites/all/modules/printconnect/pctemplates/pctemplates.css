@@ -1,0 +1,362 @@
+.page-templates h1{
+	padding-top:15px;	
+}
+.page-templates form > div > .filters {
+
+}
+.page-templates form .specifications {
+	display: none;
+}
+.page-templates form .dropdown li {
+	list-style: none;
+	float: left;
+	margin: 0;
+	width: 30%;
+}
+.page-templates form.dropdown .text, #pcproducts-config-form .dropdown .detail {
+	text-align: center;
+}
+.page-templates form .dropdown .detail {
+	font-size: smaller;
+}
+.page-templates form .dropdown li:nth-child(3n-2) {
+	clear: left;
+}
+.page-templates form .dropdown img {
+	width: 100%;
+}
+
+
+.page-templates form .pages > *{
+  width:50%;
+  display:inline-block;
+}
+
+.page-templates form .pages > * > img{
+  width:100%;
+
+}
+
+
+.page-templates form .form-item-custom input[type=text]{
+  min-width:inherit;
+  max-width:200px;
+  display:block;
+}
+
+
+#pctemplates-selection-form .templates li{
+  width: 29%;
+  float:left;
+  padding:2%;
+  list-style:none;
+  margin:0;
+}
+
+#pctemplates-selection-form .templates li:nth-child(3n+1){
+  clear:left;
+}
+
+#pctemplates-selection-form .templates li img{
+  width:100%;
+}
+
+#pctemplates-selection-form .selected li{
+  float:left;
+  list-style:none;
+  margin:0;
+}
+
+
+.item-list ul.type-1 .item-list{
+  background-color: #F0F0F0;
+  border: 1px solid #D2D2D2;
+  border-radius: 4px 4px 4px 4px;
+  display: block;
+  margin: 5px;
+  padding: 10px;
+}
+
+.item-list ul.type-1 .item-list ul{
+  display:block;
+  height:20px;
+  margin: 0 auto;
+  width:220px;
+}
+
+.item-list ul.type-1 li{
+  list-style: none outside none;
+  margin: 0;
+  padding: 0;
+  display:block;
+  float:left;
+  padding:0;
+  vertical-align: bottom;
+}
+
+.item-list ul.type-1 li a{
+  box-shadow: 0 9px 0 rgba(255, 255, 255, 0.5) inset;
+  display: block;
+  height: 14px;
+  text-indent: -9999em;
+  width: 16px;
+
+}
+
+.item-list ul.type-1 li a.selected{
+  height:20px;
+}
+
+.type-1 li a.value-ff0000{
+  background-color:#FF0000;
+}
+
+.type-1 li a.value-ff0061{
+  background-color:#FF0061;
+}
+
+.type-1 li a.value-663399{
+  background-color:#663399;
+}
+
+.type-1 li a.value-0066cc{
+  background-color:#0066CC;
+}
+
+.type-1 li a.value-669900{
+  background-color:#669900;
+}
+
+.type-1 li a.value-ffcc33{
+  background-color:#FFCC33;
+}
+
+.type-1 li a.value-ff9900{
+  background-color:#FF9900;
+}
+
+.type-1 li a.value-996633{
+  background-color:#996633;
+}
+
+.type-1 li a.value-000000{
+  background-color:#000000;
+}
+
+.type-1 li a.value-999999{
+  background-color:#999999;
+}
+
+.type-1 li a.value-ffffff{
+  background-color:#FFFFFF;
+}
+
+.type-1 li a.value-808080{
+  background-color:#808080;
+} 
+
+.type-1 li a.value-800080{
+  background-color:#800080;
+} 
+
+.type-1 li a.value-000000{
+  background-color:#000000;
+}
+
+.type-1 li a.value-0000ff{
+  background-color:#0000FF;
+} 
+
+#block-pctemplates-totd .img{
+  width:100%;
+}
+
+.page-templates form .shipping .deadline, 
+.page-templates form .shipping .delivery  {
+  width:50%;
+  float:left;
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;  Firefox 
+   -webkit-box-sizing:border-box; Safari 
+}
+
+.page-templates form .dropdown li{
+  list-style:none;
+  float:left;
+  margin:0;
+  width:30%;  
+}
+
+.page-templates form.dropdown .text, #pcproducts-config-form .dropdown .detail{
+  text-align:center; 
+}
+.page-templates form .dropdown .detail{
+  font-size:smaller;
+}
+
+.page-templates form .dropdown li:nth-child(3n-2){
+  clear:left; 
+}
+
+.page-templates form .dropdown img{
+  width:100%;
+}
+
+
+#accordion {
+	margin-top: 20px;
+}
+#accordion h3 span.fieldset-legend {
+	color: #555555;
+	font-size: 11px;
+	max-width: 106px
+}
+#accordion h3.ui-state-active {
+	border: none !important;
+}
+#accordion h3.ui-state-active span.fieldset-legend {
+	color: #f60 !important;
+	font-size: 11px;
+}
+#accordion h3 span.ui-icon {
+	display: inline-block !important;
+}
+#accordion div.ui-accordion-content {
+	border: none !important;
+}
+#accordion h3 .ui-icon-triangle-1-s {
+	background-position: -69px -13px;
+}
+#accordion h3 .ui-icon-triangle-1-e {
+	background-position: -32px -13px;
+}
+#accordion div.ui-accordion-content ul {
+	background-color: #f60;
+	border-radius: 5px;
+}
+#accordion div.ui-accordion-content ul li:first-child {
+	border: none !important;
+}
+#accordion div.ui-accordion-content ul li {
+	border-top: 1px solid #cecece;
+}
+#accordion div.ui-accordion-content ul li a {
+	color: #fff;
+	text-decoration: none;
+	width: 145px;
+	line-height: 15px;
+	padding: 5px;
+	display: block;
+	font-family: 'Open Sans', sans-serif;
+}
+#accordion div.ui-accordion-content ul li:hover {
+	background: #fff !important;
+	transition-property: background-color;
+	transition-duration: 0.7s;
+	transition-timing-fonction: linear;
+}
+#accordion div.ui-accordion-content ul li:hover a {
+	color: #f60;
+}
+
+
+#pctemplates-selection-form {
+	background:#f1f1f1;
+	padding:15px;
+	margin-top:10px;
+	float:left;
+	
+	
+}
+#pctemplates-selection-form .form-item {
+	width:48%;
+	float:left;
+	margin: 5px 0px;
+	
+}
+#pctemplates-selection-form .form-item:nth-child(odd){
+	margin-right:20px;	
+}
+
+#pctemplates-selection-form .form-item select{
+	width:200px;
+	height:37px;
+	border:none !important;
+	float:right;
+	
+}
+
+#pctemplates-selection-form .form-item label {
+	display:inline-block;
+	vertical-align:middle;
+	text-transform:uppercase;
+	color:#787878;
+	float:left;
+	font-size:11px;
+	line-height: 38px;
+}
+
+#pctemplates-selection-form .form-actions {
+	margin-top:60px;	
+}
+
+#edit-colors {
+float: right;
+position: relative;
+
+}
+
+#pctemplates-selection-form #edit-colors .fieldset-wrapper {
+	margin-left: 32px !important;
+float: left;
+background-image:none !important;
+background-color:#fff !important;
+border-radius:10px;
+-webkit-border-radius:10px;
+-ms-border-radius:10px;
+-moz-border-radius:10px;
+-o-border-radius:10px;
+	
+	position: relative;
+	left: -8px;
+}
+#pctemplates-selection-form #edit-colors legend {
+
+margin: 0 16px -10px 0px !important;
+
+}
+
+.item-list ul.type-1 li a{
+	margin-right:1px;	
+	border-radius:4px;
+-webkit-border-radius:4px;
+-ms-border-radius:4px;
+-moz-border-radius:4px;
+-o-border-radius:4px;
+}
+
+.designSelectedColor{
+	border:1px solid #000;	
+}
+
+
+.selected a{
+	color:#fe7224 !important;	
+}
+
+.newDesignUpload{
+	background:none !important;	
+	float:right;
+	padding:0 !important;
+	margin-top: -26px !important;
+}
+
+.newDesignUpload a{
+	margin:0 !important;	
+}
+#top10Template{
+    top: 0px !important;
+    bottom: 0px !important;
+    right: 0px !important;
+    left: 0px !important;
+}

@@ -1,0 +1,12 @@
+name = Rebuild url
+description = Allows users to Rebuilde URLs from old URLs to new URLs.
+package = printconnect
+core = 7.x
+files[] = pcrebuildurl.module
+files[] = pcrebuildurl.admin.inc
+version = "0.1 Cor 7.21"
+core = "7.x"
+project = "rebuildurl"
+configure = admin/config/system/rebuild_url
+
+

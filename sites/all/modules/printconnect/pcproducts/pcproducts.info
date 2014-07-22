@@ -1,0 +1,14 @@
+name = Products
+description = Product catalog
+package = printconnect
+core = 7.x
+
+#dependencies[] = pcproductsbase
+dependencies[] = pccustomers
+#dependencies[] = pcshipping
+dependencies[] = pcfiles
+
+scripts[] = pcproducts.js
+stylesheets[all][] = pcproducts.css
+
+

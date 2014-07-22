@@ -1,0 +1,7 @@
+name = Feedback
+description = Feedback
+package = printconnect
+core = 7.x
+
+dependencies[] = pccustomers
+dependencies[] = pcorders

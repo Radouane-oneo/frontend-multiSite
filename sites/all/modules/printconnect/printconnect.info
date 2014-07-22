@@ -1,0 +1,16 @@
+name = PrintConnect
+description = PrintConnect base module
+package = printconnect
+core = 7.x
+
+files[] = printconnect.install
+
+#scripts[] = fancybox/jquery.fancybox-1.3.4.js
+
+scripts[] = printconnect.js
+
+#stylesheets[all][] = fancybox/jquery.fancybox-1.3.4.css
+stylesheets[all][] = printconnect.css
+
+project = printconnect
+version = 7.x

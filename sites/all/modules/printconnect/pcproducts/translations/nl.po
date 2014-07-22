@@ -1,0 +1,74 @@
+msgid "Products"
+msgstr "Drukwerk"
+
+msgid "from_price"
+msgstr "Beschikbaar vanaf"
+
+msgid "Select a product"
+msgstr "Kies een product"
+
+msgid "Configure your product"
+msgstr "Stel je product samen"
+
+msgid "Select your amount"
+msgstr "Kies je aantal"
+
+msgid "Quantity"
+msgstr "Aantal"
+
+msgid "Price VAT excl."
+msgstr "Prijs excl. BTW"
+
+msgid "Price per piece"
+msgstr "Prijs per stuk"
+
+msgid "Enter any quantity or select a price below"
+msgstr "Vul je eigen aantal in of selecteer hieronder een aantal"
+
+msgid "Select format"
+msgstr "Kies uit een van de beschikbare formaten en upload je eigen ontwerp!"
+
+msgid "@qty pcs."
+msgstr "@qty ex."
+
+msgid "Additional finishing"
+msgstr "Optionele afwerking"
+
+msgid "Supply before"
+msgstr "Ontwerp aanleveren voor"
+
+msgid "Your order is ready for shipment"
+msgstr "Je bestelling wordt verzonden op:"
+
+msgid "Expected delivery"
+msgstr "Geschatte leverdatum"
+
+msgid "Total excl. VAT"
+msgstr "Totaal excl. BTW"
+
+msgid "VAT"
+msgstr "BTW"
+
+msgid "Total incl. VAT"
+msgstr "Totaal incl. BTW"
+
+msgid "Supply times"
+msgstr "Aanlevertijden"
+
+msgid "How to prepare your printjob"
+msgstr "Hoe je bestanden voorbereiden"
+
+msgid "Finalizing your design? Take into account these requirements:"
+msgstr "Je bent je drukklaar bestand aan het voorbereiden? Vergeet zeker deze specificaties niet!"
+
+msgid "Read more"
+msgstr "Meer lezen"
+
+msgid "Templates"
+msgstr "Templates"
+
+msgid "Download your templates here"
+msgstr "Snel en eenvoudig een drukklaar bestand maken? Download hier de templates"
+
+msgid "@product, ordering @product"
+msgstr "@product, @product drukken en bestellen"

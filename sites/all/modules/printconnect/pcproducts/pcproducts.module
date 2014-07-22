@@ -1,0 +1,1544 @@
+<?php
+
+use printconnect\Customers\Factory as CustomersFactory;
+use printconnect\Products\Factory;
+use printconnect\Products\Product;
+use printconnect\Products\Products;
+use printconnect\Products\Configurations;
+use printconnect\Products\Toolbox;
+use printconnect\Products\Pricing;
+use printconnect\Products\Options;
+use printconnect\Products\RelatedProducts;
+use printconnect\Products\Templates;
+use printconnect\Drupal\Functions;
+use printconnect\Shipping;
+
+
+function pcproducts_theme() {
+  return array(
+      'productlink' => array(
+          'variables' => array(
+              'id' => FALSE,
+              'title' => FALSE,
+              'content' => FALSE,
+              'attributes' => array(),
+          )
+      ),
+      'productprice' => array(
+          'variables' => array(
+              'id' => FALSE,
+              'attributes' => array(),
+          )
+      ),
+      'productname' => array(
+          'variables' => array(
+              'id' => FALSE,
+              'attributes' => array(),
+          )
+      ),
+  );
+}
+
+function theme_productlink($vars) {
+  $productId = $vars['id'];
+  $title = $vars['title'];
+  $content = $vars['content'];
+  $attributes = $vars['attributes'];
+
+  if ($productId) {
+    $product = Factory::Get($productId);
+    if (!$title) {
+      $title = $product->name;
+    }
+    if (!$content) {
+      $content = $product->name;
+    }
+    $attributes['alt'] = $title;
+    $attributes['title'] = $title;
+    return l($content, 'products/' . $productId, array('attributes' => $attributes, 'html' => true));
+  }
+}
+
+function theme_productname($vars) {
+  $productId = $vars['id'];
+  if ($productId) {
+    $product = Factory::Get($productId);
+    return $product->name;
+  }
+}
+
+function productname($productId, $items = array()) {
+  return theme('productname', array('id' => $productId));
+}
+
+function _pcproducts_url($value, $separator = '-') {
+  return \printconnect\Drupal\Functions::CreateUrl($value, $separator);
+}
+
+function pcproducts_menu() {
+  if (function_exists('printconnect_ensureinitialized')) {
+    printconnect_ensureinitialized();
+    $products = Factory::GetAll();
+    $flow = variable_get('pc_flow', 'whitelabel');
+    $items['products'] = array(
+        'title' => 'Products',
+        'description' => t('Product catalog'),
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('pcproducts_products_form'),
+        'access arguments' => array('access content'),
+        'file' => 'pcproducts.forms.inc',
+        'menu_name' => 'main-menu',
+        'options' => array('attributes' => array('class' => array('products'))),
+    );
+
+    switch ($flow) {
+      case 'flyer':
+        foreach ($products as $product) {
+          $items["products/$product->id"] = array(
+              'title' => 'Configuration',
+              'title callback' => '_pcproducts_getproductname',
+              'title arguments' => array(1),
+              'description' => t('Product'),
+              'page callback' => 'drupal_get_form',
+              'page arguments' => array('pcproducts_config_form', 1),
+              'access arguments' => array('access content'),
+              'file' => 'pcproducts.config.inc',
+          );
+          $items["products/$product->id/%"] = array(
+              'title' => 'Products',
+              'description' => t('Product'),
+              'page callback' => 'drupal_get_form',
+              'page arguments' => array('pcproducts_config_form', 1, 2),
+              'access arguments' => array('access content'),
+              'file' => 'pcproducts.config.inc',
+          );
+          $items["products/$product->id/%/%"] = array(
+              'title' => 'Products',
+              'description' => t('Product'),
+              'page callback' => 'drupal_get_form',
+              'page arguments' => array('pcproducts_config_form', 1, 2, 3),
+              'access arguments' => array('access content'),
+              'file' => 'pcproducts.config.inc',
+          );
+
+          $items["products/$product->id/%/%/%"] = array(
+              'title' => 'Products',
+              'description' => t('Product'),
+              'page callback' => 'drupal_get_form',
+              'page arguments' => array('pcproducts_config_form', 1, 2, 3, 4),
+              'access arguments' => array('access content'),
+              'file' => 'pcproducts.config.inc',
+          );
+          $items["products/$product->id/%/%/%/"] = array(
+              'title' => 'Products',
+              'description' => t('Product'),
+              'page callback' => 'drupal_get_form',
+              'page arguments' => array('pcproducts_config_form', 1, 2, 3, 4, 5),
+              'access arguments' => array('access content'),
+              'file' => 'pcproducts.config.inc',
+          );
+        }
+
+        break;
+      default:
+        if ($flow == 'printconcept') {
+          foreach ($products as $product) {
+            $items["products/" . $product->id] = array(
+                'title' => 'Configuration',
+                'title callback' => '_pcproducts_getproductname',
+                'title arguments' => array(1),
+                'page callback' => 'drupal_get_form',
+                'page arguments' => array('pcproducts_productoverview_form', 1),
+                'access arguments' => array('access content'),
+                'file' => 'pcproducts.forms.inc',
+            );
+
+            $typeItems = Configurations\Factory::GetTypeItems($product->id);
+            foreach ($typeItems as $typeItem) {
+              $items["products/$product->id/$typeItem->id"] = array(
+                  'title' => 'Configuration',
+                  'title callback' => '_pcproducts_getitemname',
+                  'title arguments' => array(2),
+                  'page callback' => 'drupal_get_form',
+                  'page arguments' => array('pcproducts_productconfig_form', 1, 2),
+                  'access arguments' => array('access content'),
+                  'file' => 'pcproducts.forms.inc',
+              );
+            }
+          }
+        } else {
+          foreach ($products as $product) {
+            $items["products/$product->id"] = array(
+                'title' => 'Configuration',
+                'title callback' => '_pcproducts_getproductname',
+                'title arguments' => array(1),
+                'page callback' => 'drupal_get_form',
+                'page arguments' => array('pcproducts_productconfig_form', 1),
+                'access arguments' => array('access content'),
+                'file' => 'pcproducts.forms.inc',
+            );
+          }
+
+          $items["products/%/%"] = array(
+              'title' => 'Configuration',
+              'page callback' => 'drupal_get_form',
+              'page arguments' => array('pcproducts_productconfig_form', 1, 2),
+              'access arguments' => array('access content'),
+              'file' => 'pcproducts.forms.inc',
+          );
+        }
+
+        $items['products/%/%/%/%'] = array(
+            'title' => 'Configuration',
+            'description' => t('Product'),
+            'page callback' => 'drupal_get_form',
+            'page arguments' => array('pcproducts_productconfig_form', 1, 2, 3, 4),
+            'access arguments' => array('access content'),
+            'file' => 'pcproducts.forms.inc',
+        );
+        $items['products/%/%/%/%/%'] = array(
+            'title' => 'Configuration',
+            'description' => t('Product'),
+            'page callback' => 'drupal_get_form',
+            'page arguments' => array('pcproducts_productconfig_form', 1, 2, 3, 4, 5),
+            'access arguments' => array('access content'),
+            'file' => 'pcproducts.forms.inc',
+        );
+        break;
+    }
+
+    $items["js/products"] = array(
+        'page callback' => 'pcproducts_js_callback',
+        'access arguments' => array('access content'),
+        'type' => MENU_CALLBACK,
+    );
+
+    return $items;
+  }
+}
+
+function _pcproducts_alpha_array($all = false) {
+  global $user;
+  $i = 0;
+  $products = _pcproducts_activeProducts($all);
+  usort($products, function (Product $a, Product $b) {
+            return strcmp($a->name, $b->name);
+          });
+  foreach ($products as $product) {
+    $productName = trim(strtoupper($product->name));
+    if (strlen($productName) == 0 || !ctype_alnum($productName[0])) {
+      $letter = '#';
+    } else {
+      $letter = $productName[0];
+    }
+    $ordered[$letter][] = l($product->name, 'products/' . $product->id, array('attributes' => array('title' => $product->name)));
+  }
+
+  ksort($ordered);
+  return $ordered;
+}
+
+function pcproducts_search_info() {
+  return array(
+      'title' => 'Products',
+  );
+}
+
+function pcproducts_search_access() {
+  return user_access('access content');
+}
+
+function pcproducts_search_execute($search) {
+  $products = Factory::Search($search);
+  $items = array();
+  foreach ($products->items as $product) {
+    $title = $product->name;
+    $build = array(
+        'short' => array(
+            '#type' => 'container',
+            '#attributes' => array('class' => array('description')),
+            'content' => array(
+                '#markup' => $product->shortDescription,
+            ),
+        ),
+        'image' => array(
+            '#type' => 'container',
+            '#attributes' => array('class' => array('image')),
+            'content' => array(
+                '#theme' => 'image',
+                '#path' => printconnect_getimage('products', $product->id),
+            ),
+        ),
+    );
+
+    $items[] = array(
+        'image' => _pcproducts_getimage('products', $product->id),
+        'title' => $title,
+        'link' => url('products/' . $product->id, array('absolute' => TRUE)),
+        'type' => 'pcproducts_product,',
+        'snippet' => drupal_render($build),
+        'score' => 2,
+    );
+  }
+  return $items;
+}
+
+function pcproducts_callback() {
+  global $user;
+  $args = func_get_args();
+  $page = array_shift($args);
+  switch ($page) {
+    case 'products':
+      $items = array();
+      $products = _pcproducts_activeproducts();
+      $build['products'] = array(
+          '#type' => 'container',
+          '#title' => t('Select a product'),
+          '#attributes' => array('class' => array('all-products', 'clearfix')),
+      );
+
+      foreach ($products as $product) {
+        $product->image = printconnect_getimage('products', $product->id);
+        $product->link = 'products/' . $product->id;
+        $class = ($i++ % 3 == 0 ? 'clear' : '');
+        $items[] = array(
+            'data' => l('<div class="image"><div class="all-prods">' . theme('image', array('path' => printconnect_getimage('products', $product->id))) . '</div></div><h2>' . $product->name . '</h2>' . $product->shortDecription . '<hr /><div>' . t('from_price') . ' ' . theme('price', array('value' => $product->sellPrice)) . '</div><div style="color:#009BDA">' . t('Products and possibilities') . '</div>', 'products/' . $product->id, array('html' => true, 'title' => $product->name)),
+            'class' => array($class),
+        );
+      }
+
+      $build['products']['list']['#markup'] = theme('item_list', array('items' => $items, 'attributes' => array('class' => array('clearfix'))));
+      return $build;
+
+//return theme('pcproducts_all_products', array('products' => $items));
+    case 'overview':
+      global $pcproductsProductId;
+      $productId = array_shift($args);
+      $pcproductsProductId = $productId;
+      $product = Factory::Get($productId);
+      $customer = CustomersFactory::Current();
+      if (module_exists('pcsubtitle')) {
+        if ($customer) {
+          drupal_set_title_prefix(t('@firstName, you selected', array('@firstName' => $customer->firstName)));
+        } else {
+          drupal_set_title_prefix(t('You selected'));
+        }
+        drupal_set_subtitle($product->baseline);
+      }
+
+      drupal_set_title($product->name);
+      $typeItems = Configurations\Factory::GetTypeItems($productId);
+      foreach ($typeItems as $typeItem) {
+        $typeItem->image = _pcproducts_getimage('items', $typeItem->id);
+        $typeItem->link = "products/$productId/$typeItem->id";
+        $typeItem->title = $product->name . ' ' . $typeItem->name;
+      }
+
+      drupal_add_html_head_link(array('rel' => 'canonical', 'href' => url('products/' . $productId)), TRUE);
+      $content['products'] = array(
+          '#type' => 'container',
+          '#title' => t('Select format'),
+          '#attributes' => array('class' => array('config-1', 'clearfix')),
+      );
+      $items = array();
+      $i = 0;
+      foreach ($typeItems as $typeItem) {
+        $productContent = theme('image', array('path' => $typeItem->image, 'alt' => $typeItem->title, 'title' => $typeItem->title));
+        $productContent .= '<div class="title font">' . $typeItem->name . '</div>';
+        if ($typeItem->detail != '') {
+          $productContent .= '<div style="text-align:center;"> (' . $typeItem->detail . ') </div>';
+        }
+        $items[] = array(
+            'data' => l($productContent, $typeItem->link, array('html' => TRUE, 'alt' => $typeItem->title, 'title' => $typeItem->title)),
+        );
+      }
+
+      $content['products']['list'] = array(
+          '#markup' => theme('item_list', array('items' => $items, 'attributes' => array('class' => array('clearfix')))),
+      );
+
+      return $content;
+      return theme('pcproducts_config_1', array('typeItems' => $typeItems));
+    case 'config':
+      $productId = array_shift($args);
+      $items = array_shift($args);
+      if ($items) {
+        $items = explode(',', $items);
+      } else {
+        $items = array();
+      }
+      $options = array_shift($args);
+      if ($options) {
+        $options = explode(',', $options);
+      } else {
+        $options = array();
+      }
+      $qty = array_shift($args);
+      return drupal_get_form('pcproducts_product_form', $productId, $items, $options, $qty);
+    case 'edit':
+  }
+}
+
+function pcproducts_product_form($form, &$form_state, $productId, $items, $options = array(), $qty, $item = FALSE) {
+  global $pcproductsProductId;
+  global $pcproductsProductItems;
+  global $user;
+  global $language;
+  if (is_numeric($productId)) {
+    drupal_not_found();
+    exit;
+  }
+
+  $form_state['storage']['item'] = $item;
+
+  if ($item) {
+    $vatPercentage = $item->vat;
+  } else {
+    $vatPercentage = $_SESSION['shop_vat'];
+  }
+
+
+  if (isset($form_state['values']['groups'])) {
+    $items = array_values($form_state['values']['groups']);
+  }
+
+  if (isset($form_state['values']['options'])) {
+    $options = array();
+    foreach ($form_state['values']['options'] as $key => $value) {
+      if ($value) {
+        $options[] = $key;
+      }
+    }
+  }
+
+  $defaults = Configurations\Factory::GetDefaults($productId, $items);
+  $defaults->EnsureLoaded();
+  $priceGroupId = $defaults->priceGroupId;
+  $diff = array_diff($defaults->toolboxItems, $items);
+  if (count($diff)) {
+    $items = $defaults->toolboxItems;
+  }
+  if (!$qty) {
+    $qty = $defaults->quantity;
+  }
+
+  $pcproductsProductId = $productId;
+  $pcproductsProductItems = $items;
+  if (isset($form_state['values']['quantity'])) {
+    $qty = $form_state['values']['quantity'];
+  }
+
+  if (isset($form_state['values']['options'])) {
+    foreach ($form_state['values']['options'] as $key => $value) {
+      if ($value) {
+        $options[$key] = $value;
+      }
+    }
+  }
+
+  if ($user->uid) {
+    $form['link'] = array(
+        '#type' => 'item',
+        '#title' => t('Direct link'),
+        '#markup' => url('products/' . $productId . '/' . implode(',', $items) . '/' . implode(',', $options) . '/' . $qty, array('absolute' => TRUE)),
+    );
+  }
+
+  $product = Factory::Get($productId);
+  $customer = CustomersFactory::Current();
+  $tree = Configurations\Factory::GetTree($productId, $items);
+  $toolboxItems = array();
+  $firstConfigId = $items[0];
+  $firstConfigName = FALSE;
+  drupal_add_html_head_link(array('rel' => 'canonical', 'href' => url('products/' . $productId . '/' . $firstConfigId)), TRUE);
+  foreach ($tree->items as $group) {
+    if (count((array) $group->data) > 1) {
+      $form['groups'][$group->id] = array(
+          '#type' => 'select',
+          '#title' => $group->name,
+          '#group' => $group->id,
+      );
+
+      $form['tree']['#value'][$group->id]['name'] = $group->name;
+      $defaultValue = false;
+      foreach ($group->data as $item) {
+        if ($item->id == $firstConfigId) {
+          $firstConfigName = $item->name;
+        }
+        if (in_array($item->id, $items)) {
+          $defaultValue = $item->id;
+        }
+        $toolboxItems[$item->id]['name'] = $item->name;
+        $toolboxItems[$item->id]['image'] = _pcproducts_getimage('items', $item->id);
+        $form['tree']['#value'][$group->id]['items'][$item->id]['name'] = $item->name;
+        $form['tree']['#value'][$group->id]['items'][$item->id]['image'] = _pcproducts_getimage('items', $item->id);
+        $form['groups'][$group->id]['#options'][$item->id] = $item->name;
+      }
+      $form['groups'][$group->id]['#default_value'] = $defaultValue;
+    } else {
+      $data = (array) $group->data;
+      $item = array_shift($data);
+      $form['groups'][$group->id] = array(
+          '#type' => 'item',
+          '#title' => $group->name,
+          '#markup' => '<div>' . $item->name . '</div>',
+      );
+      if ($item->id == $firstConfigId) {
+        $firstConfigName = $item->name;
+      }
+    }
+  }
+
+  drupal_set_title($product->name . ' - ' . $firstConfigName);
+  if (module_exists('pcsubtitle')) {
+    drupal_set_subtitle(t('Pick the amount that fits your needs'));
+    if ($customer) {
+      drupal_set_title_prefix(t('@firstName, you selected', array('@firstName' => $customer->firstName)) . ' ');
+    } else {
+      drupal_set_title_prefix(t('You selected') . ' ');
+    }
+  }
+
+  $form['toolboxItems']['#value'] = $toolboxItems;
+  $price = '';
+  $pricePerPiece = '';
+  $subtotal = 0;
+  $customQty = TRUE;
+  $base = FALSE;
+  $pricings = Pricing\Factory::GetPricings($priceGroupId);
+  $i = 0;
+  $previous = FALSE;
+  $listHasQuantity = FALSE;
+  foreach ($pricings as $pricing) {
+    if (($pricing->quantity > $qty) && !$base) {
+      $base = $previous;
+    }
+
+    if ($pricing->quantity == $qty) {
+      $listHasQuantity = TRUE;
+    }
+
+    $pricingQuantity = (string) $pricing->quantity;
+    $form['quantity'][$pricingQuantity]['radio'] = array(
+        '#type' => 'radio',
+        '#name' => 'quantity',
+        '#default_value' => $qty,
+        '#return_value' => $pricing->quantity,
+        '#parents' => array('quantity'),
+    );
+
+    if ($pricing->HasProperty('promoPrice') && $pricing->promoPrice != $pricing->sellPrice) {
+      $sellPrice = $pricing->promoPrice;
+      $form['quantity'][$pricingQuantity]['promo'] = array(
+          '#value' => $pricing->sellPrice,
+      );
+    } else {
+      $sellPrice = $pricing->sellPrice;
+    }
+
+    $form['quantity'][$pricingQuantity]['price'] = array(
+        '#value' => $sellPrice,
+    );
+    $form['quantity'][$pricingQuantity]['priceperpiece'] = array(
+        '#value' => $sellPrice / $pricing->quantity,
+    );
+
+    $form['price'][$pricingQuantity] = array(
+        '#type' => 'hidden',
+        '#value' => $sellPrice,
+    );
+
+    $ppp = $sellPrice / $pricing->quantity;
+    if ($base) {
+      $bpp = $base->sellPrice / $base->quantity;
+      $save = ($bpp - $ppp) / $bpp * 100;
+      if ($save >= 99) {
+        $save = 99;
+      }
+    } else {
+      $save = 0;
+    }
+    $form['quantity'][$pricingQuantity]['save'] = array(
+        '#value' => $save,
+    );
+    $form['quantity'][$pricingQuantity]['extra'] = array(
+        '#markup' => '',
+    );
+    $i++;
+    $previous = $pricing;
+  }
+  $form['custom_quantity'] = array(
+      '#type' => 'textfield',
+      '#size' => 10,
+      '#maxlength' => 6,
+      '#default_value' => '',
+  );
+
+  $form['quantity']['custom']['radio'] = array(
+      '#type' => 'radio',
+      '#name' => 'quantity',
+      '#parents' => array('quantity'),
+      '#id' => 'quantity-custom-radio',
+      '#default_value' => $qty,
+      '#return_value' => 0,
+  );
+  $form['quantity']['custom']['price'] = array(
+      '#type' => 'item',
+  );
+  $form['quantity']['custom']['priceperpiece'] = array(
+      '#type' => 'item',
+  );
+  if ($qty) {
+    $price = Pricing\Factory::GetSellPrice($priceGroupId, $qty);
+    $subtotal += $price;
+  }
+
+  if (!$listHasQuantity) {
+    $form_state['values']['custom_quantity'] = $qty;
+  }
+
+  if (isset($form_state['values']['custom_quantity']) && $form_state['values']['custom_quantity'] > 0) {
+    $customQty = $form_state['values']['custom_quantity'];
+    $price = Pricing\Factory::GetSellPrice($priceGroupId, $customQty);
+    $form['custom_quantity']['#default_value'] = $customQty;
+    $form['custom_quantity']['#value'] = $customQty;
+    $form['quantity']['custom']['price']['#value'] = $price;
+    $form['quantity']['custom']['priceperpiece']['#value'] = $price / $customQty;
+    $form['quantity']['custom']['radio']['#return_value'] = $customQty;
+    $form['price'][$customQty] = array(
+        '#type' => 'hidden',
+        '#value' => $price,
+    );
+  } else {
+    hide($form['quantity']['custom']);
+  }
+
+  $rows = array();
+  foreach (Options\Factory::GetOptions($product->id, $items) as $option) {
+    if ($option->active) {
+      if ($qty) {
+        $price = Options\Factory::GetPrice($option, $qty);
+        $rows[$option->id] = $option->name . ' ( + ' . theme('price', array('value' => $price)) . ')';
+        if (in_array($option->id, $options)) {
+          $subtotal += $price;
+        }
+      } else {
+        $rows[$option->id] = $option->name;
+      }
+
+      $form['option'][$option->id]['start'] = array(
+          '#type' => 'hidden',
+          '#value' => $option->startSell,
+      );
+      $form['option'][$option->id]['unit'] = array(
+          '#type' => 'hidden',
+          '#value' => $option->unit,
+      );
+      $form['option'][$option->id]['price'] = array(
+          '#type' => 'hidden',
+          '#value' => $option->unitSell,
+      );
+    }
+  }
+
+  if (count($rows)) {
+    $form['options'] = array(
+        '#type' => 'checkboxes',
+        '#title' => t('Additional finishing'),
+        '#default_value' => $options,
+        '#options' => $rows,
+    );
+  }
+
+  $form['subtotal'] = array(
+      '#type' => 'hidden',
+      '#value' => $subtotal,
+  );
+  $vat = Functions::Round($subtotal * $vatPercentage);
+  $form['vatpercentage'] = array(
+      '#type' => 'hidden',
+      '#value' => $vatPercentage,
+  );
+
+  $form['vat'] = array(
+      '#type' => 'hidden',
+      '#value' => $vat,
+  );
+  $total = $subtotal + $vat;
+  $form['total'] = array(
+      '#type' => 'hidden',
+      '#value' => $total,
+  );
+
+  $form['relatedProducts'] = array();
+  $form['other']['#value'] = array();
+  $i = 0;
+  $form['other'] = array(
+      '#type' => 'container',
+      '#attributes' => array('class' => array('other', 'clearfix')),
+  );
+  $form['other']['title'] = array(
+      '#prefix' => '<h3>',
+      '#suffix' => '</h3>',
+      '#markup' => t('We also make'),
+  );
+
+  foreach (pcproducts_otherproducts($productId) as $product) {
+    $form['other'][$product->id] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('item')),
+    );
+    if ($i == 0) {
+      $form['other'][$product->id]['#attributes']['class'][] = 'first';
+    }
+    $form['other'][$product->id]['image'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('image')),
+    );
+    $form['other'][$product->id]['image']['content'] = array(
+        '#markup' => theme('image', array('path' => printconnect_getimage('products', $product->id))),
+    );
+    $form['other'][$product->id]['product'] = array(
+        '#prefix' => '<h3>',
+        '#suffix' => '</h3>',
+        '#markup' => $product->name,
+    );
+    $form['other'][$product->id]['price'] = array(
+        '#markup' => theme('price', array('value' => $product->sellPrice)) . '&nbsp;' . t('for @qty pcs.', array('@qty' => $product->quantity)),
+    );
+    $form['other'][$product->id]['link'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('a-icon')),
+    );
+    $form['other'][$product->id]['link']['content'] = array(
+        '#markup' => l($product->name . ' ' . t('Ordering'), 'products/' . $product->id),
+    );
+
+    $i++;
+    if ($i >= 3) {
+      break;
+    }
+  }
+  $shipsIn = FALSE;
+  $deliveryDate = FALSE;
+  $shipping = printconnect\Products\Shipping\Factory::Get($productId, $items, $options, $qty);
+  $firstDeadline = $shipping->items[0];
+  $deadlineDate = $firstDeadline->deadlineDate;
+  if (isset($deadlineDate)) {
+    $deadlineDate = strtotime($deadlineDate);
+  }
+  $shippingDate = $firstDeadline->shippingDate;
+  if (isset($shippingDate)) {
+    $datetime1 = new DateTime('now');
+    $datetime2 = new DateTime($shippingDate);
+    $shippingDate = strtotime($shippingDate);
+  }
+  $deliveryDate = $firstDeadline->deliveryDate;
+  if (isset($deliveryDate)) {
+    $deliveryDate = strtotime($deliveryDate);
+  }
+
+  if (isset($deadlineDate) && isset($shippingDate)) {
+    $dt1 = new DateTime(date('Y-m-d', $deadlineDate));
+    $dt2 = new DateTime(date('Y-m-d', $shippingDate));
+    $shipsIn = $dt1->diff($dt2);
+    $shipsIn = $shipsIn->days;
+  }
+
+  if ($deliveryDate) {
+    $form['shipping'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('dates')),
+    );
+
+    $form['shipping']['deadline'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('deadline')),
+    );
+
+    $form['shipping']['deadline']['icon'] = array(
+        '#markup' => theme('image', array('path' => drupal_get_path('module', 'pcproducts') . '/images/shipping/pt_icon_1.png')),
+    );
+    $form['shipping']['deadline']['date'] = array(
+        '#type' => 'item',
+        '#title' => t('Supply before'),
+        '#markup' => format_date($deadlineDate),
+    );
+    $form['shipping']['shipping'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('shipping')),
+    );
+    $form['shipping']['shipping']['icon'] = array(
+        '#markup' => theme('image', array('path' => drupal_get_path('module', 'pcproducts') . '/images/shipping/pt_icon_2.png')),
+    );
+    $form['shipping']['shipping']['date'] = array(
+        '#type' => 'item',
+        '#title' => t('Your order is ready for shipment'),
+        '#markup' => format_date($shippingDate, 'short'),
+    );
+    $form['shipping']['delivery'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('delivery')),
+    );
+    $form['shipping']['delivery']['icon'] = array(
+        '#markup' => theme('image', array('path' => drupal_get_path('module', 'pcproducts') . '/images/shipping/pt_icon_3.png')),
+    );
+    $form['shipping']['delivery']['date'] = array(
+        '#type' => 'item',
+        '#title' => t('Expected delivery'),
+        '#markup' => format_date($deliveryDate, 'short'),
+    );
+    if ($shipsIn > 3) {
+      $shipsIn = '';
+    }
+    $form['shipping']['image'] = array(
+        '#markup' => theme('image', array('path' => path_to_theme() . '/images/shipping/' . $language->language . '_' . $shipsIn . '.png')),
+    );
+  }
+
+  $rows = array();
+  foreach ($shipping->items as $deadline) {
+    $rows[] = array(
+        array(
+            'class' => array('supply'),
+            'data' => t('Supply before') . ': ' . \printconnect\Drupal\Functions::FormatDate(strtotime($deadline->deadlineDate), 'custom', 'l H:i'),
+        ),
+        array(
+            'class' => array('shipping'),
+            'data' => t('Shipping_deadline') . ': ' . format_date(strtotime($deadline->shippingDate), 'custom', 'l'),
+        ),
+        array(
+            'class' => array('delivery'),
+            'data' => t('Expected delivery') . ': ' . format_date(strtotime($deadline->deliveryDate), 'custom', 'l'),
+        ),
+    );
+  }
+
+  $form['deadlines'] = array(
+      '#type' => 'container',
+      '#attributes' => array('class' => array('deadlines')),
+  );
+  $form['deadlines']['link'] = array(
+      '#markup' => l(t('Need to know more?'), '', array('fragment' => 'deadlinestooltip', 'external' => TRUE)),
+  );
+  $form['deadlines']['tooltip'] = array(
+      '#type' => 'container',
+      '#attributes' => array('style' => array('display:none')),
+  );
+  $form['deadlines']['tooltip']['content'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Supply times'),
+      '#id' => 'deadlinestooltip',
+      'text' => array('#markup' => t('printconnect is fast blabla...')),
+      'table' => array('#markup' => theme('table', array('rows' => $rows))),
+      'notice' => array('#markup' => t('Depending on your delivery address...')),
+  );
+  $form['priceGroupId'] = array(
+      '#type' => 'hidden',
+      '#value' => $priceGroupId,
+  );
+
+  $form_state['storage']['priceGroupId'] = $priceGroupId;
+  $form_state['storage']['items'] = $items;
+  $form_state['storage']['options'] = $options;
+  $form_state['storage']['productId'] = $productId;
+  $form_state['storage']['qty'] = $qty;
+
+  $form['image'] = array(
+      '#value' => _pcproducts_getimage('products', $productId),
+  );
+
+  $form['#cache'] = TRUE;
+  $form_state['cache'] = TRUE;
+  $form['#tree'] = TRUE;
+
+  return $form;
+}
+
+function pcproducts_product_form_validate($form, &$form_state) {
+  if ($form_state['input']['op'] == 'ajax') {
+    $form_state['rebuild'] = TRUE;
+  } else {
+    $priceGroupId = $form_state['values']['priceGroupId'];
+    $qty = $form_state['values']['quantity'];
+
+    if (!isset($qty) || empty($qty) || $qty <= 0) {
+      form_set_error('', t('Given quantity is not greater than 0!'));
+    }
+  }
+}
+
+function pcproducts_product_form_submit($form, &$form_state) {
+  drupal_set_message('submit');
+}
+
+function pcproducts_block_info() {
+  $blocks['productinfo'] = array(
+      'info' => t('Product info'),
+      'cache' => DRUPAL_CACHE_PER_PAGE,
+  );
+  $blocks['templates'] = array(
+      'info' => t('Product templates'),
+  );
+  $blocks['alphalist'] = array(
+      'info' => t('Products alphanumeric list'),
+      'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+  $blocks['list'] = array(
+      'info' => t('Products list'),
+      'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+  $blocks['top'] = array(
+      'info' => t('Products top'),
+      'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+  $blocks['upsell'] = array(
+      'info' => t('Products upselling'),
+  );
+  $blocks['other'] = array(
+      'info' => t('Products others also bought'),
+  );
+  $blocks['calculator'] = array(
+      'info' => t('Products calculator'),
+      'cache' => DRUPAL_NO_CACHE,
+  );
+  return $blocks;
+}
+
+function pcproducts_block_view($delta = '') {
+  global $pcproductsProductId;
+  global $pcproductsProductItems;
+  global $language;
+
+  $block = array();
+  $args = arg();
+
+  switch ($delta) {
+    case 'alphalist':
+      $list = _pcproducts_alpha_array();
+      $block['title'] = t('All products');
+      $i = 0;
+      $col = 0;
+      foreach ($list as $key => $products) {
+        if ($i == 0) {
+          $block['content'][$col] = array(
+              '#type' => 'container',
+              '#attributes' => array('class' => array('col')),
+          );
+        }
+        $block['content'][$col][$key]['title'] = array('#markup' => '<div class="initial-letter">' . $key . '</div>');
+        $block['content'][$col][$key]['list'] = array('#markup' => theme('item_list', array('items' => $products)));
+        $i+=count($products);
+        $i++;
+        if ($i >= 15) {
+          $col++;
+          $i = 0;
+        }
+      }
+      break;
+    case 'list':
+      $products = _pcproducts_activeProducts();
+      $block['title'] = t('All products');
+      usort($products, function ($a, $b) {
+                return strcmp($a->name, $b->name);
+              });
+      foreach ($products as $product) {
+        $items[] = l($product->name, 'products/' . $product->id);
+      }
+
+      $block['content']['products']['list'] = array('#markup' => theme('item_list', array('items' => $items, 'attributes' => array('class' => array('menu')))));
+      return $block;
+      break;
+    case 'top':
+      $products = Factory::GetTop();
+      $items = array();
+      $i = 0;
+      foreach ($products as $product) {
+        $items[] = l($product->name, 'products/' . $product->id);
+        if ($i++ >= 9) {
+          break;
+        }
+      }
+      $block['title'] = t('Top products');
+      $block['content'] = theme('item_list', array('items' => $items, 'type' => 'ol'));
+      return $block;
+      break;
+    case 'other':
+
+      if (arg(0) == 'products' && arg(1)) {
+        $productId = arg(1);
+        $products = pcproducts_otherproducts($productId);
+      } else {
+        $products = _pcproducts_activeproducts();
+      }
+
+      $block['title'] = t('We also make');
+      $others = array();
+      $i = 0;
+      foreach ($products as $product) {
+        $build = array();
+        $build['image'] = array(
+            '#type' => 'container',
+            '#attributes' => array('class' => array('image')),
+        );
+        $build['image']['content'] = array(
+            '#markup' => theme('image', array('path' => printconnect_getimage('products', $product->id))),
+        );
+        $build['product'] = array(
+            '#prefix' => '<h3>',
+            '#suffix' => '</h3>',
+            '#markup' => $product->name,
+        );
+
+//TEST DP
+        if ($_SERVER['HTTP_HOST'] != 'www.printconcept.es') {
+          $build['price'] = array(
+              '#markup' => theme('price', array('value' => $product->sellPrice)) . '&nbsp;' . t('for @qty pcs.', array('@qty' => $product->quantity)),
+          );
+        }
+        $build['link'] = array(
+            '#type' => 'container',
+            '#attributes' => array('class' => array('a-icon')),
+        );
+        $build['link']['content'] = array(
+            '#markup' => l($product->name . ' ' . t('Ordering'), 'products/' . $product->id),
+        );
+
+        $others[] = drupal_render($build);
+        $i++;
+
+        if ($i >= 3) {
+          break;
+        }
+      }
+
+      $block['content']['list'] = array(
+          '#attributes' => array('class' => array('other')),
+          '#markup' => theme('item_list', array('items' => $others, 'attributes' => array('class' => array('clearfix')))),
+      );
+
+      return $block;
+      break;
+    case 'upsell':
+      $products = _pcproducts_activeproducts();
+      $items = array();
+      $i = 0;
+      foreach ($products as $product) {
+        $linkContent = theme('image', array('path' => printconnect_getimage('products', $product->id)));
+        $linkContent .= '<h3>' . $product->name . '</h3>';
+        $linkContent .= '<div>' . theme('price', array('value' => $product->sellPrice)) . '&nbsp;' . t('for @qty pcs.', array('@qty' => $product->quantity)) . '</div>';
+        $content = array(
+            '#type' => 'container',
+            '#attributes' => array('class' => array('block')),
+            'link' => array(
+                '#markup' => l($linkContent, 'products/' . $product->id, array('html' => TRUE)),
+            )
+        );
+        $items[] = drupal_render($content);
+        $i++;
+        if ($i >= 3) {
+          break;
+        }
+      }
+
+      $block['content']['upsell'] = array(
+          '#type' => 'fieldset',
+          '#title' => t('Also buy'),
+      );
+
+      $block['content']['upsell']['list'] = array(
+          '#type' => 'container',
+          '#attributes' => array(),
+      );
+      foreach ($items as $item) {
+        $block['content']['upsell']['list'][] = array('#markup' => $item);
+      }
+      return $block;
+      break;
+    case 'productinfo':
+      if ($args[0] == 'products' && count($args) > 1) {
+        $productId = arg(1);
+        $product = Factory::Get($productId);
+        $block['title'] = $product->name;
+        $block['content']['info']['image']['#markup'] = theme('image', array('path' => _pcproducts_getimage('products', $product->id)));
+        $block['content']['info']['short'] = array(
+            '#type' => 'container',
+            '#attributes' => array('class' => array('short-description')),
+            'content' => array(
+                '#markup' => $product->shortDescription,
+            ),
+        );
+        $block['content']['info']['long'] = array(
+            '#type' => 'container',
+            '#attributes' => array('class' => array('long-description')),
+            'content' => array(
+                '#markup' => html_entity_decode($product->longDescription),
+            ),
+        );
+      }
+      return $block;
+      break;
+
+    case 'templates':
+      $args = arg();
+      if (variable_get('pc_flow', '') == 'printconcept') {
+        $steps = 3;
+      } else {
+        $steps = 2;
+      }
+
+      if ($args[0] == 'products' && count($args) >= $steps) {
+
+        $block['title'] = t('How to prepare your printjob');
+        $block['content']['placeholder'] = array(
+            '#markup' => '<div id="templates" style="display:none;"><!-- placeholder --></div>',
+        );
+      }
+      return $block;
+
+      if (count($items)) {
+        $templates = Templates\Factory::GetTemplates($product->id, $items);
+        $templates->EnsureLoaded();
+        if (count($templates->items)) {
+          $template = $templates->items[0];
+          $templates = array();
+          $templateImages = $template->templateImages;
+          if ($templateImages) {
+            foreach ($templateImages as $templateImage) {
+              if ($templateImage->type == 'template' /* && $templateImage->language == $language->locale */) {
+                $file = $templateImage->file;
+                $templates[] = $file;
+              }
+            }
+          }
+
+          if ($template) {
+            $block['content']['templates'] = array(
+                '#type' => 'container',
+                '#title' => t('How to prepare your printjob'),
+            );
+
+            $block['content']['templates']['text'] = array(
+                '#markup' => t('Finalizing your design? Take into account these requirements:'),
+            );
+
+            $rows = array();
+            $rows[] = array('data' => array(t('Size'), $template->size), 'no_striping' => TRUE);
+            $rows[] = array('data' => array(t('Bleed'), $template->bleed), 'no_striping' => TRUE);
+            $rows[] = array('data' => array(t('Color'), $template->colorMode), 'no_striping' => TRUE);
+            $rows[] = array('data' => array(t('Resolution'), $template->resolution), 'no_striping' => TRUE);
+            $block['content']['templates']['table'] = array(
+                '#markup' => theme('table', array('rows' => $rows, 'attributes' => array('class' => array('templates-table')))),
+            );
+            $block['content']['templates']['link']['#markup'] = l(t('Read more'), 'experttips');
+            if (count($templates)) {
+              $block['content']['templates']['templates'] = array(
+                  '#type' => 'container',
+                  '#attributes' => array('class' => array('templates')),
+              );
+              $block['content']['templates']['templates']['title'] = array(
+                  '#markup' => t('Templates'),
+                  '#prefix' => '<h3>',
+                  '#suffix' => '</h3>',
+              );
+              $block['content']['templates']['templates']['text'] = array(
+                  '#markup' => t('Download your templates here'),
+                  '#prefix' => '<div style="width:80%; margin-bottom:10px">',
+                  '#suffix' => '</div>',
+              );
+              $items = array();
+              foreach ($templates as $template) {
+                $items[] = theme('pcfilesdownloadlink', array('file' => $template));
+              }
+
+              $block['content']['templates']['templates']['items']['#markup'] = theme('item_list', array('items' => $items));
+            }
+          }
+        }
+      }
+      break;
+    case 'shipping':
+      break;
+    case 'calculator':
+      $block['title'] = t('Calculator');
+      $block['content'] = drupal_get_form('pcproducts_calculator_form');
+      break;
+  }
+
+  return $block;
+}
+
+function _pcproducts_getimage($type, $id) {
+  return printconnect_getimage($type, $id);
+}
+
+function pcproducts_getimagepath() {
+  return array(
+      'products' => array(
+          'module' => 'pcproducts',
+          'path' => 'products',
+          'extension' => 'png',
+      ),
+      'items' => array(
+          'module' => 'pcproducts',
+          'path' => 'items',
+          'extension' => 'png',
+      )
+  );
+}
+
+function pcproducts_js_callback() {
+  $args = func_get_args();
+  $items = array();
+  $subtotal = 0;
+  $priceGroupId = $_GET['priceGroupId'];
+  $qty = $_GET['custom_quantity'];
+  $options = array_shift($args);
+  if ($options) {
+    $options = explode(',', $options);
+  } else {
+    $options = array();
+  }
+
+  try {
+    $productPrice = Pricing\Factory::GetSellPrice($priceGroupId, $qty);
+    print json_encode(array(
+                'price' => (float) $productPrice,
+                'priceperpiece' => $productPrice / $qty,
+                'quantity' => (float) $qty,
+            ));
+  } catch (\Exception $ex) {
+    print json_encode(array(
+                'price' => 0,
+                'priceperpiece' => 0,
+                'quantity' => 0,
+            ));
+  }
+
+  exit;
+}
+
+function _pcproducts_activeproducts($all = FALSE) {
+  global $user;
+  $allProducts = _pcproducts_array($all);
+  $order = explode(',', variable_get('pcproducts_order', ''));
+  $result = array();
+  foreach ($order as $productId) {
+    if (isset($allProducts[$productId])) {
+      $product = $allProducts[$productId];
+      $result[] = $product;
+      unset($allProducts[$productId]);
+    }
+  }
+
+  foreach ($allProducts as $productId => $product) {
+    if ($product->active) {
+      $result[] = $product;
+    }
+  }
+
+  return $result;
+}
+
+function _pcproducts_array($all = FALSE) {
+  $products = Factory::GetAll(FALSE, FALSE, $all);
+  $result = array();
+  foreach ($products as $product) {
+    $result[$product->id] = $product;
+  }
+  return $result;
+}
+
+function pcproducts_otherproducts($productId) {
+  $otherProducts = Factory::GetOAB($productId);
+  $result = array();
+  $allProducts = _pcproducts_array();
+  foreach ($otherProducts as $product) {
+    if ($product->id != $productId && isset($allProducts[$product->id])) {
+      $result[] = $allProducts[$product->id];
+    }
+  }
+
+  return $result;
+}
+
+function pcproducts_pcsitemap() {
+  $items['pcproducts'] = array(
+      '#title' => t('Products'),
+      '#link' => 'products',
+      '#weight' => 50,
+  );
+  $products = Factory::GetAll();
+  foreach ($products as $product) {
+    if ($product->active) {
+      $items['pcproducts'][$product->id] = array(
+          '#title' => $product->name,
+          '#link' => 'products/' . $product->id,
+      );
+
+      if (variable_get('pcproducts_overviewenabled', false)) {
+        $typeItems = Configurations\Factory::GetTypeItems($product->id);
+        foreach ($typeItems as $typeItem) {
+          $items['pcproducts'][$product->id][$typeItem->id] = array(
+              '#title' => $typeItem->name,
+              '#link' => 'products/' . $product->id . '/' . $typeItem->id,
+          );
+        }
+      }
+    }
+  }
+
+  return $items;
+}
+
+function pcproducts_preprocess_html(&$vars) {
+  $arg = arg();
+  if (arg(0) == 'products' && count(arg()) == 2) {
+    $productId = arg(1);
+    if (is_numeric($productId)) {
+      $product = Factory::Get($productId);
+      $vars['head_title'] = t('@product, ordering @product', array('@product' => $product->name)) . ' | ' . check_plain(variable_get('site_name', 'Drupal'));
+    }
+  }
+}
+
+function pcproducts_flush_caches() {
+}
+
+function pcproducts_cron() {
+  _pcproducts_rebuildaliasses();
+}
+
+function pcproducts_calculator_form($form, &$form_state) {
+  $products = Factory::GetAll();
+  $items = array();
+  foreach ($products as $product) {
+    $items[$product->id] = $product->name;
+  }
+
+  $form['about'] = array(
+      '#type' => 'item',
+      '#markup' => t('About product calculator'),
+  );
+
+  $form['product'] = array(
+      '#type' => 'select',
+      '#options' => $items,
+      '#default_value' => 0,
+      '#empty_option' => t('Choose a product'),
+      '#empty_value' => 0,
+      '#ajax' => array(
+          'callback' => 'pcproducts_calculator_form_callback',
+          'wrapper' => 'pcproducts-calculator-form',
+          'method' => 'replace',
+          'effect' => 'fade',
+          'progress' => array(
+              'message' => NULL,
+              'type' => NULL,
+          ),
+      ),
+      '#attributes' => array('class' => array('product')),
+  );
+  $form['type'] = array(
+      '#id' => 'edit-type',
+      '#type' => 'select',
+      '#options' => array(),
+      '#default_value' => 0,
+      '#empty_option' => t('Choose size or shape'),
+      '#empty_value' => 0,
+      '#disabled' => true,
+      '#attributes' => array('class' => array('type')),
+  );
+  if (isset($form_state['values']['product'])) {
+    $productId = $form_state['values']['product'];
+    $items = array();
+    if ($productId) {
+      $typeItems = Configurations\Factory::GetTypeItems($productId);
+      foreach ($typeItems as $item) {
+        $detail = $item->detail;
+        $text = $item->name;
+        if ($detail) {
+          $text .= ' (' . $detail . ')';
+        }
+        $items[$item->id] = $text;
+      };
+
+      $form['type']['#options'] = $items;
+      $form['type']['#disabled'] = false;
+    }
+  }
+
+  $form['calculate'] = array(
+      '#type' => 'submit',
+      '#value' => t('Calculate'),
+      '#attributes' => array('class' => array('cart', 'button')),
+  );
+
+  $form['#cache'] = TRUE;
+  $form_state['cache'] = TRUE;
+  $form['#id'] = 'pcproducts-calculator-form';
+  return $form;
+}
+
+function pcproducts_calculator_form_callback(&$form, &$form_state) {
+  return $form;
+}
+
+function pcproducts_calculator_form_submit(&$form, &$form_state) {
+  $productId = $form_state['values']['product'];
+  if ($productId) {
+    $productId = $form_state['values']['product'];
+    $typeId = $form_state['values']['type'];
+    if ($typeId) {
+      drupal_goto('products/' . $productId . '/' . $typeId);
+    }
+    drupal_goto('products/' . $productId);
+  }
+  drupal_goto('products');
+}
+
+function _pcproducts_rebuildaliasses() {
+
+  $languages = \printconnect\Drupal\Functions::GetLanguages();
+
+  foreach ($languages as $language) {
+
+    $products = Factory::GetAll($language);
+
+    foreach ($products as $product) {
+      $path = path_load(array(
+          'source' => "products/$product->id",
+          'language' => $language->language
+              ));
+      $path['source'] = "products/$product->id";
+      $path['alias'] = _pcproducts_url_name(t('Products', array(), array('langcode' => $language->language))) . '/' . _pcproducts_url_name($product->name);
+      $path['language'] = $language->language;
+      path_save($path);
+      if (variable_get('pc_flow', '') == 'printconcept') {
+        $typeItems = Configurations\Factory::GetTypeItems($product->id);
+        foreach ($typeItems as $typeItem) {
+          $typeItem = Toolbox\Factory::Get($typeItem->id, $language);
+          $typeItem->EnsureLoaded();
+          $path = path_load(array(
+              'source' => "products/$product->id/$typeItem->id",
+              'language' => $language->language
+                  ));
+
+          $path['source'] = "products/$product->id/$typeItem->id";
+          $path['alias'] = _pcproducts_url_name(t('Products', array(), array('langcode' => $language->language))) . '/' . _pcproducts_url_name($product->name) . '/' . _pcproducts_url_name($typeItem->name);
+          $path['language'] = $language->language;
+          path_save($path);
+        }
+      }
+    }
+
+    $path = path_load(array(
+        'source' => "products",
+        'language' => $language->language
+            ));
+
+    $path['source'] = "products";
+    $path['alias'] = _pcproducts_url_name(t('Products', array(), array('langcode' => $language->language)));
+    $path['language'] = $language->language;
+    path_save($path);
+    drupal_set_message(t('Product url aliasses rebuilt for ') . $language->language);
+  }
+}
+
+function _pcproducts_url_name($value, $separator = '-') {
+  $pattern = '/[^a-zA-Z0-9]+/';
+  $output = strtolower(trim($value));
+  $output = str_replace(array('é', 'è', 'ë', 'ê', 'à', 'á', 'â', 'ó', 'ô', 'í'), array('e', 'e', 'e', 'e', 'a', 'a', 'a', 'o', 'o', 'i'), $output);
+  $output = preg_replace($pattern, $separator, $output);
+  return $output;
+}
+
+function _pcproducts_getproductname($id) {
+  if (is_numeric($id)) {
+    printconnect_ensureinitialized();
+    $product = \printconnect\Products\Factory::Get($id);
+    return $product->name;
+  }
+}
+
+function _pcproducts_getitemname($id) {
+  if (is_numeric($id)) {
+    printconnect_ensureinitialized();
+    $item = \printconnect\Products\Toolbox\Factory::Get($id);
+    return $item->name;
+  }
+}
+
+function pcproducts_filter_info() {
+  $filters = array();
+  $filters['pcproducts'] = array(
+      'title' => 'Product variables',
+      'description' => 'Print product variables ex. price, name...',
+      'process callback' => 'pcproducts_filter',
+      'tips callback' => '_pcproducts_filter_tips',
+      'cache' => FALSE,
+  );
+  return $filters;
+}
+
+function _pcproducts_filter_tips($filter, $format, $long) {
+  if ($long) {
+    return '<h4>Using product variables</h4>
+      <ul>
+      <li>Print price for product 1, items 1 & 10 and qty 10: <pre>{"type":"product","id":1,"items":[1,10], "qty":10, "property":"price"}</pre></li>
+       <li>Print product name: <pre>{"type":"product","id":1, "property":"name"}</pre></li>
+       <li>Print product baseline: <pre>{"type":"product","id": 1, "property":"baseline"}</pre></li>
+       <li>Print product image: <pre>{"type":"product","id": 1, "property":"image"}</pre></li>
+       </ul>';
+  } else {
+    return 'Print product variables ex. price, name...';
+  }
+}
+
+function pcproducts_filter($code) {
+  $matches = array();
+  preg_match_all('/\{([^\}]*)\}/', $code, $matches);
+  foreach ($matches[0] as $match) {
+    $item = json_decode($match);
+    if ($item) {
+      switch ($item->type) {
+        case 'product':
+          $id = $item->id;
+          switch ($item->property) {
+            case 'price':
+              $items = $item->items;
+              $qty = $item->qty;
+              $defaults = Configurations\Factory::GetDefaults($id, $items);
+              $priceGroupId = $defaults->priceGroupId;
+              $price = Pricing\Factory::GetSellPrice($priceGroupId, $qty);
+              $build = array(
+                  '#theme' => 'price',
+                  '#value' => $price,
+              );
+              $output = drupal_render($build);
+              $code = str_replace($match, $output, $code);
+              break;
+            case 'name':
+              $product = Factory::Get($id);
+              $output = $product->name;
+              $code = str_replace($match, $output, $code);
+              break;
+            case 'baseline':
+              $product = Factory::Get($id);
+              $output = $product->baseline;
+              $code = str_replace($match, $output, $code);
+              break;
+            case 'image':
+              $build = array(
+                  '#theme' => 'image',
+                  '#path' => printconnect_getimage('products', $id),
+              );
+              $output = drupal_render($build);
+              $code = str_replace($match, $output, $code);
+              break;
+          }
+      }
+    }
+  }
+  return $code;
+}

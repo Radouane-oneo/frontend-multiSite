@@ -1,0 +1,12 @@
+name = Customers
+description = Customers module
+package = printconnect
+core = 7.x
+dependencies[] = printconnect
+dependencies[] = pcvat
+
+scripts[] = pccustomers.js
+
+stylesheets[all][] = pccustomers.css
+
+

@@ -1,0 +1,80 @@
+#pcoffers-offer-form .item .description{
+    float:right;
+    position:relative;
+    width:70%;
+}
+
+#pcoffers-offer-form .additionalItems .description{
+    float:left;
+    position:relative;
+    width:100%;
+}
+
+#pcoffers-offer-form .additionalItems .description .price{
+    position:absolute;
+    top:0;
+    right:30px;
+}
+
+#pcoffers-offer-form .item .description .price{
+    position:absolute;
+    top:0;
+    right:30px;
+}
+
+#pcoffers-offer-form .item img{
+    float:left;
+    width:20%;
+    height:20%;
+}
+
+#pcoffers-offer-form .item .footer {
+    float:left;
+    position:relative;
+    width:100%;
+}
+
+#pcoffers-offer-form .item .footer .comment {
+    float:right;
+    position:absolute;
+    width:70%;
+}
+#pcoffers-offer-form .priceblock{
+    background-color: #F1F1F1;
+    border-radius: 5px 5px 0px 0px;
+    padding-top: 5px;
+}
+#pcoffers-offer-form .priceblock .value{
+    color: #f60;
+    font-size: 21px;
+}
+#pcoffers-offer-form .priceblock .currency{
+    font-size: 14px;
+    line-height: 15px;
+    vertical-align: top;
+}
+#pcoffers-offer-form .priceblock .decimals{
+    font-size: 14px;
+    line-height: 15px;
+    vertical-align: top;
+
+}
+#pcoffers-offer-form .priceblock label {
+    font-weight: 400 !important;
+    font-size: 14px !important;
+}
+
+#pcoffers-offer-form .priceblock div.price {
+    padding: 5px 15px 5px 15px;
+}
+#pcoffers-offer-form .priceblock .total {
+    display: none;
+}
+#pcoffers-offer-form .reject {
+    color: #f60;
+    background: none;
+    font-size: 12px;
+}
+#pcoffers-offer-form .reject:hover {
+    text-decoration: underline !important;
+}   

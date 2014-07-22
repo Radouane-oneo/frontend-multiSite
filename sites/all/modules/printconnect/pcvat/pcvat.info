@@ -1,0 +1,12 @@
+name = Vat 
+description = Provides the vat element and jquery plugin
+package = printconnect
+core = 7.x
+
+dependencies[] = printconnect
+
+stylesheets[all][] = pcvat.css
+
+scripts[] = pcvat.js
+
+

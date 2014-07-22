@@ -1,0 +1,4 @@
+name = Rotator (TODELETE?)
+description = Rotates blocks
+package = printconnect
+core = 7.x

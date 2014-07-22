@@ -1,0 +1,6 @@
+name = Gift vouchers
+description = Gift vouchers
+package = printconnect
+core = 7.x
+
+dependencies[] = printconnect

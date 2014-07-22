@@ -1,0 +1,190 @@
+<?php
+
+use printconnect\Offers\Factory;
+use printconnect\Customers\Factory as CustomersFactory;
+
+/**
+ * Implements hook menu
+ *
+ * @return array
+ */
+function pcoffers_menu() {
+  $items["myprintconnect/offers"] = array(
+      'title' => t('My offers'),
+      'page callback' => '_pcoffers_offers_form',
+      'page arguments' => array('list'),
+      'access callback' => 'pcoffers_access',
+      'file' => 'pcoffers.forms.inc',
+  );
+
+  $items["myprintconnect/offers/%"] = array(
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pcoffers_offer_form', 2),
+      //'type' => MENU_CALLBACK,
+      'access callback' => 'pcoffers_offer_access',
+      'access arguments' => array(2),
+      'file' => 'pcoffers.forms.inc',
+  );
+
+  $items["offer"] = array(
+      'title' => t('Offer entry'),
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pcoffers_offerentry_form'),
+      'access arguments' => array('access content'),
+      'file' => 'pcoffers.forms.inc',
+  );
+
+  $items["offer/hash/%"] = array(
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pcoffers_offer_form', 2),
+      'access callback' => 'pcoffers_offer_access',
+      'access arguments' => array(2),
+      'file' => 'pcoffers.forms.inc',
+  );
+
+  $items['cart/offer'] = array(
+      'page callback' => '_pcoffers_from_cart',
+      'page arguments' => array(2),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Offers access
+ *
+ * @return boolean
+ */
+function pcoffers_access() {
+  return true;
+}
+
+/**
+ * Check if user is Auterized to see offer
+ *
+ * @global object $user
+ * @param int $hash
+ * @return boolean
+ */
+function pcoffers_offer_access($hash) {
+  global $user;
+
+  if (!$user->uid) {
+    printconnect_ensureinitialized();
+    $offer = Factory::GetById($hash);
+    if ($offer->HasProperty('customer') && isset($offer->customer)) {
+      $customer = _pccustomers_ensureloggedin();
+      return($offer->customer == $customer->id);
+    }
+  }
+  return true;
+}
+
+/**
+ * Add offer overview links to customer profile block
+ *
+ * @param array $data
+ * @param array $block
+ */
+function pcoffers_block_view_pccustomers_profile_alter(&$data, $block) {
+  try {
+    $customer = $data['customer'];
+
+    if ($customer) {
+      $offers = Factory::GetAllByCustomer($customer, FALSE);
+      if ($offers->Count) {
+
+        $data['content']['offerslinks'] = array(
+            '#theme' => 'item_list',
+            '#items' => array(
+                l(t('Open offers') . ' (' . $offers->Count . ')', 'myprintconnect/offers'),
+            ),
+            '#weight' => 11,
+        );
+      }
+    }
+  } catch (\Exception $ex) {
+    
+  }
+}
+
+function pcoffers_form_pccustomers_dashboard_form_alter(&$form, &$form_state) {
+
+  try {
+    $customer = $form_state['storage']['customer'];
+    $offers = Factory::GetAllByCustomer($customer,FALSE);
+
+    $rows = array();
+    $i = 0;
+    foreach ($offers as $offer) {
+      
+      if ($offer->status->tag == 'offerStatusOpen') {
+        $link = l($offer->number, "myprintconnect/offers/$offer->hash", array('html' => TRUE, 'attributes' => array('class' => array('open'))));
+      }
+      else{
+        $link = $offer->number;
+      }
+      
+      $rows[] = array(
+          format_date(strtotime($offer->creationDate), 'medium', 'y-m-d'),
+          theme('price', array('value' => $offer->convertedTotalAmount)),
+          $link,
+      );
+
+      if (++$i >= 3)
+        break;
+    }
+
+    if (count($rows)) {
+      $form['recentoffers'] = array(
+          '#type' => 'fieldset',
+          '#title' => t('Recent offers'),
+          '#attributes' => array('class' => array('recentoffers')),
+          '#weight' => 70,
+      );
+      $form['recentoffers']['list'] = array(
+          '#theme' => 'table',
+          //  '#caption' => t('Recent offers'),
+          '#rows' => $rows,
+          '#header' => array(
+              t('Created'),
+              t('Price'),
+              t('Number')
+          ),
+          '#empty' => t('No offers'),
+          '#attributes' => array(
+              'class' => array(
+                  'list',
+                  'orders'
+              )
+          )
+      );
+
+      $form['recentoffers']['all'] = array('#markup' => l(t('All offers'), 'myprintconnect/offers'));
+    }
+  } catch (\Exception $ex) {
+    
+  }
+}
+
+function pcoffers_form_pccart_cart_form2_alter(&$form, &$form_state) {
+
+  $form['cart']['tooffer'] = array(
+      '#markup' => l(t('Download as offer'), 'cart/offer', array('attributes' => array('class' => array('download'), 'target' => '_blank'))),
+      '#weight' => -100,
+  );
+}
+
+function _pcoffers_from_cart() {
+  $cart = \printconnect\Carts\Factory::Current();
+  if (!$cart) {
+    drupal_not_found();
+    exit;
+  }
+  $offer = Factory::FromCart($cart);
+
+  drupal_goto('file/' . $offer->pdf);
+  exit;
+}

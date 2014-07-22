@@ -1,0 +1,19 @@
+name = Templates
+description = Templates order flow
+package = printconnect
+core = 7.x
+
+#dependencies[] = pctemplatesbase
+dependencies[] = pcproducts
+dependencies[] = pccart
+dependencies[] = pcdesigntool
+dependencies[] = pcfiles
+dependencies[] = pcdesigns
+
+
+scripts[] = pctemplates.js
+
+stylesheets[all][] = pctemplates.css
+
+
+

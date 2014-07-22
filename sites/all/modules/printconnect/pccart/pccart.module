@@ -1,0 +1,1885 @@
+<?php
+
+use printconnect\Carts\Factory;
+use printconnect\Shipping;
+use printconnect\Diagnostics\Debug;
+use printconnect\Drupal\Forms;
+use printconnect\Drupal\Functions;
+use printconnect\Products\Options;
+use printconnect\Products\Configurations;
+use \printconnect\Products\Toolbox;
+use \printconnect\Products\PriceGroups;
+use \printconnect\Products\Pricing;
+use \printconnect\Products;
+use \printconnect\PickupPoints;
+use printconnect\Customers\Factory as CustomersFactory;
+use printconnect\Carts\Discounts;
+
+function pccart_menu() {
+  $items['cart'] = array(
+      'title' => 'Cart',
+      'page callback' => '_pccart_callback',
+      'page arguments' => array('cart'),
+      'access arguments' => array('access content'),
+  );
+
+  $items['cart'] = array(
+      'title' => 'Cart',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pccart_cart_form2'),
+      'access arguments' => array('access content'),
+      'file' => 'pccart.forms.inc',
+  );
+
+  $items['cart/%/delete'] = array(
+      'page callback' => '_pccart_callback',
+      'page arguments' => array('item_delete', 1),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+
+  $items['cart/updatItemVat/id/%/status/%'] = array(
+      'page arguments' => array('updateCartIetmvat',3,5),
+      'access arguments' => array('access content'),
+      'file' => 'pccart.forms.inc',
+  );
+  
+  $items['cartblock/%/discount/%/delete'] = array(
+      'page callback' => '_pccart_callback',
+      'page arguments' => array('discount_delete', 1, 3),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+
+  $items['cart/files/%/%/delete'] = array(
+      'page callback' => '_pccart_callback',
+      'page arguments' => array('file_delete', 2, 3),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+
+  $items["cart/edit/%"] = array(
+      'title' => 'edit',
+      'page callback' => '_pccart_callback',
+      'page arguments' => array('edit', 2),
+      'access arguments' => array('access content'),
+  );
+
+
+  $items['cart/callback'] = array(
+      'title' => 'Cart callback',
+      'page callback' => 'pccart_callback',
+      'page arguments' => array(),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+          //'file' => 'pctemplates.config.inc',
+  );
+  $items['cart/add/%'] = array(
+      'page callback' => '_pccart_add_json',
+      'page arguments' => array(2),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/*
+  function pccart_pcmenu() {
+  $cart = Factory::Current();
+  $text = t('Cart');
+
+  if ($cart && $cart->items->count) {
+  $text .= ' (' . $cart->items->count . ')';
+  } else {
+  $text .= ' (0)';
+  }
+
+  $items['myprintconnect']['cart'] = array(
+  '#title' => $text,
+  '#description' => t('Manage your cart'),
+  '#link' => 'cart',
+  '#weight' => 80,
+  );
+  return $items;
+  }
+ */
+
+function pccart_theme() {
+  return array(
+//      'pccart_cart_block' => array(
+//          'render element' => 'cart',
+//          'template' => 'pccart-cart-block',
+//      ),
+//      'pccart_cart_form' => array(
+//          'render element' => 'form',
+//          'template' => 'pccart-cart-form',
+//      ),
+//      'pccart_save_form' => array(
+//          'render element' => 'form',
+//          'template' => 'pccart-save-form',
+//      ),
+  );
+}
+
+function pccart_progress() {
+  return array(
+      array(
+          'title' => t('Choose a product'),
+          'paths' => array('cart'),
+          'weight' => 20,
+      ),
+  );
+}
+
+function pccart_block_info() {
+  $blocks['cart'] = array(
+      'info' => t('Cart'),
+      'cache' => DRUPAL_NO_CACHE,
+  );
+  $blocks['save'] = array(
+      'info' => t('Cart save (you just added)'),
+      'visibility' => BLOCK_VISIBILITY_LISTED,
+      'pages' => 'cart',
+      'cache' => DRUPAL_NO_CACHE,
+  );
+  $blocks['indicator'] = array(
+      'info' => t('Cart indicator'),
+      'cache' => DRUPAL_NO_CACHE,
+  );
+  $blocks['shipping'] = array(
+      'info' => t('Cart shipping info'),
+      'region' => 'sidebar',
+      'visibility' => BLOCK_VISIBILITY_LISTED,
+      'pages' => 'checkout/*',
+      'cache' => DRUPAL_NO_CACHE,
+  );
+  return $blocks;
+}
+
+function pccart_block_view($delta = '') {
+  printconnect_ensureinitialized();
+  // try {
+  switch ($delta) {
+    case 'save':
+      $cart = Factory::Current();
+
+      $block = FALSE;
+      if ($cart && count($cart->orderItems)) {
+        $block['title'] = t('You just added');
+        $block['content'] = drupal_get_form('pccart_save_form');
+      }
+      return $block;
+
+      break;
+    case 'cart':
+      $cart = Factory::Current();
+      $block = FALSE;
+      $discounts = FALSE;
+      $items = array();
+      if ($cart && $cart->isFilled) {
+        $block['cart'] = $cart;
+
+
+        foreach ($cart->productItems as $item) {
+//foreach ($items as $item) {
+          $text = array();
+          $list = array();
+
+          $itemValue = $item->price;
+
+          $configs = $item->configuration->config;
+
+          foreach ($configs as $config) {
+            $list[] = $config->groupName . ': ' . $config->name;
+          }
+
+          if (count($item->options) == 0) {
+            
+          } else {
+            $optionsText = array();
+            foreach ($item->options as $option) {
+              $optionsText[] = $option->optionName;
+              $itemValue += $option->price;
+              $list[] = $option->optionName;
+            }
+          }
+
+          $content['items'][$item->id] = array(
+              '#type' => 'container',
+              '#attributes' => array('class' => array('item', 'clearfix')),
+              '#weight' => 10,
+          );
+
+
+          $content['items'][$item->id]['image'] = array(
+              '#type' => 'container',
+              '#attributes' => array('class' => array('image')),
+          );
+
+          foreach ($item->files as $file) {
+            if (isset($file->thumbnail)) {
+              $content['items'][$item->id]['image']['content'] = array(
+                  '#theme' => 'pcfilesthumb',
+                  '#file' => $file->thumbnail,
+                  '#cache' => FALSE,
+                      //'#markup' => theme('pcfilesthumb', array('file' => str_replace('file/', '', $file->thumbnail), 'cache' => FALSE)),
+              );
+            } else {
+              $content['items'][$item->id]['image']['content'] = array(
+                  '#theme' => 'image',
+                  '#path' => $item->product->image,
+                      //'#markup' => theme('image', array('path' => $item->product->image)),
+              );
+            }
+          }
+          $content['items'][$item->id]['description'] = array(
+              '#type' => 'container',
+              '#attributes' => array('class' => array('description')),
+          );
+          $content['items'][$item->id]['description']['price'] = array(
+              '#theme' => 'price',
+              '#value' => $itemValue,
+          );
+
+          $content['items'][$item->id]['description']['header'] = array(
+              '#prefix' => '<h3>',
+              '#suffix' => '</h3>',
+              '#markup' => $item->quantity . ' ' . $item->configuration->name,
+          );
+
+          $content['items'][$item->id]['description']['list'] = array(
+              '#theme' => 'item_list',
+              '#items' => $list,
+          );
+          /*
+            $content['cart']['items'][$item->id]['description']['tooltip'] = array
+            '#type' => 'container',
+            '#attributes' => array('class' => array('tooltip')),
+            );
+
+            $content['cart']['items'][$item->id]['description']['tooltip']['content'] = array(
+            '#type' => 'container',
+            '#attributes' => array('class' => array('content')),
+            );
+
+            $content['cart']['items'][$item->id]['description']['tooltip']['content']['list'] = array(
+            '#markup' => theme('item_list', array('items' => $list)),
+            );
+
+            $content['cart']['items'][$item->id]['description']['text'] = array(
+            '#markup' => theme('table', array('rows' => $text)),
+            );
+
+            $content['cart'][$item->id]['description']['more'] = array(
+            '#markup' => t('More details'),
+            );
+           */
+        }
+
+        $orderItemsAdditional = $cart->orderItemsAdditional;
+        if (count($orderItemsAdditional)) {
+//          $content['additionalItems'] = array(
+//              '#type' => 'container',
+//              '#attributes' => array('class' => array('additionalItems')),
+//          );
+
+          foreach ($orderItemsAdditional as $item) {
+            $content['additionalItems'][$item->id] = array(
+                'description' => array(
+                    '#type' => 'container',
+                    '#attributes' => array('class' => array('description', 'item')),
+                    'price' => array(
+                        '#theme' => 'price',
+                        '#value' => $item->price,
+                    ),
+                    'description' => array(
+                        '#markup' => $item->description
+                    ),
+                ),
+            );
+          }
+        }
+
+
+        if ($cart->discountItems) {
+
+//          $content['discounts'] = array(
+//              '#type' => 'container',
+//              '#attributes' => array('class' => array('discounts')),
+//              '#weight' => 50,
+//          );
+
+          foreach ($cart->discountItems as $discount) {
+            $content['discounts'][$discount->id] = array(
+                '#type' => 'container',
+                '#attributes' => array('class' => array('item', 'description', 'discount')),
+                '#weight' => 50,
+            );
+
+            $content['discounts'][$discount->id]['price'] = array(
+                '#theme' => 'price',
+                '#value' => $discount->price,
+                    //'#markup' => theme('price', array('value' => $discount->price)),
+            );
+
+            $content['discounts'][$discount->id]['description'] = array(
+//                '#prefix' => '<h3>',
+//                '#suffix' => '</h3>',
+                '#markup' => $discount->productName,
+            );
+          }
+        }
+        $content['shipping'] = array(
+            '#type' => 'container',
+            '#attributes' => array('class' => array('item', 'shipping', 'description')),
+            '#weight' => 60,
+        );
+
+        $content['shipping']['header'] = array(
+            '#type' => 'container',
+            '#attributes' => array('class' => array('clearfix')),
+        );
+
+        if ($cart->expectedShippingDate) {
+          $content['shipping']['header']['shipping'] = array(
+              '#type' => 'item',
+              '#attributes' => array('class' => array('clearfix')),
+              '#title' => t('My order will be shipped on:'),
+              '#markup' => format_date(strtotime($cart->expectedShippingDate), 'short'),
+          );
+        }
+
+
+        if ($cart->expectedDeliveryDate) {
+          $content['shipping']['header']['delivery'] = array(
+              '#type' => 'item',
+              '#title' => t('Expected delivery'),
+              '#markup' => format_date(strtotime($cart->expectedDeliveryDate), 'short'),
+              '#attributes' => array('class' => array('clearfix')),
+          );
+
+          /*
+            $content['shipping']['header']['delivery']['text'] = array(
+            '#markup' => t('Expected delivery') . ': ',
+            );
+
+            $content['shipping']['header']['delivery']['date'] = array(
+            '#prefix' => '<span class="date">',
+            '#suffix' => '</span>',
+            '#markup' => format_date(strtotime($cart->expectedDeliveryDate), 'short'),
+            );
+           */
+        }
+        $content['shipping']['price'] = array(
+            '#theme' => 'price',
+            '#value' => $cart->orderItemShipping->price,
+            '#free' => TRUE,
+                //'#markup' => theme('price', array('value' => $cart->orderItemShipping->price, 'free' => TRUE)),
+        );
+
+        $type = \printconnect\Shipping\Types\Factory::Get($cart->orderItemShipping->shippingTypeResellerShop);
+
+        $content['shipping']['description'] = array(
+            '#markup' => $type->shippingType->tag,
+        );
+
+
+
+
+        if (count($cart->orderItemsPayment)) {
+
+//          $content['payment'] = array(
+//              '#type' => 'container',
+//              '#attributes' => array('class' => array('payment-methods')),
+//              '#weight' => 70,
+//          );
+//
+//          $content['payment']['header'] = array(
+//              '#markup' => t('My order will be paid with:'),
+//          );
+
+          foreach ($cart->orderItemsPayment as $payment) {
+            $content['payment'][$payment->id] = array(
+                '#type' => 'container',
+                '#attributes' => array('class' => array('clearfix', 'description', 'item', 'payment-method')),
+                '#weight' => 70,
+            );
+
+            $content['payment'][$payment->id]['price'] = array(
+                '#theme' => 'price',
+                '#value' => $payment->price,
+                '#free' => TRUE,
+            );
+
+            $content['payment'][$payment->id]['description'] = array(
+                '#markup' => $payment->description,
+            );
+          }
+        }
+
+        $content['priceblock'] = array('#weight' => 80, '#markup' => theme('priceblock', array('subtotal' => $cart->convertedSubTotalAmount, 'vatAmount' => $cart->convertedVatAmount, 'total' => $cart->convertedTotalAmount, 'attributes' => array('class' => array('last')))));
+
+        $content['priceblock'] = array(
+            '#weight' => 80,
+            '#theme' => 'priceblock',
+            '#subtotal' => $cart->convertedSubTotalAmount,
+            '#vatAmount' => $cart->convertedVatAmount,
+            '#total' => $cart->convertedTotalAmount,
+        );
+
+        $content['#attributes']['class'][] = 'cart';
+
+        $block['content'] = $content;
+        $block['title'] = t('Shopping cart');
+      }
+      return $block;
+      break;
+
+    case 'shipping':
+      $cart = Factory::Current();
+      $block = FALSE;
+      $discounts = FALSE;
+      $items = array();
+      if ($cart && $cart->isFilled) {
+        $block['cart'] = $cart;
+        $block['title'] = t('Delivery');
+
+
+//        $content['cart'] = array(
+//            '#type' => 'fieldset',
+//            '#title' => t('Delivery or pickup'),
+//            '#attributes' => array('class' => array('clearfix')),
+//        );
+        $content['shipping'] = array(
+            '#type' => 'container',
+            '#attributes' => array('class' => array('shipping')),
+            'content' => array(
+                '#type' => 'item',
+                '#title' => t('Your order is ready for shipment'),
+                '#markup' => format_date(strtotime($cart->expectedShippingDate), 'short'),
+            ),
+        );
+
+        $content['delivery'] = array(
+            '#type' => 'container',
+            '#attributes' => array('class' => array('delivery')),
+            'content' => array(
+                '#type' => 'item',
+                '#title' => t('Expected delivery'),
+                '#markup' => format_date(strtotime($cart->expectedDeliveryDate), 'short'),
+            ),
+        );
+
+
+        $block['content'] = $content;
+      }
+      return $block;
+      break;
+
+    case 'indicator':
+      $cart = Factory::Current();
+      $content = t('Cart');
+
+      if ($cart) {
+        $content .= ' (' . $cart->count . ')';
+      } else {
+        $content .= ' (0)';
+      }
+      $block['content'] = l($content, 'cart', array('attributes' => array('class' => array('button', 'cart'))));
+
+      return $block;
+      break;
+    case 'add':
+//        $args = arg();
+//        if ($args[0] == 'products' && isset($args[3])) {
+//          array_shift($args);
+//          $url = 'cart/add/' . implode('/', $args);
+//          $block['content'] = l(t('Add to cart'), $url, array('attributes' => array('class' => array('action', 'display-block', 'cart', 'large'))));
+//        } else {
+//          $block['content'] = '  ';
+//        }
+//        return $block;
+//        break;
+  }
+  return FALSE;
+//  } catch (\Exception $ex) {
+//    Functions::HandleException($ex);
+//  }
+}
+
+function pccart_preprocess_block(&$variables) {
+  //var_dump($variables);
+//  $block  = $variables['block'];
+//  if ($block && $block->module == 'pccart'){
+//    $variables['classes_array'][] = $block->module . '-' . $block->delta;
+//  }
+}
+
+function pccart_form_pcproducts_product_form_alter(&$form, &$form_state, $form_id) {
+  global $pccart_editItemId;
+
+  if (isset($form_state['storage']['qty']) && isset($form_state['storage']['priceGroupId'])) {
+    if ($pccart_editItemId) {
+
+      $form['addToCart'] = array(
+          '#type' => 'submit',
+          '#value' => t('Update'),
+          '#weight' => 100,
+          '#validate' => array('pccart_addtocart_validate'),
+          '#submit' => array('pccart_editcartitem_submit'),
+          '#attributes' => array('class' => array('action', 'cart', 'display-block', 'button')),
+      );
+      $form_state['storage']['cart']['itemId'] = $pccart_editItemId;
+    } else {
+      $form['addToCart'] = array(
+          '#type' => 'submit',
+          '#value' => t('Add to cart'),
+          '#weight' => 100,
+          '#validate' => array('pccart_addtocart_validate'),
+          '#submit' => array('pccart_addtocart_submit'),
+          '#attributes' => array('class' => array('action', 'cart', 'display-block', 'button')),
+      );
+    }
+  }
+  return true;
+}
+
+function pccart_form_pcproducts_productconfig_form_alter(&$form, &$form_state, $form_id) {
+  global $pccart_editItemId;
+
+  if (isset($form_state['storage']['qty']) && isset($form_state['storage']['priceGroupId'])) {
+    //if ($pccart_editItemId) {
+    if ($form_state['storage']['edit']) {
+
+//      $form['step2']['footer']['priceblock']['addToCart'] = array(
+//          '#type' => 'submit',
+//          '#value' => t('Update'),
+//          '#weight' => 100,
+//          '#submit' => array('pccart_editcartitem_submit'),
+//          '#attributes' => array('class' => array('action', 'cart', 'large', 'display-block')),
+//      );
+      $form['actions']['addToCart'] = array(
+          '#prefix' => '<div class="button-wrapper">',
+          '#suffix' => '</div>',
+          '#type' => 'submit',
+          '#value' => t('Update'),
+          '#weight' => 100,
+          '#validate' => array('pccart_addtocart_validate2'),
+          '#submit' => array('pccart_editcartitem_submit'),
+          '#attributes' => array('class' => array('action', 'cart', 'display-block', 'button')),
+      );
+      $form_state['storage']['cart']['itemId'] = $pccart_editItemId;
+      $form_state['storage']['cart']['itemId'] = $form_state['storage']['edit'];
+    } else {
+//      $form['step2']['footer']['priceblock']['addToCart'] = array(
+//          '#type' => 'submit',
+//          '#value' => t('Add to cart'),
+//          '#weight' => 100,
+//          '#submit' => array('pccart_addtocart_submit2'),
+//          '#attributes' => array('class' => array('action', 'cart', 'large', 'display-block')),
+//      );
+      $form['actions']['addToCart'] = array(
+          '#prefix' => '<div class="button-wrapper">',
+          '#suffix' => '</div>',
+          '#type' => 'submit',
+          '#value' => t('Add to cart'),
+          '#weight' => 100,
+          '#validate' => array('pccart_addtocart_validate2'),
+          '#submit' => array('pccart_addtocart_submit2'),
+          '#attributes' => array('class' => array('action', 'cart', 'display-block', 'button')),
+      );
+    }
+  }
+  return true;
+}
+
+function pccart_form_pcproducts_config_form_alter(&$form, &$form_state, $form_id) {
+  global $pccart_editItemId;
+
+  if (isset($form_state['storage']['qty']) && isset($form_state['storage']['priceGroupId'])) {
+    if ($form_state['storage']['edit']) {
+
+      $form['actions']['addToCart'] = array(
+          '#type' => 'submit',
+          '#value' => t('Update'),
+          '#weight' => 100,
+          '#validate' => array('pccart_addtocart_validate2'),
+          '#submit' => array('pccart_editcartitem_submit'),
+          '#attributes' => array('class' => array('action', 'cart', 'large', 'display-block')),
+      );
+      $form_state['storage']['cart']['itemId'] = $form_state['storage']['edit'];
+    } else {
+      $form['actions']['addToCart'] = array(
+          '#type' => 'submit',
+          '#value' => t('Add to cart'),
+          '#weight' => 100,
+          '#validate' => array('pccart_addtocart_validate2'),
+          '#submit' => array('pccart_addtocart_submit2'),
+          '#attributes' => array('class' => array('action', 'cart', 'large', 'display-block')),
+      );
+    }
+  }
+  return true;
+}
+
+function pccart_addtocart_validate($form, &$form_state) {
+  if (!$form_state['storage']['quantity'] && !$form_state['values']['quantity']) {
+    form_set_error(NULL, t('Please select a quantity'));
+  }
+}
+
+function pccart_addtocart_submit($form, &$form_state) {
+  $options = array();
+  $priceGroupId = $form_state['values']['priceGroupId'];
+  if (isset($form_state['values']['options'])) {
+    foreach ($form_state['values']['options'] as $key => $value) {
+      if ($value) {
+        $options[] = $key;
+      }
+    }
+  }
+  $productId = $form_state['storage']['productId'];
+  $qty = $form_state['values']['quantity'];
+  if (!$qty) {
+    $qty = $form_state['storage']['quantity'];
+  }
+  $items = $form_state['storage']['items'];
+
+  $vatpercentage = FALSE;
+  if (isset($form_state['storage']['vatpercentage'])) {
+    $vatpercentage = $form_state['storage']['vatpercentage'];
+  }
+
+  _pccart_add($productId, $qty, $options, $priceGroupId, $vatpercentage);
+}
+
+function pccart_addtocart_validate2($form, &$form_state) {
+
+  $qty = $form_state['storage']['quantity'];
+  
+  if (!$qty) {
+    $qty = $form_state['values']['quantity'];
+    if ($qty == 'custom') {
+      $qty = $form_state['values']['custom'];
+    }
+  }
+  if (!is_numeric($qty)) {
+    form_set_error('', t('Please select a quantity'));
+  }
+ 
+}
+
+function pccart_addtocart_submit2($form, &$form_state) {
+  $options = array();
+  $priceGroupId = $form_state['storage']['priceGroupId'];
+  $options = $form_state['storage']['options'];
+
+  $productId = $form_state['storage']['productId'];
+  $qty = $form_state['storage']['quantity'];
+  if (!$qty) {
+    $qty = $form_state['values']['quantity'];
+    if ($qty == 'custom') {
+      $qty = $form_state['values']['custom'];
+    }
+  }
+  $items = $form_state['storage']['items'];
+
+  $vatpercentage = FALSE;
+  if (isset($form_state['storage']['vatpercentage'])) {
+    $vatpercentage = $form_state['storage']['vatpercentage'];
+  }
+
+  _pccart_add($productId, $qty, $options, $priceGroupId, $vatpercentage);
+}
+
+function pccart_editcartitem_submit($form, &$form_state) {
+  $itemId = $form_state['storage']['cart']['itemId'];
+
+  $options = array();
+  $priceGroupId = $form_state['values']['priceGroupId'];
+  $priceGroupId =isset($priceGroupId)?$priceGroupId :$form_state['storage']['priceGroupId'];
+  if (isset($form_state['values']['options'])) {
+    foreach ($form_state['values']['options'] as $key => $value) {
+      if ($value) {
+        $options[] = $key;
+      }
+    }
+  }
+  $productId = $form_state['storage']['productId'];
+  
+  $qty = $form_state['storage']['quantity'];
+  if (!$qty) {
+    $qty = $form_state['values']['quantity'];
+    if ($qty == 'custom') {
+      $qty = $form_state['values']['custom'];
+    }
+  }
+  $items = $form_state['storage']['items'];
+
+  $cart = Factory::Current();
+
+  $item = Factory::GetItem($cart, $itemId);
+  $item->EnsureLoaded();
+
+
+
+  if (isset($_SESSION['cart']['items'][$itemId]['template'])) {
+       
+    $templates = Products\Templates\Factory::GetTemplates($productId, $items);
+
+    if (count($templates->items)) {
+      $template = $templates->items[0];
+      if ($template->id != $_SESSION['cart']['items'][$itemId]['template']) {
+        Factory::DeleteItem($itemId, $cart);
+        $item = Factory::CreateItem($cart, $priceGroupId, $qty, '', array(), $options);
+      }
+    }
+  }
+  $item->productPriceGroupId = $priceGroupId;
+  $item->quantity = $qty;
+  $item->options = $options;
+  $vatpercentage = FALSE;
+  if (isset($form_state['storage']['vatpercentage'])) {
+    $vatpercentage = $form_state['storage']['vatpercentage'];
+    $item->vatCustom = $vatpercentage;
+  }
+
+  Factory::SaveItem($item);
+ 
+  Factory::Refresh($cart);
+  
+  unset($_SESSION['cart']['items'][$itemId]);
+
+  drupal_goto('cart');
+}
+
+function pccart_editcartitem_submit2($form, &$form_state) {
+  $itemId = $form_state['storage']['cart']['itemId'];
+
+  $priceGroupId = $form_state['storage']['priceGroupId'];
+  $options = $form_state['storage']['options'];
+
+  $productId = $form_state['storage']['productId'];
+  $qty = $form_state['storage']['quantity'];
+  $items = $form_state['storage']['items'];
+
+  $cart = Factory::Current();
+  if ($cart) {
+    $item = Factory::GetItem($cart, $itemId);
+    $item->EnsureLoaded();
+
+    $item->productPriceGroupId = $priceGroupId;
+    $item->quantity = $qty;
+    $item->options = $options;
+    $vatpercentage = FALSE;
+    if (isset($form_state['storage']['vatpercentage'])) {
+      $vatpercentage = $form_state['storage']['vatpercentage'];
+      $item->vatCustom = $vatpercentage;
+    }
+
+    Factory::SaveItem($item);
+
+    Factory::Refresh($cart);
+
+    unset($_SESSION['cart']['items'][$itemId]);
+  }
+  drupal_goto('cart');
+}
+
+function _pccart_add($productId, $qty, $options, $priceGroupId, $vat = FALSE) {
+
+  $customer = CustomersFactory::Current();
+  $cart = Factory::CurrentOrCreate();
+
+  if (!$cart) {
+    $cart = Factory::Create();
+    if ($customer) {
+      $cart->customerId = $customer->id;
+      Factory::Save($cart);
+    }
+  }
+
+  $cart->EnsureLoaded();
+
+  $relatedProducts = array();
+  $description = '';
+
+//$cart->items->Add(Factory::CreateItem($cart, $defaults->priceGroupId, $qty, $description, $relatedProducts, $options));
+//$cart->items->Add(Factory::CreateItem($cart, $priceGroupId, $qty, $description, $relatedProducts, $options));
+
+  $item = Factory::CreateItem($cart, $priceGroupId, $qty, $description, $relatedProducts, $options, $vat);
+
+  Factory::Refresh($cart);
+
+  drupal_goto('cart');
+}
+
+function _pccart_callback() {
+  global $pccart_editItemId;
+  $pccart_editItemId = FALSE;
+  try {
+    $args = func_get_args();
+    $page = array_shift($args);
+    switch ($page) {
+      case 'cart':
+        $customer = CustomersFactory::Current();
+        if ($customer && $customer->firstName) {
+          drupal_set_title(t('@firstName, do you have everything you need?', array('@firstName' => $customer->firstName)));
+        } else {
+          drupal_set_title(t('Do you have everything you need?'));
+        }
+        if (module_exists('pcsubtitle')) {
+          drupal_set_subtitle(t('We have some very nice extras for you!'));
+        }
+        return drupal_get_form('pccart_cart_form');
+      case 'cartblock':
+        $cart = Factory::Current();
+
+        $action = array_shift($args);
+        $property = array_shift($args);
+        if ($action == 'set') {
+          switch ($property) {
+            case 'shippingType' :
+              $cart->shipping_type = array_shift($args);
+              break;
+            case 'pickuppoint' :
+              $countryCode = array_shift($args);
+              $id = array_shift($args);
+              $cart->shipping_type = array_shift($args);
+              $pickuppoint = PickupPoints\Factory::Get($id, $countryCode);
+              $pickuppoint->EnsureLoaded();
+              $cart->pickuppoint = $pickuppoint;
+              break;
+            case 'paymentMethod':
+              $cart->payment_method = array_shift($args);
+              break;
+            case 'discount' :
+              $cart = Factory::Current();
+              $discount = Discounts\Factory::Create($cart->id, $array_shift($args));
+
+              Discounts\Factory::Save($discount);
+
+              $cart = Factory::Refresh($cart);
+          }
+
+          Factory::Save($cart);
+        }
+
+
+        print theme('pccart_cartblock_form', drupal_get_form('pccart_cartblock_form'));
+        exit;
+      case 'cart_add':
+        $args = arg();
+        array_shift($args);
+        array_shift($args);
+        $productId = array_shift($args);
+        $items = array_shift($args);
+        if ($items) {
+          $items = explode(',', $items);
+        } else {
+          $items = array();
+        }
+        $qty = array_shift($args);
+        $options = array_shift($args);
+        if ($options) {
+          $options = explode(',', $options);
+        } else {
+          $options = array();
+        }
+
+        _pccart_add($productId, $items, $qty, $options);
+        return 'added';
+        break;
+
+      case 'item_delete':
+        $itemId = array_shift($args);
+        $cart = Factory::Current();
+        Factory::DeleteItem($itemId, $cart);
+        if (isset($_SESSION['files'][$itemId])) {
+          unset($_SESSION['files'][$itemId]);
+        }
+        Factory::Refresh($cart);
+        drupal_goto($_SERVER['HTTP_REFERER']);
+        return t('The item was deleted');
+//drupal_goto('cart');
+        break;
+      case 'file_delete':
+        $itemId = array_shift($args);
+        $fileId = array_shift($args);
+        if (isset($_SESSION['files'][$itemId][$fileId])) {
+          unset($_SESSION['files'][$itemId][$fileId]);
+        }
+        drupal_goto($_SERVER['HTTP_REFERER']);
+        return t('The file was deleted');
+        break;
+      case 'discount_delete':
+        $cartId = array_shift($args);
+        $discountId = array_shift($args);
+        $cart = Factory::Current();
+        Discounts\Factory::Delete($cartId, $discountId);
+        Factory::Refresh($cart);
+
+        drupal_goto($_SERVER['HTTP_REFERER']);
+        return t('The discount was deleted');
+      case 'edit':
+        $itemId = array_shift($args);
+        $cart = Factory::Current();
+        if (!$cart) {
+          drupal_goto('cart');
+          exit;
+        }
+        $item = Factory::GetItemFromCart($cart, $itemId);
+//$item->EnsureLoaded();
+        $productId = $item->configuration->productId;
+        $items = array();
+        foreach ($item->configuration->config as $config) {
+          $items[] = $config->toolboxItemId;
+        }
+
+        $options = array();
+        foreach ($item->options as $option) {
+          $options[] = $option->option;
+        }
+        $qty = $item->quantity;
+
+        $pccart_editItemId = $itemId;
+
+        return drupal_get_form('pcproducts_product_form', $productId, $items, $options, $qty, $item);
+
+
+        break;
+    }
+  } catch (Exception $ex) {
+    return Functions::HandleException($ex);
+  }
+}
+
+function pccart_cart_form($form, &$form_state) {
+  global $language;
+
+  $cart = Factory::Current(FALSE);
+
+  $discounts = FALSE;
+  $items = array();
+
+  if ($cart) {
+
+    foreach ($cart->discountItems as $item) {
+      $form['discounts'][$item->discountId]['items'][$item->id] = array(
+          'price' => array('#value' => $item->price),
+          'description' => array('#value' => $item->productName),
+      );
+      $form['discounts'][$item->discountId]['remove'] = array(
+          '#type' => 'image_button',
+          '#src' => drupal_get_path('module', 'pccart') . '/images/delete.png',
+          '#value' => t('delete'),
+          '#name' => 'delete_discount_' . $item->discountId,
+          '#validate' => array('pccart_cart_form_delete_discount_validate'),
+          '#submit' => array('pccart_cart_form_delete_discount_submit'),
+          '#attributes' => array('class' => array('remove', 'noreplace')),
+          '#has_garbage_value' => FALSE,
+      );
+    }
+
+    $form['items'] = array();
+
+    foreach ($cart->productItems as $item) {
+      $itemValue = $item->price;
+      $list = array();
+
+      $priceGroup = PriceGroups\Factory::Get($item->productPriceGroupId);
+
+//      $configs = Configurations\Factory::GetByPriceGroup($item->productPriceGroupId);
+//      $configs->EnsureLoaded();
+//      $configs->Sort();
+//      $configs = $configs->items;
+
+      $configs = $item->configuration->config;
+
+
+      $list = array();
+      $items = array();
+
+//      foreach ($configs as $config) {
+//        $items[] = $config->toolboxItem->id;
+//      }
+
+      foreach ($configs as $config) {
+        $items[] = $config->toolboxItemId;
+      }
+
+
+      $firstConfig = array_shift($configs);
+
+
+      foreach ($configs as $config) {
+//$toolboxGroup = Toolbox\Factory::GetGroup($config->toolboxGroup);
+//$list[] = '<label>' . t($toolboxGroup->name) . ':</label>  ' . t($config->toolboxItem->name);
+        $list[] = '<label>' . $config->groupName . ':</label>  ' . $config->name;
+      }
+
+      foreach ($item->options as $option) {
+        $itemValue += $option->price;
+        $list[] = $option->optionName;
+      }
+
+//      $product = Products\Factory::Get($priceGroup->product);
+      $product = Products\Factory::Get($item->configuration->productId);
+
+
+      $form['items'][$item->id]['id'] = array(
+          '#type' => 'hidden',
+          '#title' => t('Item'),
+          '#markup' => $item->id,
+      );
+
+//      $form['items'][$item->id]['product_image'] = array(
+//          '#value' => Functions::GetImage('products', $product->id),
+//      );
+
+      $form['items'][$item->id]['price'] = array(
+          '#value' => $item->price,
+      );
+
+      $form['items'][$item->id]['title'] = array(
+          '#value' => $item->quantity . ' ' . t('pcs.') . ' ' . $product->name . ' ' . $firstConfig->name,
+      );
+
+      $form['items'][$item->id]['quantity'] = array(
+          '#value' => $item->quantity,
+      );
+
+      $form['items'][$item->id]['remove'] = array(
+          '#type' => 'submit',
+          '#src' => drupal_get_path('module', 'pccart') . '/images/delete.png',
+          '#name' => 'delete_item_' . $item->id,
+          '#value' => t('Delete'),
+          '#attributes' => array('class' => array('remove', 'noreplace')),
+          '#validate' => array('pccart_cart_form_delete_item_validate'),
+          '#submit' => array('pccart_cart_form_delete_item_submit'),
+          '#has_garbage_value' => FALSE,
+//'#value' => 'cart/' . $item->id . '/delete',
+      );
+
+      $form['items'][$item->id]['edit'] = array(
+          '#value' => 'cart/edit/' . $item->id . '/',
+      );
+
+      $form['items'][$item->id]['list'] = array(
+          '#value' => $list,
+      );
+
+      //$thumbnailUrl = Functions::GetImage('products', $product->id);
+      $thumbnailUrl = printconnect_getimage('products', $product->id);
+
+      foreach ($item->files as $file) {
+
+        $key = $file->id;
+        $jobId = $file->designToolJobId;
+
+        if (isset($file->thumbnail)) {
+          $thumbnail = printconnect\Files\Factory::Get($file->thumbnail);
+          $form['items'][$item->id]['file']['thumbnail'] = array(
+              '#value' => $thumbnail->url,
+          );
+          /* foreach ($thumbnail->attachments as $attachmentKey => $attachment) {
+            $thumbnailUrl = $attachment->url;
+
+            $form['items'][$item->id]['file']['thumbnail'] = array(
+            '#value' => $attachment->url,
+            );
+            } */
+        }
+
+        $form['items'][$item->id]['file']['preview'] = array(
+            '#value' => pcdesigntool_preview_url($jobId),
+        );
+
+//   $file = printconnect\Files\Factory::Get($file->file);
+
+
+        $options = array();
+
+        foreach ($item->options as $option) {
+          $options[] = $option->option;
+        }
+
+        $savedDesignId = NULL;
+
+        if (isset($_SESSION['savedDesigns'][$item->id])) {
+          $savedDesignId = $_SESSION['savedDesigns'][$item->id];
+        }
+
+
+        $form['items'][$item->id]['file']['link'] = array(
+            '#markup' => theme('designtoollink', array(
+//'templateId' => $template->id,
+                'title' => $product->name . ' ' . $firstConfig->name,
+//'content' => theme('image', array('path' => $thumbnailUrl)),
+                'content' => theme('pcfilesthumb', array('file' => $file->thumbnail)),
+                'html' => TRUE,
+                'oi' => array(
+                    'priceGroupId' => $item->productPriceGroupId,
+                    'quantity' => $item->quantity,
+                    'options' => $options,
+                ),
+                'params' => array(
+                    'id' => $item->id,
+                    'cartid' => $cart->id,
+                ),
+                'callback' => 'cart/callback/',
+                'versioning' => FALSE,
+                'jobId' => $jobId,
+                'params' => array(
+                    'id' => $item->id,
+                    'cartid' => $cart->id,
+                ),
+                'savedDesignId' => $savedDesignId,
+                'attributes' => array('class' => array('designtool', 'iframe', 'display-block')),
+            )),
+        );
+
+
+        /* foreach ($file->attachments as $attachmentKey => $attachment) {
+          $form['items'][$item->id]['file']['name'] = array(
+          '#value' => $attachmentKey,
+          );
+          $form['items'][$item->id]['file']['link'] = array(
+          '#value' => pcdesigntool_url(false, $language, $item->id, $product->name . ' ' . $firstConfig->name, $jobId),
+          );
+
+          $form['items'][$item->id]['file']['link'] = array(
+          '#markup' => theme('designtoollink', array(
+          //'templateId' => $template->id,
+          'title' => $product->name . ' ' . $firstConfig->name,
+          'content' => theme('image', array('path' => $thumbnailUrl)),
+          'html' => TRUE,
+          'jobId' => $jobId,
+          'params' => array(
+          'id' => $item->id,
+          ),
+          'attributes' => array('class' => array('designtool', 'iframe', 'display-block')),
+          )),
+          );
+
+
+
+          $form['items'][$item->id]['file']['size'] = array(
+          '#value' => $attachment->length,
+          );
+          $form['items'][$item->id]['file']['content_type'] = array(
+          '#value' => str_replace('/', '-', $attachment->contenttype),
+          );
+          } */
+      }
+
+      $form['items'][$item->id]['price'] = array(
+          '#value' => $itemValue,
+      );
+//
+//      if (module_exists('pcuploader')) {
+//        $form['items'][$item->id]['upload'] = array(
+//            '#markup' => l(t('Upload'), pcuploader_url($item->id), array('attributes' => array('class' => array('button', 'upload')))),
+//        );
+//      }
+//$templates = Products\Templates\Factory::GetTemplates($priceGroup->product, $items);
+      $templates = Products\Templates\Factory::GetTemplates($item->configuration->productId, $items);
+
+      if (count($templates->items)) {
+        $template = $templates->items[0];
+//        if (function_exists('pcdesigntool_url')) {
+//          $form['items'][$item->id]['upload'] = array(
+//              '#markup' => l(t('Upload'), pcdesigntool_url($template->id, $language, $item->id, $product->name . ' ' . $firstConfig->name), array('attributes' => array('class' => array('button', 'upload', 'designtool', 'iframe', 'display-block')))),
+//          );
+//        }
+
+
+        $_SESSION['cart']['items'][$item->id]['template'] = $template->id;
+
+        $options = array();
+
+        foreach ($item->options as $option) {
+          $options[] = $option->option;
+        }
+
+        $form['items'][$item->id]['upload'] = array(
+            '#markup' => theme('designtoollink', array(
+                'templateId' => $template->id,
+                'title' => $product->name . ' ' . $firstConfig->name,
+                'content' => t('Upload'),
+//  'jobId' => $jobId,
+                'oi' => array(
+                    'priceGroupId' => $item->productPriceGroupId,
+                    'quantity' => $item->quantity,
+                    'options' => $options,
+                ),
+                'params' => array(
+                    'id' => $item->id,
+                    'cartid' => $cart->id,
+                ),
+                'callback' => 'cart/callback/',
+                'versioning' => FALSE,
+                'attributes' => array('class' => array('button', 'upload', 'designtool', 'iframe', 'display-block')),
+            )),
+        );
+      }
+
+
+//build link 
+
+      global $user;
+
+      if ($user->uid) {
+        $params = new stdClass();
+
+        foreach ($cart->discountItems as $item) {
+
+          $params->codes[] = $item->discountId;
+        }
+
+        foreach ($cart->productItems as $item) {
+          $object = new stdClass();
+          $object->productPriceGroupId = $item->productPriceGroupId;
+          $object->quantity = $item->quantity;
+          $params->items[] = $object;
+        }
+
+        $url = url('cart/add/' . json_encode($params), array('absolute' => TRUE));
+
+        $form['link'] = array(
+            '#type' => 'item',
+            '#title' => t('Direct link'),
+            '#markup' => l($url, $url),
+        );
+      }
+    }
+
+    $types = Shipping\Types\Factory::GetAll();
+
+    $enabledTypes = array();
+
+    if ($cart->onlyPostal) {
+      foreach ($types as $type) {
+        if ($type->shippingType->deliveryType == 'deliveryTypePostal') {
+//$enabledTypes[] = $type;
+          $form_state['storage']['shipping']['type'] = $type->id;
+
+          if ($cart->orderItemShipping->shippingTypeResellerShop != $type->id) {
+            $cart->shipping_type = $type->id;
+            Factory::Save($cart);
+            drupal_goto('cart');
+          }
+        }
+      }
+    } else {
+
+      $cart->shippingDate = strtotime(substr($cart->shippingDate, 0, 10));
+
+      $form['shipping']['date'] = array(
+          '#value' => $cart->shippingDate,
+      );
+
+      $form['shipping']['cost'] = array(
+          '#value' => $cart->orderItemShipping->price,
+      );
+
+      foreach ($types as $type) {
+        if ($type->shippingType->deliveryType != 'deliveryTypePostal' && ($type->shippingType->deliveryType != 'deliveryTypePickup' || variable_get('pcpickuppoints_enabled') )) {
+          $enabledTypes[] = $type;
+        }
+      }
+    }
+
+    $form['shipping_type']['#value'] = $cart->orderItemShipping->shippingTypeResellerShop;
+
+    $form_state['storage']['shipping']['type'] = $cart->orderItemShipping->shippingTypeResellerShop;
+
+    foreach ($enabledTypes as $type) {
+
+      if ($cart->socialcardsOnly) {
+        $type->price = 0;
+      }
+
+      $form['shipping']['type'][(string) $type->id]['radio'] = array(
+          '#type' => 'radio',
+          '#name' => 'shipping',
+          '#default_value' => isset($cart->orderItemShipping->shippingTypeResellerShop) ? $cart->orderItemShipping->shippingTypeResellerShop : 0,
+          '#return_value' => $type->id,
+          '#parents' => array('shipping'),
+      );
+
+      $form['shipping']['type'][(string) $type->id]['label'] = array(
+          '#markup' => $type->shippingType->tag,
+      );
+
+      $form['shipping']['type'][(string) $type->id]['price'] = array(
+          '#value' => $type->price,
+      );
+
+      if ($type->shippingType->deliveryType == 'deliveryTypePickup') {
+        $form['shipping']['type'][(string) $type->id]['picker'] = array(
+            '#value' => 'pickuppoints/picker',
+        );
+        $form['shipping']['type'][(string) $type->id]['radio']['#attributes']['class'][] = 'pup';
+      }
+    }
+
+
+    $form['pickup']['#value'] = FALSE;
+
+    $pickuppoint = FALSE;
+    if ($cart->pickuppoint && $cart->isPickup) {
+      $form['pickup']['#value'] = TRUE;
+
+      $pickuppoint = PickupPoints\Factory::Get($cart->pickuppoint->id, $cart->pickuppoint->country);
+      $form['pup']['name'] = array(
+          '#value' => $pickuppoint->name,
+      );
+      $form['pup']['address'] = array(
+          '#value' => $pickuppoint->address . '<br/>' . $pickuppoint->postalCode . ' ' . $pickuppoint->city,
+      );
+      $form['pup']['openingHours'] = array(
+          '#value' => $pickuppoint->openingHours,
+      );
+    }
+
+    $form['pup']['id'] = array(
+        '#type' => 'hidden',
+//'#name' => 'pickuppointid',
+        '#attributes' => array('class' => array('id')),
+        '#default_value' => $pickuppoint ? $pickuppoint->id : '',
+//'#default_value' => '000947',
+//  '#default_value' => $element['#default_id'],
+    );
+
+    $form['pup']['countryCode'] = array(
+        '#type' => 'hidden',
+//'#name' => 'pickuppointcountrycode',
+        '#attributes' => array('class' => array('country-code')),
+        '#default_value' => $pickuppoint ? $pickuppoint->country : '',
+//'#default_value' => 'BE',
+// '#default_value' => $element['#default_countrycode'],
+    );
+
+    $payments = $cart->orderItemsPayment;
+    if (count($payments)) {
+      $form['payments']['#value'] = $payments;
+    }
+    $form['subtotal'] = array('#value' => $cart->subTotalAmount);
+    $form['vat'] = array('#value' => $cart->vatAmount);
+    $form['total'] = array('#value' => $cart->totalAmount);
+
+    $form['discount']['code'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Promocode'),
+//'#description' => t('Enter promocode'),
+        '#size' => 20,
+        '#attributes' => array('class' => array('hint')),
+    );
+
+    $form['discount']['add'] = array(
+        '#type' => 'submit',
+        '#name' => 'add_discount',
+        '#value' => t('Apply'),
+        '#validate' => array('pccart_cart_form_add_discount_validate'),
+        '#submit' => array('pccart_cart_form_add_discount_submit'),
+        '#attributes' => array('class' => array('large', 'add-discount', 'ok')),
+    );
+  }
+
+  $i = 0;
+
+//$products = Products\Factory::GetAll();
+  $products = _pcproducts_activeproducts();
+
+  foreach ($products as $product) {
+    //$product->image = Functions::GetImage('products', $product->id);
+    $product->image = printconnect_getimage('products', $product->id);
+    $product->link = 'products/' . $product->id;
+    $form['other']['#value'][] = $product;
+    $i++;
+
+    if ($i >= 3) {
+      break;
+    }
+  }
+
+  if (isset($form_state['storage']['uploadrequired'])) {
+    $form['uploadrequired']['#value'] = true;
+    drupal_add_js('jQuery(document).ready(function () {
+jQuery.fancybox({
+"autoScale": true,
+"transitionIn": "fade",
+"transitionOut": "fade",
+"hideOnOverlayClick" : true,
+"showCloseButton" : true,
+"enableEscapeButton" :true,
+"href": "#upload-required",
+onClosed: function(){
+jQuery("#upload-required").hide();
+}
+});
+});', 'inline');
+  } else {
+    $form['uploadrequired']['#value'] = false;
+  }
+
+
+  if (isset($form_state['storage']['message'])) {
+    $form['message'] = array(
+        '#type' => 'hidden',
+        '#value' => $form_state['storage']['message'],
+    );
+    unset($form_state['storage']['message']);
+  }
+
+
+
+
+  $form['isFilled'] = array('#value' => $cart->isFilled);
+  $form['#cache'] = TRUE;
+  $form['#tree'] = TRUE;
+
+  $form_state['storage']['cart'] = $cart;
+
+
+  return $form;
+}
+
+function pccart_cart_form_delete_item_validate($form, $form_state) {
+//  drupal_set_message('delete');
+}
+
+function pccart_cart_form_delete_item_submit($form, &$form_state) {
+// drupal_set_message('delete item');
+  $cart = Factory::Current();
+  $id = $form_state['triggering_element']['#parents'][1];
+  try {
+    Factory::DeleteItem($id, $cart);
+  } catch (\printconnect\Rest\Exceptions\Exception $ex) {
+    
+  }
+  if (isset($_SESSION['files'][$id])) {
+    unset($_SESSION['files'][$id]);
+  }
+  $cart = Factory::Refresh($cart);
+  $form_state['rebuild'] = TRUE;
+}
+
+function pccart_cart_form_delete_discount_validate($form, $form_state) {
+//  drupal_set_message('delete');
+}
+
+function pccart_cart_form_delete_discount_submit($form, &$form_state) {
+//drupal_set_message('delete discount');
+  $cart = Factory::Current();
+  $discountId = $form_state['triggering_element']['#parents'] [1];
+  Discounts\Factory::Delete($cart->id, $discountId);
+  $cart = Factory::Refresh($cart);
+  $form_state['rebuild'] = TRUE;
+}
+
+function pccart_cart_form_add_discount_validate($form, &$form_state) {
+  $customer = CustomersFactory::Current();
+  if (strtoupper(substr($form_state['values']['discount']['code'], 0, 2)) == 'GV') {
+    $form_state['storage']['giftvoucher'] = TRUE;
+    if (!$customer) {
+      form_set_error(NULL, t('Please log in to use this giftvoucher...'));
+    }
+  } else {
+    $form_state['storage']['giftvoucher'] = FALSE;
+  }
+}
+
+function pccart_cart_form_add_discount_submit($form, &$form_state) {
+  $cart = Factory::Current();
+  $customer = CustomersFactory::Current();
+  try {
+    if ($customer) {
+      $cart->customer = $customer->id;
+      Factory::Save($cart);
+    }
+    if ($form_state['storage']['giftvoucher']) {
+      \printconnect\GiftVouchers\Factory::Redeem($customer, $form_state['values']['discount']['code']);
+      drupal_set_message(t('Your voucher code has been converted to store credit... You may use this credit while checking out your order.'));
+    } else {
+      $discount = Discounts\Factory::Create($cart->id, $form_state['values']['discount']['code']);
+      Discounts\Factory::Save($discount);
+    }
+    $cart = Factory::Refresh($cart);
+  } catch (\printconnect\Rest\Exceptions\Exception $ex) {
+
+    drupal_set_message(t($ex->errors[0]), 'error');
+    $form_state['storage']['message'] = t($ex->errors[0]);
+  }
+//$form_state['rebuild'] = TRUE;
+}
+
+function pccart_cart_form_validate($form, &$form_state) {
+  $cart = $form_state['storage']['cart'];
+
+  if ($form_state['triggering_element']['#name'] == 'shipping') {
+    $cart->shipping_type = $form_state['values']['shipping'];
+    if ($cart->isPickup && isset($form_state['values']['pup']['id']) && !empty($form_state['values']['pup']['id'])) {
+      $pickuppoint = PickupPoints\Factory::Get($form_state['values']['pup']['id'], $form_state['values']['pup']['countryCode']);
+      $pickuppoint->EnsureLoaded();
+      $cart->pickuppoint = $pickuppoint;
+    } else {
+      $cart->pickuppoint = FALSE;
+    }
+    Factory::Save($cart);
+  }
+  /*
+    if ($form_state['triggering_element']['#name'] == 'add_discount' && $form_state['values']['discount']['code']) {
+    $cart = Factory::Current();
+    $discount = Discounts\Factory::Create($cart->id, $form_state['values']['discount']['code']);
+
+    Discounts\Factory::Save($discount);
+    $cart = Factory::Refresh($cart);
+    }
+   */
+  if (isset($form_state['input']['op']) && ($form_state['input']['op'] == 'ajax')) {
+    $form_state['rebuild'] = TRUE;
+  } else {
+    
+  }
+}
+
+function startsWith($haystack, $needle) {
+  $length = strlen($needle);
+  return (substr($haystack, 0, $length) === $needle);
+}
+
+function pccart_cart_form_submit($form, &$form_state) {
+
+// drupal_set_message('submit');
+}
+
+function pccart_save_form($form, &$form_state) {
+  $item = FALSE;
+
+  $cart = Factory::Current();
+
+  if ($cart && count($cart->orderItems) && $cart->orderItems[0]) {
+    foreach ($cart->orderItems as $cartitem) {
+      if ($cartitem->productPriceGroupId) {
+        $item = $cartitem;
+      }
+    }
+
+    if ($item) {
+      $itemValue = $item->price;
+      $list = array();
+
+      $priceGroup = PriceGroups\Factory::Get($item->productPriceGroupId);
+      $priceGroup->EnsureLoaded();
+
+      $configs = $item->configuration->config;
+
+      foreach ($configs as $config) {
+        $list[] = '<label>' . $config->groupName . ':</label>  ' . $config->name;
+      }
+
+      foreach ($item->options as $option) {
+        $itemValue += $option->price;
+//      $option = Options\Factory::GetPrice($option->id);
+        $list[] = $option->optionName;
+      }
+
+      $pricings = Pricing\Factory::GetPricings($priceGroup->id);
+
+      $upgrade = FALSE;
+      $more = 0;
+
+      foreach ($pricings as $pricing) {
+        if ($pricing->quantity > $item->quantity) {
+          $upgrade = $pricing->quantity;
+          $more = $pricing->sellPrice - $item->price;
+          break;
+        }
+      }
+      /*
+        $form['image'] = array(
+        '#theme' => 'image',
+        '#path' => printconnect_getimage('products', $product->id)
+        //'#value' => printconnect_getimage('products', $product->id),
+        );
+       */
+
+
+      $form['description'] = array(
+          '#type' => 'container',
+          '#attributes' => array('class' => array('description')),
+      );
+      $form['description']['price'] = array(
+          '#theme' => 'price',
+          '#value' => $itemValue,
+      );
+
+      $form['description']['header'] = array(
+          '#prefix' => '<h3>',
+          '#suffix' => '</h3>',
+          '#markup' => $item->quantity . ' ' . $item->configuration->name,
+      );
+
+//      $form['description']['list'] = array(
+//          '#theme' => 'item_list',
+//          '#items' => $list,
+//      );
+
+      if ($upgrade) {
+
+        $form['upgrade'] = array(
+            '#type' => 'container',
+            '#attributes' => array('class' => array('upgrade')),
+        );
+
+        $form['upgrade']['text'] = array(
+            '#markup' => t('Upgrade now to %qty ex. for only !price more', array('%qty' => $upgrade, '!price' => theme('price', array('value' => $more)))),
+        );
+        $form['upgrade']['actions'] = array(
+            '#type' => 'actions',
+        );
+        $form['upgrade']['actions']['submit'] = array(
+            '#type' => 'submit',
+            '#value' => t('Yes, upgrade and save!'),
+            '#attributes' => array('class' => array('large', 'display-block')),
+        );
+      }
+
+      $form_state['storage']['qty'] = $upgrade;
+      $form_state['storage']['id'] = $item->id;
+    }
+  }
+  return $form;
+}
+
+function pccart_save_form_submit($form, &$form_state) {
+  if (isset($form_state['storage']['id']) && isset($form_state['storage']['qty'])) {
+    $cart = Factory::Current();
+    $item = Factory::GetItem($cart, $form_state['storage']['id']);
+    $item->EnsureLoaded();
+    $item->quantity = $form_state['storage']['qty'];
+    $item->cart_item = $item->id;
+    Factory::SaveItem($item);
+
+    Factory::Refresh($cart);
+  }
+}
+
+function pccart_callback() {
+  if (isset($_GET['userKey'])) {
+    $customerId = $_GET['userKey'];
+    $hash = $_GET['hash'];
+    $verification = sha1($customerId . 'agD04vQPx1?FSspl');
+    if ($hash == $verification) {
+      pccustomersbase_login($customerId);
+    }
+  }
+
+  if (isset($_GET['w']) && isset($_GET['h'])) {
+    $w = $_GET['w'];
+    $h = $_GET['h'];
+
+    print '<script type="text/javascript">
+	var addedWidth = 20 + parseInt('.$w.');
+    var docWt = 0, docScrollWidth, docOffsetWidth;
+    var doc =top.document;
+    if (doc.body.scrollWidth)
+      docWt = docScrollWidth= doc.body.scrollWidth;
+    else
+      docWt = docOffsetWidth = doc.body.offsetWidth;
+    if (docScrollWidth && docOffsetWidth) docHt = Math.max(docScrollWidth, docOffsetWidth);
+    var offSet = Math.round((docWt- ' . $w . ')/2);
+    if(offSet < 10){
+        offSet = 10;
+    }
+    top.jQuery("#fancybox-wrap").css({left: offSet + "px"});
+    top.jQuery("#fancybox-inner").width(' . $w . ');
+    top.jQuery("#fancybox-inner").height(' . $h . ');
+    top.jQuery("#fancybox-wrap").width(' . $w . ');
+    top.jQuery("#fancybox-wrap").height(' . $h . ');
+    top.jQuery("#fancybox-content").width(addedWidth);
+    top.jQuery("#fancybox-content").height(' . $h . ');
+	top.jQuery("#fancybox-frame").width(' . $w . ');
+    </script>';
+    exit;
+  }
+
+  $doClose = 0;
+  if (isset($_GET['doClose'])) {
+    $doClose = $_GET['doClose'];
+  }
+  switch ($doClose) {
+    case 2:
+
+    case 1:
+      print '<script type="text/javascript">top.location = top.location;</script>';
+      break;
+    default:
+      if (!isset($_GET['versionsaved'])) {
+        $file = $_GET['fileid'];
+        $thumbnail = $_GET['thumbid'];
+        $id = $_GET['id'];
+        $jobId = $_GET['jobid'];
+        $cartId = $_GET['cartid'];
+
+        if (isset($_GET['myPcId']) && $_GET['myPcId']) {
+          $_SESSION['savedDesigns'][$id] = $_GET['myPcId'];
+        }
+
+//module_invoke('pcdesigntool', 'save', $jobId, 'design');
+
+        $cart = Factory::Current();
+        $customer = CustomersFactory::Current();
+
+        if (!$cart) {
+          $cart = Factory::Create();
+          if ($customer) {
+            $cart->customerId = $customer->id;
+            Carts\Factory::Save($cart);
+          }
+        }
+
+        $cart = Factory::Get($cartId);
+        $item = Factory::GetItem($cart, $id);
+        $item->EnsureLoaded();
+        $item->file = $file;
+        $item->thumbnail = $thumbnail;
+        $item->design_tool_job_id = $jobId;
+        $item->cart_item = $id;
+
+        Factory::SaveItem($item);
+//\printconnect\Carts\Factory::RefreshItem($item);
+        Factory::Refresh($cart);
+        print '<script type="text/javascript">top.location = "' . url('cart') . '";</script>';
+        break;
+      }
+  }
+
+
+
+  exit;
+}
+
+function _pccart_add_json($json) {
+
+  $cart = Factory::Current();
+
+  if (!$cart) {
+    $cart = Factory::Create();
+  }
+
+  $cart->EnsureLoaded();
+
+  $object = json_decode($json);
+
+  foreach ($object->items as $item) {
+    $item = Factory::CreateItem($cart, $item->productPriceGroupId, $item->quantity, '', array(), $item->options, $item->vat);
+  }
+
+  if (isset($object->codes)) {
+    foreach ($object->codes as $code) {
+      try {
+        $discount = Discounts\Factory::Create($cart->id, $code);
+        Discounts\Factory::Save($discount);
+        $cart = Factory::Refresh($cart);
+      } catch (\printconnect\Rest\Exceptions\Exception $ex) {
+        drupal_set_message(t($ex->errors[0]), 'error');
+      }
+    }
+  }
+  Factory::Refresh($cart);
+
+  drupal_goto('cart');
+
+  return print_r($object, true);
+}
+
+function pccart_form_pcgiftvouchers_config_form_alter(&$form, &$form_state, $form_id) {
+  $form['giftvouchers']['footer']['price']['addtocart'] = array(
+      '#type' => 'submit',
+      '#value' => t('Add to cart'),
+      '#weight' => 100,
+      '#submit' => array('pccart_form_pcgiftvouchers_config_form_submit'),
+      '#attributes' => array('class' => array('action', 'cart', 'large', 'display-block')),
+  );
+
+  if ($form_state['storage']['giftvoucher']) {
+    $form['giftvouchers']['footer']['price']['addtocart']['#value'] = t('Update');
+  }
+}
+
+function pccart_form_pcgiftvouchers_config_form_submit($form, $form_state) {
+  $cart = Factory::CurrentOrCreate();
+  if (!$form_state['storage']['giftvoucher']) {
+    $giftVoucher = printconnect\GiftVouchers\Factory::Create($form_state['storage']['amount'], $cart->id);
+  } else {
+    $giftVoucher = $form_state['storage']['giftvoucher'];
+    $giftVoucher->amount = $form_state['storage']['amount'];
+  }
+  printconnect\GiftVouchers\Factory::Save($giftVoucher);
+  drupal_goto('cart');
+}
+
+function pccart_form_pccustomers_loginas_form_alter(&$form, &$form_state, $form_id) {
+  $customer = $form_state['storage']['customer'];
+  if ($customer) {
+    $form['getcart'] = array(
+        '#type' => 'submit',
+        '#submit' => array('pccart_form_pccustomers_loginas_form_submit'),
+        '#value' => t('Get latest cart'),
+    );
+  }
+}
+
+function pccart_form_pccustomers_loginas_form_submit($form, &$form_state) {
+  $customer = $form_state['storage']['customer'];
+  if ($customer) {
+    $cart = Factory::GetLast($customer->id);
+    try {
+      $cart->EnsureLoaded();
+      if ($cart) {
+        $_SESSION['cartid'] = $cart->id;
+        drupal_set_message('Last cart loaded');
+      }
+    } catch (\Exception $ex) {
+      drupal_set_message('No cart found');
+    }
+  }
+}
+
+function pccart_loggedin($customerId) {
+  $cart = Factory::Current();
+  if ($cart) {
+    if ($customerId != $cart->customer) {
+      $cart->customer = $customerId;
+      Factory::Save($cart);
+    }
+  } else {
+    $cart = Factory::GetLast($customerId);
+    try {
+      $cart->EnsureLoaded();
+      if ($cart) {
+        $_SESSION['cartid'] = $cart->id;
+      }
+    } catch (\Exception $ex) {
+      
+    }
+  }
+}
+
+function pccart_loggedout() {
+  try {
+    $cart = Factory::Current();
+    if ($cart) {
+      $cart->Remove('customer');
+      $cart->storeCredit = 0;
+      Factory::Save($cart);
+    }
+  } catch (\Exception $ex) {
+    
+  }
+}
+

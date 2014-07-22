@@ -1,0 +1,21 @@
+<?php
+
+function pcrestdal_dal_info() {
+    return array(
+        'restdal' => array(
+            '#weight' => 0,
+            '#title' => t('Rest Dal'),
+            '#callback' => 'pcrestdal_create_dal',
+        )
+);
+}
+
+function pcrestdal_create_dal() {
+    global $pc_apikey;
+    if ($pc_apikey) {
+        $apikey = $pc_apikey;
+    } else {
+        $apikey =  variable_get('pc_apikey', '5366f78ef949b76f75cd2efa5098e984c309c563');
+    }
+    return new \printconnect\Rest\Dal(variable_get('pc_url', 'http://admin.stg.printconcept.com/rest/'), $apikey, variable_get('pc_timeout', 600));
+}

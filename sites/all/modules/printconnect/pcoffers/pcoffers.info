@@ -1,0 +1,9 @@
+name = Offers
+description = Offers module
+package = printconnect
+core = 7.x
+dependencies[] = printconnect
+
+stylesheets[all][] = pcoffers.css
+
+

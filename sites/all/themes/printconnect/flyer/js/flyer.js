@@ -1,0 +1,142 @@
+jQuery(document).ready(function(e) {
+
+    if (jQuery('#homeSlider').length) {
+        jQuery('#homeSlider ul').cycle({
+    	    pager:'#pagerSliderHolder',
+    	    fx:'scrollUp'
+    	});
+    }
+    
+	jQuery('#helppanel').find('.center-wrapper').eq(0).remove();
+	
+});
+
+(function ($) {
+	
+	////////////////////**///////////////
+	
+	
+	Drupal.behaviors.textarea = {
+  attach: function (context, settings) {
+    $('.form-textarea-wrapper.resizable', context).once('textarea', function () {
+      var staticOffset = null;
+      var textarea = $(this).addClass('resizable-textarea').find('textarea');
+      var grippie = $('<div class="grippie"></div>').mousedown(startDrag);
+
+      grippie.insertAfter(textarea);
+
+      function startDrag(e) {
+        staticOffset = textarea.height() - e.pageY;
+        textarea.css('opacity', 0.25);
+        $(document).mousemove(performDrag).mouseup(endDrag);
+        return false;
+      }
+
+      function performDrag(e) {
+        var  before = textarea.height();
+        textarea.height(Math.max(32, staticOffset + e.pageY) + 'px');
+        var after = textarea.height();
+        if (parent.jQuery('#fancybox-content').length > 0) {
+            parent.jQuery('#fancybox-content').height(parent.jQuery('#fancybox-content').height() + (after - before));
+        }
+        
+        return false;
+      }
+
+      function endDrag(e) {
+        $(document).unbind('mousemove', performDrag).unbind('mouseup', endDrag);
+        textarea.css('opacity', 1);
+      }
+    });
+  }
+};
+	
+	
+	
+	//////////////////////***////////////////
+    Drupal.behaviors.flyer = {
+        detach: function (context) {},
+        attach: function (context, settings) {
+            $('.page-templates .filters').accordion({
+                header: "h3",
+                autoHeight: false
+            });
+			
+    $(".videoutub").click(function() {
+        $.fancybox({
+			'padding'		: 0,
+			'transitionIn'	: 'none',
+			'transitionOut'	: 'none',
+			'title'			: this.title,
+			'href'			: this.href,
+		    'type'			: 'iframe',
+		    onComplete: function (links, index) {  
+			    var id = $('#fancybox-content').find('iframe').attr('id');
+			    var player = new YT.Player(id, {
+				    events: {
+				        'onReady':onPlayerReady,
+				    }
+			    });
+				   
+			},
+			onClosed : function(){
+		        console.log('Closed');
+			}	   
+    });
+	return false;
+});
+		   $("a.iframe").click(function(e) {
+            return false;
+           });
+		
+
+            $('.videosOptionsBar li a').click(function (e) {
+                return false;
+            });
+            $('#SliderCreaHomePage').jCarouselLite({
+                btnPrev: ".nextCrea",
+                btnNext: ".prevCrea",
+                visible: 4,
+                speed: 500,
+                circular: true
+            });
+            $('a.nextCrea ,a.prevCrea').click(function (e) {
+                return false;
+            });
+            $('a.nextCrea ,a.prevCrea').hover(function () {
+                $(this).animate({
+                    opacity: 0.5
+                }, 300);
+            }, function () {
+                $(this).animate({
+                    opacity: 1
+                }, 300);
+            });
+       
+            $(".button,input[type=submit]").button();
+            $('#pcproducts-calculator-form select').selectBox();
+            $('table tr td input:checked').each(function () {
+                $(this).parents('tr').addClass('checked');
+            });
+            $('table > tbody > tr > td input[type=radio]').each(function () {
+                var radio = $(this);
+                var tr = $(this).parents('tr');
+                tr.click(function (e) {
+                    radio.attr('checked', true);
+                    radio.trigger('change');
+                })
+                $('a', tr).click(function (e) {
+                    e.stopPropagation();
+                })
+            });
+            $('.form-type-textfield, .form-type-password', context)
+			    .has('.description').each(function () {
+                    $('input, select', this).attr('title', $('.description', this)
+					    .html());
+                    $('input, select', this)
+					    .attr('placeholder', $('.description', this).html());
+                    $('.description', this).hide();
+            });
+        }
+	}
+})(jQuery);

@@ -1,0 +1,6 @@
+name = Newsletters
+description = Newsletters module
+package = printconnect
+core = 7.x
+
+dependencies[] = pccustomers

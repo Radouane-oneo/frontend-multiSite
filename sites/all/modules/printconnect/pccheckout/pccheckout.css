@@ -1,0 +1,192 @@
+
+html.js #pccheckout-checkout-form fieldset.collapsed{
+  height:inherit;
+}
+
+/*#pccheckout-checkout-form .actions{
+  margin-top:2%;
+}*/
+#pccheckout-checkout-form .actions .button, #pccheckout-checkout-form .actions input[type=submit]{
+  float:right;
+}
+#pccheckout-invoiceanddelivery-form fieldset#shipping .messages {
+    border: 1px solid #FF0000;
+    color: #FF0000;
+    font-size: 14px;
+    margin: 6px 0 0 21px;
+}
+#pccheckout-invoiceanddelivery-form .summary .invoice{
+  float:right;
+  width:50%;
+  padding:0;
+  margin:0;
+  border:none;
+}
+
+#pccheckout-invoiceanddelivery-form .summary .shipping{
+  float:left;
+  width:50%;
+  padding:0;
+  margin:0;
+  border:none;
+}
+
+#pccheckout-invoiceanddelivery-form fieldset legend{
+  display:none;
+}
+
+.page-checkout #invoice-address {
+  clear:both;
+}
+
+.page-checkout .form-item-actions-agree label{
+  width:inherit;
+  float:none;
+}
+.page-checkout-payment table th, .page-checkout-payment table td{
+  /*white-space:nowrap;*/
+  padding-right:1em;
+  padding-left:1em;
+  height: 34px;
+}
+.lineSeparator {
+    background: none repeat scroll 0 0 white;
+    padding: 8px 0px;
+    text-transform: uppercase;
+    line-height: 21px;
+    font-size: 20px;
+    font-weight: 600;
+}
+.page-checkout-invoiceanddelivery #shipping-address a{
+    width: 180px;
+	margin-left: 5px;
+}
+
+.page-checkout-invoiceanddelivery #shipping-address .form-item-shipping-detail-contact{
+    float: left!important;
+}
+
+.neutralDescritpion, #neutralRadio {
+     margin: -12px 5px -12px 17px;
+}
+
+.form-item-isCompany input {
+    float: left !important;
+    position: relative;
+    z-index: 99;
+}
+#pccustomers-newaddress-billingaddresses-form .form-item-isCompany input ,
+#pccustomers-address-billingaddresses-form .form-item-isCompany input{
+   left: auto !important;
+}
+
+.form-item-invoice-address-current-isCompany input {
+    left: 220px;
+    position: relative;
+    top: -14px;
+    z-index: 99;
+}
+
+.form-item-isCompany label {
+    float: none !important;
+    position: relative;
+    top: -10px;
+    width: 200px !important;
+}
+#pccustomers-newaddress-billingaddresses-form .form-item-isCompany label,
+#pccustomers-address-billingaddresses-form .form-item-isCompany label{
+    top: 0px !important;
+    font-weight: bold;
+}
+.form-item-invoice-address-current-isCompany label {
+    float: none !important;
+    position: relative;
+    top: 20px;
+    width: 200px !important;
+}
+
+.form-item-company{
+    display: none;
+}
+
+
+.payment-origin-price {
+    float: right;
+    font-family: Tahoma;
+    font-size: 10px;
+    position: relative;
+    top: -8px;
+    }
+#light .form-submit{
+    float: right;
+margin-left: 0px !important;
+}
+
+.black_overlay{
+     display: none;
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        z-index:1001;
+        -moz-opacity: 0.8;
+        opacity:.80;
+        filter: alpha(opacity=80);
+    }
+    .black_overlay2{
+        display: block;
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        z-index:1001;
+        -moz-opacity: 0.8;
+        opacity:.80;
+        filter: alpha(opacity=80);
+    }
+    .white_content {
+        position: absolute;
+        top: 120px;
+        left: 25%;
+        width: 50%;
+        height: auto;
+        padding: 16px;
+        border: 5px solid rgb(206, 206, 206);
+        background-color: white;
+        z-index: 1002;
+        overflow: hidden;
+    }
+    .button_valid_address_vat{
+    float: right;
+    color: #fff;
+    display: block;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    padding: 8px 10px;
+    border-radius: 4px 4px 4px 4px;
+    border: none;
+    margin: 0;
+    text-align: left;
+    background: #77b800;
+
+    }
+  .button_null_address_vat{
+    color: #fff;
+    display: block;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    padding: 8px 10px;
+    border-radius: 4px 4px 4px 4px;
+    border: none;
+    margin: 0;
+    text-align: left;
+    background: #EB1616;
+
+
+}

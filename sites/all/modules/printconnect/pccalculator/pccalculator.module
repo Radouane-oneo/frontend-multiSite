@@ -1,0 +1,226 @@
+<?php
+
+use printconnect\Products\Factory;
+use printconnect\Products\Configurations;
+use printconnect\Products\Product;
+use printconnect\Drupal\Functions;
+
+/* implements hook_menu
+ *
+ * urls
+ *
+ */
+
+function pccalculator_menu() {
+  $items['js/pccalculator/%'] = array(
+      'page callback' => '_pccalculator_js_callback',
+      'page arguments' => array(2),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+/* implements hook_theme
+ * defined theming functions
+ */
+
+function pccalculator_theme() {
+  return array(
+      'pccalculator_calculator_block' => array(
+          'variables' => array('form' => NULL),
+          'template' => 'pccalculator-calculator-block',
+      ),
+      'pccalculator_calculator_form' => array(
+          'render element' => 'form',
+          'template' => 'pccalculator-calculator-form',
+      ),
+      'pccalculator_calculator_form2' => array(
+          'render element' => 'form',
+          'template' => 'pccalculator-calculator-form2',
+      ),
+  );
+}
+
+function _pccalculator_js_callback($productId) {
+  $matches = array();
+  $configs = Configurations\Factory::Get($productId);
+  $typeItems = $configs->GetTypeItems();
+
+  foreach ($typeItems as $typeItem) {
+    $matches[$typeItem->id] = $typeItem->name;
+  }
+
+
+//  $matches = array();
+//  if ($string) {
+//    $products = Factory::Search($string);
+//    foreach ($products as $product) {
+//      $name = t($product->name);
+//      if (preg_match("/$string/i", $name)) {
+//        $matches[$name] = $name;
+//      }
+//    }
+//  }
+
+  $element = array();
+
+
+  return drupal_json_output(form_select_options($element, $matches));
+  return drupal_json_output(array('count' => count($matches), 'result' => theme('item_list', array('items' => $matches))));
+}
+
+/* implements hook_block_info
+ * define blocks
+ */
+
+function pccalculator_block_info() {
+  $blocks['calculator'] = array(
+      'info' => t('Print calculator') . '(USE THE OTHER ONE)',
+  );
+  $blocks['calculator2'] = array(
+      'info' => t('Print calculator 2') . '(USE THE OTHER ONE)',
+  );
+  return $blocks;
+}
+
+/* implements hook_block_view
+ * block implementation
+ */
+
+function pccalculator_block_view($delta = '') {
+
+  switch ($delta) {
+    case 'calculator':
+      $block = array();
+
+      //$block['subject'] = t('Print calculator');
+      $block['content'] = drupal_get_form('pccalculator_calculator_form');
+
+      return $block;
+      break;
+    case 'calculator2':
+      $block = array();
+
+      //$block['subject'] = t('Print calculator');
+      $block['content'] = drupal_get_form('pccalculator_calculator_form', 'calculator2');
+
+      return $block;
+      break;
+  }
+  return $block;
+}
+
+/* the form */
+
+function pccalculator_calculator_form($form, &$form_state, $type = 'calculator') {
+  global $user;
+  $options = array();
+  $specs = array();
+  $products = Factory::GetAll();
+
+//  $products = $products->items;
+//  usort($products, function (Product $a, Product $b) {
+//            return strcmp(t($a->name), t($b->name));
+//          });
+
+  foreach ($products as $product) {
+    if ($user->uid || $product->active) {
+      $options[$product->id] = $product->name;
+      $form['products']['#value'][$product->id]['name'] = $product->name;
+      $form['products']['#value'][$product->id]['image'] = Functions::GetImage('products', $product->id);
+    }
+  }
+
+  if (isset($form_state['values']['product'])) {
+    //$configs = Configurations\Factory::Get($form_state['values']['product']);
+    //$configs->EnsureLoaded();
+    //$typeItems = $configs->GetTypeItems;
+    $typeItems = Configurations\Factory::GetTypeItems($form_state['values']['product']);
+
+    foreach ($typeItems as $typeItem) {
+      $specs[$typeItem->id] = $typeItem->name;
+      $form['items']['#value'][$typeItem->id]['name'] = $typeItem->name;
+      //$form['items']['#value'][$typeItem->id]['image'] = Functions::GetImage('items', $typeItem->id);
+      $form['items']['#value'][$typeItem->id]['image'] = l(theme('image', array('path' => printconnect_getimage('items', $typeItem->id))), 'products/' . $form_state['values']['product'] . '/' . $typeItem->id, array('html' => TRUE, 'attributes' => array('onclick' => "_gaq.push(['_trackEvent', '" . $type . "', 'calculate_price', 'price_calculator']);")));
+      $form['items']['#value'][$typeItem->id]['link'] = 'products/' . $form_state['values']['product'] . '/' . $typeItem->id;
+    }
+  }
+
+  $form['product'] = array(
+      '#type' => 'select',
+      //'#size' => 20,
+      //'#description' => t('Type or choose product'),
+      '#options' => $options,
+      '#empty_value' => 0,
+      '#empty_option' => '- ' . t('Choose product') . ' -',
+      '#required' => TRUE,
+      '#default_value' => isset($form_state['values']['product']) ? $form_state['values']['product'] : 0,
+  );
+  $form['spec'] = array(
+      '#type' => 'select',
+//      '#size' => 20,
+      // '#description' => t('Choose size or shape'),
+      '#attributes' => array('autocomplete' => 'OFF'),
+      '#options' => $specs,
+      '#required' => FALSE,
+  );
+
+  if (count($specs)) {
+    $form['spec']['#required'] = TRUE;
+    $form['spec']['#default_value'] = array_shift(array_keys($specs));
+    $form['spec']['#disabled'] = FALSE;
+  } else {
+    $form['spec']['#empty_value'] = 0;
+    $form['spec']['#empty_option'] = '- ' . t('Choose size or shape') . ' -';
+    $form['spec']['#disabled'] = TRUE;
+    $form['spec']['#attributes'] = array('class' => array('disabled'));
+  }
+
+  $form['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Calculate my price'),
+      '#attributes' => array('class' => array('button', 'display-block', 'large', 'cart')),
+  );
+
+  $form['#id'] = 'pccalculator-calculator-form';
+
+//$form_state['rebuild'] = TRUE;
+
+  return $form;
+}
+
+function pccalculator_calculator_form_validate($form, &$form_state) {
+  if ($form_state['input']['op'] == 'ajax') {
+    $form_state['rebuild'] = TRUE;
+  }
+  //drupal_goto('products/' . $productId . '/' . $spec);
+}
+
+//function pccalculator_calculator_form_callback($form, $form_state) {
+//  return $form;
+//}
+
+
+/* the form submit function */
+function pccalculator_calculator_form_submit($form, $form_state) {
+  /* $form_state['values'] contains submitted values */
+  $productId = $form_state['values']['product'];
+  if ($form_state['values']['spec']) {
+    $spec = $form_state['values']['spec'];
+    drupal_goto('products/' . $productId . '/' . $spec);
+  } else {
+    drupal_goto('products/' . $productId);
+  }
+}
+
+function _pccalculator_get_product_by_name($name) {
+
+  /* autoloaded in module \classes\printconnect\<namespace>.... */
+  $products = Factory::GetAll();
+  foreach ($products as $product) {
+    if ($product->name == $name) {
+      return $product->id;
+    }
+  }
+}

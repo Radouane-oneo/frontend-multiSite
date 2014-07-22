@@ -1,0 +1,12 @@
+name = Payments
+description = Payments
+package = printconnect
+core = 7.x
+
+dependencies[] = printconnect
+
+stylesheets[all][] = pcpayments.css
+
+scripts[] = pcpayments.js
+
+

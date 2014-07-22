@@ -1,0 +1,2 @@
+msgid "Products"
+msgstr "Les imprimes"

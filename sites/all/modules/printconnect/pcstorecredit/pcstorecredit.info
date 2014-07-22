@@ -1,0 +1,8 @@
+name = Store credit
+description = Store credit 
+package = printconnect
+core = 7.x
+
+dependencies[] = pccustomers
+dependencies[] = pcorders
+

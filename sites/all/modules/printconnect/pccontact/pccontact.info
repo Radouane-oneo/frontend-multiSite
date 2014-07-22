@@ -1,0 +1,10 @@
+name = Contact
+description = Contact module
+package = printconnect
+core = 7.x
+
+dependencies[] = pccustomers
+stylesheets[all][] = contact.css
+scripts[] = pccontact.js
+
+

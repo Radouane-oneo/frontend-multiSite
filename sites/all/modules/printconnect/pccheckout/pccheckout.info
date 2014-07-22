@@ -1,0 +1,16 @@
+name = Checkout
+description = Checkout module
+package = printconnect
+core = 7.x
+
+dependencies[] = pccustomers
+dependencies[] = pcpayments
+dependencies[] = pccart
+dependencies[] = pcvat
+
+scripts[] = pccheckout.js
+
+stylesheets[all][] = pccheckout.css
+
+
+

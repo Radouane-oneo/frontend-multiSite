@@ -1,0 +1,3420 @@
+# $Id$
+#
+# French translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  pcanalytics/pcanalytics.info: n/a
+#  pcbase/pcbase.info: n/a
+#  pcbpost/pcbpost.info: n/a
+#  pccalculator/pccalculator.info: n/a
+#  pccart/pccart.info: n/a
+#  pccheckout/pccheckout.info: n/a
+#  pccobranding/pccobranding.info: n/a
+#  pccontact/pccontact.info: n/a
+#  pccontenttypes/pccontenttypes.info: n/a
+#  pccustomers/pccustomers.info: n/a
+#  pcdesigner/pcdesigner.info: n/a
+#  pcdesigns/pcdesigns.info: n/a
+#  pcdesigntool/pcdesigntool.info: n/a
+#  pcdevel/pcdevel.info: n/a
+#  pcelections/pcelections.info: n/a
+#  pcfancybox/pcfancybox.info: n/a
+#  pcfeedback/pcfeedback.info: n/a
+#  pcfiles/pcfiles.info: n/a
+#  pcgiftvouchers/pcgiftvouchers.info: n/a
+#  pchints/pchints.info: n/a
+#  pcinvoices/pcinvoices.info: n/a
+#  pclivecom/pclivecom.info: n/a
+#  pcmenu/pcmenu.info: n/a
+#  pcnewsletters/pcnewsletters.info: n/a
+#  pcoffers/pcoffers.info: n/a
+#  pcogone/pcogone.info: n/a
+#  pcorders/pcorders.info: n/a
+#  pcpayments/pcpayments.info: n/a
+#  pcpickuppoints/pcpickuppoints.info: n/a
+#  pcproducts/pcproducts.info: n/a
+#  pcrestdal/pcrestdal.info: n/a
+#  pcrotator/pcrotator.info: n/a
+#  pcsamplepacks/pcsamplepacks.info: n/a
+#  pcsearch/pcsearch.info: n/a
+#  pcsegments/pcsegments.info: n/a
+#  pcselect/pcselect.info: n/a
+#  pcsitemap/pcsitemap.info: n/a
+#  pcsocial/pcsocial.info: n/a
+#  pcstorecredit/pcstorecredit.info: n/a
+#  pcstores/pcstores.info: n/a
+#  pcsubtitle/pcsubtitle.info: n/a
+#  pctemplates/pctemplates.info: n/a
+#  pctradetracker/pctradetracker.info: n/a
+#  pcuploader/pcuploader.info: n/a
+#  pcvat/pcvat.info: n/a
+#  pcbase/pcbase.module: n/a
+#  pclivecom/pclivecom.module: n/a
+#  pctemplates/pctemplates.config.inc: n/a
+#  pccart/pccart.forms.inc: n/a
+#  pccheckout/pccheckout.forms.inc: n/a
+#  pcorders/pcorders.forms.inc: n/a
+#  pcproducts/pcproducts.config.inc: n/a
+#  pcbpost/pcbpost.module: n/a
+#  pccheckout/pccheckout.form.inc: n/a
+#  pccheckout/pccheckout.module: n/a
+#  pccheckout/pccheckout_20110528.module: n/a
+#  pccontact/pccontact.forms.inc: n/a
+#  pccontact/pccontact.module: n/a
+#  pccustomers/pccustomers.forms.inc: n/a
+#  pccustomers/pccustomers.module: n/a
+#  pcnewsletters/pcnewsletters.module: n/a
+#  pcstores/pcstores.module: n/a
+#  pcmenu/pcmenu.module: n/a
+#  pcsearch/pcsearch.module: n/a
+#  pctemplates/pctemplates.selection.inc: n/a
+#  pcbase/classes/printconnect/Drupal/Functions.php: n/a
+#  pcbpost/pcbpost.forms.inc: n/a
+#  pcgiftvouchers/pcgiftvouchers.module: n/a
+#  pcinvoices/pcinvoices.module: n/a
+#  pcpickuppoints/pcpickuppoints.module: n/a
+#  pcsamplepacks/pcsamplepacks.forms.inc: n/a
+#  pccalculator/pccalculator.module: n/a
+#  pcproducts/pcproducts.module: n/a
+#  pccart/pccart.module: n/a
+#  pcoffers/pcoffers.forms.inc: n/a
+#  pcdesigner/pcdesigner.forms.inc: n/a
+#  pcdesigntool/pcdesigntool.module: n/a
+#  pcuploader/pcuploader.module: n/a
+#  pcuploader/pcuploader2.module: n/a
+#  pcdesigns/pcdesigns.module: n/a
+#  pcorders/pcorders.module: n/a
+#  pcproducts/pcproducts.forms.inc: n/a
+#  pccartbase/pccartbase.info: n/a
+#  pccustomersbase/pccustomersbase.info: n/a
+#  pcinvoicesbase/pcinvoicesbase.info: n/a
+#  pcordersbase/pcordersbase.info: n/a
+#  pcpaymentsbase/pcpaymentsbase.info: n/a
+#  pcproductsbase/pcproductsbase.info: n/a
+#  pcshipping/pcshipping.info: n/a
+#  pctemplatesbase/pctemplatesbase.info: n/a
+#  pcogone/pcogone.module: n/a
+#  pcstorecredit/pcstorecredit.module: n/a
+#  pcpayments/pcpayments.forms.inc: n/a
+#  pcpayments/pcpayments.module: n/a
+#  pcoffers/pcoffers.module: n/a
+#  pcsamplepacks/pcsamplepacks.module: n/a
+#  pcgiftvouchers/pcgiftvouchers.forms.inc: n/a
+#  pccobranding/pccobranding.forms.inc: n/a
+#  pccobranding/pccobranding.module: n/a
+#  pctemplates/pctemplates.module: n/a
+#  pcproductsbase/pcproductsbase.module: n/a
+#  pcfeedback/pcfeedback.module: n/a
+#  pccontenttypes/pccontenttypes.module: n/a
+#  pcuploader/pcuploader3.module: n/a
+#  pcdesigner/pcdesigner.module: n/a
+#  pcfiles/pcfiles.module: n/a
+#  pcdevel/pcdevel.module: n/a
+#  pcelections/pcelections.module: n/a
+#  pclivecom/pclivecom-chat-block.tpl.php: n/a
+#  pcsitemap/pcsitemap.module: n/a
+#  pcrestdal/pcrestdal.module: n/a
+#  pcrestdal/classes/printconnect/Rest/Dal.php: n/a
+#  pcrotator/pcrotator.module: n/a
+#  pcsegments/pcsegments.module: n/a
+#  pcsocial/pcsocial.module: n/a
+#  pcstores/pcstores.forms.inc: n/a
+#  pcsubtitle/pcsubtitle.module: n/a
+#  pcuploader/pcuploader_old.js: n/a
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2013-02-04 14:37+0100\n"
+"PO-Revision-Date: 2013-02-14 13:34+0100\n"
+"Last-Translator: \n"
+"Language-Team: French <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n>1);\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#: pcanalytics/pcanalytics.info:0
+msgid "Analytics"
+msgstr ""
+
+#: pcanalytics/pcanalytics.info:0
+msgid "Adds Google Analytics and Remarketing code to pages"
+msgstr ""
+
+#: pcanalytics/pcanalytics.info:0 pcbase/pcbase.info:0 pcbpost/pcbpost.info:0
+#: pccalculator/pccalculator.info:0 pccart/pccart.info:0
+#: pccheckout/pccheckout.info:0 pccobranding/pccobranding.info:0
+#: pccontact/pccontact.info:0 pccontenttypes/pccontenttypes.info:0
+#: pccustomers/pccustomers.info:0 pcdesigner/pcdesigner.info:0
+#: pcdesigns/pcdesigns.info:0 pcdesigntool/pcdesigntool.info:0
+#: pcdevel/pcdevel.info:0 pcelections/pcelections.info:0
+#: pcfancybox/pcfancybox.info:0 pcfeedback/pcfeedback.info:0
+#: pcfiles/pcfiles.info:0 pcgiftvouchers/pcgiftvouchers.info:0
+#: pchints/pchints.info:0 pcinvoices/pcinvoices.info:0
+#: pclivecom/pclivecom.info:0 pcmenu/pcmenu.info:0
+#: pcnewsletters/pcnewsletters.info:0 pcoffers/pcoffers.info:0
+#: pcogone/pcogone.info:0 pcorders/pcorders.info:0
+#: pcpayments/pcpayments.info:0 pcpickuppoints/pcpickuppoints.info:0
+#: pcproducts/pcproducts.info:0 pcrestdal/pcrestdal.info:0
+#: pcrotator/pcrotator.info:0 pcsamplepacks/pcsamplepacks.info:0
+#: pcsearch/pcsearch.info:0 pcsegments/pcsegments.info:0
+#: pcselect/pcselect.info:0 pcsitemap/pcsitemap.info:0
+#: pcsocial/pcsocial.info:0 pcstorecredit/pcstorecredit.info:0
+#: pcstores/pcstores.info:0 pcsubtitle/pcsubtitle.info:0
+#: pctemplates/pctemplates.info:0 pctradetracker/pctradetracker.info:0
+#: pcuploader/pcuploader.info:0 pcvat/pcvat.info:0
+msgid "printconnect"
+msgstr ""
+
+#: pcbase/pcbase.module:207 pclivecom/pclivecom.module:37;373;5
+msgid "Help"
+msgstr "Aide"
+
+#: pcbase/pcbase.module:289
+msgid "Free"
+msgstr "Gratuit"
+
+#: pcbase/pcbase.module:360;368;384
+msgid "Total excl. VAT"
+msgstr "Total hors TVA"
+
+#: pcbase/pcbase.module:361;372;388 pctemplates/pctemplates.config.inc:408
+msgid "VAT"
+msgstr "TVA"
+
+#: pcbase/pcbase.module:362;376;392 pccart/pccart.forms.inc:636
+#: pccheckout/pccheckout.forms.inc:1196 pcorders/pcorders.forms.inc:383
+#: pcproducts/pcproducts.config.inc:350 pctemplates/pctemplates.config.inc:974
+msgid "Total incl. VAT"
+msgstr "Total TVA incl."
+
+#: pcbase/pcbase.module:543
+msgid "Dal"
+msgstr ""
+
+#: pcbase/pcbase.module:545
+msgid "The Dal to use"
+msgstr ""
+
+#: pcbase/pcbase.module:558
+msgid "Payment gateway"
+msgstr ""
+
+#: pcbase/pcbase.module:560
+msgid "The payment gateway to use"
+msgstr ""
+
+#: pcbase/pcbase.module:566
+msgid "Use cache"
+msgstr ""
+
+#: pcbase/pcbase.module:568
+msgid "Use the caching mechanism."
+msgstr ""
+
+#: pcbase/pcbase.module:583
+msgid "Phone number"
+msgstr ""
+
+#: pcbase/pcbase.module:588 pcbpost/pcbpost.module:351
+#: pccheckout/pccheckout.form.inc:219;1182
+#: pccheckout/pccheckout.module:354;470;628
+#: pccheckout/pccheckout_20110528.module:380;597;1055;1130;1271
+#: pccontact/pccontact.forms.inc:42 pccontact/pccontact.module:300;376
+#: pccustomers/pccustomers.forms.inc:110;610;906
+#: pccustomers/pccustomers.module:628;685
+#: pcnewsletters/pcnewsletters.module:86;88;154 pcstores/pcstores.module:436
+msgid "Email"
+msgstr "Adresse émail"
+
+#: pcbase/pcbase.module:608;639
+msgid "More like this"
+msgstr "Plus comme ceci"
+
+#: pcbase/pcbase.module:611
+msgid "Progress"
+msgstr ""
+
+#: pcbase/pcbase.module:734
+msgid "Watchdog entry of severity @severity"
+msgstr ""
+
+#: pcbase/pcbase.module:891;961
+msgid "Help page"
+msgstr ""
+
+#: pcbase/pcbase.module:894
+msgid "Specify a relative URL to display as the help page."
+msgstr ""
+
+#: pcbase/pcbase.module:899;969 pcmenu/pcmenu.module:70;137
+msgid "General conditions"
+msgstr "Conditions générales"
+
+#: pcbase/pcbase.module:902
+msgid "Specify a relative URL to display as the general conditions page."
+msgstr ""
+
+#: pcbase/pcbase.module:912;931
+msgid "PrintConnect"
+msgstr ""
+
+#: pcbase/pcbase.module:913;932
+msgid "Addtional settings"
+msgstr ""
+
+#: pcbase/pcbase.module:917
+msgid "Additional css to be loaded in this theme"
+msgstr ""
+
+#: pcbase/pcbase.module:919
+msgid ""
+"Specify extra css rules to be loaded in the theme, do not use the &lt;"
+"style&gt; tag."
+msgstr ""
+
+#: pcbase/pcbase.module:941
+msgid "The currency to be used when displaying prices"
+msgstr ""
+
+#: pcbase/pcbase.module:951;955 pcsearch/pcsearch.module:5;77;84
+#: pcsearch/pcsearch.info:0 pctemplates/pctemplates.selection.inc:522;636
+msgid "Search"
+msgstr "Rechercher"
+
+#: pcbase/pcbase.module:963
+msgid "The help page of this website."
+msgstr ""
+
+#: pcbase/pcbase.module:971
+msgid "The general conditions page of this website."
+msgstr ""
+
+#: pcbase/pcbase.module:997
+msgid "Loading"
+msgstr "En cours de chargement"
+
+#: pcbase/pcbase.module:1006
+msgid "Copy content"
+msgstr ""
+
+#: pcbase/pcbase.module:1007
+msgid "Copies another part into this"
+msgstr ""
+
+#: pcbase/pcbase.info:0
+msgid "Base"
+msgstr "Base"
+
+#: pcbase/pcbase.info:0
+msgid "PrintConnect base module"
+msgstr ""
+
+#: pcbase/classes/printconnect/Drupal/Functions.php:23
+msgid "Cannot log in"
+msgstr ""
+
+#: pcbase/classes/printconnect/Drupal/Functions.php:38;40
+msgid "An exception occurred."
+msgstr ""
+
+#: pcbpost/pcbpost.forms.inc:10
+msgid ""
+"This service is temporarily unavailable. We apologize for this "
+"inconvenience... Please try again later or choose another shipping method..."
+msgstr ""
+
+#: pcbpost/pcbpost.forms.inc:64
+#: pccheckout/pccheckout.form.inc:290;401;1253;1362
+#: pccheckout/pccheckout.forms.inc:82 pccheckout/pccheckout.module:689
+#: pccheckout/pccheckout_20110528.module:710;862;1352;1465
+#: pcgiftvouchers/pcgiftvouchers.module:88 pcinvoices/pcinvoices.module:161
+#: pcpickuppoints/pcpickuppoints.module:509
+#: pcsamplepacks/pcsamplepacks.forms.inc:107
+msgid "Postal code"
+msgstr "Code postal"
+
+#: pcbpost/pcbpost.forms.inc:71 pcinvoices/pcinvoices.module:166
+#: pcpickuppoints/pcpickuppoints.module:515
+msgid "Place"
+msgstr "Ville"
+
+#: pcbpost/pcbpost.forms.inc:78 pcpickuppoints/pcpickuppoints.module:520
+msgid "Find"
+msgstr "Rechercher"
+
+#: pcbpost/pcbpost.forms.inc:115
+msgid "Choose a pickup point"
+msgstr "Choisissez un point relais"
+
+#: pcbpost/pcbpost.forms.inc:119
+msgid ""
+"You have not selected a pickupoint. Fill in your postal code or place above "
+"and click 'Find'"
+msgstr ""
+"Vous n'avez pas encore sélectionné un point relais. Entrez votre code postal "
+"ou nom de ville, et cliquez sur le bouton \"Rechercher\""
+
+#: pcbpost/pcbpost.forms.inc:201
+msgid "No pickup points found"
+msgstr ""
+
+#: pcbpost/pcbpost.module:87 pcstores/pcstores.module:564
+msgid "Select this pickup point"
+msgstr "Sélectionnez ce point relais"
+
+#: pcbpost/pcbpost.module:115 pcpickuppoints/pcpickuppoints.module:597
+#: pcstores/pcstores.module:162
+msgid "Opening hours"
+msgstr "Heures d'ouverture"
+
+#: pcbpost/pcbpost.module:144 pcpickuppoints/pcpickuppoints.module:621
+#: pcstores/pcstores.module:221
+msgid "Choose your pickup point"
+msgstr "Choisissez votre point relais"
+
+#: pcbpost/pcbpost.module:257;275;289
+#: pccheckout/pccheckout_20110528.module:565;1239
+#: pcpickuppoints/pcpickuppoints.module:655;670
+msgid "Choose another pickup point in your neighbourhood"
+msgstr "Choisissez un autre point relais"
+
+#: pcbpost/pcbpost.module:292 pccheckout/pccheckout_20110528.module:561;1235
+msgid "Choose a pickup point in your neighbourhood"
+msgstr "Choisissez un point relais"
+
+#: pcbpost/pcbpost.module:338 pccheckout/pccheckout.form.inc:204;1167
+#: pccheckout/pccheckout.module:613
+#: pccheckout/pccheckout_20110528.module:582;1256 pcstores/pcstores.module:423
+msgid "Who will pick up your print work?"
+msgstr "Qui va collecter les imprimés?"
+
+#: pcbpost/pcbpost.module:345 pccheckout/pccheckout.form.inc:212;1175
+#: pccheckout/pccheckout.module:621
+#: pccheckout/pccheckout_20110528.module:590;1264 pcstores/pcstores.module:430
+msgid "SMS"
+msgstr ""
+
+#: pcbpost/pcbpost.module:358 pccheckout/pccheckout.forms.inc:503;591
+#: pccustomers/pccustomers.forms.inc:390;511 pcstores/pcstores.module:442
+msgid "Save"
+msgstr "Enregistrer"
+
+#: pcbpost/pcbpost.module:371;379 pccheckout/pccheckout.form.inc:1601
+#: pccheckout/pccheckout.module:1367;1518
+#: pccheckout/pccheckout_20110528.module:622;1678;2157
+#: pcstores/pcstores.module:455;463;523
+msgid "Please select a pickup point"
+msgstr "Sélectionnez un point relais"
+
+#: pcbpost/pcbpost.module:5;14
+msgid "Pick up your order"
+msgstr ""
+
+#: pcbpost/pcbpost.info:0
+msgid "bPost"
+msgstr ""
+
+#: pcbpost/pcbpost.info:0
+msgid "bPost shipping integration"
+msgstr ""
+
+#: pccalculator/pccalculator.module:79
+msgid "Print calculator"
+msgstr "Calculateur de prix"
+
+#: pccalculator/pccalculator.module:82
+msgid "Print calculator 2"
+msgstr ""
+
+#: pccalculator/pccalculator.module:156
+msgid "Choose product"
+msgstr "Choisissez un produit"
+
+#: pccalculator/pccalculator.module:175
+msgid "Choose size or shape"
+msgstr "Choisissez une taille ou une forme"
+
+#: pccalculator/pccalculator.module:182
+msgid "Calculate my price"
+msgstr "Calculer mon prix"
+
+#: pccalculator/pccalculator.info:0 pcproducts/pcproducts.module:1544
+msgid "Calculator"
+msgstr "Calculateur des prix"
+
+#: pccalculator/pccalculator.info:0
+msgid "The Print Calculator block"
+msgstr ""
+
+#: pccart/pccart.forms.inc:34
+msgid "There are no products in your cart"
+msgstr "Votre panier est vide!"
+
+#: pccart/pccart.forms.inc:39
+msgid "Click here to continue shopping"
+msgstr "Cliquez ici pour continuer vos achats"
+
+#: pccart/pccart.forms.inc:45 pccart/pccart.module:424
+msgid "Shopping cart"
+msgstr "Panier"
+
+#: pccart/pccart.forms.inc:117 pccart/pccart.module:1012
+#: pccheckout/pccheckout.forms.inc:837 pcoffers/pcoffers.forms.inc:44;85
+#: pctemplates/pctemplates.config.inc:309;352
+msgid "pcs."
+msgstr ""
+
+#: pccart/pccart.forms.inc:175 pccheckout/pccheckout.forms.inc:894
+#: pcdesigner/pcdesigner.forms.inc:84 pcorders/pcorders.forms.inc:284
+msgid "Download preview"
+msgstr "Télécharger un aperçu"
+
+#: pccart/pccart.forms.inc:196 pccart/pccart.module:1176
+#: pccheckout/pccheckout.forms.inc:923 pccheckout/pccheckout.module:112
+#: pcdesigner/pcdesigner.forms.inc:104;110 pcdesigntool/pcdesigntool.module:18
+#: pcuploader/pcuploader.module:72 pcuploader/pcuploader2.module:104
+msgid "Upload"
+msgstr "Transférer"
+
+#: pccart/pccart.forms.inc:239 pccart/pccart.module:1023
+#: pccustomers/pccustomers.forms.inc:39 pcdesigns/pcdesigns.module:146
+msgid "Delete"
+msgstr "Supprimer"
+
+#: pccart/pccart.forms.inc:249
+msgid "Edit this product"
+msgstr "Modifiez la commande"
+
+#: pccart/pccart.forms.inc:281
+msgid "Discounts"
+msgstr ""
+
+#: pccart/pccart.forms.inc:295
+msgid "Promo"
+msgstr ""
+
+#: pccart/pccart.forms.inc:308 pccart/pccart.module:942
+#: pcgiftvouchers/pcgiftvouchers.module:197;264
+msgid "delete"
+msgstr "supprimer"
+
+#: pccart/pccart.forms.inc:322
+msgid "You are using \"%code\"."
+msgstr ""
+
+#: pccart/pccart.forms.inc:339
+msgid ""
+"My files are ok, I do not want an extra file check. My files can be printed "
+"as they are."
+msgstr ""
+
+#: pccart/pccart.forms.inc:343
+msgid "I want an extra file check."
+msgstr ""
+
+#: pccart/pccart.forms.inc:351
+msgid "File checks"
+msgstr ""
+
+#: pccart/pccart.forms.inc:357
+msgid "About online file checks with the designtool."
+msgstr ""
+
+#: pccart/pccart.forms.inc:391
+msgid "Shipment"
+msgstr "Livraison"
+
+#: pccart/pccart.forms.inc:475
+msgid "!value exc. VAT"
+msgstr "!value hors TVA"
+
+#: pccart/pccart.forms.inc:475
+msgid "!value inc. VAT"
+msgstr "!value TVA inc."
+
+#: pccart/pccart.forms.inc:553
+msgid "Order before 10:00"
+msgstr "Commandez avant 10h"
+
+#: pccart/pccart.forms.inc:565
+msgid "Expected shipping"
+msgstr "Expédition prévue"
+
+#: pccart/pccart.forms.inc:577 pccart/pccart.module:346;459
+#: pcorders/pcorders.module:164;203
+#: pcproducts/pcproducts.config.inc:390;429;462
+#: pcproducts/pcproducts.forms.inc:281;313;594;595
+#: pcproducts/pcproducts.module:1030;1059
+#: pctemplates/pctemplates.config.inc:1070;1098;1128
+msgid "Expected delivery"
+msgstr "Date de livraison estimée"
+
+#: pccart/pccart.forms.inc:583 pcorders/pcorders.forms.inc:420
+msgid "Discount"
+msgstr "Réduction"
+
+#: pccart/pccart.forms.inc:590
+msgid ""
+"Heb je een promocode, voucher of cadeaubon gekregen? Vul hem dan hier in!"
+msgstr ""
+"Vous avez reçu un code promotionnel ou un chèque-cadeau ? Veuillez entrer "
+"votre code ! "
+
+#: pccart/pccart.forms.inc:602 pccart/pccart.module:1350
+msgid "Apply"
+msgstr "Appliquer"
+
+#: pccart/pccart.forms.inc:627
+msgid "Continue shopping"
+msgstr "Continuer les achats"
+
+#: pccart/pccart.forms.inc:665 pccart/pccart.module:1218
+#: pcproducts/pcproducts.config.inc:597 pcproducts/pcproducts.forms.inc:273
+#: pcproducts/pcproducts.module:592
+msgid "Direct link"
+msgstr ""
+
+#: pccart/pccart.forms.inc:751 pccart/pccart.module:1454
+msgid "Please log in to use this giftvoucher..."
+msgstr ""
+
+#: pccart/pccart.forms.inc:768 pccart/pccart.module:1471
+msgid ""
+"Your voucher code has been converted to store credit... You may use this "
+"credit while checking out your order."
+msgstr ""
+
+#: pccart/pccart.forms.inc:796
+msgid "No cart or empty"
+msgstr ""
+
+#: pccart/pccart.forms.inc:806 pccheckout/pccheckout.form.inc:1028
+#: pccheckout/pccheckout.forms.inc:1016 pccheckout/pccheckout.module:406
+msgid "Please upload a file for all your items"
+msgstr "S'il vous plaît télécharger un fichier pour tous vos articles"
+
+#: pccart/pccart.module:20;27;130;472 pccart/pccart.info:0
+msgid "Cart"
+msgstr "Panier"
+
+#: pccart/pccart.module:121
+msgid "Choose a product"
+msgstr "Choisissez un produit"
+
+#: pccart/pccart.module:133
+msgid "Cart save (you just added)"
+msgstr ""
+
+#: pccart/pccart.module:138
+msgid "Cart indicator"
+msgstr ""
+
+#: pccart/pccart.module:141
+msgid "Cart shipping info"
+msgstr ""
+
+#: pccart/pccart.module:158
+msgid "You just added"
+msgstr "Vous venez d'ajouter"
+
+#: pccart/pccart.module:337
+msgid "My order will be shipped on:"
+msgstr "Votre commande sera envoyée le :"
+
+#: pccart/pccart.module:436 pccheckout/pccheckout.module:164
+msgid "Delivery"
+msgstr "Livraison"
+
+#: pccart/pccart.module:449 pcproducts/pcproducts.forms.inc:560;561
+#: pcproducts/pcproducts.module:1015
+msgid "Your order is ready for shipment"
+msgstr "Votre commande est envoyé le"
+
+#: pccart/pccart.module:517;555;592;1782
+msgid "Update cart"
+msgstr "Mettre à jour mon panier"
+
+#: pccart/pccart.module:526;574;601;1775 pcoffers/pcoffers.forms.inc:115
+msgid "Add to cart"
+msgstr "Ajouter au panier"
+
+#: pccart/pccart.module:793
+msgid "@firstName, do you have everything you need?"
+msgstr "@firstName, c'est votre panier!"
+
+#: pccart/pccart.module:795
+msgid "Do you have everything you need?"
+msgstr "Mon panier"
+
+#: pccart/pccart.module:798
+msgid "We have some very nice extras for you!"
+msgstr "Téléchargez votre mise en page"
+
+#: pccart/pccart.module:869
+msgid "The item was deleted"
+msgstr ""
+
+#: pccart/pccart.module:879
+msgid "The file was deleted"
+msgstr ""
+
+#: pccart/pccart.module:889
+msgid "The discount was deleted"
+msgstr ""
+
+#: pccart/pccart.module:999
+msgid "Item"
+msgstr "Item"
+
+#: pccart/pccart.module:1341
+msgid "Promocode"
+msgstr ""
+
+#: pccart/pccart.module:1605
+msgid "Upgrade now to %qty ex. for only !price more"
+msgstr "Promouvez à %qty pcs. pour seulement !price plus"
+
+#: pccart/pccart.module:1612
+msgid "Yes, upgrade and save!"
+msgstr "Economisez!"
+
+#: pccart/pccart.module:1804
+msgid "Get latest cart"
+msgstr ""
+
+#: pccart/pccart.module:56 pccustomers/pccustomers.forms.inc:32
+msgid "edit"
+msgstr "modifier"
+
+#: pccart/pccart.module:64
+msgid "Cart callback"
+msgstr ""
+
+#: pccart/pccart.info:0
+msgid "Cart module"
+msgstr ""
+
+#: pccartbase/pccartbase.info:0
+msgid "Cart base"
+msgstr ""
+
+#: pccartbase/pccartbase.info:0
+msgid "Cart classes"
+msgstr ""
+
+#: pccartbase/pccartbase.info:0 pccustomersbase/pccustomersbase.info:0
+#: pcinvoicesbase/pcinvoicesbase.info:0 pcordersbase/pcordersbase.info:0
+#: pcpaymentsbase/pcpaymentsbase.info:0 pcproductsbase/pcproductsbase.info:0
+#: pcshipping/pcshipping.info:0 pctemplatesbase/pctemplatesbase.info:0
+msgid "printconnect class library"
+msgstr ""
+
+#: pccheckout/pccheckout.form.inc:23;478;918;1058
+msgid "Your details"
+msgstr "Vos coordonnées"
+
+#: pccheckout/pccheckout.form.inc:39;1063
+msgid "In case something is unclear, we need your contact details."
+msgstr ""
+"Entrez votre nom et numéro de téléphone afin que nous puissions vous "
+"contacter facilement si nécessaire."
+
+#: pccheckout/pccheckout.form.inc:43;1067 pccheckout/pccheckout.forms.inc:48
+#: pccheckout/pccheckout.module:519
+#: pccheckout/pccheckout_20110528.module:497;1181
+#: pccustomers/pccustomers.forms.inc:120 pccustomers/pccustomers.module:697
+#: pcinvoices/pcinvoices.module:141
+msgid "First name"
+msgstr "Prénom"
+
+#: pccheckout/pccheckout.form.inc:50;1074 pccheckout/pccheckout.forms.inc:55
+#: pccheckout/pccheckout.module:526
+#: pccheckout/pccheckout_20110528.module:504;1188
+#: pccustomers/pccustomers.forms.inc:127 pccustomers/pccustomers.module:702
+msgid "Last name"
+msgstr "Nom"
+
+#: pccheckout/pccheckout.form.inc:57;1081 pccheckout/pccheckout.forms.inc:62
+#: pccheckout/pccheckout.module:533
+#: pccheckout/pccheckout_20110528.module:511;1195
+msgid "Mobile number"
+msgstr "Votre numéro mobile"
+
+#: pccheckout/pccheckout.form.inc:70;464 pccheckout/pccheckout.forms.inc:147
+#: pccheckout/pccheckout.module:361;541;865
+#: pccheckout/pccheckout_20110528.module:519;604;738;1062;1203;1278;1379
+#: pccustomers/pccustomers.forms.inc:923
+msgid "Continue"
+msgstr "Continuer"
+
+#: pccheckout/pccheckout.form.inc:79;176;926;1141
+#: pccheckout/pccheckout.module:146 pcorders/pcorders.forms.inc:433
+msgid "Shipping"
+msgstr "Livraison"
+
+#: pccheckout/pccheckout.form.inc:86;486;743;1425
+#: pccheckout/pccheckout.forms.inc:608;994
+#: pccheckout/pccheckout.module:59;120;173 pcogone/pcogone.module:230;17;24;59
+#: pcorders/pcorders.forms.inc:444
+msgid "Payment"
+msgstr "Paiement sécurisé"
+
+#: pccheckout/pccheckout.form.inc:129;1095 pccheckout/pccheckout.forms.inc:313
+#: pccheckout/pccheckout.module:450
+#: pccheckout/pccheckout_20110528.module:660;823;1304;1421
+msgid "New"
+msgstr "Nouveau"
+
+#: pccheckout/pccheckout.form.inc:185;1150
+msgid "You specified to pick this parcel up at a pick up point."
+msgstr ""
+
+#: pccheckout/pccheckout.form.inc:226;320;1189;1282
+#: pccheckout/pccheckout.module:644;727
+#: pccheckout/pccheckout_20110528.module:611;744;1286;1388
+msgid "Neutral shipping"
+msgstr "Livraison neutre (aucune indication de PrintConcept.fr sur la boite)"
+
+#: pccheckout/pccheckout.form.inc:245;1208
+msgid "You specified a delivery for this order. Whom shall we ship it to?"
+msgstr "Cette commande sera livrée. Où faut-elle aller?"
+
+#: pccheckout/pccheckout.form.inc:250;357;1213;1318
+#: pccheckout/pccheckout.forms.inc:70 pccheckout/pccheckout.module:659;785
+#: pccheckout/pccheckout_20110528.module:674;835;1322;1437
+#: pcgiftvouchers/pcgiftvouchers.module:59;400
+#: pcsamplepacks/pcsamplepacks.forms.inc:50;204
+msgid "Address"
+msgstr "Adresse"
+
+#: pccheckout/pccheckout.form.inc:268;387;1231;1348
+#: pccheckout/pccheckout.forms.inc:428;555
+#: pccheckout/pccheckout.module:667;806
+#: pccheckout/pccheckout_20110528.module:688;849;1330;1451
+#: pccontact/pccontact.forms.inc:30 pccontact/pccontact.module:124;215;370
+#: pccustomers/pccustomers.forms.inc:57;312;437
+#: pcgiftvouchers/pcgiftvouchers.module:66
+#: pcsamplepacks/pcsamplepacks.forms.inc:89
+#: pctemplates/pctemplates.config.inc:119
+msgid "Name"
+msgstr "Nom"
+
+#: pccheckout/pccheckout.form.inc:276;380;1239;1341
+#: pccheckout/pccheckout.forms.inc:117;123;421;548
+#: pccheckout/pccheckout.module:675;799
+#: pccheckout/pccheckout_20110528.module:696;842;1338;1444
+#: pccustomers/pccustomers.forms.inc:58;134;319;444
+#: pccustomers/pccustomers.module:707 pcgiftvouchers/pcgiftvouchers.module:74
+#: pcinvoices/pcinvoices.module:151 pcsamplepacks/pcsamplepacks.forms.inc:95
+msgid "Company"
+msgstr "Société"
+
+#: pccheckout/pccheckout.form.inc:283;394;1246;1355
+#: pccheckout/pccheckout.forms.inc:75;435;562
+#: pccheckout/pccheckout.module:682;813
+#: pccheckout/pccheckout_20110528.module:703;855;1345;1458
+#: pccustomers/pccustomers.forms.inc:331;456
+#: pcgiftvouchers/pcgiftvouchers.module:81 pcinvoices/pcinvoices.module:156
+#: pcsamplepacks/pcsamplepacks.forms.inc:101
+msgid "Street"
+msgstr "Rue"
+
+#: pccheckout/pccheckout.form.inc:297;408;1260;1369
+#: pccheckout/pccheckout.forms.inc:89 pccheckout/pccheckout.module:696;827
+#: pccheckout/pccheckout_20110528.module:717;869;1359;1472
+#: pccustomers/pccustomers.forms.inc:59;346;471
+#: pcgiftvouchers/pcgiftvouchers.module:95
+#: pcsamplepacks/pcsamplepacks.forms.inc:113
+msgid "City"
+msgstr "Ville"
+
+#: pccheckout/pccheckout.form.inc:304;415;1267;1376
+#: pccheckout/pccheckout.forms.inc:97;455;582
+#: pccheckout/pccheckout.module:703;835
+#: pccheckout/pccheckout_20110528.module:724;876;1366;1479
+#: pccustomers/pccustomers.forms.inc:359;484
+#: pcgiftvouchers/pcgiftvouchers.module:102
+#: pcpickuppoints/pcpickuppoints.module:500
+#: pcsamplepacks/pcsamplepacks.forms.inc:119
+msgid "Country"
+msgstr "Pays"
+
+#: pccheckout/pccheckout.form.inc:312;1275 pccheckout/pccheckout.module:711
+#: pccheckout/pccheckout_20110528.module:731;1373
+#: pccontact/pccontact.forms.inc:36 pccontact/pccontact.module:223;297;382
+#: pccustomers/pccustomers.forms.inc:141;325;450
+#: pccustomers/pccustomers.module:712 pcgiftvouchers/pcgiftvouchers.module:110
+msgid "Phone"
+msgstr "Numéro de téléphone"
+
+#: pccheckout/pccheckout.form.inc:335;1296
+msgid "Need an invoice?"
+msgstr "Besoin d'une facture?"
+
+#: pccheckout/pccheckout.form.inc:343;1304 pccheckout/pccheckout.module:755
+#: pccheckout/pccheckout_20110528.module:817;1415
+msgid "I need an invoice for my tax collector"
+msgstr "Je voudrais une facture pour cette commande"
+
+#: pccheckout/pccheckout.form.inc:444;1405
+#: pccheckout/pccheckout.forms.inc:135;483 pccheckout/pccheckout.module:850
+#: pccheckout/pccheckout_20110528.module:884;1487
+#: pccustomers/pccustomers.forms.inc:367;491 pcinvoices/pcinvoices.module:171
+msgid "Vat number"
+msgstr "Numéro de TVA"
+
+#: pccheckout/pccheckout.form.inc:451;1412 pccheckout/pccheckout.forms.inc:490
+#: pccheckout/pccheckout.module:857
+#: pccheckout/pccheckout_20110528.module:891;1494
+#: pccustomers/pccustomers.forms.inc:1020 pccustomers/pccustomers.module:776
+#: pcstorecredit/pcstorecredit.module:86
+msgid "Reference"
+msgstr "Votre référence sur la facture"
+
+#: pccheckout/pccheckout.form.inc:607;1618 pccheckout/pccheckout.module:1385
+msgid "There appears to be something wrong with your shipping address"
+msgstr ""
+
+#: pccheckout/pccheckout.form.inc:822;831;1494;1501;1510
+#: pccheckout/pccheckout.forms.inc:1148 pcpayments/pcpayments.forms.inc:87
+msgid "Select payment method"
+msgstr "Sélectionnez votre mode de paiement"
+
+#: pccheckout/pccheckout.form.inc:899 pccheckout/pccheckout.forms.inc:1179
+msgid "I agree with the !termsandconditionslink"
+msgstr "J'accepte  !termsandconditionslink"
+
+#: pccheckout/pccheckout.form.inc:906;1559 pccheckout/pccheckout.module:972
+#: pccheckout/pccheckout_20110528.module:960;1565
+msgid "Confirm"
+msgstr "Confirmer"
+
+#: pccheckout/pccheckout.form.inc:1010
+#: pccheckout/pccheckout.forms.inc:1442;1443
+#: pccheckout/pccheckout.module:1249;1250
+#: pccheckout/pccheckout_20110528.module:1788;1991
+#: pcpayments/pcpayments.forms.inc:147 pcpayments/pcpayments.module:349
+msgid "Not implemented."
+msgstr ""
+
+#: pccheckout/pccheckout.form.inc:1047
+msgid "Register or login"
+msgstr "S'inscrire ou se connecter"
+
+#: pccheckout/pccheckout.form.inc:1551
+msgid "I agree with the "
+msgstr "J'accepte "
+
+#: pccheckout/pccheckout.form.inc:1551
+msgid "terms and conditions"
+msgstr "les conditions générales de vente"
+
+#: pccheckout/pccheckout.forms.inc:41 pccheckout/pccheckout.module:95;138
+msgid "Personal"
+msgstr "Détails personnels"
+
+#: pccheckout/pccheckout.forms.inc:352;388;398 pcorders/pcorders.forms.inc:206
+msgid "Invoice address"
+msgstr "Adresse de facturation"
+
+#: pccheckout/pccheckout.forms.inc:361
+msgid "Change invoice address"
+msgstr ""
+
+#: pccheckout/pccheckout.forms.inc:373;525
+msgid "Shipping address"
+msgstr ""
+
+#: pccheckout/pccheckout.forms.inc:382
+msgid "Change shipping address"
+msgstr ""
+
+#: pccheckout/pccheckout.forms.inc:404;531
+msgid "Select from addressbook"
+msgstr ""
+
+#: pccheckout/pccheckout.forms.inc:443;569
+msgid "Postal code and City"
+msgstr "Code postal et ville"
+
+#: pccheckout/pccheckout.forms.inc:611
+msgid "Upload your files"
+msgstr ""
+
+#: pccheckout/pccheckout.forms.inc:1103
+msgid "Store Credit"
+msgstr ""
+
+#: pccheckout/pccheckout.forms.inc:1113 pcstorecredit/pcstorecredit.module:197
+msgid "I want to pay with my store credit"
+msgstr "Je paye avec mon crédit."
+
+#: pccheckout/pccheckout.forms.inc:1114 pcstorecredit/pcstorecredit.module:198
+msgid "I'd rather pay the normal way"
+msgstr "J'utiliserai mon crédit pour une prochaine commande"
+
+#: pccheckout/pccheckout.forms.inc:1121
+#: pcstorecredit/pcstorecredit.module:182;204
+msgid "You have !amount in store credit"
+msgstr "Vous avez !amount en crédit"
+
+#: pccheckout/pccheckout.forms.inc:1142
+msgid "Choose your payment method"
+msgstr ""
+
+#: pccheckout/pccheckout.forms.inc:1204
+msgid "Pay now"
+msgstr ""
+
+#: pccheckout/pccheckout.forms.inc:1289 pcorders/pcorders.forms.inc:458
+msgid "File check"
+msgstr ""
+
+#: pccheckout/pccheckout.forms.inc:1297
+msgid "Total excl. Vat"
+msgstr "Total hors TVA"
+
+#: pccheckout/pccheckout.forms.inc:1309
+msgid "Order overview"
+msgstr ""
+
+#: pccheckout/pccheckout.forms.inc:1316 pcoffers/pcoffers.forms.inc:38;79
+#: pcpayments/pcpayments.forms.inc:81
+msgid "Description"
+msgstr "Description"
+
+#: pccheckout/pccheckout.forms.inc:1317 pcoffers/pcoffers.forms.inc:195
+#: pcoffers/pcoffers.module:130
+msgid "Price"
+msgstr ""
+
+#: pccheckout/pccheckout.module:54
+msgid "Your contact information"
+msgstr "Vos coordonnées"
+
+#: pccheckout/pccheckout.module:194;252
+#: pccheckout/pccheckout_20110528.module:126
+msgid "Secure payment"
+msgstr "Paiement sécurisé"
+
+#: pccheckout/pccheckout.module:375 pccheckout/pccheckout_20110528.module:1076
+#: pccustomers/pccustomers.forms.inc:939
+msgid "Email not found."
+msgstr "Cette adresse email est introuvable."
+
+#: pccheckout/pccheckout.module:439 pccheckout/pccheckout_20110528.module:1107
+msgid "Not @firstName? Click here..."
+msgstr "Vous n'êtes pas @firstName? Cliquez ici ..."
+
+#: pccheckout/pccheckout.module:463
+#: pccheckout/pccheckout_20110528.module:373;1123
+#: pccustomers/pccustomers.forms.inc:603
+msgid "I'm a customer already"
+msgstr "Je suis déjà client"
+
+#: pccheckout/pccheckout.module:464
+#: pccheckout/pccheckout_20110528.module:374;1124
+#: pccustomers/pccustomers.forms.inc:604
+msgid "I'm not a customer yet"
+msgstr "Je ne suis pas encore client"
+
+#: pccheckout/pccheckout.module:477
+#: pccheckout/pccheckout_20110528.module:387;1137
+#: pccustomers/pccustomers.forms.inc:622;636
+#: pccustomers/pccustomers.module:639
+msgid "Your password"
+msgstr "Votre mot de passe"
+
+#: pccheckout/pccheckout.module:487;88
+#: pccheckout/pccheckout_20110528.module:398;1147
+#: pccustomers/pccustomers.forms.inc:657
+#: pccustomers/pccustomers.module:336;344;352;360
+msgid "Login"
+msgstr "Se connecter"
+
+#: pccheckout/pccheckout.module:498
+#: pccheckout/pccheckout_20110528.module:407;1158
+#: pccustomers/pccustomers.forms.inc:676
+#: pccustomers/pccustomers.module:385;386
+msgid "Register"
+msgstr "S'inscrire"
+
+#: pccheckout/pccheckout.module:504
+#: pccheckout/pccheckout_20110528.module:410;1164
+#: pccustomers/pccustomers.forms.inc:632
+msgid "Choose your password"
+msgstr "Choisissez votre mot de passe"
+
+#: pccheckout/pccheckout.module:820 pcsamplepacks/pcsamplepacks.module:124
+msgid "PC and city"
+msgstr "Code postal et ville"
+
+#: pccheckout/pccheckout.module:963
+#: pccheckout/pccheckout_20110528.module:952;1557
+msgid "I agree with the terms and conditions"
+msgstr "J'accepte les termes"
+
+#: pccheckout/pccheckout.module:984
+#: pccheckout/pccheckout_20110528.module:308;1577
+msgid "Thanks for your order"
+msgstr "Merci pour votre commande"
+
+#: pccheckout/pccheckout.module:992 pccheckout/pccheckout_20110528.module:1585
+msgid "Dear @firstName, please complete your details"
+msgstr "Bonjour @firstName, veuillez remplir vos détails!"
+
+#: pccheckout/pccheckout.module:994
+#: pccheckout/pccheckout_20110528.module:316;1587
+msgid "Please complete your details"
+msgstr "Complétez vos coordonnées"
+
+#: pccheckout/pccheckout.module:1005
+#: pccheckout/pccheckout_20110528.module:326;1598
+msgid "Dear @firstName, choose your pickup point"
+msgstr "Bonjour @firstName, choissisez votre point relais"
+
+#: pccheckout/pccheckout.module:1007
+#: pccheckout/pccheckout_20110528.module:328;1600
+msgid "Dear @firstName, choose your delivery address"
+msgstr "Bonjour @firstName, choisissez votre adresse de livraison"
+
+#: pccheckout/pccheckout.module:1018
+#: pccheckout/pccheckout_20110528.module:338;1611
+msgid "Dear @firstName, choose your payment method"
+msgstr "Bonjour @firstName, choisissez votre méthode de paiement"
+
+#: pccheckout/pccheckout.module:1145
+#: pccheckout/pccheckout_20110528.module:1711;1814
+#: pccustomers/pccustomers.forms.inc:791
+msgid "This email address is already registered"
+msgstr "Cette adresse email est déjà enregistré"
+
+#: pccheckout/pccheckout.module:1162;1262;1281
+#: pccheckout/pccheckout_20110528.module:427;1728;1800
+#: pccustomers/pccustomers.forms.inc:773 pccustomers/pccustomers.module:657
+msgid "Cannot log in using the given email and password."
+msgstr ""
+"Impossible de se connecter en utilisant l'e-mail et mot de passe donnée"
+
+#: pccheckout/pccheckout.module:80;131 pccheckout/pccheckout.info:0
+msgid "Checkout"
+msgstr "Paiement sécurisé"
+
+#: pccheckout/pccheckout.module:104
+msgid "Invoice and delivery"
+msgstr ""
+
+#: pccheckout/pccheckout.module:155
+msgid "Pickup"
+msgstr ""
+
+#: pccheckout/pccheckout_20110528.module:1648;1927
+msgid "Please select a payment method"
+msgstr "Choisissez une méthode de paiement"
+
+#: pccheckout/pccheckout_20110528.module:2290;2305
+msgid "Amount: @qty"
+msgstr "Quantité: @qty "
+
+#: pccheckout/pccheckout_20110528.module:2302
+#: pcgiftvouchers/pcgiftvouchers.forms.inc:87
+#: pcinvoices/pcinvoices.module:115;286
+msgid "Amount"
+msgstr "Montant"
+
+#: pccheckout/pccheckout.info:0
+msgid "Checkout module"
+msgstr ""
+
+#: pccobranding/pccobranding.forms.inc:9
+#: pccustomers/pccustomers.module:137;246;370;378
+msgid "Log out"
+msgstr "Se déconnecter"
+
+#: pccobranding/pccobranding.forms.inc:17;32
+#: pccustomers/pccustomers.module:643;949;337;353
+msgid "Log in"
+msgstr "Se connecter"
+
+#: pccobranding/pccobranding.forms.inc:21
+msgid "Provide the password to proceed"
+msgstr ""
+
+#: pccobranding/pccobranding.forms.inc:26
+#: pccustomers/pccustomers.forms.inc:618 pccustomers/pccustomers.module:635
+msgid "Password"
+msgstr "Mot de passe"
+
+#: pccobranding/pccobranding.forms.inc:43
+msgid "Invalid password"
+msgstr "Invalid password"
+
+#: pccobranding/pccobranding.module:131
+#: pcproducts/pcproducts.module:323;1185;1211
+#: pctemplates/pctemplates.module:195
+msgid "All products"
+msgstr "Tous les produits"
+
+#: pccobranding/pccobranding.module:183
+msgid "By printconnect"
+msgstr ""
+
+#: pccobranding/pccobranding.module:217 pcproducts/pcproducts.forms.inc:19
+#: pcproducts/pcproducts.module:291;1674;1890;1903;91;112;121;131;140
+#: pcproducts/pcproducts.info:0 pcproductsbase/pcproductsbase.module:65;81;96
+msgid "Products"
+msgstr "Les imprimes"
+
+#: pccobranding/pccobranding.info:0
+msgid "Cobranding"
+msgstr ""
+
+#: pccobranding/pccobranding.info:0
+msgid "Enables cobranding of default sites"
+msgstr ""
+
+#: pccontact/pccontact.forms.inc:10;56 pccontact/pccontact.module:388
+#: pcfeedback/pcfeedback.module:38
+msgid "Send"
+msgstr "Envoi"
+
+#: pccontact/pccontact.forms.inc:48
+msgid "Remarks"
+msgstr ""
+
+#: pccontact/pccontact.forms.inc:67 pccontact/pccontact.module:425
+msgid "Your message has been sent."
+msgstr "Votre message a été envoyé."
+
+#: pccontact/pccontact.module:83;282;292;295;38;45;52
+#: pccontact/pccontact.info:0 pcmenu/pcmenu.module:58;116
+msgid "Contact"
+msgstr "Contact"
+
+#: pccontact/pccontact.module:86
+msgid "About contacting us"
+msgstr ""
+
+#: pccontact/pccontact.module:104;119
+msgid "Mail @contact"
+msgstr "Envoyer un e-mail vers @contact"
+
+#: pccontact/pccontact.module:132
+msgid "E-mail"
+msgstr "Adresse émail"
+
+#: pccontact/pccontact.module:140;231;303 pcoffers/pcoffers.forms.inc:60
+msgid "Comment"
+msgstr "Commentaire"
+
+#: pccontact/pccontact.module:151;242
+#: pccustomers/pccustomers.forms.inc:168;251
+#: pccustomers/pccustomers.module:789;841
+msgid "Submit"
+msgstr "Soumettre"
+
+#: pccontact/pccontact.module:171;413
+msgid "E-mail address is not valid"
+msgstr ""
+
+#: pccontact/pccontact.module:195;210
+msgid "Have @contact call me back"
+msgstr "Laissez @contact me rappeler"
+
+#: pccontact/pccontact.module:283
+msgid "Contact !name"
+msgstr ""
+
+#: pccontact/pccontact.module:328
+msgid "Site"
+msgstr ""
+
+#: pccontact/pccontact.module:330 pccustomers/pccustomers.module:724
+msgid "Language"
+msgstr "Langue"
+
+#: pccontact/pccontact.module:357
+msgid "I`ll contact you as soon as possible"
+msgstr "Je vais vous faire savoir quelque chose dès que possible!"
+
+#: pccontact/pccontact.module:14;26
+msgid "Mail me"
+msgstr ""
+
+#: pccontact/pccontact.module:20;32
+msgid "Call me back"
+msgstr ""
+
+#: pccontact/pccontact.info:0
+msgid "Contact module"
+msgstr ""
+
+#: (duplicate) pccontenttypes/pccontenttypes.module:227;62 ;177
+msgid "Inspiration"
+msgstr ""
+
+#: (duplicate) pccontenttypes/pccontenttypes.module:233;462;486;502;661;9 ;166
+msgid "News"
+msgstr "Nouvelles"
+
+#: pccontenttypes/pccontenttypes.module:239;465;662;155
+msgid "Expert tips"
+msgstr "Conseils techniques"
+
+#: pccontenttypes/pccontenttypes.module:245;469;144
+msgid "Press"
+msgstr ""
+
+#: pccontenttypes/pccontenttypes.module:251;473;188 pcmenu/pcmenu.module:161
+msgid "Jobs"
+msgstr "Jobs"
+
+#: (duplicate) pccontenttypes/pccontenttypes.module:257;477;663;95 ;199
+msgid "Blog"
+msgstr "Blog"
+
+#: pccontenttypes/pccontenttypes.module:264;133 pcmenu/pcmenu.module:105
+msgid "Ideas"
+msgstr "Conseils"
+
+#: pccontenttypes/pccontenttypes.module:511
+msgid "More news"
+msgstr "Plus de nouvelles"
+
+#: pccontenttypes/pccontenttypes.module:522
+msgid "Rebuild aliasses and menus"
+msgstr ""
+
+#: pccontenttypes/pccontenttypes.module:654
+#: pcproductsbase/pcproductsbase.module:100
+msgid "Url aliasses rebuilt."
+msgstr ""
+
+#: (duplicate) pccontenttypes/pccontenttypes.module:11
+msgid "A news post."
+msgstr ""
+
+#: (duplicate) pccontenttypes/pccontenttypes.module:20
+msgid "Expert tip"
+msgstr ""
+
+#: (duplicate) pccontenttypes/pccontenttypes.module:22
+msgid "An expert tip post."
+msgstr ""
+
+#: (duplicate) pccontenttypes/pccontenttypes.module:31 ;45
+msgid "Image"
+msgstr "Image"
+
+#: (duplicate) pccontenttypes/pccontenttypes.module:64
+msgid "An inspiration post."
+msgstr ""
+
+#: (duplicate) pccontenttypes/pccontenttypes.module:73
+msgid "Press release"
+msgstr ""
+
+#: (duplicate) pccontenttypes/pccontenttypes.module:75
+msgid "A press release post."
+msgstr ""
+
+#: (duplicate) pccontenttypes/pccontenttypes.module:84
+msgid "Vacancy"
+msgstr ""
+
+#: (duplicate) pccontenttypes/pccontenttypes.module:86
+msgid "A job post."
+msgstr ""
+
+#: (duplicate) pccontenttypes/pccontenttypes.module:97
+msgid "A blog post."
+msgstr ""
+
+#: pccontenttypes/pccontenttypes.info:0
+msgid "Content types (TODELETE?)"
+msgstr ""
+
+#: pccontenttypes/pccontenttypes.info:0
+msgid "Provides the content types"
+msgstr ""
+
+#: pccustomers/pccustomers.forms.inc:11 pccustomers/pccustomers.module:132
+msgid "Welcome @name"
+msgstr "Bienvenue @name"
+
+#: pccustomers/pccustomers.forms.inc:24
+msgid "Your addresses"
+msgstr "Vos adresses"
+
+#: pccustomers/pccustomers.forms.inc:65
+msgid "No addresses"
+msgstr ""
+
+#: pccustomers/pccustomers.forms.inc:75
+msgid "Add an address"
+msgstr "Ajouter une adresse"
+
+#: pccustomers/pccustomers.forms.inc:92
+msgid "The address was removed"
+msgstr ""
+
+#: pccustomers/pccustomers.forms.inc:114;614
+#: pccustomers/pccustomers.module:631
+msgid "Your email address"
+msgstr "Votre adresse e-mail"
+
+#: pccustomers/pccustomers.forms.inc:206;426;552
+msgid "Saved"
+msgstr "Enregistré"
+
+#: pccustomers/pccustomers.forms.inc:217
+#: pccustomers/pccustomers.module:185;238
+msgid "Change your password"
+msgstr "Changer le mot de passe"
+
+#: pccustomers/pccustomers.forms.inc:222
+msgid "Old Password"
+msgstr "Ancien mot de passe"
+
+#: pccustomers/pccustomers.forms.inc:230
+msgid "New Password"
+msgstr "Nouveau mot de passe"
+
+#: pccustomers/pccustomers.forms.inc:239
+msgid "Confirm password"
+msgstr "Confirmer le mot de passe"
+
+#: pccustomers/pccustomers.forms.inc:266
+msgid "Your old password is not correct."
+msgstr "Votre ancien mot de passe est incorrect"
+
+#: pccustomers/pccustomers.forms.inc:270
+msgid "Your passwords don't match."
+msgstr ""
+
+#: pccustomers/pccustomers.forms.inc:288
+msgid "Your password has been changed"
+msgstr "Votre mot de passe a été modifié."
+
+#: pccustomers/pccustomers.forms.inc:338;463
+msgid "PostalCode"
+msgstr "Code postal"
+
+#: pccustomers/pccustomers.forms.inc:374;497
+msgid "This is the default invoice address"
+msgstr "Adresse de facturation par défaut"
+
+#: pccustomers/pccustomers.forms.inc:380;502
+msgid "This is the default shipping address"
+msgstr "Adresse de livraison par défaut"
+
+#: pccustomers/pccustomers.forms.inc:395;515
+msgid "Back"
+msgstr "Précédent"
+
+#: pccustomers/pccustomers.forms.inc:568;918
+msgid "Login or register"
+msgstr "S'inscrire ou se connecter"
+
+#: pccustomers/pccustomers.forms.inc:594
+msgid "Or"
+msgstr "Ou"
+
+#: pccustomers/pccustomers.forms.inc:651;897
+#: pccustomers/pccustomers.module:455
+msgid "Forgot your password?"
+msgstr "Mot de passe oublié?"
+
+#: pccustomers/pccustomers.forms.inc:755;782
+msgid "Not a valid email address"
+msgstr ""
+
+#: pccustomers/pccustomers.forms.inc:786
+msgid "Password not long enough"
+msgstr ""
+
+#: pccustomers/pccustomers.forms.inc:901
+msgid ""
+"No problem, just fill in your email address below, we'll send you a "
+"temporary password that you can change on the printconnect.com site."
+msgstr ""
+"Pas de problème, entrez votre adresse courriel ci-dessous, nous vous "
+"enverrons un mot de passe temporaire que vous pouvez changer sur le site ."
+
+#: pccustomers/pccustomers.forms.inc:951
+msgid "A new password will be sent to this email address"
+msgstr ""
+
+#: pccustomers/pccustomers.forms.inc:970
+#: pcstorecredit/pcstorecredit.module:36;325
+msgid "Your store credit amount : !value"
+msgstr "Vos crédits: !value"
+
+#: pccustomers/pccustomers.forms.inc:975 pcstorecredit/pcstorecredit.module:41
+msgid "Use your store credit to pay your next orders"
+msgstr "Utilisez votre crédit pour votre prochaine commande"
+
+#: pccustomers/pccustomers.forms.inc:994 pcstorecredit/pcstorecredit.module:60
+msgid "Payment of order @id"
+msgstr ""
+
+#: pccustomers/pccustomers.forms.inc:996 pcstorecredit/pcstorecredit.module:62
+msgid "Payment of order !order"
+msgstr ""
+
+#: pccustomers/pccustomers.forms.inc:1020
+#: pcstorecredit/pcstorecredit.module:86
+msgid "No data found"
+msgstr "No data found"
+
+#: pccustomers/pccustomers.forms.inc:1020
+#: pcinvoices/pcinvoices.module:115;136;146;286;346
+#: pcstorecredit/pcstorecredit.module:86
+msgid "Date"
+msgstr "Date"
+
+#: pccustomers/pccustomers.forms.inc:1020
+#: pcstorecredit/pcstorecredit.module:86
+msgid "Credit"
+msgstr "Credit"
+
+#: pccustomers/pccustomers.forms.inc:1020
+#: pcstorecredit/pcstorecredit.module:86
+msgid "Debet"
+msgstr ""
+
+#: pccustomers/pccustomers.forms.inc:1036
+#: pcgiftvouchers/pcgiftvouchers.module:388
+#: pcstorecredit/pcstorecredit.module:102
+msgid "Code"
+msgstr "Code"
+
+#: pccustomers/pccustomers.forms.inc:1041 pccustomers/pccustomers.module:535
+#: pcstorecredit/pcstorecredit.module:107;15
+msgid "Redeem"
+msgstr ""
+
+#: pccustomers/pccustomers.module:22;109
+msgid "Customer login as"
+msgstr ""
+
+#: pccustomers/pccustomers.module:25
+msgid "Customer welcome"
+msgstr ""
+
+#: pccustomers/pccustomers.module:31
+msgid "Customer account overview (TO BE REMOVED)"
+msgstr ""
+
+#: pccustomers/pccustomers.module:34
+msgid "Customer `Manage your account` (TO BE REMOVED"
+msgstr ""
+
+#: pccustomers/pccustomers.module:37
+msgid "Customer profile links"
+msgstr ""
+
+#: pccustomers/pccustomers.module:91
+msgid "Customer login"
+msgstr ""
+
+#: pccustomers/pccustomers.module:125;152
+msgid "Manage your account"
+msgstr ""
+
+#: pccustomers/pccustomers.module:134
+msgid "Welcome"
+msgstr "Bienvenue"
+
+#: pccustomers/pccustomers.module:137 pcorders/pcorders.module:139;184
+msgid "My orders"
+msgstr "Mes commandes"
+
+#: pccustomers/pccustomers.module:139
+msgid "Log in with your personal account"
+msgstr "Connectez-vous "
+
+#: pccustomers/pccustomers.module:139
+msgid "Order status"
+msgstr "État de votre commande"
+
+#: pccustomers/pccustomers.module:163
+msgid "Your profile"
+msgstr ""
+
+#: pccustomers/pccustomers.module:185
+msgid "Update your profile"
+msgstr "Mettre à jour"
+
+#: pccustomers/pccustomers.module:195;232
+msgid "My account"
+msgstr "Mon compte"
+
+#: pccustomers/pccustomers.module:205;239
+msgid "Address book"
+msgstr "Carnet d'adresses"
+
+#: pccustomers/pccustomers.module:210;369;377
+msgid "Logout"
+msgstr "Déconnexion"
+
+#: pccustomers/pccustomers.module:237
+msgid "Edit profile"
+msgstr "Editer mon profil"
+
+#: pccustomers/pccustomers.module:601
+msgid "@name, edit an address"
+msgstr "@name, mettez à jour votre adresse"
+
+#: pccustomers/pccustomers.module:603
+msgid "Edit an address"
+msgstr ""
+
+#: pccustomers/pccustomers.module:737
+msgid "Gender"
+msgstr "Gender"
+
+#: pccustomers/pccustomers.module:750 pcproducts/pcproducts.module:1802
+msgid "Type"
+msgstr "Type"
+
+#: pccustomers/pccustomers.module:764
+msgid "Sector"
+msgstr "Sector"
+
+#: pccustomers/pccustomers.module:783
+msgid "Birthday"
+msgstr "Birthday"
+
+#: pccustomers/pccustomers.module:858
+msgid "Deleted"
+msgstr "Supprimé"
+
+#: pccustomers/pccustomers.module:926;984
+msgid "Successfully logged in as %name"
+msgstr ""
+
+#: pccustomers/pccustomers.module:928;970
+msgid "Customer belongs to another shop"
+msgstr ""
+
+#: pccustomers/pccustomers.module:932;975
+msgid "Customer not found"
+msgstr ""
+
+#: pccustomers/pccustomers.module:943
+msgid "Customer number"
+msgstr ""
+
+#: pccustomers/pccustomers.module:953
+msgid "Logged in as %name"
+msgstr ""
+
+#: pccustomers/pccustomers.module:304;312
+msgid "My printconnect"
+msgstr ""
+
+#: pccustomers/pccustomers.module:321;328
+msgid "Profile"
+msgstr "Profil"
+
+#: pccustomers/pccustomers.module:393;401
+msgid "Addresses"
+msgstr "Vos adresses"
+
+#: pccustomers/pccustomers.module:410;417
+msgid "Address edit"
+msgstr "Modification de l'adresse"
+
+#: pccustomers/pccustomers.module:425
+msgid "Address delete"
+msgstr ""
+
+#: pccustomers/pccustomers.module:432;438
+msgid "New address"
+msgstr "Ajouter une nouvelle adresse"
+
+#: pccustomers/pccustomers.module:448
+msgid "Forgot password"
+msgstr "Forgot password"
+
+#: pccustomers/pccustomers.module:463;470
+msgid "Change password"
+msgstr "Changez le mot de passe"
+
+#: pccustomers/pccustomers.module:478;486
+msgid "Log in as"
+msgstr ""
+
+#: pccustomers/pccustomers.module:528
+#: pcstorecredit/pcstorecredit.module:31;318;521;539;9
+#: pcstorecredit/pcstorecredit.info:0;0
+msgid "Store credit"
+msgstr "Mes crédits"
+
+#: pccustomers/pccustomers.info:0
+msgid "Customers"
+msgstr "Customers"
+
+#: pccustomers/pccustomers.info:0
+msgid "Customers module"
+msgstr ""
+
+#: pccustomersbase/pccustomersbase.info:0
+msgid "Customers Base"
+msgstr ""
+
+#: pccustomersbase/pccustomersbase.info:0
+msgid "Customer classes"
+msgstr ""
+
+#: pcdesigner/pcdesigner.forms.inc:25
+#: pcproducts/pcproducts.module:103;152;160;169;176;185
+msgid "Configuration"
+msgstr "Configuration"
+
+#: pcdesigner/pcdesigner.forms.inc:149
+msgid "Technical details"
+msgstr ""
+
+#: pcdesigner/pcdesigner.forms.inc:152 pcproducts/pcproducts.forms.inc:327
+#: pcproducts/pcproducts.module:1396;1432
+msgid "How to prepare your printjob"
+msgstr "Comment préparer vos fichiers"
+
+#: pcdesigner/pcdesigner.forms.inc:157 pcproducts/pcproducts.config.inc:492
+msgid "Design documents"
+msgstr ""
+
+#: pcdesigner/pcdesigner.forms.inc:163 pcproducts/pcproducts.config.inc:504
+#: pcproducts/pcproducts.forms.inc:645 pcproducts/pcproducts.module:1436
+msgid "Finalizing your design? Take into account these requirements:"
+msgstr ""
+"Vous êtes prêt à imprimer votre fichier ? Assurez-vous que vous n'oubliez "
+"pas ces spécifications ! "
+
+#: pcdesigner/pcdesigner.forms.inc:169 pcproducts/pcproducts.config.inc:526
+#: pcproducts/pcproducts.forms.inc:653 pcproducts/pcproducts.module:1440
+#: pcuploader/pcuploader.module:198 pcuploader/pcuploader2.module:73
+#: pcuploader/pcuploader3.module:187;360
+msgid "Size"
+msgstr "Taille"
+
+#: pcdesigner/pcdesigner.forms.inc:174 pcproducts/pcproducts.config.inc:531
+#: pcproducts/pcproducts.forms.inc:654 pcproducts/pcproducts.module:1441
+msgid "Bleed"
+msgstr "Débord"
+
+#: pcdesigner/pcdesigner.forms.inc:180 pcproducts/pcproducts.config.inc:537
+#: pcproducts/pcproducts.forms.inc:655 pcproducts/pcproducts.module:1442
+msgid "Color"
+msgstr "Couleur"
+
+#: pcdesigner/pcdesigner.forms.inc:186 pcproducts/pcproducts.config.inc:543
+#: pcproducts/pcproducts.forms.inc:656 pcproducts/pcproducts.module:1443
+msgid "Resolution"
+msgstr "Résolution"
+
+#: pcdesigner/pcdesigner.forms.inc:200 pcproducts/pcproducts.forms.inc:666
+#: pcproducts/pcproducts.module:1447
+msgid "Read more"
+msgstr "Lire la suite"
+
+#: pcdesigner/pcdesigner.forms.inc:210 pcproducts/pcproducts.module:1457
+#: pctemplates/pctemplates.module:231;258;269 pctemplates/pctemplates.info:0
+msgid "Templates"
+msgstr "Gabarits"
+
+#: pcdesigner/pcdesigner.forms.inc:215 pcproducts/pcproducts.module:1462
+msgid "Download your templates here"
+msgstr ""
+"Créez rapidement et facilement un fichier prêt pour l'impression? "
+"Télécharger les modèles ici."
+
+#: pcdesigner/pcdesigner.forms.inc:237
+msgid "Job`s done"
+msgstr ""
+
+#: pcdesigner/pcdesigner.module:76
+msgid "I will not upload a design. My designer will do it for me."
+msgstr ""
+
+#: pcdesigner/pcdesigner.module:112
+msgid "Email address designer"
+msgstr ""
+
+#: pcdesigner/pcdesigner.module:132
+msgid ""
+"Attention! If you don`t upload your files now, we cannot guarantee the "
+"estimated delivery date. You will be informed when your designer uploads the "
+"file."
+msgstr ""
+
+#: pcdesigner/pcdesigner.module:179
+msgid "Email is not valid"
+msgstr ""
+
+#: pcdesigner/pcdesigner.module:5
+msgid "Upload design"
+msgstr ""
+
+#: pcdesigner/pcdesigner.module:12;20
+msgid "Designtool callback"
+msgstr ""
+
+#: pcdesigner/pcdesigner.info:0 pctemplates/pctemplates.config.inc:124
+#: pctemplates/pctemplates.module:172
+msgid "Designer"
+msgstr "Concepteur:"
+
+#: pcdesigner/pcdesigner.info:0
+msgid "Designer module"
+msgstr ""
+
+#: pcdesigns/pcdesigns.module:35
+msgid ""
+"You started @number lay-outs that haven't been ordered yet. Order them now!"
+msgstr ""
+"Vous avez @number mises en page non commandées. Commandez-les maintenant!"
+
+#: pcdesigns/pcdesigns.module:80 pcproducts/pcproducts.config.inc:96;104
+#: pcproducts/pcproducts.module:104;113;122;132;141;177;186;1780
+#: pctemplates/pctemplates.config.inc:1010
+#: pctemplates/pctemplates.selection.inc:528
+#: pctemplates/pctemplates.module:178
+msgid "Product"
+msgstr "Product"
+
+#: pcdesigns/pcdesigns.module:95;96
+msgid "Last edited"
+msgstr "Dernière modification"
+
+#: pcdesigns/pcdesigns.module:120;130 pcproducts/pcproducts.forms.inc:810
+msgid "Order now"
+msgstr "Commandez maintenant"
+
+#: pcdesigns/pcdesigns.module:290;305
+msgid "Saved designs"
+msgstr "Mes mises en page "
+
+#: pcdesigns/pcdesigns.module:11
+msgid "My saved designs"
+msgstr "Mes mises en page "
+
+#: pcdesigns/pcdesigns.module:17 pctemplates/pctemplates.module:32;42
+msgid "Personalize your designs"
+msgstr "Créez vos imprimés en ligne"
+
+#: pcdesigns/pcdesigns.info:0 pctemplates/pctemplates.module:24
+msgid "Designs"
+msgstr ""
+
+#: pcdesigns/pcdesigns.info:0
+msgid "Allow saving of designs"
+msgstr ""
+
+#: pcdesigntool/pcdesigntool.module:31
+msgid "preview"
+msgstr ""
+
+#: pcdesigntool/pcdesigntool.module:47 pcfiles/pcfiles.module:152
+msgid "File server"
+msgstr ""
+
+#: pcdesigntool/pcdesigntool.module:49
+msgid "The design tool server address"
+msgstr ""
+
+#: pcdesigntool/pcdesigntool.module:58
+msgid "Designtool Callback"
+msgstr ""
+
+#: pcdesigntool/pcdesigntool.info:0
+msgid "Designtool"
+msgstr ""
+
+#: pcdesigntool/pcdesigntool.info:0
+msgid "Integrates the Designtool"
+msgstr ""
+
+#: pcdevel/pcdevel.module:67
+msgid "Clear cache"
+msgstr "Purger le cache"
+
+#: pcdevel/pcdevel.module:68
+msgid "PHP Info"
+msgstr ""
+
+#: pcdevel/pcdevel.module:72;11;13
+msgid "Devel"
+msgstr ""
+
+#: pcdevel/pcdevel.module:73 pcdevel/pcdevel.info:0
+msgid "Development aids"
+msgstr ""
+
+#: pcdevel/pcdevel.module:113
+msgid "Debug"
+msgstr "Debug"
+
+#: pcdevel/pcdevel.module:17
+msgid "PHP info"
+msgstr ""
+
+#: pcdevel/pcdevel.module:19
+msgid "Show phpinfo"
+msgstr ""
+
+#: pcdevel/pcdevel.module:24
+msgid "Empty cache"
+msgstr ""
+
+#: pcdevel/pcdevel.module:26
+msgid ""
+"Clear the CSS cache and all database cache tables which store page, node, "
+"theme and variable caches."
+msgstr ""
+
+#: pcdevel/pcdevel.info:0
+msgid "Development (TODELETE?)"
+msgstr ""
+
+#: pcelections/pcelections.module:14
+msgid ""
+"By indicating that these are electional prints, an adjusted VAT percentage "
+"will be applied... Please notice that the prints will be validated visually."
+msgstr ""
+
+#: pcelections/pcelections.module:18
+msgid "These are electional prints"
+msgstr ""
+
+#: pcelections/pcelections.module:75;330
+msgid "Electional prints"
+msgstr "L' impressions éléctorales"
+
+#: pcelections/pcelections.module:79;215;334
+msgid ""
+"By indicating that these are electional prints, an adjusted VAT percentage "
+"of 6% will be applied..."
+msgstr ""
+"Pour les impressions éléctorales, vous payez 6% de TVA en lieu du 21%. "
+"Cochez la case ci-dessous si ce produit sera utilisez comme impression "
+"éléctorale. Attention: nous sommes obliger de vérifier chaque demande."
+
+#: pcelections/pcelections.module:88;344
+msgid "Yes, these are electional prints"
+msgstr "Oui, il s'agit des impressions éléctorales. Je paie 6% de TVA."
+
+#: pcelections/pcelections.module:136;156
+msgid ""
+"These are electional prints, an adjusted VAT percentage of 6% will be "
+"applied..."
+msgstr ""
+"Ce sont des impressions éléctorales. On ajoute 6% de TVA en lieu de 21%."
+
+#: pcelections/pcelections.info:0
+msgid "Elections"
+msgstr ""
+
+#: pcelections/pcelections.info:0
+msgid "Enables print for elections with 6% VAT"
+msgstr ""
+
+#: pcfancybox/pcfancybox.info:0
+msgid "Fancybox (TODELETE?)"
+msgstr ""
+
+#: pcfancybox/pcfancybox.info:0
+msgid "Provides the fancybox jquery plugin"
+msgstr ""
+
+#: pcfeedback/pcfeedback.module:8;28 pcfeedback/pcfeedback.info:0;0
+msgid "Feedback"
+msgstr ""
+
+#: pcfeedback/pcfeedback.module:32
+msgid "Enter text"
+msgstr ""
+
+#: pcfeedback/pcfeedback.module:33
+msgid "Where do you printconnect from?"
+msgstr ""
+
+#: pcfeedback/pcfeedback.module:60
+msgid "Thanks for your feedback..."
+msgstr ""
+
+#: pcfiles/pcfiles.module:47;48
+msgid "Download"
+msgstr "Téléchargement"
+
+#: pcfiles/pcfiles.module:154
+msgid "The file server address"
+msgstr ""
+
+#: pcfiles/pcfiles.module:16;24;32 pcfiles/pcfiles.info:0
+#: pcuploader/pcuploader2.module:151;155 pcuploader/pcuploader3.module:343
+msgid "Files"
+msgstr "Fichiers"
+
+#: pcfiles/pcfiles.info:0
+msgid "File server integration"
+msgstr ""
+
+#: pcgiftvouchers/pcgiftvouchers.forms.inc:33
+msgid "Ideal for business cards"
+msgstr ""
+
+#: pcgiftvouchers/pcgiftvouchers.forms.inc:38
+msgid "Ideal for envelopes"
+msgstr ""
+
+#: pcgiftvouchers/pcgiftvouchers.forms.inc:43
+msgid "Ideal for print packages"
+msgstr ""
+
+#: pcgiftvouchers/pcgiftvouchers.forms.inc:47
+msgid "Choose an amount"
+msgstr ""
+
+#: pcgiftvouchers/pcgiftvouchers.forms.inc:55
+#: pcgiftvouchers/pcgiftvouchers.module:5;13
+#: pcgiftvouchers/pcgiftvouchers.info:0;0
+msgid "Gift vouchers"
+msgstr ""
+
+#: pcgiftvouchers/pcgiftvouchers.forms.inc:65
+msgid "Prints as a gift! Intro text on giftvouchers"
+msgstr ""
+
+#: pcgiftvouchers/pcgiftvouchers.forms.inc:87
+msgid "Text"
+msgstr "Texte"
+
+#: pcgiftvouchers/pcgiftvouchers.forms.inc:109
+msgid "This product will be shipped with BPost"
+msgstr ""
+
+#: pcgiftvouchers/pcgiftvouchers.module:54
+msgid "Please specify the address we should send the giftvoucher(s) to.."
+msgstr ""
+
+#: pcgiftvouchers/pcgiftvouchers.module:212;279;333;383
+msgid "Gift voucher"
+msgstr ""
+
+#: pcgiftvouchers/pcgiftvouchers.module:219;286
+msgid ""
+"This product will be shipped with BPost. You may enter the address later "
+"during checkout."
+msgstr ""
+
+#: pcgiftvouchers/pcgiftvouchers.module:223;290
+msgid "Edit"
+msgstr "Modifier"
+
+#: pcgiftvouchers/pcgiftvouchers.module:393
+msgid "Expiration date"
+msgstr "Expiration date"
+
+#: pchints/pchints.info:0
+msgid "Hints"
+msgstr ""
+
+#: pchints/pchints.info:0
+msgid ""
+"Sets descriptions as title attribute for form items, and uses them as "
+"default values on textfields"
+msgstr ""
+
+#: pcinvoices/pcinvoices.module:51;359;373;32 pcinvoices/pcinvoices.info:0
+msgid "Invoices"
+msgstr "Factures"
+
+#: pcinvoices/pcinvoices.module:76
+msgid "@firstName, this an overview of your invoices"
+msgstr "@firstName, voici un aperçu de vos factures"
+
+#: pcinvoices/pcinvoices.module:82
+msgid "My invoices"
+msgstr "Mes factures"
+
+#: pcinvoices/pcinvoices.module:115;286
+msgid "Method"
+msgstr "Méthode"
+
+#: pcinvoices/pcinvoices.module:115;286;346
+msgid "Outstanding"
+msgstr "Outstanding"
+
+#: pcinvoices/pcinvoices.module:115
+msgid "Order"
+msgstr "Ordre"
+
+#: pcinvoices/pcinvoices.module:115;286;346
+msgid "Invoice"
+msgstr "Facture"
+
+#: pcinvoices/pcinvoices.module:115;286;346
+msgid "No invoices found"
+msgstr "Aucune facture"
+
+#: pcinvoices/pcinvoices.module:126
+msgid "Header"
+msgstr "Entête"
+
+#: pcinvoices/pcinvoices.module:131 pcoffers/pcoffers.forms.inc:197
+#: pcoffers/pcoffers.module:131 pcorders/pcorders.module:164;203;345
+msgid "Number"
+msgstr "Nombre"
+
+#: pcinvoices/pcinvoices.module:176 pctemplates/pctemplates.config.inc:399
+msgid "Subtotal"
+msgstr "Sous-total"
+
+#: pcinvoices/pcinvoices.module:181 pcvat/pcvat.info:0
+msgid "Vat"
+msgstr "Vat"
+
+#: pcinvoices/pcinvoices.module:186
+msgid "Total amount"
+msgstr "Total amount"
+
+#: pcinvoices/pcinvoices.module:211 pctemplates/pctemplates.config.inc:114
+msgid "Details"
+msgstr "Détails"
+
+#: pcinvoices/pcinvoices.module:275
+msgid "Download invoice"
+msgstr ""
+
+#: pcinvoices/pcinvoices.module:282
+msgid "Invoice overview"
+msgstr "Factures"
+
+#: pcinvoices/pcinvoices.module:342
+msgid "Recent invoices"
+msgstr "Factures récentes"
+
+#: pcinvoices/pcinvoices.module:348
+msgid "All invoices"
+msgstr "Tous les factures"
+
+#: pcinvoices/pcinvoices.module:38
+msgid "Invoice details"
+msgstr ""
+
+#: pcinvoices/pcinvoices.info:0
+msgid "Invoices module"
+msgstr ""
+
+#: pcinvoicesbase/pcinvoicesbase.info:0
+msgid "Invoices base"
+msgstr ""
+
+#: pcinvoicesbase/pcinvoicesbase.info:0
+msgid "Invoices classes"
+msgstr ""
+
+#: pclivecom/pclivecom-chat-block.tpl.php:2 pclivecom/pclivecom.module:173
+msgid "Een van onze specialisten staat je graag te woord!"
+msgstr "Un de nos spécialistes est heureux de vous aider!"
+
+#: pclivecom/pclivecom-chat-block.tpl.php:3
+msgid "Start Chat"
+msgstr ""
+
+#: pclivecom/pclivecom-chat-block.tpl.php:4
+msgid "info@printconnect.be"
+msgstr ""
+
+#: pclivecom/pclivecom-chat-block.tpl.php:4
+msgid "078 15 01 01"
+msgstr ""
+
+#: pclivecom/pclivecom.module:38
+msgid "All the help you need"
+msgstr ""
+
+#: pclivecom/pclivecom.module:77
+msgid "Chat"
+msgstr ""
+
+#: pclivecom/pclivecom.module:80
+msgid "Chat (small)"
+msgstr ""
+
+#: pclivecom/pclivecom.module:170
+msgid "Questions?"
+msgstr ""
+
+#: pclivecom/pclivecom.module:183;308
+msgid "Start chat"
+msgstr "Commencez chat"
+
+#: pclivecom/pclivecom.module:295
+msgid "Do you have a question?"
+msgstr "Une question?"
+
+#: pclivecom/pclivecom.info:0
+msgid "Livecom"
+msgstr ""
+
+#: pclivecom/pclivecom.info:0
+msgid "Livecom integration"
+msgstr ""
+
+#: pcmenu/pcmenu.module:35
+msgid "PC main menu"
+msgstr ""
+
+#: pcmenu/pcmenu.module:38
+msgid "Top bar"
+msgstr ""
+
+#: pcmenu/pcmenu.module:61;122 pcsitemap/pcsitemap.info:0
+msgid "Sitemap"
+msgstr "Plan du site"
+
+#: pcmenu/pcmenu.module:73;143
+msgid "Privacy policy"
+msgstr ""
+
+#: pcmenu/pcmenu.module:76
+msgid "Disclaimer"
+msgstr ""
+
+#: pcmenu/pcmenu.module:79;149
+msgid "Recall"
+msgstr ""
+
+#: pcmenu/pcmenu.module:101 pcproducts/pcproducts.forms.inc:19
+#: pcsitemap/pcsitemap.module:71
+msgid "Home"
+msgstr "Accueil"
+
+#: pcmenu/pcmenu.info:0
+msgid "Menu"
+msgstr "Menu"
+
+#: pcmenu/pcmenu.info:0
+msgid "Main menu"
+msgstr "Menu principal"
+
+#: pcnewsletters/pcnewsletters.module:81
+msgid "Do you want to learn more about what printconnect.com can do for you?"
+msgstr ""
+
+#: pcnewsletters/pcnewsletters.module:81
+msgid "Subscribe to our newsletter."
+msgstr "Abonnez-vous à notre newsletter."
+
+#: pcnewsletters/pcnewsletters.module:93;15
+msgid "Subscribe"
+msgstr "Abonnez-vous"
+
+#: pcnewsletters/pcnewsletters.module:108
+msgid ""
+"Thank you very much for subscribing. Twice a month, you’ll receive the "
+"latest promotions and news. Don’t miss out!"
+msgstr ""
+"Merci de vous inscrire sur le bulletin de PrintConcept.fr. Deux fois par "
+"mois, vous recevrez les dernières promotions et nouvelles. Ne les manquez "
+"pas!"
+
+#: pcnewsletters/pcnewsletters.module:147
+msgid "No interest"
+msgstr ""
+
+#: pcnewsletters/pcnewsletters.module:148
+msgid "Too much information"
+msgstr ""
+
+#: pcnewsletters/pcnewsletters.module:160
+msgid "Reason"
+msgstr "Reason"
+
+#: pcnewsletters/pcnewsletters.module:166;19
+msgid "Unsubscribe"
+msgstr ""
+
+#: pcnewsletters/pcnewsletters.module:173
+msgid "Unsubscribed"
+msgstr ""
+
+#: pcnewsletters/pcnewsletters.module:8
+msgid "Newsletter"
+msgstr "Bulletin"
+
+#: pcnewsletters/pcnewsletters.info:0
+msgid "Newsletters"
+msgstr ""
+
+#: pcnewsletters/pcnewsletters.info:0
+msgid "Newsletters module"
+msgstr ""
+
+#: pcoffers/pcoffers.forms.inc:9
+msgid "Offer"
+msgstr ""
+
+#: pcoffers/pcoffers.forms.inc:121
+msgid "Reject"
+msgstr ""
+
+#: pcoffers/pcoffers.forms.inc:138
+msgid "Your offer is already been used."
+msgstr ""
+
+#: pcoffers/pcoffers.forms.inc:167
+msgid "Rejected"
+msgstr ""
+
+#: pcoffers/pcoffers.forms.inc:170
+msgid "Expired"
+msgstr ""
+
+#: pcoffers/pcoffers.forms.inc:194 pcoffers/pcoffers.module:129
+#: pcorders/pcorders.module:164;203;345
+msgid "Created"
+msgstr "Créé(e)"
+
+#: pcoffers/pcoffers.forms.inc:196
+msgid "Items"
+msgstr "Éléments"
+
+#: pcoffers/pcoffers.forms.inc:198 pcorders/pcorders.module:164;203;345
+msgid "Status"
+msgstr "Statut"
+
+#: pcoffers/pcoffers.forms.inc:200 pcoffers/pcoffers.module:133
+msgid "No offers"
+msgstr ""
+
+#: pcoffers/pcoffers.module:13
+msgid "My offers"
+msgstr ""
+
+#: pcoffers/pcoffers.module:92
+msgid "Open offers"
+msgstr ""
+
+#: pcoffers/pcoffers.module:120
+msgid "Recent offers"
+msgstr ""
+
+#: pcoffers/pcoffers.module:142
+msgid "All offers"
+msgstr ""
+
+#: pcoffers/pcoffers.info:0
+msgid "Offers"
+msgstr ""
+
+#: pcoffers/pcoffers.info:0
+msgid "Offers module"
+msgstr ""
+
+#: pcogone/pcogone.module:45
+msgid "Payment exception"
+msgstr ""
+
+#: pcogone/pcogone.module:52
+msgid "Payment cancel"
+msgstr ""
+
+#: pcogone/pcogone.module:71
+msgid "Ogone URL"
+msgstr ""
+
+#: pcogone/pcogone.module:73
+msgid ""
+"The URL for the Ogone PSP service. Use https://secure.ogone.com/ncol/test/"
+"orderstandard.asp for testpurposes, https://secure.ogone.com/ncol/prod/"
+"orderstandard.asp for production use."
+msgstr ""
+
+#: pcogone/pcogone.module:77
+msgid "Merchant catalog URL"
+msgstr ""
+
+#: pcogone/pcogone.module:79
+msgid ""
+"The relative path to your catalog page. For instance if your catalog page is "
+"www.yourdomain.com/catalog enter catalog"
+msgstr ""
+
+#: pcogone/pcogone.module:83
+msgid "pspid"
+msgstr ""
+
+#: pcogone/pcogone.module:85
+msgid "The login username for the Ogone PSP service."
+msgstr ""
+
+#: pcogone/pcogone.module:89
+msgid "Currency"
+msgstr ""
+
+#: pcogone/pcogone.module:91
+msgid ""
+"Use \"EUR\", \"USD\" or \"GBP\" for currency. See Ogone documentation for "
+"details."
+msgstr ""
+
+#: pcogone/pcogone.module:109
+msgid "BG Color"
+msgstr ""
+
+#: pcogone/pcogone.module:111
+msgid "Background color payment page.(empty for default)"
+msgstr ""
+
+#: pcogone/pcogone.module:115
+msgid "text Color"
+msgstr ""
+
+#: pcogone/pcogone.module:117
+msgid "Text color payment page.(empty for default)"
+msgstr ""
+
+#: pcogone/pcogone.module:121
+msgid "Table BG Color"
+msgstr ""
+
+#: pcogone/pcogone.module:123
+msgid "Background color tables in payment page.(empty for default)"
+msgstr ""
+
+#: pcogone/pcogone.module:127
+msgid "Table Text Color"
+msgstr ""
+
+#: pcogone/pcogone.module:129
+msgid "Text color tables in payment page.(empty for default)"
+msgstr ""
+
+#: pcogone/pcogone.module:133
+msgid "Button Color"
+msgstr ""
+
+#: pcogone/pcogone.module:135
+msgid "Button color in payment page.(empty for default)"
+msgstr ""
+
+#: pcogone/pcogone.module:139
+msgid "Button Text Color"
+msgstr ""
+
+#: pcogone/pcogone.module:141
+msgid "Button text color in payment page.(empty for default)"
+msgstr ""
+
+#: pcogone/pcogone.module:145
+msgid "Logo Path"
+msgstr ""
+
+#: pcogone/pcogone.module:147
+msgid "Logo to use on payment page.(empty for none)"
+msgstr ""
+
+#: pcogone/pcogone.module:151
+msgid "Fonttype"
+msgstr ""
+
+#: pcogone/pcogone.module:156
+msgid "SHA-1 Signature pre"
+msgstr ""
+
+#: pcogone/pcogone.module:158
+msgid "SHA-1 signature for pre payment verification."
+msgstr ""
+
+#: pcogone/pcogone.module:162
+msgid "SHA-1 Signature post"
+msgstr ""
+
+#: pcogone/pcogone.module:164
+msgid "SHA-1 signature for post payment verification."
+msgstr ""
+
+#: pcogone/pcogone.module:296
+msgid "Veilig betalen"
+msgstr ""
+
+#: pcogone/pcogone.module:378
+msgid ""
+"One moment please, you will automaticaly be redirected to the payment "
+"gateway..."
+msgstr ""
+
+#: pcogone/pcogone.module:379
+msgid ""
+"Popupblockers might stop the paymentpage from opening, please click the "
+"button to open the payment page if it does not open automaticaly."
+msgstr ""
+
+#: pcogone/pcogone.module:380
+msgid "Click here to go to payment page manually"
+msgstr ""
+
+#: pcogone/pcogone.module:548
+msgid "Payment received..."
+msgstr ""
+
+#: pcogone/pcogone.module:31
+msgid "Payment accept"
+msgstr ""
+
+#: pcogone/pcogone.module:38
+msgid "Payment decline"
+msgstr ""
+
+#: pcogone/pcogone.info:0
+msgid "Ogone"
+msgstr "Ogone"
+
+#: pcogone/pcogone.info:0
+msgid "Ogone integration"
+msgstr ""
+
+#: pcorders/pcorders.forms.inc:10
+msgid "Details of your order @number : @status"
+msgstr "Détails de commande @number : @status"
+
+#: pcorders/pcorders.forms.inc:15
+msgid "Your order is now in status %status"
+msgstr "Votre commande a l'état: %status"
+
+#: pcorders/pcorders.forms.inc:71
+msgid "From order to delivery"
+msgstr "De la commande à la livraison"
+
+#: pcorders/pcorders.forms.inc:88
+msgid "Delivered"
+msgstr ""
+
+#: pcorders/pcorders.forms.inc:138
+msgid "Dear @name"
+msgstr ""
+
+#: pcorders/pcorders.forms.inc:143
+msgid ""
+"Congratulations on your order. From now on, it`s our task to provide you "
+"with the best prints possible."
+msgstr ""
+
+#: pcorders/pcorders.forms.inc:162
+msgid "Just ordered!"
+msgstr ""
+
+#: pcorders/pcorders.forms.inc:178
+msgid "This orders delivery"
+msgstr "Adresse de livraison"
+
+#: pcorders/pcorders.forms.inc:199
+msgid ""
+"Your order will by delivered at the given address, at last 24 hours after "
+"shipping."
+msgstr ""
+"Votre commande vous sera livrée à l'adresse indiquée, entre 24 et 72 heures "
+"après l'expédition de notre unité de fabrication."
+
+#: pcorders/pcorders.forms.inc:235
+msgid "Your order is shipped neutral"
+msgstr "Votre commande vous sera expédiée neutre."
+
+#: pcorders/pcorders.forms.inc:243 pcorders/pcorders.module:359
+msgid "Details of your order @number"
+msgstr "Détails de commande @number"
+
+#: pcorders/pcorders.forms.inc:363
+msgid "Track"
+msgstr "Suivi"
+
+#: pcorders/pcorders.forms.inc:407;468
+msgid "Extra"
+msgstr "Extra"
+
+#: pcorders/pcorders.module:164
+msgid "Finished"
+msgstr "Fini"
+
+#: pcorders/pcorders.module:165;203;345
+msgid "No orders"
+msgstr "Aucune commande"
+
+#: pcorders/pcorders.module:210
+msgid "@firstName, thank you for ordering"
+msgstr "@firstName, merci pour votre commande"
+
+#: pcorders/pcorders.module:212
+msgid "Thank you for ordering"
+msgstr ""
+
+#: pcorders/pcorders.module:341
+msgid "Recent orders"
+msgstr "Commandes récentes"
+
+#: pcorders/pcorders.module:347
+msgid "All orders"
+msgstr "Tous les commandes"
+
+#: pcorders/pcorders.module:420
+msgid "Delivery cost"
+msgstr "Frais de livraison"
+
+#: pcorders/pcorders.module:444;460
+msgid "Open orders"
+msgstr "Commandes en cours"
+
+#: pcorders/pcorders.module:445;461;50
+msgid "Closed orders"
+msgstr "Commandes clôturées"
+
+#: pcorders/pcorders.module:44
+msgid "Active orders"
+msgstr "Commandes en cours"
+
+#: pcorders/pcorders.module:56;63
+msgid "Orders details"
+msgstr ""
+
+#: pcorders/pcorders.module:72
+msgid "Orders confirmation"
+msgstr ""
+
+#: pcorders/pcorders.module:79;88
+msgid "Order confirmation"
+msgstr "Confirmation de commande"
+
+#: pcorders/pcorders.info:0
+msgid "Orders"
+msgstr "Orders"
+
+#: pcorders/pcorders.info:0
+msgid "Orders module"
+msgstr ""
+
+#: pcordersbase/pcordersbase.info:0
+msgid "Orders base"
+msgstr ""
+
+#: pcordersbase/pcordersbase.info:0
+msgid "Orders classes"
+msgstr ""
+
+#: pcpayments/pcpayments.forms.inc:17
+msgid "This payment request does not exists (anymore)..."
+msgstr ""
+
+#: pcpayments/pcpayments.forms.inc:76
+msgid "Payment request intro"
+msgstr ""
+
+#: pcpayments/pcpayments.forms.inc:117 pcpayments/pcpayments.module:315
+msgid "Proceed"
+msgstr ""
+
+#: pcpayments/pcpayments.module:355
+msgid "Payment methods"
+msgstr "Payment methods"
+
+#: pcpayments/pcpayments.module:169;177;186
+msgid "Payment request"
+msgstr "Payment request"
+
+#: pcpayments/pcpayments.info:0;0
+msgid "Payments"
+msgstr "Payments"
+
+#: pcpaymentsbase/pcpaymentsbase.info:0
+msgid "Payments Base"
+msgstr ""
+
+#: pcpaymentsbase/pcpaymentsbase.info:0
+msgid "Payments base classes"
+msgstr ""
+
+#: pcpickuppoints/pcpickuppoints.module:150
+msgid "Choose"
+msgstr "Choose"
+
+#: pcpickuppoints/pcpickuppoints.module:172
+msgid "!name field is required."
+msgstr "Le champ !name est requis."
+
+#: pcpickuppoints/pcpickuppoints.module:282;378
+msgid "Pickup points"
+msgstr ""
+
+#: pcpickuppoints/pcpickuppoints.module:290
+msgid "Pickup points callback"
+msgstr ""
+
+#: pcpickuppoints/pcpickuppoints.module:297
+msgid "Pickup points details callback"
+msgstr ""
+
+#: pcpickuppoints/pcpickuppoints.module:305
+#: pcstores/pcstores.module:5;13;22;31;39;47;55;63
+msgid "Picker"
+msgstr ""
+
+#: pcpickuppoints/pcpickuppoints.module:381
+msgid "Pickup points quick search (where available)"
+msgstr ""
+
+#: pcpickuppoints/pcpickuppoints.module:393
+msgid "Free pickup service"
+msgstr ""
+
+#: pcpickuppoints/pcpickuppoints.module:402
+msgid "Haal je drukwerk af bij jou om de hoek"
+msgstr ""
+
+#: pcpickuppoints/pcpickuppoints.module:403
+msgid ""
+"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non turpis "
+"urna, sed elementum urna. Maecenas ultrices ullamcorper dui, vitae ornare "
+"odio eleifend at. Maecenas vulputate vestibulum sodales. Sed nisi augue, "
+"euismod elementum vulputate ut, vehicula vel felis"
+msgstr ""
+
+#: pcpickuppoints/pcpickuppoints.module:438
+msgid "Your postal code"
+msgstr "Code postal"
+
+#: pcpickuppoints/pcpickuppoints.info:0
+msgid "Pickup points (TODELETE?)"
+msgstr ""
+
+#: pcpickuppoints/pcpickuppoints.info:0
+msgid "Pickup points module"
+msgstr ""
+
+#: pcproducts/pcproducts.config.inc:109 pcproducts/pcproducts.forms.inc:758
+#: pcproducts/pcproducts.module:421
+msgid "Select a product"
+msgstr "Sélectionnez un produit"
+
+#: pcproducts/pcproducts.config.inc:194
+msgid "Options"
+msgstr "Options"
+
+#: pcproducts/pcproducts.config.inc:205
+msgid "No options selected"
+msgstr ""
+
+#: pcproducts/pcproducts.config.inc:256;279;290
+#: pcproducts/pcproducts.forms.inc:430;455
+#: pctemplates/pctemplates.config.inc:870;892
+msgid "@qty pcs."
+msgstr ""
+
+#: pcproducts/pcproducts.config.inc:308 pcproducts/pcproducts.forms.inc:203
+#: pctemplates/pctemplates.config.inc:905
+msgid "Quantity"
+msgstr "Quantité"
+
+#: pcproducts/pcproducts.config.inc:308 pcproducts/pcproducts.forms.inc:205
+#: pctemplates/pctemplates.config.inc:905
+msgid "Price VAT excl."
+msgstr "Prix hors TVA."
+
+#: pcproducts/pcproducts.config.inc:308 pcproducts/pcproducts.forms.inc:206
+#: pctemplates/pctemplates.config.inc:905
+msgid "Price VAT incl."
+msgstr ""
+
+#: pcproducts/pcproducts.config.inc:322 pctemplates/pctemplates.config.inc:919
+msgid "Enter your amount"
+msgstr ""
+
+#: pcproducts/pcproducts.config.inc:407
+#: pctemplates/pctemplates.config.inc:1087
+msgid "Supply before @time"
+msgstr ""
+
+#: pcproducts/pcproducts.config.inc:455 pcproducts/pcproducts.forms.inc:307
+#: pcproducts/pcproducts.module:1080
+#: pctemplates/pctemplates.config.inc:486;1121
+msgid "Supply times"
+msgstr "Quand vos imprimés seront-ils prêts ?"
+
+#: pcproducts/pcproducts.config.inc:462
+#: pcproducts/pcproducts.forms.inc:313;552;553
+#: pcproducts/pcproducts.module:1000;1051
+#: pctemplates/pctemplates.config.inc:498;1128
+msgid "Supply before"
+msgstr "Téléchargez votre fichier avant "
+
+#: pcproducts/pcproducts.config.inc:464 pcproducts/pcproducts.forms.inc:315
+#: pcproducts/pcproducts.module:1085
+#: pctemplates/pctemplates.config.inc:520;1130
+msgid "Depending on your delivery address..."
+msgstr ""
+"En fonction de l'adresse, la livraison a lieu entre 24 et 72 heures après "
+"expédition. Attention, on livre uniquement en semaine. Vous pouvez vérifier "
+"l'état de votre commande via MonPrintConcept.fr."
+
+#: pcproducts/pcproducts.forms.inc:56
+msgid "Configure your product"
+msgstr "Configurez votre produit"
+
+#: pcproducts/pcproducts.forms.inc:110
+msgid "Choose your @item"
+msgstr ""
+
+#: pcproducts/pcproducts.forms.inc:194
+msgid "Select your amount"
+msgstr "Choisissez votre quantité"
+
+#: pcproducts/pcproducts.forms.inc:217
+msgid "Enter any quantity or select a price above"
+msgstr ""
+
+#: pcproducts/pcproducts.forms.inc:233 pcproducts/pcproducts.module:826
+msgid "Additional finishing"
+msgstr "Finition optionelle"
+
+#: pcproducts/pcproducts.forms.inc:800 pcproducts/pcproducts.module:439
+msgid "from_price"
+msgstr "Disponible apd."
+
+#: pcproducts/pcproducts.forms.inc:839 pcproducts/pcproducts.module:480
+msgid "Select format"
+msgstr "Faites votre choix"
+
+#: pcproducts/pcproducts.module:92 pcproducts/pcproducts.info:0
+msgid "Product catalog"
+msgstr ""
+
+#: pcproducts/pcproducts.module:293
+msgid "Our product catalog"
+msgstr ""
+
+#: pcproducts/pcproducts.module:307
+msgid "Top 10 products"
+msgstr "Top 10 des produits"
+
+#: pcproducts/pcproducts.module:439
+msgid "Products and possibilities"
+msgstr "Produits et possibilités"
+
+#: pcproducts/pcproducts.module:457;663
+msgid "@firstName, you selected"
+msgstr "@firstName, vous avez sélectionné"
+
+#: pcproducts/pcproducts.module:459;665
+msgid "You selected"
+msgstr "Vous avez sélectionné"
+
+#: pcproducts/pcproducts.module:661
+msgid "Pick the amount that fits your needs"
+msgstr "Sélectionnez la quantité dont vous avez besoin"
+
+#: pcproducts/pcproducts.module:892;1259
+msgid "We also make"
+msgstr "D'autres clients ont également acheté :"
+
+#: pcproducts/pcproducts.module:916;1282;1316
+msgid "for @qty pcs."
+msgstr "pour @qty pcs."
+
+#: pcproducts/pcproducts.module:923;1290
+msgid "Ordering"
+msgstr ": commandez-les"
+
+#: pcproducts/pcproducts.module:1055 pctemplates/pctemplates.config.inc:500
+msgid "Shipping_deadline"
+msgstr "Sera envoyé "
+
+#: pcproducts/pcproducts.module:1072
+msgid "Need to know more?"
+msgstr "Les délais de livraison"
+
+#: pcproducts/pcproducts.module:1083 pctemplates/pctemplates.config.inc:491
+msgid "printconnect is fast blabla..."
+msgstr ""
+
+#: pcproducts/pcproducts.module:1122
+msgid "Given quantity is not greater than 0!"
+msgstr ""
+
+#: pcproducts/pcproducts.module:1133
+msgid "Product info"
+msgstr ""
+
+#: pcproducts/pcproducts.module:1144
+msgid "Product templates"
+msgstr ""
+
+#: pcproducts/pcproducts.module:1147
+msgid "Products alphanumeric list"
+msgstr ""
+
+#: pcproducts/pcproducts.module:1150
+msgid "Products list"
+msgstr ""
+
+#: pcproducts/pcproducts.module:1153
+msgid "Products top"
+msgstr ""
+
+#: pcproducts/pcproducts.module:1156
+msgid "Products upselling"
+msgstr ""
+
+#: pcproducts/pcproducts.module:1159
+msgid "Products others also bought"
+msgstr ""
+
+#: pcproducts/pcproducts.module:1162
+msgid "Products calculator"
+msgstr ""
+
+#: pcproducts/pcproducts.module:1245
+msgid "Top products"
+msgstr ""
+
+#: pcproducts/pcproducts.module:1340
+msgid "Also buy"
+msgstr ""
+
+#: pcproducts/pcproducts.module:1753
+msgid "@product, ordering @product"
+msgstr "@product, impression @product"
+
+#: pcproducts/pcproducts.module:1771
+msgid "About product calculator"
+msgstr ""
+"Choisissez votre produit et votre taille ou votre forme et calculez "
+"immédiatement votre prix!"
+
+#: pcproducts/pcproducts.module:1826
+msgid "Calculate"
+msgstr "Calculer mon prix"
+
+#: pcproducts/pcproducts.module:1908
+msgid "Url aliasses rebuilt for "
+msgstr ""
+
+#: pcproductsbase/pcproductsbase.module:26
+msgid "Product order"
+msgstr ""
+
+#: pcproductsbase/pcproductsbase.module:28
+msgid "Comma separated list of product ids"
+msgstr ""
+
+#: pcproductsbase/pcproductsbase.module:33
+msgid "Top items"
+msgstr ""
+
+#: pcproductsbase/pcproductsbase.module:35
+msgid "Number of products marked as 'top' products"
+msgstr ""
+
+#: pcproductsbase/pcproductsbase.module:40
+msgid "Rebuild url aliasses"
+msgstr ""
+
+#: pcproductsbase/pcproductsbase.info:0
+msgid "Products base"
+msgstr ""
+
+#: pcproductsbase/pcproductsbase.info:0
+msgid "Product base classes"
+msgstr ""
+
+#: pcrestdal/pcrestdal.module:7
+msgid "Rest Dal"
+msgstr ""
+
+#: pcrestdal/pcrestdal.info:0
+msgid "Rest data access"
+msgstr ""
+
+#: pcrestdal/pcrestdal.info:0
+msgid "Provides the Rest Dal"
+msgstr ""
+
+#: pcrestdal/classes/printconnect/Rest/Dal.php:154;186;214
+msgid "pcrestdal"
+msgstr ""
+
+#: pcrestdal/classes/printconnect/Rest/Dal.php:154;186;214
+msgid "%timing on %type %url \\n Data \\n %data \\n Response %response"
+msgstr ""
+
+#: pcrotator/pcrotator.module:8
+msgid "Discover all our promotions"
+msgstr "Découvrez toutes nos promotions"
+
+#: pcrotator/pcrotator.info:0
+msgid "Rotator"
+msgstr ""
+
+#: pcrotator/pcrotator.info:0
+msgid "Rotates blocks"
+msgstr ""
+
+#: pcsamplepacks/pcsamplepacks.forms.inc:25
+msgid "About requesting a samplepack"
+msgstr ""
+"Eprouvez la qualité de PrintConcept.fr. Dans notre paquet d’échantillons "
+"vous pouvez expérimenter chaque type de papier et chaque finition. Sentez et "
+"convainquez vous-même."
+
+#: pcsamplepacks/pcsamplepacks.forms.inc:131
+#: pcsamplepacks/pcsamplepacks.module:110
+msgid "Request"
+msgstr "Demander"
+
+#: pcsamplepacks/pcsamplepacks.forms.inc:183
+#: pcsamplepacks/pcsamplepacks.module:39
+msgid "Sample pack requested"
+msgstr ""
+
+#: pcsamplepacks/pcsamplepacks.module:75 pcsamplepacks/pcsamplepacks.info:0
+msgid "Sample packs"
+msgstr "Sample packs"
+
+#: pcsamplepacks/pcsamplepacks.module:84
+msgid "Sample box"
+msgstr ""
+
+#: pcsamplepacks/pcsamplepacks.module:96
+msgid "Convince yourself"
+msgstr ""
+"Soyez définitivement convaincu ! Demandez un Pack d'échantillons gratuit."
+
+#: pcsamplepacks/pcsamplepacks.module:31
+msgid "Request a sample pack"
+msgstr "Demandez un echantillon"
+
+#: pcsamplepacks/pcsamplepacks.info:0
+msgid "Provides sample pack requests"
+msgstr ""
+
+#: pcsearch/pcsearch.module:97
+msgid "Please enter some keywords."
+msgstr "Veuillez entrer des mots-clés."
+
+#: pcsearch/pcsearch.module:12
+msgid "Search autocomplete"
+msgstr ""
+
+#: pcsearch/pcsearch.info:0
+msgid "Search function"
+msgstr ""
+
+#: pcsegments/pcsegments.module:10
+msgid "Segment menu"
+msgstr ""
+
+#: pcsegments/pcsegments.module:14
+msgid "Segment products"
+msgstr ""
+
+#: pcsegments/pcsegments.module:125
+msgid "Choose your segment"
+msgstr ""
+
+#: pcsegments/pcsegments.module:137
+msgid "A-Z"
+msgstr ""
+
+#: pcsegments/pcsegments.module:138
+msgid "By Segment"
+msgstr ""
+
+#: pcsegments/pcsegments.info:0 pctemplates/pctemplates.selection.inc:536
+msgid "Segment"
+msgstr ""
+
+#: pcsegments/pcsegments.info:0
+msgid "Provides blocks for products segmentation"
+msgstr ""
+
+#: pcselect/pcselect.info:0
+msgid "Select replacement (TODELETE?)"
+msgstr ""
+
+#: pcselect/pcselect.info:0
+msgid "Replaces select fields"
+msgstr ""
+
+#: pcshipping/pcshipping.info:0
+msgid "Shipping Base TOBEDELETED"
+msgstr ""
+
+#: pcshipping/pcshipping.info:0
+msgid "Shipping base classes"
+msgstr ""
+
+#: pcsitemap/pcsitemap.module:5;11
+msgid "Site map"
+msgstr ""
+
+#: pcsitemap/pcsitemap.info:0
+msgid "Provides the sitemap and sitemap.xml"
+msgstr ""
+
+#: pcsocial/pcsocial.module:26
+msgid "Social media list"
+msgstr ""
+
+#: pcsocial/pcsocial.module:37
+msgid "Social"
+msgstr ""
+
+#: pcsocial/pcsocial.module:159
+msgid "Twitter account"
+msgstr ""
+
+#: pcsocial/pcsocial.module:164
+msgid "Facebook account"
+msgstr ""
+
+#: pcsocial/pcsocial.module:169
+msgid "LinkedIn account"
+msgstr ""
+
+#: pcsocial/pcsocial.module:174
+msgid "Flickr account"
+msgstr ""
+
+#: pcsocial/pcsocial.module:179
+msgid "YouTube account"
+msgstr ""
+
+#: pcsocial/pcsocial.module:184
+msgid "Google plus account"
+msgstr ""
+
+#: pcsocial/pcsocial.info:0
+msgid "Social (TODELETE?)"
+msgstr ""
+
+#: pcsocial/pcsocial.info:0
+msgid "Social media integration"
+msgstr ""
+
+#: pcstorecredit/pcstorecredit.module:174
+msgid "Pay with your store credit"
+msgstr "Payer avec votre crédit"
+
+#: pcstorecredit/pcstorecredit.module:221
+msgid "Choose the amount"
+msgstr "Choisissez le montant"
+
+#: pcstorecredit/pcstorecredit.module:298
+msgid "Not a number."
+msgstr ""
+
+#: pcstores/pcstores.forms.inc:30
+msgid "Select your region"
+msgstr ""
+
+#: pcstores/pcstores.forms.inc:51
+msgid "Select your pickup point"
+msgstr ""
+
+#: pcstores/pcstores.module:723
+msgid "Select a pickup point in your neighbourhood"
+msgstr ""
+
+#: pcstores/pcstores.module:71
+msgid "StoreInfo"
+msgstr ""
+
+#: pcstores/pcstores.module:79
+msgid "Store"
+msgstr ""
+
+#: pcstores/pcstores.info:0
+msgid "Stores"
+msgstr ""
+
+#: pcstores/pcstores.info:0
+msgid "Provides store shipping"
+msgstr ""
+
+#: pcsubtitle/pcsubtitle.module:128 pcsubtitle/pcsubtitle.info:0
+msgid "Subtitle"
+msgstr "Sous-titre"
+
+#: pcsubtitle/pcsubtitle.info:0
+msgid "Put a subtitle on every page"
+msgstr ""
+
+#: pctemplates/pctemplates.config.inc:42
+#: pctemplates/pctemplates.selection.inc:57
+msgid "Step"
+msgstr "Etape"
+
+#: pctemplates/pctemplates.config.inc:42
+msgid "configure your"
+msgstr "Configurez vos"
+
+#: pctemplates/pctemplates.config.inc:72
+msgid "Outside"
+msgstr "L'extérieur"
+
+#: pctemplates/pctemplates.config.inc:74
+msgid "Inside"
+msgstr "l'intérieur"
+
+#: pctemplates/pctemplates.config.inc:100;708
+msgid "Thumbnail"
+msgstr "Thumbnail"
+
+#: pctemplates/pctemplates.config.inc:146 pctemplates/pctemplates.module:183
+msgid "Dimension"
+msgstr "Dimension"
+
+#: pctemplates/pctemplates.config.inc:163
+msgid "Back to overview"
+msgstr "Retour au sommaire"
+
+#: pctemplates/pctemplates.config.inc:175
+#: pctemplates/pctemplates.selection.inc:13
+msgid "Looking for the best designs? Try one of our FREE templates!"
+msgstr ""
+"Vous cherchez les meilleurs designs? Essayez nos gabarits GRATUITS "
+"maintenant!"
+
+#: pctemplates/pctemplates.config.inc:227
+msgid "Configure"
+msgstr "Configurer"
+
+#: pctemplates/pctemplates.config.inc:337
+msgid "Custom quantity"
+msgstr "Choisissez une quantité"
+
+#: pctemplates/pctemplates.config.inc:361;367
+msgid "Pricing"
+msgstr "Prix"
+
+#: pctemplates/pctemplates.config.inc:362
+msgid "Design + print included!"
+msgstr "Mise en page et l'impression inclus dans le prix!"
+
+#: pctemplates/pctemplates.config.inc:417
+msgid "Total"
+msgstr "Total"
+
+#: pctemplates/pctemplates.config.inc:426;951;985
+msgid "Start design"
+msgstr "Commencer à concevoir"
+
+#: pctemplates/pctemplates.config.inc:470
+msgid "Production and shipping"
+msgstr "Production et expédition"
+
+#: pctemplates/pctemplates.config.inc:475
+msgid "Next deadline"
+msgstr "Nous avons besoin de vos fichiers avant "
+
+#: pctemplates/pctemplates.config.inc:480
+msgid "Print will be shipped"
+msgstr "Expédié"
+
+#: pctemplates/pctemplates.config.inc:524
+msgid "More on delivery times: click here"
+msgstr "En savoir plus sur nos délais de livraison? Cliquez ici."
+
+#: pctemplates/pctemplates.selection.inc:57
+msgid "Choose a design"
+msgstr "Choisissez un modèle"
+
+#: pctemplates/pctemplates.selection.inc:64;555
+msgid "Clear all filters"
+msgstr "Effacer tous les filtres"
+
+#: pctemplates/pctemplates.selection.inc:72
+msgid "Filter"
+msgstr "Filtrer"
+
+#: pctemplates/pctemplates.selection.inc:80;82;498;721;726
+#: pctemplates/pctemplates.module:133;143
+msgid "Upload your own design"
+msgstr ""
+
+#: pctemplates/pctemplates.selection.inc:162;167;864;869
+msgid "Previous"
+msgstr "Précédent"
+
+#: pctemplates/pctemplates.selection.inc:163;174;865;876
+msgid "Next"
+msgstr "Suivant"
+
+#: pctemplates/pctemplates.selection.inc:356
+msgid ""
+"Fine-tune your selection by using these filters. You can easily remove any "
+"filter by deleting them on the left."
+msgstr ""
+"Peaufinez votre choix en utilisant ces filtres. Vous pouvez facilement "
+"supprimer les filtres sur la gauche."
+
+#: pctemplates/pctemplates.selection.inc:411
+msgid "Browse by"
+msgstr "Parcourir par"
+
+#: pctemplates/pctemplates.selection.inc:606
+msgid "No templates found"
+msgstr "Aucun modèle disponible."
+
+#: pctemplates/pctemplates.selection.inc:629
+msgid "Fill in keyword"
+msgstr ""
+
+#: pctemplates/pctemplates.selection.inc:651
+msgid "Filter by product"
+msgstr ""
+
+#: pctemplates/pctemplates.selection.inc:672
+msgid "Filter by segment"
+msgstr ""
+
+#: pctemplates/pctemplates.selection.inc:708
+msgid "Filter by"
+msgstr ""
+
+#: pctemplates/pctemplates.module:70;161
+msgid "Template of the day"
+msgstr ""
+
+#: pctemplates/pctemplates.module:73
+msgid "Template products list"
+msgstr ""
+
+#: pctemplates/pctemplates.module:76
+msgid "Templates filters block"
+msgstr ""
+
+#: pctemplates/pctemplates.module:79
+msgid "Template specifications"
+msgstr ""
+
+#: pctemplates/pctemplates.module:83
+msgid "Template segments"
+msgstr ""
+
+#: pctemplates/pctemplates.module:118
+msgid "Search a design"
+msgstr ""
+
+#: pctemplates/pctemplates.module:187
+msgid "Design now"
+msgstr ""
+
+#: pctemplates/pctemplates.module:210
+msgid "Specifications"
+msgstr ""
+
+#: pctemplates/pctemplates.info:0
+msgid "Templates order flow"
+msgstr ""
+
+#: pctemplatesbase/pctemplatesbase.info:0
+msgid "Templates Base"
+msgstr ""
+
+#: pctemplatesbase/pctemplatesbase.info:0
+msgid "Template classes"
+msgstr ""
+
+#: pctradetracker/pctradetracker.info:0
+msgid "Tradetracker"
+msgstr ""
+
+#: pctradetracker/pctradetracker.info:0
+msgid "Adds Tradetracker code to pages"
+msgstr ""
+
+#: pcuploader/pcuploader.module:68
+msgid "Choose a file to upload"
+msgstr ""
+
+#: pcuploader/pcuploader.module:79
+msgid "Ready"
+msgstr ""
+
+#: pcuploader/pcuploader.module:149
+msgid "New file"
+msgstr ""
+
+#: pcuploader/pcuploader.module:151
+msgid "Allowed extensions: %allowed "
+msgstr ""
+
+#: pcuploader/pcuploader.module:151
+msgid "Maximum allowed size: %maxsize."
+msgstr ""
+
+#: pcuploader/pcuploader.module:197 pcuploader/pcuploader2.module:99
+msgid "File"
+msgstr "Fichier"
+
+#: pcuploader/pcuploader.module:199 pcuploader/pcuploader3.module:202;374
+msgid "Remove"
+msgstr "Retirer"
+
+#: pcuploader/pcuploader.module:213
+msgid "%current of %total uploaded (%percentage%)"
+msgstr ""
+
+#: pcuploader/pcuploader.module:256
+msgid "Add a new file"
+msgstr "Ajouter un nouveau fichier"
+
+#: pcuploader/pcuploader2.module:68 pcuploader/pcuploader3.module:182;355
+msgid "File name"
+msgstr "Nom du fichier"
+
+#: pcuploader/pcuploader2.module:78 pcuploader/pcuploader3.module:192;365
+msgid "Path"
+msgstr "Chemin"
+
+#: pcuploader/pcuploader2.module:100
+msgid "Maximum size: @size, allowed extension: @extensions"
+msgstr ""
+
+#: pcuploader/pcuploader2.module:100;131 pcuploader/pcuploader3.module:226
+msgid "MB"
+msgstr ""
+
+#: pcuploader/pcuploader3.module:387
+msgid "Upload a new file"
+msgstr ""
+
+#: pcuploader/pcuploader3.module:393
+msgid "refresh"
+msgstr ""
+
+#: pcuploader/pcuploader.info:0
+msgid "Uploader (TODELETE?)"
+msgstr ""
+
+#: pcuploader/pcuploader.info:0
+msgid "Uploader element"
+msgstr ""
+
+#: pcuploader/pcuploader_old.js:0
+msgid "Ready."
+msgstr ""
+
+#: pcuploader/pcuploader_old.js:0
+msgid "Initializing"
+msgstr ""
+
+#: pcvat/pcvat.info:0
+msgid "Provides the vat element and jquery plugin"
+msgstr ""

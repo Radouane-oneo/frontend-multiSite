@@ -1,0 +1,101 @@
+
+#pcorders-order-form .fieldset-wrapper {
+  padding:0;
+}
+#pcorders-order-form .fieldset-wrapper > div {
+  margin:9px;
+}
+#pcorders-order-form .fieldset-wrapper .priceblock {
+  background:#F0F0F0;
+  margin: 0;
+  margin-top:20px;
+  border-top:solid 1px #D2D2D2;
+  padding:9px;
+  -moz-border-radius: 0 0 5px 5px;
+  -webkit-border-radius: 0 0 5px 5px;
+  -khtml-border-radius: 0 0 5px 5px;
+  border-radius: 0 0 5px 5px;
+}
+#pcorders-order-form .fieldset-wrapper .priceblock > table {
+  float: right;
+  width: 210px;
+}
+#pcorders-order-form .item > a {
+  float: left;
+  width: 180px;
+}
+#pcorders-order-form .item > .description {
+  float: right;
+  width: 375px;
+}
+#pcorders-order-form .item > .description > .price {
+  float: right;
+  width: 100px;
+  text-align: right;
+}
+/*#pcorders-order-form .delivery, #pcorders-order-form .current {
+  float: left;
+  width: 280px;
+  border-right: 1px solid #d9d9d9;
+}*/
+#pcorders-order-form .delivery h2, #pcorders-order-form .invoice h2, #pcorders-order-form .details h2, #pcorders-order-form .extra h2 {
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding-left: 25px;
+}
+#pcorders-order-form .delivery h2 {
+  background-image: url("images/shipping.png");
+}
+#pcorders-order-form .invoice h2 {
+  background-image: url("images/invoice.png");
+}
+#pcorders-order-form fieldset .details h2 {
+  background-image: url("images/pccart-cart-form-icon.png");
+}
+#pcorders-order-form fieldset .extra h2 {
+  background-image: url("images/icon_add_blue.png");
+}
+/*#pcorders-order-form  .invoice, #pcorders-order-form  .history {
+  float: right;
+  width: 280px;
+}*/
+#pcorders-order-form  .address {
+  margin: 10px 10px 10px 35px;
+}
+#pcorders-order-form .smaller {
+  margin-right: 10px;
+  margin-left: 25px;
+}
+#pcorders-order-form .delivery .shippingdate {
+  margin-left: 25px;
+}
+#pcorders-order-form .details .item {
+  margin-left: 25px;
+}
+#pcorders-order-form .details .item img{
+  max-width:180px;
+}
+#pcorders-order-form .extra table {
+  margin-left: 25px;
+  width: 96%;
+}
+
+#pcorders-order-form fieldset {
+  margin-top:10px;
+}
+
+/*#pcorders-order-form .current  .status {
+  font-weight:bold;
+  font-size: x-large;
+  background:none;
+  padding:10px 0;
+}*/
+
+#pcorders-order-form .history .active {
+  font-weight:bold;
+  color:#009BDA;
+  font-size:larger;
+}
+#pcorders-order-form .item-list ul li {
+  margin: 0 0 0 20px;
+}

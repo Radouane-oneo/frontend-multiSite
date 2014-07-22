@@ -1,0 +1,1505 @@
+@import url(http://fonts.googleapis.com/css?family=Paytone+One);
+
+
+@font-face {
+font-family: 'AkzidenzMdCn';
+src: url('http://static.linqed2u.be/css/fonts/berthold_akzidenz_grotesk_be_medium_condensed-webfont.eot');
+src: url('http://static.linqed2u.be/css/fonts/berthold_akzidenz_grotesk_be_medium_condensed-webfont.eot?#iefix') format('embedded-opentype'),
+url('http://static.linqed2u.be/css/fonts/berthold_akzidenz_grotesk_be_medium_condensed-webfont.woff') format('woff'),
+url('http://static.linqed2u.be/css/fonts/berthold_akzidenz_grotesk_be_medium_condensed-webfont.ttf') format('truetype'),
+url('http://static.linqed2u.be/css/fonts/berthold_akzidenz_grotesk_be_medium_condensed-webfont.svg#BertholdAkzidenzGroteskBEMdCn') format('svg');
+font-weight: normal;
+font-style: normal;
+}
+@font-face {
+font-family: 'AkzidenzLtCn';
+src: url('http://static.linqed2u.be/css/fonts/berthold_akzidenz_grotesk_be_light_condensed-webfont.eot');
+src: url('http://static.linqed2u.be/css/fonts/berthold_akzidenz_grotesk_be_light_condensed-webfont.eot?#iefix') format('embedded-opentype'),
+url('http://static.linqed2u.be/css/fonts/berthold_akzidenz_grotesk_be_light_condensed-webfont.woff') format('woff'),
+url('http://static.linqed2u.be/css/fonts/berthold_akzidenz_grotesk_be_light_condensed-webfont.ttf') format('truetype'),
+url('http://static.linqed2u.be/css/fonts/berthold_akzidenz_grotesk_be_light_condensed-webfont.svg#BertholdAkzidenzGroteskBELtCn') format('svg');
+font-weight: normal;
+font-style: normal;
+} 
+
+::-moz-selection { background: #00cccc; color: #fff; text-shadow: none; }
+::selection { background: #00cccc; color: #fff; text-shadow: none; }
+
+
+html, body, img, fieldset{
+	margin:0;
+	padding:0;
+	border:none;
+	outline:none;
+}
+
+p{margin-bottom: 10px;}
+p + p{margin: 10px 0 0 0;}
+
+
+li a.active{color: #fff;}
+html{
+	font-size:12px;
+}
+body{
+	background: #414141 url("http://static.linqed2u.be/media/images/bg-merken.jpg");
+	color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+ul, ul li{list-style: disc;}
+
+#canvas{
+	background: #414141;
+	background: rgba(65,65,65,0.85);
+	height:165px;
+}
+
+.clearfix{
+	clear:both;
+}
+
+.container{
+	margin:0 auto;
+	padding: 0 0 10px 0;
+	position:relative;
+	width:960px;
+	/*background: rgba(255,255,255,0.5);
+	border-radius: 50px 0 0 0;*/
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"]{
+		
+	}
+
+a{
+	color: #fff;
+	text-decoration: none;
+}
+	a:hover{
+		color: #00cccc;
+		text-decoration: underline;
+	}
+	
+	a:active{
+		
+	}
+	
+a.forgot-password{margin-left: 10px;}
+
+h1,h2,h3,h4,h5,h6{
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+  font-family: "AkzidenzMdCn",Arial,Helvetica,sans-serif;
+  color: #fff;
+}
+
+h2 a, #content a{color:#000;}
+
+#content h1,#content h2,#content h3,#content h4,#content h5,#content h6{color: #000;}
+
+h1{font-size: 42px;}
+#content h1 {
+    background: none repeat scroll 0 0 #02CBB6;
+    color: #FFFFFF;
+    display: block;
+    height: 70px;
+    line-height: 70px;
+    margin: 0 0 20px -10px;
+    padding: 0 0 0 10px;
+    width: 90%;
+}
+h2,#center h1 {font-size: 160%;line-height: 130%;border-bottom: 1px solid #00cccc; padding-bottom: 5px;}
+h3{font-size: 140%;}
+h4{font-size: 130%;}
+h5{font-size: 120%;}
+h6{font-size: 110%;}
+
+h2{
+    line-height: 120%;
+	padidng-bottom: 10px;
+}
+
+#content h2{font-size:30px;}
+
+	h2 a{ text-decoration: none;}
+		h2 a:hover{color: #000; text-decoration: none;}
+
+#header,
+#navigation,
+#highlight,
+#content,
+#sidebar-first,
+#sidebar-second{
+	margin: 0 10px;
+}
+
+#sidebar-first select,
+#sidebar-second select{
+	max-width: 200px;
+    word-wrap: break-word;
+}
+
+#header{
+	height: 75px;
+    padding: 10px 0;
+	padding-top: 40px;
+	background: none;
+
+}
+
+	#header #header_left, #header #header_right, .region-header-right, #header > a{
+		width: 50%;
+		float: left;
+	}
+	
+		#header #header_left p, #header #header_right  p{  }
+
+	#header #header_left img{
+		margin-left: 10px;
+	}
+	
+	#header #header_right{
+		
+	}
+
+#navigation{
+	padding: 0;
+	height: 40px;
+	margin-bottom: 20px;
+	overflow: hidden;
+}
+
+#navigation ul#main-menu{
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+
+	#navigation #main-menu li{
+		list-style: none;
+		float: left;
+		margin-right: 20px;
+	}
+	
+		#navigation #main-menu li.first{border-left: none;}
+	
+		#navigation #main-menu li a{
+			color: #FFFFFF;
+			display: inline-block;
+    		font-size: 14px;
+			font-weight: bold;
+    		line-height: 40px;
+    		padding: 0 10px;
+    		text-decoration: none;
+			text-transform: uppercase;
+		}
+		
+		#navigation #main-menu li a:hover{
+			text-decoration: none;
+			color: #02CBB6;
+			font-weight: bold;
+			background: #eee;
+		}
+		
+		#navigation #main-menu li a:active{
+			text-decoration: none;
+		}
+
+#navigation #nav_right{
+	/*float: right;
+	width: 220px;*/
+}
+
+#highlight{
+	clear: both;
+	margin-bottom: 10px;
+}
+
+#main{
+	clear: both;
+	background: none;
+	padding-bottom: 20px;
+}
+
+#sidebar-first, #sidebar-second, .region-sidebar-first{
+	float: left;
+	width: 220px;
+}
+
+.breadcrumb{
+	background: none;
+    color: #222;
+    font-size: 12px;
+    margin-bottom: 10px;
+    padding: 10px 5px 0 10px;
+	line-height: 17px;
+}
+	.breadcrumb a{
+		color: #222;
+		text-decoration: none;
+	}
+	
+		.breadcrumb a:hover{
+			color: #00cccc;
+			text-decoration: none;
+		}
+	
+#content{
+	width: 880px; /*920px*/
+	float: left;
+	padding: 0 10px 10px;
+	background: #fff;
+	border: 20px solid #414141;
+	color: #222;
+}
+
+	body.one-sidebar #content{
+		width: 640px; /*680px*/
+	}
+	
+	body.two-sidebars #content{
+		width: 400px; /*440px*/
+	}
+	
+	/*.page-products #content{background:none;box-shadow:none;border-radius:none;padding:0;}
+	body.one-sidebar.page-products #content{width: 700px;}
+	body.two-sidebars.page-products #content{width: 460px;}
+	.page-products .fieldset-wrapper{background: #fff;box-shadow: 0 5px 5px rgba(0,0,0,0.5), inset 0 60px 60px rgba(0,0,0,0.1);border-radius: 6px 6px 6px 6px;padding:20px;}
+	.page-products .fieldset{margin: 20px 0;}
+	.page-products h1{color: #fff;}
+	.page-products fieldset#templates .fieldset-wrapper{min-height: 130px;}*/
+	
+	
+.region-sidebar-first .block,
+.region-sidebar-second .block{
+	margin-bottom: 20px;
+	padding: 10px;
+	background: #02CBB6;
+	box-shadow: 0 0 4px #6A6A6A;
+}
+
+.region-sidebar-first .block h2,
+.region-sidebar-second .block h2{
+	color: #fff;
+	border: none;
+	font-size: 30px;
+	font-family: "AkzidenzMdCn",Arial,Helvetica,sans-serif;
+	text-transform: uppercase;
+}
+
+.region-sidebar-first .block a:hover,
+.region-sidebar-second .block a:hover{
+	color: #000;	
+}
+/*product list*//*
+.block#block-pcproducts-list{
+		background: #90d105;
+background: -moz-linear-gradient(top,  #90d105 0%, #6fba17 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#90d105), color-stop(100%,#6fba17));
+background: -webkit-linear-gradient(top,  #90d105 0%,#6fba17 100%);
+background: -o-linear-gradient(top,  #90d105 0%,#6fba17 100%);
+background: -ms-linear-gradient(top,  #90d105 0%,#6fba17 100%);
+background: linear-gradient(to bottom,  #90d105 0%,#6fba17 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#90d105', endColorstr='#6fba17',GradientType=0 );
+}
+
+.block#block-pcproducts-list h2{
+	background: #90d105;
+background: -moz-linear-gradient(top,  #90d105 0%, #6fba17 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#90d105), color-stop(100%,#6fba17));
+background: -webkit-linear-gradient(top,  #90d105 0%,#6fba17 100%);
+background: -o-linear-gradient(top,  #90d105 0%,#6fba17 100%);
+background: -ms-linear-gradient(top,  #90d105 0%,#6fba17 100%);
+background: linear-gradient(to bottom,  #90d105 0%,#6fba17 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#90d105', endColorstr='#6fba17',GradientType=0 );
+	border-top: 1px solid #b4e003;
+	border-bottom: 1px solid #A9DA02;
+	box-shadow: none;
+}
+
+.block#block-pcproducts-list ul li{
+	color: #fff;
+	font-size: 14px;
+	border-color: #4b800f;
+}
+
+.block#block-pcproducts-list a{
+	color: #fff;
+}
+.block#block-pcproducts-list a:hover{
+	color: #ffe500;
+	text-decoration: none;
+	padding-left: 5px;
+}
+*/
+.block#block-pcproducts-list ul li{
+	list-style: none;
+	line-height: 24px;
+	padding-left: 0;
+	margin-left: 0;
+}
+
+	.block#block-pcproducts-list ul li.last{border:none;}
+
+/* END - product list*/
+
+.region-sidebar-first .block:after,
+.region-sidebar-second .block:after{
+	content:'';
+	display:block;
+	clear: both;
+}
+
+.region-sidebar-first .block legend,
+.region-sidebar-second .block legend{
+	font-size: 30px;
+    font-weight: normal;
+    margin-bottom: 10px;
+	font-family: Arial, sans-serif;
+}
+
+.region-sidebar-first .block ul li,
+.region-sidebar-second .block ul li{
+    /* border-bottom: 1px  solid #d8d8d8; */
+	list-style: disc;
+	margin: 5px 0 0 15px;
+    padding: 0 0 5px;
+}
+.region-sidebar-first .block ul li a,
+.region-sidebar-second .block ul li a{
+	display: block;
+    font-size: 120%;
+    font-weight: normal;
+    overflow: hidden;
+    padding: 0 0 0 0;
+    text-indent: 0;
+}
+
+.region-sidebar-first .block-pcproducts,
+.region-sidebar-second .block-pcproducts,
+.region-sidebar-first .block-pcproducts a,
+.region-sidebar-second .block-pcproducts a,
+.region-sidebar-first .block-pcproducts a:hover,
+.region-sidebar-second .block-pcproducts a:hover{
+	color: #000;
+}
+
+#bottom{
+	width: 100%;
+	min-height: 134px;
+	position: relative;
+	color: #000;
+	background: #E5E5E5;
+	background: rgba(229,229,229,0.85);
+	padding-top: 20px;
+	border-top: 20px solid #414141;
+}
+
+#inner-bottom{min-height: 200px;}
+
+#footer{
+	width: 960px;
+	margin: 0 auto;
+}
+
+#footer .block{
+	float: left;
+	margin: 0 10px;
+    width: 280px;
+	padding: 10px;
+	min-height: 250px;
+	background: #02CBB6;
+	box-shadow: 0 0 4px #6A6A6A;
+}
+
+#footer h2{
+    line-height: 120%;
+	font-weight: normal;
+	color: #fff;
+	border: none;
+	font-size: 36px;
+	font-family: "AkzidenzMdCn",Arial,Helvetica,sans-serif;
+}
+
+	#footer h2 a{color: #fff;}
+
+#closure{
+	width: 940px;
+	margin: 10px auto 0 auto;
+	min-height: 60px;
+	padding: 0 10px;
+	border-top: 1px solid #EEEEEE;
+    box-shadow: 0 -1px 0 #CCCCCC;
+	color: #222;
+}
+
+#closure .block{
+	float: left;
+	width: 50%;
+}
+
+.node-newsitem{
+	margin-bottom: 20px;	
+}
+
+.node-article img, img.floatleft {
+	background: #fff;
+	border: 1px solid #4f6e19;
+	height: 160x;
+    margin: 0 25px 25px 0;
+    padding: 5px;
+    width: 200px;
+	float: left;
+}
+
+.submitted{
+	font-weight: bold;
+	margin: 5px 0;
+}
+
+/* ------ PC ADJUSTMENTS ------ */
+
+/* Product page 1 */
+.page-products #block-system-main h2{font-size:130%;line-height:100%}
+.page-products #block-system-main #pcproducts-products-form ul li{text-align:center}
+.page-products #block-system-main .form-item, .page-products #block-system-main .form-actions{margin-top:0.25em}
+.page-products #block-system-main #pcproducts-products-form ul li label{font-weight:normal;display:inline}
+
+/* Product page 2 */
+#pcproducts-products-form ul li, #pcproducts-productoverview-form ul li, #pcproducts-productconfig-form .other li{text-align:center}
+
+
+/* Product info block */
+#block-pcproducts-productinfo img{max-width:198px;border-radius:4px 4px 4px 4px}
+#block-pcproducts-productinfo .short-description{font-weight:bold}
+#block-pcproducts-productinfo .long-description ul{padding-left:20px}
+
+/* tables */
+table{width:100%}
+table tr{border-bottom: 1px solid #ddd;line-height: 30px;}
+table th{border:none; color: #fff; text-transform: uppercase; background: #02CBB6;}
+table tr.even{background:none; border-bottom: 1px solid #ddd;}
+table tr.odd{background: #eee; border-bottom: 1px solid #ddd;}
+table tbody{border-color: #ddd;}
+#priceblock table, .templates-table{width: 250px;float:right;font-size: 16px;font-weight: bold;margin-left: 20px;}
+table td.value{text-align:right;}
+
+/* Cart indicator */
+#block-pccart-indicator{}
+
+#block-pccart-indicator .button{
+	font-size: 16px;
+	float: right;
+	height: 55px;
+	text-align: center;
+	padding: 0 5px;
+	line-height: 55px;
+}
+
+fieldset{
+	margin-top: 20px;
+}
+
+fieldset legend{
+	color: #000;
+    font-weight: normal;
+	padding-bottom: 10px;
+    line-height: 120%;
+	width: 100%;
+	margin-bottom: 10px;
+	font-size: 30px;
+	font-family: "AkzidenzMdCn",Arial,Helvetica,sans-serif;
+}
+
+	.page-products fieldset legend{
+		color: #000;
+		margin-bottom: 0;
+	}
+
+.form-item-step2-custom-quantity label{float: left; margin-bottom: 20px;}
+.form-item-step2-custom-quantity input{float: right;}
+
+#pcproducts-products-form h2{border:none;}
+
+#edit-step2-footer-priceblock-addtocart{
+	float: right;
+	margin-top: 20px;
+}
+
+.page-products #priceblock input{
+	float: right;
+	margin-top: 20px;
+}
+
+
+.block.block-locale{
+    position: absolute;
+    right: 20px;
+    top: 136px;
+}
+
+	.block.block-locale ul{
+		margin: 0;
+		padding: 0;
+	}
+	
+		.block.block-locale ul li{
+			list-style: none;
+			float: left;
+			margin-left: 10px;
+		}
+
+#pccart-cart-form #edit-cart .item{margin-bottom: 20px;padding-bottom:20px;border-bottom:1px solid #d6d6d6;}
+#pccart-cart-form #edit-cart .description h3{width: 85%;margin-bottom:10px;font-size:28px;}
+#pccart-cart-form #edit-cart .description input.remove{
+	background: transparent url('images/delete.png');
+    border: medium none;
+    display: block;
+    float: right;
+    height: 16px;
+    margin: 0;
+    padding: 0;
+    text-indent: -9999em;
+    width: 16px;
+	cursor: pointer;
+	}
+
+#edit-step2-options{margin: 10px 0; padding: 10px 0; border-bottom: 1px solid #d6d6d6; border-top: 1px solid #d6d6d6;}
+#pcproducts-productconfig-form .footer > .priceblock{padding: 10px 0 0 10px;}
+
+#pccart-cart-form .item .upload-box{
+	border: 1px solid #00cccc;
+    float: left;
+    padding-left: 10px;#pccart-cart-form #edit-cart .item
+    width: 30%;	
+}
+
+#pccart-cart-form .item .upload-box a.button{
+    
+}
+
+.page-cart #edit-actions{margin-bottom: 10px;float: right}
+
+#pccart-cart-form .item .upload-box .text{padding-left: 0; padding-top: 0;}
+
+#edit-deadlines{margin-top: 10px;font-size: 14px; color: #fff; background: url(images/orange/info.gif) no-repeat left center;padding-left: 20px;}
+	#edit-deadlines a{color: #fff;}
+		#edit-deadlines a:hover{text-decoration: none; color: #00cccc;}
+
+.page-templates #pctemplates-selection-form .image img{
+	max-width: 48%;
+	margin: 1%;
+}
+
+.page-templates #pctemplates-selection-form table tr td{
+	float: left;
+	width: 33%;
+	text-align: center;
+}
+
+.page-templates #pctemplates-selection-form table td a{
+	text-align: center;
+}
+
+.page-templates .description,
+.page-templates fieldset.configuration legend,
+.page-templates #deadlines,
+.page-templates #pctemplates-configblock-form .button:first-child{
+	display: none;	
+}
+
+.page-templates #pctemplates-config-form img{
+	max-width: 90%;
+	margin: 2%;
+}
+
+#pctemplates-config-form #edit-details #edit-pages .page{
+	float: left;
+	width: 50%;
+}
+
+#pctemplates-config-form #edit-description label,
+#pctemplates-configblock-form #edit-configuration label{
+	float: left;
+	width: 25%;
+}
+
+label[for="edit-custom_quantity"]{
+    width: 100% !important;
+}
+
+.page-templates #pctemplates-configblock-form .button{
+	font-size: 18px;
+    height: 70px;
+    line-height: 70px;
+    margin-top: 10px;
+    text-align: center;
+    width: 50%;	
+}
+
+.page-templates .priceblock{
+	background: #eee;
+	border: 1px solid #02CBB6;
+	padding: 0 10px;
+	float: right;
+	min-width: 35%;
+}
+	
+.page-templates .priceblock .total .price{
+	line-height: 18px !important;	
+}
+
+.page-cart #fancybox-content{
+	height: 720px !important;	
+}
+	
+.page-templates #edit-shipping{
+	clear: both;
+	margin-top: 20px;
+}
+
+	.page-templates #edit-shipping .fancybox{
+		display: none;	
+	}
+
+.page-templates .shipping .form-item,
+.page-templates #edit-shipping .form-item{
+	background: #eee;
+	padding: 2%;
+	width: 46%;
+	float: left;
+}
+
+.page-templates .shipping h4{
+	font-size: 30px;
+    margin-top: 40px;
+}
+
+.page-tempaltes #edit-shipping .fancybox{
+	display: none;
+}
+
+.page-cart table.openinghours tr:last-child{border-bottom: none;}
+.page-cart .actions input.action{width:270px;}
+
+.page-cart form .shipping .footer {
+clear:none;
+}
+
+.page-cart .footer .shipping{
+	display: none;	
+}
+
+.page-cart .footer .deadline,
+.page-cart .footer .delivery{
+/*	padding: 2% !important;*/
+	width: 46% !important;
+	background: #eee;
+}
+
+	.page-cart .footer .deadline img,
+	.page-cart .footer .delivery img{
+		display: none;
+	}
+
+.page-cart #pccart-cart-form .item .image{
+	text-align: center;		
+}
+
+.page-cart #edit-notice-container,
+.page-cart .actions > a{
+	display: none;	
+}
+
+.page-cart .priceblock.form-wrapper,
+.page-cart .discount.form-wrapper{
+/*	background: #eee;
+	border: 1px solid #00cccc;
+	margin: 20px -1px !important;
+	height: 120px;*/
+}
+
+.page-cart .priceblock.form-wrapper{
+	float: right !important;
+	min-width: 40% !important;
+	width: inherit !important;
+}
+
+.page-paymentrequest #pcpayments-request-form table.grid tr td{
+	padding: 0 5px;
+	line-height: 18px;
+}
+.page-paymentrequest #pcpayments-request-form table.grid tr td img{
+	vertical-align: middle;
+}
+
+.page-paymentrequest #pcpayments-request-form table.grid tr td .form-type-radio input{
+	margin: 5px;	
+}
+
+.page-paymentrequest #pcpayments-request-form table.grid tr td:last-child{
+	font-size: 10px;
+	padding: 5px;
+}
+
+.page-paymentrequest #pcpayments-request-form .footer .price{float:none;width:inherit;}
+
+.page-paymentrequest #pcpayments-request-form .price.form-wrapper input{width: 350px;}
+
+.page-paymentrequest #priceblock{
+	background: #eee;
+	border: 1px solid #00cccc;
+	margin: 0 -1px !important;
+	height: 120px;
+	min-width: 40% !important;
+	float: right;
+	padding: 5px;
+}
+
+.page-paymentrequest #priceblock .price.total label{line-height: 40px;}
+
+
+.page-paymentrequest fieldset.order .text-right .price{
+	font-family: "AkzidenzMdCn",Arial,Helvetica,sans-serif;
+	font-weight: normal;
+	font-size: 24px;
+	float: right;
+}
+
+.page-checkout #pccheckout-checkout-form label{
+	float: left;
+	width: 250px;
+}
+
+.page-checkout #pccheckout-checkout-form .form-item-shipping-delivery-postalCode,
+.page-checkout #pccheckout-checkout-form .form-item-shipping-invoice-address-postalCode{display:inline !important;}
+.page-checkout #pccheckout-checkout-form .form-item-shipping-delivery-city,
+.page-checkout #pccheckout-checkout-form .form-item-shipping-invoice-address-city{display:inline !important;}
+.page-checkout #pccheckout-checkout-form .form-item-shipping-delivery-city label,
+.page-checkout #pccheckout-checkout-form .form-item-shipping-invoice-address-city label{display:none !important;}
+.page-checkout #pccheckout-checkout-form .form-item-shipping-delivery-city input,
+.page-checkout #pccheckout-checkout-form .form-item-shipping-invoice-address-city input{width:312px !important;}
+.page-checkout #pccheckout-checkout-form .form-item-shipping-delivery-postalCode input,
+.page-checkout #pccheckout-checkout-form .form-item-shipping-invoice-address-postalCode input{width: 50px !important;}
+
+
+
+.page-myprintconnect-login .form-checkboxes .form-item, .form-radios .form-item{
+	margin: 0 0 10px;
+    padding: 0;
+}
+
+	.page-myprintconnect-login .form-checkboxes .form-item, .form-radios .form-item input.form-radio{
+		margin-left: 0;
+	}
+
+.page-myprintconnect-login .form-item .description{
+	display: none;	
+}
+
+.page-myprintconnect-login .form-item-email{
+	clear: left;	
+}
+
+/*
+.page-myprintconnect-login .form-item-email,
+.page-myprintconnect-login .form-item-password{
+	float: left;
+	width: 50%;
+}
+*/
+
+.page-myprintconnect-login .form-radios{
+	display: block;
+	margin-left: 200px;
+}
+
+	.page-myprintconnect-login .form-radios label{
+		vertical-align: middle;	
+	}
+
+.page-myprintconnect-login .form-item-email label,
+.page-myprintconnect-login .form-item-password label{
+	width: 200px;
+	float: left;
+}
+
+.page-myprintconnect-login input.form-submit{
+	float: left;
+	margin-left: 200px;
+	min-width: 150px;
+}
+
+.form-item-shipping-pickup-neutral{
+	display: none;	
+}
+
+.box.invoice{
+	margin-top: 20px;
+}
+
+#pcbpost-picker-form #result .pois .list{
+	background: #000;
+	border-radius: 4px 4px 4px 4px;
+}
+
+#pcbpost-picker-form #result .name{
+	color: #00cccc;
+}
+
+#pcbpost-picker-form .form-submit{
+	margin: 10px;
+	padding: 10px !important;
+	height: auto !important;
+}
+
+#pcbpost-picker-form .form-item{
+	float: left;	
+}
+
+#pcbpost-picker-form .form-submit{
+	margin-top: 12px;
+	line-height:  inherit !important;
+}
+
+#pcbpost-picker-form .form-item label{
+	float: left;
+	padding: 10px 0;
+}
+
+#pcbpost-picker-form .form-item input[type="text"]{
+	padding: 10px;
+	background: #fff;
+	border: none;
+	border-radius: 4px 4px 4px 4px;
+}
+
+
+.page-myprintconnect-orders .history,
+#pcorders-order-form .smaller{
+	display: none;	
+}
+
+#pcorders-order-form .currentorderstatus{
+	color: #f00;
+	padding-left: 0;
+}
+
+#pcorders-order-form .delivery h2, #pcorders-order-form .invoice h2, #pcorders-order-form .details h2, #pcorders-order-form .extra h2{
+	padding-left: 0;	
+}
+
+#pcorders-order-form .current{
+	width: 640px;
+	margin: 10px 0;
+	padding: 0;
+	border-bottom: 1px solid #00cccc;
+}
+
+#pcorders-order-form #edit-thanks h2{
+	border: none;	
+}
+
+#pcorders-order-form .address{
+	margin-left: 0;
+}
+
+#pcorders-order-form .details .item{
+	margin-left: 0 !important;	
+}
+
+#pcorders-order-form .item > a{
+	margin-right: 3% !important;
+	width: 27% !important;
+}
+
+.page-myprintconnect-orders fieldset legend{
+	border-bottom: 1px solid #00cccc;	
+}
+
+#pcorders-order-form .fieldset-wrapper .priceblock{
+	background: #eee;	
+	border: 1px solid #00cccc;
+	min-width: 250px;
+	float: right;
+	border-radius: 0 0 0 0 !important;
+	padding: 0 10px;
+}
+
+.page-checkout fieldset#payment h2{
+	font-size: 14px;
+	border-bottom: 0;
+}
+
+.page-checkout fieldset#payment table.sticky-table thead{
+	display: none;	
+}
+
+.page-checkout fieldset#payment table.sticky-enabled.sticky-table tbody{
+	font-size: 10px;	
+}
+
+.page-checkout fieldset#payment table.sticky-enabled.sticky-table tr{
+	line-height: 15px;	
+}
+
+
+.page-checkout table.sticky-enabled.sticky-table tbody .form-item.form-type-radio.form-item-payment-method {
+    margin: 0 10px;
+}
+
+.page-checkout table.sticky-enabled.sticky-table tbody img {
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.page-checkout table.sticky-enabled.sticky-table tbody .price {
+    font-size: 14px;
+    margin: 0 20px;
+}
+
+.page-checkout #priceblock table{
+	background: none repeat scroll 0 0 #222222;
+    border: 1px solid #00cccc;
+    border-collapse: inherit;
+    overflow: hidden;
+    padding: 10px;
+	line-height: 18px;
+	font-size: 12px;
+}
+
+.page-checkout #priceblock table tr{
+	line-height: inherit !important;	
+}
+
+.page-checkout .form-submit{
+	width: 300px;
+	height: 50px;
+	line-height: 40px;
+}
+
+.page-checkout .pup.box {
+margin-left: 250px;
+}
+
+	.page-checkout .pup.box tr td:first-child{
+		padding-left: 10px;
+	}
+
+.page-checkout .pcbpost-picker-link{
+	float: right;
+	margin: 20px 0;
+}
+
+.page-checkout .box.invoice{
+	clear: both;
+}
+
+.page-checkout .form-item-payment-footer-terms label,
+.page-checkout .box.invoice .form-item-shipping-invoice-header-needinvoice label{
+	float: none !important;
+	width: inherit !important;
+}
+
+#pccheckout-checkout-form .actions .button, #pccheckout-checkout-form .actions input[type="submit"]{
+	width: 390px;	
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+/* ------ BUTTONS ------ */
+input.action, input.add-discount, a.button, .node-readmore a,
+#pcbpost-picker-form .form-submit, input.button, .delete.form-submit,
+#pccustomers-changepassword-form .form-submit,
+#pccustomers-profile-form .form-submit{
+	color: #fff;
+	background: #02CBB6;
+	border: 1px solid #eee;
+	display: inline-block;
+    padding:3px 10px;
+    font-size: 14px;
+	cursor:pointer;
+	font-family:Arial, Helvetica, sans-serif;
+	text-transform: uppercase;
+	height:23px;line-height:23px;
+	border-radius: 3px 3px 3px 3px;
+	text-decoration: none;
+}
+
+	#pccustomers-changepassword-form .form-submit,
+	#pccustomers-profile-form .form-submit,
+	input.button,
+	input.action{
+		height: 53px;
+	}
+a.button{
+height:45px;
+}
+	
+	input.button:hover,
+	input.action:hover,
+	a.button:hover,
+	.node-readmore a:hover,
+	#pcbpost-picker-form .form-submit{
+		text-decoration: none;
+		background: #eee;
+		color: #02CBB6;
+		border: 1px solid #02CBB6;
+	}
+	
+.page-cart #block-system-main .actions.form-wrapper{
+	float: right;	
+}
+
+.page-checkout .fieldset-legend{
+	border-bottom: 1px solid #00cccc;	
+	display: block;
+}
+
+
+.page-checkout fieldset.collapsed{
+	height: inherit !important;
+}
+
+.form-item-shipping-delivery-neutral{display:none;}
+
+.page-checkout #priceblock table{
+	background: #eee;
+	border-color: #02CBB6;
+}
+
+
+#pcorders-order-form .current h2{
+	display: inline-block;
+	padding-right: 10px;
+	border: none;
+}
+
+#pcorders-order-form .currentorderstatus {
+    color: #02CBB6;
+    font-family: "AkzidenzMdCn",Arial,Helvetica,sans-serif;
+    font-size: 30px;
+    font-weight: normal;
+    padding-left: 0;
+    text-transform: uppercase;
+	display: inline
+}
+
+#pcorders-order-form .shippingdate{
+	margin-top: 10px;	
+}
+
+#pcorders-order-form .details .item img{
+	max-height: 180px;
+	max-width: 180px;
+}
+.filters {
+display:none;
+}
+.specifications{
+  display:none;	
+}
+#pctemplates-config-form2 .form-item.form-type-item{
+	height: 28px;
+	line-height: 28px;
+}
+
+#pctemplates-config-form2 .form-item label {
+float:left;	
+padding-right: 20px;
+width: 30%;
+}
+#pctemplates-config-form2 .form-item select {
+	width: 60%;
+}
+#pctemplates-selection-form ul.selected {
+  display:none;	
+}
+#pctemplates-selection-form .templates a {
+	text-align:center;
+}
+
+.page-templates .actions .button.action{
+	height: 50px;
+    line-height: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.page-templates .actions #price{
+	display: none;
+}
+
+.page-cart .shipping .text span.price{
+	font-family: "AkzidenzMdCn",Arial,Helvetica,sans-serif;
+	font-weight: normal;
+	font-size: 24px;
+	margin-top: -30px;
+	float: right;
+}
+
+.page-cart .add-discount{
+	position: relative;
+	top: -52px;
+	left: 120px;
+	height: 40px;
+	padding: 0 10px;
+	border-color: #02CBB6;
+}
+
+/* ---- PRICEBLOCK ---- */
+.priceblock{
+	font-size: 16px;
+}
+
+	.priceblock .total{
+/*		line-height: 50px;*/
+		margin-bottom: 0 !important;
+	}
+	
+		.priceblock .total .price{
+			font-size: 34px;
+			line-height: 40px;
+		}
+
+	.priceblock .price{
+		font-size: 24px;
+		font-family: "AkzidenzMdCn",Arial,Helvetica,sans-serif;
+	}
+
+		.priceblock > div{
+			margin: 10px 0;	
+		}
+	
+		.priceblock .price label{
+			font-family: arial,sans-serif;
+    		font-size: 12px;
+		}
+/* ---- END - PRICEBLOCK ---- */
+
+.page-cart .total-container,
+.page-myprintconnect-login #edit-openauth{display: none;}
+
+.page-checkout-shipping .number{width:40%;}
+
+.button.pcbpost-picker-link{color: #fff !important;text-align:center;width:388px;padding: 10px 0;}
+.button.pcbpost-picker-link:hover{color: #000 !important;}
+
+.page-checkout-payment .button.continue{
+	margin-top: 10px;	
+}
+
+.page-checkout-payment .priceblock{
+	background: #eee;
+	border: 1px solid #02CBB6;
+	padding: 0 10px;
+	float: right;
+	margin-top: 10px;
+	min-width: 40%;
+}
+
+.page-checkout-payment .priceblock label{width: inherit !important;}
+
+.page-cart .shipping.form-wrapper{
+	margin-top: 20px;
+}
+
+.page-cart .shipping.form-wrapper h2{
+	font-size: 20px;
+}
+
+.page-templates table th{padding-right:0;}
+
+.page-templates table tbody tr td:nth-last-child(1),
+.page-templates table tbody tr td:nth-last-child(2),
+.page-products table tbody tr td:nth-last-child(1),
+.page-products table tbody tr td:nth-last-child(2){
+	text-align: right;
+	width: 120px; /* width: 80px; */
+	padding-left: 20px;
+}
+
+.page-templates table tbody tr td .price,
+.page-products table tbody tr td .price{
+	text-align: right;
+	padding-right: 10px;
+}
+
+.page-templates table tbody tr td .price .currency,
+.page-templates table tbody tr td .price .currency{
+	float: left;
+	margin-left: 18px;
+}
+
+.file-check{display:none;}
+
+
+#pccart-cart-form .item .description .price{font-size: 24px;font-family: "AkzidenzMdCn",Arial,Helvetica,sans-serif;}
+
+
+/* FORMS */
+.page-checkout #pccheckout-checkout-form input[type="text"]{
+	width: 378px;
+}
+
+	.page-checkout #pccheckout-checkout-form select{
+		width: 390px;
+	}
+
+	.page-checkout #pccheckout-checkout-form input.country{
+		width: 31px;
+		border-right: none;
+	}
+	
+	.page-checkout #pccheckout-checkout-form input.number{
+		width: 336px;
+	}
+
+/* AFHAALPUNTEN */
+#pcbpost-picker-form fieldset {margin-top: 20px !important;}
+
+body.page-pcbpost{
+	background: #414141;	
+}
+
+body.page-pcbpost h1,
+body.page-pcbpost fieldset legend{
+	background: none repeat scroll 0 0 #02CBB6 !important;
+    color: #FFFFFF;
+    display: block;
+    height: 70px;
+    line-height: 70px;
+    margin: 20px 0 10px -10px;
+    padding: 0 0 0 20px;
+    width: 90%;
+	font-size: 36px;
+}
+body.page-pcbpost h2{display:none;}
+
+#pcbpost-picker-form .form-submit{float:none !important;}
+#pcbpost-picker-form #result{background: #414141;}
+#pcbpost-picker-form h3{color:#02CBB6;}
+#pcbpost-picker-form #result .pois .list{background: #eee;color:#000;}
+
+.openinghours,
+#pcbpost-picker-form #result .address{color:#000 !important;}
+
+/* OTHER */
+#pcorders-order-form .delivery,
+#pcorders-order-form .invoice{padding: 2% 0 !important;}
+
+.page-myprintconnect-profile #pccustomers-profile-form select,
+.page-myprintconnect-addresses-new .form-item-country select{
+	width: 207px;	
+}
+.page-myprintconnect-addresses-new .form-item-vatNumber input.number{
+	width: 162px;	
+}
+
+.page-myprintconnect-changepassword label,
+.page-myprintconnect-profile label,
+.page-myprintconnect-addresses-new label{
+    float: left;
+    width: 30%;
+}
+
+.page-myprintconnect-addresses-new .form-type-checkbox label{
+    float: none;
+    width: inherit;
+}
+
+.page-myprintconnect-addresses-new .form-type-checkbox{
+    margin-left: 30%;
+}
+
+.page-myprintconnect-changepassword input.form-submit,
+.page-myprintconnect-profile input.form-submit,
+.page-myprintconnect-addresses-new input.form-submit{
+	margin-left: 30%;
+}
+
+
+.page-templates- #price {
+    display: none;
+}
+
+
+
+#pccustomers-login-form #edit-forgot{
+	margin-left: 200px;	
+	width: 310px;
+	margin-top: -15px !important;
+	text-align: justify;
+}
+
+#pccustomers-login-form #edit-forgot legend{
+	margin: 0;
+	padding: 0;
+	line-height: 100%;
+}
+
+#pccustomers-login-form #edit-forgot .fieldset-legend,
+#pccustomers-login-form #edit-forgot .fieldset-title{
+	font-size: 12px;
+	padding: 0 !important;
+	background: none !important;
+	text-transform: none !important;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#pccustomers-login-form #edit-forgot .form-item{
+	margin-left: -200px;	
+}
+
+#pccustomers-login-form #edit-forgot .form-item label{
+	float: left;
+	width: 200px;
+}
+
+
+#pcorders-order-form .fieldset-wrapper > div{margin:0 !important;}
+
+
+#pcorders-order-form .overview table {
+    clear: both;
+    margin: 10px 0 20px !important;
+}
+
+/* ---- DESIGNS ----*/
+.page-myprintconnect-designs .design.form-wrapper{
+	clear: both;
+	margin-bottom: 10px;
+	min-height: 150px;
+}
+
+	.page-myprintconnect-designs .design.form-wrapper .image{
+		float: left;
+		margin-right: 20px;
+		width: 180px;
+	}
+
+		.page-myprintconnect-designs .design.form-wrapper .image img{
+			max-width: 180px;
+			max-height: 180px;
+		}
+	
+	.page-myprintconnect-designs .design.form-wrapper .details{
+		float: left;
+		width: 440px;
+	}
+	
+		.page-myprintconnect-designs .design.form-wrapper .details .form-item{
+			margin: 10px 0 !important;
+		}
+	
+		.page-myprintconnect-designs .design.form-wrapper .details .form-item label{
+			float: left;
+			width: 150px;
+			margin-right: 10px;
+		}	
+		
+		.page-myprintconnect-designs .design.form-wrapper .details .form-item h2{
+			border: none !important;
+			font-weight: norma !important;
+			font-family: Arial, Helvetica, sans-serif !important;
+			font-size: 12px !important;
+			line-height: 18px !important;
+			padding: 5px 0 !important;
+		}
+
+.page-myprintconnect-designs .button.action{
+	height: 18px;
+	line-height: 18px;
+	padding: 5px;
+	border-color: #02CBB6;
+	float: left;
+	margin-right: 10px;
+}
+
+.page-myprintconnect-designs .delete.form-submit{
+	color: #000 !important;
+	height: 30px;
+	line-height: 18px;
+	padding: 5px;
+	border-color: #02CBB6;
+	float: left;
+}
+
+	.page-myprintconnect-designs .delete.form-submit:hover{
+		background-color: #eee;
+		color: #f00 !important;
+	}
+
+/* ---- INPUTS ---- */
+#block-system-main label{
+	height: 16px;
+	padding: 5px 0;
+	line-height: 16px;
+}
+
+#block-system-main input[type="text"],
+#block-system-main input[type="password"],
+#block-system-main input[type="email"]{
+    border: 1px solid #484848;
+/*    height: 16px;*/
+    padding: 5px;
+}
+
+#block-system-main select{
+	border: 1px solid #484848;
+    height: 28px;
+    padding: 5px;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+	#block-system-main select{
+		-webkit-appearance: none;
+		background-image: url("images/dropdown.png");
+		background-position: right;
+		background-repeat: no-repeat;
+		box-shadow: none;
+		outline: none;
+	}
+}
+
+.page-myprintconnect-login #block-system-main input[type="text"],
+.page-myprintconnect-login #block-system-main input[type="password"],
+.page-myprintconnect-login #block-system-main input[type="email"] {
+    width: 298px;
+}
+
+.page-cart #block-system-main .form-item-cart-footer-discount-code > input[type="text"]{
+	height: 28px;
+	width: 98px;
+}
+
+
+.form-actions input[type=submit]{
+float:right;
+}
+
+.page-templates .owndesign{
+display:none;
+}
+
+.page-templates- .form-actions{
+float:left;
+clear:none;
+}
+
+
+.page-cart form .item .description{
+	width: 73%;	
+}
+
+.page-cart .form-item-cart-discount-code input{
+	padding: 10px !important;
+    width: 110px;
+}

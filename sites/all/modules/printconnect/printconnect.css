@@ -1,0 +1,222 @@
+#block-printconnect-progress {
+  border: solid 1px black;
+}
+
+#block-printconnect-progress ul{
+  margin :0
+}
+#block-printconnect-progress li{
+  float:left;
+  padding: 5px; 
+  margin:0;
+  margin-left:30px;
+}
+
+#block-printconnect-progress li.active{
+  font-weight: bold;
+}
+
+.priceblock{
+  clear:both;
+}
+.price{
+  text-align:right;
+  white-space: nowrap;  
+}
+.price.total{
+  font-size: larger;
+}
+
+.price label{
+  float: left;
+}
+
+a.delete{
+  background:transparent url(images/delete.png) no-repeat left center;
+  padding-left:15px;
+}
+
+#block-locale-language.dropdown{
+  padding: 0;
+  margin:0;
+}
+
+#block-locale-language.dropdown .content{
+  background: #ffffff;
+  padding:0;
+}
+
+#block-locale-language.dropdown .content .current{
+  background: #ffffff url('images/dropdown_arrow.png') no-repeat right center ;
+  padding: 0 10px 0 5px;
+  border: 1px solid #dddddd;
+  min-width:85px;
+}
+
+#block-locale-language.dropdown .content ul{
+  margin: 0;
+  list-style:inside;
+  padding: 0;
+  display: none;
+  position : absolute;
+  z-index : 2000;
+  border: 1px solid #dddddd;  
+}
+
+#block-locale-language.dropdown .content ul li{
+  margin: 0;	
+  padding: 0 10px 0 5px;
+  background: #ffffff;
+  border-bottom: 1px solid #dddddd;
+  display : block;
+  float : none;    
+}
+
+#block-locale-language.dropdown .content ul li:hover{
+  background: #f0f0f0;
+}
+
+#block-locale-language.dropdown .content ul li > *,
+#block-locale-language.dropdown .content .current > *{
+  color: #333333;
+  text-decoration: none;
+  padding: 2px 5px 2px 25px;
+  display: block;
+  margin: 0;
+  background-position: left center;
+  background-repeat: no-repeat;
+  text-align:left;
+  border:none;
+}
+
+#block-locale-language.dropdown .content a.active{
+  color: #333333;
+  text-decoration: none;
+  border: 1px solid #dddddd;
+  border:none;
+  display:block;
+}
+
+#block-locale-language.dropdown .content .nl-BE > *,
+#block-locale-language.dropdown .content .nl-be > *{
+  background-image: url("images/flags/be-nl.png");
+}
+
+#block-locale-language.dropdown .content .fr-BE > *,
+#block-locale-language.dropdown .content .fr-Be > *,
+#block-locale-language.dropdown .content .fr-be > *{
+  background-image: url("images/flags/be-fr.png");
+}
+
+#block-locale-language.dropdown .content .nl-NL > *,
+#block-locale-language.dropdown .content .nl > *{
+  background-image: url("images/flags/nl-nl.png");
+}
+
+#block-locale-language.dropdown .content .fr-FR > *,
+#block-locale-language.dropdown .content .fr > *{
+  background-image: url("images/flags/fr-fr.png");
+}
+
+#block-locale-language.dropdown .content .en > *{
+  background-image: url("images/flags/gb-en.png");
+}
+
+
+
+.loading .overlay { 
+  /*  position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:1000;
+    margin:0 auto;
+    background:black;
+    opacity:0.3;*/
+}
+
+.loading .message { 
+  /*  position:fixed;
+    top:35%;
+    left:35%;
+    width:30%;
+    z-index:2000;*/
+  background:white url(images/loader.gif) 10px center no-repeat;
+  text-align: center;
+  padding:.2em; 
+  -moz-box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+  -webkit-box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+  box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+  margin:0 auto;
+  width:30%;
+  -moz-border-radius:0 0 5px 5px;
+  border-radius:0 0 5px 5px;
+
+}
+
+.loading{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:1000;
+}
+
+
+.fancybox_preloader{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:transparent url(images/loader_large.gif) center center no-repeat
+}
+
+
+html.js fieldset.collapsed .fieldset-legend{
+  background-image:none;
+}
+
+
+input[type="submit"].remove{
+  background: transparent url('images/delete.png') center center no-repeat;
+  border:none; 
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  text-indent: -9999em;
+  width: 16px;
+  cursor: pointer;
+}
+.page-search .search-form{
+  display:none;
+}
+
+.page-search .search-info{
+  display:none;
+}
+
+.region-announcements {
+  position:fixed;
+  z-index:1000;
+  width:100%;
+  background:#F0F0F0;
+  bottom:0;
+  color:white;
+  background: rgb(0,0,0); 
+  background: rgba(0,0,0,0.75);
+}
+
+#printconnect-cookies-form, #printconnect-browserwarning-form {
+  padding:5px;
+  text-align:center;
+}
+
+#printconnect-cookies-form input[type=submit], #printconnect-browserwarning-form input[type=submit]{
+  display:inline-block;
+}
+#printconnect-cookies-form .text, #printconnect-browserwarning-form .text{
+  padding: 0 5px;
+}

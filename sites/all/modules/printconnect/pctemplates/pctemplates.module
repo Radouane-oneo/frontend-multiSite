@@ -1,0 +1,304 @@
+<?php
+
+function pctemplates_menu() {
+    $items = array();
+    $items['templates'] = array(
+        'title' => 'Designs',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('pctemplates_selection_form2'),
+        'access arguments' => array('access content'),
+        'file' => 'pctemplates.selection.inc',
+        'type' => MENU_NORMAL_ITEM,
+        'menu_name' => 'main-menu',
+    );
+    $items['templates/%'] = array(
+        'title' => 'Personalize your designs',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('pctemplates_config_form2', 1),
+        'access arguments' => array('access content'),
+        'file' => 'pctemplates.config.inc',
+        'type' => MENU_NORMAL_ITEM,
+    );
+    $items['templates/%/product/%'] = array(
+        'title' => 'Personalize your designs',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('pctemplates_config_form2', 1, 3),
+        'access arguments' => array('access content'),
+        'file' => 'pctemplates.config.inc',
+        'type' => MENU_NORMAL_ITEM,
+    );
+    $items['templates/callback/order'] = array(
+        'title' => 'Personalize your designs',
+        'page callback' => 'pctemplates_callback',
+        'page arguments' => array('order'),
+        'access arguments' => array('access content'),
+        'type' => MENU_CALLBACK,
+        'file' => 'pctemplates.config.inc',
+    );
+
+    return $items;
+}
+
+function pctemplates_block_info() {
+    $blocks = array();
+    $blocks['totd'] = array(
+        'info' => t('Template of the day'),
+    );
+    $blocks['products'] = array(
+        'info' => t('Template products list'),
+    );
+    $blocks['selection'] = array(
+        'info' => t('Templates filters block'),
+        'cache' => DRUPAL_NO_CACHE,
+    );
+    $blocks['specifications'] = array(
+        'info' => t('Template specifications'),
+        'cache' => DRUPAL_NO_CACHE,
+    );
+    if (module_exists('pcsegments')) {
+        $blocks['segments'] = array(
+            'info' => t('Template segments'),
+        );
+    }
+    $blocks['Top10'] = array(
+        'info' => t('Top [ 10 ] Templates Block '),
+        'cache' => DRUPAL_NO_CACHE,
+    );
+    return $blocks;
+}
+
+function pctemplates_block_view($delta = '') {
+    global $copartner;
+    $args = arg();
+    $block = FALSE;
+    switch ($delta) {
+        case 'config':
+            if (count($args) >= 3 && $args[0] == 'templates' && $args[2] == 'config') {
+                $block['content'] = drupal_get_form('pctemplates_configblock_form', $args[1], $args[3]);
+                return $block;
+            }
+            break;
+        case 'selection':
+            if (count($args) == 1 && $args[0] == 'templates') {
+                $block['title'] = t('Search a design');
+                $block['content']['placeholder'] = array(
+                    '#markup' => '',
+                );
+
+                return $block;
+            }
+            break;
+        case 'owndesign':
+            switch (variable_get('pc_flow', 'flyer')) {
+                case 'printconcept':
+                    if (count($args) == 2 && $args[0] == 'templates') {
+                        $block['title'] = t('Upload your own design');
+                        $block['content'] = drupal_get_form('pctemplates_owndesignblock_form', $args[1]);
+                    }
+                    break;
+                default:
+                    if (count($args) == 1 && $args[0] == 'templates') {
+                        $block['content'] = array(
+                            '#markup' => l(t('Upload your own design'), 'products', array('attributes' => array('class' => array('owndesign', 'button')))),
+                        );
+                    }
+                    break;
+            }
+            break;
+        case 'totd':
+            $templates = \printconnect\Templates\Factory::GetAll();
+            $templates->EnsureLoaded();
+            $template = $templates[0];
+            if ($template) {
+                $products = $template->products;
+                $product = $products[0];
+
+                $block['title'] = t('Template of the day');
+
+                $block['content']['name'] = array('#markup' => $template->name);
+
+                $block['content']['thumb'] = array(
+                    '#theme' => 'pcfilesthumb',
+                    '#file' => $template->thumbnail->file,
+                );
+                $block['content']['designer'] = array(
+                    '#type' => 'item',
+                    '#title' => t('Designer'),
+                    '#markup' => 'printconnect.com',
+                );
+
+                $block['content']['product'] = array(
+                    '#type' => 'item',
+                    '#title' => t('Product'),
+                    '#markup' => $product->name,
+                );
+                $block['content']['dimension'] = array(
+                    '#type' => 'item',
+                    '#title' => t('Dimension'),
+                    '#markup' => $template->Dimension->name,
+                );
+                $block['content']['link'] = array(
+                    '#markup' => l(t('Design now'), 'templates/' . $template->id, array('attributes' => array('class' => array('button')))),
+                );
+            }
+            return $block;
+            break;
+        case 'products':
+            $products = _pcproducts_activeProducts();
+            $block['title'] = t('All products');
+            $items = array();
+            foreach ($products as $product) {
+                $items[] = l($product->name, 'templates/' . $product->id);
+            }
+            $block['content']['list'] = array(
+                '#theme' => 'item_list',
+                '#items' => $items,
+            );
+            break;
+        case 'specifications':
+            if (count($args) == 2 && $args[0] == 'templates') {
+                $block['title'] = t('Specifications');
+                $block['content']['placeholder'] = array(
+                    '#markup' => '',
+                );
+            }
+            break;
+        case 'segments':
+            if (module_exists('pcsegments')) {
+                $segmentItems = array();
+                $segments = \printconnect\Segments\Factory::GetAll();
+
+                foreach ($segments as $segment) {
+                    if ($segment->tag == '') {
+                        $segmentItems[] = array(
+                            'data' => l($segment->name->name, 'templates/', array('query' => _pctemplates_selection_getQueryString(FALSE, FALSE, array($segment->id)))),
+                        );
+                    }
+                }
+
+                $block['title'] = t('Templates');
+                $block['content']['segments'] = array(
+                    '#theme' => 'item_list',
+                    '#items' => $segmentItems,
+                );
+            }
+            break;
+        case 'Top10':
+        $templatestop10 = \printconnect\Templates\Factory::getTop10Template();
+        $ts =\printconnect\Templates\Factory::LoadTop10Template($templatestop10);
+        
+        $block['content']['startul']= array('#markup' => "<div id='SliderCreaHomePage'><ul>");
+         $i=0;
+             foreach($ts as $valueItems ) {
+                $block['content']['contentitem1'.$i]= array('#markup' => "<li>");
+                $block['content']['contentlink1'.$i] = array('#markup' =>"<a id='top10Template' href='templates/" . $valueItems->id . "'>");
+                $block['content']['thumb'.$i] = array('#markup' => theme('pcfilesthumb', array('file' => $valueItems->thumbnail->file, 'alt' => array('#markup' =>$valueItems->name),)));
+                $block['content']['contentlink2'.$i] = array('#markup' => '</a>');
+                $block['content']['name'.$i] = array('#markup' => "<p class='nameCrea'>". $valueItems->name ."</p>",);
+                $block['content']['link'.$i] = array('#markup' => l(t('Utiliser cette créa'), 'templates/' .  $valueItems->id),);
+                $block['content']['contentitem2'.$i]= array('#markup' => "</li>");
+                $i++;
+            }
+        $block['content']['endul']= array('#markup' => "</ul><a class='nextCrea' href='#'>next </a><a class='prevCrea' href='#'>prev </a></div>");
+            break;     
+     }  
+
+//   dpm(debug_backtrace());
+    return $block;
+}
+
+function pctemplates_menu_breadcrumb_alter(&$active_trail, $item) {
+    foreach ($active_trail as $key => $crumb) {
+        if (isset($crumb['router_path']) && $crumb['router_path'] == 'templates/%') {
+            $productId = $crumb['original_map'][1];
+            if (isset($_SESSION['pctemplates'][$productId])) {
+                $active_trail[$key]['localized_options']['query'] = $_SESSION['pctemplates'][$productId];
+            }
+        }
+    }
+}
+
+function pctemplates_pcsitemap_alter(&$items) {
+    $items['pctemplates'] = array(
+        '#title' => t('Templates'),
+        '#link' => 'products',
+        '#weight' => 70,
+    );
+
+    foreach (element_children($items['pcproducts']) as $productId) {
+        $templates = \printconnect\Templates\Factory::GetAllByProduct($productId);
+        $templates->EnsureLoaded();
+        $templates = $templates->GetActive();
+        if (count($templates)) {
+            $items['pcproducts'][$productId]['templates'] = array(
+                '#title' => t('Templates'),
+                '#link' => 'templates/' . $productId,
+            );
+            $items['pctemplates'][$productId] = array(
+                '#title' => $items['pcproducts'][$productId]['#title'],
+                '#link' => 'templates/' . $productId,
+            );
+            foreach ($templates as $template) {
+                $items['pctemplates'][$productId][$template->id] = array(
+                    '#title' => $template->name,
+                    '#link' => 'templates/' . $productId . '/config/' . $template->id,
+                );
+            }
+        }
+    }
+}
+
+function _pctemplates_link($productId) {
+    return 'templates/' . $productId;
+}
+
+
+function _pctemplates_query($selectedProperties, $page, $product = FALSE) {
+    $query = array(
+        'page' => $page,
+    );
+    foreach ($selectedProperties as $key => $values) {
+        $query[$key] = implode(',', array_keys($values));
+    }
+    if ($product) {
+        $query['productId'] = $product;
+    }
+    return $query;
+}
+
+function _pctemplates_selection_getQueryString($page = FALSE, $products = FALSE, $segments = FALSE, $filters = FALSE, $search = FALSE, $limit = 24) {
+
+    $result = array();
+    if ($page && $page > 1) {
+        $result['page'] = $page;
+    }
+    if ($segments) {
+        $result['segments'] = implode(',', $segments);
+    }
+    if ($products) {
+        $result['products'] = implode(',', $products);
+    }
+    if ($search) {
+        $result['search'] = $search;
+    }
+
+    if ($filters) {
+        $result['filter'] = $filters;
+    }
+    return $result;
+}
+
+function pctemplates_form_pctemplates_selection_form2_alter(&$form, &$form_state) {
+    if (isset($form['filters'][1])) {
+        $form['colors'] = $form['filters'][1];
+        $form['colors']['#weight'] = 30;
+        unset($form['filters'][1]);
+    }
+}
+function pctemplates_preprocess_html(&$vars) {
+  $arg = arg();
+  if (arg(0) == 'templates') {
+    $vars['head_title'] = t('templatetitle') . ' | ' . check_plain(variable_get('site_name', 'Drupal'));
+
+  }
+}

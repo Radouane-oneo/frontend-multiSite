@@ -1,0 +1,38 @@
+#pccustomers-address-form .form-item-city, #pccustomers-newaddress-form .form-item-city{
+  clear:none;
+}
+
+#pccustomers-address-form  .form-item-city label, #pccustomers-newaddress-form  .form-item-city label{
+  display:none;
+
+}
+
+#pccustomers-address-form  .form-item-postalCode input, #pccustomers-newaddress-form  .form-item-postalCode input{
+  width:48px;
+  min-width:0;
+  float:left;
+  background-color:#FFF;
+}
+
+#pccustomers-address-form  .form-item-city input, #pccustomers-newaddress-form  .form-item-city input{
+  margin-left: 10px;
+  min-width: 0;
+  width: 268px;
+}
+
+#pccustomers-dashboard-form .recentorders{
+  float:left;
+  width:300px;
+}
+
+#pccustomers-dashboard-form .recentinvoices{
+  float:right;
+  width:300px;
+}
+#pccustomers-dashboard-form fieldset{
+  margin-top:10px;
+}
+
+#pccustomers-login-form .fieldset-wrapper > input[type=submit]{
+  float:right;
+}

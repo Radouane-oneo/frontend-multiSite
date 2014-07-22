@@ -1,0 +1,191 @@
+<?php
+
+use printconnect\Files\Factory;
+
+function pcfiles_menu() {
+  /*
+    $items['admin/printconnect/files'] = array(
+    'title' => 'Files',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('_pcfiles_settings'),
+    'access arguments' => array('acces content'),
+    'type' => MENU_LOCAL_TASK,
+    );
+   */
+  $items['file/%'] = array('title' => 'Files', 'page callback' => '_pcfiles_file', 'page arguments' => array(1), 'access arguments' => array('access content'), 'type' => MENU_CALLBACK,);
+
+  $items['file/%/%'] = array('title' => 'Files', 'page callback' => '_pcfiles_file', 'page arguments' => array(1, 2), 'access arguments' => array('access content'), 'type' => MENU_CALLBACK,);
+
+  $items['pcfiles'] = array('title' => 'Files', 'page callback' => 'drupal_get_form', 'page arguments' => array('pcfiles_files_form'), 'access arguments' => array('access content'), 'type' => MENU_LOCAL_TASK,);
+
+  return $items;
+}
+
+function pcfiles_theme() {
+  return array('pcfilesdownloadlink' => array(
+      'variables' => array(
+          'file' => NULL,
+          'content' => FALSE,
+          'title' => 'Download', 
+          'attributes' => array(),),),
+      'pcfilesthumb' => array(
+          'variables' => array(
+              'file' => NULL,
+              'attributes' => array(),
+              'cache' => TRUE,),),
+      'pcfilesimage' => array(
+          'variables' => array(
+              'file' => NULL,
+              'attributes' => array(),
+              'alt'=>array(),
+              'cache' => TRUE,),),
+      );
+}
+
+function theme_pcfilesdownloadlink($vars) {
+  $attributes = $vars['attributes'];
+  $attributes['target'] = '_blank';
+// return l(drupal_render($vars['title']), 'file/' . $vars['file'], array('html' => TRUE, 'attributes' => $attributes));
+
+  if ($vars['content']) {
+    if (is_array($vars['content'])) {
+      $content = drupal_render($vars['content']);
+    } else {
+      $content = $vars['content'];
+    }
+  } else {
+    $content = t('Download');
+  }
+
+  if (strstr($vars['file'], '/')) {
+    $s3 = variable_get('pc_files_s3', 'https://s3.amazonaws.com/dt-printconcept-production/');
+    $url = $s3 . $vars['file'];
+    if ($vars['cache']) {
+      $url .= '?' . variable_get('css_js_query_string', '0');
+    } else {
+      $url .= '?' . md5(uniqid(rand(), true));
+    }
+  } else {
+    $url = 'file/' . $vars['file'];
+  }
+  if(preg_match("/^template/",$vars['file'])) {
+      $url.=".zip";
+  }
+  return l($content, $url, array('html' => TRUE, 'attributes' => $attributes));
+}
+
+function theme_pcfilesthumb($vars) {
+  if (strstr($vars['file'], '/')) {
+    $s3 = variable_get('pc_files_s3', 'https://dt-printconcept-production.s3.amazonaws.com/');
+    $url = $s3 . $vars['file'];
+    if ($vars['cache']) {
+      $url .= '?' . variable_get('css_js_query_string', '0');
+    } else {
+      $url .= '?' . md5(uniqid(rand(), true));
+    }
+  } else {
+    $url = 'file/' . $vars['file'];
+    if ($vars['cache']) {
+      $url .= '/' . variable_get('css_js_query_string', '0');
+    } else {
+      $url .= '/' . md5(uniqid(rand(), true));
+    }
+  }
+  return theme('image', array(
+      'path' => url($url),
+      'attributes' => $vars['attributes'],
+      'alt' =>$vars['alt'],
+      ));
+}
+
+function theme_pcfilesimage($vars) {
+  return theme_pcfilesthumb($vars);
+}
+
+function _pcfiles_file($fileId, $cache = FALSE) {
+  if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
+    header('HTTP/1.1 304 Not Modified');
+    drupal_send_headers();
+    return;
+  }
+
+  $fileparts = explode('.', $fileId);
+  $fileId = $fileparts[0];
+  $file = Factory::Get($fileId);
+  $url = FALSE;
+  $found = FALSE;
+  foreach ($file->attachments as $attachmentKey => $attachment) {
+    $path = $attachment->url;
+    $mime = $attachment->contentType;
+    $length = $attachment->length;
+    $name = $attachment->id;
+
+    $fileparts = explode('.', $name);
+    if (count($fileparts) == 1) {
+      switch ($mime) {
+        case 'application/zip' :
+          $name .= '.zip';
+          break;
+      }
+    }
+
+    $found = TRUE;
+  }
+
+  if ($found) {
+    header('Content-type: ' . $mime);
+    header('Content-length: ' . $length);
+
+    if ($cache) {
+      header('Cache-Control:private');
+      header('Cache-control: max-age=' . (60 * 60 * 24 * 365));
+      header('Expires: ' . gmdate(DATE_RFC1123, time() + 60 * 60 * 24 * 365));
+      header('Last-Modified: ' . gmdate(DATE_RFC1123, time())); 
+    } else {
+      // IE Fix
+      header('Cache-Control:');
+    }
+
+    $file = @fopen($path, 'rb');
+    if ($file) {
+      ob_clean();
+      flush();
+      fpassthru($file);
+      exit;
+    }
+  } else {
+    drupal_not_found();
+  }
+}
+
+function _pcfiles_settings() {
+  $options = array();
+
+  $form['pc_files'] = array('#type' => 'textfield', '#title' => t('File server'), '#default_value' => variable_get('pc_files', 'http://files.stg.printconnect.com'), '#description' => t("The file server address"),);
+
+  return system_settings_form($form);
+}
+
+function pcfiles_files_form($form, &$form_state) {
+  $baseUrl = variable_get('pc_files', 'http://files.prd.printconnect.com/');
+
+  $baseUrl = 'http://files.prd.printconnect.com/';
+
+  $url = $baseUrl . '_design/tracking/_view/all';
+
+  $response = drupal_http_request($url, array('timeout' => 300));
+
+  $data = json_decode($response->data);
+
+
+  $i = 0;
+  foreach ($data->rows as $file) {
+    
+    $response = drupal_http_request($baseUrl . $file->value->_id . '?rev=' . $file->value->_rev, array('method' => 'DELETE'));
+
+    if ($i++ > 1000)
+      break;
+  }
+
+  return $form;
+}

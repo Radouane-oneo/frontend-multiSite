@@ -1,0 +1,180 @@
+input[type=submit]{
+  padding: 0 10px;
+  min-width:80px;
+  min-height:33px;
+  cursor:pointer;
+  color:white;
+  text-align:left;
+  font-size:14px;
+  margin:0;
+  background:none;
+  border:none;
+  font-weight: normal;
+  font-family: 'DaxRegular', Arial, Helvetica, sans-serif;
+}
+
+.display-block input[type=submit]{
+  width:100%;
+}
+
+input[type=submit].display-block{
+  width:100%;
+}
+
+#pcproducts-product-form  input[type=submit] {
+  width:100%;
+}
+
+
+/* NIEUW */
+
+a.button{
+  padding: 0 10px;
+  min-width:80px;
+  min-height:33px;
+  line-height:33px;
+  color:white;
+  text-align:left;
+  font-size:14px;
+  margin:0;
+  /* border:none; */
+}
+
+.button, input[type=submit]{
+  display: inline-block;
+  /* BLUE */ background: url('images/button_new_blue.png') repeat-x;
+  /* GREEN */ /* background: url('images/button_new_green.png') repeat-x; */
+  background-size: 100% 100%;
+	border-radius: 4px 4px 4px 4px;
+	overflow: hidden;
+	box-shadow: inset 1px 1px 0 rgba(255,255,255,0.2), 0 1px 0 rgba(0,0,0,0.2);
+  text-align: left;
+  /* BLUE */  border:solid 1px #1d6684;
+  /* GREEN */ /* border:solid 1px #568500; */
+  font-family: 'DaxRegular', Arial, Helvetica, sans-serif;
+  padding: 0 10px;
+}
+
+.button:hover,  input[type=submit]:hover{
+	/* BLUE */ background: url('images/button_new_blue_hover.png') repeat-x;
+	/* GREEN */ /* background: url('images/button_new_green_hover.png') repeat-x; */
+  	background-size: 100% 100%;
+	box-shadow: inset 1px 1px 0 rgba(255,255,255,0.2), 0 1px 3px rgba(0,0,0,0.7);
+}
+
+.button:active,  input[type=submit]:active{
+	/* BLUE */ background: url('images/button_new_blue_active.png') repeat-x;
+	/* GREEN */ /* background: url('images/button_new_green_active.png') repeat-x; */
+  	background-size: 100% 100%;
+	box-shadow: inset 1px 1px 0 rgba(255,255,255,0.2), 0 1px 0 rgba(0,0,0,0.2);
+}
+
+.button > .content, .button > .content:hover, .button > .content:active{
+  display:block;
+  width:100%;
+  background-size:auto;
+  box-shadow:none;
+  border:none;
+  background:transparent;
+}
+
+.button.action,  input[type=submit].action/*, #block-pccalculator-calculator .button*/ {
+  border: 1px solid #bf5e16;
+  border-radius: 4px 4px 4px 4px;
+  overflow: hidden;
+  background: #ff9600 url('images/button_new_orange.png') repeat-x;
+  background-size: 100% 100%;
+  /* background:url('images/button_orange_large.png') no-repeat center center; */
+}
+
+.button.action:hover,  input[type=submit].action:hover/*, #block-pccalculator-calculator .button:hover*/{
+	background: #ff9600 url('images/button_new_orange_hover.png') repeat-x;
+	background-size: 100% 100%;
+	box-shadow: inset 1px 1px 0 rgba(255,255,255,0.2), 0 1px 3px rgba(0,0,0,0.7);
+}
+
+.button.action:active,  input[type=submit].action:active/*, #block-pccalculator-calculator .button:active*/{
+	background: #ff9600 url('images/button_new_orange_active.png') repeat-x;
+	background-size: 100% 100%;
+	box-shadow: inset 1px 1px 0 rgba(255,255,255,0.2), 0 1px 0 rgba(0,0,0,0.2);
+}
+
+.button.display-block > input[type="submit"]{
+  display:block;
+  width:100%;
+  border-radius: 4px 4px 4px 4px;
+	overflow: hidden;
+
+}
+
+.button.display-block{
+  display:block; 
+}
+
+.button.choose > .content{
+  padding-left:25px;
+  background:url(images/icon_choose.png) left center no-repeat;
+}
+
+.button.ok > .content{
+  padding-left:25px;
+  background:url(images/icon_ok.png) left center no-repeat;
+}
+
+.button.chat > .content{
+  padding-left:25px;
+  background:url(images/icon_chat.png) left center no-repeat;
+}
+
+.button.checkout > .content{
+  padding-left:25px;
+  background:url(images/icon_checkout.png) left center no-repeat;
+  text-align:center;
+}
+
+.button.cart > .content{
+  padding-left:25px;
+  background:url(images/icon_cart.png) left center no-repeat;
+}
+
+.section-header .button.cart > .content{
+  padding-left:25px;
+  background:url(images/icon_cart.png) 0 center no-repeat;
+}
+
+
+.button.calc > .content{
+  padding-left:25px;
+  background:url(images/calc_cart.png) left center no-repeat;
+}
+
+.button.request > .content{
+  padding-left:25px;
+  background:url(images/icon_request.png) left center no-repeat;
+}
+
+.button.continue > .content{
+  padding-left:25px;
+  background:url(images/icon_continue.png) left center no-repeat;
+}
+
+.button.collect > .content{
+  padding-left:25px;
+  background:url(images/icon_collect.png) left center no-repeat;
+}
+
+.button.login  > .content{
+  padding-left:25px;
+  background:url(images/icon_login.png) left center no-repeat;
+}
+
+.button.register > .content{
+  padding-left:25px;
+  background:url(images/icon_register.png) left center no-repeat;
+}
+
+.button.down{
+  -moz-box-shadow:none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}

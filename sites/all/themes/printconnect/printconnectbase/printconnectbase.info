@@ -1,0 +1,26 @@
+name = PrintConnect Base Theme
+description = A flexible theme with many print.
+package = Core
+version = VERSION
+core = 7.x
+engine = phptemplate
+
+stylesheets[all][] = css/printconnectbase.css
+
+scripts[] = js/printconnectbase.js
+
+
+regions[announcements] = Announcements
+regions[top] = Top
+regions[nav_right] = Navigation Right
+regions[header_right] = Header Right
+regions[dropdown] = Dropdown
+regions[highlighted] = Highlighted
+regions[sidebar_first] = Sidebar First
+regions[sidebar_second] = Sidebar Second
+regions[help] = Help
+regions[content] = Content
+regions[triptych] = Triptych
+regions[footer] = Footer
+
+

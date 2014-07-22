@@ -1,0 +1,13 @@
+name = Orders
+description = Orders module
+package = printconnect
+core = 7.x
+
+#dependencies[] = pcordersbase
+dependencies[] = pccustomers
+
+stylesheets[all][] = pcorders.css
+
+
+
+

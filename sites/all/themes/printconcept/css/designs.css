@@ -1,0 +1,63 @@
+#pcdesigns-saveddesigns-form .design .delete input{
+  background:transparent url(images/delete.png) center center no-repeat;
+  cursor:inherit;
+  text-indent:-9999px;
+  border:none;
+  padding: 0;
+  width:20px;
+  min-width:20px;
+  height:20px;
+  min-height:20px;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  position:absolute;
+  top:0;
+  right:0;
+  cursor:pointer;
+}
+
+#pcdesigns-saveddesigns-form .image{
+  width:280px;
+  display:inline-block;
+  background-color: #F0F0F0;
+  padding:10px;
+  border: none;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -khtml-border-radius: 4px;
+  border-radius: 4px; 
+}
+
+#pcdesigns-saveddesigns-form .image img{
+  margin:0 auto;
+  display:block;
+  width:200px;
+  min-height:20px;
+}
+
+#pcdesigns-saveddesigns-form label{
+  display:none;
+}
+#pcdesigns-saveddesigns-form .details{
+  width:280px;
+  display:inline-block;
+  vertical-align: top;
+  padding:10px;
+}
+#pcdesigns-saveddesigns-form .design{
+  border-bottom:1px solid #D2D2D2;
+  margin:10px 0;
+  padding-bottom:10px;
+  position:relative;
+}
+
+#pcdesigns-saveddesigns-form .design.last{
+  border-bottom:none;
+  padding-bottom:0;
+}
+
+#pcdesigns-saveddesigns-form .design .order{
+  position:absolute;
+  bottom:15px;
+}

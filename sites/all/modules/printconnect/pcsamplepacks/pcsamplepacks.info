@@ -1,0 +1,13 @@
+name = Sample packs
+description = Provides sample pack requests
+package = printconnect
+core = 7.x
+
+dependencies[] = printconnect
+
+stylesheets[all][] = pcsamplepacks.css
+
+#scripts[] = pcsamplepacks.js
+
+
+

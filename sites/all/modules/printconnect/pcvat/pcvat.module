@@ -1,0 +1,102 @@
+<?php
+
+use printconnect\Validation\Vat;
+
+function pcvat_menu() {
+  $items['js/pcvat/%/%'] = array(
+      'page callback' => '_pcvat_js_callback',
+      'page arguments' => array(2, 3),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+function _pcvat_js_callback($country, $number) {
+  drupal_json_output(Vat::validate($country . $number));
+  exit;
+}
+
+function pcvat_element_info() {
+  return array(
+      'vatfield' => array(
+          '#input' => true,
+          '#process' => array('_pcvat_vatfield_process'),
+          '#value_callback' => '_pcvat_vatfield_value',
+          '#element_validate' => array('_pcvat_vatfield_validate'),
+          '#theme_wrappers' => array('form_element'),
+          '#default_value' => '',
+          '#default_country' => 'BE',
+      ),
+  );
+}
+
+function _pcvat_vatfield_validate($element, &$form_state) {
+  form_set_value($element, $element['#value'], $form_state);
+}
+
+function _pcvat_vatfield_value(&$element, $input = FALSE, &$form_state = NULL) {
+  if ($input) {
+    $value = $input['country'] . $input['number'];
+    return $value;
+  } else {
+    return $element['#default_value'];
+  }
+}
+
+//function pcvat_theme() {
+//  return array(
+//      'vatfield' => array(
+//          'render element' => 'element',
+//      ),
+//  );
+//}
+
+//function theme_vatfield($element) {
+//  //  dpm('theme_reporting_tableselect()');
+////  return drupal_render($element) ;
+//  
+//}
+
+function _pcvat_vatfield_process($element) {
+  // dpm('reporting_tableselect_process()');
+
+  $value = $element['#value'];
+
+  if (strlen($value) >= 2) {
+    $country = substr($value, 0, 2);
+    $number = substr($value, 2);
+  } else {
+    $country = $element['#default_country'];
+    $number = $value;
+  }
+
+  $ajax = array();
+  if (isset($element['#ajax'])) {
+    $ajax = $element['#ajax'];
+  }
+
+  $element['country'] = array(
+      '#type' => 'textfield',
+      '#default_value' => $country,
+      '#size' => 2,
+      '#maxlength' => 2,
+      '#attributes' => array('class' => array('country'), 'readonly' => 'readonly'),
+      '#theme_wrappers' => array(),
+      '#ajax' => $ajax,
+  );
+
+  $element['number'] = array(
+      '#type' => 'textfield',
+      '#default_value' => $number,
+      '#attributes' => array('class' => array('number')),
+      '#theme_wrappers' => array(),
+      '#ajax' => $ajax,
+  );
+//	$element['#prefix'] = '<div class="control">';
+  //$element['#suffix'] = '</div>';
+
+  $element['#tree'] = true;
+
+  return $element;
+}

@@ -1,0 +1,52 @@
+<?php
+
+function pcogone_schema() {
+  $schema['ogone_payment'] = array(
+      'description' => 'Ogone payments',
+      'fields' => array(
+          'rid' => array(
+              'description' => 'The primary identifier for a payment.',
+              'type' => 'varchar',
+              'length' => '200',
+              'not null' => TRUE,
+          ),
+          'payment_method' => array(
+              'description' => 'The payment method idenitifier',
+              'type' => 'int',
+              'not null' => FALSE,
+          ),
+          'order_id' => array(
+              'description' => 'The order idenitifier',
+              'type' => 'int',
+              'not null' => TRUE,
+          ),
+          'amount' => array(
+              'description' => 'The amout of the payment request.',
+              'type' => 'float',
+              'unsigned' => TRUE,
+              'not null' => TRUE,
+              'size' => 'medium',
+              'default' => 0,
+          ),
+          'requested' => array(
+              'description' => 'The creation date time',
+              'type' => 'int',
+              'not null' => TRUE,
+          ),
+          'received' => array(
+              'description' => 'The payment date time',
+              'type' => 'int',
+              'not null' => FALSE,
+          ),
+          'params' => array(
+              'description' => 'Additional parameters to the request',
+              'type' => 'text',
+              'size' => 'normal',
+              'not null' => FALSE,
+          )
+      ),
+      'primary key' => array('rid'),
+  );
+  return $schema;
+}
+?>

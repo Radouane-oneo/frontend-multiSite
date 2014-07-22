@@ -1,0 +1,14 @@
+.elections.box{
+  background-image: url('aankruisbolletje.jpg');
+  background-position: 10px center;
+  background-repeat: no-repeat;
+  padding-left: 60px;
+}
+
+.elections.box label{
+  float:none;
+}
+
+.elections.box .form-type-checkbox label{
+  float :none;
+}

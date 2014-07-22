@@ -1,0 +1,207 @@
+<?php
+
+function pcanalytics_page_alter(&$page) {
+    $account = variable_get('pcanalytics_account', 'account');
+    $conversionId = variable_get('pcanalytics_conversionId', false);
+    $conversionLabel = variable_get('pcanalytics_conversionLabel', 'conversionLabel');
+    $remarketingLabel = variable_get('pcanalytics_remarketingLabel', 'remarketingLabel');
+    $verification = variable_get('pcanalytics_verification', 'verification');
+
+    $remarketingLabelDefault = $remarketingLabel[0];
+
+    drupal_add_html_head(
+        array(
+            '#tag' => 'meta',
+            '#attributes' => array(
+                'name' => 'google-site-verification',
+                'content' => $verification
+            )
+        ),
+        'google-site-verification'
+    );
+    $path = arg();
+    $parts = explode('.', $_SERVER['HTTP_HOST']);
+    array_shift($parts);
+    $domain = implode('.', $parts);
+
+    $analytics = '
+    <!-- Google Code for Analytics -->
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(["_setAccount", "' . $account . '"]);
+        _gaq.push(["_setDomainName", "' . $domain . '"]);
+        _gaq.push(["_trackPageview"]);
+        _gaq.push(["_trackPageLoadTime"]);
+
+        (function() {
+            var ga = document.createElement("script"); ga.type = "text/javascript"; ga.async = true;
+            ga.src = ("https:" == document.location.protocol ? "https://" : "http://") + "stats.g.doubleclick.net/dc.js";
+            var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+    ';
+
+    $conversion = FALSE;
+    $remarketingProduct = FALSE;
+    $remarketingDefault = FALSE;
+
+    if ($conversionId) {
+        $conversion = '
+        <!-- Google Code for Aankoop/verkoop Conversion Page -->
+        <script type="text/javascript">
+        /* <![CDATA[ */
+        var google_conversion_id = "' . $conversionId . '";
+        var google_conversion_language = "en";
+        var google_conversion_format = "3";
+        var google_conversion_color = "ffffff";
+        var google_conversion_label = "' . $conversionLabel . '";
+        var google_conversion_value = 0;
+        /* ]]> */
+        </script>
+        <script type="text/javascript" src="https://www.googleadservices.com/pagead/conversion.js">
+        </script>
+        <noscript>
+        <div style="display:inline;">
+        <img height="1" width="1" style="border-style:none;" alt="" src="https://www.googleadservices.com/pagead/conversion/' . $conversionId . '/?label=' . $conversionLabel . '&amp;guid=ON&amp;script=0"/>
+        </div>
+        </noscript>
+        ';
+
+        $remarketingDefault = '
+        <!-- Google Code for Visitors Remarketing List -->
+        <script type="text/javascript">
+        /* <![CDATA[ */
+        var google_conversion_id = "' . $conversionId . '";
+        var google_conversion_language = "en";
+        var google_conversion_format = "3";
+        var google_conversion_color = "666666";
+        var google_conversion_label = "' . $remarketingLabelDefault . '";
+        var google_conversion_value = 0;
+        /* ]]> */
+        </script>
+        <script type="text/javascript" src="https://www.googleadservices.com/pagead/conversion.js">
+        </script>
+        <noscript>
+        <div style="display:inline;">
+        <img height="1" width="1" style="border-style:none;" alt="" src="https://www.googleadservices.com/pagead/conversion/' . $conversionId . '/?label=' . $remarketingLabelDefault . '&amp;guid=ON&amp;script=0"/>
+        </div>
+        </noscript>
+        ';
+
+        if ((count($path) > 1) && ($path[0] == 'products') && isset($remarketingLabel[$path[1]])) {
+            $remarketingLabelProduct = $remarketingLabel[$path[1]];
+            $remarketingProduct = '
+            <!-- Google Code for Product Visitors Remarketing List -->
+            <script type="text/javascript">
+            /* <![CDATA[ */
+            var google_conversion_id = "' . $conversionId . '";
+            var google_conversion_language = "en";
+            var google_conversion_format = "3";
+            var google_conversion_color = "666666";
+            var google_conversion_label = "' . $remarketingLabelProduct . '";
+            var google_conversion_value = 0;
+            /* ]]> */
+            </script>
+            <script type="text/javascript" src="https://www.googleadservices.com/pagead/conversion.js">
+            </script>
+            <noscript>
+            <div style="display:inline;">
+            <img height="1" width="1" style="border-style:none;" alt="" src="https://www.googleadservices.com/pagead/conversion/' . $conversionId . '/?label=' . $remarketingLabelProduct . '&amp;guid=ON&amp;script=0"/>
+            </div>
+            </noscript>
+            ';
+        }
+    }
+    if (count($path) == 4 && $path[1] == 'orders' && $path[3] == 'confirmation') {
+        if ($conversion) {
+            $page['page_bottom']['pcanalytics']['conversion']['#markup'] = $conversion;
+        }
+    } else {
+        $page['page_bottom']['pcanalytics']['analytics']['#markup'] = $analytics;
+        if ($remarketingDefault) {
+            $page['page_bottom']['pcanalytics']['remarketingDefault']['#markup'] = $remarketingDefault;
+        }
+        if ($remarketingProduct) {
+            $page['page_bottom']['pcanalytics']['remarketingProduct']['#markup'] = $remarketingProduct;
+        }
+    }
+}
+
+function pcanalytics_form_pcorders_order_form_alter(&$form, $form_state, $form_id) {
+    $path = arg();
+    if (count($path) == 4 && $path[1] == 'orders' && $path[3] == 'confirmation') {
+        $orderId = $path[2];
+        $order = \printconnect\Orders\Factory::Get($orderId);
+        $customer = $order->customer;
+
+        $account = variable_get('pcanalytics_account', 'account');
+
+        if (isset($order->orderBillingAddress)) {
+            $address = $order->orderBillingAddress;
+            $name = $address->company;
+            $city = $address->city;
+            $country = printconnect\Countries\Factory::Get($address->country);
+            $country = $country->iso;
+        } else {
+            $name = $customer->name;
+            $city = '';
+            $country = '';
+        }
+        $total = $order->subTotalAmount;
+        $vat = $order->vatAmount;
+        $shipping = $order->orderItemShipping->price;
+
+        $googlePurchaseTracking = "
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', '$account']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    
+        _gaq.push(['_addTrans',
+            '$order->id',       // order ID - required
+            '$name',            // affiliation or store name
+            '$total',           // total - required
+            '$vat',             // tax
+            '$shipping',        // shipping
+            '$city',            // city
+            '',                 // state or province
+            '$country'          // country
+        ]);";
+
+        foreach ($order->productItems as $item) {
+            $category = $item->configuration->name;
+            $quantity = 1;
+            $product = $item->productName . ' x ' . $item->quantity;
+
+            $googlePurchaseTracking .= "
+                _gaq.push(['_addItem',
+                    '$order->id',       // order ID - required
+                    '$item->id',        // SKU/code - required
+                    '$product',         // product name
+                    '$category',        // category or variation
+                    '$item->price',     // unit price - required
+                    '$quantity'         // quantity - required
+                ]);";
+        }
+
+        $googlePurchaseTracking .= "
+        _gaq.push(['_trackTrans']); //submits transaction to the Analytics servers
+
+        (function() {
+            var ga = document . createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s . parentNode . insertBefore(ga, s);
+        })();
+        ";
+
+        drupal_add_js($googlePurchaseTracking, array('scope' => 'footer', 'type' => 'inline'));
+    }
+}

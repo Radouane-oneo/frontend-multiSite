@@ -1,0 +1,42 @@
+#pcdesigns-saveddesigns-form  .fieldset-wrapper > div.design  {
+    background-color: #F1F1F1;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
+    height: 150px;
+    border-bottom: none !important;
+    position: relative;
+}
+#pcdesigns-saveddesigns-form .image img {
+    height: 132px;
+    width: 132px;
+}
+#pcdesigns-saveddesigns-form input.delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-image: url("../../../../all/themes/printconnect/flyer/css/images/delete.png") !important;
+    width: 24px;
+    height: 24px;      
+}
+#pcdesigns-saveddesigns-form input.delete:hover {
+    background-position-y: 24px;
+}
+#pcdesigns-saveddesigns-form legend span {
+    font-size: 15px;
+    text-transform: none;
+}
+#pcdesigns-saveddesigns-form .fieldset-wrapper {
+    padding: 0px !important;
+}
+#pcdesigns-saveddesigns-form a.designtool span {
+     background: none !important;
+}
+#pcdesigns-saveddesigns-form a.designtool {
+     background-image: url("../../../../all/themes/printconnect/flyer/css/images/button_request.png") !important;
+     background-repeat: no-repeat;
+     background-position: left;
+}
+#pcdesigns-saveddesigns-form .button{
+    min-width: 120px;
+}

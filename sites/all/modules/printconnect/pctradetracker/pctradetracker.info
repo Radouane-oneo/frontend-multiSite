@@ -1,0 +1,4 @@
+name = Tradetracker
+description = Adds Tradetracker code to pages
+package = printconnect
+core = 7.x

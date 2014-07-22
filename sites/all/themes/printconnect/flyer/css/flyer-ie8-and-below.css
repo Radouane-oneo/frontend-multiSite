@@ -1,0 +1,61 @@
+/* 
+    Document   : flyer-ie8-and-below.css
+    Created on : 13-mrt-2013, 9:38:24
+    Author     : ewald.de.wreede
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+  display: block;
+}
+
+#pccustomers-login-form .form-item-email label{
+	line-height: 23px;	/* 46px/2 */
+}
+
+.page-checkout #invoice-address select{
+	height: 40px;	
+}
+
+.page-checkout-payment table.grid tr{
+	*height: 40px;	
+}
+
+.page-checkout-payment table.grid tr{
+	float: none;
+	height: 40px;
+}
+
+.page-checkout-payment table.grid tr td.last-child,
+.page-checkout-payment .payment-methods-table .price{
+	text-align: right;	
+}
+
+#pcorders-order-form .invoice{
+	float: none;	
+}
+
+#pcorders-order-form span.value{
+	line-height: normal !important;	
+}
+
+.region-content .form-actions span.price .whole,
+.page-products #block-system-main .actions.form-wrapper span.price .whole{
+	position: relative;
+	top: -10px;
+}
+
+.page-products fieldset.deadlines legend{
+	*position:relative;
+	*left:-7px;
+}
+
+.page-cart #block-system-main .actions.form-wrapper{
+	padding-bottom: 0;	
+}
+
+.page-checkout-payment .payment-methods-table input{
+	background: none;	
+}
+

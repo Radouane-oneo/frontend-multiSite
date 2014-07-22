@@ -1,0 +1,9 @@
+name = Resulte Combine
+description = combine resulte Search module Products & node & others .
+files[] = pcresulte_combine.module
+core = 7.x
+version = "1.0"
+project = "pcresulte_combine"
+package = printconnect
+
+

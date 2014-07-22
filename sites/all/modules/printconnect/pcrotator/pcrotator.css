@@ -1,0 +1,31 @@
+.rotator{
+  position: relative;
+}
+
+.rotator .slides{
+  position:relative;
+}
+
+.rotator .slides .rotating{
+  position: absolute;
+  top:0;
+}
+
+.rotator .controller{
+/*  position: absolute;
+  bottom:0;*/
+  right:0;
+}
+
+.rotator .controller li{
+  float:left;
+}
+
+.rotator .controller li a{
+  min-width: 10px;
+  min-height: 10px;
+}
+
+.rotator .controller li a.current{
+  font-weight:bold;
+}

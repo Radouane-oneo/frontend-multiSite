@@ -1,0 +1,62 @@
+name = Flyer
+description = Default flyer theme 
+package = Core
+version = VERSION
+core = 7.x
+#stylesheets[all][] = css/layout.css
+stylesheets[all][] = css/flyer.css
+stylesheets[all][] = libraries/jquery.selectBox/jquery.selectBox.css
+stylesheets[all][] = css/pcstoresBlock.css
+
+stylesheets-conditional[lt IE 9][all][] = css/flyer-ie8-and-below.css
+stylesheets-conditional[IE][all][] = css/ie.css
+stylesheets-conditional[IE 7][all][] = css/ie7.css
+stylesheets-conditional[IE 8][all][] = css/ie8.css
+stylesheets-conditional[IE 9][all][] = css/ie9.css
+stylesheets-conditional[IE 10][all][] = css/ie10.css
+stylesheets-conditional[IE][all][] = css/ie.css
+ 
+#stylesheets[all][] = css/slideshow_1.css
+
+#stylesheets[all][] = css/stylelsdr2.css
+#stylesheets[all][] = css/style470f.css
+#stylesheets[all][] = css/preview470f.css
+
+
+scripts[] = libraries/jQueryui/jQueryui.js
+scripts[] = libraries/Jcookies/cookies.js
+scripts[] = libraries/scrollBarPlugin/jquery.mCustomScrollbar.min.js
+scripts[] = libraries/scrollBarPlugin/jquery.mCustomScrollbar.concat.min.js
+scripts[] = libraries/homeSlider/homeslider.js
+scripts[] = libraries/jcarousellite/jcarousellite.js
+scripts[] = libraries/jquery.selectBox/jquery.selectBox.js
+
+#scripts[] = libraries/mjslider/jquery.themepunch.plugins.min00ad.js
+#scripts[] = libraries/mjslider/jquery.themepunch.revolution.min00ad.js
+scripts[] = js/html5shiv.js
+scripts[] = js/selectivizr-min.js
+#scripts[] = js/sliderfunction.js
+#scripts[] = libraries/mjslider2/jquery.themepunch.plugins.min470f.js
+#scripts[] = libraries/mjslider2/jquery.themepunch.revolution.min470f.js
+
+
+scripts[] = js/flyer.js
+#scripts[] = js/sldr.js
+
+
+
+regions[announcements] = Announcements
+regions[top] = Top
+regions[productmenu] = Product Menu
+regions[cart] = Cart
+regions[header_right] = Header Right
+regions[highlightedFlyer] = highlightedFlyer
+#regions[slideshow] = Slideshow
+regions[sidebar_first] = Sidebar First
+regions[sidebar_second] = Sidebar Second
+regions[contenttop] = Content top
+regions[content] = Content
+regions[fronttabs] = Front Tabs
+regions[contentbottom] = Content bottom
+regions[footer] = Footer
+regions[closure] = Closure

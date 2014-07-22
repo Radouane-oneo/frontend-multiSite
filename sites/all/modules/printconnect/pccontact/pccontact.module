@@ -1,0 +1,477 @@
+<?php
+
+use printconnect\Diagnostics\Debug;
+use printconnect\Drupal\Forms;
+use printconnect\Drupal\Functions;
+
+/**
+ * Implements hook_menu
+ *
+ * Urls
+ */
+function pccontact_menu() {
+  $items['mailme/%/%'] = array(
+      'title' => 'Mail me',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pccontact_mailme_form', 1, 2),
+      'access arguments' => array('access content'),
+  );
+
+  $items['mailme/%/%/success'] = array(
+      'title' => 'Mail me',
+      'page callback' => 'pccontact_success',
+      'page arguments' => array(1, 2),
+      'access arguments' => array('access content'),
+  );
+  $items['callmeback/%/%/success'] = array(
+      'title' => 'Call me back',
+      'page callback' => 'pccontact_success',
+      'page arguments' => array(1, 2),
+      'access arguments' => array('access content'),
+  );
+    $items['callmeback/%/%'] = array(
+      'title' => 'Call me back',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pccontact_callmeback_form', 1, 2),
+      'access arguments' => array('access content'),
+  );
+  $items['contact/%'] = array(
+      'title' => 'Contact',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pccontact_contact_form', 1),
+      'access arguments' => array('access content'),
+  );
+ 
+  $items['contact/general'] = array(
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pccontact_general_form', 1),
+      'access arguments' => array('access content'),
+      'file' => 'pccontact.forms.inc',
+  );
+  $items['contact/stores'] = array(
+      'title' => 'Contact',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pccontact_stors_form'),
+      'access arguments' => array('access content'),
+      'file' => 'pccontact.forms.inc',
+  );
+   $items['contact/email'] = array(
+      'title' => 'Contact',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pccontact_email_form'),
+      'access arguments' => array('access content'),
+      'file' => 'pccontact.forms.inc',
+  );
+
+
+  return $items;
+}
+
+/*
+ * Implements hook_block_info
+ * Defines the available blocks
+ */
+
+function pccontact_block_info() {
+//  $blocks['contact'] = array(
+//      'info' => t('Contact block'),
+//      'cache' => DRUPAL_CACHE_GLOBAL,
+//  );
+//  return $blocks;
+  return array();
+}
+
+/*
+ * Implements hook_block_view
+ * Implements the available blocks
+ */
+
+function pccontact_block_view($delta = '') {
+  switch ($delta) {
+    case 'contact2':
+      $block['title'] = t('Contact');
+      $block['content'] = array(
+          'text' => array(
+              '#markup' => t('About  contacting us'),
+          ),
+          'link' => array(
+              '#markup' => l('Contact us', 'contact/callmeback', array('attributes' => array('class' => array('fancybox', 'iframe')), 'query' => array('contentonly' => TRUE))),
+          ),
+      );
+
+      return $block;
+  }
+}
+
+/**
+ * Defines the mailme form
+ */
+function pccontact_mailme_form($form, &$form_state, $idName, $userName) {
+
+  $customer = \printconnect\Customers\Factory::Current();
+
+  drupal_set_title(t('Mail @contact', array('@contact' => $userName)));
+  $iconPath = '/images/ww-' . $idName . '.png';
+  $form['image'] = array(
+      '#type' => 'item',
+      '#markup' => theme(
+              'image', array(
+          'path' => variable_get('file_' . file_default_scheme() . '_path', conf_path() . '/files') . $iconPath
+              )
+      ),
+  );
+
+  $form['title'] = array(
+      '#type' => 'item',
+      '#prefix' => '<h4>',
+      '#suffix' => '</h4>',
+      '#markup' => t('Mail @contact', array('@contact' => $userName)),
+  );
+
+  $form['name'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Name'),
+      '#required' => TRUE,
+      '#default_value' => $customer ? $customer->name : '',
+      '#size' => 25,
+  );
+
+  $form['email'] = array(
+      '#type' => 'textfield',
+      '#title' => t('E-mail'),
+      '#required' => TRUE,
+      '#default_value' => $customer ? $customer->email : '',
+      '#size' => 25,
+  );
+
+  $form['comment'] = array(
+      '#type' => 'textarea',
+      '#title' => t('Comment'),
+      '#required' => TRUE,
+      '#resizable' => FALSE,
+  );
+
+  $form['captcha'] = array(
+      '#type' => 'captcha',
+  );
+
+  $form['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Submit'),
+      '#attributes' => array('class' => array('button', 'large', 'submit')),
+  );
+
+  return $form;
+}
+
+function pccontact_mailme_form_validate($form, &$form_state) {
+  /*
+    if ($form_state['values']['name'] === NULL) {
+    form_set_error('name', t('Name can\'t be empty'));
+    }
+    if ($form_state['values']['email'] === NULL) {
+    form_set_error('email', t('E-mail can\'t be empty'));
+    }
+    if ($form_state['values']['comment'] === NULL) {
+    form_set_error('comment', t('Comment can\'t be empty'));
+    }
+   */
+  if (!valid_email_address($form_state['values']['email'])) {
+    form_set_error('email', t('E-mail address is not valid'));
+  }
+}
+
+function pccontact_mailme_form_submit($form, &$form_state) {
+  $params = array();
+  $params['account'] = $form_state['values']['email'];
+  $params['name'] = $form_state['values']['name'];
+  $params['comment'] = $form_state['values']['comment'];
+  $params['contact'] = $form_state['build_info']['args']['1'];
+  drupal_mail(
+          'pccontact', 'mailme', variable_get('pccontact_email', 'info@printconcept.com'), NULL, $params
+  );
+  //drupal_set_message(t('Your request has been successfully sent'));
+  $query = $_GET;
+  unset($query['q']);
+  drupal_goto('mailme/' . $form_state['build_info']['args']['0'] . '/' . $form_state['build_info']['args']['1'] . '/success', array('query' => $query));
+}
+
+/**
+ * Defines the callmeback form
+ */
+function pccontact_callmeback_form($form, &$form_state, $idName, $userName) {
+  $customer = \printconnect\Customers\Factory::Current();
+  drupal_set_title(t('Have @contact call me back', array('@contact' => $userName)));
+  $iconPath = '/images/ww-' . $idName . '.png';
+  $form['image'] = array(
+      '#type' => 'item',
+      '#markup' => theme(
+              'image', array(
+          'path' => variable_get('file_' . file_default_scheme() . '_path', conf_path() . '/files') . $iconPath
+              )
+      ),
+  );
+
+  $form['title'] = array(
+      '#type' => 'item',
+      '#prefix' => '<h4>',
+      '#suffix' => '</h4>',
+      '#markup' => t('Have @contact call me back', array('@contact' => $userName)),
+  );
+
+  $form['name'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Name'),
+      '#required' => TRUE,
+      '#default_value' => $customer ? $customer->name : '',
+      '#size' => 25,
+  );
+
+  $form['phone'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Phone'),
+      '#required' => TRUE,
+      '#default_value' => $customer ? $customer->phone : '',
+      '#size' => 25,
+  );
+
+  $form['comment'] = array(
+      '#type' => 'textarea',
+      '#title' => t('Comment'),
+      '#required' => TRUE,
+      '#resizable' => FALSE,
+  );
+
+  $form['captcha'] = array(
+      '#type' => 'captcha',
+  );
+
+  $form['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Submit'),
+      '#attributes' => array('class' => array('button', 'large', 'submit')),
+  );
+
+  return $form;
+}
+
+function pccontact_callmeback_form_validate($form, &$form_state) {
+  /* if ($form_state['values']['name'] === NULL) {
+    form_set_error('name', t('Name can\'t be empty'));
+    }
+    if ($form_state['values']['phone'] === NULL) {
+    form_set_error('email', t('E-mail can\'t be empty'));
+    }
+    if ($form_state['values']['comment'] === NULL) {
+    form_set_error('comment', t('Comment can\'t be empty'));
+    } */
+}
+
+function pccontact_callmeback_form_submit($form, &$form_state) {
+  $params = array();
+  $params['phone'] = $form_state['values']['phone'];
+  $params['name'] = $form_state['values']['name'];
+  $params['comment'] = $form_state['values']['comment'];
+  $params['contact'] = $form_state['build_info']['args']['1'];
+  drupal_mail(
+          'pccontact', 'callmeback', variable_get('pccontact_email', 'info@printconcept.com'), NULL, $params
+  );
+  //drupal_set_message(t('Your request has been successfully sent'));
+  $query = $_GET;
+  unset($query['q']);
+  drupal_goto('callmeback/' . $form_state['build_info']['args']['0'] . '/' . $form_state['build_info']['args']['1'] . '/success', array('query' => $query));
+}
+
+function pccontact_mail($key, &$message, $params) {
+  global $language;
+  $message['headers']['Content-Type'] = 'text/html; charset=UTF-8; format=flowed';
+
+  switch ($key) {
+    case 'mailme':
+      $message['subject'] = t('Contact') . ' ' . $params['contact'];
+      $message['body'][] = t(
+              'Contact !name', array(
+          '!name' => $params['name']
+              )
+      );
+      $message['body'][] = $params['account'];
+      $message['body'][] = $params['comment'];
+      break;
+    case 'callmeback':
+      $message['subject'] = t('Contact') . ' ' . $params['name'];
+
+      //$message['body'][] = t('Contact !name', array('!name' => $params['name']));
+      $message['body'][] = '<br/><b>' . t('Contact') . '</b>: ';
+      $message['body'][] = $params['name'];
+      $message['body'][] = '<br/><b>' . t('Phone') . '</b>: ';
+      $message['body'][] = $params['phone'];
+      if (isset($params['email'])) {
+        $message['body'][] = '<br/><b>' . t('Email') . '</b>: ';
+        $message['body'][] = $params['email'];
+      }
+      $message['body'][] = '<br/><b>' . t('Comment') . '</b>: <br/>';
+      $message['body'][] = nl2br(htmlentities($params['comment']));
+      break;
+
+    case 'general':
+      $message['subject'] = t('Contact') . ' ' . $params['name'];
+
+      //$message['body'][] = t('Contact !name', array('!name' => $params['name']));
+      $message['body'][] = '<br/><b>' . t('Contact') . '</b>: ';
+      $message['body'][] = $params['name'];
+      $message['body'][] = '<br/><b>' . t('Phone') . '</b>: ';
+      $message['body'][] = $params['phone'];
+      if (isset($params['email'])) {
+        $message['body'][] = '<br/><b>' . t('Email') . '</b>: ';
+        $message['body'][] = $params['email'];
+      }
+      $message['body'][] = '<br/><b>' . t('Comment') . '</b>: <br/>';
+      $message['body'][] = nl2br(htmlentities($params['comment']));
+      break;
+    case 'stores':
+          
+    $message['subject'] = t('Store subscription') . ' ' . $params['name'];
+      $message['body'][] = '<br/><b>' . t('Contact') . '</b>: ';
+            $message['body'][] = $params['name'];
+            $message['body'][] = '<br/><b>' . t('Phone') . '</b>: ';
+            $message['body'][] = $params['phone'];
+            if (isset($params['email'])) {
+                $message['body'][] = '<br/><b>' . t('Email') . '</b>: ';
+                $message['body'][] = $params['email'];
+            }
+            $message['body'][] = '<br/><b>' . t('socity') . '</b>: ';
+            $message['body'][] = $params['socity'];
+            $message['body'][] = '<br/><b>' . t('activity') . '</b>: ';
+            $message['body'][] = $params['activity'];
+            $message['body'][] = '<br/><b>' . t('vatnumber') . '</b>: ';
+            $message['body'][] = $params['vatnumber'];
+
+            $message['body'][] = '<br/><b>' . t('Comment') . '</b>: <br/>';
+            $message['body'][] = nl2br(htmlentities($params['comment']));
+      break;
+    case 'cobranding':
+      $message['subject'] = 'Cobranding info request';
+
+      $message['body'][] = $params['name'];
+      $message['body'][] = $params['email'];
+      $message['body'][] = $params['phone'];
+      $message['body'][] = $params['comment'];
+      break;
+    case 'contactfooter':
+      $message['subject'] = 'contactformulier via footer';
+
+      $message['body'][] = $params['name'];
+      $message['body'][] = $params['email'];
+      $message['body'][] = $params['phone'];
+      $message['body'][] = $params['comment'];
+      break;
+    case 'email':
+      $message['subject'] = 'Email';
+      $message['body'][] = 'test';
+      break;
+  }
+
+  $message['body'][] = '<br/><b>' . t('Site') . '</b>: ';
+  $message['body'][] = $_SERVER['HTTP_HOST'];
+  $message['body'][] = '<br/><b>' . t('Language') . '</b>: ';
+  $message['body'][] = $language->language;
+}
+
+function pccontact_success($idName, $userName) {
+  //drupal_add_js('jQuery(document).ready(function () { parent.jQuery.fancybox.close(); });', 'inline');
+  $content = array();
+
+  $iconPath = '/images/ww-' . $idName . '.png';
+  $content['image'] = array(
+      '#type' => 'item',
+      '#markup' => theme(
+              'image', array(
+          'path' => variable_get('file_' . file_default_scheme() . '_path', conf_path() . '/files') . $iconPath
+              )
+      ),
+  );
+
+  $content['name'] = array(
+      '#type' => 'item',
+      '#prefix' => '<h4>',
+      '#suffix' => '</h4>',
+      '#markup' => $userName,
+  );
+
+  $content['title'] = array(
+      '#type' => 'item',
+      '#markup' => t('I`ll contact you as soon as possible'),
+  );
+
+
+  return $content;
+}
+
+function pccontact_contact_form($form, $form_state, $key) {
+  if (!$form_state['rebuild']) {
+
+    $customer = \printconnect\Customers\Factory::Current();
+    $form['name'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Name'),
+        '#required' => TRUE,
+        '#default_value' => $customer ? $customer->name : '',
+    );
+    $form['email'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Email'),
+        '#required' => FALSE,
+        '#default_value' => $customer ? $customer->email : '',
+    );
+    $form['phone'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Phone'),
+        '#required' => TRUE,
+        '#default_value' => $customer ? $customer->phone : '',
+    );
+    $form['actions']['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Send'),
+        '#attributes' => array('class' => array('noreplace')),
+        '#ajax' => array(
+            'callback' => 'pccontact_contact_form_callback',
+            'wrapper' => 'pccontact-contact-form',
+            'method' => 'replace',
+            'effect' => 'fade',
+        ),
+    );
+  } else {/*
+    $form['result'] = array(
+    '#type' => 'container',
+    '#attributes' => array('class' => array('box', 'messages', 'status')),
+    );
+    $form['result']['text'] = array(
+    '#markup' => t('Your message has been sent.')
+    ); */
+  }
+
+  $form['#id'] = 'pccontact-contact-form';
+  return $form;
+}
+
+function pccontact_contact_form_validate($form, &$form_state) {
+  if (!valid_email_address($form_state['values']['email'])) {
+    form_set_error('email', t('E-mail address is not valid'));
+  }
+}
+
+function pccontact_contact_form_submit($form, &$form_state) {
+  $params = array();
+  $params['phone'] = $form_state['values']['phone'];
+  $params['email'] = $form_state['values']['email'];
+  $params['name'] = $form_state['values']['name'];
+  $key = $form_state['build_info']['args']['0'];
+
+  drupal_mail('pccontact', $key, variable_get('pccontact_email', 'info@printconcept.com'), NULL, $params);
+  drupal_set_message(t('Your message has been sent.'));
+  $form_state['rebuild'] = TRUE;
+}
+
+function pccontact_contact_form_callback($form, &$form_state) {
+  return $form;
+}

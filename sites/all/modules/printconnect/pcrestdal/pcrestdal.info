@@ -1,0 +1,6 @@
+name = Rest data access
+description = Provides the Rest Dal
+package = printconnect
+core = 7.x
+
+

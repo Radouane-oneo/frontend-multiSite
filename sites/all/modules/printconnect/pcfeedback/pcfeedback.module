@@ -1,0 +1,61 @@
+<?php
+
+use printconnect\Customers\Feedback\Factory;
+use printconnect\Customers\Factory as CustomersFactory;
+
+function pcfeedback_block_info() {
+  $blocks['feedback'] = array(
+      'info' => t('Feedback'),
+  );
+  return $blocks;
+}
+
+function pcfeedback_block_view($delta = '') {
+  switch ($delta) {
+    case 'feedback':
+      $customer = CustomersFactory::Current();
+      if ($customer) {
+        $block['content'] = drupal_get_form('pcfeedback_feedback_form', $customer->id);
+      }
+      return $block;
+      break;
+  }
+}
+
+function pcfeedback_feedback_form($form, &$form_state, $customerId) {
+  $form['feedback'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Feedback'),
+  );
+  $form['feedback']['text'] = array(
+      '#type' => 'textarea',
+      '#description' => t('Enter text'),
+      '#title' => t('Where do you printconnect from?'),
+      '#required' => TRUE,
+  );
+  $form['feedback']['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Send'),
+  );
+  
+  $form_state['storage']['customerId'] = $customerId;
+
+  return $form;
+}
+
+function pcfeedback_feedback_form_validate($form, &$form_state) {
+  try {  
+    //  Factory::Redeem(CustomersFactory::Current(), $form_state['values']['code']);
+  } catch (\printconnect\Dal\Exception $ex) {
+    // form_set_error('code', implode("\n", $ex->errors));
+  }
+}
+
+function pcfeedback_feedback_form_submit($form, &$form_state) {
+  //drupal_goto('myprintconnect/credit');
+  $feedback = Factory::Create($form_state['storage']['customerId']);
+  $feedback->feedback = $form_state['values']['text'];
+  Factory::Save($feedback);
+  
+  drupal_set_message(t('Thanks for your feedback...'));
+}

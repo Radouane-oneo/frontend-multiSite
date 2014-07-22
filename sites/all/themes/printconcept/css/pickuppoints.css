@@ -1,0 +1,76 @@
+
+#pcpickuppoints-picker-form {
+}
+
+#pcpickuppoints-picker-form div.map {
+  height:530px;
+}
+#pcpickuppoints-picker-form .infowindow {
+}
+#pcpickuppoints-picker-form .name {
+  font-weight: bold;
+  display:block;
+  font-size:12px;
+  color:#009BDA;
+}
+#pcpickuppoints-picker-form .address {
+  font-size: 10px;
+  line-height: 1.2em;
+}
+#pcpickuppoints-picker-form .form-item-country {
+  display:none;
+}
+.openinghours {
+  margin: 5px 0;
+}
+.openinghours .day {
+  color: #009BDA;
+}
+.openinghours tr {
+  border-bottom:dotted 1px #D2D2D2;
+  background:transparent;
+  height:20px;
+}
+.openinghours td {
+  font-size: 10px;
+  padding:0;
+}
+#pcpickuppoints-picker-form td {
+  vertical-align: middle;
+}
+#pcpickuppoints-picker-form .results-container {
+  float:left;
+  width:300px;
+  height:530px;
+  background-color:#666666;
+}
+#pcpickuppoints-picker-form .results-container .results, #pcpickuppoints-picker-form .results-container .text {
+  background:white;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -khtml-border-radius: 7px;
+  border-radius: 7px;
+  margin:10px;
+  padding:10px;
+}
+#pcpickuppoints-picker-form .results-container .results {
+  display:none;
+}
+#pcpickuppoints-picker-form .results-container .results li {
+  background:url('images/icon_pickuppoint.png') left center no-repeat;
+  padding-left: 40px;
+  cursor:pointer;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -khtml-border-radius: 4px;
+  border-radius: 4px;
+  list-style:none;
+  margin:0;
+
+}
+#pcpickuppoints-picker-form .results-container .results li .select-container {
+  min-height:20px;
+}
+#pcpickuppoints-picker-form .results-container .results li .select {
+  display:none;
+}

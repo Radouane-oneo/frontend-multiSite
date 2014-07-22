@@ -1,0 +1,401 @@
+<?php
+
+function pcelections_form_pcproducts_product_form2_alter(&$form, &$form_state) {
+
+  $parts = explode('.', $_SERVER['HTTP_HOST']);
+  $extention = array_pop($parts);
+
+
+  $form['elections'] = array(
+      '#type' => 'container',
+  );
+  $form['elections']['text'] = array(
+      '#type' => 'item',
+      '#markup' => t('By indicating that these are electional prints, an adjusted VAT percentage will be applied... Please notice that the prints will be validated visually.'),
+  );
+  $form['elections']['isElectional'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('These are electional prints'),
+  );
+
+  $form_state['storage']['vatpercentage'] = 0.06;
+
+  $form['step2']['footer']['price']['block'] = array(
+      '#markup' => theme('priceblock', array('subtotal' => $form_state['storage']['subtotal'], 'vat' => 0.06, 'attributes' => array('id' => 'priceblock'))),
+  );
+
+  $form['#validate'][] = 'pcelections_pcproducts_form2_validate';
+}
+
+function pcelections_pcproducts_form2_validate($form, &$form_state) {
+  if ($form_state['values']['elections']['isElectional']) {
+    $form_state['storage']['vatpercentage'] = 0.06;
+  }
+}
+
+function pcelections_form_pcproducts_product_form_alter(&$form, &$form_state) {
+
+  $parts = explode('.', $_SERVER['HTTP_HOST']);
+  $extention = array_pop($parts);
+
+  // $extention = 'be';
+
+  if ($extention == 'be') {
+
+    $item = $form_state['storage']['item'];
+
+    $disabled = FALSE;
+    $default = FALSE;
+
+    if ($item) {
+      if ($item->vat == 0.06) {
+        $default = TRUE;
+      }
+      $disabled = TRUE;
+    } else {
+      if (isset($form_state['values']['elections']['isElectional'])) {
+        $default = $form_state['values']['elections']['isElectional'];
+      } else {
+        $default = variable_get('pcelections_default', FALSE);
+      }
+    }
+
+
+
+    $form['elections'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('elections', 'box')),
+        '#weight' => 80,
+    );
+
+    $form['elections']['title'] = array(
+        '#type' => 'item',
+        '#prefix' => '<h4>',
+        '#suffix' => '</h4>',
+        '#markup' => t('Electional prints'),
+    );
+    $form['elections']['text'] = array(
+        '#type' => 'item',
+        '#markup' => t('By indicating that these are electional prints, an adjusted VAT percentage of 6% will be applied...'),
+    );
+    /*
+      $form['elections']['warning'] = array(
+      '#type' => 'item',
+      '#markup' => t('The prints will be visually validated...'),
+      ); */
+    $form['elections']['isElectional'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Yes, these are electional prints'),
+        '#default_value' => $default,
+        '#disabled' => $disabled,
+    );
+
+
+    if ($default) {
+
+      $subtotal = $form['subtotal']['#value'];
+
+      $vat = \printconnect\Drupal\Functions::Round($subtotal * 0.06);
+
+      $form['vat']['#value'] = $vat;
+
+      $total = $subtotal + $vat;
+
+      $form['total']['#value'] = $total;
+
+      $form['vatpercentage']['#value'] = 0.06;
+    }
+
+    $form['#validate'][] = 'pcelections_pcproducts_form_validate';
+  }
+}
+
+function pcelections_pcproducts_form_validate($form, &$form_state) {
+  if ($form_state['values']['elections']['isElectional']) {
+    $form_state['storage']['vatpercentage'] = 0.06;
+  } else {
+    unset($form_state['storage']['vatpercentage']);
+  }
+}
+
+function pcelections_form_pccart_cart_form2_alter(&$form, &$form_state) {
+  $cart = $form_state['storage']['cart'];
+
+  if (count($cart->productItems)) {
+    foreach ($cart->productItems as $item) {
+      if ($item->vat == '0.06') {
+        $form['cart']['items'][$item->id]['description']['elections'] = array(
+            '#type' => 'container',
+            '#attributes' => array('class' => array('elections', 'box')),
+            '#weight' => 100,
+            '#sorted' => FALSE,
+        );
+
+        $form['cart']['items'][$item->id]['description']['elections']['text'] = array(
+            '#type' => 'item',
+            '#markup' => t('These are electional prints, an adjusted VAT percentage of 6% will be applied...'),
+        );
+      }
+    }
+  }
+}
+
+function pcelections_form_pcorders_order_form_alter(&$form, &$form_state) {
+  $order = $form_state['storage']['order'];
+
+  foreach ($order->productItems as $item) {
+    if ($item->vat == '0.06') {
+      $form['order']['details']['item'][$item->id]['description']['elections'] = array(
+          '#type' => 'container',
+          '#attributes' => array('class' => array('elections', 'box')),
+          '#weight' => 100,
+      );
+
+      $form['order']['details']['item'][$item->id]['description']['elections']['text'] = array(
+          '#type' => 'item',
+          '#markup' => t('These are electional prints, an adjusted VAT percentage of 6% will be applied...'),
+      );
+    }
+  }
+}
+
+function pcelections_form_pctemplates_configblock_form_alter(&$form, $form_state) {
+  global $conf;
+  $parts = explode('.', $_SERVER['HTTP_HOST']);
+  $extention = array_pop($parts);
+
+  //$extention = 'be';
+
+  if ($extention == 'be'  && isset($form['configuration'])) {
+//    $item = $form_state['storage']['item'];
+
+    $disabled = FALSE;
+    $default = FALSE;
+
+    if (isset($form_state['values']['isElectional'])) {
+      $default = $form_state['values']['isElectional'];
+    } else {
+      $default = variable_get('pcelections_default', FALSE);
+    }
+
+    $ajax = array(
+        'callback' => 'pceleections_form_pctemplates_configblock_callback',
+        'wrapper' => 'pctemplates-configblock-form',
+        'method' => 'replace',
+        'effect' => 'fade',
+        'progress' => array(
+            'message' => NULL,
+            'type' => NULL,
+        ),
+    );
+
+    $form['elections'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('elections', 'box')),
+        '#weight' => 80,
+    );
+    /*
+      $form['elections']['title'] = array(
+      '#type' => 'item',
+      '#prefix' => '<h4>',
+      '#suffix' => '</h4>',
+      '#markup' => t('Electional prints'),
+      );
+      $form['elections']['text'] = array(
+      '#type' => 'item',
+      '#markup' => t('By indicating that these are electional prints, an adjusted VAT percentage of 6% will be applied...'),
+      ); */
+    /*
+      $form['elections']['warning'] = array(
+      '#type' => 'item',
+      '#markup' => t('The prints will be visually validated...'),
+      ); */
+    $form['elections']['isElectional'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('By indicating that these are electional prints, an adjusted VAT percentage of 6% will be applied...'),
+        '#default_value' => $default,
+        '#disabled' => $disabled,
+        '#ajax' => $ajax,
+    );
+
+
+    if ($default) {
+
+      $vatPercentage = 0.06;
+
+
+      $designtoollinkParams = $form_state['storage']['designtoollinkParams'];
+
+      $designtoollinkParams['oi']['vat'] = $vatPercentage;
+
+      $form['customize'] = array(
+          '#markup' => theme('designtoollink', $designtoollinkParams),
+          '#weight' => -100,
+      );
+
+      $form['customize2'] = array(
+          '#markup' => theme('designtoollink', $designtoollinkParams),
+          '#weight' => 90,
+      );
+
+
+
+      $subtotal = $form_state['storage']['subtotal'];
+      $form['priceblock']['subtotal']['#markup'] = theme('price', array('value' => $subtotal));
+
+      $vat = \printconnect\Drupal\Functions::Round($subtotal * $vatPercentage);
+
+      $form['priceblock']['vat']['#markup'] = theme('price', array('value' => $vat));
+
+      $total = $subtotal + $vat;
+
+      $form['priceblock']['total']['#markup'] = theme('price', array('value' => $total, 'total' => TRUE));
+    }
+
+    //$form['#validate'][] = 'pcelections_pcproducts_form_validate';
+  }
+}
+
+function pceleections_form_pctemplates_configblock_callback(&$form, $form_state) {
+  $subtotal = $form_state['storage']['subtotal'];
+  $form['priceblock']['subtotal']['#markup'] = theme('price', array('value' => $subtotal));
+
+  if (isset($form_state['values']['isElectional']) && $form_state['values']['isElectional']) {
+    $vatPercentage = 0.06;
+  } else {
+    $vatPercentage = $_SESSION['shop_vat'];
+  }
+
+  $vat = \printconnect\Drupal\Functions::Round($subtotal * $vatPercentage);
+  $form['priceblock']['vat']['#markup'] = theme('price', array('value' => $vat));
+
+  $total = $subtotal + $vat;
+
+  $form['priceblock']['total']['#markup'] = theme('price', array('value' => $total, 'total' => TRUE));
+
+  $designtoollinkParams = $form_state['storage']['designtoollinkParams'];
+
+  $designtoollinkParams['oi']['vat'] = $vatPercentage;
+
+  $form['customize'] = array(
+      '#markup' => theme('designtoollink', $designtoollinkParams),
+      '#weight' => -100,
+  );
+
+  $form['customize2'] = array(
+      '#markup' => theme('designtoollink', $designtoollinkParams),
+      '#weight' => 90,
+  );
+
+
+  return $form;
+}
+
+function pcelections_form_pcproducts_productconfig_form_alter(&$form, &$form_state) {
+  $parts = explode('.', $_SERVER['HTTP_HOST']);
+  $extention = array_pop($parts);
+
+  $extention = 'be';
+
+  if ($extention == 'be') {
+    $disabled = FALSE;
+    $default = FALSE;
+
+    if (isset($form_state['storage']['item'])) {
+      $item = $form_state['storage']['item'];
+      if ($item->vat == 0.06) {
+        $default = TRUE;
+      }
+      $disabled = TRUE;
+    } else {
+      if (isset($form_state['values']['step2']['elections']['isElectional'])) {
+        $default = $form_state['values']['step2']['elections']['isElectional'];
+      } else {
+        $default = variable_get('pcelections_default', FALSE);
+      }
+    }
+
+
+
+    $form['step2']['elections'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('elections', 'box')),
+        '#weight' => 80,
+    );
+
+    $form['step2']['elections']['title'] = array(
+        '#type' => 'item',
+        '#prefix' => '<h4>',
+        '#suffix' => '</h4>',
+        '#markup' => t('Electional prints'),
+    );
+    $form['step2']['elections']['text'] = array(
+        '#type' => 'item',
+        '#markup' => t('By indicating that these are electional prints, an adjusted VAT percentage of 6% will be applied...'),
+    );
+    /*
+      $form['elections']['warning'] = array(
+      '#type' => 'item',
+      '#markup' => t('The prints will be visually validated...'),
+      ); */
+    $ajax = $form_state['storage']['ajax'];
+    $form['step2']['elections']['isElectional'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Yes, these are electional prints'),
+        '#default_value' => $default,
+        '#disabled' => $disabled,
+        '#ajax' => $ajax,
+//        '#ajax' => array(
+//            'callback' => 'pcelections_pcproducts_productconfig_form_callback',
+//            'wrapper' => 'priceblock',
+//            'method' => 'replace',
+//            'effect' => 'fade',
+//            'progress' => array(
+//                'message' => NULL,
+//                'type' => NULL,
+//            ),
+//        ),
+    );
+
+
+    if ($default) {
+      $subtotal = $form_state['storage']['subtotal'];
+      if ($form_state['values']['step2']['elections']['isElectional']) {
+        $vatPercentage = 0.06;
+        $form_state['storage']['vatpercentage'] = 0.06;
+      } else {
+        $vatPercentage = $_SESSION['shop_vat'];
+        unset($form_state['storage']['vatpercentage']);
+      }
+
+      $form['step2']['footer']['priceblock']['table'] = array(
+          '#markup' => theme('priceblock', array('subtotal' => $subtotal, 'vat' => $vatPercentage)),
+      );
+    }
+
+    $form['#validate'][] = 'pcelections_pcproducts_productconfig_form_validate';
+  }
+}
+
+function pcelections_pcproducts_configform_step2_callback_alter(&$form, &$form_state) {
+  $subtotal = $form_state['storage']['subtotal'];
+  if ($form_state['values']['step2']['elections']['isElectional']) {
+    $vatPercentage = 0.06;
+    $form_state['storage']['vatpercentage'] = 0.06;
+  } else {
+    $vatPercentage = $_SESSION['shop_vat'];
+    unset($form_state['storage']['vatpercentage']);
+  }
+
+  $form['step2']['footer']['priceblock']['table'] = array(
+      '#markup' => theme('priceblock', array('subtotal' => $subtotal, 'vat' => $vatPercentage)),
+  );
+}
+
+function pcelections_pcproducts_productconfig_form_validate($form, &$form_state) {
+  if ($form_state['values']['step2']['elections']['isElectional']) {
+    $form_state['storage']['vatpercentage'] = 0.06;
+  } else {
+    unset($form_state['storage']['vatpercentage']);
+  }
+}

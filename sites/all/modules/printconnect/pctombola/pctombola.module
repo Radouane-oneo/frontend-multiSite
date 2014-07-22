@@ -1,0 +1,636 @@
+<?php
+
+function pctombola_block_info(){
+    $blocks = array();
+    $blocks['info'] = array(
+        'info' => t('tombola')
+    );
+    return $blocks;
+}
+
+function pctombola_block_view(){
+    $block = array();
+    $block['subject'] = t('tombola');
+    $block['content'] = drupal_get_form('pctombola_tombola_form');
+    return $block;
+}
+
+function pctombola_tombola_form(){
+    $questions = listQuestions();
+    $randomQuestions = array(
+        "Q1" => $questions[rand(0, 9)],
+        "Q2" => $questions[rand(0, 9)],
+        "Q3" => $questions[rand(0, 9)],
+    );
+    $qes = variable_get("Qestion");
+
+    if (!isset($qes)) {
+        variable_set("Qestion", $randomQuestions);
+    }
+    $form['paticiperBtn'] = array(
+        '#prefix' => '<a href="#" id="edit-paticiperbtn">',
+        '#suffix' => '</a>',
+        '#markup' => t('Suivant'),
+    );
+
+    $form['globalForm'] = array(
+        '#type' => 'container',
+    );
+    $form['globalForm']['TenYears'] = array(
+        '#type' => 'container'
+    );
+    $form['globalForm']['TenYears']['IntroHolder'] = array(
+        '#type' => 'container',
+    );
+    $form['globalForm']['TenYears']['IntroHolder']['Video'] = array(
+        '#prefix' => '<div id="video">',
+        '#suffix' => '</div>', 
+    );
+    $form['globalForm']['TenYears']['IntroHolder']['playLink'] = array(
+        '#prefix' => '<a class="playLink" href="#" id="playLinkIntroPage">',
+        '#suffix' => '</a>',
+        '#markup' => t('Suivant'),
+    );
+    $form['globalForm']['TenYears']['formImage'] = array(
+        '#type' => 'container',
+    );
+    $form['globalForm']['TenYears']['next'] = array(
+        '#title' => 'previous',
+        '#type' => 'submit',
+        '#value' => t('Continue'),
+    );
+    $form['globalForm']['TenYears']['firstSlid'] = array(
+        '#type' => 'container',
+    );
+    $form['globalForm']['TenYears']['questions'] = array(
+        '#type' => 'container',
+    );
+    $form['globalForm']['TenYears']['questions']['Q1'] = array(
+        '#title' => $randomQuestions['Q1']["Qestion"],
+        '#type' => 'radios',
+        '#options' => $randomQuestions['Q1']["Choix"],
+    );
+    $form['globalForm']['TenYears']['questions']['Q2'] = array(
+        '#title' => $randomQuestions['Q2']["Qestion"],
+        '#type' => 'radios',
+        '#options' => $randomQuestions['Q2']["Choix"],
+    );
+    $form['globalForm']['TenYears']['questions']['Q3'] = array(
+        '#title' => $randomQuestions['Q3']["Qestion"],
+        '#type' => 'radios',
+        '#options' => $randomQuestions['Q3']["Choix"],
+    );
+    $form['globalForm']['TenYears']['userformOptions'] = array(
+        '#type' => 'container',
+    );
+    $form['globalForm']['TenYears']['userformOptions']['userformParticulierOptions'] = array(
+        '#prefix' => '<div class="optionParticulier">',
+        '#suffix' => '</div>',
+        '#markup' => ' <span class="title">'.t('Vous êtes').'</span> <a href="#" class="partoculierLink">' . t('Un particulier') . '</a>',
+    );
+    $form['globalForm']['TenYears']['userformOptions']['userformSocieteOptions'] = array(
+        '#prefix' => '<div class="optionSociete">',
+        '#suffix' => '</div>',
+        '#markup' => ' <span class="title">'.t('OU') .' </span> <a href="#" class="SocieteLink">' . t('Une société') . '</a>',
+    );
+    $form['globalForm']['TenYears']['userform'] = array(
+        '#type' => 'container',
+    );
+    $form['globalForm']['TenYears']['userform']['Userforms'] = array(
+        '#type' => 'container',
+    );
+    $form['globalForm']['TenYears']['userform']['Userforms']['nameCompany'] = array(
+        '#title' => t('Société'),
+        '#type' => 'textfield',
+    );
+    $form['globalForm']['TenYears']['userform']['Userforms']['sectorCompany'] = array(
+        '#title' => t('Secteur'),
+        '#type' => 'textfield'
+    );
+    $form['globalForm']['TenYears']['userform']['Userforms']['name'] = array(
+        '#title' => t('Nom'),
+        '#type' => 'textfield',
+    );
+    $form['globalForm']['TenYears']['userform']['Userforms']['lastName'] = array(
+        '#title' => t('Prénom'),
+        '#type' => 'textfield',
+    );
+    $form['globalForm']['TenYears']['userform']['Userforms']['email'] = array(
+        '#title' => t('Email'),
+        '#type' => 'textfield',
+    );
+    $form['globalForm']['TenYears']['userform']['Userforms']['tel'] = array(
+        '#title' => t('Tél'),
+        '#type' => 'textfield',
+    );
+    $form['globalForm']['TenYears']['userform']['Userforms']['newsPaper'] = array(
+        '#options' => array(1 => t("Recevoir les news de flyer.fr")),
+        '#type' => 'checkboxes',
+        '#attributes' => array('checked' => 'checked'),
+    );
+    $form['globalForm']['TenYears']['endSlider'] = array(
+        '#type' => 'container',
+    );
+    $form['globalForm']['TenYears']['send'] = array(
+        '#type' => 'submit',
+        '#executes_submit_callback' => false,
+        '#value' => t("Bénéficiez d'une remise de 10%"),
+        "#ajax" => array(
+            "callback" => 'pctombola_tombola_form_callback',
+            "wrapper" => "edit-endslider-new",
+            "method" => "html",
+        )
+    );
+    
+    return $form;
+}
+
+function pctombola_tombola_form_callback($form, &$form_state){
+    $langPrefix = base_path();
+    $winner = 0;
+    $resultat = t('<div id="msg"> ')
+        .t('Merci pour votre participation')
+        .t('</div>')
+        .t('<a id="bttHome" onclick="jQuery.fancybox.close();return false;">')
+        .t('Retourner au site')
+        .t('</a>');
+    $choosenQuestion = variable_get("Qestion");
+    variable_set("Qestion", null);
+    
+    if (isset($form_state['values']['Q1']) && $choosenQuestion['Q1']['Response'] == $form_state['values']['Q1']) {
+        $winner++;
+    }
+    if (isset($form_state['values']['Q2']) && $choosenQuestion['Q2']['Response'] == $form_state['values']['Q2']) {
+        $winner++;
+    }
+    if (isset($form_state['values']['Q3']) && $choosenQuestion['Q2']['Response'] == $form_state['values']['Q3']) {
+        $winner++;
+    }
+    $uid = $form_state['values']['email'];
+    $sqlEmail=db_query("SELECT count(id) FROM {tombola} WHERE  email like '".$uid."'")->fetchField();
+    
+    if ($sqlEmail==1) {
+        $resultat = t('<div id="msg"> ')
+       .t("L'adresse email saisie est déjà utilisée")
+       .t("</div>")
+       .t('<a id="bttHome" onclick="jQuery.fancybox.close();return false;">')
+       .t('Retourner au site')
+       .t('</a>');
+    } else {
+    $nid = db_insert('tombola')
+     ->fields(array(
+            'first_nom' => $form_state['values']['name'],
+            'last_name' => $form_state['values']['lastName'],
+            'email' => $form_state['values']['email'],
+            'tel' => $form_state['values']['tel'],
+            'company' => $form_state['values']['nameCompany'],
+            'sector' => $form_state['values']['sectorCompany'],
+            'winner' => ($winner == 3) ? 1 : 0,
+            'Source' => $GLOBALS['base_url'],
+            'Langae' => $langPrefix,
+                ))
+             ->execute();
+        
+       if ($winner == 3) {
+            $resultat = t('<div id="msg"> ')
+            .t('Bravo, vous avez gagné une remise de 10% et vous participerez au tirage au sort pour gagner un des 10 types de cadeaux')
+            .t('</div>')
+            .t('<a id="bttHome" onclick="jQuery.fancybox.close();return false;">')
+            .t('Retourner au site')
+            .t('</a>');
+       }
+    pctombola_mail_send_admin('',$form_state); 
+    pctombola_mail_send_admin2('',$form_state); 
+    pctombola_mail_send_client('',$form_state);
+    pctombola_mail_send_client_mobile('',$form_state);
+  }
+
+ return $resultat;
+}
+ 
+function pctombola_mail_send_client($form, &$form_state) {
+    $module = 'pctombola';
+    $key = 'envoi_email_clent';
+    $to = $form_state['values']['email'];
+    $from = 'info@flyer.fr';
+    switch (request_path()){
+    case 'nlnl/system/ajax':
+    $params = '<html><body><table  width="595" align="center" cellspacing="0" cellpadding="0">'
+         .'<tr height="23">'
+         .'<td><center>'
+         .'<span style="color:#808080;font-size:9px;">Voor de webversie klik </span><a href="' . $GLOBALS['base_url'] . '/flyer-viert-zijn-10e-verjaardag" style="color:#808080;font-size:9px;">hier</a>'
+         .'</center></td></tr>'
+         .'<tr height="92">'
+         .'<td align="center"><a href="mailto:info@flyer.nl"><img src="http://www.oneodns.com/flyer/nl-img/NL/H1.png" /></a></td>'
+         .'</tr><tr>'
+         .'<td align="center" style="padding-top:6px;"><a href="' . $GLOBALS['base_url'] . '/flyer-viert-zijn-10e-verjaardag" ><img src="http://www.oneodns.com/flyer/nl-img/NL/slide.png" /></a></td>'
+         .'</tr><tr><td>'
+         .'<div  style="margin:0 7px; padding:5px 20px; background:#FFFFFF; float:left; border-radius:0 0 5px 5px;">'
+         .'<h2 style="color:#ff6600;font-size:22px; margin-bottom:0px; font-weight:normal">Beste ' . ucfirst($form_state['values']['name']) . ' ' . $form_state['values']['lastName'] . '</h2>'
+         .'<p style="color:#78b800;font-size:16px;font-weight:bold; margin:0">Hartelijk dank om deel te nemen aan onze verjaardagstombola!</p>'
+         .'<p style="color:#808284;font-size:12px;">Iedereen die deelneemt maakt kans op één van de fantastische prijzen uit onze tombola.</p>'
+         .'<p style="color:#808284;font-size:12px;">We maken de uitslag binnenkort bekend, maar geniet ondertussen al van een uitzonderlijke 10% korting op je eerstvolgende bestelling! </p>'
+         .'<p style="color:#808284;font-size:12px;">PROMOCODE : 10YEARSFLYER</p>'
+         .'<p style="color:#808284;font-size:12px;">Bedankt en hopelijk tot binnenkort op onze vernieuwde website !</p>'
+         .'</div></td></tr>'
+         .'<tr><td style="padding-top:6px;"><img src="http://www.oneodns.com/flyer/nl-img/NL/footer.png" /></td></tr>'
+         .'<tr><td align="center" style=" padding:10px 0;"><span style="color:#808284;font-size:12px;">FLYER bvba - Dorpsstraat 175, BE-8340 Sijsele - +32 70 222 309 <br /><a href="mailto:info@flyer.nl">info@Flyer.nl</a> <br />'
+         .'Om uit te schrijven klik <a href="' . $GLOBALS['base_url'] . '/uitschrijven">hier</a> </span></td></tr>'
+         .'</table></body></html>'; 
+    break;
+    case 'benl/system/ajax':
+     $params = '<html><body><table  width="595" align="center" cellspacing="0" cellpadding="0">'
+         .' <tr height="23">'
+         .' <td><center>'
+         .'<span style="color:#808080;font-size:9px;">Voor de webversie klik </span><a href="' . $GLOBALS['base_url'] . '/flyer-viert-zijn-10e-verjaardag" style="color:#808080;font-size:9px;">hier</a>'
+         .'</center></td></tr>'
+         .'<tr height="92">'
+         .'<td align="center"><a href="mailto:info@flyer.be"><img src="http://www.oneodns.com/flyer/nl-img/BE/H1.png" /></a></td>'
+         .'</tr><tr>'
+         .'<td align="center" style="padding-top:6px;"><a href="' . $GLOBALS['base_url'] . '/flyer-viert-zijn-10e-verjaardag"><img src="http://www.oneodns.com/flyer/nl-img/BE/slide.png" /></a></td>'
+         .'</tr><tr><td>'
+         .'<div  style="margin:0 7px; padding:5px 20px; background:#FFFFFF; float:left; border-radius:0 0 5px 5px;">'
+         .'<h2 style="color:#ff6600;font-size:22px; margin-bottom:0px; font-weight:normal">Beste ' .  ucfirst($form_state['values']['name']) . ' ' . $form_state['values']['lastName'] . '</h2>'
+         .'<p style="color:#78b800;font-size:16px;font-weight:bold; margin:0">Hartelijk dank om deel te nemen aan onze verjaardagstombola!</p>'
+         .'<p style="color:#808284;font-size:12px;">Iedereen die deelneemt maakt kans op één van de fantastische prijzen uit onze tombola.</p>'
+         .'<p style="color:#808284;font-size:12px;">We maken de uitslag binnenkort bekend, maar geniet ondertussen al van een uitzonderlijke 10% korting op je eerstvolgende bestelling! </p>'
+         .'<p style="color:#808284;font-size:12px;">PROMOCODE : 10YEARSFLYER</p>'
+         .'<p style="color:#808284;font-size:12px;">Bedankt en hopelijk tot binnenkort op onze vernieuwde website !</p>'
+         .'</div></td></tr>'
+         .'<tr><td style="padding-top:6px;"><img src="http://www.oneodns.com/flyer/nl-img/BE/footer.png" /></td></tr>'
+         .'<tr><td align="center" style=" padding:10px 0;"><span style="color:#808284;font-size:12px;">FLYER bvba - Dorpsstraat 175, BE-8340 Sijsele - +32 70 222 309 <br /><a href="mailto:info@flyer.be">info@Flyer.be</a> <br />'
+         .'Om uit te schrijven klik <a href="' . $GLOBALS['base_url'] . '/uitschrijven">hier</a> </span></td></tr>'
+         .'</table></body></html>'; 
+     break;
+    case 'befr/system/ajax':
+     $params = '<html><body><table  width="595" align="center" cellspacing="0" cellpadding="0">'
+         .' <tr height="23">'
+         .' <td><center>'
+         .'<span style="color:#808080;font-size:9px;">Pour la version web cliquez  </span><a href="' . $GLOBALS['base_url'] . '/flyer-fete-ses-10-ans" style="color:#808080;font-size:9px;">içi</a>'
+         .'</center></td> </tr>'
+         .'<tr height="92">'
+         .'<td align="center"><a href="mailto:info@flyer.be"><img src="http://www.oneodns.com/flyer/fr-img/BE/H1.jpg" /></a></td>'
+         .'</tr><tr>'
+         .'<td align="center" style="padding-top:6px;"><a href="' . $GLOBALS['base_url'] . '/flyer-fete-ses-10-ans" ><img src="http://www.oneodns.com/flyer/fr-img/BE/slide.jpg" /></a></td>'
+         .'</tr><tr><td>'
+         .'<div  style="margin:0 7px; padding:5px 20px; background:#FFFFFF; float:left; border-radius:0 0 5px 5px;">'
+         .'<h2 style="color:#ff6600;font-size:22px; margin-bottom:0px; font-weight:normal">Cher ' .  ucfirst($form_state['values']['name']) . ' ' . $form_state['values']['lastName'] . '</h2>'
+         .'<p style="color:#78b800;font-size:16px;font-weight:bold; margin:0">Flyer vous remercie d’avoir participé à son jeu-concours !</p>'
+         .'<p style="color:#808284;font-size:12px;">Vous avez été nombreux à jouer, merci !</p>'
+         .'<p style="color:#808284;font-size:12px;">Nous vous communiquerons prochainement les résultats du tirage au sort, en attendant vous pouvez profiter d’une remise de 10% sur votre prochain achat à l’occasion des 10 ans de Flyer. </p>'
+         .'<p style="color:#808284;font-size:12px;">CODE PROMO : 10YEARSFLYER </p>'
+         .'<p style="color:#808284;font-size:12px;">Merci encore pour votre participation !</p>'
+         .'</div></td></tr>'
+         .'<tr><td style="padding-top:6px;"><img src="http://www.oneodns.com/flyer/fr-img/BE/footer.png" /></td></tr>'
+         .'<tr><td align="center" style=" padding:10px 0;"><span style="color:#808284;font-size:12px;">FLYER bvba - Dorpsstraat 175, BE-8340 Sijsele - +32 70 222 309 <br /><a href="mailto:info@Flyer.fr">info@Flyer.fr</a> <br />'
+         .'Pour vous désinscrire cliquez <a href="' . $GLOBALS['base_url'] . '/desabonner">ici</a></span></td></tr>'
+         .'</table></body></html>'; 
+        break;
+    case 'lufr/system/ajax':
+        $params = '<html><body><table  width="595" align="center" cellspacing="0" cellpadding="0">'
+         .' <tr height="23">'
+         .' <td><center>'
+         .'<span style="color:#808080;font-size:9px;">Pour la version web cliquez  </span><a href="' . $GLOBALS['base_url'] . '/flyer-fete-ses-10-ans" style="color:#808080;font-size:9px;">içi</a>'
+         .'</center></td></tr>'
+         .'<tr height="92">'
+         .'<td align="center"><a href="mailto:info@flyer.lu"><img src="http://www.oneodns.com/flyer/fr-img/LU/H1.jpg" /></a></td>'
+         .'</tr><tr>'
+         .'<td align="center" style="padding-top:6px;"><a href="' . $GLOBALS['base_url'] . '/flyer-fete-ses-10-ans" ><img src="http://www.oneodns.com/flyer/fr-img/LU/slide.jpg" /></a></td>'
+         .'</tr><tr><td>'
+         .'<div style="margin:0 7px; padding:5px 20px; background:#FFFFFF; float:left; border-radius:0 0 5px 5px;">'
+         .'<h2 style="color:#ff6600;font-size:22px; margin-bottom:0px; font-weight:normal">Cher ' .  ucfirst($form_state['values']['name']) . ' ' . $form_state['values']['lastName'] . '</h2>'
+         .'<p style="color:#78b800;font-size:16px;font-weight:bold; margin:0">Flyer vous remercie d’avoir participé à son jeu-concours !</p>'
+         .'<p style="color:#808284;font-size:12px;">Vous avez été nombreux à jouer, merci !</p>'
+         .'<p style="color:#808284;font-size:12px;">Nous vous communiquerons prochainement les résultats du tirage au sort, en attendant vous pouvez profiter d’une remise de 10% sur votre prochain achat à l’occasion des 10 ans de Flyer. </p>'
+         .'<p style="color:#808284;font-size:12px;">CODE PROMO : 10YEARSFLYER </p>'
+         .'<p style="color:#808284;font-size:12px;">Merci encore pour votre participation !</p>'
+         .'</div></td></tr>'
+         .'<tr><td style="padding-top:6px;"><img src="http://www.oneodns.com/flyer/fr-img/LU/footer.png" /></td></tr>'
+         .'<tr><td align="center" style=" padding:10px 0;"><span style="color:#808284;font-size:12px;">FLYER bvba - Dorpsstraat 175, BE-8340 Sijsele - +32 70 222 309 <br /><a href="mailto:info@flyer.lu">info@Flyer.lu</a> <br />'
+         .'Pour vous désinscrire cliquez <a href="' . $GLOBALS['base_url'] . '/desabonner">ici</a></span></td></tr>'
+         .'</table></body></html>'; 
+        break;
+    case 'frfr/system/ajax':
+        $params = '<html><body><table  width="595" align="center" cellspacing="0" cellpadding="0">'
+         .' <tr height="23">'
+         .' <td><center>'
+         .'<span style="color:#808080;font-size:9px;">Pour la version web cliquez  </span><a href="' . $GLOBALS['base_url'] . '/flyer-fete-ses-10-ans" style="color:#808080;font-size:9px;">içi</a>'
+         .'</center></td></tr>'
+         .'<tr height="92">'
+         .'<td align="center"><a href="mailto:info@flyer.fr"><img src="http://www.oneodns.com/flyer/fr-img/FR/H1.jpg" /></a></td>'
+         .'</tr><tr>'
+         .'<td align="center" style="padding-top:6px;"><a href="' . $GLOBALS['base_url'] . '/flyer-fete-ses-10-ans"><img src="http://www.oneodns.com/flyer/fr-img/FR/slide.jpg" /></a></td>'
+         .'</tr><tr><td>'
+         .'<div  style="margin:0 7px; padding:5px 20px; background:#FFFFFF; float:left; border-radius:0 0 5px 5px;">'
+         .'<h2 style="color:#ff6600;font-size:22px; margin-bottom:0px; font-weight:normal">Cher ' .  ucfirst($form_state['values']['name']) . ' ' . $form_state['values']['lastName'] . '</h2>'
+         .'<p style="color:#78b800;font-size:16px;font-weight:bold; margin:0">Flyer vous remercie d’avoir participé à son jeu-concours !</p>'
+         .'<p style="color:#808284;font-size:12px;">Vous avez été nombreux à jouer, merci !</p>'
+         .'<p style="color:#808284;font-size:12px;">Nous vous communiquerons prochainement les résultats du tirage au sort, en attendant vous pouvez profiter d’une remise de 10% sur votre prochain achat à l’occasion des 10 ans de Flyer. </p>'
+         .'<p style="color:#808284;font-size:12px;">CODE PROMO : 10YEARSFLYER </p>'
+         .'<p style="color:#808284;font-size:12px;">Merci encore pour votre participation !</p>'
+         .'</div></td></tr>'
+         .'<tr><td style="padding-top:6px;"><img src="http://www.oneodns.com/flyer/fr-img/FR/footer.png" /></td></tr>'
+         .'<tr><td align="center" style=" padding:10px 0;"><span style="color:#808284;font-size:12px;">FLYER bvba - Dorpsstraat 175, BE-8340 Sijsele - +32 70 222 309 <br /><a href="mailto:info@flyer.fr">info@Flyer.fr</a> <br />'
+         .'Pour vous désinscrire cliquez <a href="' . $GLOBALS['base_url'] . '/desabonner">ici</a></span></td></tr>'
+         .'</table></body></html>';
+         break;
+    }
+     $language = language_default();
+     $send = TRUE;
+     $result = drupal_mail($module, $key, $to, $language, $params, $from, $send );
+     $sendMeail = FALSE;
+     if ($result['result'] == TRUE) {
+         $sendMeail = TRUE;
+     }
+}
+function pctombola_mail_send_admin($form, &$form_state) {
+    $langPrefix = base_path();
+    $module = 'pctombola';
+    $key = 'envoi_email_admin';
+    $to = 'salim@agenceoneo.com';
+    $from = 'info@flyer.fr';
+    $params = t('Nom : ') . $form_state['values']['name'] . "\n"
+        .t("Prénom : ") . $form_state['values']['lastName'] . "\n"
+        .t("Email : ") . $form_state['values']['email'] . "\n"
+        .t("Tél : ") . $form_state['values']['tel'] . "\n"
+        .t("Société : ") . $form_state['values']['nameCompany'] . "\n"
+        .t("Secteur : ") . $form_state['values']['sectorCompany']. "\n"
+        .t("Source : ") .$langPrefix. "\n"
+        .t("Langae : ") . $GLOBALS['base_url'] . "\n"; 
+    $language = language_default();
+    $send = TRUE;
+    $result = drupal_mail($module, $key, $to, $language, $params, $from, $send);
+    $sendMeail = FALSE;
+    if ($result['result'] == TRUE) {
+         $sendMeail = TRUE;
+    }
+}
+function pctombola_mail_send_admin2($form, &$form_state) {
+    $langPrefix = base_path();
+    $module = 'pctombola';
+    $key = 'envoi_email_admin2';
+    $to = 'ahmed@flyer.be';
+    $from = 'info@flyer.fr';
+    $params = t('Nom : ') . $form_state['values']['name'] . "\n"
+        .t("Prénom : ") . $form_state['values']['lastName'] . "\n"
+        .t("Email : ") . $form_state['values']['email'] . "\n"
+        .t("Tél : ") . $form_state['values']['tel'] . "\n"
+        .t("Société : ") . $form_state['values']['nameCompany'] . "\n"
+        .t("Secteur : ") . $form_state['values']['sectorCompany']. "\n"
+        .t("Source : ") .$langPrefix. "\n"
+        .t("Langae : ") . $GLOBALS['base_url'] . "\n"; 
+        
+    $language = language_default();
+    $send = TRUE;
+    $result = drupal_mail($module, $key, $to, $language, $params, $from, $send);
+    $sendMeail = FALSE;
+    if ($result['result'] == TRUE) {
+         $sendMeail = TRUE;
+    }
+}
+function pctombola_mail_send_client_mobile($form, &$form_state) {
+    $module = 'pctombola';
+    $key = 'envoi_email_clent_mobile';
+    $to = $form_state['values']['email'];
+    $from = 'info@flyer.fr';
+    switch (request_path()){
+    case 'nlnl/system/ajax':
+    $params = "Voor de webversie klik \n" . $GLOBALS['base_url'] . "/flyernl-viert-zijn-10e-verjaardag "."\n \n"
+        ."Beste " .  ucfirst($form_state['values']['name']) . " " . $form_state['values']['lastName']
+        .", Hartelijk dank om deel te nemen aan onze verjaardagstombola! \n"
+        ."Iedereen die deelneemt maakt kans op één van de fantastische prijzen uit onze tombola. \n"
+        ."We maken de uitslag binnenkort bekend, maar geniet ondertussen al van een uitzonderlijke 10% korting op je eerstvolgende bestelling! \n"
+        ."PROMOCODE : 10YEARSFLYER \n"
+        ."Bedankt en hopelijk tot binnenkort op onze vernieuwde website ! \n \n"
+        ."FLYER bvba - Dorpsstraat 175, \n"
+        ."BE-8340 Sijsele - +32 70 222 309 \n"
+        ."info@Flyer.nl \n"
+        ."Om uit te schrijven klik hier \n" . $GLOBALS['base_url'] . '/uitschrijven';
+    break;
+    case 'benl/system/ajax':
+   $params = "Voor de webversie klik \n" . $GLOBALS['base_url'] . "/flyerbe-viert-zijn-10e-verjaardag "."\n \n"
+        ."Beste " .  ucfirst($form_state['values']['name']) . " " . $form_state['values']['lastName']
+        .", Hartelijk dank om deel te nemen aan onze verjaardagstombola! \n"
+        ."Iedereen die deelneemt maakt kans op één van de fantastische prijzen uit onze tombola. \n"
+        ."We maken de uitslag binnenkort bekend, maar geniet ondertussen al van een uitzonderlijke 10% korting op je eerstvolgende bestelling! \n"
+        ."PROMOCODE : 10YEARSFLYER \n"
+        ."Bedankt en hopelijk tot binnenkort op onze vernieuwde website ! \n \n"
+        ."FLYER bvba - Dorpsstraat 175, \n"
+        ."BE-8340 Sijsele - +32 70 222 309 \n"
+        ."info@Flyer.be \n"
+        ."Om uit te schrijven klik hier \n" . $GLOBALS['base_url'] . '/uitschrijven';
+     break;
+     case 'befr/system/ajax':
+     $params = "Pour la version web cliquez \n" . $GLOBALS['base_url'] . "/flyerbe-fete-ses-10-ans "."\n \n"
+         ."Cher" .  ucfirst($form_state['values']['name']) . " " . $form_state['values']['lastName']
+         .", Flyer vous remercie d’avoir participé à son jeu-concours ! \n"
+         ."Vous avez été nombreux à jouer, merci ! \n"
+         ."Nous vous communiquerons prochainement les résultats du tirage au sort,  en attendant vous pouvez profiter  d’une remise de 10% sur votre prochain achat à l’occasion des 10 ans de Flyer.\n"
+         ."CODE PROMO : 10YEARSFLYER \n"
+         ."Merci encore pour votre participation ! \n \n"
+         ."FLYER bvba - Dorpsstraat 175, \n"
+         ."BE-8340 Sijsele - +32 70 222 309 \n"
+         ."info@Flyer.be \n"
+         ."Pour vous désinscrire cliquez ici \n" . $GLOBALS['base_url'] . '/desabonner';
+        break;
+        case 'lufr/system/ajax':
+         $params = "Pour la version web cliquez \n" . $GLOBALS['base_url'] . "/flyerlu-fete-ses-10-ans"."\n \n"
+         ."Cher" .  ucfirst($form_state['values']['name']) . " " . $form_state['values']['lastName']
+         .", Flyer vous remercie d’avoir participé à son jeu-concours ! \n"
+         ."Vous avez été nombreux à jouer, merci ! \n"
+         ."Nous vous communiquerons prochainement les résultats du tirage au sort,  en attendant vous pouvez profiter  d’une remise de 10% sur votre prochain achat à l’occasion des 10 ans de Flyer.\n"
+         ."CODE PROMO : 10YEARSFLYER \n"
+         ."Merci encore pour votre participation ! \n \n"
+         ."FLYER bvba - Dorpsstraat 175, \n"
+         ."BE-8340 Sijsele - +32 70 222 309 \n"
+         ."info@Flyer.lu \n"
+         ."Pour vous désinscrire cliquez ici \n" . $GLOBALS['base_url'] . '/desabonner';
+        break;
+        case 'frfr/system/ajax':
+        $params = "Pour la version web cliquez \n" . $GLOBALS['base_url'] . "/flyerfr-fete-ses-10-ans"."\n \n"
+         ."Cher" .  ucfirst($form_state['values']['name']) . " " . $form_state['values']['lastName']
+         .", Flyer vous remercie d’avoir participé à son jeu-concours ! \n"
+         ."Vous avez été nombreux à jouer, merci ! \n"
+         ."Nous vous communiquerons prochainement les résultats du tirage au sort,  en attendant vous pouvez profiter  d’une remise de 10% sur votre prochain achat à l’occasion des 10 ans de Flyer.\n"
+         ."CODE PROMO : 10YEARSFLYER \n"
+         ."Merci encore pour votre participation ! \n \n"
+         ."FLYER bvba - Dorpsstraat 175, \n"
+         ."BE-8340 Sijsele - +32 70 222 309 \n"
+         ."info@Flyer.fr \n"
+         ."Pour vous désinscrire cliquez ici \n" . $GLOBALS['base_url'] . '/desabonner';
+         break;
+    }
+     $language = language_default();
+     $send = TRUE;
+     $result = drupal_mail($module, $key, $to, $language, $params, $from, $send );
+     $sendMeail = FALSE;
+     if ($result['result'] == TRUE) {
+         $sendMeail = TRUE;
+     }
+}
+
+function pctombola_mail($key, &$message, $params) {
+
+  switch ($key) {
+    case 'envoi_email_admin':
+        $message['subject'] = t("Flyer Tombola Email");
+        $message['body'][] =  t('Une nouvelle participation au jeu concours "Flyer fête ses 10 ans" a été envoyée :');
+        $message['body'][] = $params; 
+      break;
+  case 'envoi_email_admin2':
+        $message['subject'] = t("Flyer Tombola Email");
+        $message['body'][] =  t('Une nouvelle participation au jeu concours "Flyer fête ses 10 ans" a été envoyée :');
+        $message['body'][] = $params; 
+      break;
+  case 'envoi_email_clent':
+        $message['headers']['Content-Type'] = 'text/html; charset=UTF-8; format=flowed';
+        $message['subject'] =  t('Flyer.fr vous remercie d’avoir participé à son jeu-concours !');
+        $message['body'][] = $params;
+      break;
+  case 'envoi_email_clent_mobile':
+      $message['subject'] =  t('Flyer.fr vous remercie d’avoir participé à son jeu-concours !');
+      $message['body'][] = $params;
+      break;
+  }
+}
+
+function pctombola_enable() {
+   drupal_install_schema('pctombola');
+}
+
+function pctombola_disable() {
+    db_query('DROP TABLE {tombola}');
+}
+
+function pctombola_install(){
+    drupal_install_schema('pctombola');
+}
+
+function listQuestions(){
+    $questions = array(
+        array(
+            "Response" => 0,
+            "Qestion" => t('Cette affirmation est-elle vrai? Une imprimerie en ligne est aussi une imprimerie traditionnelle'),
+            "Choix" => array(t('Vrai'),
+                t('Faux'),
+        )),
+        array(
+            "Response" => 1,
+            "Qestion" => t('Les dimensions du format A5 sont'),
+            "Choix" => array(t('10,5x14, 8 cm'),
+                t('21x14, 8 cm'),
+                t('21x29, 7 cm'),
+        )),
+        array(
+            "Response" => 0,
+            "Qestion" => t('Le magenta en imprimerie correspond au :'),
+            "Choix" => array(t('Rouge'),
+                t('Bleu'),
+                t('Jaune'),
+        )),
+        array(
+            "Response" => 1,
+            "Qestion" => t("L'impression en Offset est destinée aux petites quantités :"),
+            "Choix" => array(t('Vrai'),
+                t('Faux'),
+        )),
+        array(
+            "Response" => 0,
+            "Qestion" => t("En imprimerie, l'abréviation BAT correspond à :"),
+            "Choix" => array(t('Bon à tirer'),
+                t("Brevet d'aptitude technique"),
+         
+        )),
+        array(
+            "Response" => 1,
+            "Qestion" => t("La Social Card correspond à :"),
+            "Choix" => array(t('Une carte de correspondance'),
+                t('Une carte de visite destinée aux réseaux sociaux'),
+        )),
+        array(
+            "Response" => 1,
+            "Qestion" => t("Cette affirmation est-elle vrai? Une imprimante numérique est plus grande qu'une machine offset :"),
+            "Choix" => array(t('Vrai'),
+                t('Faux'),
+        )),
+        array(
+            "Response" => 1,
+            "Qestion" => t('Le pelliculage est un procédé de finition qui permet de :'),
+            "Choix" => array(t('Donner du relief aux imprimés'),
+                t('Rigidifier un peu plus les imprimés'),
+        )),
+        array(
+            "Response" => 1,
+            "Qestion" => t('Le vernis sélectif  est:'),
+            "Choix" => array(t("un pelliculage brillant appliqué uniquement sur le recto d'un document"),
+                t("un pelliculage brillant appliqué  sur les textes, images, logos...etc d'un document"),
+                t("un pelliculage brillant appliqué uniquement sur le texte d'un document"),
+        )),
+        array(
+            "Response" => 0,
+            "Qestion" => t("Pour l'impression grand format en numérique, la résolution des fichiers doit être de:"),
+            "Choix" => array(t('150 dpi (pixels/pouce)'),
+                t('300 dpi (pixels/pouce)'),
+        )),
+    );
+    return $questions;
+}
+
+function pctombola_schema(){
+    $schema['tombola'] = array(
+        'description' => t('Stores particication in the tombola'),
+        'fields' => array(
+            'id' => array(
+                'type' => 'serial',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+            ),
+            'first_nom' => array(
+                'type' => 'text',
+                'not null' => false,
+            ),
+            'last_name' => array(
+                'type' => 'text',
+                'not null' => false,
+            ),
+            'email' => array(
+                'type' => 'text',
+                'not null' => false,
+            ),
+            'tel' => array(
+                'type' => 'text',
+                'not null' => false,
+            ),
+            'company' => array(
+                'type' => 'text',
+                'not null' => false,
+            ),
+            'sector' => array(
+                'type' => 'text',
+                'not null' => false,
+            ),
+            'newsaper' => array(
+                'type' => 'int',
+                'length' => 1,
+                'not null' => TRUE,
+                'default' => 1,
+            ),
+            'winner' => array(
+                'type' => 'int',
+                'length' => 2,
+                'not null' => TRUE,
+                'default' => 1,
+            ),
+              'Source' => array(
+                'type' => 'text',
+                'not null' => false,
+            ),
+             'Langae' => array(
+                'type' => 'text',
+                'not null' => false,
+            ),
+        ),
+        'primary key' => array('id'),
+    );
+    return $schema;
+}

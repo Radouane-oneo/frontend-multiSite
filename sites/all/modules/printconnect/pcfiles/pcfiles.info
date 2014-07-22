@@ -1,0 +1,8 @@
+name = Files
+description = Couchdb and S3 file server integration
+package = printconnect
+core = 7.x
+
+dependencies[] = printconnect
+
+

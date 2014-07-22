@@ -1,0 +1,12 @@
+<?php
+
+/**
+ * pcbase -> printconnect
+ */
+/*
+function printconnect_update_7000() {
+  db_query("update system set name = 'printconnect',filename = 'sites/all/modules/printconnect/printconnect.module' where name = 'pcbase';");
+  db_query("truncate cache_bootstrap;");
+  drupal_flush_all_caches();
+}*/
+

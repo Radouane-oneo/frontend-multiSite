@@ -1,0 +1,24 @@
+name = PrintConnect Blank theme
+description = A flexible theme with many print.
+package = Core
+version = VERSION
+core = 7.x
+engine = phptemplate
+
+base theme = printconnectbase
+
+stylesheets[all][] = css/printconnectblank.css
+#stylesheets[all][] = css/layout.css
+#stylesheets[all][] = css/colors.css
+
+regions[top] = Top
+regions[nav_right] = Navigation Right
+regions[header_right] = Header Right
+regions[highlight] = Highlight
+regions[sidebar_first] = Sidebar First
+regions[sidebar_second] = Sidebar Second
+regions[content] = Content
+regions[footer] = Footer
+regions[closure] = Closure
+
+

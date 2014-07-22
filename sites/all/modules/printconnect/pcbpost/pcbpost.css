@@ -1,0 +1,92 @@
+#pcbpost-picker-form .form-item{
+  display:inline-block;
+}
+
+#pcbpost-picker-form .form-submit{
+  float:right;
+  margin:10px 0;
+}
+
+#pcbpost-picker-form .form-item label{
+  min-width:0;
+  margin:0 10px;
+}
+
+#pcbpost-picker-form .form-item input{
+  min-width:0;
+  width:auto;
+}
+
+#pcbpost-picker-form .form-item label{
+  min-width:0;
+}
+
+#pcbpost-picker-form #result{
+  background-color: #666666;
+}
+#pcbpost-picker-form #result #map{
+  width:640px;
+  height:540px;
+  float:right;
+}
+
+#pcbpost-picker-form #result .pois{
+  float:left;
+  width:300px;
+  display:none;
+  height:540px;
+  overflow:auto;
+}
+
+#pcbpost-picker-form #result .pois .list{
+  background:white;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -khtml-border-radius: 7px;
+  border-radius: 7px;
+  margin:10px;
+  padding:10px;
+}
+
+#pcbpost-picker-form #result .item-list ul li{
+  cursor:pointer;
+  list-style:none;
+  margin:0;
+  padding-left:40px;
+  background: url(postpoint.png) no-repeat top left;
+  height: 50px;  
+  line-height: 1em;
+}
+
+#pcbpost-picker-form #result .name {
+  color: #009BDA;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+#pcbpost-picker-form #result .address {
+  font-size: 10px;
+  line-height:1.2em;
+}
+
+#pcbpost-picker-form #result .services {
+  color: #009BDA;
+  font-size: 10px;
+  line-height:1.2em;
+  padding-left:60px;
+  min-height: 50px;
+  background: url(bancontact.png) no-repeat top left;
+}
+
+
+#pcbpost-picker-form fieldset > legend{
+  background:none; 
+}
+
+#pcbpost-picker-form fieldset{
+  margin:0;
+}
+
+#pcbpost-picker-form fieldset .fieldset-wrapper{
+  padding:0;
+}

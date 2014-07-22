@@ -1,0 +1,6 @@
+name = Analytics
+description = Adds Google Analytics and Remarketing code to pages
+package = printconnect
+core = 7.x
+
+scripts[] = pcanalytics.js

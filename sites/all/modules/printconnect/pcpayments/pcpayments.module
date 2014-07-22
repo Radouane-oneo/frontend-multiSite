@@ -1,0 +1,519 @@
+<?php
+
+use printconnect\Payments\Requests;
+use printconnect\PaymentMethods\Factory;
+use printconnect\Carts\Factory as CartsFactory;
+use printconnect\Customers\Factory as CustomersFactory;
+use printconnect\Orders\Factory as OrdersFactory;
+use printconnect\Orders\Payments\Factory as PaymentsFactory;
+use printconnect\Drupal\Functions;
+
+function pcpayments_process_payment($paymentMethod, $customerName, $amount, $callback, $params) {
+  module_invoke_all('processpayment', $paymentMethod, $customerName, $amount, $callback, $params);
+}
+
+function pcpayments_form_pcpaymentrequests_paymentrequest_form_alter(&$form, &$form_state) {
+  //$form['#submit'][] = 'pcpayments_pcpaymentrequests_paymentrequest_form_submit';
+}
+
+function pcpayments_pcpaymentrequests_paymentrequest_form_submit($form, $form_state) {
+  // _pcpayments_process_payment($form_state['values']['payment_method'], '', $form_state['storage']['amount'], 'pcpayments_create_payment', $form_state['storage']);
+}
+
+function pcpayments_create_payment($paymentId, $amount, $params) {
+  $customer = CustomersFactory::Current();
+  $payment = PaymentsFactory::Create();
+
+  if (!empty($params['paymentRequestId'])) {
+    $payment->paymentRequest = $params['paymentRequestId'];
+  }
+  if (!empty($params['cart'])) {
+    $payment->order = $params['cart'];
+  }
+
+  $payment->amount = $amount;
+//$payment->vat = $params['vat'];
+  $payment->type = $params['type'];
+  $payment->ogoneId = $paymentId;
+
+  PaymentsFactory::Save($payment);
+
+  if (!empty($params['payment_created_callback'])) {
+    call_user_func($params['payment_created_callback'], $paymentId, $amount, $params);
+  }
+
+//drupal_goto('myprintconnect/orders');
+}
+
+function pcpayments_checkout_form_payment_callback($form, &$form_state) {
+  return $form['payment'];
+}
+
+function _pcpayments_checkout_payment_created($paymentId, $amount, $params) {
+  module_invoke_all('order_created');
+}
+
+function pcpayments_menu() {
+
+  $items['paymentrequest/key/%'] = array(
+      'title' => 'Payment request',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pcpayments_request_form', 2),
+      'access arguments' => array('access content'),
+      'file' => 'pcpayments.forms.inc',
+      'type' => MENU_CALLBACK,
+  );
+
+  $items['paymentrequest/key/%/%'] = array(
+      'title' => 'Payment request',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pcpayments_request_form', 2, 3),
+      'access arguments' => array('access content'),
+      'file' => 'pcpayments.forms.inc',
+      'type' => MENU_CALLBACK,
+  );
+  $items['payment/redirect/%'] = array(
+      'title' => 'Payment',
+      'page callback' => '_pcpayments_callback',
+      'page arguments' => array('redirect', 2),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+  $items['payment/redirect/%/%'] = array(
+      'title' => 'Payment',
+      'page callback' => '_pcpayments_redirect',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pcpayments_redirect_form', 2, 3),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+  $items['payment/accept'] = array(
+      'title' => 'Payment accept',
+      'page callback' => '_pcpayments_callback',
+      'page arguments' => array('accept'),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+  $items['payment/accept/%'] = array(
+      'title' => 'Payment accept',
+      'page callback' => '_pcpayments_accept',
+      'page arguments' => array(2),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+  $items['payment/decline'] = array(
+      'title' => 'Payment decline',
+      'page callback' => '_pcpayments_callback',
+      'page arguments' => array('decline'),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+  $items['payment/exception'] = array(
+      'title' => t('Payment exception'),
+      'page callback' => '_pcpayments_callback',
+      'page arguments' => array('exception'),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+  $items['payment/cancel'] = array(
+      'title' => t('Payment cancel'),
+      'page callback' => '_pcpayments_callback',
+      'page arguments' => array('cancel'),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+  $items['payment/back'] = array(
+      'title' => t('Payment back'),
+      'page callback' => '_pcpayments_back',
+      'page arguments' => array(),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+  $items['payment/back/%'] = array(
+      'title' => t('Payment back'),
+      'page callback' => '_pcpayments_back',
+      'page arguments' => array(2),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+  $items['payment/template'] = array(
+      'title' => 'Payment',
+      'page callback' => '_pcpayments_callback',
+      'page arguments' => array('template'),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+function pcpayments_block_info() {
+  $blocks['methods'] = array(
+      'info' => t('Payment methods'),
+  );
+  return $blocks;
+}
+
+function pcpayments_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'methods':
+      $items = array();
+      $paymentMethods = Factory::GetAll();
+      foreach ($paymentMethods as $value) {
+        if ($value->paymentMethod->internalName != 'cod' && $value->paymentMethod->internalName != 'invoice' && $value->paymentMethod->internalName != 'transfer') {
+          //$items[] = theme('image', array('path' => Functions::GetImage('paymentmethods', $value->paymentMethod->internalName)));
+          $items[] = theme('image', array('path' => printconnect_getimage('paymentmethods', $value->paymentMethod->internalName)));
+        }
+      }
+      $block['content'] = theme('item_list', array('items' => $items));
+      break;
+    case 'secure':
+      $paymentMethods = Factory::GetAll();
+      $block['content'] = theme('pcpayments_secure_block', array('paymentMethods' => $paymentMethods));
+      break;
+  }
+  return $block;
+}
+
+function pcpayments_processpayment($paymentMethodId, $customerName, $orderId, $amount, $params = array()) {
+  $rid = $orderId . '_' . substr(uniqid(), 9);
+  if (isset($params['paymentRequest'])) {
+    $request = $params['paymentRequest'];
+    // $request = \printconnectP\Payments\Requests\Factory::GetByKey($orderId);
+    //$requestInfo = \printconnect\Payments\Requests\Info\Factory::Get($orderId, $paymentMethodId);
+    $requestInfo = \printconnect\Payments\Requests\Info\Factory::CreatePaymentRequest($orderId, $paymentMethodId);
+    //$requestInfo->EnsureLoaded();
+    $rid = $request->key;
+    $rid = $requestInfo->orderid;
+    $requestInfo->back = 'paymentrequest/key/' . $request->key;
+  } else {
+    $requestInfo = \printconnect\Payments\Requests\Info\Factory::CreateCart($orderId, $paymentMethodId);
+    // $rid = $request->orderid;
+    $rid = $requestInfo->orderid;
+    // $rid = $orderId;
+    $requestInfo->back = 'checkout/payment';
+  }
+
+  //var_dump($request);
+
+  $requestInfo->paymentmethod = $paymentMethodId;
+
+  //$object = $request->GetProperties();
+
+
+  $_SESSION[$rid] = json_encode($requestInfo->GetProperties());
+
+  //$params['callback'] = $callback;
+  //$rid = $request->key;
+  //$params['customerName'] = $customerName;
+  //var_dump($_SESSION[$rid]);
+
+  drupal_goto('payment/redirect/' . $rid . '/' . $paymentMethodId);
+  exit;
+}
+
+function pcpayments_redirect_form($form, $form_state, $rid, $paymentMethodId = FALSE) {
+  $requestInfo = json_decode($_SESSION[$rid]);
+
+  unset($requestInfo->source);
+  unset($requestInfo->loaded);
+  unset($requestInfo->paymentmethod);
+  unset($requestInfo->order);
+
+  foreach ($requestInfo as $name => $value) {
+    $form[$name] = array(
+        '#type' => 'hidden',
+        '#value' => $value,
+    );
+  }
+
+  switch ($requestInfo->type) {
+    case 'paymentGatewayOgone':
+      $form['HOMEURL'] = array(
+          '#type' => 'hidden',
+          '#value' => url('<front>', array('absolute' => TRUE)),
+      );
+      $form['CATALOGURL'] = array(
+          '#type' => 'hidden',
+          '#value' => url('<front>', array('absolute' => TRUE)),
+      );
+      $form['BACKURL'] = array(
+          '#type' => 'hidden',
+          '#value' => url('payment/back/' . $rid, array('absolute' => TRUE)),
+      );
+      $form['ACCEPTURL'] = array(
+          '#type' => 'hidden',
+          '#value' => url('payment/accept/' . $rid, array('absolute' => TRUE)),
+      );
+      $form['DECLINEURL'] = array(
+          '#type' => 'hidden',
+          '#value' => url('payment/decline', array('absolute' => TRUE)),
+      );
+      $form['EXCEPTIONURL'] = array(
+          '#type' => 'hidden',
+          '#value' => url('payment/exception', array('absolute' => TRUE)),
+      );
+      $form['CANCELURL'] = array(
+          '#type' => 'hidden',
+          '#value' => url('payment/cancel', array('absolute' => TRUE)),
+      );
+      $host = $_SERVER['HTTP_HOST'];
+      switch ($host) {
+        case 'www.printconcept.be':
+        case 'www.printconcept.nl':
+        case 'www.printconcept.fr':
+          $form['TP'] = array(
+              '#type' => 'hidden',
+              '#value' => url('payment/template', array('absolute' => TRUE, 'https' => TRUE)),
+          );
+          break;
+        default:
+      }
+
+      break;
+
+    case 'paymentGatewayMarocTelecommerce':
+      $form['updateURL']['#value'] = url('payment/accept', array('absolute' => TRUE));
+      $form['offerURL']['#value'] = url('payment/back/' . $rid, array('absolute' => TRUE));
+
+      $checksum = $requestInfo->action . $requestInfo->storeId . $requestInfo->cartId . $requestInfo->totalAmountTx . $requestInfo->email . '8662585ff07b829f8a1090ed58f6561e';
+      $checksum = md5(utf8entities(rawurlencode($checksum)));
+
+      $form['checksum']['#value'] = $checksum;
+      break;
+    default:
+  }
+
+  $form['text'] = array(
+      '#type' => 'container',
+      '#attributes' => array('class' => array('text')),
+      'part1' => array(
+          '#markup' => t('One moment please, you will automaticaly be redirected to the payment gateway...'),
+      ),
+      'part2' => array(
+          '#markup' => t('Popupblockers might stop the paymentpage from opening, please click the button to open the payment page if it does not open automaticaly.'),
+      ),
+  );
+
+  $form['actions'] = array(
+      '#type' => 'actions',
+  );
+  $form['actions']['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Click here to go to payment page manually'),
+  );
+
+
+  drupal_add_js("jQuery('form.payment').submit();", array('type' => 'inline', 'scope' => 'footer'));
+
+  $form['#action'] = $requestInfo->action;
+  $form['#attributes']['class'][] = 'payment';
+
+
+  return $form;
+}
+
+function _pcpayments_callback() {
+  $args = func_get_args();
+  $page = array_shift($args);
+  switch ($page) {
+    case 'redirect':
+      return _pcpayments_redirect(array_shift($args));
+    case 'accept':
+      return _pcpayments_accept(array_merge($_GET, $_POST));
+    case 'decline':
+    case 'exception':
+    case 'cancel':
+      return _pcpayments_cancel(array_merge($_GET, $_POST));
+    case 'template':
+      drupal_set_title(utf8_decode(t('Payment')));
+      drupal_set_breadcrumb(array());
+      return '$$$PAYMENT ZONE$$$';
+  }
+}
+
+function _pcpayments_cancel($args) {
+  drupal_goto('checkout/payment');
+}
+
+function _pcpayments_accept($args) {
+//  $rid = $args['orderID'];
+//  $pm = $args['PM'];
+//  $brand = $args['BRAND'];
+//  $amount = $args['amount'];
+  //$orderId = $args['order'];
+  /*
+    $request = \printconnect\Payments\Requests\Factory::GetByKey($rid);
+    $request->EnsureLoaded();
+
+    $orderId = $request->order;
+   */
+
+
+  if (is_array($args)) {
+
+    if (isset($args['orderID'])) {
+      $rid = $args['orderID'];
+    } elseif (isset($args['cartId'])) {
+      $rid = $args['cartId'];
+    }
+
+    if (isset($args['amount'])) {
+      $amount = $args['amount'];
+    } elseif (isset($args['totalAmountTx'])) {
+      $amount = $args['totalAmountTx'];
+    }
+  } else {
+    $rid = $args;
+  }
+
+  $parts = explode('_', $rid);
+
+  $orderId = $parts[0];
+//  $paymentMethodId = $args['paymentMethod'];
+//  if ($paymentMethodId) {
+//    $payment = \printconnect\Payments\Factory::Create($rid, $amount, $paymentMethodId, $rid);
+//
+//    \printconnect\Payments\Factory::Save($payment);
+//  }
+
+  unset($_SESSION[$rid]);
+  unset($_SESSION['cartid']);
+  drupal_goto('myprintconnect/orders/' . $orderId . '/confirmation');
+  exit;
+
+//  $result = db_select('ogone_payment', 'p')
+//    ->fields('p', array('rid', 'payment_method', 'order_id', 'params', 'received'))
+//    ->condition('p.rid', $args['orderID'])
+//    ->execute()
+//    ->fetchAssoc();
+//
+//  if ($result) {
+//    $id = $result['order_id'];
+//    $params = unserialize($result['params']);
+//
+//    $callback = $params['accept'];
+//
+//    if (!$result['received']) {
+//
+//      $payment = Payments\Factory::Create($id, $args['amount'], $result['payment_method'], $args['orderID']);
+//
+//      $payment->paymentRequest = $id;
+//
+//      if (isset($params['paymentRequest'])) {
+//        $payment->paymentRequest = $params['paymentRequest'];
+//      } else {
+//        Carts\Factory::Delete();
+//      }
+//
+//      Payments\Factory::Save($payment);
+//
+//      db_update('ogone_payment')
+//        ->fields(array(
+//          'received' => time(),
+//        ))
+//        ->condition('rid', $args['orderID'])
+//        ->execute();
+//
+//      // if (function_exists($requestParams['callback'])) {
+//      //call_user_func($requestParams['callback'], $params['PAYID'], $params['amount'], $requestParams);
+//      // }
+//    }
+//
+//    drupal_goto($callback);
+//    print'
+//     <script language="JavaScript">
+//    top.location = "' . $callback . '";
+//  </script>';
+//
+//
+//    print t('Payment received...');
+//
+//    exit;
+//    drupal_goto('myprintconnect/orders/' . $id . '/confirmation');
+//  } else {
+//    drupal_goto('myprintconnect/orders');
+//  }
+}
+
+function _pcpayments_back($rid = FALSE) {
+  if ($rid && $_SESSION[$rid]) {
+    $requestInfo = json_decode($_SESSION[$rid]);
+    drupal_goto($requestInfo->back);
+  }
+  drupal_goto('<front>');
+}
+
+function pcpayments_paymentgateway_info() {
+  return array('pcpayments' => 'Standard');
+}
+
+function utf8entities($source) {
+//    array used to figure what number to decrement from character order value 
+//    according to number of characters used to map unicode to ascii by utf-8
+  $decrement[4] = 240;
+  $decrement[3] = 224;
+  $decrement[2] = 192;
+  $decrement[1] = 0;
+
+//    the number of bits to shift each charNum by
+  $shift[1][0] = 0;
+  $shift[2][0] = 6;
+  $shift[2][1] = 0;
+  $shift[3][0] = 12;
+  $shift[3][1] = 6;
+  $shift[3][2] = 0;
+  $shift[4][0] = 18;
+  $shift[4][1] = 12;
+  $shift[4][2] = 6;
+  $shift[4][3] = 0;
+
+  $pos = 0;
+  $len = strlen($source);
+  $encodedString = '';
+  while ($pos < $len) {
+    $charPos = substr($source, $pos, 1);
+    $asciiPos = ord($charPos);
+    if ($asciiPos < 128) {
+      $encodedString .= htmlentities($charPos);
+      $pos++;
+      continue;
+    }
+
+    $i = 1;
+    if (($asciiPos >= 240) && ($asciiPos <= 255))  // 4 chars representing one unicode character
+      $i = 4;
+    else if (($asciiPos >= 224) && ($asciiPos <= 239))  // 3 chars representing one unicode character
+      $i = 3;
+    else if (($asciiPos >= 192) && ($asciiPos <= 223))  // 2 chars representing one unicode character
+      $i = 2;
+    else  // 1 char (lower ascii)
+      $i = 1;
+    $thisLetter = substr($source, $pos, $i);
+    $pos += $i;
+
+//       process the string representing the letter to a unicode entity
+    $thisLen = strlen($thisLetter);
+    $thisPos = 0;
+    $decimalCode = 0;
+    while ($thisPos < $thisLen) {
+      $thisCharOrd = ord(substr($thisLetter, $thisPos, 1));
+      if ($thisPos == 0) {
+        $charNum = intval($thisCharOrd - $decrement[$thisLen]);
+        $decimalCode += ($charNum << $shift[$thisLen][$thisPos]);
+      } else {
+        $charNum = intval($thisCharOrd - 128);
+        $decimalCode += ($charNum << $shift[$thisLen][$thisPos]);
+      }
+
+      $thisPos++;
+    }
+
+    $encodedLetter = '&#' . str_pad($decimalCode, ($thisLen == 1) ? 3 : 5, '0', STR_PAD_LEFT) . ';';
+    $encodedString .= $encodedLetter;
+  }
+
+  return $encodedString;
+}
+

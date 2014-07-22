@@ -1,0 +1,303 @@
+<?php
+
+namespace printconnect\Carts {
+
+  use printconnect\Dal;
+use printconnect\Customers;
+
+  class Factory {
+
+    public static function Get($id, $cache = TRUE) {
+      return new Cart(array('id' => $id), $cache);
+    }
+
+    public static function Refresh(Cart $object) {
+      //if ($object->HasProperty('items')) {
+      //  Dal::ClearCache($object->items);
+      // }
+      Dal::ClearCache($object);
+      return self::Get($object->id);
+    }
+
+    public static function RefreshItem(Item $object) {
+      return Dal::ClearCache($object);
+    }
+
+    public static function GetItems(Cart $cart) {
+      return new Items(array(), array('cart' => $cart));
+    }
+
+    public static function LoadItems(Items $items) {
+      if ($items->cart && $items->cart->id) {
+        $id = $items->cart->id;
+        Dal::LoadCollection($items, 'cart-item', array('cart' => $id), function ($value) {
+                  $item = new Item(get_object_vars($value));
+                  $item->loaded = true;
+                  return $item;
+                });
+        $items->Sort();
+      }
+    }
+
+    public static function GetItemFromCart($cart, $id) {
+      if ($cart) {
+        foreach ($cart->orderItems as $item) {
+          if ($item->id == $id) {
+            return $item;
+          }
+        }
+      }
+      return FALSE;
+      //return new Item(array('cart' => $cart->id, 'id' => $id));
+    }
+
+    public static function GetItem(Cart $cart, $id) {
+      return new Item(array('cart' => $cart->id, 'id' => $id));
+    }
+
+    public static function LoadItem(Item $object) {
+      return Dal::Load($object, 'cart-item', array('id' => $object->id, 'cart' => $object->cart));
+    }
+
+    public static function LoadCart(Cart $object) {
+      if ($object->HasProperty('id')) {
+        $id = $object->Get('id');
+
+        if ($id) {
+          Dal::Load($object, 'cart', array('id' => $id), $object->cache);
+
+
+          if (isset($_SESSION['payment_method'])) {
+            $object->payment_method = $_SESSION['payment_method'];
+          }
+          $object->customer_reference = $object->customerReference;
+          //$object->items = Factory::GetItems($object);
+        }
+      } elseif ($object->HasProperty('customerId')) {
+        $customerId = $object->Get('customerId');
+
+        if ($customerId) {
+          Dal::Load($object, 'cart', array('customer' => $customerId), $object->cache);
+        }
+      }
+    }
+
+    public static function Logout($cart) {
+      unset($_SESSION['cartid']);
+      return TRUE;
+      unset($_SESSION['shipping_address']);
+      $cart->Remove('shipping_address');
+      unset($_SESSION['billing_address']);
+      $cart->Remove('billing_address');
+      $cart->customer = 0;
+      return Factory::Save($cart);
+    }
+
+    public static function CurrentOrCreate() {
+      $current = self::Current(FALSE);
+      if (!$current) {
+        $current = Factory::Create();
+        $customer = \printconnect\Customers\Factory::Current();
+        if ($customer) {
+          $current->customerId = $customerId;
+          Factory::Save($current);
+        }
+      }
+      return $current;
+    }
+
+    public static function Current($cache = TRUE) {
+      static $current = FALSE;
+
+      $current = &drupal_static(__FUNCTION__);
+
+      if ($current && $cache) {
+        return $current;
+      }
+
+      try {
+
+        if (isset($_SESSION['cartid'])) {
+          $current = self::Get($_SESSION['cartid'], $cache); // unserialize($_SESSION['customer']);
+
+          $current->EnsureLoaded();
+          //$current->shipping = $_SESSION['cartshipping'];
+          // $current->pickuppoint = array('id' => '000923', 'country' => 'BE');
+          /*
+            if (isset($_SESSION['cart']['shipping']['pickupPointId'])) {
+            $current->pickuppointId = $_SESSION['cart']['shipping']['pickupPointId'];
+            $current->pickuppointCountry = $_SESSION['cart']['shipping']['pickupPointCountry'];
+            } */
+          if (isset($_SESSION['cart']['shipping']['pup'])) {
+            $current->pickuppoint = unserialize($_SESSION['cart']['shipping']['pup']);
+          }
+          if (isset($_SESSION['shipping_address'])) {
+            $current->shipping_address = $_SESSION['shipping_address'];
+          }
+          if (isset($_SESSION['billing_address'])) {
+            $current->billing_address = $_SESSION['billing_address'];
+          }
+          if (isset($_SESSION['payment_method'])) {
+            $current->payment_method = $_SESSION['payment_method'];
+          }
+
+          return $current;
+        } else {
+          return FALSE;
+        }
+        // }
+      } catch (\printconnect\Dal\NotFoundException $ex) {
+        self::Clear();
+        return FALSE;
+      }
+    }
+
+    public static function Clear() {
+      unset($_SESSION['pup']);
+      unset($_SESSION['shipping_address']);
+      unset($_SESSION['billing_address']);
+      unset($_SESSION['cartid']);
+      unset($_SESSION['payment_method']);
+    }
+
+    public static function Save($object) {
+      
+ 
+    $customer = Customers\Factory::Current();
+    $ref = $object->customer_reference;
+      if ($customer) {
+        $object->customer = $customer->id;
+      }
+
+      $object->cart = $object->id;
+
+      if ($object->pickuppoint) {
+        $_SESSION['cart']['shipping']['pup'] = serialize($object->pickuppoint);
+        unset($_SESSION['shipping_address']);
+        $object->Remove('shipping_address');
+
+        if (is_object($object->pickuppoint)) {
+          $object->pickuppoint = $object->pickuppoint->GetProperties();
+        }
+      // $object->Remove('pickuppoint');
+      } else {
+          
+        $object->Remove('pickuppoint');
+        $_SESSION['shipping_address'] = $object->shipping_address;
+        unset($_SESSION['cart']['shipping']['pup']);
+      }
+     
+       
+//      if ($object->HasProperty('billingAccount')) {
+//        $_SESSION['billingAccount'] = $object->billingAccount;
+//      } else {
+//        unset($_SESSION['billingAccount']);
+//      }
+      if ($object->HasProperty('payment_method')) {
+        $_SESSION['payment_method'] = $object->payment_method;
+      } else {
+        unset($_SESSION['payment_method']);
+      }
+      try {
+        $_SESSION['cartid'] = $object->id;
+
+        if (!isset($object->storeCredit)) {
+          //drupal_set_message('set store credit from payments');
+          $object->storeCredit = $object->storeCreditUsed;
+        }
+        $object->customer_reference = $ref;
+        return Dal::Save($object, 'cart', array('id' => $object->id));
+
+      } catch (\printconnect\Dal\NotFoundException $ex) {
+        self::Clear();
+        return FALSE;
+      }
+      //}
+    }
+
+    public static function Validate(Cart $object) {
+      //if (!empty($object->id)) {
+      Dal::Save($object, 'cart', array('cart' => $object->id), TRUE);
+      //}
+    }
+
+    public static function Create() {
+
+      $cart = new Cart(Dal::Create(New Cart, 'cart', array()));
+      $cart->loaded = TRUE;
+
+      $cart->items = new Items();
+
+      if ($cart->id) {
+        $_SESSION['cartid'] = $cart->id;
+      }
+      return $cart;
+    }
+
+    public static function Delete() {
+      unset($_SESSION['cartid']);
+      unset($_SESSION['shipping_address']);
+      unset($_SESSION['payment_method']);
+      unset($_SESSION['billing_address']);
+    }
+
+    public static function CreateItem($cart, $priceGroup, $quantity, $description, $relatedProducts, $options, $vat = FALSE) {
+      $object = new Item();
+      $object->cart = $cart->id;
+      $object->product_price_group = $priceGroup;
+      $object->quantity = $quantity;
+      $object->description = '';
+      //$object->comments = $comments;
+      $object->related_products = $relatedProducts;
+      $object->options = $options;
+      $object->comments = ' ';
+
+      if ($vat && $vat != $_SESSION['shop_vat']) {
+        $object->vatCustom = $vat;
+      }
+      try {
+        $object = Dal::Create($object, 'cart-item', array());
+        $object->loaded = TRUE;
+      } catch (\Exception $ex) {
+        
+      }
+
+      $result = self::GetItem($cart, $object->id);
+      $result->EnsureLoaded();
+      return $result;
+    }
+
+    public static function SaveItem(Item $object) {
+      //$object->cart_item = $object->id;
+      $object->product_price_group = $object->productPriceGroupId;
+      $object->description = '';
+      //$object->cart = $object->order;
+      $options = array();
+      foreach ($object->options as $option) {
+        if (is_object($option)) {
+          $options[] = $option->option;
+        } else {
+          $options[] = $option;
+        }
+      }
+      $object->options = $options;
+      return Dal::Save($object, 'cart-item', array('id' => $object->id, 'cart' => $object->cart));
+    }
+
+    public static function DeleteItem($id, Cart $cart) {
+      return Dal::Delete('cart-item', array('id' => $id, 'cart' => $cart->id));
+    }
+
+    public static function Process($cart, $type) {
+      $cart->cart = $cart->id;
+      $cart->type = $type;
+      Dal::Create($cart, 'process-cart', array());
+    }
+
+    public static function GetLast($customerId) {
+      return new Cart(array('customerId' => $customerId), FALSE);
+    }
+
+  }
+
+} 

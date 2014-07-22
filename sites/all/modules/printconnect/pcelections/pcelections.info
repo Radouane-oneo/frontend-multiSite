@@ -1,0 +1,9 @@
+name = Elections
+description = Enables print for elections with 6% VAT
+package = printconnect
+core = 7.x
+
+#dependencies[] = pcproductsbase
+
+
+stylesheets[all][] = pcelections.css

@@ -1,0 +1,41 @@
+.partoculierLink{
+background: -moz-linear-gradient(top, #77b800 0%, #669c02 100%);
+background: -o-linear-gradient(top, #77b800 0%, #669c02 100%);
+background: -webkit-linear-gradient(top, #77b800 0%, #669c02 100%);
+background:#77b800;
+	
+}
+
+.SocieteLink{
+background: -moz-linear-gradient(top, #77b800 0%, #669c02 100%);
+background: -o-linear-gradient(top, #77b800 0%, #669c02 100%);
+background: -webkit-linear-gradient(top, #77b800 0%, #669c02 100%);
+background:#77b800;
+}
+
+#pctemplates-selection-form{
+	width:98% !important;	
+}
+#homeSlider{
+	left:-40px;
+	margin-top: -33px !important;
+}
+
+#block-pcproducts-calculator select, #block-pcproducts-calculator .selectBox{
+	width:100px !important;	
+}
+#block-pccustomers-profile .item-list li.first a{
+
+		
+}
+#block-pccustomers-profile .item-list li {
+	line-height:18px !important;
+}
+
+#pccustomers-newaddress-form .form-item-postalCode, 
+#pccustomers-address-form .form-item-postalCode, 
+#pccustomers-newaddress-form .form-item-city, 
+#pccustomers-address-form .form-item-city {
+	float:left !important;
+	
+}

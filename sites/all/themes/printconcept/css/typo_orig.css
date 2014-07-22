@@ -1,0 +1,232 @@
+@charset "utf-8";
+/* CSS Document */
+
+#typo img {
+	border: none;
+	text-decoration: none;
+	outline: none;
+}
+
+#typo .rounded {
+	border-radius: 7px 7px 7px 7px;
+	border: 1px solid #d2d2d2;	
+}
+
+#typo img.rounded {
+	border-radius: 7px 7px 7px 7px;
+	border: 1px solid #d2d2d2;	
+}
+
+#typo h2, #typo h3, #typo h4 {
+	color: #009bda;		
+}
+
+#typo h2 {
+    font-size: 18px;
+    line-height: 18px;
+	margin: 10px 0 10px 0;
+}
+
+#typo h3 {
+    font-size: 17px;
+    line-height: 17px;
+    font-size: 22px;
+    line-height: 24px;
+	margin: 25px 0 10px 0;
+}
+
+#typo h3 {
+    font-size: 18px;
+    line-height: 18px;
+    margin: 15px 0 10px 0;
+}
+
+#typo .bold {
+	font-weight: bold;
+	font-size: 13px;
+}
+
+#typo .italic {
+	font-style: italic;
+}
+
+#typo .blue {
+	color: #009bda;	
+}
+
+#typo .orange {
+	color: #ff6600;	
+}
+
+#typo .grey {
+	color: #666666;
+}
+
+#typo .lightgrey {
+	color: f0f0f0;	
+}
+
+#typo .dotted {
+	padding: 0 0 10px 0;
+	border-bottom: 1px dotted #d2d2d2;	
+}
+
+#typo h4 {
+    font-size: 16px;
+    line-height: 16px;
+    margin: 15px 0 10px 0;
+}
+
+#typo h5 {
+    font-size: 14px;
+    line-height: 14px;
+    margin: 12px 0 10px 0;
+}
+
+#typo p {
+	padding: 0;
+	margin: 10px 0 15px 0;
+	line-height: 1.6em;
+}
+
+#typo .inset-left {
+    float: left;
+    margin: 15px 15px 10px 0;
+	display: block;
+	position: relative;
+}
+
+#typo .inset-right {
+    float: right;
+    margin: 15px 0 10px 15px;
+	display: block;
+	position: relative;
+}
+
+#typo .clear {
+	clear: both;	
+}
+
+/* WIDTHS */
+
+#typo .width25 {
+    width: 25%;
+}
+
+#typo .width33 {
+    width: 33%;
+}
+
+/* KOLOMMEN */
+#typo .floatbox {
+    overflow: hidden;
+}
+
+#typo .floatbox > .col-2 {
+    width: 305px;
+	margin: 0 0 0 10px;
+	float: left;
+    overflow: hidden;
+	
+}
+
+#typo .floatbox > .col-3 {
+    width: 200px;
+	margin: 0 0 0 10px;
+	float: left;
+    overflow: hidden;
+	
+}
+
+#typo .floatbox > .col-4 {
+    width: 147px;
+	margin: 0 0 0 10px;
+	float: left;
+    overflow: hidden;
+	
+}
+
+#typo .floatbox > .first {
+	margin: 0 0 0 0;
+	
+}
+
+/* LIJSTEN */
+
+
+#typoul.bullet, #typo ul.check {
+    list-style: none outside none;
+	margin: 0;
+	padding: 0;
+}
+
+#typo ul.arrow, #typo ul.check li {
+    line-height: 16px;
+    margin: 5px 0;
+    padding-left: 24px;
+    line-height: 26px;
+    margin: 3px 0;
+    padding-left: 35px;
+}
+
+#typoul.bullet li {
+	background: url(/sites/all/themes/printconcept/css/images/typo_bullet.png) no-repeat scroll 0 7px transparent;
+    list-style: none outside none;
+    margin: 0;
+	padding: 0 0 0 20px;
+}
+
+#typo ul.check li {
+	background: url(/sites/all/themes/printconcept/css/images/typo_check.png) no-repeat scroll 0 0 transparent;	
+}
+
+#typo ol {
+    margin: 10px 0;
+    padding: 0 0 0 20px;
+}
+
+#typo ol li {
+	line-height: 26px;
+    margin: 5px 0;
+    padding-left: 10px;
+}
+
+/* BOXES */
+#typo .box {
+	border-radius: 7px 7px 7px 7px;
+	border: 1px solid #d2d2d2;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding: 10px;
+	background: #f0f0f0;
+}
+
+#typo .box.how-to {
+    background: url("images/how_to.png") no-repeat scroll right top #F0F0F0;
+}
+
+#typo .box.alert {
+    background: url("/sites/all/themes/printconcept/css/images/alert.png") no-repeat scroll 0 10px #D5E9FD;
+    border: 1px solid #BAD2DA;
+    padding-left: 50px;
+}
+
+#typo .box > h2, #typo .box > h3, #typo .box > h4, #typo .box > h5 {
+	margin-top: 0;	
+}
+/* QUOTES */
+#typo blockquote {
+    font-size: 130%;
+    font-style: italic;
+	background: url(/sites/all/themes/printconcept/css/images/typo_quote_a.png) no-repeat scroll 0 0 transparent;
+    border: medium none;
+    margin: 10px 0;
+    padding: 0 35px;
+    text-align: justify;
+}
+
+#typo blockquote p {
+	background: url(/sites/all/themes/printconcept/css/images/typo_quote_b.png) no-repeat scroll 100% 100% transparent;
+    margin: 0 -35px 10px 0;
+    padding: 0 35px 0px 0;	
+}

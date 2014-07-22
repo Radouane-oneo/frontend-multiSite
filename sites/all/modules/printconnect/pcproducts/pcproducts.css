@@ -1,0 +1,350 @@
+#pcproducts-products-form ul li, #pcproducts-productoverview-form ul li, #pcproducts-productconfig-form .other li, #block-pcproducts-other li{
+  float:left;
+  width:27%;
+  margin: 0;
+  list-style:none;
+  padding:3%;
+  text-align:center;
+}
+#pcproducts-productconfig-form .options{
+  clear:both;
+}
+#pcproducts-productconfig-form .shipping, #pcproducts-productconfig-form .templates{
+  float:left;
+  width:48%;
+  margin-left: 0;
+  margin-right: 2%;
+  box-sizing:border-box;
+  -moz-box-sizing:border-box; /* Firefox */
+  -webkit-box-sizing:border-box; /* Safari */
+}
+#pcproducts-productconfig-form .templates{
+  margin-left:2%;
+  margin-right: 0;
+}
+
+
+#pcproducts-productconfig-form .templates{
+  margin-left:2%;
+  margin-right: 0;
+}
+
+
+#pcproducts-productconfig-form .shipping{
+  margin-left: 0;
+  margin-right:2%;
+}
+#pcproducts-products-form ul li:nth-child(3n+4),  #pcproducts-productoverview-form ul li:nth-child(3n+4){
+  clear:left;
+}
+
+#pcproducts-products-form ul li img{
+  width:100%;
+}
+
+#pcproducts-products-form ul, #pcproducts-productoverview-form ul , #pcproducts-productconfig-form .other ul, #block-pcproducts-other ul{
+  margin:0;
+  padding:0;
+}
+
+#pcproducts-products-form ul img, #pcproducts-productoverview-form ul img , #pcproducts-productconfig-form .other img, #block-pcproducts-other ul li img{
+  width:100%;
+}
+
+#pcproducts-productconfig-form .form-type-checkboxes .form-type-checkbox{
+  float: left;
+  width:50%;
+  margin:0;
+  clear:none;
+}
+
+#pcproducts-productconfig-form .configuration select{
+  width:50%;
+}
+
+#pcproducts-productconfig-form .step-1 .configuration{
+  width:68%;
+  padding:0;
+  float:right;
+}
+
+#pcproducts-productconfig-form .step-1 .configuration .replaced{
+  display:none;
+}
+
+#pcproducts-productconfig-form .step-1 .configuration label{
+  width:50%;
+  float:left;
+}
+
+
+#pcproducts-productconfig-form .step-1 .description img{
+  float:left;
+  width:100%;
+}
+
+#pcproducts-productconfig-form .step-1 .description{
+  float:left;
+  width:30%;
+}
+
+#pcproducts-productconfig-form .deadlines{
+  clear:both;
+  width:100%;
+}
+
+#pcproducts-productconfig-form .deadlines .fieldset-wrapper{
+  position:absolute;
+  background:white;
+  width:100%;
+}
+
+#pcproducts-productconfig-form .deadlines legend{
+  font-size:inherit;
+  line-height:inherit;
+}
+#pcproducts-productconfig-form .grid .old {
+  color: #F90;
+  text-decoration: line-through;
+}
+
+#pcproducts-productconfig-form .form-item-step2-custom-quantity {
+  display:inline-block;
+  width:100%;
+}
+
+#pcproducts-productconfig-form .form-item-step2-custom-quantity label{
+  width:70%;
+}
+
+#pcproducts-productconfig-form .form-item-step2-custom-quantity input[type=text]{
+  display:block;
+  float:right;
+  width:30%;
+}
+
+#pcproducts-productconfig-form .options label{
+  float:none;
+  width:inherit;
+}
+
+#pcproducts-productconfig-form table{
+  width:100%;
+} 
+
+#pcproducts-productconfig-form table th, #pcproducts-productconfig-form table td{
+  white-space:nowrap;
+  padding-right:1em;
+  padding-left:1em;
+}
+
+/*#pcproducts-productconfig-form table th.filler, #pcproducts-productconfig-form table td.filler{
+  width:100%;
+}*/
+
+
+
+#pcproducts-productconfig-form .shipping > .fieldset-wrapper > div {
+  width:50%;
+  float:left;
+}
+
+
+#pcproducts-productconfig-form .form-type-select{
+  /*display:none; */
+}
+
+#pcproducts-productconfig-form .configuration{
+  position:relative;
+}
+
+#pcproducts-productconfig-form .configuration a.select{
+
+}
+
+#pcproducts-productconfig-form .configuration .form-item:after{
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+#pcproducts-productconfig-form .configuration .replacement{
+  position:relative;
+}
+
+#pcproducts-productconfig-form .configuration .replacement .dropdown {
+  display:none;
+  z-index:300;
+  position:absolute;
+  width:150%;
+  background:white;
+  margin:0;
+  right:0;
+  top:0;
+  -moz-box-shadow: 3px 3px 3px rgba(0,0,0,0.2);
+  -webkit-box-shadow: 3px 3px 3px rgba(0,0,0,0.2);
+  box-shadow: 3px 3px 3px rgba(0,0,0,0.2);
+
+  -webkit-border-radius: 4px 4px 4px 4px;
+  -moz-border-radius:  4px 4px 4px 4px;
+  border-radius:  4px 4px 4px 4px;
+
+  box-sizing:border-box;
+  -moz-box-sizing:border-box; 
+  -webkit-box-sizing:border-box;
+
+  opacity:0;
+  display:block;
+  visibility:hidden;
+}
+
+#pcproducts-productconfig-form .configuration .replacement .dropdown.open {
+  opacity:1;
+  display:block;
+  visibility: visible;
+}
+
+#pcproducts-productconfig-form .configuration .replacement .dropdown legend {
+  width:100%;
+  cursor:pointer;
+}
+
+#pcproducts-productconfig-form .dropdown .fieldset-wrapper {
+  width:100%;
+}
+
+#pcproducts-productconfig-form .dropdown li {
+  width:25%;
+  float:left;
+  margin:0;
+  list-style:none;
+  box-sizing:border-box;
+  -moz-box-sizing:border-box; /* Firefox */
+  -webkit-box-sizing:border-box; /* Safari */
+  text-align:center;
+  padding:1em;
+}
+
+#pcproducts-productconfig-form .dropdown li:nth-child(4n+1){
+  clear:left;
+}
+
+#pcproducts-productconfig-form .dropdown li img{
+  width:100%;
+}
+
+#block-pcproducts-productinfo img{
+  width:100%;
+}
+
+
+#block-pcproducts-templates table td:first-child{
+  background:transparent url(images/typo_check.png) center center no-repeat;
+}
+
+
+#pcproducts-config-form .form-type-select, #pcproducts-config-form .form-type-item{
+  background: #F1F1F1;
+  padding:5px;
+  margin:2px 0;
+  clear:both;
+}
+
+#pcproducts-config-form .form-type-select, #pcproducts-config-form .form-type-select label{
+  cursor:pointer;
+}
+
+#pcproducts-config-form .form-type-select label, #pcproducts-config-form .form-type-item label{
+  display:inline-block;
+  width: 30%;
+}
+
+#pcproducts-config-form .dropdown li{
+  list-style:none;
+  float:left;
+  margin:0;
+  width:30%;  
+}
+
+#pcproducts-config-form .dropdown .text, #pcproducts-config-form .dropdown .detail{
+  text-align:center; 
+}
+#pcproducts-config-form .dropdown .detail{
+  font-size:smaller;
+}
+
+#pcproducts-config-form .dropdown li:nth-child(3n-2){
+  clear:left; 
+}
+
+#pcproducts-config-form .dropdown img{
+  width:100%;
+}
+#pcproducts-config-form .description .text{
+
+  width:50%;
+}
+
+#pcproducts-config-form .description .image{
+  float:right;
+  width:50%;
+}
+#pcproducts-config-form .description .image img{
+  width:100%;
+}
+
+#pcproducts-config-form .description .image h3{
+  text-align:center;
+}
+
+
+#pcproducts-config-form table{
+  width:100%;
+}
+
+
+.page-products #pcproducts-config-form table.grid tbody tr td .old.price{
+  text-decoration: line-through;
+}
+
+#pcproducts-config-form .shipping .deadlines legend{
+  font-size:inherit;  
+}
+
+#pcproducts-config-form .deadline, #pcproducts-config-form .delivery {
+  width:50%;
+  float:left; 
+}
+
+#pcproducts-config-form .templates .fieldset-wrapper{
+  padding:10px;
+}
+
+#pcproducts-config-form .templates .image{
+  float:left;
+  width:50%;
+}
+
+#pcproducts-config-form .templates .image img{
+  max-height:350px;
+  width: auto;
+}
+
+#pcproducts-config-form .templates .description{
+  float:right;
+  width:50%;
+}
+
+#pcproducts-config-form .templates .description .name{
+  font-weight:bold;
+}
+#pcproducts-config-form .link{
+    padding-left: 10px;
+}
+#pcproducts-config-form .banner {
+    clear: both;
+    margin-bottom: 17px;
+}
+

@@ -1,0 +1,35 @@
+#pcsamplepacks-request-block-form .form-item-email{
+  float:left;
+}
+
+#pcsamplepacks-request-block-form .form-item-email > input{
+  width:150px;
+  min-height: 26px;
+}
+
+#pcsamplepacks-request-block-form .button{
+  float:right;
+  margin:10px 0;
+}
+
+#pcsamplepacks-request-form .form-item-city{
+  clear:none;
+}
+
+#pcsamplepacks-request-form  .form-item-city label{
+  display:none;
+
+}
+
+#pcsamplepacks-request-form  .form-item-postalCode input{
+  width:48px;
+  min-width:0;
+  float:left;
+  background-color:#FFF;
+}
+
+#pcsamplepacks-request-form  .form-item-city input{
+  margin-left: 10px;
+  min-width: 0;
+  width: 268px;
+}

@@ -1,0 +1,305 @@
+<?php
+
+function pcsegments_init() {
+  drupal_add_js(array('pcsegments' => array('selected' => 0)), 'setting');
+  drupal_add_library('system', 'ui.tabs');
+  if (module_exists('libraries')) {
+    $path = libraries_get_path('jquery.masonry');
+
+    if (!empty($path) && file_exists($path . '/jquery.masonry.min.js')) {
+      drupal_add_js($path . '/jquery.masonry.min.js');
+    } elseif (!empty($path) && file_exists($path . '/jquery.masonry.js')) {
+      drupal_add_js($path . '/jquery.masonry.js');
+    }
+  }
+}
+
+function pcsegments_menu() {
+  $items['segments'] = array(
+      'title' => 'Segments',
+      'description' => t('Segments'),
+      'page callback' => 'pcsegments_segments',
+      'access arguments' => array('access content'),
+      'menu_name' => 'main-menu',
+      'options' => array('attributes' => array('class' => array('segments'))),
+      'file' => 'pcsegments.pages.inc',
+  );
+
+  $items["segments/%"] = array(
+      'title callback' => '_pcsegments_getsegmentname',
+      'title arguments' => array(1),
+      'description' => t('Segment'),
+      'page callback' => 'pcsegments_segment',
+      'page arguments' => array(1),
+      'access arguments' => array('access content'),
+      'file' => 'pcsegments.pages.inc',
+  );
+
+  $items["segments/%/products"] = array(
+      'title' => 'Products',
+      'description' => t('Segment products'),
+      'page callback' => 'pcsegments_segment_products',
+      'page arguments' => array(1),
+      'access arguments' => array('access content'),
+      'file' => 'pcsegments.pages.inc',
+  );
+
+  $items["segments/%/templates"] = array(
+      'title' => 'Templates',
+      'description' => t('Segment templates'),
+      'page callback' => 'pcsegments_segment_templates',
+      'page arguments' => array(1),
+      'access arguments' => array('access content'),
+      'file' => 'pcsegments.pages.inc',
+  );
+  /*
+    $segments = \printconnect\Segments\Factory::GetAll();
+    foreach ($segments as $segment) {
+    $items["segments/$segment->id"] = array(
+    'title callback' => '_pcsegments_getsegmentname',
+    'title arguments' => array(1),
+    'description' => t('Segment'),
+    'page callback' => 'pcsegments_segment',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),
+    'file' => 'pcsegments.pages.inc',
+    );
+
+    $items["segments/$segment->id/products"] = array(
+    'title' => 'Products',
+    'description' => t('Segment products'),
+    'page callback' => 'pcsegments_segment_products',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),
+    'file' => 'pcsegments.pages.inc',
+    );
+
+    $items["segments/$segment->id/templates"] = array(
+    'title' => 'Templates',
+    'description' => t('Segment templates'),
+    'page callback' => 'pcsegments_segment_templates',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),
+    'file' => 'pcsegments.pages.inc',
+    );
+    }
+   */
+  return $items;
+}
+
+function pcsegments_block_info() {
+  return array(
+      'menu' => array(
+           'info' => t('Segment menu'),
+           'cache' => DRUPAL_CACHE_PER_PAGE,
+      ),
+      'products' => array(
+           'info' => t('Segment products'),
+           'cache' => DRUPAL_CACHE_PER_PAGE,
+      ),
+      'Description' => array(
+           'info' => t('Description of Segments'),
+           'cache' => DRUPAL_NO_CACHE,
+      ),
+  );
+}
+
+function pcsegments_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'menu':
+      $segments = \printconnect\Segments\Factory::GetAll();
+        
+      $items = array();
+      $j = 0;
+      foreach ($segments as $segment) {
+    
+        if ($segment->tag == '') {
+          $products = array();
+          $i = 0;
+          foreach ($segment->products as $product) {
+            $products[] = array(
+                'data' => l($product->name->name, 'products/' . $product->id),
+            );
+            if (++$i >= 8) {
+              break;
+            }
+          }
+          $items[] = l($segment->name->name, 'segments/' . $segment->id, array('html' => true, 'attributes' => array('title' => html_entity_decode($segment->name->longDescription)))); //. drupal_render($dropdown);
+
+          if (++$j > 3)
+            break;
+        }
+      }
+      $block['subject'] = t('Choose your segment');
+      $block['content']['items'] = array(
+          '#theme' => 'item_list',
+          '#items' => $items,
+      );
+      break;
+
+    case 'products':
+      $tabs = array(
+          l(t('A-Z'), '', array('fragment' => 'pcsegments_products_products', 'external' => true)),
+          l(t('By Segment'), '', array('fragment' => 'pcsegments_products_segments', 'external' => true)),
+      );
+
+      $segments = \printconnect\Segments\Factory::GetAll();
+      
+      $segmentItems = array();
+      $products = array();
+      foreach ($segments as $segment) {
+          
+        $segmentProducts = array();
+        foreach ($segment->products as $product) {
+          $products[$product->id] = $product;
+        }
+
+        if ($segment->tag == '') {
+          $segmentItems[] = array(
+              'data' => l($segment->name->name, 'segments/' . $segment->id, array('html' => TRUE)),
+              'children' => $segmentProducts,
+          );
+        }
+      }
+
+      $productsByName = array();
+
+      foreach ($products as $id => $product) {
+        $productsByName[$product->name->name] = array(
+            'data' => l($product->name->name, 'products/' . $id,array('attributes'=>array('class'=> array('item'.$id)))),
+        );
+      }
+
+      ksort($productsByName);
+
+      $block['content']['tabs'] = array(
+          '#theme' => 'item_list',
+          '#items' => $tabs,
+          '#attributes' => array('class' => array('tabs')),
+      );
+
+      $block['content']['products'] = array(
+          '#type' => 'container',
+          '#attributes' => array('id' => 'pcsegments_products_products'),
+      );
+
+      $block['content']['products']['items'] = array(
+          '#theme' => 'item_list',
+          '#items' => $productsByName,
+      );
+
+      $block['content']['segments'] = array(
+          '#type' => 'container',
+          '#attributes' => array('id' => 'pcsegments_products_segments'),
+      );
+
+      $block['content']['segments']['items'] = array(
+          '#theme' => 'item_list',
+          '#items' => $segmentItems,
+      );
+      
+      break;
+      
+     case 'Description':        
+        $args = arg();
+        $id = $args[1];
+        
+        $segment = \printconnect\Segments\Factory::Get($id);
+        
+        try {
+            $segment->EnsureLoaded();
+        } catch (\Exception $ex) {
+            drupal_not_found();
+          exit;
+        }      
+        $resl=$segment->name->longDescription;
+        
+        if ($resl != NULL) {
+            $block['content'] = array(
+              '#prefix' => '<p>',
+              '#suffix' => '</p>',
+              '#markup' => $resl,
+          );
+        } else {  
+            $block['content'] = t('the description is not available');
+        }
+     break;
+  }
+  return $block;
+}
+
+function pcsegments_flush_caches() {
+  //_pcsegments_rebuildaliasses();
+}
+
+function pcsegments_cron() {
+  _pcsegments_rebuildaliasses();
+}
+
+function _pcsegments_rebuildaliasses() {
+  $languages = \printconnect\Drupal\Functions::GetLanguages();
+
+  foreach ($languages as $language) {
+
+    $segments = \printconnect\Segments\Factory::GetAll($language, FALSE, FALSE, FALSE);
+
+    foreach ($segments as $segment) {
+      if ($segment->tag == '') {
+        $path = path_load(array(
+            'source' => "segments/$segment->id",
+            'language' => $language->language
+                ));
+        $path['source'] = "segments/$segment->id";
+        $path['alias'] = printconnect_url_name(t('Segments', array(), array('langcode' => $language->language))) . '/' . printconnect_url_name(printconnect_url_name($segment->name->name));
+        $path['language'] = $language->language;
+
+        path_save($path);
+
+
+        $path = path_load(array(
+            'source' => "segments/$segment->id/products",
+            'language' => $language->language
+                ));
+        $path['source'] = "segments/$segment->id/products";
+        $path['alias'] = printconnect_url_name(t('Segments', array(), array('langcode' => $language->language))) . '/' . printconnect_url_name($segment->name->name) . '/' . printconnect_url_name(t('Products', array(), array('langcode' => $language->language)));
+        $path['language'] = $language->language;
+
+        path_save($path);
+
+
+        $path = path_load(array(
+            'source' => "segments/$segment->id/templates",
+            'language' => $language->language
+                ));
+        $path['source'] = "segments/$segment->id/templates";
+        $path['alias'] = printconnect_url_name(t('Segments', array(), array('langcode' => $language->language))) . '/' . printconnect_url_name($segment->name->name) . '/' . printconnect_url_name(t('Templates', array(), array('langcode' => $language->language)));
+        $path['language'] = $language->language;
+
+        path_save($path);
+      }
+    }
+    $path = path_load(array(
+        'source' => "segments",
+        'language' => $language->language
+            ));
+
+    $path['source'] = "segments";
+    $path['alias'] = printconnect_url_name(t('Segments', array(), array('langcode' => $language->language)));
+    $path['language'] = $language->language;
+    path_save($path);
+
+
+    drupal_set_message(t('Segment url aliasses rebuilt for ') . $language->language);
+  }
+}
+
+function _pcsegments_getsegmentname($id) {
+  try {
+    printconnect_ensureinitialized();
+    $segment = \printconnect\Segments\Factory::Get($id);
+    return html_entity_decode($segment->name->name);
+  } catch (\Exception $ex) {
+    
+  }
+}

@@ -1,0 +1,24 @@
+<?php
+
+function pcrebuildurl_permission() {
+  $permissions['administer redirects'] = array(
+    'title' => t('Administer URL redirections'),
+  );
+  return $permissions;
+}
+/**
+ * Implements hook_menu().
+ */
+function pcrebuildurl_menu() {
+   $items['admin/config/system/rebuild_url'] = array(
+    'title' => 'Rebuild Url',
+    'description' => 'Rebuild module for new ror URL redirects.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('pcrebuildurl_rebuild_url_form'),
+    'access arguments' => array('administer redirects'),
+    'file' => 'pcrebuildurl.admin.inc',
+
+  );
+
+  return $items;
+}

@@ -1,0 +1,7 @@
+.page-samplepack-requested .description .text{
+ float:left;
+}
+
+.page-samplepack-requested .description img{
+ float:right;
+}

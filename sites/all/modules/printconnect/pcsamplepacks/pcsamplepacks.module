@@ -1,0 +1,148 @@
+<?php
+
+use printconnect\SamplePacks\Factory;
+use printconnect\Customers;
+use printconnect\Customers\Addresses;
+use printconnect\Drupal\Functions;
+use printconnect\Drupal\Forms;
+
+function pcsamplepacks_theme() {
+  return array(
+          /*
+            'pcsamplepacks_request_block_form' => array(
+            'render element' => 'form',
+            'template' => 'pcsamplepacks-request-block-form',
+            ), *//*
+            'pcsamplepacks_request_form' => array(
+            'render element' => 'form',
+            'template' => 'pcsamplepacks-request-form',
+            ),
+           */
+          /*
+            'pcsamplepacks_requested' => array(
+            'variables' => array('samplePack' => NULL),
+            'template' => 'pcsamplepacks-requested',
+            ) */
+  );
+}
+
+function pcsamplepacks_menu() {
+  $items['samplepack'] = array(
+      'title' => 'Request a sample pack',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pcsamplepacks_request_form'),
+      'file' => 'pcsamplepacks.forms.inc',
+      'access arguments' => array('access content'),
+  );
+
+  $items['samplepack/requested'] = array(
+      'title' => t('Sample pack requested'),
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pcsamplepacks_requested_form'),
+      'file' => 'pcsamplepacks.forms.inc',
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+//
+//function _pcsamplepacks_callback($page) {
+//  try {
+//    switch ($page) {
+//      case 'request':
+//        return drupal_get_form('pcsamplepacks_request_form');
+//        break;
+//      case 'requested':
+//        $samplePack = NULL;
+//
+//        if (isset($_SESSION['samplePackId'])) {
+//          $samplePack = Factory::Get($_SESSION['samplePackId']);
+//          $samplePack->EnsureLoaded();
+//          $samplePack->country->EnsureLoaded();
+//          $samplePack->language->EnsureLoaded();
+//        }
+//        return theme('pcsamplepacks_requested', array('samplePack' => $samplePack));
+//        break;
+//    }
+//  } catch (Exception $ex) {
+//    return Functions::HandleException($ex);
+//  }
+//}
+
+function pcsamplepacks_block_info() {
+  $blocks['request'] = array(
+      'info' => t('Sample packs'),
+      'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+  return $blocks;
+}
+
+function pcsamplepacks_block_view($delta = '') {
+  switch ($delta) {
+    case 'request':
+      //$block['subject'] = t('Free sample pack');
+      $block['title'] = t('Sample box');
+      //$block['content'] = drupal_get_form('pcsamplepacks_request_block_form');
+
+      $block['content']['#attributes'] = array('class' => array('clearfix'));
+
+
+      $block['content']['intro'] = array('#markup' => '<p>' . t('Convince yourself') . '</p>');
+
+      $block['content']['link'] = array(
+          '#markup' => l(t('Request'), 'samplepack', array('attributes' => array('class' => array('button', 'request')))),
+      );
+
+      return $block;
+  }
+}
+
+function pcsamplepacks_request_block_form($form, $form_state) {
+
+  $form['#attributes'] = array('class' => array('clearfix'));
+
+
+  $form['intro'] = array('#markup' => '<p>' . t('Convince yourself') . '</p>');
+
+//  $form['email'] = array(
+//      '#type' => 'textfield',
+//      '#description' => t('Your email address'),
+//      '#size' => 20,
+//      '#attributes' => array('class' => array('hint')),
+//  );
+//  $form['submit'] = array(
+//      '#type' => 'submit',
+//      '#value' => t('Request'),
+//      '#attributes' => array('class' => array('button', 'large', 'request')),
+//  );
+  $form['link'] = array(
+      '#markup' => l(t('Request'), 'samplepack', array('attributes' => array('class' => array('button', 'request')))),
+  );
+  return $form;
+}
+
+function pcsamplepacks_request_block_form_submit($form, $form_state) {
+//  $customer = \printconnect\Customers\Factory::GetByEmail($form_state['values']['email']);
+
+  $_SESSION['samplePackCustomerEmail'] = $form_state['values']['email'];
+
+  drupal_goto('samplepack');
+}
+
+function pcsamplepacks_form_pcsamplepacks_request_form_alter(&$form, &$form_state) {
+  $form['request']['postalCode']['#title'] = t('PC and city');
+  $form['request']['city']['#title_display'] = 'invisible';
+}
+
+function pcsamplepacks_getimagepath() {
+  return array(
+      'samplepacks' => array(
+          'module' => 'pcsamplepacks',
+          'path' => 'samplepacks',
+          'extension' => 'png',
+      ),
+  
+  );
+}

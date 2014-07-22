@@ -1,0 +1,2409 @@
+<?php
+
+use printconnect\Carts\Factory as CartsFactory;
+use printconnect\Diagnostics\Debug;
+use printconnect\Drupal\Forms;
+use printconnect\Drupal\Functions;
+use printconnect\Customers\Addresses;
+use printconnect\Customers;
+use printconnect\Carts;
+use printconnect\PaymentMethods;
+use printconnect\PickupPoints;
+use printconnect\Products\Options;
+use printconnect\Products\Configurations;
+use \printconnect\Products\Toolbox;
+use \printconnect\Products\PriceGroups;
+use \printconnect\Products;
+
+function pccheckout_theme() {
+	return array(
+					'pccheckout_checkout_form' => array(
+									'render element' => 'form',
+									'template' => 'pccheckout-checkout-form',
+					),
+//      'pccheckout_cart_block' => array(
+//          'render element' => 'cart',
+//          'template' => 'pccheckout-cart-block',
+//      ),
+					'pccheckout_login_form' => array(
+									'render element' => 'form',
+									'template' => 'pccheckout-login-form',
+					),
+					'pccheckout_personal_form' => array(
+									'render element' => 'form',
+									'template' => 'pccheckout-personal-form',
+					),
+					'pccheckout_pickup_form' => array(
+									'render element' => 'form',
+									'template' => 'pccheckout-pickup-form',
+					),
+					'pccheckout_delivery_form' => array(
+									'render element' => 'form',
+									'template' => 'pccheckout-delivery-form',
+					),
+					'pccheckout_payment_form' => array(
+									'render element' => 'form',
+									'template' => 'pccheckout-payment-form',
+					),
+					'pccheckout_forgotpassword_form' => array(
+									'render element' => 'form',
+									'template' => 'pccheckout-forgotpassword-form',
+					),
+	);
+}
+
+function pccheckout_menu() {
+	$items['checkout'] = array(
+					'title' => 'Checkout',
+					'page callback' => '_pccheckout_callback',
+					'page arguments' => array('main'),
+					'access arguments' => array('access content'),
+	);
+	$items['checkout/login'] = array(
+					'title' => 'Login',
+					'page callback' => '_pccheckout_callback',
+					'page arguments' => array('login'),
+					'access arguments' => array('access content'),
+					//  'type' => MENU_CALLBACK,
+	);
+	$items['checkout/personal'] = array(
+					'title' => 'Personal',
+					'page callback' => '_pccheckout_callback',
+					'page arguments' => array('personal'),
+					//'access callback' => 'pccheckout_access',
+					'access arguments' => array('access content'),
+					//  'type' => MENU_CALLBACK,
+	);
+	$items['checkout/shipping'] = array(
+					'title' => 'Shipping',
+					'page callback' => '_pccheckout_callback',
+					'page arguments' => array('shipping'),
+					//'access callback' => 'pccheckout_access',
+					'access arguments' => array('access content'),
+					// 'type' => MENU_CALLBACK,
+	);
+
+	$items['checkout/shipping/pickup'] = array(
+					'title' => 'Pickup',
+					'page callback' => '_pccheckout_set_callback',
+					'page arguments' => array('shipping', 'pickup'),
+					//'access callback' => 'pccheckout_access',
+					'access arguments' => array('access content'),
+					'type' => MENU_CALLBACK,
+	);
+
+	$items['checkout/shipping/delivery'] = array(
+					'title' => 'Delivery',
+					'page callback' => '_pccheckout_set_callback',
+					'page arguments' => array('shipping', 'delivery'),
+					//'access callback' => 'pccheckout_access',
+					'access arguments' => array('access content'),
+					'type' => MENU_CALLBACK,
+	);
+	$items['checkout/payment'] = array(
+					'title' => 'Payment',
+					'page callback' => '_pccheckout_callback',
+					'page arguments' => array('payment'),
+					//'access callback' => 'pccheckout_access',
+					'access arguments' => array('access content'),
+	);
+
+//  $items['checkout/forgotpassword'] = array(
+//      'title' => 'Forgot password',
+//      'page callback' => '_pccheckout_callback',
+//      'page arguments' => array('forgotpassword'),
+//      //'access callback' => 'pccheckout_access',
+//      'access arguments' => array('access content'),
+//     // 'type' => MENU_CALLBACK,
+//  );
+
+	return $items;
+}
+
+function pccheckout_form_pccart_cart_form_alter(&$form, $form_state, $form_id) {
+	$form['checkout'] = array(
+					'#type' => 'submit',
+					'#value' => t('Secure payment'),
+					'#weight' => 100,
+					'#attributes' => array('class' => array('action', 'large', 'checkout')),
+					'#submit' => array('pccheckout_pccart_cart_form_submit'),
+	);
+//$form['#submit'][] = 'pccheckout_pccart_cart_form_submit';
+//  $form['checkout'] = array(
+//      '#markup' => l(t('Check out'), 'checkout', array('attributes' => array ('class' => array('action', 'button')))),
+//  );
+}
+
+function pccheckout_pccart_cart_form_submit($form, $form_state) {
+	$cart = Carts\Factory::Current();
+
+	$cart->shipping_type = $form_state['values']['shipping'];
+	if ($cart->isPickup && isset($form_state['values']['pup']['id']) && !empty($form_state['values']['pup']['id'])) {
+		$pickuppoint = PickupPoints\Factory::Get($form_state['values']['pup']['id'], $form_state['values']['pup']['countryCode']);
+		$pickuppoint->EnsureLoaded();
+		$cart->pickuppoint = $pickuppoint;
+	} else {
+		$cart->pickuppoint = FALSE;
+	}
+
+	$cart->shipping_type = $form_state['values']['shipping'];
+	Carts\Factory::Save($cart);
+	Carts\Factory::Refresh($cart);
+	drupal_goto('checkout');
+}
+
+function _pccheckout_set_callback($property, $value) {
+	if ($property == 'shipping') {
+		$cart = Carts\Factory::Current();
+		$types = \printconnect\Shipping\Types\Factory::GetAll();
+		if ($value == 'pickup') {
+			foreach ($types as $type) {
+				if ($type->isPickup) {
+					$cart->shipping_type = $type->id;
+				}
+			}
+			$cart->pickuppoint = FALSE;
+		} else {
+			foreach ($types as $type) {
+				if (!$type->isPickup) {
+					$cart->shipping_type = $type->id;
+					break;
+				}
+			}
+			$cart->pickuppoint = FALSE;
+		}
+		Carts\Factory::Save($cart);
+	}
+	drupal_goto('checkout/shipping');
+}
+
+function _pccheckout_callback() {
+	drupal_add_js('misc/collapse.js');
+	drupal_add_js('misc/form.js');
+
+	$args = func_get_args();
+	$page = array_shift($args);
+	$arg = array_shift($args);
+	$customer = Customers\Factory::Current();
+
+
+	switch ($page) {
+		case 'main' :
+			if (!$customer) {
+				drupal_goto('checkout/login');
+			} else {
+				drupal_goto('checkout/personal');
+			}
+
+			break;
+		case 'shipping':
+			if ($arg == 'delivery') {
+				$cart = Carts\Factory::Current();
+				$cart->shipping_address = $address->id;
+				$cart->Remove('pickuppoint');
+				Carts\Factory::Save($cart);
+				drupal_goto('checkout/shipping');
+			}
+			if ($arg == 'pickup') {
+				$cart = Carts\Factory::Current();
+				$types = \printconnect\Shipping\Types\Factory::GetAll();
+				foreach ($types as $type) {
+					if (!$type->isPickup) {
+						$cart->shipping_type = $type->id;
+					}
+				}
+				// $cart->pickuppoint = FALSE;
+				Carts\Factory::Save($cart);
+
+				drupal_goto('checkout/shipping');
+				exit;
+			}
+			break;
+	}
+
+	if (isset($_SESSION['checkout']['redirect'])) {
+		$url = $_SESSION['checkout']['redirect'];
+		drupal_add_js('jQuery(document).ready(function () {
+        jQuery.fancybox({
+            "width": 600,
+            "height": 500,
+            "autoScale": false,
+            "transitionIn": "fade",
+            "transitionOut": "fade",
+            "type": "iframe",
+            "hideOnOverlayClick" : false,
+            "showCloseButton" : true,
+            "enableEscapeButton" :true,
+            "href": "' . url(urldecode($url)) . '"
+        });
+  });', 'inline');
+		unset($_SESSION['checkout']['redirect']);
+	}
+
+
+
+	return drupal_get_form('pccheckout_checkout_form', $page);
+}
+
+function _pccheckout_callback2() {
+	try {
+		$args = func_get_args();
+		$page = array_shift($args);
+
+		switch ($page) {
+			case 'main' :
+				return drupal_goto('checkout/login');
+			case 'forgotpassword':
+				$form = drupal_get_form('pccheckout_forgotpassword_form');
+				return $form;
+			default:
+				drupal_add_js('misc/collapse.js');
+				drupal_add_js('misc/form.js');
+
+				$customer = Customers\Factory::Current();
+				$cart = Carts\Factory::Current();
+
+				if ($page == 'payment') {
+					$paymentMethod = array_shift($args);
+					if ($paymentMethod) {
+						$cart->payment_method = $paymentMethod;
+						Carts\Factory::Save($cart);
+						drupal_goto('checkout/payment');
+					}
+				}
+
+
+				if ($page == 'login' && $customer) {
+					return drupal_goto('checkout/shipping');
+				}
+				if (!$customer && $page != 'login') {
+					return drupal_goto('checkout/login');
+				}
+
+
+				if (!$cart) {
+					$cart = Carts\Factory::Create();
+				}
+
+
+				$forms['#prefix'] = '<div id="pccheckout-checkout-form">';
+				$forms['#suffix'] = '</div>';
+
+				if ($page == 'login') {
+					$forms['first'] = drupal_get_form('pccheckout_login_form');
+				} else {
+					$forms['first'] = drupal_get_form('pccheckout_personal_form');
+				}
+
+				if ($cart && $cart->isPickup) {
+					$forms['second'] = drupal_get_form('pccheckout_pickup_form');
+				} else {
+					$forms['second'] = drupal_get_form('pccheckout_delivery_form');
+				}
+
+				$forms['third'] = drupal_get_form('pccheckout_payment_form');
+
+				switch ($page) {
+					case 'login':
+						drupal_set_title(t('Thanks for your order'));
+						$forms['first']['fieldsetclass']['#value'] = '';
+						$forms['second']['fieldsetclass']['#value'] = 'disabled collapsed';
+						$forms['third']['fieldsetclass']['#value'] = 'disabled collapsed';
+						break;
+					case 'personal':
+						if ($customer) {
+							if ($customer->firstName != '') {
+								drupal_set_title(t('Please complete your details', array('@firstName' => $customer->firstName)));
+							}
+						}
+						$forms['first']['fieldsetclass']['#value'] = '';
+						$forms['second']['fieldsetclass']['#value'] = 'disabled collapsed';
+						$forms['third']['fieldsetclass']['#value'] = 'disabled collapsed';
+						break;
+					case 'shipping':
+						if ($customer && $customer->firstName != '') {
+							if ($cart && $cart->isPickup) {
+								drupal_set_title(t('Dear @firstName, choose your pickup point', array('@firstName' => $customer->firstName)));
+							} else {
+								drupal_set_title(t('Dear @firstName, choose your delivery address', array('@firstName' => $customer->firstName)));
+							}
+						}
+						$forms['first']['fieldsetclass']['#value'] = 'collapsible collapsed';
+						$forms['second']['fieldsetclass']['#value'] = '';
+						$forms['third']['fieldsetclass']['#value'] = 'disabled collapsed';
+						break;
+					case 'payment':
+						if ($customer) {
+							if ($customer->firstName != '') {
+								drupal_set_title(t('Dear @firstName, choose your payment method', array('@firstName' => $customer->firstName)));
+							}
+						}
+						$forms['first']['fieldsetclass']['#value'] = 'collapsible collapsed';
+						$forms['second']['fieldsetclass']['#value'] = 'collapsible collapsed';
+						$forms['third']['fieldsetclass']['#value'] = '';
+						break;
+				}
+
+				return $forms;
+		}
+	} catch (\Exception $ex) {
+		return Functions::HandleException($ex);
+	}
+}
+
+function pccheckout_preprocess_page(&$vars) {
+///$variables['theme_hook_suggestion'] = 'page__2col';
+	/* $args = arg();
+    if ($args[0] == 'checkout' && $args[1] == 'forgotpassword') {
+    $vars['theme_hook_suggestion'] = 'page__empty';
+    } */
+}
+
+function pccheckout_login_form($form, &$form_state) {
+	if (isset($form_state['values']['options'])) {
+		$option = $form_state['values']['options'];
+	} else {
+		$option = 'new';
+	}
+
+	$form['options'] = array(
+					'#type' => 'radios',
+					'#default_value' => $option,
+					'#options' => array(
+									'existing' => t("I'm a customer already"),
+									'new' => t("I'm not a customer yet"),
+					),
+	);
+
+	$form['email'] = array(
+					'#type' => 'textfield',
+					'#title' => t('Email'),
+					'#required' => TRUE,
+					'#size' => 30,
+					'#attributes' => array('class' => array('customer-email')),
+	);
+	$form['password'] = array(
+					'#type' => 'password',
+					'#title' => t('Your password'),
+					'#required' => TRUE,
+					'#size' => 30,
+	);
+
+	$form['option']['#value'] = $option;
+
+	if ($option == 'existing') {
+		$form['login'] = array(
+						'#name' => 'login',
+						'#type' => 'submit',
+						'#value' => t('Login'),
+						'#attributes' => array('class' => array('action', 'button', 'large', 'login')),
+		);
+	}
+
+	if ($option == 'new') {
+		$form['register'] = array(
+						'#name' => 'register',
+						'#type' => 'submit',
+						'#value' => t('Register'),
+						'#attributes' => array('class' => array('action', 'button', 'large', 'register')),
+		);
+		$form['password']['#title'] = t('Choose your password');
+	}
+
+	$form['#tree'] = TRUE;
+	$form['#cache'] = TRUE;
+	return $form;
+}
+
+function pccheckout_login_form_validate(&$form, &$form_state) {
+
+	if (isset($form_state['triggering_element']['#name'])) {
+		switch ($form_state['triggering_element']['#name']) {
+			case 'login':
+				$customer = Customers\Factory::Login($form_state['values']['email'], $form_state['values']['password']);
+				if ($customer) {
+					$form_state['storage']['customer'] = $customer;
+				} else {
+					form_set_error('', t('Cannot log in using the given email and password.'));
+				}
+				break;
+			case 'register':
+				$customer = Customers\Factory::Create();
+				Forms::LoadObject($form_state['values'], $customer);
+				$customer->repeatpassword = $customer->password;
+				Customers\Factory::Validate($customer);
+				$form_state['storage']['customer'] = $customer;
+				$form_state['storage']['new_customer'] = TRUE;
+				break;
+		}
+	}
+
+	if (isset($form_state['input']['op']) && ($form_state['input']['op'] == 'ajax')) {
+		$form_state['rebuild'] = TRUE;
+	}
+
+//  try {
+//    $customer = Customers\Factory::GetByEmail($form_state['values']['email']);
+//    if ($customer) {
+//      $customer = Customers\Factory::Login($form_state['values']['email'], $form_state['values']['password']);
+//      if ($customer) {
+//        $form_state['storage']['customer'] = $customer;
+//        return true;
+//      } else {
+//        form_set_error('login', t('Cannot log in using the given email and password.'));
+//        return false;
+//      }
+//    } else {
+//      $customer = Customers\Factory::Create();
+//      Forms::LoadObject($form_state['values'], $customer);
+//      $customer->repeatpassword = $customer->password;
+//      Customers\Factory::Validate($customer);
+//      $form_state['storage']['customer'] = $customer;
+//      $form_state['storage']['new_customer'] = TRUE;
+//      return true;
+//    }
+//  } catch (\printconnect\Dal\Exception $ex) {
+//    Forms::HandleException($ex, $form, '');
+//    return FALSE;
+//  }
+}
+
+function pccheckout_login_form_submit(&$form, &$form_state) {
+	$customer = $form_state['storage']['customer'];
+
+	Customers\Factory::Save($customer);
+
+	Customers\Factory::LoginByObject($customer);
+
+	if (isset($form_state['storage']['new_customer'])) {
+		drupal_goto('checkout/personal');
+	} else {
+		drupal_goto('checkout/shipping');
+	}
+}
+
+function pccheckout_personal_form($form, &$form_state) {
+	$customer = Customers\Factory::Current();
+	$firstName = '';
+	$lastName = '';
+
+	if ($customer) {
+		$firstName = $customer->firstName;
+		$lastName = $customer->lastName;
+	}
+
+	$form['firstName'] = array(
+					'#type' => 'textfield',
+					'#title' => t('First name'),
+					'#required' => TRUE,
+					'#size' => 30,
+					'#default_value' => $firstName,
+	);
+	$form['lastName'] = array(
+					'#type' => 'textfield',
+					'#title' => t('Last name'),
+					'#required' => TRUE,
+					'#size' => 30,
+					'#default_value' => $lastName,
+	);
+	$form['phone'] = array(
+					'#type' => 'textfield',
+					'#title' => t('Mobile number'),
+					'#required' => TRUE,
+					'#size' => 30,
+					'#default_value' => $customer ? $customer->phone : '',
+	);
+	$form['submit'] = array(
+					'#name' => 'test',
+					'#type' => 'submit',
+					'#value' => t('Continue'),
+					'#attributes' => array('class' => array('action', 'button', 'large', 'continue')),
+	);
+
+	$form['#cache'] = TRUE;
+	return $form;
+}
+
+function pccheckout_personal_form_submit($form, &$form_state) {
+	$customer = Customers\Factory::Current();
+	$customer->firstName = $form_state['values']['firstName'];
+	$customer->lastName = $form_state['values']['lastName'];
+	$customer->phone = $form_state['values']['phone'];
+	Customers\Factory::Save($customer);
+	drupal_goto('checkout/shipping');
+}
+
+function pccheckout_pickup_form($form, &$form_state) {
+	$customer = Customers\Factory::Current();
+	$cart = Carts\Factory::Current();
+
+
+	$form['name']['#value'] = '';
+	$form['address']['#value'] = '';
+	$form['postalCode']['#value'] = '';
+	$form['city']['#value'] = '';
+	$form['openinghours']['#value'] = '';
+	$form['selected']['#value'] = FALSE;
+
+	$pickuppoint = FALSE;
+
+	if ($cart && $cart->pickuppoint) {
+		$pickuppoint = PickupPoints\Factory::Get($cart->pickuppoint->id, $cart->pickuppoint->country);
+		$form['name']['#value'] = $pickuppoint->name;
+		$form['address']['#value'] = $pickuppoint->address;
+		$form['postalCode']['#value'] = $pickuppoint->postalCode;
+		$form['city']['#value'] = $pickuppoint->city;
+		$form['openinghours']['#value'] = $pickuppoint->openingHoursArray;
+		$form['selected']['#value'] = TRUE;
+	}
+
+	$form['new'] = array(
+					'#markup' => l(t('Choose a pickup point in your neighbourhood'), 'pickuppoints/picker', array('attributes' => array('class' => array('open', 'button', 'choose', 'iframe')), 'query' => array('callback' => 'pccheckout_picker_callback'))),
+	);
+
+	$form['another'] = array(
+					'#markup' => l(t('Choose another pickup point in your neighbourhood'), 'pickuppoints/picker', array('attributes' => array('class' => array('open', 'button', 'choose', 'iframe')), 'query' => array('callback' => 'pccheckout_picker_callback'))),
+	);
+
+	$form['id'] = array(
+					'#type' => 'hidden',
+					'#default_value' => $pickuppoint ? $pickuppoint->id : '',
+					'#attributes' => array('class' => array('id')),
+	);
+
+	$form['country'] = array(
+					'#type' => 'hidden',
+					'#default_value' => $pickuppoint ? $pickuppoint->country : '',
+					'#attributes' => array('class' => array('country-code')),
+	);
+
+	$form['contact'] = array(
+					'#type' => 'textfield',
+					'#title' => t('Who will pick up your print work?'),
+					'#required' => TRUE,
+					'#default_value' => $customer ? $customer->firstName . ' ' . $customer->lastName : '',
+					'#size' => 30,
+	);
+
+	$form['sms'] = array(
+					'#type' => 'textfield',
+					'#title' => t('SMS'),
+					'#default_value' => $customer ? $customer->phone : '',
+					'#size' => 30,
+	);
+
+	$form['email'] = array(
+					'#type' => 'textfield',
+					'#title' => t('Email'),
+					'#default_value' => $customer ? $customer->email : '',
+					'#size' => 30,
+	);
+
+	$form['submit'] = array(
+					'#type' => 'submit',
+					'#value' => t('Continue'),
+					'#attributes' => array('class' => array('action', 'button', 'large', 'continue')),
+	);
+
+
+	$form['neutral'] = array(
+					'#type' => 'checkbox',
+					'#title' => t('Neutral shipping'),
+					'#default_value' => $cart->neutralShipping,
+	);
+
+//$form['#tree'] = TRUE;
+	$form['#cache'] = TRUE;
+	return $form;
+}
+
+function pccheckout_pickup_form_validate(&$form, &$form_state) {
+	if (!isset($form_state['values']['id']) || !$form_state['values']['id']) {
+		form_set_error('pup][open', t('Please select a pickup point'));
+	}
+}
+
+function pccheckout_pickup_form_submit(&$form, &$form_state) {
+	$cart = Carts\Factory::Current();
+
+	$pickuppoint = PickupPoints\Factory::Get($form_state['values']['id'], $form_state['values']['country']);
+	$pickuppoint->EnsureLoaded();
+	$cart->pickuppoint = $pickuppoint;
+
+	$cart->pickuppoint->contactName = $form_state['values']['contact'];
+	$cart->pickuppoint->email = $form_state['values']['email'];
+	$cart->pickuppoint->phone = $form_state['values']['sms'];
+
+	$cart->neutralShipping = $form_state['values']['neutral'];
+
+	Carts\Factory::Save($cart);
+
+	Carts\Factory::Refresh($cart);
+
+	drupal_goto('checkout/payment');
+}
+
+function pccheckout_delivery_form($form, &$form_state) {
+	$customer = Customers\Factory::Current();
+	$cart = Carts\Factory::Current();
+
+	$defaultShippingAddress = FALSE;
+
+	if ($cart && $cart->HasProperty('shipping_address') && !$cart->isPickup) {
+		$defaultShippingAddress = Addresses\Factory::Get($cart->shipping_address);
+		$defaultShippingAddress->EnsureLoaded();
+	}
+
+	if ($customer) {
+		$addresses = array();
+
+		$addresses[0] = ' - ' . t('New') . ' - ';
+
+		foreach (Addresses\Factory::GetAddresses($customer) as $address) {
+			$address->EnsureLoaded();
+			$addresses[$address->id] = $address->company;
+			if (!$defaultShippingAddress) {
+				if ($address->defaultShipping) {
+					$defaultShippingAddress = $address;
+				}
+			}
+		}
+
+		$form['address'] = array(
+						'#type' => 'select',
+						'#title' => t('Address'),
+						'#options' => $addresses,
+						'#default_value' => $defaultShippingAddress ? $defaultShippingAddress->id : 0,
+		);
+	}
+
+	$countries = array();
+	$items = printconnect\Countries\Factory::GetAll();
+	foreach ($items as $country) {
+		$countries[$country->id] = t($country->tag);
+	}
+
+	$form['name'] = array(
+					'#type' => 'textfield',
+					'#title' => t('Name'),
+					'#required' => TRUE,
+					'#size' => 30,
+					'#default_value' => $defaultShippingAddress ? $defaultShippingAddress->name : '',
+	);
+
+	$form['company'] = array(
+					'#type' => 'textfield',
+					'#title' => t('Company'),
+					'#required' => FALSE,
+					'#default_value' => $defaultShippingAddress ? $defaultShippingAddress->company : '',
+					'#size' => 30,
+	);
+	$form['street'] = array(
+					'#type' => 'textfield',
+					'#title' => t('Street'),
+					'#required' => TRUE,
+					'#default_value' => $defaultShippingAddress ? $defaultShippingAddress->street : '',
+					'#size' => 30,
+	);
+	$form['postalCode'] = array(
+					'#type' => 'textfield',
+					'#title' => t('Postal code'),
+					'#required' => TRUE,
+					'#default_value' => $defaultShippingAddress ? $defaultShippingAddress->postalCode : '',
+					'#size' => 30,
+	);
+	$form['city'] = array(
+					'#type' => 'textfield',
+					'#title' => t('City'),
+					'#required' => TRUE,
+					'#default_value' => $defaultShippingAddress ? $defaultShippingAddress->city : '',
+					'#size' => 30,
+	);
+	$form['country'] = array(
+					'#type' => 'select',
+					'#title' => t('Country'),
+					'#required' => TRUE,
+					'#options' => $countries,
+					'#default_value' => $defaultShippingAddress ? $defaultShippingAddress->country : '',
+	);
+	$form['phone'] = array(
+					'#type' => 'textfield',
+					'#title' => t('Phone'),
+					'#default_value' => $defaultShippingAddress ? $defaultShippingAddress->phone : '',
+					'#size' => 30,
+	);
+	$form['submit'] = array(
+					'#name' => 'delivery-submit',
+					'#type' => 'submit',
+					'#value' => t('Continue'),
+					'#attributes' => array('class' => array('action', 'button', 'large', 'continue')),
+	);
+
+	$form['neutral'] = array(
+					'#type' => 'checkbox',
+					'#title' => t('Neutral shipping'),
+					'#default_value' => $cart->neutralShipping,
+	);
+
+	$form['#cache'] = TRUE;
+
+	return $form;
+}
+
+function pccheckout_delivery_form_validate(&$form, &$form_state) {
+	try {
+		$customer = Customers\Factory::Current();
+		if (isset($form_state['values']['address'])) {
+			$addressId = $form_state['values']['address'];
+
+			if ($addressId == 0) {
+				$address = Addresses\Factory::Create();
+//        $address->firstName = $customer->firstName;
+//        $address->lastName = $customer->lastName;
+//        $address->phone = $customer->phone;
+			} else {
+				$address = Addresses\Factory::Get($addressId);
+				$address->EnsureLoaded();
+			}
+
+			Forms::LoadObject($form_state['values'], $address);
+			$address->customer = $customer->id;
+			Addresses\Factory::Validate(clone $address);
+			$form_state['storage']['address'] = $address;
+		}
+	} catch (\printconnect\Dal\Exception $ex) {
+		Forms::HandleException($ex, $form, '');
+		return false;
+	}
+}
+
+function pccheckout_delivery_form_submit(&$form, &$form_state) {
+	$address = $form_state['storage']['address'];
+	Addresses\Factory::Save($address);
+
+	$cart = Carts\Factory::Current();
+	$cart->shipping_address = $address->id;
+//;
+	$cart->neutralShipping = $form_state['values']['neutral'];
+
+	$cart->Remove('pickuppoint');
+	Carts\Factory::Save($cart);
+
+	drupal_goto('checkout/payment');
+}
+
+function pccheckout_payment_form($form, &$form_state) {
+	$customer = Customers\Factory::Current();
+	$cart = Carts\Factory::Current();
+
+	$countries = array();
+	$items = printconnect\Countries\Factory::GetAll();
+	foreach ($items as $country) {
+		$countries[$country->id] = t($country->tag);
+	}
+
+	$defaultBillingAddress = FALSE;
+	$defaultNeedInvoice = FALSE;
+
+	if ($cart && $cart->HasProperty('billing_address')) {
+		$defaultBillingAddress = Addresses\Factory::Get($cart->billing_address);
+		$defaultBillingAddress->EnsureLoaded();
+		$defaultNeedInvoice = TRUE;
+	}
+
+	$form['needinvoice'] = array(
+					'#type' => 'checkbox',
+					'#default_value' => $defaultNeedInvoice,
+					'#title' => t('I need an invoice for my tax collector'),
+	);
+
+	if ($customer) {
+		$addresses = array();
+
+		$addresses[0] = ' - ' . t('New') . ' - ';
+
+		foreach (Addresses\Factory::GetAddresses($customer) as $address) {
+			$address->EnsureLoaded();
+			$addresses[$address->id] = $address->company;
+			if ($address->defaultBilling) {
+				$defaultBillingAddress = $address;
+			}
+		}
+
+		$form['address'] = array(
+						'#type' => 'select',
+						'#title' => t('Address'),
+						'#options' => $addresses,
+						'#default_value' => $defaultBillingAddress ? $defaultBillingAddress->id : 0,
+		);
+	}
+	$form['company'] = array(
+					'#type' => 'textfield',
+					'#title' => t('Company'),
+//      '#required' => TRUE,
+					'#default_value' => $defaultBillingAddress ? $defaultBillingAddress->company : '',
+					'#size' => 30,
+	);
+	$form['name'] = array(
+					'#type' => 'textfield',
+					'#title' => t('Name'),
+					'#size' => 30,
+					'#default_value' => $defaultBillingAddress ? $defaultBillingAddress->name : '',
+	);
+	$form['street'] = array(
+					'#type' => 'textfield',
+					'#title' => t('Street'),
+					//    '#required' => TRUE,
+					'#default_value' => $defaultBillingAddress ? $defaultBillingAddress->street : '',
+					'#size' => 30,
+	);
+	$form['postalCode'] = array(
+					'#type' => 'textfield',
+					'#title' => t('Postal code'),
+					//  '#required' => TRUE,
+					'#default_value' => $defaultBillingAddress ? $defaultBillingAddress->postalCode : '',
+					'#size' => 30,
+	);
+	$form['city'] = array(
+					'#type' => 'textfield',
+					'#title' => t('City'),
+					//'#required' => TRUE,
+					'#default_value' => $defaultBillingAddress ? $defaultBillingAddress->city : '',
+					'#size' => 30,
+	);
+	$form['country'] = array(
+					'#type' => 'select',
+					'#title' => t('Country'),
+					// '#required' => TRUE,
+					'#options' => $countries,
+					'#default_value' => $defaultBillingAddress ? $defaultBillingAddress->country : '',
+	);
+
+	$form['vat'] = array(
+					'#type' => 'vatfield',
+					'#title' => t('Vat number'),
+					'#attributes' => array('class' => array('vat')),
+					'#default_value' => $defaultBillingAddress ? $defaultBillingAddress->vatNumber : '',
+	);
+
+	$form['reference'] = array(
+					'#type' => 'textfield',
+					'#title' => t('Reference'),
+					//    '#required' => TRUE,
+					'#default_value' => $cart->customerReference,
+					'#size' => 30,
+	);
+
+
+
+	if ($cart) {
+
+		$paymentMethods = PaymentMethods\Factory::GetAll();
+
+		$options = array();
+		$methods = array();
+
+		$default = FALSE;
+//    if ($cart->payment_method) {
+//      $default = $cart->payment_method;
+//    }
+		foreach ($paymentMethods as $value) {
+//  if (!(strtolower($value->paymentMethod->internalName) == 'invoice' && $customer && !$customer->freeOfCashPayment)) {
+
+			$subTotalWithoutPayment = $cart->subTotalAmountWithoutPayment;
+			$cost = $value->CalculateCost($subTotalWithoutPayment);
+
+			$options[$value->id] = ''; //t($value->paymentMethod->internalName);
+
+			if (is_string($value->paymentMethod->descriptionTag)) {
+				$description = $value->paymentMethod->descriptionTag;
+			} else {
+				$description = '';
+			}
+
+			$methods[$value->id] = array(
+							'image' => Functions::GetImage('paymentmethods', $value->paymentMethod->internalName),
+							'name' => t($value->paymentMethod->internalName),
+							'cost' => $cost,
+							'description' => t($description),
+			);
+//  }
+		}
+
+		$form['methods'] = array(
+						'#value' => $methods,
+		);
+
+		$form['method'] = array(
+						'#type' => 'radios',
+						'#required' => TRUE,
+						'#options' => $options,
+						'#default_value' => $cart->payment_method,
+						//'#title' => t('Payment methods'),
+		);
+	}
+
+	$form['subtotal'] = array('#value' => $cart->subTotalAmount);
+	$form['vatamount'] = array('#value' => $cart->vatAmount);
+	$form['total'] = array('#value' => $cart->totalAmount);
+
+	$form['terms'] = array(
+					'#type' => 'checkbox',
+					'#title' => t('I agree with the terms and conditions'),
+					'#title_display' => 'invisible',
+					'#required' => TRUE,
+	);
+
+
+	$form['submit'] = array(
+					'#type' => 'submit',
+					'#value' => t('Confirm'),
+					'#attributes' => array('class' => array('action', 'button', 'large', 'continue', 'display-block')),
+	);
+
+
+	$form['#tree'] = TRUE;
+	$form['#cache'] = TRUE;
+	return $form;
+}
+
+//function pccheckout_payment_form_validate($form, &$form_state) {
+//
+//  $cart = Carts\Factory::Current();
+//
+//  $cart->payment_method = $form_state['values']['method'];
+//  Carts\Factory::Save($cart);
+//
+//  if (isset($form_state['input']['op']) && ($form_state['input']['op'] == 'ajax')) {
+//    $form_state['rebuild'] = TRUE;
+//  }
+//
+//  try {
+//    if (!isset($form_state['values']['method'])) {
+//      form_set_error('method', t('Please select a payment method'));
+//    }
+//
+//    if ($form_state['values']['needinvoice']) {
+//      $customer = Customers\Factory::Current();
+//      $addressId = $form_state['values']['address'];
+//
+//      if ($addressId == 0) {
+//        $address = Addresses\Factory::Create();
+////        $address->name = $customer->firstName;
+////        $address->lastName = $customer->lastName;
+//        $address->phone = $customer->phone;
+//      } else {
+//        $address = Addresses\Factory::Get($addressId);
+//        $address->EnsureLoaded();
+//      }
+//      Forms::LoadObject($form_state['values'], $address);
+//      $address->customer = $customer->id;
+//      Addresses\Factory::Validate(clone $address);
+//      $form_state['storage']['address'] = $address;
+//    }
+//  } catch (\printconnect\Dal\Exception $ex) {
+//    Forms::HandleException($ex, $form, '');
+//    return false;
+//  }
+//}
+//function pccheckout_payment_form_submit($form, &$form_state) {
+//  $cart = Carts\Factory::Current();
+//  $customer = Customers\Factory::Current();
+//  $paymentMethod = PaymentMethods\Factory::Get($form_state['values']['method']);
+//
+//  if ($form_state['values']['needinvoice']) {
+//    $address = $form_state['storage']['address'];
+//    Addresses\Factory::Save($address);
+//    $cart->billing_address = $address->id;
+//    $cart->customer_reference = $form_state['values']['reference'];
+//  } else {
+//    $cart->Remove('billing_address');
+//  }
+//
+//  $cart->payment_method = $form_state['values']['method'];
+//
+//  $cart->customer = $customer->id;
+//
+//  Carts\Factory::Save($cart);
+//
+//  switch (strtolower($paymentMethod->paymentMethod->internalName)) {
+//    case 'cod':
+//      $id = $cart->id;
+//      Carts\Factory::Process($cart, 'cod');
+//      Carts\Factory::Delete();
+//      drupal_goto('myprintconnect/orders/' . $id . '/confirmation');
+//      break;
+//    case 'invoice' :
+//      $id = $cart->id;
+//      Carts\Factory::Process($cart, 'invoice');
+//      Carts\Factory::Delete();
+//      drupal_goto('myprintconnect/orders/' . $id . '/confirmation');
+//      break;
+//    default:
+//      $paymentgateway = variable_get('pc_paymentgateway', 'pcogone');
+//      if (function_exists(($paymentgateway . '_processpayment'))) {
+//        call_user_func($paymentgateway . '_processpayment', $form_state['values']['method'], $customer->name, $cart->id, $cart->totalAmount);
+//      } else {
+//        form_set_error('method', t('Not implemented.'));
+//      }
+//  }
+//}
+
+function pccheckout_forgotpassword_form($form, $form_state) {
+	$form['email'] = array(
+					'#type' => 'textfield',
+					'#title' => t('Email'),
+					'#required' => TRUE,
+					'#size' => 40,
+	);
+
+	$form['submit'] = array(
+					'#type' => 'submit',
+					'#value' => t('Continue'),
+					'#attributes' => array('class' => array('button', 'large', 'continue')),
+	);
+
+	return $form;
+}
+
+function pccheckout_forgotpassword_form_validate($form, &$form_state) {
+	try {
+		$customer = Customers\Factory::GetByEmail($form_state['values']['email']);
+		if ($customer) {
+			$form_state['storage']['customer'] = $customer;
+			return true;
+		} else {
+			form_set_error('', t('Email not found.'));
+			return false;
+		}
+	} catch (\printconnect\Dal\Exception $ex) {
+		Forms::HandleException($ex, $form, '');
+		return FALSE;
+	}
+}
+
+function pccheckout_forgotpassword_form_submit($form, $form_state) {
+	$customer = $form_state['storage']['customer'];
+	Customers\Factory::RequestNewPassword($customer);
+
+	print '<script type="text/javascript">top.' . $_GET['callback'] . '();</script>';
+	exit;
+}
+
+function pccheckout_checkout_form($form, &$form_state, $step) {
+	$cart = Carts\Factory::Current();
+	$customer = Customers\Factory::Current();
+
+	$countries = array();
+	$items = printconnect\Countries\Factory::GetAll();
+	foreach ($items as $country) {
+		$countries[$country->id] = t($country->tag);
+	}
+
+
+	if ($customer && $customer->firstName != '') {
+		$form['logout'] = array(
+						'#type' => 'item',
+						'#markup' => l(t('Not @firstName? Click here...', array('@firstName' => $customer->firstName)), 'myprintconnect/logout/checkout'),
+		);
+	}
+
+
+	if (!$customer) {
+//<editor-fold defaultstate="collapsed" desc="Login">
+		if (isset($form_state['values']['login']['options'])) {
+			$option = $form_state['values']['login']['options'];
+		} else {
+			$option = 'new';
+		}
+		$form['login']['options'] = array(
+						'#type' => 'radios',
+						'#default_value' => $option,
+						'#options' => array(
+										'existing' => t("I'm a customer already"),
+										'new' => t("I'm not a customer yet"),
+						),
+		);
+
+		$form['login']['email'] = array(
+						'#type' => 'textfield',
+						'#title' => t('Email'),
+						'#required' => TRUE,
+						'#size' => 30,
+						'#attributes' => array('class' => array('customer-email')),
+		);
+		$form['login']['password'] = array(
+						'#type' => 'password',
+						'#title' => t('Your password'),
+						'#required' => TRUE,
+						'#size' => 30,
+		);
+
+		$form['login']['option']['#value'] = $option;
+
+		if ($option == 'existing') {
+			$form['login']['submit'] = array(
+							'#type' => 'submit',
+							'#value' => t('Login'),
+							'#attributes' => array('class' => array('action', 'button', 'large', 'login')),
+							'#validate' => array('pccheckout_checkout_form_login_validate'),
+							'#submit' => array('pccheckout_checkout_form_login_submit'),
+							'#limit_validation_errors' => array(array('login')),
+			);
+		}
+
+		if ($option == 'new') {
+			$form['login']['register'] = array(
+							'#type' => 'submit',
+							'#value' => t('Register'),
+							'#attributes' => array('class' => array('action', 'button', 'large', 'register')),
+							'#validate' => array('pccheckout_checkout_form_register_validate'),
+							'#submit' => array('pccheckout_checkout_form_register_submit'),
+							'#limit_validation_errors' => array(array('login')),
+			);
+			$form['login']['password']['#title'] = t('Choose your password');
+		}
+//</editor-fold>
+	} else {
+
+
+//<editor-fold defaultstate="collapsed" desc="Personal">
+
+		$firstName = '';
+		$lastName = '';
+
+		if ($customer) {
+			$firstName = $customer->firstName;
+			$lastName = $customer->lastName;
+		}
+		$form['personal']['firstName'] = array(
+						'#type' => 'textfield',
+						'#title' => t('First name'),
+						'#required' => TRUE,
+						'#size' => 30,
+						'#default_value' => $firstName,
+		);
+		$form['personal']['lastName'] = array(
+						'#type' => 'textfield',
+						'#title' => t('Last name'),
+						'#required' => TRUE,
+						'#size' => 30,
+						'#default_value' => $lastName,
+		);
+		$form['personal']['phone'] = array(
+						'#type' => 'textfield',
+						'#title' => t('Mobile number'),
+						'#required' => TRUE,
+						'#size' => 30,
+						'#default_value' => $customer ? $customer->phone : '',
+		);
+		$form['personal']['submit'] = array(
+						'#name' => 'personal-submit',
+						'#type' => 'submit',
+						'#value' => t('Continue'),
+						'#attributes' => array('class' => array('action', 'button', 'large', 'continue')),
+						'#submit' => array('pccheckout_checkout_form_personal_submit'),
+						'#limit_validation_errors' => array(array('personal')),
+		);
+
+//</editor-fold>
+	}
+
+	if ($cart && $cart->isPickup) {
+//<editor-fold defaultstate="collapsed" desc="Pickup">
+
+		$form['pickup']['name']['#value'] = '';
+		$form['pickup']['address']['#value'] = '';
+		$form['pickup']['postalCode']['#value'] = '';
+		$form['pickup']['city']['#value'] = '';
+		$form['pickup']['openinghours']['#value'] = '';
+		$form['pickup']['selected']['#value'] = FALSE;
+
+		$pickuppoint = FALSE;
+
+		if ($cart->pickuppoint) {
+			$pickuppoint = PickupPoints\Factory::Get($cart->pickuppoint->id, $cart->pickuppoint->country);
+			$form['pickup']['name']['#value'] = $pickuppoint->name;
+			$form['pickup']['address']['#value'] = $pickuppoint->address;
+			$form['pickup']['postalCode']['#value'] = $pickuppoint->postalCode;
+			$form['pickup']['city']['#value'] = $pickuppoint->city;
+			$form['pickup']['openinghours']['#value'] = $pickuppoint->openingHoursArray;
+			$form['pickup']['selected']['#value'] = TRUE;
+		}
+
+		$form['pickup']['new'] = array(
+						'#markup' => l(t('Choose a pickup point in your neighbourhood'), 'pickuppoints/picker', array('attributes' => array('class' => array('open', 'button', 'choose', 'iframe')), 'query' => array('callback' => 'pccheckout_picker_callback'))),
+		);
+
+		$form['pickup']['another'] = array(
+						'#markup' => l(t('Choose another pickup point in your neighbourhood'), 'pickuppoints/picker', array('attributes' => array('class' => array('open', 'button', 'choose', 'iframe')), 'query' => array('callback' => 'pccheckout_picker_callback'))),
+		);
+
+		$form['pickup']['id'] = array(
+						'#type' => 'hidden',
+						'#default_value' => $pickuppoint ? $pickuppoint->id : '',
+						'#attributes' => array('class' => array('id')),
+		);
+
+		$form['pickup']['country'] = array(
+						'#type' => 'hidden',
+						'#default_value' => $pickuppoint ? $pickuppoint->country : '',
+						'#attributes' => array('class' => array('country-code')),
+		);
+
+		$form['pickup']['contact'] = array(
+						'#type' => 'textfield',
+						'#title' => t('Who will pick up your print work?'),
+						'#required' => TRUE,
+						'#default_value' => $customer ? $customer->name : '',
+						'#size' => 30,
+		);
+
+		$form['pickup']['sms'] = array(
+						'#type' => 'textfield',
+						'#title' => t('SMS'),
+						'#default_value' => $customer ? $customer->phone : '',
+						'#size' => 30,
+		);
+
+		$form['pickup']['email'] = array(
+						'#type' => 'textfield',
+						'#title' => t('Email'),
+						'#default_value' => $customer ? $customer->email : '',
+						'#size' => 30,
+		);
+
+		$form['pickup']['submit'] = array(
+						'#type' => 'submit',
+						'#value' => t('Continue'),
+						'#attributes' => array('class' => array('action', 'button', 'large', 'continue')),
+						'#submit' => array('pccheckout_checkout_form_pickup_submit'),
+						'#limit_validation_errors' => array(array('personal'), array('pickup')),
+		);
+
+		$form['pickup']['neutral'] = array(
+						'#type' => 'checkbox',
+						'#title' => t('Neutral shipping'),
+						'#default_value' => $cart->neutralShipping,
+		);
+
+//</editor-fold>
+	} else {
+//<editor-fold defaultstate="collapsed" desc="Delivery">
+
+		$defaultShippingAddress = FALSE;
+
+		if ($cart && $cart->HasProperty('shipping_address') && !$cart->isPickup) {
+			$defaultShippingAddress = Addresses\Factory::Get($cart->shipping_address);
+			$defaultShippingAddress->EnsureLoaded();
+		}
+
+		if ($customer) {
+			$addresses = array();
+
+			$addresses[0] = ' - ' . t('New') . ' - ';
+
+			foreach (Addresses\Factory::GetAddresses($customer) as $address) {
+				$address->EnsureLoaded();
+				if ($address->company != '') {
+					$addresses[$address->id] = $address->company;
+				} else {
+					$addresses[$address->id] = $address->name;
+				}
+				if (!$defaultShippingAddress) {
+					if ($address->defaultShipping) {
+						$defaultShippingAddress = $address;
+					}
+				}
+			}
+
+			$form['delivery']['address'] = array(
+							'#type' => 'select',
+							'#title' => t('Address'),
+							'#options' => $addresses,
+							'#default_value' => $defaultShippingAddress ? $defaultShippingAddress->id : 0,
+			);
+		}
+
+		$form['delivery']['name'] = array(
+						'#type' => 'textfield',
+						'#title' => t('Name'),
+						'#required' => TRUE,
+						'#size' => 30,
+						'#default_value' => $defaultShippingAddress ? $defaultShippingAddress->name : ($customer ? $customer->name : ''),
+		);
+
+		$form['delivery']['company'] = array(
+						'#type' => 'textfield',
+						'#title' => t('Company'),
+						'#required' => FALSE,
+						'#default_value' => $defaultShippingAddress ? $defaultShippingAddress->company : '',
+						'#size' => 30,
+		);
+		$form['delivery']['street'] = array(
+						'#type' => 'textfield',
+						'#title' => t('Street'),
+						'#required' => TRUE,
+						'#default_value' => $defaultShippingAddress ? $defaultShippingAddress->street : '',
+						'#size' => 30,
+		);
+		$form['delivery']['postalCode'] = array(
+						'#type' => 'textfield',
+						'#title' => t('Postal code'),
+						'#required' => TRUE,
+						'#default_value' => $defaultShippingAddress ? $defaultShippingAddress->postalCode : '',
+						'#size' => 30,
+		);
+		$form['delivery']['city'] = array(
+						'#type' => 'textfield',
+						'#title' => t('City'),
+						'#required' => TRUE,
+						'#default_value' => $defaultShippingAddress ? $defaultShippingAddress->city : '',
+						'#size' => 30,
+		);
+		$form['delivery']['country'] = array(
+						'#type' => 'select',
+						'#title' => t('Country'),
+						'#required' => TRUE,
+						'#options' => $countries,
+						'#default_value' => $defaultShippingAddress ? $defaultShippingAddress->country : '',
+		);
+		$form['delivery']['phone'] = array(
+						'#type' => 'textfield',
+						'#title' => t('Phone'),
+						'#default_value' => $defaultShippingAddress ? $defaultShippingAddress->phone : '',
+						'#size' => 30,
+		);
+		$form['delivery']['submit'] = array(
+						'#type' => 'submit',
+						'#value' => t('Continue'),
+						'#attributes' => array('class' => array('action', 'button', 'large', 'continue')),
+						//'#validate' => array('pccheckout_checkout_form_delivery_validate'),
+						'#submit' => array('pccheckout_checkout_form_delivery_submit'),
+						'#limit_validation_errors' => array(array('personal'), array('delivery')),
+		);
+
+		$form['delivery']['neutral'] = array(
+						'#type' => 'checkbox',
+						'#title' => t('Neutral shipping'),
+						'#default_value' => $cart ? $cart->neutralShipping : false,
+		);
+
+//</editor-fold>
+	}
+//<editor-fold defaultstate="collapsed" desc="Payment">
+
+	$defaultBillingAddress = FALSE;
+	$defaultNeedInvoice = FALSE;
+
+	if ($cart && $cart->HasProperty('billing_address')) {
+		$defaultBillingAddress = Addresses\Factory::Get($cart->billing_address);
+		$defaultBillingAddress->EnsureLoaded();
+		$defaultNeedInvoice = TRUE;
+	}
+
+	$form['payment']['invoicewrapperclass']['#value'] = 'hidden';
+	$required = FALSE;
+	if (isset($form_state['values']['payment']) && $form_state['values']['payment']['needinvoice']) {
+		$form['payment']['invoicewrapperclass']['#value'] = '';
+		$required = TRUE;
+	}
+
+	$form['payment']['needinvoice'] = array(
+					'#type' => 'checkbox',
+					'#default_value' => $defaultNeedInvoice,
+					'#title' => t('I need an invoice for my tax collector'),
+	);
+
+	if ($customer) {
+		$addresses = array();
+
+		$addresses[0] = ' - ' . t('New') . ' - ';
+
+		foreach (Addresses\Factory::GetAddresses($customer, true) as $address) {
+			$address->EnsureLoaded();
+			if ($address->company != '') {
+				$addresses[$address->id] = $address->company;
+			} else {
+				$addresses[$address->id] = $address->name;
+			}
+			if ($address->defaultBilling) {
+				$defaultBillingAddress = $address;
+			}
+		}
+
+		$form['payment']['address'] = array(
+						'#type' => 'select',
+						'#title' => t('Address'),
+						'#options' => $addresses,
+						'#default_value' => $defaultBillingAddress ? $defaultBillingAddress->id : 0,
+		);
+	}
+	$form['payment']['company'] = array(
+					'#type' => 'textfield',
+					'#title' => t('Company'),
+					'#required' => $required,
+					'#default_value' => $defaultBillingAddress ? $defaultBillingAddress->company : '',
+					'#size' => 30,
+	);
+	$form['payment']['name'] = array(
+					'#type' => 'textfield',
+					'#title' => t('Name'),
+					'#required' => $required,
+					'#size' => 30,
+					'#default_value' => $defaultBillingAddress ? $defaultBillingAddress->name : ($customer ? $customer->name : ''),
+	);
+	$form['payment']['street'] = array(
+					'#type' => 'textfield',
+					'#title' => t('Street'),
+					'#required' => $required,
+					'#default_value' => $defaultBillingAddress ? $defaultBillingAddress->street : '',
+					'#size' => 30,
+	);
+	$form['payment']['postalCode'] = array(
+					'#type' => 'textfield',
+					'#title' => t('Postal code'),
+					'#required' => $required,
+					'#default_value' => $defaultBillingAddress ? $defaultBillingAddress->postalCode : '',
+					'#size' => 30,
+	);
+	$form['payment']['city'] = array(
+					'#type' => 'textfield',
+					'#title' => t('City'),
+					'#required' => $required,
+					'#default_value' => $defaultBillingAddress ? $defaultBillingAddress->city : '',
+					'#size' => 30,
+	);
+	$form['payment']['country'] = array(
+					'#type' => 'select',
+					'#title' => t('Country'),
+					'#required' => $required,
+					'#options' => $countries,
+					'#default_value' => $defaultBillingAddress ? $defaultBillingAddress->country : '',
+	);
+
+	$form['payment']['vat'] = array(
+					'#type' => 'vatfield',
+					'#title' => t('Vat number'),
+					'#attributes' => array('class' => array('vat')),
+					'#default_value' => $defaultBillingAddress ? $defaultBillingAddress->vatNumber : '',
+	);
+
+	$form['payment']['reference'] = array(
+					'#type' => 'textfield',
+					'#title' => t('Reference'),
+					//    '#required' => TRUE,
+					'#default_value' => $cart ? $cart->customerReference : '',
+					'#size' => 30,
+	);
+
+
+
+	if ($cart) {
+
+		$paymentMethods = PaymentMethods\Factory::GetAll();
+
+		$options = array();
+		$methods = array();
+
+		$default = $cart->payment_method;
+
+		foreach ($paymentMethods as $value) {
+			if (!(strtolower($value->paymentMethod->internalName) == 'invoice' && $customer && !$customer->freeOfCashPayment)) {
+
+				if (!$default) {
+					$default = $value->paymentMethod->id;
+				}
+
+				$subTotalWithoutPayment = $cart->subTotalAmountWithoutPayment;
+				$cost = $value->CalculateCost($subTotalWithoutPayment);
+
+				$options[$value->id] = ''; //t($value->paymentMethod->internalName);
+
+				if (is_string($value->paymentMethod->descriptionTag)) {
+					$description = $value->paymentMethod->descriptionTag;
+				} else {
+					$description = '';
+				}
+
+				$methods[$value->id] = array(
+								'image' => Functions::GetImage('paymentmethods', $value->paymentMethod->internalName),
+								'name' => t($value->paymentMethod->internalName),
+								'cost' => $cost,
+								'description' => t($description),
+				);
+			}
+		}
+
+		$form['payment']['methods'] = array(
+						'#value' => $methods,
+		);
+
+		$form['payment']['method'] = array(
+						'#type' => 'radios',
+						'#required' => TRUE,
+						'#options' => $options,
+						'#default_value' => $default,
+						//'#title' => t('Payment methods'),
+		);
+	}
+
+	$form['payment']['subtotal'] = array('#value' => $cart ? $cart->subTotalAmount : 0);
+	$form['payment']['vatamount'] = array('#value' => $cart ? $cart->vatAmount : 0);
+	$form['payment']['total'] = array('#value' => $cart ? $cart->totalAmount : 0);
+
+	$form['payment']['terms'] = array(
+					'#type' => 'checkbox',
+					'#title' => t('I agree with the terms and conditions'),
+					'#title_display' => 'invisible',
+					'#required' => TRUE,
+	);
+
+
+	$form['payment']['submit'] = array(
+					'#type' => 'submit',
+					'#value' => t('Confirm'),
+					'#attributes' => array('class' => array('action', 'button', 'large', 'continue', 'display-block')),
+					//'#submit' => array('pccheckout_checkout_form_payment_submit'),
+//'#limit_validation_errors' => array(array('personal', 'delivery', 'payment')),
+	);
+
+
+//</editor-fold>
+
+
+	switch ($step) {
+		case 'login':
+			drupal_set_title(t('Thanks for your order'));
+			$form['login']['fieldsetclass']['#value'] = '';
+			$form['shipping']['fieldsetclass']['#value'] = 'disabled collapsed';
+			$form['payment']['fieldsetclass']['#value'] = 'disabled collapsed';
+			break;
+		case 'personal':
+			if ($customer) {
+				if ($customer->firstName != '') {
+					drupal_set_title(t('Dear @firstName, please complete your details', array('@firstName' => $customer->firstName)));
+				} else {
+					drupal_set_title(t('Please complete your details'));
+				}
+			}
+			$form['personal']['fieldsetclass']['#value'] = '';
+			$form['shipping']['fieldsetclass']['#value'] = 'disabled collapsed';
+			$form['payment']['fieldsetclass']['#value'] = 'disabled collapsed';
+
+			break;
+		case 'shipping':
+			if ($customer && $customer->firstName != '') {
+				if ($cart && $cart->isPickup) {
+					drupal_set_title(t('Dear @firstName, choose your pickup point', array('@firstName' => $customer->firstName)));
+				} else {
+					drupal_set_title(t('Dear @firstName, choose your delivery address', array('@firstName' => $customer->firstName)));
+				}
+			}
+			$form['personal']['fieldsetclass']['#value'] = 'collapsible collapsed';
+			$form['shipping']['fieldsetclass']['#value'] = '';
+			$form['payment']['fieldsetclass']['#value'] = 'disabled collapsed';
+
+			break;
+		case 'payment':
+			if ($customer) {
+				if ($customer->firstName != '') {
+					drupal_set_title(t('Dear @firstName, choose your payment method', array('@firstName' => $customer->firstName)));
+				}
+			}
+
+			$form['personal']['fieldsetclass']['#value'] = 'collapsible collapsed';
+			$form['shipping']['fieldsetclass']['#value'] = 'collapsible collapsed';
+			$form['payment']['fieldsetclass']['#value'] = '';
+
+			break;
+		case 'redirect':
+			$form['personal']['fieldsetclass']['#value'] = 'disabled collapsed';
+			$form['shipping']['fieldsetclass']['#value'] = 'disabled collapsed';
+			$form['payment']['fieldsetclass']['#value'] = 'disabled collapsed';
+			break;
+	}
+
+	$form['#cache'] = TRUE;
+	$form['#tree'] = TRUE;
+	return $form;
+}
+
+function pccheckout_checkout_form_validate(&$form, &$form_state) {
+	try {
+		if (isset($form_state['input']['op']) && ($form_state['input']['op'] == 'ajax')) {
+			if ($form_state['triggering_element']['#name'] == 'payment[method]') {
+				$cart = Carts\Factory::Current();
+				$cart->payment_method = $form_state['values']['payment']['method'];
+				Carts\Factory::Save($cart);
+			}
+
+			$form_state['rebuild'] = TRUE;
+		} else {
+			$page = $form_state['build_info']['args'][0];
+
+			switch ($page) {
+				case 'payment':
+					if (!isset($form_state['values']['payment']['method'])) {
+						form_set_error('payment][method', t('Please select a payment method'));
+					} else {
+
+						if ($form_state['values']['payment']['needinvoice']) {
+							$customer = Customers\Factory::Current();
+							$addressId = $form_state['values']['payment']['address'];
+
+							if ($addressId == 0) {
+								$address = Addresses\Factory::Create();
+								$address->phone = $customer->phone;
+							} else {
+								$address = Addresses\Factory::Get($addressId);
+								$address->EnsureLoaded();
+							}
+							Forms::LoadObject($form_state['values']['payment'], $address);
+							$address->customer = $customer->id;
+							try {
+								Addresses\Factory::Validate(clone $address);
+							} catch (\printconnect\Dal\Exception $ex) {
+								Forms::HandleException($ex, $form, 'payment][');
+							}
+							$form_state['storage']['payment']['address'] = $address;
+						}
+					}
+
+				case 'shipping':
+					$customer = Customers\Factory::Current();
+					$cart = Carts\Factory::Current();
+					if ($cart && $cart->isPickup) {
+						if (!isset($form_state['values']['pickup']['id'])) {
+							form_set_error('pickup][new', t('Please select a pickup point'));
+						}
+					} else {
+						if (isset($form_state['values']['delivery']['address'])) {
+							$addressId = $form_state['values']['delivery']['address'];
+
+							if ($addressId == 0) {
+								$address = Addresses\Factory::Create();
+								$address->firstName = $customer->firstName;
+								$address->lastName = $customer->lastName;
+								$address->phone = $customer->phone;
+							} else {
+								$address = Addresses\Factory::Get($addressId);
+								$address->EnsureLoaded();
+							}
+
+							Forms::LoadObject($form_state['values']['delivery'], $address);
+							$address->customer = $customer->id;
+							try {
+								Addresses\Factory::Validate(clone $address);
+							} catch (\printconnect\Dal\Exception $ex) {
+								Forms::HandleException($ex, $form, 'delivery][');
+							}
+							$form_state['storage']['delivery']['address'] = $address;
+						}
+					}
+				case 'personal':
+					break;
+				case 'login':
+					var_dump($form_state['triggering_element']);
+					if ($form_state['triggering_element'] == 'register') {
+						$customer = Customers\Factory::GetByEmail($form_state['values']['login']['email']);
+						if ($customer) {
+							form_set_error('login', t('This email address is already registered'));
+						} else {
+							$customer = Customers\Factory::Create();
+							Forms::LoadObject($form_state['values']['login'], $customer);
+							$customer->repeatpassword = $customer->password;
+							Customers\Factory::Validate($customer);
+							$form_state['storage']['customer'] = $customer;
+							$form_state['storage']['new_customer'] = TRUE;
+							return true;
+						}
+					}
+					if ($form_state['triggering_element'] == 'submit') {
+						$customer = Customers\Factory::Login($form_state['values']['login']['email'], $form_state['values']['login']['password']);
+						if ($customer) {
+							$form_state['storage']['customer'] = $customer;
+							return true;
+						} else {
+							form_set_error('login', t('Cannot log in using the given email and password.'));
+							return false;
+						}
+					}
+			}
+		}
+	} catch (\printconnect\Dal\Exception $ex) {
+		Forms::HandleException($ex, $form, '');
+// form_set_error();
+		return FALSE;
+	}
+}
+
+function pccheckout_checkout_form_submit(&$form, &$form_state) {
+	$cart = Carts\Factory::Current();
+	$customer = Customers\Factory::Current();
+	$paymentMethod = PaymentMethods\Factory::Get($form_state['values']['payment']['method']);
+
+	if ($form_state['values']['payment']['needinvoice']) {
+		$address = $form_state['storage']['payment']['address'];
+		Addresses\Factory::Save($address);
+		Addresses\Factory::ClearAddressesCache($customer);
+		$cart->billing_address = $address->id;
+		$cart->customer_reference = $form_state['values']['payment']['reference'];
+	} else {
+		$cart->Remove('billing_address');
+	}
+
+	$cart->payment_method = $form_state['values']['payment']['method'];
+
+	$cart->customer = $customer->id;
+
+	Carts\Factory::Save($cart);
+	$cart = Carts\Factory::Refresh($cart);
+
+	switch (strtolower($paymentMethod->paymentMethod->internalName)) {
+		case 'cod':
+			$id = $cart->id;
+			Carts\Factory::Process($cart, 'cod');
+			Carts\Factory::Delete();
+			drupal_goto('myprintconnect/orders/' . $id . '/confirmation');
+			break;
+		case 'invoice' :
+			$id = $cart->id;
+			Carts\Factory::Process($cart, 'invoice');
+			Carts\Factory::Delete();
+			drupal_goto('myprintconnect/orders/' . $id . '/confirmation');
+			break;
+		default:
+			$paymentgateway = variable_get('pc_paymentgateway', 'pcogone');
+			if (function_exists(($paymentgateway . '_processpayment'))) {
+
+				$url = call_user_func($paymentgateway . '_processpayment', $form_state['values']['payment']['method'], $customer->name, $cart->id, $cart->totalAmount, array(
+								'accept' => url('myprintconnect/orders/' . $cart->id . '/confirmation'),
+								'cancel' => url('checkout/payment'),
+				));
+
+				$_SESSION['checkout']['redirect'] = $url;
+				//drupal_goto('checkout/redirect/' . urlencode($url));
+			} else {
+				form_set_error('method', t('Not implemented.'));
+			}
+	}
+}
+
+function pccheckout_checkout_form_login_validate($form, &$form_state) {
+	try {
+		$customer = Customers\Factory::Login($form_state['values']['login']['email'], $form_state['values']['login']['password']);
+		if ($customer) {
+			$form_state['storage']['customer'] = $customer;
+			return true;
+		} else {
+			form_set_error('login', t('Cannot log in using the given email and password.'));
+			return false;
+		}
+	} catch (\printconnect\Dal\Exception $ex) {
+		Forms::HandleException($ex, $form['login'], 'login][');
+		return FALSE;
+	}
+}
+
+function pccheckout_checkout_form_register_validate($form, &$form_state) {
+	try {
+
+		$customer = Customers\Factory::GetByEmail($form_state['values']['login']['email']);
+		if ($customer) {
+			form_set_error('login', t('This email address is already registered'));
+		} else {
+			$customer = Customers\Factory::Create();
+			Forms::LoadObject($form_state['values']['login'], $customer);
+			$customer->repeatpassword = $customer->password;
+			Customers\Factory::Validate($customer);
+			$form_state['storage']['customer'] = $customer;
+			$form_state['storage']['new_customer'] = TRUE;
+			return true;
+		}
+	} catch (\printconnect\Dal\Exception $ex) {
+		Forms::HandleException($ex, $form['login'], 'login][');
+// form_set_error();
+		return FALSE;
+	}
+}
+
+function pccheckout_checkout_form_login_submit($form, &$form_state) {
+	$customer = $form_state['storage']['customer'];
+
+	Customers\Factory::Save($customer);
+
+	Customers\Factory::LoginByObject($customer);
+
+	drupal_goto('checkout/personal');
+}
+
+function pccheckout_checkout_form_register_submit($form, &$form_state) {
+	$customer = $form_state['storage']['customer'];
+
+	Customers\Factory::Save($customer);
+
+	Customers\Factory::LoginByObject($customer);
+
+	drupal_goto('checkout/personal');
+}
+
+function pccheckout_checkout_form_personal_submit($form, &$form_state) {
+	$customer = Customers\Factory::Current();
+	$customer->firstName = $form_state['values']['personal']['firstName'];
+	$customer->lastName = $form_state['values']['personal']['lastName'];
+	$customer->phone = $form_state['values']['personal']['phone'];
+	Customers\Factory::Save($customer);
+
+	drupal_goto('checkout/shipping');
+}
+
+function pccheckout_checkout_form_delivery_validate(&$form, &$form_state) {
+	$form['delivery']['fieldsetclass']['#value'] = '';
+	try {
+		$customer = Customers\Factory::Current();
+		if (isset($form_state['values']['delivery']['address'])) {
+			$addressId = $form_state['values']['delivery']['address'];
+
+			if ($addressId == 0) {
+				$address = Addresses\Factory::Create();
+				$address->firstName = $customer->firstName;
+				$address->lastName = $customer->lastName;
+				$address->phone = $customer->phone;
+			} else {
+				$address = Addresses\Factory::Get($addressId);
+				$address->EnsureLoaded();
+			}
+
+			Forms::LoadObject($form_state['values']['delivery'], $address);
+			$address->customer = $customer->id;
+			Addresses\Factory::Validate(clone $address);
+			$form_state['storage']['delivery']['address'] = $address;
+		}
+	} catch (\printconnect\Dal\Exception $ex) {
+		Forms::HandleException($ex, $form['delivery'], 'delivery][');
+	}
+
+	return $form;
+}
+
+function pccheckout_checkout_form_pickup_submit(&$form, &$form_state) {
+	$cart = Carts\Factory::Current();
+
+	$pickuppoint = PickupPoints\Factory::Get($form_state['values']['pickup']['id'], $form_state['values'] ['pickup']['country']);
+	$pickuppoint->EnsureLoaded();
+	$cart->pickuppoint = $pickuppoint;
+
+	$cart->pickuppoint->contactName = $form_state['values']['pickup']['contact'];
+	$cart->pickuppoint->email = $form_state['values']['pickup']['email'];
+	$cart->pickuppoint->phone = $form_state['values']['pickup']['sms'];
+
+	$cart->neutralShipping = $form_state['values']['pickup']['neutral'];
+
+	Carts\Factory::Save($cart);
+
+	Carts\Factory::Refresh($cart);
+
+	drupal_goto('checkout/payment');
+}
+
+function pccheckout_checkout_form_delivery_submit(&$form, &$form_state) {
+	$customer = Customers\Factory::Current();
+	$address = $form_state['storage']['delivery']['address'];
+	Addresses\Factory::Save($address);
+	Addresses\Factory::ClearAddressesCache($customer);
+
+	$cart = Carts\Factory::Current();
+	$cart->shipping_address = $address->id;
+	$cart->Remove('pickuppoint');
+	Carts\Factory::Save($cart);
+
+	drupal_goto('checkout/payment');
+}
+
+function pccheckout_checkout_form_payment_validate(&$form, &$form_state) {
+	try {
+		if (!isset($form_state['values']['payment']['method'])) {
+			form_set_error('method', t('Please select a payment method'));
+		} else {
+
+			if ($form_state['values']['payment']['needinvoice']) {
+				$customer = Customers\Factory::Current();
+				$addressId = $form_state['values']['payment']['address'];
+
+				if ($addressId == 0) {
+					$address = Addresses\Factory::Create();
+					$address->phone = $customer->phone;
+				} else {
+					$address = Addresses\Factory::Get($addressId);
+					$address->EnsureLoaded();
+				}
+				Forms::LoadObject($form_state['values']['payment'], $address);
+				$address->customer = $customer->id;
+				Addresses\Factory::Validate(clone $address);
+				$form_state['storage']['payment']['address'] = $address;
+			}
+		}
+	} catch (\printconnect\Dal\Exception $ex) {
+		Forms::HandleException($ex, $form, '');
+		return false;
+	}
+}
+
+function pccheckout_checkout_form_payment_submit(&$form, &$form_state) {
+	$cart = Carts\Factory::Current();
+	$customer = Customers\Factory::Current();
+	$paymentMethod = PaymentMethods\Factory::Get($form_state['values']['payment']['method']);
+
+	if ($form_state['values']['payment']['needinvoice']) {
+		$address = $form_state['storage']['payment']['address'];
+		Addresses\Factory::Save($address);
+		$cart->billing_address = $address->id;
+		$cart->customer_reference = $form_state['values']['payment']['reference'];
+	} else {
+		$cart->Remove('billing_address');
+	}
+
+	$cart->payment_method = $form_state['values']['payment']['method'];
+
+	$cart->customer = $customer->id;
+
+	Carts\Factory::Save($cart);
+
+	switch (strtolower($paymentMethod->paymentMethod->internalName)) {
+		case 'cod':
+			$id = $cart->id;
+			Carts\Factory::Process($cart, 'cod');
+			Carts\Factory::Delete();
+			drupal_goto('myprintconnect/orders/' . $id . '/confirmation');
+			break;
+		case 'invoice' :
+			$id = $cart->id;
+			Carts\Factory::Process($cart, 'invoice');
+			Carts\Factory::Delete();
+			drupal_goto('myprintconnect/orders/' . $id . '/confirmation');
+			break;
+		default:
+			$paymentgateway = variable_get('pc_paymentgateway', 'pcogone');
+			if (function_exists(($paymentgateway . '_processpayment'))) {
+				call_user_func($paymentgateway . '_processpayment', $form_state['values']['payment']['method'], $customer->name, $cart->id, $cart->totalAmount);
+			} else {
+				form_set_error('method', t('Not implemented.'));
+			}
+	}
+}
+
+//function pccheckout_checkout_form_register_validate(&$form, &$form_state) {
+//  try {
+//    $customer = Customers\Factory::Create();
+//    Forms::LoadObject($form_state['values']['register'], $customer);
+//    $customer->repeatpassword = $form_state['values']['register']['repeat'];
+//    Customers\Factory::Validate($customer);
+//    $form_state['storage']['customer'] = $customer;
+//  } catch (\printconnect\Dal\Exception $ex) {
+//    Forms::HandleException($ex, $form['register'], 'register][');
+//// form_set_error();
+//    return FALSE;
+//  }
+//}
+//
+//function pccheckout_checkout_form_register_submit(&$form, &$form_state) {
+//  $customer = $form_state['storage']['customer'];
+//
+//  Customers\Factory::Save($customer);
+//
+//  Customers\Factory::LoginByObject($customer);
+//
+//
+//  drupal_goto('checkout');
+////$form_state['rebuild'] = TRUE;
+//// $form_state['storage']['step'] = 2;
+//// drupal_set_message('submit register');
+//}
+//function pccheckout_checkout_form_login_validate(&$form, &$form_state) {
+//  try {
+//    $customer = Customers\Factory::GetByEmail($form_state['values']['login']['email']);
+//    if ($customer) {
+//      $customer = Customers\Factory::Login($form_state['values']['login']['email'], $form_state['values']['login']['password']);
+//      if ($customer) {
+//        $form_state['storage']['customer'] = $customer;
+//        return true;
+//      } else {
+//        form_set_error('login', t('Cannot log in using the given email and password.'));
+//        return false;
+//      }
+//    } else {
+//      $customer = Customers\Factory::Create();
+//      Forms::LoadObject($form_state['values']['login'], $customer);
+//      $customer->repeatpassword = $customer->password;
+//      Customers\Factory::Validate($customer);
+//      $form_state['storage']['customer'] = $customer;
+//      $form_state['storage']['new_customer'] = TRUE;
+//      return true;
+//    }
+//  } catch (\printconnect\Dal\Exception $ex) {
+//    Forms::HandleException($ex, $form['login'], 'login][');
+//// form_set_error();
+//    return FALSE;
+//  }
+//}
+//function pccheckout_checkout_form_login_submit(&$form, &$form_state) {
+//  $customer = $form_state['storage']['customer'];
+//
+//  Customers\Factory::Save($customer);
+//
+//  Customers\Factory::LoginByObject($customer);
+//
+//  if (isset($form_state['storage']['new_customer'])) {
+//    drupal_goto('checkout/personal');
+//  } else {
+//    drupal_goto('checkout/shipping');
+//  }
+//}
+
+function pccheckout_checkout_form_forgot_submit(&$form, &$form_state) {
+	drupal_set_message($form_state ['values']['forgot']['email']);
+}
+
+//function pccheckout_checkout_form_personal_submit(&$form, &$form_state) {
+//  $customer = Customers\Factory::Current();
+//  $customer->firstName = $form_state['values']['personal']['firstName'];
+//  $customer->lastName = $form_state['values']['personal']['lastName'];
+//  $customer->phone = $form_state['values']['personal']['phone'];
+//  Customers\Factory::Save($customer);
+//
+////  $form_state['rebuild'] = TRUE;
+////  $form_state['storage']['step'] = 3;
+//
+//  drupal_goto('checkout/shipping');
+//}
+//function pccheckout_checkout_form_delivery_validate(&$form, &$form_state) {
+//  try {
+//    $customer = Customers\Factory::Current();
+//    if (isset($form_state['values']['delivery']['address'])) {
+//      $addressId = $form_state['values']['delivery']['address'];
+//
+//      if ($addressId == 0) {
+//        $address = Addresses\Factory::Create();
+//        $address->firstName = $customer->firstName;
+//        $address->lastName = $customer->lastName;
+//        $address->phone = $customer->phone;
+//      } else {
+//        $address = Addresses\Factory::Get($addressId);
+//        $address->EnsureLoaded();
+//      }
+//
+//      Forms::LoadObject($form_state['values']['delivery'], $address);
+//      $address->customer = $customer->id;
+//      Addresses\Factory::Validate(clone $address);
+//      $form_state['storage']['delivery']['address'] = $address;
+//    }
+//  } catch (\printconnect\Dal\Exception $ex) {
+//    Forms::HandleException($ex, $form['delivery'], 'delivery][');
+//    return false;
+//  }
+//}
+//function pccheckout_checkout_form_delivery_submit(&$form, &$form_state) {
+//  $address = $form_state['storage']['delivery']['address'];
+//  Addresses\Factory::Save($address);
+//
+//  $cart = Carts\Factory::Current();
+//  $cart->shipping_address = $address->id;
+//  $cart->Remove('pickuppoint');
+//  Carts\Factory::Save($cart);
+////
+////  $form_state['rebuild'] = TRUE;
+////  $form_state['storage']['step'] = 4;
+//  drupal_goto('checkout/payment');
+//}
+
+function pccheckout_checkout_form_delivery_to_pickup_submit(&$form, &$form_state) {
+	$cart = Carts\Factory::Current();
+	$types = \printconnect\Shipping\Types\Factory::GetAll();
+	foreach ($types as $type) {
+		if ($type->isPickup) {
+			$cart->shipping_type = $type->id;
+		}
+	}
+
+//$cart->pickuppoint = FALSE;
+	Carts\Factory::Save($cart);
+//
+//  $form_state['rebuild'] = TRUE;
+//  $form_state['storage']['step'] = 3;
+
+	drupal_goto('checkout/shipment');
+}
+
+function pccheckout_checkout_form_pickup_to_delivery_submit(&$form, &$form_state) {
+	$cart = Carts\Factory::Current();
+	$types = \printconnect\Shipping\Types\Factory::GetAll();
+	foreach ($types as $type) {
+		if (!$type->isPickup) {
+			$cart->shipping_type = $type->id;
+		}
+	}
+	$cart->pickuppoint = FALSE;
+	Carts\Factory::Save($cart);
+
+//  $form_state['rebuild'] = TRUE;
+//  $form_state['storage']['step'] = 3;
+//
+	drupal_goto('checkout/shipment');
+}
+
+function pccheckout_checkout_form_pickup_validate(&$form, &$form_state) {
+	if (!isset($form_state['values']['pup']['id']) || !$form_state['values']['pup']['id']) {
+		form_set_error('pup][open', t('Please select a pickup point'));
+	}
+}
+
+//
+//function pccheckout_checkout_form_pickup_submit(&$form, &$form_state) {
+//  $cart = Carts\Factory::Current();
+//
+//  $pickuppoint = PickupPoints\Factory::Get($form_state['values']['pup']['id'], $form_state['values']['pup']['country']);
+//  $pickuppoint->EnsureLoaded();
+//  $cart->pickuppoint = $pickuppoint;
+//
+//  Carts\Factory::Save($cart);
+//
+//  Carts\Factory::Refresh($cart);
+//
+////  $form_state['rebuild'] = TRUE;
+////  $form_state['storage']['step'] = 4;
+//
+//  drupal_goto('checkout/payment');
+//}
+//function pccheckout_checkout_form_validate($form, &$form_state) {
+//  try {
+//    if (!isset($form_state['values']['payment']['method'])) {
+//      form_set_error('payment][method', t('Please select a payment method'));
+//    }
+//
+//    if ($form_state['values']['payment']['needinvoice'] == 'yes') {
+//      $customer = Customers\Factory::Current();
+//      $addressId = $form_state['values']['payment']['invoice']['address'];
+//
+//      if ($addressId == 0) {
+//        $address = Addresses\Factory::Create();
+//        $address->firstName = $customer->firstName;
+//        $address->lastName = $customer->lastName;
+//        $address->phone = $customer->phone;
+//      } else {
+//        $address = Addresses\Factory::Get($addressId);
+//        $address->EnsureLoaded();
+//      }
+//      Forms::LoadObject($form_state['values']['payment']['invoice'], $address);
+//      $address->customer = $customer->id;
+//      Addresses\Factory::Validate(clone $address);
+//      $form_state['storage']['invoice']['address'] = $address;
+//    }
+//  } catch (\printconnect\Dal\Exception $ex) {
+//    Forms::HandleException($ex, $form['payment']['invoice'], 'payment][invoice][');
+//    return false;
+//  }
+//}
+//function pccheckout_checkout_form_submit($form, &$form_state) {
+//  $cart = Carts\Factory::Current();
+//  $customer = Customers\Factory::Current();
+//  $paymentMethod = PaymentMethods\Factory::Get($form_state['values']['payment']['method']);
+//
+//  if ($form_state['values']['payment']['needinvoice'] == 'yes') {
+//    $address = $form_state['storage']['invoice']['address'];
+//    Addresses\Factory::Save($address);
+//    $cart->billing_address = $address->id;
+//    $cart->customer_reference = $form_state['values']['payment']['invoice']['reference'];
+//  }
+//
+//  $cart->payment_method = $form_state['values']['payment']['method'];
+//
+//  if ($cart->isPickup) {
+//    $cart->pickuppoint = PickupPoints\Factory::Get($form_state['values']['pup']['id'], $form_state['values']['pup']['country']);
+//    $cart->pickuppoint->EnsureLoaded();
+//    $cart->pickuppoint->firstName = $form_state['values']['pup']['contact'];
+//    $cart->pickuppoint->phone = $form_state['values']['pup']['warn']['sms']['value'];
+//    $cart->pickuppoint->email = $form_state['values']['pup']['warn']['email']['value'];
+//  }
+//
+//  $cart->customer = $customer->id;
+//
+//
+//  Carts\Factory::Save($cart);
+//
+//  switch (strtolower($paymentMethod->paymentMethod->internalName)) {
+//    case 'cod':
+//      $id = $cart->id;
+//      Carts\Factory::Process($cart, 'cod');
+//      Carts\Factory::Delete();
+//      drupal_goto('myprintconnect/orders/' . $id . '/confirmation');
+//      break;
+//    case 'invoice' :
+//      $id = $cart->id;
+//      Carts\Factory::Process($cart, 'invoice');
+//      Carts\Factory::Delete();
+//      drupal_goto('myprintconnect/orders/' . $id . '/confirmation');
+//      break;
+//    default:
+//      $paymentgateway = variable_get('pc_paymentgateway', 'pcogone');
+//      if (function_exists(($paymentgateway . '_processpayment'))) {
+//        call_user_func($paymentgateway . '_processpayment', $form_state['values']['payment']['method'], $customer->name, $cart->id, $cart->totalAmount);
+//      } else {
+//        form_set_error('payment][method', t('Not implemented.'));
+//      }
+//  }
+//}
+//function pccheckout_block_info() {
+//  $blocks['cart'] = array(
+//      'info' => t('Cart (checkout)'),
+//  );
+//  return $blocks;
+//}
+
+function pccheckout_block_view($delta = '') {
+	try {
+		switch ($delta) {
+			case 'cart':
+
+				$args = arg();
+				if ($args[0] != 'checkout') {
+					return FALSE;
+				} else {
+					$cart = Carts\Factory::Current();
+					$block = FALSE;
+					$discounts = FALSE;
+					$items = array();
+					if ($cart) {
+						foreach ($cart->items as $item) {
+
+							$itemValue = $item->price;
+
+							if ($item->discountId) {
+								$discount = new stdClass();
+								$discount->price = $itemValue;
+								$discount->description = $item->productName;
+								$discounts[] = $discount;
+							}
+
+							if ($item->productPriceGroupId) {
+
+								$text = array(t('Amount: @qty', array('@qty' => $item->quantity)));
+								$priceGroup = PriceGroups\Factory::Get($item->productPriceGroupId);
+								$priceGroup->EnsureLoaded();
+
+								$configs = Configurations\Factory::GetByPriceGroup($item->productPriceGroupId);
+								$configs->EnsureLoaded();
+
+								$configs->Sort();
+								$configs = $configs->items;
+
+								$text = array();
+								$text[] = array(
+												t('Amount'),
+												$item->quantity,
+								);
+								$list = array(t('Amount: @qty', array('@qty' => $item->quantity)));
+
+								$config = array_shift($configs);
+// $toolboxItem = Toolbox\Factory::Get($config->toolboxItem);
+								$toolboxGroup = Toolbox\Factory::GetGroup($config->toolboxGroup);
+								$list[] = t($toolboxGroup->name) . ': ' . t($config->toolboxItem->name);
+								$text[] = array(
+												t($toolboxGroup->name),
+												t($config->toolboxItem->name)
+								);
+
+
+								foreach ($configs as $config) {
+// $toolboxItem = Toolbox\Factory::Get($config->toolboxItem);
+									$toolboxGroup = Toolbox\Factory::GetGroup($config->toolboxGroup);
+
+									$list[] = t($toolboxGroup->name) . ': ' . t($config->toolboxItem->name);
+								}
+
+								if (count($item->options) == 0) {
+// $text[] = t('Extra options') . ' : ' . t('None');
+								} else {
+									$optionsText = array();
+									foreach ($item->options as $option) {
+// $option = Options\Factory::Get($optionId);
+										$optionsText[] = t($option->optionName);
+										$itemValue += $option->price;
+//$text[] = t($option->optionName);
+										$list[] = t($option->optionName);
+									}
+// $text[] = t('Extra options') . ' : ' . implode(', ', $optionsText);
+								}
+
+								$product = Products\Factory::Get($priceGroup->product);
+
+								$files = array();
+
+								if (isset($_SESSION['files'][$item->id])) {
+									foreach ($_SESSION['files'][$item->id] as $key) {
+
+										$file = printconnect\Files\Factory::Get($key);
+
+										foreach ($file->attachments as $attachmentKey => $attachment) {
+											$files[$key]['name'] = $attachmentKey;
+											$files[$key]['link'] = $attachment->url;
+											$files[$key]['size'] = $attachment->length;
+											$files[$key]['content_type'] = str_replace('/', '-', $attachment->contenttype);
+										}
+
+										if (isset($_SESSION['thumbnails'][$item->id][$key])) {
+											$thumbnail = printconnect\Files\Factory::Get($_SESSION['thumbnails'][$item->id][$key]);
+
+											foreach ($thumbnail->attachments as $attachmentKey => $attachment) {
+												$files[$key]['thumbnail'] = $attachment->url;
+											}
+										}
+									}
+								}
+
+								$item->list = $list;
+								$item->files = $files;
+								$item->price = $itemValue;
+								$item->text = $text;
+								$item->product = $product;
+								$item->product->image = Functions::GetImage('products', $item->product->id);
+
+								$items[] = $item;
+							}
+						}
+
+						$type = \printconnect\Shipping\Types\Factory::Get($cart->orderItemShipping->shippingTypeResellerShop);
+
+						foreach ($cart->orderItemsPayment as $payment) {
+							$paymentMethod = PaymentMethods\Factory::Get($cart->payment_method);
+							$payment->image = Functions::GetImage('paymentmethods', $paymentMethod->paymentMethod->internalName);
+							$payment->method = $paymentMethod;
+						}
+
+						$cart->orderItemShipping->text = t($type->shippingType->tag);
+						$cart->shippingDate = strtotime(substr($cart->shippingDate, 0, 10));
+						$cart->items = $items;
+						$cart->discounts = $discounts;
+
+
+
+//            switch ($cart->ShippingType) {
+//              case 2:
+//                $cart->orderItemShipping->text = t('Ik laat deze bestelling leveren');
+//                break;
+//              case 3:
+//                $cart->orderItemShipping->text = t('Ik haal mijn bestelling af');
+//                break;
+//            }
+
+						$block['content'] = theme('pccheckout_cart_block', array('cart' => $cart));
+					}
+					return $block;
+				}
+				break;
+		}
+		return $block;
+	} catch (\Exception $ex) {
+		Functions::HandleException($ex);
+	}
+}

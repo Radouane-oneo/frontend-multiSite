@@ -1,0 +1,12 @@
+name = Designs
+description = Allow saving of designs
+package = printconnect
+core = 7.x
+dependencies[] = pccustomers
+dependencies[] = pcproducts
+dependencies[] = pccart
+dependencies[] = fancybox
+
+scripts[] = pcdesigns.js
+stylesheets[all][] = pcdesigns.css
+

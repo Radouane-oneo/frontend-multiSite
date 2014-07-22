@@ -1,0 +1,161 @@
+<?php
+
+function pcdevel_access() {
+  global $user;
+
+  return ($user->uid);
+}
+
+function pcdevel_menu() {
+  $items['pcdevel'] = array(
+      'title' => 'Devel',
+      'page callback' => 'pcdevel_overview',
+      'description' => 'Devel',
+      'access callback' => 'pcdevel_access',
+  );
+  $items['pcdevel/phpinfo'] = array(
+      'title' => 'PHP info',
+      'page callback' => 'pcdevel_phpinfo',
+      'description' => 'Show phpinfo',
+      'access callback' => 'pcdevel_access',
+      'type' => MENU_NORMAL_ITEM,
+  );
+  $items['pcdevel/clear_cache'] = array(
+      'title' => 'Empty cache',
+      'page callback' => 'pcdevel_cache_clear',
+      'description' => 'Clear the CSS cache and all database cache tables which store page, node, theme and variable caches.',
+      'access callback' => 'pcdevel_access',
+      'type' => MENU_NORMAL_ITEM,
+  );
+  $items['pcdevel/clear_cache/%'] = array(
+      'page arguments' => array(2),
+      'access callback' => 'pcdevel_access',
+      'type' => MENU_CALLBACK
+          ,
+  );
+  return $items;
+}
+
+function pcdevel_pcmenu() {
+  global $user;
+  $menuItems = array();
+  if ($user->uid) {
+//    $items['pcdevel'] = array(
+//        '#title' => t('Devel'),
+//        '#description' => t('Development aids'),
+//        '#link' => 'pcdevel',
+//        '#weight' => 50,
+//    );
+//
+//
+//    $path = drupal_get_destination();
+//    $path = $path['destination'];
+//
+//    $items['pcdevel']['clear_cache'] = array(
+//        '#title' => t('Clear cache'),
+//        '#link' => 'pcdevel/clear_cache/' . urlencode($path),
+//    );
+//
+//    $items['pcdevel']['phpinfo'] = array(
+//        '#title' => t('PHP info'),
+//        '#link' => 'pcdevel/phpinfo',
+//    );
+
+
+    $path = drupal_get_destination();
+    $path = $path['destination'];
+    $items[] = l(t('Clear cache'), 'pcdevel/clear_cache/' . urlencode($path));
+    $items[] = l(t('PHP Info'), 'pcdevel/phpinfo');
+
+
+    $menuItems['devel'] = array(
+        '#title' => t('Devel'),
+        '#description' => t('Development aids'),
+        '#link' => 'pcdevel',
+        '#weight' => 50,
+        '#dropdown' => theme('item_list', array('items' => $items)));
+  }
+  return $menuItems;
+}
+
+function pcdevel_cache_clear($redirect = '') {
+  drupal_flush_all_caches();
+
+  drupal_set_message('Cache cleared.');
+
+  drupal_goto(urldecode($redirect));
+}
+
+function pcdevel_phpinfo() {
+  phpinfo();
+}
+
+function pcdevel_overview() {
+  return theme('item_list', array('items' => array(
+          l('PHPInfo', 'pcdevel/phpinfo'),
+          l('Clear cache', 'pcdevel/clear_cache'),
+          )));
+}
+
+//function pcdevel_block_info() {
+//  /*$blocks['debug'] = array(
+//      'info' => t('Debug'),
+//  );*/
+//  return $blocks;
+//}
+
+function pcdevel_block_view($delta = '') {
+  switch ($delta) {
+    case 'debug':
+      global $user;
+      $block = array();
+      if ($user->uid) {
+        $block['subject'] = t('Debug');
+        $block['content'] = theme('table', array('rows' => \printconnect\Diagnostics\Debug::GetLog()));
+      }
+
+      return $block;
+      break;
+  }
+  return $block;
+}
+
+function pcdevel_exit() {
+  /*$fp = fopen('pcdevel.log', 'aw');
+  if ($fp) {
+    $log = \printconnect\Diagnostics\Debug::GetLog();
+    foreach ($log as $line) {
+      fputcsv($fp, $line);
+    }
+    fclose($fp);
+  }*/
+}
+
+/* function pcdevel_form_alter(&$form, &$form_state, $form_id) {
+  global $user;
+
+  $forms = explode(',', variable_get('pcdevel_debugforms'));
+
+  if ($user->uid && in_array($form_id, $forms)) {
+  $form['submitted'] = array(
+  '#type' => 'item',
+  '#title' => t('Time submitted'),
+  '#markup' => date('h:i:s'),
+  );
+
+  if (isset($form_state['triggering_element'])) {
+  $form['triggering_element'] = array(
+  '#type' => 'item',
+  '#title' => t('Triggering element'),
+  '#markup' => '<pre>' . print_r($form_state['triggering_element'], TRUE) . '</pre>',
+  );
+  }
+
+  $form['formstate'] = array(
+  '#type' => 'item',
+  '#title' => t('Form state'),
+  '#markup' => '<pre>' . print_r($form_state, true) . '</pre>',
+  );
+  }
+  return $form;
+  } */

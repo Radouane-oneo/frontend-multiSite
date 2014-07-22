@@ -1,0 +1,12 @@
+name = Designtool
+description = Integrates the Designtool
+package = printconnect
+core = 7.x
+
+dependencies[] = fancybox
+
+scripts[] = pcdesigntool.js
+
+stylesheets[all][] = pcdesigntool.css
+
+

@@ -1,0 +1,18 @@
+{
+    "name": "Frontend Flyer",
+    "type": "application",
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/printconcept/phing"
+        }
+    ],
+    "require-dev": {
+        "phing/phing": "dev-fixes",
+        "phpdocumentor/phpdocumentor": "v2.0.1"
+    }
+}

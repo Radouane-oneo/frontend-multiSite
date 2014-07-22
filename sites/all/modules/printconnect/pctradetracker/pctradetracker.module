@@ -1,0 +1,16 @@
+<?php
+
+function pctradetracker_form_pcorders_order_form_alter(&$form, $form_state, $form_id)
+{
+    $path = arg();
+    if (count($path) == 4 && $path[1] == 'orders' && $path[3] == 'confirmation') {
+        $orderId = $path[2];
+        $order = \printconnect\Orders\Factory::Get($orderId);
+
+        $amount = $order->itemsSubTotal;
+
+        $form['tradetrackerpixel'] = array(
+            '#markup' => '<img src="https://ts.tradetracker.net/?cid=2119&pid=2877&tid=' . $order->id . '&tam=' . $amount . '" style="width:1px; height:1px; border:0px;" />'
+        );
+    }
+}

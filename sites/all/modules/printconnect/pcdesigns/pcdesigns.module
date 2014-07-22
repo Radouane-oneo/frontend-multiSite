@@ -1,0 +1,312 @@
+<?php
+
+use \printconnect\Customers;
+use \printconnect\Customers\Designs\Factory;
+use \printconnect\Products;
+use \printconnect\Products\PriceGroups;
+use \printconnect\Carts;
+
+function pcdesigns_menu() {
+  $items['myprintconnect/designs'] = array(
+      'title' => 'My saved designs',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pcdesigns_saveddesigns_form'),
+      'access callback' => 'pccustomers_access',
+  );
+  $items['myprintconnect/designs/callback'] = array(
+      'title' => 'Personalize your designs',
+      'page callback' => 'pcdesigns_callback',
+      'page arguments' => array(),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+          //'file' => 'pctemplates.config.inc',
+  );
+  return $items;
+}
+
+function pcdesigns_saveddesigns_form($form, $form_state) {
+  _pccustomers_ensureloggedin();
+
+  $customer = Customers\Factory::Current();
+  $designs = Factory::GetByCustomer($customer, FALSE);
+
+  $form['designs'] = array(
+      '#type' => 'fieldset',
+      '#title' => t("You started @number lay-outs that haven't been ordered yet", array('@number' => $designs->count)),
+  );
+
+  foreach ($designs as $design) {
+    $priceGroup = $design->priceGroup->id;
+
+    $product = $design->priceGroup->product;
+
+    $form['designs'][$design->id] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('design')),
+        'image' => array(
+            '#type' => 'container',
+            '#attributes' => array('class' => array('image')),
+            'content' => array(
+                '#markup' => theme('designtoollink', array(
+                    'savedDesignId' => $design->id,
+                    'jobId' => $design->jobId,
+                    'title' => $product->name,
+                    //'content' => t('Customize your') . ' ' . strtolower($product->name),
+                    'content' => theme('designtooljobthumb', array('jobId' => $design->jobId)),
+                    'html' => true,
+                    'ribbons' => 'design',
+                    'oi' => array(
+                        'priceGroupId' => $design->priceGroup->id,
+                        'quantity' => $design->quantity,
+                        'options' => $design->options,
+                    ),
+                    'params' => array('designId' => $design->id),
+                    'callback' => 'myprintconnect/designs/callback/',
+                    'versioning' => TRUE,
+//                    'attributes' => array('class' => array('button', 'action')),
+                )),
+            /*
+              '#type' => 'item',
+              '#title' => t('Image'),
+              '#markup' => theme('image', array('path' => variable_get('pc_designtoolurl', 'http://designtool.stg.printconnect.com') . '/job/thumb/jobid/' . $design->jobId)),
+             */
+            ),
+        ),
+        'details' => array(
+            '#type' => 'container',
+            '#attributes' => array('class' => array('details')),
+            'product' => array(
+                '#type' => 'item',
+                '#title' => strtoupper(t('Chosen Product')).' :',
+                '#markup' => '<h2>' . $product->name . '</h2>',
+            ), /*
+              'quantity' => array(
+              '#type' => 'item',
+              '#title' => t('Quantity'),
+              '#markup' => $design->quantity,
+              ),
+              'job' => array(
+              '#type' => 'item',
+              '#title' => t('Job'),
+              '#markup' => $design->jobId,
+              ), */
+            'updated' => array(
+                '#type' => 'item',
+                '#title' => t('Last edited').' :',
+                '#markup' =>  format_date($design->lastEdited),
+            ),
+            /*
+              'link' => array(
+              '#markup' => theme('designtoollink', array(
+              'savedDesignId' => $design->id,
+              'jobId' => $design->jobId,
+              'title' => $product->name,
+              'content' => t('Customize your') . ' ' . strtolower($product->name),
+              'ribbons' => 'design',
+              'oi' => array(
+              'priceGroupId' => $design->priceGroup->id,
+              'quantity' => $design->quantity,
+              'options' => $design->options,
+              ),
+              // 'callback' => 'templates/callback/order',
+
+              'versioning' => TRUE,
+              'attributes' => array('class' => array('button', 'action')),
+              )),
+              ), */
+            'order' => array(
+                '#attributes' => array('class' => array('order')),
+                '#type' => 'submit',
+                '#value' => t('Order now'),
+                //'#validate' => array('pcdesigns_saveddesigns_form_order_validate'),
+                '#submit' => array('pcdesigns_saveddesigns_form_order_submit'),
+            ),
+            'order' => array(
+                '#markup' => theme('designtoollink', array(
+                    'savedDesignId' => $design->id,
+                    'jobId' => $design->jobId,
+                    'title' => $product->name,
+                    //'content' => t('Customize your') . ' ' . strtolower($product->name),
+                    'content' => t('Continue'),
+                    'html' => false,
+                    'ribbons' => 'design',
+                    'oi' => array(
+                        'priceGroupId' => $design->priceGroup->id,
+                        'quantity' => $design->quantity,
+                        'options' => $design->options,
+                    ),
+                    'params' => array('designId' => $design->id),
+                    'callback' => 'myprintconnect/designs/callback/',
+                    'versioning' => TRUE,
+                    'attributes' => array('class' => array('button', 'action', 'order')),
+                ))),
+            'delete' => array(
+                '#type' => 'submit',
+                '#name' => 'delete_' . $design->id,
+//                '#value' => t('Delete'),
+                '#attributes' => array('class' => array('delete')),
+                //'#validate' => array('pcdesigns_saveddesigns_form_delete_validate'),
+                '#submit' => array('pcdesigns_saveddesigns_form_delete_submit'),
+            )
+        )
+    );
+  }
+
+  $form['designs'] = array_reverse($form['designs'], true);
+
+  $keys = element_children($form['designs']);
+
+  if (count($keys)) {
+    $form['designs'][$keys[0]]['#attributes']['class'][] = 'first';
+    $form['designs'][$keys[count($keys) - 1]]['#attributes']['class'][] = 'last';
+  }
+
+  $form['#cache'] = TRUE;
+
+  return $form;
+}
+
+function pcdesigns_saveddesigns_form_delete_submit($form, &$form_state) {
+  $customer = Customers\Factory::Current();
+  $designs = Factory::GetByCustomer($customer);
+  $id = $form_state['triggering_element']['#array_parents'][1];
+  Factory::Delete($id);
+//Factory::Refresh($designs);
+  $form_state['rebuild'] = TRUE;
+}
+
+function pcdesigns_saveddesigns_form_order_submit($form, &$form_state) {
+  $id = $form_state['triggering_element']['#array_parents'][1];
+
+  $design = Factory::Get($id);
+
+  $cart = Carts\Factory::Current();
+  $customer = Customers\Factory::Current();
+
+  if (!$cart) {
+    $cart = Carts\Factory::Create();
+    $cart->customerId = $customer->id;
+    Carts\Factory::Save($cart);
+  }
+  $item = Carts\Factory::CreateItem($cart, $design->priceGroup->id, $design->quantity, NULL, NULL, $design->options);
+//$item->file = $file;
+//$item->thumbnail = $thumbnail;
+  $item->design_tool_job_id = $design->jobId;
+
+  Carts\Factory::SaveItem($item);
+  Carts\Factory::Refresh($cart);
+
+  drupal_goto('cart');
+
+//$form_state['rebuild'] = TRUE;
+}
+
+function pcdesigns_callback() {
+
+  switch ($_GET['doClose']) {
+    case 2:
+
+    case 1:
+      print '<script type="text/javascript">top.location = top.location;</script>';
+      break;
+    default:
+      if (!isset($_GET['versionsaved'])) {
+
+        $file = $_GET['fileid'];
+        $thumbnail = $_GET['thumbid'];
+        $jobId = $_GET['jobid'];
+
+        $priceGroupId = $_GET['priceGroupId'];
+        $qty = $_GET['qty'];
+        $options = $_GET['options'];
+
+//module_invoke('pcdesigntool', 'save', $jobId, 'design');
+
+        $cart = Carts\Factory::Current();
+        $customer = Customers\Factory::Current();
+
+        if (!$cart) {
+          $cart = Carts\Factory::Create();
+          $cart->customerId = $customer->id;
+          Carts\Factory::Save($cart);
+        }
+
+        $item = Carts\Factory::CreateItem($cart, $priceGroupId, $qty, NULL, NULL, $options);
+        $item->file = $file;
+        $item->thumbnail = $thumbnail;
+        $item->design_tool_job_id = $jobId;
+
+        if (isset($_GET['myPcId'])) {
+          $_SESSION['savedDesigns'][$item->id] = $_GET['myPcId'];
+        }
+
+        Carts\Factory::SaveItem($item);
+//  //\printconnect\Carts\Factory::RefreshItem($item);
+        Carts\Factory::Refresh($cart);
+
+
+
+
+        print '<script type="text/javascript">top.location = "' . url('cart') . '";</script>';
+        break;
+      } else {
+        //print '<script type="text/javascript">top.location = top.location;</script>';
+      }
+  }
+  if (isset($_GET['myPcId'])) {
+      Factory::Delete($_GET['myPcId']);   
+  }
+
+  exit;
+  if (isset($_GET['doClose']) && $_GET['doClose'] > 0) {
+    print '<script type="text/javascript">top.location = top.location;</script>';
+    exit;
+  }
+}
+
+function pcdesigns_form_pcorders_order_form_alter(&$form, $form_state, $form_id) {
+  // if ($form['confirmation']['#value']) {
+  //$order = $form['order']['#value'];
+  $order = $form_state['storage']['order'];
+
+  foreach ($order->orderItems as $item) {
+    if (isset($_SESSION['savedDesigns'][$item->id]) && !is_null($_SESSION['savedDesigns'][$item->id]) && $_SESSION['savedDesigns'][$item->id] != 'null') {
+      try {
+        Factory::Delete($_SESSION['savedDesigns'][$item->id]);
+      } catch (\Exception $ex) {
+        
+      }
+      unset($_SESSION['savedDesigns'][$item->id]);
+    }
+  }
+  //}
+}
+
+function pcdesigns_block_view_pccustomers_profile_alter(&$data, $block) {
+  $customer = $data['customer'];
+  if ($customer) {
+    $designs = Factory::GetByCustomer($customer,false);
+    if ($designs->count) {
+      $data['content']['designs'] = array(
+          '#theme' => 'item_list',
+          '#items' => array(
+              l(t('Saved designs') . ' (' . $designs->count . ')', 'myprintconnect/designs'),
+          ),
+          '#weight' => 50,
+      );
+    }
+  }
+}
+
+function pcdesigns_block_view_pccustomers_links_alter(&$data, $block) {
+  $customer = $data['customer'];
+  if ($customer) {
+    $designs = Factory::GetByCustomer($customer);
+    if ($designs->count) {
+      $data['content']['links']['designs'] = array(
+          '#markup' => theme('item_list', array('items' => array(
+                  l(t('Saved designs') . ' (' . $designs->count . ')', 'myprintconnect/designs'),
+                  ))));
+    }
+  }
+}

@@ -1,0 +1,67 @@
+.front.page-cobranding .cobranding-content{
+  position:relative
+}
+
+.front.page-cobranding .cobranding-content .image{
+  overflow:hidden;
+  max-width:900px;
+  max-height:260px;
+}
+
+.front.page-cobranding .section-main > .left{
+  width:inherit !important;
+  left:0 !important;
+}
+
+.front.page-cobranding .cobranding-content .products{
+  float:left;
+  width:220px;
+}
+
+.front.page-cobranding .cobranding-content .products.all{
+  bottom:0;
+  position:absolute;
+}
+
+.front.page-cobranding .cobranding-content .products li{
+  background:none;
+  list-style:none;
+  margin:0;
+}
+.front.page-cobranding .cobranding-content .products li{
+  padding:10px;
+  display:block;
+  color:white;
+
+  border-bottom: solid 1px white;
+}
+
+.front.page-cobranding .cobranding-content .products li a{ 
+  display:block;
+  color:white;
+  background:url('icon_continue.png') right center no-repeat;
+}
+
+.front.page-cobranding .cobranding-content .products.all li{
+  border-top: solid 1px white;
+  border-bottom: none;
+}
+
+.front.page-cobranding .cobranding-content .text{
+  float:right;
+  width:700px;
+  padding:10px;
+  background-color:white;
+}
+
+.front.page-cobranding .cobranding-content .products li #pccobranding-login-form{ 
+  color:#666666;
+}
+
+
+#pccobranding-login-form fieldset .form-type-textfield label + input, #pccobranding-login-form fieldset .form-type-password label + input, #pccobranding-login-form fieldset .form-type-password label{
+  margin: 0;
+  min-width:0;
+  width: inherit;
+  color:#666666;
+}

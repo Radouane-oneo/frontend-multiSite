@@ -1,0 +1,13 @@
+name = Designer
+description = Designer module
+package = printconnect
+core = 7.x
+
+dependencies[] = pccart
+dependencies[] = pcproducts
+
+stylesheets[all][] = pcdesigner.css
+
+scripts[] = pcdesigner.js
+
+

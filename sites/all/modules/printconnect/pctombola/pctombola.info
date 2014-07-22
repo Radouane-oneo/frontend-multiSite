@@ -1,0 +1,10 @@
+name = pctombola
+description = module tombola
+package = printconnect
+core = 7.x
+
+dependencies[] = fancybox
+stylesheets[all][] = pctombola.css
+scripts[] = pctombola.js
+
+

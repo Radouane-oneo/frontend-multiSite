@@ -1,0 +1,11 @@
+name = Invoices
+description = Invoices module
+package = printconnect
+core = 7.x
+
+dependencies[] = pccustomers
+
+
+
+
+

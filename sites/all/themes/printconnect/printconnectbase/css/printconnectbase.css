@@ -1,0 +1,536 @@
+
+body{
+
+}
+
+img{
+  max-width:100%;
+}
+
+#main{
+  min-height:300px;
+}
+#bottom{
+  min-height: 200px;
+}
+
+.form-type-textfield, 
+.form-type-select, 
+.form-type-checkbox, 
+.form-type-vatfield ,
+.form-type-password {
+  /*  clear:both;*/
+}
+
+.form-type-textfield label, 
+.form-type-select label, 
+.form-type-checkbox label, 
+.form-type-vatfield label,
+.form-type-password label,
+.form-type-item label{
+  float:left;
+  width:30%;
+  clear:left;
+}
+
+.form-type-textfield input,
+.form-type-select select,
+.form-type-vatfield input,
+.form-type-password input{
+  box-sizing:border-box;
+  -moz-box-sizing:border-box; 
+  -webkit-box-sizing:border-box; 
+  width: 70%;
+}
+
+.form-type-vatfield input.country{
+  width:8%;
+}
+
+.form-type-vatfield input.number{
+  width:60%;
+  margin-left: 2%;
+}
+
+.form-item input.postalCode {
+  float:left;
+  width:10%;
+}
+
+.form-item input.city {
+  width:58%;
+  clear:right;
+  margin-left: 2%;
+}
+
+input.form-checkbox,
+input.form-radio{
+  margin: 0;
+}
+
+
+#block-locale-language.dropdown{
+  padding: 0;
+  margin:0;
+}
+
+#block-locale-language.dropdown .content{
+  background: #ffffff;
+  padding:0;
+}
+
+#block-locale-language.dropdown .content .current{
+  background: #ffffff url('images/dropdown_arrow.png') no-repeat right center ;
+  padding: 0 10px 0 5px;
+  border: 1px solid #dddddd;
+  min-width:85px;
+}
+
+#block-locale-language.dropdown .content ul{
+  margin: 0;
+  list-style:inside;
+  padding: 0;
+  display: none;
+  position : absolute;
+  z-index : 2000;
+  border: 1px solid #dddddd;  
+}
+
+#block-locale-language.dropdown .content ul li{
+  margin: 0;	
+  padding: 0 10px 0 5px;
+  background: #ffffff;
+  border-bottom: 1px solid #dddddd;
+  display : block;
+  float : none;    
+}
+
+#block-locale-language.dropdown .content ul li:hover{
+  background: #f0f0f0;
+}
+
+#block-locale-language.dropdown .content ul li > *,
+#block-locale-language.dropdown .content .current > *{
+  color: #333333;
+  text-decoration: none;
+  padding: 2px 5px 2px 25px;
+  display: block;
+  margin: 0;
+  background-position: left center;
+  background-repeat: no-repeat;
+  text-align:left;
+  border:none;
+}
+
+#block-locale-language.dropdown .content a.active{
+  color: #333333;
+  text-decoration: none;
+  border: 1px solid #dddddd;
+  border:none;
+  display:block;
+}
+
+#block-locale-language.dropdown .content .nl-BE > *,
+#block-locale-language.dropdown .content .nl-be > *{
+  background-image: url("images/flags/be-nl.png");
+}
+
+#block-locale-language.dropdown .content .fr-BE > *,
+#block-locale-language.dropdown .content .fr-Be > *,
+#block-locale-language.dropdown .content .fr-be > *{
+  background-image: url("images/flags/be-fr.png");
+}
+
+#block-locale-language.dropdown .content .nl-NL > *,
+#block-locale-language.dropdown .content .nl > *{
+  background-image: url("images/flags/nl-nl.png");
+}
+
+#block-locale-language.dropdown .content .fr-FR > *,
+#block-locale-language.dropdown .content .fr > *{
+  background-image: url("images/flags/fr-fr.png");
+}
+
+#block-locale-language.dropdown .content .en > *{
+  background-image: url("images/flags/gb-en.png");
+}
+
+.page-myprintconnect-login .form-radios{
+  margin-left:30%;
+}
+
+.page-myprintconnect-login .form-radios > .form-item-options{
+  float: left;
+  margin-bottom: 10px;
+  margin-right: 20px;
+}
+
+.page-myprintconnect-login .form-radios > .form-item-options{
+  float: left;
+  margin-bottom: 10px;
+  margin-right: 20px;
+}
+
+
+.page-cart form .shipping .deadline,
+.page-cart form .shipping .delivery,
+.page-templates form .shipping .deadline,
+.page-templates form .shipping .delivery{
+  padding-top:40px;
+  text-align:center;
+}
+.page-cart form .shipping .deadline,
+.page-templates form .shipping .deadline{
+  background: transparent url('images/shipping/pt_icon_1.png') center top no-repeat;
+}
+.page-cart form .shipping .shipping,
+.page-templates form .shipping .shipping{
+  background: transparent url('images/shipping/pt_icon_2.png') center top no-repeat;
+}
+.page-cart form .shipping .delivery,
+.page-templates form .shipping .delivery  {
+  background: transparent url('images/shipping/pt_icon_3.png') center top no-repeat;
+}
+
+#pccart-cart-form .shipping table.grid tbody tr td .address{
+  line-height: 18px;
+}
+
+#pccart-cart-form .shipping table.grid > tbody > tr.even{
+  background: none;
+}
+
+html.js fieldset.collapsed{
+  height:inherit;
+}
+
+table th, table td{
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.form-actions .link{
+  line-height: 50px;
+}
+
+.page-myprintconnect-login  #edit-forgot.collapsed legend{
+  font-size: 12px;
+  line-height: 18px;
+  border: 0 none;
+  position: absolute;
+  top: -42px;
+}
+
+.page-myprintconnect-login  #edit-forgot legend{
+  font-size: 12px;
+  line-height: 18px;
+  border: 0 none;
+  top: 0;	
+}
+
+#pccart-cart-form .item .price{font-size: 18px;}
+
+#pcproducts-productconfig-form .options div.form-type-checkbox{
+  float: left;
+  width: 48%;
+  margin-right: 2%;
+}
+
+#pcproducts-productconfig-form .options div.form-type-checkbox:nth-child(even){
+  margin-right: 0%;
+  margin-left: 2%;
+}
+
+#pccart-cart-form .item .remove,
+#pccart-cart-form .item .remove:hover{
+  background: transparent url('images/delete.png') center center no-repeat !important;
+}
+
+
+.page-myprintconnect-login .form-radios .form-item{
+  float: left;
+  margin-bottom: 2em;
+  width: 50%;	
+  margin-left: 0;
+  margin-right: 0;
+}
+
+#pccart-cart-form .item div.upload-box{
+  padding-top: 110px;
+  background: url("images/upload.png") center center no-repeat;
+}
+
+#pccart-cart-form .shipping td{line-height: 18px;padding:5px 0;}
+#pccart-cart-form .shipping td input[type="radio"]{margin-right:10px;}
+
+#pccart-cart-form .item .prefix{
+  text-align: left;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+#pcorders-order-form .name{
+  margin-bottom: 10px;
+}
+
+#pcorders-order-form .smaller{
+  margin-top: 10px;
+}
+
+input[type="submit"],
+a.button{
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;         /* Opera/IE 8+ */ 	
+}
+
+.region-closure .menu li{
+  float:left;
+  list-style:none;
+}
+
+.region-triptych .block{
+  float:left;
+  width:33%;
+}
+
+#dropdown{
+  position:absolute;
+  margin: 0 auto;
+  margin-top:-2px;
+  width:100%;
+  z-index:200;
+  /* display:none;*/
+  background:transparent url(images/purple_arrow.png) 20% top no-repeat;
+  left:0;
+  line-height: inherit;
+
+/*  -webkit-transform: rotateX(60deg);
+  -moz-transform: rotateX(60deg);
+  -o-transform: rotateX(60deg);
+  transform: rotateX(60deg);*/
+
+/*  -webkit-transform: rotate(-360deg) scale(0,0);
+  -moz-transform: rotate(-360deg) scale(0,0);
+  -o-transform: rotate(-360deg) scale(0,0);
+  transform: rotate(-360deg) scale(0,0);*/
+
+  -webkit-transition:all .5s ease;
+  -moz-transition:all .5s ease;
+  -o-transition: all .5s ease;
+  transition:all .5s ease;
+
+/*  transform-origin:0 0;
+  -ms-transform-origin:0 0;  IE 9 
+  -webkit-transform-origin:0 0;  Safari and Chrome 
+  -moz-transform-origin:0 0;  Firefox 
+  -o-transform-origin:0 0;  Opera */
+
+  /*      transform-origin: 0 0 50px;
+    -ms-transform-origin: 0 0 50px;
+    -webkit-transform-origin: 0 0 50px;
+    -moz-transform-origin: 0 0 50px;
+    -o-transform-origin:0 0 50px;*/
+
+
+  display:block;
+  /*height:0;*/
+  opacity:0;
+  visibility: hidden;
+}
+
+#dropdown.open{
+  opacity:1;
+/*  height:inherit;*/
+  display:block;
+  visibility: visible;
+/*  -webkit-transform:rotateX(0);
+  -moz-transform: rotateX(0);
+  -o-transform: rotateX(0);
+  transform:rotateX(0);*/
+
+/*  -webkit-transform:rotate(0) scale(1,1);
+  -moz-transform: rotate(0) scale(1,1);
+  -o-transform: rotate(0) scale(1,1);
+  transform:rotate(0) scale(1,1);*/
+}
+
+#dropdown .region-dropdown{
+  background:white url(images/menu_background.jpg) left top repeat-y;
+  -moz-box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+  -webkit-box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+  box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+
+  -webkit-border-radius: 4px 4px 4px 4px;
+  -moz-border-radius: 4px 4px 4px 4px;
+  border-radius: 4px 4px 4px 4px;
+
+  box-sizing:border-box;
+  -moz-box-sizing:border-box; 
+  -webkit-box-sizing:border-box;
+  margin-top:1em;
+}
+
+#dropdown .region-dropdown .block:first-child li,
+#dropdown .region-dropdown .block:first-child a,
+#dropdown .region-dropdown .block:first-child h2{
+  color:white;
+}
+
+#dropdown .region-dropdown .block{
+  float:left;
+  width:25%;
+  padding:1em;
+  box-sizing:border-box;
+  -moz-box-sizing:border-box; 
+  -webkit-box-sizing:border-box;
+}
+
+#dropdown .region-dropdown #block-pcproducts-top li{
+  line-height: 2em;
+  font-size:larger;
+}
+#dropdown .region-dropdown #block-pcproducts-alphalist{
+  width:75%;
+}
+/*
+#dropdown .region-dropdown #block-pcproducts-alphalist{
+  padding:0;
+  padding-top:1em;
+}
+
+#dropdown .region-dropdown #block-pcproducts-alphalist{
+  padding:0;
+  padding-top:1em;
+}*/
+
+#dropdown .region-dropdown #block-pcproducts-alphalist h2{
+  padding-left:0;
+}
+
+#dropdown .region-dropdown #block-pcproducts-alphalist .col{
+  padding-right:1em;
+  float:left;
+  width:33%;
+  box-sizing:border-box;
+  -moz-box-sizing:border-box; 
+  -webkit-box-sizing:border-box;
+}
+
+#dropdown .region-dropdown #block-pcproducts-alphalist .col .initial-letter{
+  color:inherit;
+}
+
+#footer #site-slogan{
+  float:right;
+  font-size: 20px;
+  font-weight: normal;
+  line-height: 30px;
+}
+
+#closure li{
+  float:left;
+  list-style:none;
+}
+#navigation ul#main-menu{
+  float:left;
+  box-sizing:border-box;
+  -moz-box-sizing:border-box; 
+  -webkit-box-sizing:border-box; 
+  margin:0;
+  width:inherit;
+}
+
+#navigation .region-nav-right{
+  float:right;
+  width:45%;
+  box-sizing:border-box;
+  -moz-box-sizing:border-box; 
+  -webkit-box-sizing:border-box; 
+  margin:0;
+}
+
+#search-block-form, #search-form  {
+  position:relative;
+}
+
+#search-block-form .form-submit, #search-form .form-submit{
+  background:url(images/glass.png) center center no-repeat;
+  width:50px;
+  text-indent: -9999px;
+  position:absolute;  
+  right:0;
+  top:0;
+  border:0;
+  -moz-box-shadow:nones;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+
+#search-block-form .form-text{
+  width:100%;
+}
+.search-results.pcproducts-results .search-snippet img{
+  width:30%;
+}
+
+#block-pcproducts-calculator input{
+  width:100%;
+}
+
+#pcproducts-productconfig-form .configuration .replacement .dropdown {
+  display:none;
+  z-index:300;
+  position:absolute;
+  width:150%;
+  background:white;
+  margin:0;
+  right:0;
+  -moz-box-shadow: 3px 3px 3px #666;
+  -webkit-box-shadow: 3px 3px 3px #666;
+  box-shadow: 3px 3px 3px #666;
+
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+
+  box-sizing:border-box;
+  -moz-box-sizing:border-box; 
+  -webkit-box-sizing:border-box;
+
+/*  -webkit-transform: rotateX(60deg);
+  -moz-transform: rotateX(60deg);
+  -o-transform: rotateX(60deg);
+  transform: rotateX(60deg);*/
+  -webkit-transition:all .5s ease;
+  -moz-transition:all .5s ease;
+  -o-transition: all .5s ease;
+  transition:all .5s ease;
+
+/*  transform-origin:0 0;
+  -ms-transform-origin:0 0;  IE 9 
+  -webkit-transform-origin:0 0;  Safari and Chrome 
+  -moz-transform-origin:0 0;  Firefox 
+  -o-transform-origin:0 0;  Opera */
+
+  /*  transform-origin: 0 0 50px;
+    -ms-transform-origin: 0 0 50px;
+    -webkit-transform-origin: 0 0 50px;
+    -moz-transform-origin: 0 0 50px;
+    -o-transform-origin:0 0 50px;*/
+
+  opacity:0;
+  display:block;
+  visibility:hidden;
+}
+
+#pcproducts-productconfig-form .configuration .replacement  .dropdown.open {
+  opacity:1;
+  display:block;
+  visibility: visible;
+/*  -webkit-transform:rotateX(0);
+  -moz-transform: rotateX(0);
+  -o-transform: rotateX(0);
+  transform:rotateX(0);*/
+}

@@ -1,0 +1,35 @@
+msgid "Cart"
+msgstr "Winkelwagen"
+
+msgid "Add to cart"
+msgstr "In winkelwagen"
+
+msgid "Shopping cart"
+msgstr "Winkelwagen"
+
+msgid "Shipment"
+msgstr "Levering"
+
+msgid "Depending on the options, the delivery time may vary"
+msgstr "Let op! De verzenddatum van dit product kan veranderen naargelang de opties die je erbij kiest! De geschatte leverdatum vind je in de winkelwagen."
+
+msgid "Expected delivery"
+msgstr "Geschatte leverdatum"
+
+msgid "Your order is ready for shipment"
+msgstr "Je bestelling wordt verzonden op:"
+
+msgid "Order before"
+msgstr "Bestel voor"
+
+msgid "Your information is never exchanged / sold to third parties"
+msgstr "Je informatie wordt nooit doorgegeven aan derden"
+
+msgid "Heb je een promocode, voucher of cadeaubon gekregen? Vul hem dan hier in!"
+msgstr "Heb je een promocode, voucher of cadeaubon gekregen? Vul dan hier je code in!"
+
+msgid "Continue shopping"
+msgstr "Verder winkelen"
+
+msgid "No file uploaded"
+msgstr "Upload jouw ontwerp"

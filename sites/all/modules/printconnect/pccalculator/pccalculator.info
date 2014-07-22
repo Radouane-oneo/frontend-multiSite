@@ -1,0 +1,10 @@
+name = Calculator (TODELETE?)
+description = The Print Calculator block
+package = printconnect
+core = 7.x
+
+dependencies[] = pcproducts
+
+stylesheets[all][] = pccalculator.css
+
+scripts[] = pccalculator.js

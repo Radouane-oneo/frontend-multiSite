@@ -1,0 +1,110 @@
+<?php
+
+function pcrotator_init() {
+  drupal_add_js(drupal_get_path('module', 'pcrotator') . '/jquery.rotate.js');
+  drupal_add_js(drupal_get_path('module', 'pcrotator') . '/pcrotator.js');
+  drupal_add_css(drupal_get_path('module', 'pcrotator') . '/pcrotator.css');
+
+  drupal_add_js(array('pcrotator' => array('text' => t('Discover all our promotions'), 'speed' => '7000', 'region' => 'highlighted')), 'setting');
+}
+
+function pcrotator_preprocess_page(&$vars) {
+  $region = 'highlighted';
+  //$region = 'slideshow';
+  $items = array();
+  $blocks = array();
+  if (isset($vars['page'][$region])) {
+
+
+    foreach (element_children($vars['page'][$region]) as $key) {
+      $class = array();
+      if (count($items) == 0) {
+        $class[] = 'current';
+      }
+      $block = $vars['page'][$region][$key]['#block'];
+
+      $items[] = l($block->subject, '', array('fragment' => 'block-block-' . $block->delta, 'external' => true, 'attributes' => array('class' => $class)));
+      //$items[] = l('', '', array('fragment' => 'block-block-' . $block->delta, 'external' => true, 'attributes' => array('class' => $class)));
+
+      $blocks[$key] = $vars['page'][$region][$key];
+
+      unset($vars['page'][$region][$key]);
+    }
+
+    if (count($blocks)) {
+
+      $vars['page'][$region]['slides'] = array(
+          '#type' => 'container',
+          '#attributes' => array('class' => array('slides', 'clearfix')),
+      );
+
+      $vars['page'][$region]['slides'] += $blocks;
+
+      $vars['page'][$region]['controller'] = array(
+          '#type' => 'container',
+          '#attributes' => array('class' => array('controller', 'clearfix')),
+          'list' => array(
+              '#theme' => 'item_list',
+              '#items' => $items,
+          ),
+          '#weight' => -50,
+      );
+    }
+    // $vars['page'][$region]['classes_array'][] = 'rotatorpreprocesspage';
+//  var_dump($variables);
+  }
+}
+
+function pcrotator_preprocess_region(&$vars) {
+  $region = 'highlighted';
+  //$region = 'slideshow';
+  if ($vars['region'] == $region) {
+    //var_dump($vars);
+    $vars['classes_array'][] = 'rotator';
+  }
+}
+
+function pcrotator_process_page(&$vars) {
+//  $region = 'slideshow';
+//  foreach (element_children($vars['page'][$region]) as $key => $element) {
+//    
+//  }
+}
+
+function pcrotator_preprocess_html(&$vars) {
+//  $region = 'slideshow';
+//  foreach (element_children($vars['page'][$region]) as $key) {
+//    //var_dump($key) ;
+//    $block = $vars['page'][$region][$key]['#block'];
+//    var_dump($block->title);
+//  }
+//  $vars['page'][$region]['controller'] = array(
+//      '#type' => 'container',
+//      '#attributes' => array('class' => array('controller', 'clearfix')),
+//      'content' => array(
+//          '#markup' => 'controller 2', 
+//      ),
+//      '#weight' => -50,
+//  );
+}
+
+function pcrotator_process_html(&$vars) {
+//  $region = 'slideshow';
+}
+
+function pcrotator_preprocess_block(&$vars) {
+  $region = 'highlighted';
+  // $region = 'slideshow';
+  if ($vars['block']->region == $region) {
+    $vars['block']->title = '';
+    $vars['block']->subject = '';
+    $vars['classes_array'][] = $vars['block_zebra'];
+    $vars['classes_array'][] = 'rotating';
+    if ($vars['block_id'] > 1) {
+      $vars['attributes_array']['style'][] = 'display:none;';
+    } else {
+      $vars['classes_array'][] = 'current';
+    }
+  }
+}
+

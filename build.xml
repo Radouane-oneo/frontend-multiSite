@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="printconcept" default="clean" basedir=".">
+    <property name="basedir" value="${project.basedir}" />
+    <property name="builddir" value="${basedir}/build" />
+    <property name="source" value="${basedir}" />
+
+    <!-- Default included/excluded files and folders -->
+    <patternset id="defaultSet">
+        <include name="sites/all/modules/printconnect/**/*.php" />
+        <include name="sites/all/modules/printconnect/**/*.module" />
+        <include name="sites/all/modules/printconnect/**/*.inc" />
+    </patternset>
+
+    <!-- Clean up -->
+    <target name="clean">
+        <echo msg="Cleaning build directory" />
+        <delete dir="${builddir}/docs" />
+
+        <mkdir dir="${builddir}/docs" />
+    </target>
+
+    <target name="phpdoc">
+        <includepath classpath="${basedir}/vendor/phpdocumentor" />
+        <phpdoc2 title="Frontend Flyer Documentation" destdir="${builddir}/docs" template="responsive">
+            <fileset dir="${source}">
+                <patternset refid="defaultSet" />
+            </fileset>
+        </phpdoc2>
+    </target>
+</project>

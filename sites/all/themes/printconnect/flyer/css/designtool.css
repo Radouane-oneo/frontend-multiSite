@@ -1,0 +1,1531 @@
+/*  USE THIS FILE FOR DESIGNTOOL GUI STYLING/CUSTOMIZATION
+
+    Document   : designtool_gui_styling
+    Copyright  : printconcept.be 2010
+    Author     : jeroen
+    Description: designtool application gui definition, design aspects
+*/
+
+
+/* shop specific graphics */
+
+/* splash screen loader translated logos */
+#designtool_splashscreen .logo{
+    background-image: url(images/designtool/shoplogos/loadinglogo_be.png);
+    display: none;
+}
+#designtool_splashscreen .logo.nl_NL_1_1297160610{
+    background-image: url(images/designtool/shoplogos/loadinglogo_nl.png);
+}
+#designtool_splashscreen .logo.nl_NL{
+    background-image: url(images/designtool/shoplogos/loadinglogo_nl.png);
+}
+#designtool_splashscreen .logo.fr_FR_1_1304672871{
+    background-image: url(images/designtool/shoplogos/loadinglogo_fr.png);
+}
+#designtool_splashscreen .logo.fr_FR{
+    background-image: url(images/designtool/shoplogos/loadinglogo_fr.png);
+}
+#designtool_splashscreen .logo.es_ES{
+    background-image: url(images/designtool/shoplogos/loadinglogo_es.png);
+}
+/*#designtool_splashscreen .logo.en_US{
+    background-image: url(images/designtool/shoplogos/loadinglogo_en_US.png);
+}*/
+#designtool_splashscreen .logo.en_GB_1_1314948868{
+    background-image: url(images/designtool/shoplogos/loadinglogo_uk.png);
+}
+#designtool_splashscreen .logo.en_GB{
+    background-image: url(images/designtool/shoplogos/loadinglogo_uk.png);
+}
+#designtool_splashscreen .logo.fr_LU_1_1309433522, 
+#designtool_splashscreen .logo.fr_LU{
+    background-image: url(images/designtool/shoplogos/loadinglogo_lu.png);
+}
+
+div#pc_dt #menu_layer #ribbon_heads.en_US{
+    /*background-image: url(images/designtool/shoplogos/picasso_header_en.png);*/
+}
+div#pc_dt #menu_layer #ribbon_heads{
+ /*   background-image: url(images/designtool/shoplogos/picasso_header.png);*/
+}
+div#pc_dt #menu_layer #ribbon_heads.size_1250{
+    background-image: url(images/designtool/shoplogos/picasso_header_1250.png);
+}
+
+
+/* ribbonitems icon definitions */
+
+div#pc_dt #menu_layer .menu_ribbon_item#btn_uploadpage .icon{
+    background-image: url(images/designtool/upload.png);
+    margin-left: -20px;
+    top: 7px;
+}
+div#pc_dt #menu_layer .menu_ribbon_item#btn_addimage .icon{
+    background-image: url(images/designtool/image.png);
+    height: 38px;
+    width: 40px;
+    margin-left: -17px;
+    top: 7px;
+}
+
+div#pc_dt #menu_layer #btn_arrange .menu_ribbon_item .icon{
+    background-image: url(images/designtool/arrange.png);
+    height: 38px;
+    width: 38px;
+    margin-left: -19px;
+/*    top: 6px;*/
+}
+div#pc_dt #menu_layer #btn_arrange .menu_ribbon_item.disabled .icon{
+    top: 4px;
+}
+
+div#pc_dt #menu_layer .menu_ribbon_item#btn_savetemplate:hover .icon{
+    background-position: bottom;
+}
+
+div#pc_dt #menu_layer .addshape_icon{
+	background-image: url(images/designtool/add_shape.png);
+}
+
+
+div#pc_dt #menu_layer .menu_ribbon_item#btn_addtext .icon{
+    background-image: url(images/designtool/text.png);
+    height: 38px;
+    width: 40px;
+    margin-left: -17px;
+    top: 7px;
+}
+
+
+/* debug logger window */
+
+
+
+/* splash/loading screen */
+#fancybox-frame{
+    /*overflow: hidden;*/
+}
+
+div#designtool_splashscreen{
+    width: 800px;
+    height: 650px;
+    background-color: #ffffff;
+    top:0px;
+    left:0px;
+    overflow: hidden;
+}
+div#designtool_splashscreen .splash_contents{
+    position: relative;
+    height: 210px;
+    top: 190px;
+    text-align: center;
+    color: #666666;
+    font-size: 11px;
+}
+#designtool_splashscreen .logo_holder{
+/*    background-image: url(images/designtool/loading_picasso.png);*/
+    width: 172px;
+    height: 172px;
+    position: relative;
+    left: 50%;
+    margin-left: -86px;
+}
+#designtool_splashscreen .preloader{
+    background-image: url('images/designtool/loader_flyer.gif');
+    width: 64px;
+    height: 64px;
+    position: absolute;
+    left: 54px;
+    bottom: 40px;
+}
+#designtool_splashscreen .logo{
+    position: relative;
+    text-align: center;
+    top: 30px;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 25px;
+    width: 100%;
+}
+#designtool_splashscreen .splash_message{
+    height: 20px;
+    width: 100%;
+    line-height: 20px;
+    position: absolute;
+    bottom: 0px;
+    font-family: Arial,Helvetica,sans-serif;
+}
+
+/* container */
+div#pc_dt{
+    /*border: 5px solid #bbbbbb;*/
+    font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+    font-size: 12px;
+}
+
+#pc_dt .access_denied{
+    color: #cc0000;
+    font-size: 24px;
+    text-align: center;
+    padding-top:45px;
+}
+
+
+/* editor window */
+#pc_dt_editor{
+    background-color:#dddddd;
+    border-top: 1px solid #cccccc;
+}
+
+div#pc_dt #pc_dt_editor{
+
+}
+
+div#pc_dt #editor_canvas_holder {
+    background-color: #9a9a9a;
+}
+
+div#pc_dt div#job_page_container{
+    background-color: #ffffff;
+}
+
+div#pc_dt #page_label{
+	background: #ff6600;
+    color: #ffffff;
+    width: 100%;
+    height: 38px;
+    line-height: 38px;
+    font-size: 16px;
+    text-align: center;
+	font-family: 'OpenSans', Arial, Helvetica, sans-serif;
+	font-weight: 400;
+    font-style: normal;
+    position: absolute;
+    top: 0px;
+    z-index: 1;
+	border-radius: 4px 4px 0 0;
+}
+
+
+/* manipulators */
+div#pc_dt div#manip_layer{
+    /*border-color: #cccccc;*/
+}
+
+/* ribbons */
+div#pc_dt #menu_layer{
+    background-color:transparent;
+}
+div#pc_dt #menu_layer .menu_ribbon{
+    padding: 5px;
+}
+div#pc_dt #menu_layer .menu_ribbon .menu_ribbon_head{
+    padding-bottom: 5px;
+    border-bottom:1px solid #cccccc;
+    margin-bottom: 5px;
+}
+
+/* ribbon items */
+div#pc_dt div#menu_layer{
+    height: 108px;
+    background: transparent;
+    background-color: transparent;
+/*    overflow: hidden;*/
+}
+div#pc_dt #menu_layer #ribbon_heads{
+    height: 23px;
+    line-height: 23px;
+    background-color: #F0F0F0;
+    border-bottom: 1px solid #dddddd;
+    font-size: 14px;
+
+    /*-moz-border-radius: 15px 0px 0px 0px;*/
+    /*border-radius: 15px 0px 0px 0px;*/
+
+    width: auto;
+    height: 38px;
+/*    background-image: url(images/designtool/shoplogos/picasso_header.png);*/
+/*    background-position: 5px 5px;*/
+    background-repeat: no-repeat;
+    
+}
+div#pc_dt #menu_layer #ribbon_heads.size_1250{
+    background-image: url(images/designtool/shoplogos/picasso_header_1250.png);
+}
+div#pc_dt #menu_layer #ribbon_contents{
+    height: 69px;
+/*    overflow: hidden;*/
+    border-left: 1px solid #c6c6c6;
+    border-right: 1px solid #c6c6c6;
+
+    background-color: #ffffff;
+
+
+/*    background-image: url(images/designtool/picasso_ribbon_bg.png);*/
+}
+div#pc_dt #menu_layer .menu_ribbon_head{
+    cursor: pointer;
+    float: right;
+    padding-top: 15px;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: #999999;
+    position: relative;
+    z-index: 10;
+    border-left: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    margin: 1px;
+    margin-bottom: 0px;
+    margin-right: 3px;
+
+    /* hide ribbon tabs for upload tool phase */
+    display: none;
+}
+div#pc_dt #menu_layer .menu_ribbon_head.active{
+    color: #000000;
+    background-color: #ffffff;
+}
+div#pc_dt #menu_layer .menu_ribbon_content{
+    padding: 0px;
+    display: none;
+}
+div#pc_dt #menu_layer .menu_ribbon_content .menu_ribbon_item{
+    float: left;
+}
+div#pc_dt #menu_layer .menu_ribbon_content .menu_ribbon_item input{
+    float: left;
+}
+
+div#pc_dt #menu_layer .menu_ribbon_content #template_name{
+    float: left;
+    height: 68px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+div#pc_dt #menu_layer .menu_ribbon_content #template_name .label{
+    padding: 5px;
+    font-size: 11px;
+    text-align: center;
+    color: #666666;
+}
+div#pc_dt #menu_layer .menu_ribbon_content #template_name input{
+    border: 1px solid #cccccc;
+    width: 120px;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    padding-bottom: 1px;
+    padding-top: 1px;
+}
+
+/* element var */
+div#pc_dt #menu_layer .menu_ribbon_content #element_var{
+    float: left;
+    height: 68px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+div#pc_dt #menu_layer .menu_ribbon_content .element_var_select{
+    position: relative;
+}
+div#pc_dt #menu_layer .menu_ribbon_content #element_var input.element_var{
+    border: 1px solid #cccccc;
+    width: 220px;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    background-image: url("images/designtool/select_arrow.png");
+    background-position: 210px 7px;
+    background-repeat: no-repeat;
+    border: 1px solid #CCCCCC;
+    color: #646464;
+    font-size: 12px;
+    height: 18px;
+    line-height: 18px;
+    padding-bottom: 1px;
+    padding-top: 1px;
+    float: left;
+}
+div#pc_dt #menu_layer .menu_ribbon_content #element_var input#save_var{
+    border: 1px solid #cccccc;
+    height: 22px;
+    line-height: 18px;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    margin-left: 5px;
+    color: #646464;
+    font-size: 12px;
+    float: left;
+    cursor: pointer;
+    background-color: #eeeeee;
+    display: block;
+}
+div#pc_dt #menu_layer .menu_ribbon_content #element_var .options{
+    width: 250px;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    font-size: 12px;
+    color: #646464;
+    height: 120px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: absolute;
+    top: 36px;
+    left: 0px;
+    z-index: 6999;
+    display: none;
+}
+div#pc_dt #menu_layer .menu_ribbon_content #element_var .option{
+    height: 19px;
+    line-height: 19px;
+    border-bottom: 1px solid #cccccc;
+    padding-left: 3px;
+    cursor: pointer;
+}
+div#pc_dt #menu_layer .menu_ribbon_content #element_var .option:hover{
+    background-color: #eeeeee;
+    color: #000000;
+}
+div#pc_dt #menu_layer .menu_ribbon_content #element_var .label{
+    padding: 5px;
+    font-size: 11px;
+    text-align: center;
+    color: #666666;
+    clear: both;
+}
+
+/* XYLocation ribbonItem */
+div#pc_dt #menu_layer .menu_ribbon_content #btn_xylocation{
+    padding-top: 15px;
+    line-height: 20px;
+    cursor: default;
+}
+div#pc_dt #menu_layer .menu_ribbon_content #btn_xylocation .x_loc,
+div#pc_dt #menu_layer .menu_ribbon_content #btn_xylocation .y_loc{
+    height: 25px;
+    line-height: 22px;
+}
+div#pc_dt #menu_layer .menu_ribbon_content #btn_xylocation input{
+    height: 20px;
+    line-height: 20px;
+    padding: 0px;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 40px;
+    border: 1px solid #cccccc;
+    cursor: text;
+}
+
+
+div#pc_dt #menu_layer .menu_ribbon_content .checkbox_ribbonitem{
+    /*    clear: both;*/
+    height: 20px;
+    /*line-height: 20px;*/
+    font-size: 11px;
+    color: #646464;
+    padding-left: 5px;
+    padding-right: 5px;
+    overflow: hidden;
+}
+div#pc_dt #menu_layer .menu_ribbon_content .checkbox_ribbonitem input{
+    float: left;
+    margin-top: 3px;
+}
+div#pc_dt #menu_layer .menu_ribbon_content .checkbox_ribbonitem .label{
+    float: left;
+    margin-top: 3px;
+    margin-left: 3px;
+    line-height: 12px;
+}
+
+div#pc_dt #menu_layer .menu_ribbon_content .inline_ribbonitem{
+    padding-left: 5px;
+    padding-right: 5px;
+    overflow: hidden;
+}
+div#pc_dt #menu_layer .menu_ribbon_content .inline_ribbonitem input{
+    height: 20px;
+    border: 1px solid #cccccc;
+    background-color: #eeeeee;
+    color: #646464;
+    font-size: 11px;
+    margin-left: 0px;
+}
+div#pc_dt #menu_layer .menu_ribbon_content .inline_ribbonitem input:hover{
+    border: 1px solid #aaaaaa;
+    color: #000000;
+}
+
+
+div#pc_dt #menu_layer .ribbonitem_sep{
+    height: 68px;
+    width: 1px;
+/*    background-image: url(images/designtool/picasso_separator.png);
+    background-repeat: no-repeat;
+    background-position: center;*/
+    background-color: #eeeeee;
+    float:left;
+}
+div#pc_dt #menu_layer .ribbonitem_sep.right{
+    float:right;
+}
+div#pc_dt #menu_layer .menu_ribbon_item{
+    height: 23px;
+    min-width: 42px;
+    padding-top: 45px;
+    padding-left: 7px;
+    padding-right: 7px;
+    font-size: 11px;
+    color: #666666;
+    text-align: center;
+    position: relative;
+/*    overflow: hidden;*/
+    overflow: visible;
+    cursor: pointer;
+    background-color: #ffffff;
+/*    background-image: url(images/designtool/picasso_ribbon_bg.png);*/
+}
+
+div#pc_dt #menu_layer .menu_ribbon_item.highlight .label{
+    color: #0098d9;
+}
+
+div#pc_dt #menu_layer .menu_ribbon_item .icon{
+    width: 36px;
+    height: 36px;
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    margin-left: -18px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+div#pc_dt #menu_layer .menu_ribbon_item:hover{
+/*    background-image: url(images/designtool/picasso_btn_on.png);*/
+    background-color: #ffffff;
+}
+div#pc_dt #menu_layer .menu_ribbon_item:hover .icon{
+    background-position: center;
+}
+
+div#pc_dt #menu_layer .menu_ribbon_item.disabled,
+div#pc_dt #menu_layer .submenubutton.disabled{
+    zoom: 1;
+
+    min-height: 0px;
+
+/*    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(opacity=60)";
+    filter:alpha(opacity=60);
+    -moz-opacity:0.6;
+    -khtml-opacity: 0.6;
+    opacity: 0.6;*/
+
+    background-position: bottom;
+
+    cursor: default;
+}
+div#pc_dt #menu_layer .menu_ribbon_item.disabled:hover,
+div#pc_dt #menu_layer .submenubutton.disabled:hover{
+/*    background-image: url(images/designtool/picasso_ribbon_bg.png);*/
+/*    background-color: #ffffff;*/
+}
+div#pc_dt #menu_layer .menu_ribbon_item.disabled .icon,
+div#pc_dt #menu_layer .submenubutton.disabled .icon{
+    background-position: bottom;
+}
+div#pc_dt #menu_layer .menu_ribbon_item.disabled:hover .icon,
+div#pc_dt #menu_layer .submenubutton.disabled:hover .icon{
+    background-position: bottom;
+}
+
+div#pc_dt #menu_layer .menu_ribbon_item.locked{
+    zoom: 1;
+
+    min-height: 0px;
+    
+/*    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(opacity=60)";
+    -moz-opacity:0.6;
+    -khtml-opacity: 0.6;
+    opacity: 0.6;
+    filter:alpha(opacity=60);*/
+
+    background-position: bottom;
+
+    cursor: default;
+}
+
+div#pc_dt #menu_layer .menu_ribbon_item.locked:hover{
+/*    background-image: url(images/designtool/picasso_ribbon_bg.png);*/
+    background-color: #ffffff;
+}
+div#pc_dt #menu_layer .menu_ribbon_item.locked:hover .icon{
+    background-position: center;
+}
+
+div#pc_dt #menu_layer .menu_ribbon_item.disabled{
+    zoom: 1;
+
+    min-height: 0px;
+
+/*    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(opacity=60)";
+    -moz-opacity:0.6;
+    -khtml-opacity: 0.6;
+    opacity: 0.6;
+    filter:alpha(opacity=60);*/
+    background-position: bottom;
+
+    cursor: default;
+}
+
+div#pc_dt #menu_layer .menu_ribbon_item.disabled:hover{
+/*    background-image: url(images/designtool/picasso_ribbon_bg.png);*/
+    background-position: bottom;
+}
+div#pc_dt #menu_layer .menu_ribbon_item.disabled:hover .icon{
+    background-position: bottom;
+}
+
+div#pc_dt #menu_layer .submenubutton .menu_ribbon_item:hover{
+/*    background-image: url(images/designtool/picasso_ribbon_bg.png);*/
+}
+
+
+div#pc_dt #menu_layer .menu_ribbon_content .menu_ribbon_item.right{
+    float: right;
+}
+
+
+div#pc_dt #menu_layer .menu_ribbon_content .ribbonitem_legend{
+/*    background-image: url(images/designtool/picasso_ribbon_bg.png);*/
+/*    background-color: #FFFFFF;*/
+    color: #666666;
+    cursor: default;
+    font-size: 14px;
+    height: 68px;
+    overflow: hidden;
+    padding-left: 5px;
+    padding-right: 5px;
+    position: relative;
+    text-align: left;
+    float: right;
+
+    margin-top: -3px;
+}
+div#pc_dt #menu_layer .menu_ribbon_content .ribbonitem_legend .leftcol{
+    float:left;
+    background-image: url(images/designtool/legend_lines1.png);
+    background-repeat: no-repeat;
+    padding-left: 35px;
+    padding-top: 8px;
+    margin-right: 20px;
+}
+div#pc_dt #menu_layer .menu_ribbon_content .ribbonitem_legend .rightcol{
+    display: none;
+    float:left;
+    background-image: url(images/designtool/legend_lines2.png);
+    background-repeat: no-repeat;
+    padding-left: 36px;
+    padding-top: 8px;
+}
+div#pc_dt #menu_layer .menu_ribbon_content .ribbonitem_legend .legend_item{
+    line-height: 19px;
+    height: 19px;
+    font-size: 10px;
+}
+
+div#pc_dt #menu_layer .menu_ribbon_item.highlight .icon,
+div#pc_dt #menu_layer .menu_ribbon_item.highlight:hover .icon{
+/*    background-position: bottom;*/
+}
+div#pc_dt #menu_layer .menu_ribbon_item.highlight .label,
+div#pc_dt #menu_layer .menu_ribbon_item.highlight:hover .label{
+    color: #0098d9;
+}
+div#pc_dt #menu_layer .menu_ribbon_item:hover .label{
+    color: #0098d9;
+}
+div#pc_dt #menu_layer .menu_ribbon_item.locked:hover .label,
+div#pc_dt #menu_layer .menu_ribbon_item.disabled:hover .label{
+    color: #666666;
+}
+
+
+/*canvas btn*/
+div#pc_dt #menu_layer #btn_canvas{
+    position: absolute;
+    top: 136px;
+    right: 25px;
+/*    height: 28px;*/
+    width: 130px;
+    z-index: 6900;
+    background-color: #ffffff;
+    border: 0 none;
+    cursor: default;
+    padding-bottom: 4px;
+/*    width: 72px;*/
+border-radius: 4px 4px 4px 4px;
+overflow: hidden;
+box-shadow: 3px 3px 3px rgba(0,0,0,0.25);
+}
+div#pc_dt #menu_layer #btn_canvas.noRotate{
+    width: 100px;
+}
+div#pc_dt #menu_layer #btn_canvas .handle{
+    width: 10px;
+    height: 28px;
+    float: left;
+    background-color: #cccccc;
+    border-right: 0 none;
+    cursor: move;
+}
+div#pc_dt #menu_layer #btn_canvas .label{
+    width: 100%;
+    text-align: center;
+    color: #ffffff;
+    font-size: 12px;
+	font-family: 'OpenSans', arial, sans-serif;
+	font-weight: 400;
+    background-color: #ff6600;
+    border-bottom: 0 none;
+    cursor: move;
+	line-height: 24px;
+}
+
+div#pc_dt #menu_layer #btn_canvas #btn_rotate:hover{
+    background-position: center;
+}
+div#pc_dt #menu_layer #btn_canvas #btn_rotate.disabled:hover{
+    background-position: 0px 23px;
+}
+
+
+/* zoom button */
+div#pc_dt #menu_layer #btn_zoom.menu_ribbon_item{
+    padding: 0px;
+    height: 28px;
+/*    min-width: 76px;*/
+    cursor: default;
+    float: left;
+}
+div#pc_dt #menu_layer #btn_zoom.menu_ribbon_item:hover{
+/*    background-image: url(images/designtool/picasso_ribbon_bg.png);*/
+    background-color: #ffffff;
+}
+
+div#pc_dt #menu_layer #btn_zoom.menu_ribbon_item .buttons{
+/*    width: 62px;
+    height: 54px;*/
+    margin-top: 7px;
+    margin-left: 5px;
+    padding-bottom: 5px;
+/*    margin-top: 6px;
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    margin-left: -38px;*/
+}
+div#pc_dt #menu_layer #btn_canvas .subbtn{
+    float: right;
+    cursor: pointer;
+    margin: 5px;
+    margin-top: 0px;
+}
+
+div#pc_dt #menu_layer #btn_zoom.menu_ribbon_item #btn_zoom_fit:hover{
+/*    background-position: center;*/
+}
+div#pc_dt #menu_layer #btn_zoom.menu_ribbon_item #btn_zoom_fit.disabled:hover{
+    background-position: bottom;
+}
+
+div#pc_dt #menu_layer #btn_zoom.menu_ribbon_item #btn_zoom_plus:hover{
+/*    background-position: 0px 19px;*/
+}
+div#pc_dt #menu_layer #btn_zoom.menu_ribbon_item #btn_zoom_plus.disabled:hover{
+    background-position: center;
+}
+
+div#pc_dt #menu_layer #btn_zoom.menu_ribbon_item #btn_zoom_min:hover{
+/*    background-position: 0px 19px;*/
+}
+div#pc_dt #menu_layer #btn_zoom.menu_ribbon_item #btn_zoom_min.disabled:hover{
+    background-position: bottom;
+}
+div#pc_dt #menu_layer #btn_zoom.menu_ribbon_item .label{
+    padding-top: 45px;
+}
+
+div#pc_dt #menu_layer #btn_zoom.menu_ribbon_item .subbtn.disabled{
+/*    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(opacity=60)";
+    -moz-opacity:0.6;
+    -khtml-opacity: 0.6;
+    opacity: 0.6;
+    filter:alpha(opacity=60);*/
+
+    background-position: -1px 23px !important;
+
+    cursor: default;
+}
+div#pc_dt #menu_layer #btn_zoom.menu_ribbon_item #btn_zoom_min.subbtn.disabled{
+    background-position: 0px 23px !important;
+}
+
+
+/*arrange button*/
+div#pc_dt #menu_layer .submenubutton{
+    overflow: visible;
+    float: left;
+    position: relative;
+    height: auto;
+    width: auto;
+    z-index: 6990;
+/*    background-image: url(images/designtool/picasso_ribbon_bg.png);*/
+}
+
+div#pc_dt #menu_layer .submenubutton .arrow{
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    margin-left: -4px;
+    width: 8px;
+    height: 6px;
+/*    background-image: url(images/designtool/picasso_btn_submenu.png);*/
+}
+
+div#pc_dt #menu_layer .submenubutton .submenu{
+    position: absolute;
+    top: 68px;
+    left: -1px;
+    background-color: #ffffff;
+    color: #646464;
+    border: 1px solid #CCCCCC;
+/*    border-top: none;*/
+    padding: 0px;
+    min-width: 160px;
+    display: none;
+}
+
+div#pc_dt #menu_layer .submenubutton .submenu .menu_ribbon_subitem{
+    padding: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 7px;
+    font-size: 12px;
+    height: 20px;
+    cursor: pointer;
+}
+div#pc_dt #menu_layer .submenubutton .submenu .menu_ribbon_subitem .icon{
+    background-position: bottom;
+    float: left;
+    width: 20px;
+    height: 18px;
+    margin-right: 5px;
+}
+div#pc_dt #menu_layer .submenubutton .submenu .menu_ribbon_subitem .label{
+    float: left;
+    height: 20px;
+    line-height: 20px;
+}
+div#pc_dt #menu_layer .submenubutton .submenu .menu_ribbon_subitem:hover{
+    background-color: #eeeeee;
+}
+div#pc_dt #menu_layer .submenubutton .submenu .menu_ribbon_subitem{
+}
+
+
+div#pc_dt #menu_layer .submenubutton:hover .submenu{
+    display: block;
+}
+div#pc_dt #menu_layer .submenubutton:hover .arrow{
+    display: none;
+}
+div#pc_dt #menu_layer .submenubutton.disabled:hover .submenu{
+    display: none;
+}
+div#pc_dt #menu_layer .submenubutton.locked:hover .arrow{
+    display: block;
+}
+div#pc_dt #menu_layer .submenubutton.disabled:hover .arrow{
+    display: block;
+}
+
+
+/* ribbon item grid (grid enable, grid snap) */
+div#pc_dt #menu_layer .ribbonitem_grid{
+    position: absolute;
+    right: 0;
+    top: 38px;
+}
+div#pc_dt #menu_layer .ribbonitem_grid .buttons{
+    height: 45px;
+}
+div#pc_dt #menu_layer .ribbonitem_grid .button{
+    height: 32px;
+    width: 31px;
+    float: left;
+    margin-top: 8px;
+    background-repeat: no-repeat;
+    background-position: -1px 0px;
+    border: 1px solid #ffffff;
+}
+div#pc_dt #menu_layer .ribbonitem_grid .button:hover{
+    border: 1px solid #cccccc;
+}
+div#pc_dt #menu_layer .ribbonitem_grid .button.enabled{
+    border: 1px solid #ff6600;
+    background-color: #ffbf94;
+}
+
+div#pc_dt #menu_layer .ribbonitem_grid .label{
+    font-size: 11px;
+    color: #666;
+    text-align: center;
+}
+
+
+/* message layer */
+div#pc_dt #message_layer{
+    color:#299115;
+    height: 0px;
+    position: relative;
+    z-index:100000;
+}
+div#message_layer span{
+    position: relative;
+    width: 750px;
+    margin: 0px;
+    padding-left: 38px;
+    padding-right: 10px;
+    background-color: #14a625;
+    color: #ffffff;
+    display: block;
+    height: 28px;
+    line-height: 28px;
+    background-image: url(images/designtool/picasso_confirm.png);
+    background-repeat: no-repeat;
+    background-position: 8px 4px;
+    cursor: pointer;
+}
+div#message_layer span.error{
+    background-color: #ff0000;
+/*    background-image: url(images/designtool/picasso_error.png);*/
+    border-bottom:1px solid #d51010;
+}
+div#message_layer span.warning{
+    background-color: #ff6600;
+/*    background-image: url(images/designtool/picasso_warning.png);*/
+    border-bottom:1px solid #bb520c;
+}
+div#message_layer span div.closeBtn{
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    width: 19px;
+    height: 18px;
+/*    background-image: url(images/designtool/picasso_message_close.png);*/
+}
+
+div#message_layer #messages_holder{
+    position: absolute;
+    top: 1px;
+    left: 1px;
+}
+
+
+/* guides layer */
+div#pc_dt div#guides_layer #bleedbox{
+    position: absolute;
+    border: 1px solid #000000;
+}
+div#pc_dt div#guides_layer #safetybox{
+    position: absolute;
+    border: 1px solid #77b800;
+}
+
+
+/* dialog layer & dialogs */
+div#pc_dt div#dialog{
+    background-color: #fff;
+    border: none;
+    padding: 0px;
+    width: 350px;
+    margin-left: -175px;
+	height: auto;
+	border-radius: 4px 4px 4px 4px;
+	box-shadow: 3px 3px 3px rgba(0,0,0,0.25);
+	overflow: hidden;
+}
+
+div#pc_dt #dialog.quickupload,
+.quickuploadmode div#pc_dt div#dialog{
+	box-shadow: none;
+	background-color: #f7f7f7;
+}
+
+div#pc_dt #dialog.quickupload #dialog_title{
+	background: none;
+	color: #ff6600;
+}
+
+div#pc_dt #dialog.quickupload .confirmselection.area{
+	color: #fff;	
+	line-height: 25px !important;
+}
+
+div#pc_dt #dialog.quickupload .file.area .fileuploader.msgstate-ok{
+	background-color: #77b800;
+	border-color: #77b800;
+}
+
+div#pc_dt #dialog.quickupload .file.area .fileuploader.msgstate-warning{
+	background-color: #f60;
+	border-color: #f60;
+}
+
+div#pc_dt #dialog.quickupload .file.area .fileuploader.msgstate-ok .labelcol .label{
+	background-image: url("images/message-24-ok.png");
+	background-position: 5px;
+	background-size: 18px 18px;
+}
+div#pc_dt #dialog.quickupload .file.area .fileuploader.msgstate-error .labelcol .label,
+div#pc_dt #dialog.quickupload .file.area .fileuploader.msgstate-warning .labelcol .label{
+	background-image: url("images/message-24-error.png");
+	background-position: 5px;
+	background-size: 18px 18px;
+}
+
+div#pc_dt #dialog.quickupload .messages.area div.message{
+	border-radius: 4px 4px 4px 4px;	
+}
+
+div#pc_dt #dialog.quickupload .file.area .fileuploader.msgstate-ok{
+	background-color: #77b800;
+	border-color: #77b800;
+}
+
+div#pc_dt #dialog.quickupload .mode.area .button.selected,
+div#pc_dt #dialog.quickupload .mode.area.locked .button.selected{
+	background-color: #ff6600;
+	border-color: #ff6600;
+	color: #fff;
+}
+
+div#pc_dt #dialog.quickupload .mode.area.locked .button:hover{
+	border-color: #d2d2d2;
+}
+
+div#pc_dt #dialog.quickupload .mode.area .button{
+	background-color: #fff;
+	border-color: #d2d2d2;
+	color: #646464;
+}
+
+div#pc_dt #dialog.quickupload .mode.area .button:hover{
+	background-color: #ff6600;
+	border-color: #ff6600;
+	color: #fff;
+}
+
+div#pc_dt #dialog.quickupload .button.area .picasso_btn_orange.disabled div{
+	background-image: none;	
+}
+
+div#pc_dt #dialog.quickupload .button.area .picasso_btn_orange.disabled{
+	background: #d2d2d2;
+}
+
+div#pc_dt #dialog.quickupload .file.area .fileuploader .subcomponent.progressbarArea .ui-widget-content{
+	border-color: #f60;	
+}
+
+div#pc_dt #dialog.quickupload .file.area .fileuploader .subcomponent.progressbarArea .ui-widget-header{
+	background-image: none;
+	background-color: #f60;
+}
+
+
+div#pc_dt #dialog.quickupload .button.area #continueBtn,
+div#pc_dt #dialog.quickupload .button.area #uploadBtn{
+	height: 35px;
+	line-height: 35px;
+}
+
+div#pc_dt #dialog.quickupload .button.area #continueBtn .label,
+div#pc_dt #dialog.quickupload .button.area #uploadBtn .label{
+	line-height: 35px;	
+}
+
+div#pc_dt #dialog.quickupload .button.area{
+	background-color: #3c3c3c;
+	height: 35px;
+	padding: 10px;
+}
+
+div#pc_dt #dialog.quickupload .file.area{
+	border-color: #ff6600;
+	background-color: #fff;
+}
+
+div#pc_dt #dialog.quickupload .file.area .fileuploader{
+	background-color: #f4f4f4;
+	border-color: #f4f4f4;
+}
+
+div#pc_dt #dialog.quickupload .fancy_filefield .selected_value{
+	background: #fff;
+	border-color: #d2d2d2;
+}
+
+div#pc_dt div#dialog #dialog_title .label{
+    float: left;
+    margin-left: 8px;
+}
+div#pc_dt div#dialog #dialog_title{
+	background: #ff6600;
+    height: 36px;
+    line-height: 36px;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+    font-size: 16px;
+    color: #fff;
+    overflow: hidden;
+	background: #ff6600;
+	padding: 0;
+}
+div#pc_dt div#dialog.wide #dialog_title{
+    background: #ff6600;
+}
+div#pc_dt div#dialog #dialog_title #btn_cancel{
+    width: 19px;
+    height: 18px;
+    float: right;
+    margin-top: 10px;
+    margin-right: 7px;
+    cursor: pointer;
+    background-image: url(images/designtool/picasso_dialog_close.png);
+}
+
+div#pc_dt div#dialog #dialog_content{
+    background: none;
+    padding: 10px;
+    overflow: hidden;
+    color: #646464;
+}
+div#pc_dt div#dialog #dialog_content .warning{
+    font-size: 11px;
+}
+
+div#pc_dt div#dialog.wide #dialog_content{
+    background: #ffffff;
+}
+div#pc_dt div#dialog #dialog_buttons{
+    background: #3C3C3C;
+    height: 40px;
+    position: relative;
+	border-radius: 0 0 4px 4px;
+	padding: 10px;
+}
+div#pc_dt div#dialog.wide  #dialog_buttons{
+/*    background-image: url(images/designtool/picasso_dialog_footer_wide.png);*/
+  background-image:none;
+}
+div#pc_dt div#dialog #dialog_content .instructions{
+    color: #646464;
+}
+
+div#pc_dt div#dialog #dialog_content #progress_bar_comment{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+div#pc_dt div#dialog #dialog_content #progress_bar_comment .text{
+    float: left;
+    color: #646464;
+}
+div#pc_dt div#dialog #dialog_content #progress_bar_comment .spinner{
+    background-image: url("images/designtool/messagebar_loader_flyer.gif");
+    height: 16px;
+    width: 16px;
+    float: left;
+    margin-right: 10px;
+}
+
+#ajaxloader{
+	background-image: url("images/designtool/messagebar_loader_flyer.gif") !important;
+}
+
+div#pc_dt #dialog .dlg_content .text{
+    padding: 0;
+}
+
+div#pc_dt #dialog .dlg_content .img img{
+    border: 1px solid #f1f1f1;
+	border-radius: 4px 4px 4px 4px;
+}
+
+div#pc_dt #dialog.close .dlg_content .text{
+    padding: 0 0 10px 0;
+}
+
+
+div#pc_dt .fancy_filefield{
+    position: relative;
+    height: 36px;
+    cursor: pointer;
+    text-align: right;
+    overflow: hidden;
+}
+div#pc_dt .fancy_filefield .fake_file{
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    cursor: pointer;
+}
+div#pc_dt .fancy_filefield .selected_value{
+    float: left;
+    left: 0px;
+    height: 32px;
+    font-size: 14px;
+    line-height: 32px;
+    padding-left: 8px;
+    padding-right: 8px;
+    width: 201px;
+    margin-right: 8px;
+    border: 1px solid #d2d2d2;
+    /*background-image: url(images/designtool/picasso_input.png);*/
+    background-position: bottom;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+div#pc_dt .fancy_filefield .browse{
+    float: right;
+    cursor: pointer;
+	height: 33px;
+	line-height: 33px;	
+}
+
+	div#pc_dt .fancy_filefield .browse .label{
+		line-height: 33px;	
+	}
+
+div#pc_dt .fancy_filefield .filefield{
+    position: absolute;
+    -moz-opacity: 0;
+    filter: alpha(opacity:0);
+    opacity: 0;
+    z-index: 2;
+    cursor: pointer;
+    height: 36px;
+    text-align: right;
+    font-size: 22px;
+    right: 0px;
+/*    float: right;*/
+}
+
+div#pc_dt.ltmsie9 .fancy_filefield .filefield{
+    width: 1000px;
+    height: 100px;
+    top: -20px;
+    right: 0px;
+}
+
+
+/* footer */
+div#pc_dt #footer_layer{
+    border: 1px solid #3C3C3C;
+    height: 38px;
+    width:798px;
+    overflow: hidden;
+    background: #3C3C3C;
+	border-radius: 0 0 4px 4px;
+	padding: 10px 0;
+}
+div#pc_dt #footer_layer #footer_navigation{
+    padding: 5px 0;
+    /*width: 425px;*/
+    height:30px;
+    float: left;
+    margin-top: 0;
+}
+div#pc_dt #footer_layer .label{
+    float: left;
+    height: 25px;
+    line-height: 25px;
+    margin-right: 10px;
+    margin-top: 4px;
+    font-size: 16px;
+    color: #646464;
+}
+div#pc_dt #footer_layer .job_nav_link{
+    margin-right: 5px;
+    text-decoration: none;
+    color: #646464;
+    display: block;
+    float:left;
+    width: 26px;
+    height: 30px;
+    margin-left:6px;
+    margin-right: 6px;
+    line-height: 36px;
+    text-align: center;
+    outline: none;
+    font-size: 10px;
+    background-image: url(images/designtool/page_nav_icon.png);
+    background-repeat: no-repeat;
+}
+div#pc_dt #footer_layer .job_nav_link:hover{
+    background-position: bottom;
+    color: #ff6600;
+}
+div#pc_dt #footer_layer .job_nav_link.selected{
+    background-position: bottom;
+    color: #ff6600;
+    cursor: default;
+}
+div#pc_dt #footer_layer .job_nav_link.locked{
+    background-position: top;
+    color: #646464;
+    cursor: default;
+}
+div#pc_dt #footer_layer .job_nav_link.locked.selected{
+    background-position: bottom;
+    color: #0183b8;
+    cursor: default;
+}
+
+div#pc_dt #footer_layer .job_nav_link.disabled{
+    background-position: top;
+   color: #666666;
+    cursor: default;
+}
+div#pc_dt #footer_layer .job_nav_link.disabled.selected{
+    background-position: bottom;
+    color: #0183b8;
+    cursor: default;
+}
+
+div#pc_dt #footer_layer #footer_menu{
+    margin: 0 10px;
+    height: 40px;
+    position: absolute;
+    right: 0px;
+}
+
+div#pc_dt #footer_layer #footer_menu .menu_footer_item{
+    height:40px;
+    position: relative;
+    cursor: pointer;
+    float: right;
+    display: block;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+	background: #77b800;
+	background-color: #77b800;
+	background: -moz-linear-gradient(top, #77b800 0%, #669c02 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #77b800), color-stop(100%, #669c02));
+	background: -webkit-linear-gradient(top, #77b800 0%, #669c02 100%);
+	background: -o-linear-gradient(top, #77b800 0%, #669c02 100%);
+	background: linear-gradient(to bottom, #77b800 0%, #669c02 100%);
+	border-radius: 4px 4px 4px 4px;
+}
+div#pc_dt #footer_layer #footer_menu .menu_footer_item div{
+    background: none;
+    height: 40px;
+    float: left;
+}
+
+div#pc_dt #footer_layer #footer_menu .menu_footer_item .leftedge,
+div#pc_dt #footer_layer #footer_menu .menu_footer_item .rightedge{
+	display: none;
+}
+
+div#pc_dt #footer_layer #footer_menu .menu_footer_item .label{
+	background: none;
+    margin: 0px;
+    line-height: 40px;
+    color: #ffffff;
+    font-size:14px;
+    text-align: center;
+    position: relative;
+    padding: 0 10px;
+}
+div#pc_dt #footer_layer #footer_menu .menu_footer_item .label .icon{
+    height: 20px;
+    width: 20px;
+	margin: 10px 5px 10px 0;
+	display: block;
+    position: static;
+    top: 0;
+    left: 0;
+    /*default*/
+    background-image: url("images/designtool/icon_cart.png");
+}
+
+div#pc_dt #footer_layer #footer_menu #btn_orderJob .label{
+    /*min-width: 75px;*/
+    color: #ffffff;
+}
+
+div#pc_dt #footer_layer #footer_menu #btn_previewPdf{
+    height: 40px;
+    line-height: 40px;
+    padding-left: 35px;
+    margin: 0 10px 0 0;
+    padding-right: 10px;
+    background-image: url("images/designtool/preview_icon.png");
+    background-repeat: no-repeat;
+	background-color: none !important;
+    font-size: 13px;
+    color: #ff6600;
+    background-position: 10px center;
+	border: 0 none;
+	background: transparent url("images/designtool/preview_icon.png") no-repeat 10px center !important;
+}
+div#pc_dt #footer_layer #footer_menu #btn_previewPdf:hover{
+/*    background-position: 10px -27px;*/
+	color: #ff6600;
+	text-decoration: underline;
+}
+
+div#pc_dt #footer_layer .jcarousel-skin-designtool_nav{
+    float: left;
+}
+
+
+/*navigation arrows*/
+div#pc_dt .nav_arrow{
+    display: block;
+    width: 42px;
+    height: 48px;
+    position: absolute;
+    top: 290px;
+    outline: none;
+    z-index: 6000;
+    /*display: none;*/
+}
+div#pc_dt .nav_arrow:hover{
+    background-position: bottom;
+}
+div#pc_dt #nav_arrow_left{
+    left: 18px;
+/*    background-image: url(images/designtool/nav_arrow_left.png);*/
+}
+div#pc_dt #nav_arrow_right{
+    right: 18px;
+/*    background-image: url(images/designtool/nav_arrow_right.png);*/
+}
+
+
+
+
+div#pc_dt .picasso_btn_orange{
+    height:40px;
+    position: relative;
+    cursor: pointer;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+	background: #77b800;
+	background-color: #77b800;
+	background: -moz-linear-gradient(top, #77b800 0%, #669c02 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #77b800), color-stop(100%, #669c02));
+	background: -webkit-linear-gradient(top, #77b800 0%, #669c02 100%);
+	background: -o-linear-gradient(top, #77b800 0%, #669c02 100%);
+	background: linear-gradient(to bottom, #77b800 0%, #669c02 100%);
+	border-radius: 4px 4px 4px 4px;
+	min-width: 80px;
+	padding: 0 10px;
+	display: inline-block;
+	text-align: center;
+}
+
+div#pc_dt .picasso_btn_orange div,
+div#pc_dt .picasso_btn_orange.blue div{
+	background: none;	
+}
+
+div#pc_dt .picasso_btn_orange .leftedge,
+div#pc_dt .picasso_btn_orange .rightedge{
+	display: none;
+}
+
+div#pc_dt .picasso_btn_orange .label{
+	
+    background-position: top center;
+    margin: 0px;
+    line-height: 40px;
+    color: #ffffff;
+    font-size:14px;
+    text-align: center;
+	position: relative;
+    padding-left: 0px;
+}
+
+div#pc_dt .picasso_btn_orange.blue .label{
+    color: #ffffff;
+}
+
+#dialog_buttons .picasso_btn_orange{
+	float: none;
+	margin: 0;
+}
+
+div#pc_dt div#dialog #dialog_message_area{
+    float: left;
+    margin-left: 0;
+    margin-top: 7px;
+}
+
+div#pc_dt .login_form .txt_email td{
+    padding-bottom: 5px;
+}
+
+div#pc_dt div#dialog.colorpicker #dialog_content{
+    height: 130px;
+}
+
+div#pc_dt .label .icon{
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    top: 6px;
+    left: 0px;
+    /*default*/
+/*    background-image: url(images/designtool/icon_ok.png);*/
+    display: none;
+}
+
+div#pc_dt #btn_upload .icon{
+/*    background-image: url(images/designtool/icon_upload.png);*/
+}
+
+div#pc_dt .fancy_filefield .browse .icon{
+/*    background-image: url(images/designtool/icon_choose.png);*/
+}
+div#pc_dt div#dialog .fancy_filefield .selected_value{
+    width: 190px;
+}
+div#pc_dt div#dialog .fancy_filefield .picasso_btn_orange .label{
+    width: 50px;
+}
+
+div#pc_dt #dialog.help .dlg_content .text{
+    padding: 0 25px 10px 25px;
+    text-align: justify;
+}
+div#pc_dt #dialog.help .dlg_content .img{
+    padding-bottom: 0;
+    text-align: center;
+}
+div#pc_dt #dialog.help .dlg_content .img img{
+    border: 1px solid #f1f1f1;
+	border-radius: 4px 4px 4px 4px;
+	margin: 10px 0;
+}
+
+div#pc_dt .resize_buttons,
+div#pc_dt .resize_buttons .lbl{
+	color: #646464; /* maincolor */	
+}
+
+div#pc_dt .resize_buttons a{
+	color: #ff6600;	
+}

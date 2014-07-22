@@ -1,0 +1,391 @@
+<?php
+
+use printconnect\Invoices\Invoice;
+use printconnect\Invoices\Factory;
+use printconnect\Diagnostics\Debug;
+use printconnect\Drupal\Functions;
+use printconnect\Customers;
+
+function pcinvoices_access() {
+  return true;
+  printconnect_ensureinitialized();
+  $customer = Customers\Factory::Current();
+  //return TRUE;
+  return isset($customer);
+}
+
+function pcinvoices_invoice_access($invoiceId) {
+  printconnect_ensureinitialized();
+  $customer = Customers\Factory::Current();
+  if ($customer) {
+    $invoice = Factory::Get($invoiceId);
+    if ($invoice->customer == $customer->id) {
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
+
+function pcinvoices_menu() {
+  $items['myprintconnect/invoices'] = array(
+      'title' => 'Invoices',
+      'page callback' => '_pcinvoices_callback',
+      'page arguments' => array('list'),
+      'access callback' => 'pcinvoices_access',
+  );
+  $items['myprintconnect/invoices/%'] = array(
+      'title' => 'Invoice details',
+      'page arguments' => array('details', 2),
+      'access callback' => 'pcinvoices_invoice_access',
+      'access arguments' => array(2),
+  );
+
+  return $items;
+}
+
+function pcinvoices_pcmenu() {
+  $customer = Customers\Factory::Current();
+  $items = array();
+  if ($customer) {
+    $items['myprintconnect']['invoices'] = array('#title' => t('Invoices'), '#link' => 'myprintconnect/invoices');
+  }
+  return $items;
+}
+
+function _pcinvoices_callback() {
+  try {
+    $args = func_get_args();
+    $page = array_shift($args);
+
+    _pccustomers_ensureloggedin();
+    switch ($page) {
+      case 'list':
+        return drupal_get_form('pcinvoices_list_form');
+      case 'details':
+        $id = array_shift($args);
+        return drupal_get_form('pcinvoices_detail_form', Factory::Get($id));
+    }
+  } catch (Exception $ex) {
+    return Functions::HandleException($ex);
+  }
+}
+
+function pcinvoices_list_form($form, $form_state) {
+  $customer = Customers\Factory::Current();
+  drupal_set_title(t('@firstName, this an overview of your invoices', array('@firstName' => $customer->firstName)));
+  $invoices = Factory::GetInvoices($customer, FALSE);
+
+
+  $form['invoices'] = array(
+      '#type' => 'container',
+      '#title' => t('My invoices'),
+  );
+
+  $rows = array();
+  foreach ($invoices as $invoice) {
+    if (Factory::GetBalance($invoice) > 1) {
+      $flag = '<div class="flag">&nbsp</div>';
+      $class = 'topay';
+      $balance = Factory::GetBalance($invoice);
+    } else {
+      $flag = '<div>&nbsp</div>';
+      $class = '';
+      $balance = 0;
+    }
+
+    $rows[] = array(
+        array('data' => $flag),
+        array('data' => format_date(strtotime($invoice->creationDate), 'short')),
+        array('data' => ''),
+        array(
+            'data' => theme('price', array('value' => $invoice->totalAmount, 'attributes' => array('class' => array($class)))),
+        ),
+        array(
+            'data' => theme('price', array('value' => $balance)),
+        ),
+        l($invoice->order, 'myprintconnect/orders/' . $invoice->order),
+//          array('data' => l($invoice->number, printconnect\Files\Factory::getFileUrl($invoice->pdf), array('attributes' => array('class' => 'pdf', 'target' => '_blank')))),
+        array('data' => theme('pcfilesdownloadlink', array('file' => $invoice->pdf, 'title' => $invoice->number, 'attributes' => array('class' => array('pdf'))))),
+    );
+  }
+
+  $form['invoices']['list'] = array(
+      '#type' => 'item',
+      '#markup' => theme('table', array('rows' => array_reverse($rows), 'header' => array('', t('Date'), t('Method'), t('Amount'), t('Outstanding'), t('Order'), t('Invoice')), 'empty' => t('No invoices found'), 'attributes' => array('class' => array('list'))))
+  );
+
+
+
+  return $form;
+}
+
+function pcinvoices_detail_form($form, $form_state, $invoice) {
+  $form['header'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Header'),
+      '#collapsible' => TRUE,
+  );
+  $form['header']['number'] = array(
+      '#type' => 'item',
+      '#title' => t('Number'),
+      '#markup' => $invoice->number,
+  );
+  $form['header']['date'] = array(
+      '#type' => 'item',
+      '#title' => t('Date'),
+      '#markup' => $invoice->creationDate,
+  );
+  $form['header']['firstName'] = array(
+      '#type' => 'item',
+      '#title' => t('First name'),
+      '#markup' => $invoice->firstName,
+  );
+  $form['header']['lastName'] = array(
+      '#type' => 'item',
+      '#title' => t('Date'),
+      '#markup' => $invoice->lastName,
+  );
+  $form['header']['company'] = array(
+      '#type' => 'item',
+      '#title' => t('Company'),
+      '#markup' => $invoice->company,
+  );
+  $form['header']['street'] = array(
+      '#type' => 'item',
+      '#title' => t('Street'),
+      '#markup' => $invoice->street,
+  );
+  $form['header']['postalCode'] = array(
+      '#type' => 'item',
+      '#title' => t('Postal code'),
+      '#markup' => $invoice->postalCode,
+  );
+  $form['header']['city'] = array(
+      '#type' => 'item',
+      '#title' => t('Place'),
+      '#markup' => $invoice->city,
+  );
+  $form['header']['varNumber'] = array(
+      '#type' => 'item',
+      '#title' => t('Vat number'),
+      '#markup' => $invoice->vatNumber,
+  );
+  $form['header']['subtotalAmount'] = array(
+      '#type' => 'item',
+      '#title' => t('Subtotal'),
+      '#markup' => $invoice->subTotalAmount,
+  );
+  $form['header']['vatAmount'] = array(
+      '#type' => 'item',
+      '#title' => t('Vat'),
+      '#markup' => $invoice->vatAmount,
+  );
+  $form['header']['totalAmount'] = array(
+      '#type' => 'item',
+      '#title' => t('Total amount'),
+      '#markup' => $invoice->totalAmount,
+  );
+
+  $form['header']['download'] = array(
+      //'#markup' => l(t('Download'), $invoice->path),
+      '#markup' => theme('pcfilesdownloadlink', array('file' => $invoice->pdf, 'attributes' => array('class' => array('pdf'))))
+  );
+
+  $rows[] = array();
+  foreach ($invoice->lines as $line) {
+
+    $rows[] = array(
+        $line->description,
+        $line->comments,
+        $line->unitAmount,
+        $line->quantity,
+        $line->subTotalAmount,
+        $line->vatAmount,
+        $line->totalAmount,
+    );
+  }
+
+  $form['lines'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Details'),
+  );
+
+  $form['lines']['lines'] = array(
+      '#markup' => theme('table', array('rows' => $rows)),
+  );
+
+  return $form;
+}
+
+function pcinvoices_form_pcorders_order_form_alter(&$form, &$form_state, $form_id) {
+    $invoice = FALSE;
+    $order = variable_get("order");
+
+    if (count($order->invoices)) {
+        $rows = array();
+        foreach ($order->invoices as $invoice) {
+            if (Factory::GetBalance($invoice) > 1) {
+                $flag = '<div class="flag">&nbsp</div>';
+                $class = 'topay';
+                $balance = Factory::GetBalance($invoice);
+            } else {
+                $flag = '<div>&nbsp</div>';
+                $class = '';
+                $balance = 0;
+            }
+
+            $rows[] = array(
+                array('data' => $flag),
+                array('data' => format_date(strtotime($invoice->creationDate), 'short')),
+                array('data' => ''),
+                array(
+                    'data' => theme(
+                        'price', array(
+                            'value' => $invoice->totalAmount,
+                            'attributes' => array('class' => array($class))
+                        )
+                    ),
+                ),
+                array(
+                    'data' => theme('price', array('value' => $balance)),
+                ),
+                array(
+                    'data' => theme(
+                        'pcfilesdownloadlink',
+                        array(
+                            'file' => $invoice->pdf,
+                            'title' => $invoice->number,
+                            'attributes' => array('class' => array('pdf')))
+                    )
+                ),
+            );
+        }
+
+        if ($invoice) {
+            if (variable_get('pc_flow', 'whitelabel') == 'flyer') {
+                $form['actions']['download'] = array(
+                    '#theme' => 'pcfilesdownloadlink',
+                    '#file' => $invoice->pdf,
+                    '#title' => t('Download invoice'),
+                    '#attributes' => array('class' => array('button', 'download')),
+                );
+            } else {
+                $form['invoices'] = array(
+                    '#attributes' => array('class' => array('invoices')),
+                    '#type' => 'fieldset',
+                    '#title' => t('Invoice overview'),
+                );
+                $form['invoices']['list'] = array(
+                    '#type' => 'item',
+                    '#markup' => theme(
+                        'table',
+                        array(
+                            'rows' => array_reverse($rows),
+                            'header' => array(
+                                '',
+                                t('Date'),
+                                t('Method'),
+                                t('Amount'),
+                                t('Outstanding'),
+                                t('Invoice')
+                            ),
+                            'empty' => t('No invoices found'),
+                            'attributes' => array('class' => array('grid'))
+                        )
+                    )
+                );
+            }
+        }
+    }
+    return $form;
+}
+
+function pcinvoices_theme() {
+  return array(
+      'pcinvoices2_list_form' => array(
+          'render element' => 'form',
+          'template' => 'pcinvoices-list-form',
+      ),
+  );
+}
+
+function pcinvoices_form_pccustomers_dashboard_form_alter(&$form, &$form_state) {
+  $customer = $form_state['storage']['customer'];
+
+  $invoices = Factory::GetInvoices($customer);
+
+  $rows = array();
+  $i = 0;
+  $invoices->EnsureLoaded();
+  $invoices = $invoices->items;
+  $invoices = array_reverse($invoices);
+
+  foreach ($invoices as $invoice) {
+    if ($invoice->balance > 1) {
+      $flag = '<div class="flag">&nbsp</div>';
+      $class = 'topay';
+      $balance = $invoice->balance;
+
+      $rows[] = array(
+          array('data' => format_date(strtotime($invoice->creationDate), 'short')),
+          //  array('data' => ''),
+          /* array(
+            'data' => theme('price', array('value' => $invoice->totalAmount, 'attributes' => array('class' => array($class)))),
+            ), */
+          array(
+              'data' => theme('price', array('value' => $balance)),
+          ),
+          //   l($invoice->order, 'myprintconnect/orders/' . $invoice->order),
+//          array('data' => l($invoice->number, printconnect\Files\Factory::getFileUrl($invoice->pdf), array('attributes' => array('class' => 'pdf', 'target' => '_blank')))),
+          array('data' => theme('pcfilesdownloadlink', array('file' => $invoice->pdf, 'title' => $invoice->number, 'attributes' => array('class' => array('pdf'))))),
+      );
+
+
+      if (++$i >= 3)
+        break;
+    }
+  }
+
+  $form['recentinvoices'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Recent invoices'),
+      '#attributes' => array('class' => array('recentinvoices')),
+      '#weight' => 60,
+  );
+  $form['recentinvoices']['list'] = array('#markup' => theme('table', array('rows' => $rows, 'header' => array(t('Date'), t('Outstanding'), t('Invoice')), 'empty' => t('No invoices found'), 'attributes' => array('class' => array('list')))));
+
+  $form['recentinvoices']['all'] = array('#markup' => l(t('All invoices'), 'myprintconnect/invoices'));
+}
+
+function pcinvoices_block_view_pccustomers_links_alter(&$data, $block) {
+  $customer = $data['customer'];
+  if ($customer) {
+
+    $invoices = Factory::GetInvoices($customer);
+
+    $data['content']['links']['invoices'] = array(
+        '#markup' => theme('item_list', array('items' => array(
+                l(t('Invoices') . ' (' . $invoices->count . ')', 'myprintconnect/invoices'),
+                ))));
+  }
+}
+
+function pcinvoices_block_view_pccustomers_profile_alter(&$data, $block) {
+  $customer = $data['customer'];
+  if ($customer) {
+
+    $invoices = Factory::GetInvoices($customer);
+    $invoices->EnsureLoaded();
+   
+    $invoices = $invoices->items;
+   
+    $data['content']['invoices'] = array(
+        '#theme' => 'item_list',
+        '#items' => array(
+            l(t('Invoices') . '(' . count($invoices) . ')', 'myprintconnect/invoices'),
+        ),
+        '#weight' => 70,
+    );
+  }
+}

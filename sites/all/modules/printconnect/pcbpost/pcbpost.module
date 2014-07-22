@@ -1,0 +1,403 @@
+<?php
+
+function pcbpost_menu() {
+  $items['pcbpost/picker'] = array(
+      'title' => 'Pick up your order',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pcbpost_picker_form'),
+      'access arguments' => array('access content'),
+      'file' => 'pcbpost.forms.inc',
+      'type' => MENU_CALLBACK,
+  );
+
+  $items['pcbpost/picker/%'] = array(
+      'title' => 'Pick up your order',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pcbpost_picker_form', 2),
+      'access arguments' => array('access content'),
+      'file' => 'pcbpost.forms.inc',
+      'type' => MENU_CALLBACK,
+  );
+
+  $items['pcbpost/set/pickuppoint/%'] = array(
+      'page callback' => '_pcbpost_set_pickuppoint',
+      'page arguments' => array(3),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+function pcbpost_theme() {
+  return array(
+      'pcbpost_poi' => array(
+          'variables' => array(
+              'poi' => FALSE,
+              'attributes' => array(),
+              'format' => 'detail',
+              'selectable' => FALSE,
+          ),
+      ),
+      'pcbpost_picker_link' => array(
+          'variables' => array(
+              'title' => FALSE,
+              'callback' => FALSE,
+              'attributes' => array(),
+          ),
+      ),
+  );
+}
+
+function theme_pcbpost_poi($vars) {
+  $poi = $vars['poi'];
+  $selectable = $vars['selectable'];
+
+  if ($poi) {
+    $vars['attributes']['class'][] = $poi->Type;
+  }
+
+  $html = '<div ' . drupal_attributes($vars['attributes']) . '>';
+
+  if ($poi) {
+    if ($vars['format'] == 'infowindow') {
+      $html .= '
+          <div>
+          <div class="name">' . htmlentities($poi->Name) . '</div>
+          <div class="address">' . $poi->Street . ' ' . $poi->Number . '<br/>' . $poi->Zip . ' ' . $poi->City . '</div>
+          </div>';
+
+      $rows = array();
+      foreach ($poi->openingHours as $day => $hours) {
+        $rows[] = array(t($day), $hours);
+      }
+
+      $html .= '<div>' . theme('table', array('rows' => $rows, 'attributes' => array('class' => array('openinghours')))) . '</div>';
+//$html .= theme('item_list', array('items' => $items));
+//$vars['enabled']
+      if (count($poi->services)) {
+        $services = array();
+        foreach ($poi->services as $service) {
+          $services[] = $service;
+        }
+
+        $html .= '<div class="services">' . implode(',', $services) . '</div>';
+      }
+      if ($selectable)
+        $html .= l(t('Select this pickup point'), 'pcbpost/picker', array('attributes' => array('class' => array('button', 'select'), 'id' => 'select-' . $poi->Id)));
+    }
+    if ($vars['format'] == 'detail') {
+      /*
+        if ($poi->contactName) {
+        $html .= '<div class="contact">' . htmlentities($poi->contactName) . '</div>';
+        }
+
+        if ($poi->email) {
+        $html .= '<div class="email">' . htmlentities($poi->email) . '</div>';
+        }
+
+        if ($poi->phone) {
+        $html .= '<div class="phone">' . htmlentities($poi->phone) . '</div>';
+        }
+       */
+
+      $html .= '
+          <div>
+          <div class="name"><h3>' . htmlentities($poi->Name) . '</h3></div>
+          <div class="address">' . $poi->Street . ' ' . $poi->Number . '<br/>' . $poi->Zip . ' ' . $poi->City . '</div>
+          </div>';
+
+      $rows = array();
+      foreach ($poi->openingHours as $day => $hours) {
+        $rows[] = array(t($day), $hours);
+      }
+
+      $html .= '<div>' . t('Opening hours') . theme('table', array('rows' => $rows, 'attributes' => array('class' => array('openinghours')))) . '</div>';
+
+//      $html .= '<div class="services">' . implode(',', $poi->services) . '</div>';
+    }
+    if ($vars['format'] == 'list') {
+      $html .= '
+          <div class="name">' . htmlentities($poi->Name) . '</div>
+          <div class="address">' . $poi->Street . ' ' . $poi->Number . '<br/> ' . $poi->Zip . ' ' . $poi->City . '</div>
+       ';
+    }
+  }
+
+  $html .= '</div>';
+
+  return $html;
+}
+
+function theme_pcbpost_picker_link($vars) {
+  module_load_include('inc', 'pcbpost', 'pcbpost.forms');
+  $vars['attributes']['class'][] = 'pcbpost-picker-link';
+  $vars['attributes']['class'][] = 'iframe';
+  $vars['query']['contentonly'] = TRUE;
+
+  $url = 'pcbpost/picker';
+  if ($vars['callback']) {
+    $url .= '/' . $vars['callback'];
+  }
+
+  if (!$vars['title']) {
+    $title = t('Choose your pickup point');
+  } else {
+    $title = $vars['title'];
+  }
+
+  $build = array(
+      'link' => array('#markup' => l($title, $url, $vars)),
+          //'form' => $form,
+  );
+
+  return drupal_render($build);
+}
+
+function pcbpost_form_pccart_cart_form2_alter(&$form, &$form_state) {
+  $typeId = FALSE;
+  $cart = $form_state['storage']['cart'];
+
+  $form['pcbpost']['id'] = array(
+      '#type' => 'hidden',
+      '#default_value' => FALSE,
+      '#attributes' => array('class' => array('pcbpost', 'id')),
+  );
+
+  if ($cart) {
+    if (isset($form_state['values']['cart']['shipping']['type'])) {
+      $currentType = $form_state['values']['cart']['shipping']['type'];
+    } else {
+      $currentType = $cart->orderItemShipping->shippingTypeResellerShop;
+    }
+
+    if (isset($form_state['storage']['shipping']['types'])) {
+      $types = $form_state['storage']['shipping']['types'];
+      foreach ($types as $type) {
+        if ($type->shippingType->type == 'shippingTypeBpostPickupPoint') {
+          $typeId = $type->id;
+        }
+      }
+      if ($currentType == $typeId && isset($form['cart']['shipping']['type']['#options'][$typeId])) {
+        $form['cart']['shipping']['type']['#options'][$typeId]['label'] .=  theme('pcbpost_picker_link', array('callback' => 'pcbpost_cart_callback'));
+        $form['cart']['shipping']['pup']['id']['#default_value'] = '';
+        $form['cart']['shipping']['pup']['countryCode']['#default_value'] = '';
+
+        if ($cart->pickuppoint && $cart->pickuppoint->id > 100000) {
+          $poi = \printconnect\bPost\Factory::Get($cart->pickuppoint->id);
+          $form['cart']['shipping']['pup']['id']['#default_value'] = $cart->pickuppoint->id;
+          $form['pcbpost']['id']['#default_value'] = $cart->pickuppoint->id;
+          $form['cart']['shipping']['type']['#options'][$typeId]['label'] .= '<br/>' . theme('pcbpost_poi', array('poi' => $poi, 'format' => 'detail', 'attributes' => array('class' => array('pup', 'clearfix'))));
+        } else {
+          $form['cart']['shipping']['type']['#options'][$typeId]['label'] .= '<br/>' . theme('pcbpost_poi', array('poi' => FALSE, 'format' => 'detail', 'attributes' => array('class' => array('pup', 'clearfix'))));
+        }
+      } else {
+        unset($form['cart']['shipping']['bpost']);
+        //  $form['cart']['shipping']['type']['#options'][$typeId]['extra'] = '';
+      }
+    }
+  }
+  $submit = $form['#submit'];
+  array_unshift($submit, 'pcbpost_pccart_cart_form2_submit');
+  $form['#submit'] = $submit;
+}
+
+function pcbpost_pccart_cart_form2_submit($form, &$form_state) {
+  $cart = $form_state['storage']['cart'];
+  $typeId = FALSE;
+  if ($cart) {
+    if (isset($form_state['values']['cart']['shipping']['type'])) {
+      $currentType = $form_state['values']['cart']['shipping']['type'];
+    } else {
+      $currentType = $cart->orderItemShipping->shippingTypeResellerShop;
+    }
+
+    if (isset($form_state['storage']['shipping']['types'])) {
+      $types = $form_state['storage']['shipping']['types'];
+      foreach ($types as $type) {
+        if ($type->shippingType->type == 'shippingTypeBpostPickupPoint') {
+          $typeId = $type->id;
+        }
+      }
+
+      if ($currentType == $typeId) {
+        $id = $form_state['values']['pcbpost']['id'];
+
+        if ($id) {
+          $store = \printconnect\bPost\Factory::Get($id);
+          $store->EnsureLoaded();
+          $cart->pickuppoint = $store->cartObject;
+        } else {
+          $cart->pickuppoint = FALSE;
+        }
+
+        $form_state['storage']['cart'] = $cart;
+      }
+    }
+  }
+}
+
+function pcbpost_form_pccheckout_checkout_form_alter(&$form, &$form_state) {
+  $cart = $form_state['storage']['cart'];
+
+  $shippingType = $form_state['storage']['shippingType'];
+
+  if ($shippingType == 'shippingTypeBpostPickupPoint') {
+
+    if ($cart->pickuppoint && $cart->pickuppoint->id > 100000) {
+      $poi = \printconnect\bPost\Factory::Get($cart->pickuppoint->id);
+      $form['shipping']['pickup']['bpost']['poi']['#markup'] = theme('pcbpost_poi', array('poi' => $poi, 'format' => 'detail', 'attributes' => array('class' => array('pup', 'box', 'clearfix'))));
+    } else {
+      $form['shipping']['pickup']['bpost']['poi']['#markup'] = theme('pcbpost_poi', array('poi' => false, 'format' => 'detail', 'attributes' => array('class' => array('pup', 'box', 'clearfix'))));
+    }
+
+    $form['shipping']['pickup']['bpost']['select']['#markup'] = theme('pcbpost_picker_link', array('title' => t('Choose another pickup point in your neighbourhood'), 'callback' => 'pcbpost_checkout_callback', 'attributes' => array('class' => array('button'))));
+  }
+}
+
+function pcbpost_form_pccheckout_checkout_form2_alter(&$form, &$form_state) {
+  $cart = $form_state['storage']['cart'];
+
+  $shippingType = $form_state['storage']['shippingType'];
+
+  if ($shippingType == 'shippingTypeBpostPickupPoint') {
+
+    if ($cart->pickuppoint && $cart->pickuppoint->id > 100000) {
+      $poi = \printconnect\bPost\Factory::Get($cart->pickuppoint->id);
+      $form['shipping']['pickup']['bpost']['poi']['#markup'] = theme('pcbpost_poi', array('poi' => $poi, 'format' => 'detail', 'attributes' => array('class' => array('pup', 'box', 'clearfix'))));
+    } else {
+      $form['shipping']['pickup']['bpost']['poi']['#markup'] = theme('pcbpost_poi', array('poi' => false, 'format' => 'detail', 'attributes' => array('class' => array('pup', 'box', 'clearfix'))));
+    }
+
+    $form['shipping']['pickup']['bpost']['select']['#markup'] = theme('pcbpost_picker_link', array('title' => t('Choose another pickup point in your neighbourhood'), 'callback' => 'pcbpost_checkout_callback', 'attributes' => array('class' => array('button'))));
+  }
+}
+
+function pcbpost_form_pccheckout_shipping_form_alter(&$form, &$form_state) {
+  $cart = $form_state['storage']['cart'];
+
+  $shippingType = $form_state['storage']['shippingType'];
+
+  if ($shippingType == 'shippingTypeBpostPickupPoint') {
+
+    if ($cart->pickuppoint && $cart->pickuppoint->id > 100000) {
+      $poi = \printconnect\bPost\Factory::Get($cart->pickuppoint->id);
+      $form['shipping']['pickup']['bpost']['poi']['#markup'] = theme('pcbpost_poi', array('poi' => $poi, 'format' => 'detail', 'attributes' => array('class' => array('pup', 'box', 'clearfix'))));
+      $form['shipping']['pickup']['bpost']['select']['#markup'] = theme('pcbpost_picker_link', array('title' => t('Choose another pickup point in your neighbourhood'), 'callback' => 'pcbpost_checkout_callback', 'attributes' => array('class' => array('button'))));
+    } else {
+      $form['shipping']['pickup']['bpost']['poi']['#markup'] = theme('pcbpost_poi', array('poi' => false, 'format' => 'detail', 'attributes' => array('class' => array('pup', 'box', 'clearfix'))));
+      $form['shipping']['pickup']['bpost']['select']['#markup'] = theme('pcbpost_picker_link', array('title' => t('Choose a pickup point in your neighbourhood'), 'callback' => 'pcbpost_checkout_callback', 'attributes' => array('class' => array('button'))));
+    }
+  }
+}
+
+function pcbpost_form_pccheckout_invoiceanddelivery_form_alter(&$form, &$form_state) {
+
+  $cart = $form_state['storage']['cart'];
+  $customer = $form_state['storage']['customer'];
+
+  $form['pcbpost']['id'] = array(
+      '#type' => 'hidden',
+      '#default_value' => FALSE,
+      '#attributes' => array('class' => array('pcbpost', 'id')),
+  );
+  if ($form_state['storage']['shippingType'] == 'shippingTypeBpostPickupPoint') {
+    unset($form['summary']['shipping']['selected']);
+
+    $form['shipping']['pickup']['id'] = array(
+        '#type' => 'hidden',
+    );
+    if (isset($cart->pickuppoint->id)) {
+//$store = \printconnect\Stores\Factory::Get($cart->pickuppoint->id);
+      $poi = \printconnect\bPost\Factory::Get($cart->pickuppoint->id);
+//$poi = $cart->pickuppoint;
+      $form['shipping']['pickup']['id']['#default_value'] = $poi->Id;
+      $form['pcbpost']['id']['#default_value'] = $poi->Id;
+    } else {
+      $poi = FALSE;
+    }
+
+    $form['summary']['shipping']['selected'] = array(
+        '#theme' => 'pcbpost_poi',
+        '#poi' => $poi,
+        '#attributes' => array('class' => array('pup', 'clearfix')),
+    );
+
+    $form['shipping']['detail']['change'] = array(
+        '#theme' => 'pcbpost_picker_link',
+        '#callback' => 'pcbpost_checkout_callback',
+    );
+
+    unset($form['shipping']['detail']['current']);
+
+    $form['shipping']['detail']['contact'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Who will pick up your print work?'),
+        '#required' => TRUE,
+        '#default_value' => isset($cart->pickuppoint) && isset($cart->pickuppoint->contactName) ? $cart->pickuppoint->contactName : ($customer ? $customer->name : ''),
+        '#size' => 30,
+    );
+    $form['shipping']['detail']['phone'] = array(
+        '#type' => 'textfield',
+        '#title' => t('SMS'),
+        '#default_value' => isset($cart->pickuppoint) && isset($cart->pickuppoint->phone) ? $cart->pickuppoint->phone : ($customer ? $customer->phone : ''),
+        '#size' => 30,
+    );
+    $form['shipping']['detail']['email'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Email'),
+        '#default_value' => isset($cart->pickuppoint) && isset($cart->pickuppoint->email) ? $cart->pickuppoint->email : ($customer ? $customer->email : ''),
+        '#size' => 30,
+    );
+
+    $form['shipping']['detail']['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Save'),
+        '#name' => 'shipping_address_submit',
+        '#validate' => array('pcbpost_invoiceanddelivery_form_shipping_validate'),
+        '#submit' => array('pcbpost_invoiceanddelivery_form_shipping_submit'),
+    );
+  }
+
+  $form['#validate'][] = 'pcbpost_pccheckout_invoiceanddelivery_form_validate';
+}
+
+function pcbpost_pccheckout_invoiceanddelivery_form_validate($form, &$form_state) {
+  if ($form_state['storage']['shippingType'] == 'shippingTypeBpostPickupPoint') {
+    if (!isset($form_state['values']['pcbpost']['id']) || !$form_state['values']['pcbpost']['id']) {
+      form_set_error('', t('Please select a pickup point'));
+    }
+  }
+}
+
+function pcbpost_invoiceanddelivery_form_shipping_validate($form, &$form_state) {
+  if ($form_state['storage']['shippingType'] == 'shippingTypeBpostPickupPoint') {
+    if (!isset($form_state['values']['pcbpost']['id']) || !$form_state['values']['pcbpost']['id']) {
+      form_set_error('', t('Please select a pickup point'));
+    }
+  }
+}
+
+function pcbpost_invoiceanddelivery_form_shipping_submit($form, &$form_state) {
+  $cart = $form_state['storage']['cart'];
+  $id = $form_state['values']['pcbpost']['id'];
+  if ($id) {
+    $poi = \printconnect\bPost\Factory::Get($id);
+    $cart->pickuppoint = $poi->cartObject;
+    $cart->pickuppoint->contactName = $form_state['values']['shipping']['detail']['contact'];
+    $cart->pickuppoint->email = $form_state['values']['shipping']['detail']['email'];
+    $cart->pickuppoint->phone = $form_state['values']['shipping']['detail']['phone'];
+    \printconnect\Carts\Factory::Save($cart);
+  }
+}
+
+function _pcbpost_set_pickuppoint($id) {
+  $cart = \printconnect\Carts\Factory::Current();
+  if ($cart) {
+    $poi = \printconnect\bPost\Factory::Get($id);
+    $poi->EnsureLoaded();
+    $cart->pickuppoint = $poi->cartObject;
+    \printconnect\Carts\Factory::Save($cart);
+  }
+  exit;
+}

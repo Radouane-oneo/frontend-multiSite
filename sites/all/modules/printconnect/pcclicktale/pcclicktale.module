@@ -1,0 +1,36 @@
+<?php
+
+function pcclicktale_page_alter(&$page) {
+
+  $pid = variable_get('pc_clicktalepid', FALSE);
+  $ratio = variable_get('pc_clicktaleratio', FALSE);
+
+  if ($pid) {
+
+    $top = '<!-- ClickTale Top part -->
+<script type="text/javascript">
+var WRInitTime=(new Date()).getTime();
+</script>
+<!-- ClickTale end of Top part -->';
+
+    $bottom = <<<CODE
+<!-- ClickTale Bottom part -->
+<div id="ClickTaleDiv" style="display: none;"></div>
+<script type='text/javascript'>
+document.write(unescape("%3Cscript%20src='"+
+ (document.location.protocol=='https:'?
+  'https://clicktalecdn.sslcs.cdngc.net/www/':
+  'http://s.clicktale.net/')+
+ "WRe0.js'%20type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var ClickTaleSSL=1;
+if(typeof ClickTale=='function') ClickTale($pid,$ratio,"www14");
+</script>
+<!-- ClickTale end of Bottom part -->
+CODE;
+
+    $page['page_top']['pcclicktale']['#markup'] = $top;
+    $page['page_bottom']['pcclicktale']['#markup'] = $bottom;
+  }
+}

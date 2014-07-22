@@ -1,0 +1,404 @@
+<?php
+
+function pcgiftvouchers_menu() {
+  $items['giftvouchers'] = array(
+      'title' => 'Gift vouchers',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pcgiftvouchers_config_form'),
+      'access arguments' => array('access content'),
+      'file' => 'pcgiftvouchers.forms.inc',
+  );
+
+  $items['giftvoucher/%'] = array(
+      'title' => 'Gift vouchers',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pcgiftvouchers_config_form', 1),
+      'access arguments' => array('access content'),
+      'file' => 'pcgiftvouchers.forms.inc',
+  );
+
+  return $items;
+}
+
+function pcgiftvouchers_theme() {
+  return array(
+      'pcgiftvouchersoption' => array(
+          'variables' => array(
+              'amount' => 0,
+              'text' => '',
+          )
+      ),
+  );
+}
+
+function theme_pcgiftvouchersoption($vars) {
+  $amount = theme('price', array('value' => $vars['amount']));
+
+  return '<div><div>' . $amount . '</div><div>' . $vars['text'] . '</div>';
+}
+
+function pcgiftvouchers_form_pccheckout_checkout_form_alter(&$form, &$form_state, $form_id) {
+  $cart = $form_state['storage']['cart'];
+
+  if ($cart->hasVouchers && !isset($form['shipping']['delivery'])) {
+    $defaultShippingAddress = $form_state['storage']['defaultShippingAddress'];
+    $customer = $form_state['storage']['customer'];
+
+    $form['shipping']['giftvouchers'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('box')),
+    );
+
+
+    $form['shipping']['giftvouchers']['text'] = array(
+        '#markup' => t('Please specify the address we should send the giftvoucher(s) to..'),
+    );
+
+    $form['shipping']['giftvouchers']['address']['address'] = array(
+        '#type' => 'select',
+        '#title' => t('Address'),
+        '#options' => $form_state['storage']['addresses'],
+        '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->id : 0,
+    );
+
+    $form['shipping']['giftvouchers']['address']['name'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Name'),
+        '#required' => TRUE,
+        '#size' => 30,
+        '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->name : ($customer ? $customer->name : ''),
+    );
+
+    $form['shipping']['giftvouchers']['address']['company'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Company'),
+        '#required' => FALSE,
+        '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->company : '',
+        '#size' => 30,
+    );
+    $form['shipping']['giftvouchers']['address']['street'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Street'),
+        '#required' => TRUE,
+        '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->street : '',
+        '#size' => 30,
+    );
+    $form['shipping']['giftvouchers']['address']['postalCode'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Postal code'),
+        '#required' => TRUE,
+        '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->postalCode : '',
+        '#size' => 30,
+    );
+    $form['shipping']['giftvouchers']['address']['city'] = array(
+        '#type' => 'textfield',
+        '#title' => t('City'),
+        '#required' => TRUE,
+        '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->city : '',
+        '#size' => 30,
+    );
+    $form['shipping']['giftvouchers']['address']['country'] = array(
+        '#type' => 'select',
+        '#title' => t('Country'),
+        '#required' => TRUE,
+        '#empty_value' => 0,
+        '#options' => $form_state['storage']['deliveryCountries'],
+        '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->country : $defaultCountry->id,
+    );
+    $form['shipping']['giftvouchers']['address']['phone'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Phone'),
+        '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->phone : ($customer ? $customer->phone : ''),
+        '#size' => 30,
+    );
+  }
+
+  //$form['shipping']['submit']['#validate'][] = 'pcgiftvouchers_pccheckout_form_shipping_validate';
+  // array_unshift($form['shipping']['submit']['#submit'], 'pcgiftvouchers_pccheckout_form_shipping_submit');
+
+  return $form;
+}
+
+function pcgiftvouchers_pccheckout_form_shipping_validate($form, &$formstate) {
+  if (isset($form['shipping']['giftvouchers'])) {
+
+    $customer = $form_state['storage']['customer'];
+
+    $addressId = $form_state['values']['shipping']['giftvouchers']['address'];
+
+    if ($addressId == 0) {
+      $address = Addresses\Factory::Create();
+      $address->firstName = $customer->firstName;
+      $address->lastName = $customer->lastName;
+      $address->phone = $customer->phone;
+    } else {
+      $address = Addresses\Factory::Get($addressId);
+      $address->EnsureLoaded();
+    }
+
+    Forms::LoadObject($form_state['values']['shipping']['giftvouchers'], $address);
+    $address->customer = $customer->id;
+    try {
+      Addresses\Factory::Validate(clone $address);
+    } catch (\printconnect\Dal\Exception $ex) {
+      Forms::HandleException($ex, $form, 'shipping][giftvouchers][');
+    }
+    $form_state['storage']['shipping']['giftvouchers']['address'] = $address;
+
+    //drupal_set_message('validate vouchers');
+  } elseif (isset($form['shipping']['delivery'])) {
+    //drupal_set_message('validate vouchers with delivery address');
+  }
+}
+
+function pcgiftvouchers_pccheckout_form_shipping_submit($form, &$formstate) {
+  if (isset($form['shipping']['giftvouchers'])) {
+    drupal_set_message('submit vouchers');
+  } elseif (isset($form['shipping']['delivery'])) {
+    drupal_set_message('submit vouchers with delivery address');
+  }
+}
+
+function pcgiftvouchers_form_pccart_cart_form_alter(&$form, &$form_state) {
+  $cart = $form_state['storage']['cart'];
+
+  if ($cart && count($cart->giftVouchers)) {
+
+//      $form['giftvouchers'] = array(
+//          '#type' => 'container',
+//          '#attributes' => array('class' => array('giftvouchers', 'item', 'clearfix')),
+//      );
+
+
+    foreach ($cart->giftVouchers as $giftVoucher) {
+      $form['giftvouchers'][$giftVoucher->id] = array(
+          '#type' => 'container',
+          '#attributes' => array('class' => array('item', 'clearfix', 'giftvoucher')),
+      );
+
+      $form['giftvouchers'][$giftVoucher->id]['image'] = array(
+          '#type' => 'container',
+          '#attributes' => array('class' => array('image')),
+      );
+
+      $form['giftvouchers'][$giftVoucher->id]['image']['content'] = array(
+          '#markup' => theme('image', array('path' => \printconnect\Drupal\Functions::GetImage('products', 'giftvoucher'))),
+      );
+
+
+      $form['giftvouchers'][$giftVoucher->id]['description'] = array(
+          '#type' => 'container',
+          '#attributes' => array('class' => array('description')),
+      );
+
+      $form['giftvouchers'][$giftVoucher->id]['description']['remove'] = array(
+          '#type' => 'submit',
+          '#src' => drupal_get_path('module', 'pccart') . '/images/delete.png',
+          '#value' => t('delete'),
+          '#name' => 'delete_giftvoucher_' . $giftVoucher->id,
+          '#validate' => array('pccart_cart_form_delete_giftvoucher_validate'),
+          '#submit' => array('pccart_cart_form_delete_giftvoucher_submit'),
+          '#attributes' => array('class' => array('remove', 'noreplace')),
+          '#has_garbage_value' => FALSE,
+      );
+
+      $form['giftvouchers'][$giftVoucher->id]['description']['price'] = array(
+          '#markup' => theme('price', array('value' => $giftVoucher->convertedAmount)),
+      );
+
+      $form['giftvouchers'][$giftVoucher->id]['description']['header'] = array(
+          '#prefix' => '<h4>',
+          '#suffix' => '</h4>',
+          '#markup' => t('Gift voucher'),
+      );
+
+      $form['giftvouchers'][$giftVoucher->id]['description']['image'] = array(
+          '#markup' => theme('image', array('path' => drupal_get_path('module', 'pcgiftvouchers') . '/postal.jpg', 'attributes' => array('class' => array('left')))),
+      );
+      $form['giftvouchers'][$giftVoucher->id]['description']['text'] = array(
+          '#markup' => t('This product will be shipped with BPost. You may enter the address later during checkout.'),
+      );
+      $form['giftvouchers'][$giftVoucher->id]['description']['link'] = array(
+          '#type' => 'item',
+          '#markup' => l(t('Edit'), 'giftvoucher/' . $giftVoucher->id, array('attributes' => array('class' => 'edit'))),
+      );
+    }
+  }
+}
+
+function pcgiftvouchers_form_pccart_cart_form2_alter(&$form, &$form_state) {
+  $cart = $form_state['storage']['cart'];
+
+  if (count($cart->giftVouchers)) {
+
+//      $form['giftvouchers'] = array(
+//          '#type' => 'container',
+//          '#attributes' => array('class' => array('giftvouchers', 'item', 'clearfix')),
+//      );
+
+
+    foreach ($cart->giftVouchers as $giftVoucher) {
+      $formc['giftvouchers'][$giftVoucher->id] = array(
+          '#type' => 'container',
+          '#attributes' => array('class' => array('item', 'clearfix', 'giftvoucher')),
+      );
+
+      $form['cart']['giftvouchers'][$giftVoucher->id]['image'] = array(
+          '#type' => 'container',
+          '#attributes' => array('class' => array('image')),
+      );
+
+      $form['cart']['giftvouchers'][$giftVoucher->id]['image']['content'] = array(
+          '#markup' => theme('image', array('path' => \printconnect\Drupal\Functions::GetImage('products', 'giftvoucher'))),
+      );
+
+
+      $form['cart']['giftvouchers'][$giftVoucher->id]['description'] = array(
+          '#type' => 'container',
+          '#attributes' => array('class' => array('description')),
+      );
+
+      $form['cart']['giftvouchers'][$giftVoucher->id]['description']['remove'] = array(
+          '#type' => 'submit',
+          '#src' => drupal_get_path('module', 'pccart') . '/images/delete.png',
+          '#value' => t('delete'),
+          '#name' => 'delete_giftvoucher_' . $giftVoucher->id,
+          '#validate' => array('pccart_cart_form_delete_giftvoucher_validate'),
+          '#submit' => array('pccart_cart_form_delete_giftvoucher_submit'),
+          '#attributes' => array('class' => array('remove', 'noreplace')),
+          '#has_garbage_value' => FALSE,
+      );
+
+      $form['cart']['giftvouchers'][$giftVoucher->id]['description']['price'] = array(
+          '#markup' => theme('price', array('value' => $giftVoucher->convertedAmount)),
+      );
+
+      $form['cart']['giftvouchers'][$giftVoucher->id]['description']['header'] = array(
+          '#prefix' => '<h4>',
+          '#suffix' => '</h4>',
+          '#markup' => t('Gift voucher'),
+      );
+
+      $form['cart']['giftvouchers'][$giftVoucher->id]['description']['image'] = array(
+          '#markup' => theme('image', array('path' => drupal_get_path('module', 'pcgiftvouchers') . '/postal.jpg', 'attributes' => array('class' => array('left')))),
+      );
+      $form['cart']['giftvouchers'][$giftVoucher->id]['description']['text'] = array(
+          '#markup' => t('This product will be shipped with BPost. You may enter the address later during checkout.'),
+      );
+      $form['cart']['giftvouchers'][$giftVoucher->id]['description']['link'] = array(
+          '#type' => 'item',
+          '#markup' => l(t('Edit'), 'giftvoucher/' . $giftVoucher->id, array('attributes' => array('class' => 'edit'))),
+      );
+    }
+  }
+}
+
+function pcgiftvouchers_block_view_pccart_cart_alter(&$data, $block) {
+  $cart = $data['cart'];
+  if ($cart && count($cart->giftVouchers)) {
+    $data['content']['cart']['giftvouchers'] = array(
+        '#type' => 'container',
+        '#attributes' => array(),
+        '#weight' => 20,
+    );
+
+    foreach ($cart->giftVouchers as $giftVoucher) {
+
+      $data['content']['cart']['giftvouchers'][$giftVoucher->id] = array(
+          '#type' => 'container',
+          '#attributes' => array('class' => array('item', 'clearfix')),
+      );
+
+      $data['content']['cart']['giftvouchers'][$giftVoucher->id]['image'] = array(
+          '#type' => 'container',
+          '#attributes' => array('class' => array('image')),
+      );
+
+      $data['content']['cart']['giftvouchers'][$giftVoucher->id]['image']['content'] = array(
+          '#markup' => theme('image', array('path' => \printconnect\Drupal\Functions::GetImage('products', 'giftvoucher'))),
+      );
+
+      $data['content']['cart']['giftvouchers'][$giftVoucher->id]['description'] = array(
+          '#type' => 'container',
+          '#attributes' => array('class' => array('description')),
+      );
+
+      $data['content']['cart']['giftvouchers'][$giftVoucher->id]['description']['price'] = array(
+          '#markup' => theme('price', array('value' => $giftVoucher->convertedAmount)),
+      );
+
+      $data['content']['cart']['giftvouchers'][$giftVoucher->id]['description']['header'] = array(
+          '#prefix' => '<h4>',
+          '#suffix' => '</h4>',
+          '#markup' => t('Gift voucher'),
+      );
+      $data['content']['cart']['giftvouchers'][$giftVoucher->id]['description']['address'] = array(
+          '#markup' => $giftVoucher->address,
+      );
+    }
+  }
+}
+
+function pccart_cart_form_delete_giftvoucher_validate($form, $form_state) {
+  //drupal_set_message('validate delete giftvoucher');
+}
+
+function pccart_cart_form_delete_giftvoucher_submit($form, $form_state) {
+  $giftVoucherId = $form_state['triggering_element']['#parents'][1];
+  //drupal_set_message(' delete giftvoucher');
+
+  \printconnect\GiftVouchers\Factory::Delete(\printconnect\GiftVouchers\Factory::Get($giftVoucherId));
+
+
+  \printconnect\Carts\Factory::Refresh($form_state['storage']['cart']);
+}
+
+function pcgiftvouchers_form_pcorders_order_form_alter(&$form, &$form_state) {
+  $order = $form_state['storage']['order'];
+
+  foreach ($order->giftVouchers as $giftVoucher) {
+
+    $form['order']['details']['giftvoucher'][$giftVoucher->id] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('item', 'clearfix', 'giftvoucher'))
+    );
+
+    $form['order']['details']['giftvoucher'][$giftVoucher->id]['image'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('image')),
+    );
+
+    $form['order']['details']['giftvoucher'][$giftVoucher->id]['content'] = array(
+        '#markup' => theme('image', array('path' => \printconnect\Drupal\Functions::GetImage('products', 'giftvoucher'))),
+    );
+
+    $form['order']['details']['giftvoucher'][$giftVoucher->id]['description'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('description')),
+    );
+
+    $form['order']['details']['giftvoucher'][$giftVoucher->id]['description']['price'] = array('#markup' => theme('price', array('value' => $giftVoucher->convertedAmount)));
+    $form['order']['details']['giftvoucher'][$giftVoucher->id]['description']['name'] = array(
+        '#prefix' => '<h4>',
+        '#markup' => t('Gift voucher'),
+        '#suffix' => '</h4><hr/>',
+    );
+    $form['order']['details']['giftvoucher'][$giftVoucher->id]['description']['code'] = array(
+        '#type' => 'item',
+        '#title' => t('Code'),
+        '#markup' => $giftVoucher->code,
+    );
+    $form['order']['details']['giftvoucher'][$giftVoucher->id]['description']['expiredate'] = array(
+        '#type' => 'item',
+        '#title' => t('Expiration date'),
+        '#markup' => format_date(time(), 'short'),
+    );
+    $form['order']['details']['giftvoucher'][$giftVoucher->id]['description']['address'] = array(
+        '#type' => 'item',
+        '#name' => 'address',
+        '#attributes' => array('class' => array('address')),
+        '#title' => t('Address'),
+        '#markup' => theme('address', array('address' => $giftVoucher->address)),
+    );
+  }
+}

@@ -1,0 +1,180 @@
+<?php
+
+use \printconnect\Newsletters\Subscriptions\Factory;
+use \printconnect\Customers;
+
+function pcnewsletters_menu() {
+  $items['newsletter'] = array(
+      'title' => 'Newsletter',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pcnewsletters_subscribe_form'),
+      'access arguments' => array('access content'),
+          //'file' => 'pcnewsletters.forms.inc',
+  );
+  $items['newsletter/subscribe'] = array(
+      'title' => 'Subscribe',
+      'access arguments' => array('access content'),
+  );
+  $items['newsletter/unsubscribe'] = array(
+      'title' => 'Unsubscribe',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pcnewsletters_unsubscribe_form'),
+      'access arguments' => array('access content'),
+          // 'file' => 'pcnewsletters.forms.inc',
+  );
+  return $items;
+}
+
+/*
+  function pcnewsletters_block_info() {
+  $blocks['subscribe'] = array(
+  'info' => t('Newsletter subscribe'),
+  );
+  return $blocks;
+  }
+
+  function pcnewsletters_block_view($delta = '') {
+  module_load_include('inc', 'pcnewsletters', 'pcnewsletters.forms');
+  $block['title'] = t('Subscribe');
+  $block['content'] = drupal_get_form('pcnewsletters_subscribe_form');
+  return $block;
+  }
+ */
+
+function pcnewsletters_form_pccheckout_checkout_form_alter(&$form, $form_state, $form_id) {
+  if (isset($form['personal'])) {
+    /* $form['personal']['subscribe'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Subscribe to newsletter'),
+      );
+      array_unshift($form['personal']['submit']['#submit'], 'pcnewsletters_form_pccheckout_form_submit');
+     */
+  }
+}
+
+function pcnewsletters_form_pccheckout_form_submit($form, &$form_state) {
+  if (isset($form_state['values']['personal']['subscribe'])) {
+    $customer = Customers\Factory::Current();
+    if ($customer) {
+      /* $subscription = Factory::GetByEmail($customer->email);
+        if (!$subscription) {
+        $subscription = Factory::Create($customer->email);
+        Factory::Save($subscription);
+        } */
+    }
+    //  drupal_set_message(t('Subscribed'));
+  }
+}
+
+function pcnewsletters_subscribe_form($form, $form_state) {
+  $customer = \printconnect\Customers\Factory::Current();
+  $email = '';
+
+  if ($customer) {
+    $email = $customer->email;
+  }
+
+  if (!isset($form_state['storage']['subscribed'])) {
+
+    $form['text'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('text')),
+        'content' => array(
+            '#markup' => t('Do you want to learn more about what printconnect.com can do for you?') . '<br/>' . t('Subscribe to our newsletter.'),
+        ),
+    );
+
+    $form['email'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Email'),
+        '#default_value' => $email,
+        '#description' => t('Email'),
+        '#attributes' => array('class' => array('hint')),
+    );
+    $form['actions']['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Subscribe'),
+        '#ajax' => array(
+            'callback' => 'pcnewsletters_subscribe_form_callback',
+            'wrapper' => 'pcnewsletters-subscribe-form',
+            'method' => 'replace',
+            'effect' => 'fade',
+            'progress' => array(
+                'message' => NULL,
+                'type' => NULL,
+            ),
+        )
+    );
+  } else {
+    $form['confirmation'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('confirmation')),
+        'content' => array(
+            '#markup' => t('Thank you very much for subscribing. Twice a month, you’ll receive the latest promotions and news. Don’t miss out!'),
+        ),
+    );
+  }
+
+  $form['#id'] = 'pcnewsletters-subscribe-form';
+
+  return $form;
+}
+
+function pcnewsletters_subscribe_form_submit($form, &$form_state) {
+//  $subscription = Factory::GetByEmail($form_state['values']['email']);
+  // $subscription->EnsureLoaded();
+//  if (!$subscription) 
+  try {
+    $subscription = Factory::Create($form_state['values']['email']);
+    Factory::Save($subscription);
+    $form_state['storage']['subscribed'] = TRUE;
+  } catch (\Exception $ex) {
+    
+  }
+
+  $form_state['rebuild'] = TRUE;
+  // }
+  //drupal_set_message(t('Subscribed'));
+}
+
+function pcnewsletters_subscribe_form_callback($form, $form_state) {
+  return $form;
+}
+
+function pcnewsletters_unsubscribe_form($form, $form_state) {
+  $customer = \printconnect\Customers\Factory::Current();
+  $email = '';
+
+  if ($customer) {
+    $email = $customer->email;
+  }
+
+  $options = array(
+      '1' => t('No interest'),
+      '2' => t('Too much information'),
+  );
+
+
+  $form['email'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Email'),
+      '#default_value' => $email,
+  );
+
+  $form['reason'] = array(
+      '#type' => 'radios',
+      '#title' => t('Reason'),
+      '#options' => $options,
+  );
+
+  $form['actions']['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Unsubscribe'),
+  );
+  return $form;
+}
+
+function pcnewsletters_unsubscribe_form_submit($form, $form_state) {
+  Factory::Delete($form_state['values']['email']);
+  drupal_set_message(t('Unsubscribed'));
+}

@@ -1,0 +1,1222 @@
+<?php
+
+use printconnect\Customers\Addresses;
+use printconnect\Customers\Factory;
+use printconnect\Diagnostics\Debug;
+use printconnect\Drupal\Forms;
+use printconnect\Drupal\Functions;
+use printconnect\Customers\Messages;
+
+/**
+ * Implements hook_block_info
+ *
+ * Define blocks
+ */
+function pccustomers_block_info() {
+  /*
+    $blocks['login'] = array(
+    'info' => t('Customer login'),
+    );
+   */
+  $blocks['loginas'] = array(
+      'info' => t('Customer login as'),
+      'cache' => DRUPAL_NO_CACHE,
+  );
+  $blocks['welcome'] = array(
+      'info' => t('Customer welcome'),
+  );
+//  $blocks['myprintconnect'] = array(
+//      'info' => t('Customer `My Account` links'),
+//  );
+  $blocks['links'] = array(
+      'info' => t('Customer account overview (TO BE REMOVED)'),
+  );
+  $blocks['manage'] = array(
+      'info' => t('Customer `Manage your account` (TO BE REMOVED'),
+  );
+  $blocks['profile'] = array(
+      'info' => t('Customer profile links'),
+      'cache' => DRUPAL_NO_CACHE,
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_theme
+ */
+function pccustomers_theme() {
+  return array(
+      'pccustomers_avatar' => array(
+          'variables' => array(
+              'size' => 'small',
+          ),
+      ),
+      'pccustomers_facebookconnect' => array(
+          'variables' => array(
+              'redirect' => '/',
+              'title' => FALSE,
+          ),
+      ),
+      'pccustomers_googleconnect' => array(
+          'variables' => array(
+              'redirect' => '/',
+              'title' => FALSE,
+          ),
+      ),
+  );
+}
+
+/**
+ * Implements hook_preprocess_page
+ */
+function pccustomers_preprocess_page(&$vars) {
+///$variables['theme_hook_suggestion'] = 'page__2col';
+//  $args = arg();
+//  if (count($args) > 1 && $args[0] == 'myprintconnect' && $args[1] == 'forgotpassword') {
+//    $vars['theme_hook_suggestion'] = 'page__empty';
+//  }
+
+  $args = arg();
+  if (count($args) >= 1 && $args[0] == 'myprintconnect' && isset($_SESSION['pccustomers']['conversion'])) {
+    $conversion = $_SESSION['pccustomers']['conversion'];
+    drupal_set_message(t('Your account %user has been migrated... ', array('%user' => $conversion['username'])), 'warning');
+    drupal_set_message(t('From now on you\'ll need to use %email to log in to your account', array('%email' => $conversion['email'])), 'warning');
+    drupal_set_message(t('You may change your email address in your profile.'), 'warning');
+    drupal_set_message(t('Your orders and invoices are still being migrated, but will be available to you shortly.'), 'warning');
+  }
+}
+
+/**
+ * Implements hook_block_view
+ *
+ * Block implementation
+ */
+function pccustomers_block_view($delta = '') {
+  global $user;
+  $block = FALSE;
+  switch ($delta) {
+    case 'login':
+      $customer = Factory::Current();
+      if (!$customer) {
+        $block['subject'] = t('Customer login');
+        $form = drupal_get_form('pccustomers_login_block_form');
+        $block['content'] = drupal_render($form);
+      } /* else {
+        $block['subject'] = t('My account');
+        $block['content'] = theme('item_list', array('items' => array(
+        l(t('Profile'), 'myprintconnect/profile'),
+        l(t('Addresses'), 'myprintconnect/addresses'),
+        l(t('Orders'), 'myprintconnect/orders'),
+        l(t('Invoices'), 'myprintconnect/invoices'),
+        l(t('Log out'), 'myprintconnect/logout'),
+        )));
+        } */
+      return $block;
+      break;
+
+    case 'loginas':
+      if ($user->uid) {
+        $block['subject'] = t('Customer login as');
+        $form = drupal_get_form('pccustomers_loginas_form');
+        $block['content'] = drupal_render($form);
+        return $block;
+      }
+      break;
+
+    case 'welcome':
+      $customer = Factory::Current();
+      switch (variable_get('pc_flow', 'whitelabel')) {
+        case 'flyer':
+          $block['content'][] = array(
+              'image' => array(
+                  '#theme' => 'pccustomers_avatar',
+              ),
+              'link' => array(
+                  '#markup' => l(t('Manage your account'), 'myprintconnect'),
+              ),
+          );
+          break;
+        default:
+          if ($customer) {
+            if ($customer->firstName) {
+              $welcome = l(t('Welcome @name', array('@name' => $customer->firstName)), 'myprintconnect/orders');
+            } else {
+              $welcome = l(t('Welcome'), 'myprintconnect/orders');
+            }
+
+            $block['content'] = theme('item_list', array('items' => array($welcome, l(t('My orders'), 'myprintconnect/orders'), l(t('Log out'), 'myprintconnect/logout', array('query' => array('return' => drupal_get_path_alias($_GET["q"])))))));
+          } else {
+            $block['content'] = theme('item_list', array('items' => array(l(t('Log in with your personal account'), 'myprintconnect/login', array('query' => array('return' => drupal_get_path_alias($_GET["q"])))), l(t('Order status'), 'myprintconnect/orders'))));
+          }
+      }
+      return $block;
+      break;
+    case 'manage':
+      // $customer = Factory::Current();
+      // if ($customer) {
+      $block['content'][] = array(
+          'image' => array(
+              '#theme' => 'pccustomers_avatar',
+          ),
+          'link' => array(
+              '#markup' => l(t('Manage your account'), 'myprintconnect'),
+          ),
+      );
+      return $block;
+      break;
+    case 'myprintconnect':
+      $customer = Factory::Current();
+      if ($customer) {
+        if ($customer->firstName) {
+          $title = $customer->firstName . ' ' . $customer->lastName;
+        } else {
+          $title = t('Your profile');
+        }
+        if ($customer->phone) {
+          $items[] = $customer->phone;
+        }
+        if ($customer->email) {
+          $items[] = $customer->email;
+        }
+
+        $block['title'] = $title;
+        $block['content'] = array(
+            '#prefix' => '<div id="profile-info">',
+            '#suffix' => '</div>',
+//            'name' => array(
+//                '#markup' => '<h3>' . $customer->firstName . ' ' . $customer->lastName . '</h3>',
+//            ),
+            'details' => array(
+//'#markup' => '<ul><li><span>t</span>' . $customer->phone . '</li><li><span>e</span>' . $customer->email . '</li></ul>',
+                '#markup' => theme('item_list', array('items' => $items, 'attributes' => array('class' => 'details'))),
+            ),
+            'links' => array(
+// '#markup' => l(t('Update your profile'), 'myprintconnect/profile') . ' | ' . l(t('Change your password'), 'myprintconnect/changepassword'),
+                '#markup' => theme('item_list', array('items' => array(l(t('Update your profile'), 'myprintconnect/profile'), l(t('Change your password'), 'myprintconnect/changepassword')), 'attributes' => array('class' => 'links'))),
+            ),
+        );
+      }
+      break;
+    case 'links':
+      $customer = Factory::Current();
+      $block['customer'] = $customer;
+      if ($customer) {
+
+        $block['title'] = t('My account');
+
+//        $block['content']['links'] = array(
+//            '#type' => 'fieldset',
+//            '#title' => t('Myprintconnect.com'),
+//        );
+//
+
+        $block['content']['links']['addresses'] = array(
+            '#markup' => theme('item_list', array('items' => array(
+                    l(t('Address book'), 'myprintconnect/addresses'),
+                    ))));
+
+        $block['content']['links']['logout'] = array(
+            '#markup' => theme('item_list', array('items' => array(
+                    l(t('Logout'), 'myprintconnect/logout'),
+                    ))),
+            '#weight' => 100,
+        );
+      }
+      break;
+
+    case 'profile' :
+      $customer = Factory::Current();
+      $block['customer'] = $customer;
+      if ($customer) {
+        if (variable_get('pc_flow', 'whitelabel') == 'flyer') {
+          if ($customer->firstName) {
+            $block['title'] = $customer->firstName;
+          } else {
+            $block['title'] = '...';
+          }
+          $block['content']['image'] = array(
+              '#theme' => 'pccustomers_avatar',
+              '#weight' => -10,
+          );
+        } else {
+          $block['title'] = t('My account');
+        }
+        $block['content']['profilelinks'] = array(
+            '#theme' => 'item_list',
+            '#items' => array(
+                0 => l(t('Edit profile'), 'myprintconnect/profile'),
+                1 => l(t('Change your password'), 'myprintconnect/changepassword'),
+                2 => l(t('Address book'), 'myprintconnect/addresses'),
+            ),
+            '#weight' => 0,
+        );
+        $block['content']['logoutlinks'] = array(
+            '#theme' => 'item_list',
+            '#items' => array(
+                99 => l(t('Log out'), 'myprintconnect/logout'),
+            ),
+            '#weight' => 99,
+        );
+
+
+        break;
+      }
+  }
+  return $block;
+}
+
+function pccustomers_access() {
+ // return true;
+  printconnect_ensureinitialized();
+  $customer = Factory::Current();
+  return isset($customer);
+}
+
+function pccustomers_address_access($addressId) {
+  printconnect_ensureinitialized();
+  $customer = Factory::Current();
+  if ($customer) {
+    $address = Addresses\Factory::Get($addressId);
+    if ($address->customer == $customer->id) {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+function _pccustomers_redirect() {
+  $args = arg();
+  $url = 'myprintconnect';
+
+  $orig = array_shift($args);
+
+  foreach ($args as $arg) {
+    $url .= '/' . $arg;
+  }
+
+  drupal_goto($url);
+}
+
+/**
+ * Implements hook_menu
+ *
+ * Urls
+ */
+function pccustomers_menu() {
+
+  $items['myprintconcept'] = array(
+      'page callback' => '_pccustomers_redirect',
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+
+  $items['myprintconnect'] = array(
+      'title' => 'My printconnect',
+      'page callback' => '_pccustomers_callback',
+      'page arguments' => array('dashboard'),
+      'access arguments' => array('access content'),
+      'weight' => 10,
+  );
+
+  $items['myprintconnect'] = array(
+      'title' => 'My printconnect',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pccustomers_dashboard_form'),
+      'access arguments' => array('access content'),
+      'weight' => 10,
+      'file' => 'pccustomers.forms.inc',
+  );
+
+  $items['myprintconnect/profile'] = array(
+      'title' => 'Profile',
+      'page arguments' => array('profile'),
+      'access callback' => 'pccustomers_access',
+//'type' => MENU_DEFAULT_LOCAL_TASK,
+  );
+
+  $items['myprintconnect/profile'] = array(
+      'title' => 'Profile',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pccustomers_profile_form'),
+      'access arguments' => array('access content'),
+      'file' => 'pccustomers.forms.inc',
+  );
+
+  $items['myprintconnect/login'] = array(
+      'title' => 'Login',
+      'description' => 'Log in',
+      'page arguments' => array('login'),
+      'access callback' => 'user_access',
+      'access arguments' => array('access content'),
+  );
+
+  $items['myprintconnect/login'] = array(
+      'title' => 'Login',
+      //'page callback' => 'pccustomers_login_forms',
+      'page arguments' => array('pccustomers_login_form'),
+      'access arguments' => array('access content'),
+      'file' => 'pccustomers.forms.inc',
+  );
+
+  $items['myprintconnect/login/%'] = array(
+      'title' => 'Login',
+      'description' => 'Log in',
+      'page arguments' => array('login', 2),
+      'access callback' => 'user_access',
+      'access arguments' => array('access content'),
+  );
+
+  $items['myprintconnect/login/%'] = array(
+      'title' => 'Login',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pccustomers_login_form', 2),
+      'access arguments' => array('access content'),
+      'file' => 'pccustomers.forms.inc',
+  );
+
+
+  $items['myprintconnect/logout'] = array(
+      'title' => 'Logout',
+      'description' => 'Log out',
+      'page callback' => '_pccustomers_callback',
+      'page arguments' => array('logout'),
+      'access arguments' => array('access content'),
+  );
+
+  $items['myprintconnect/logout/%'] = array(
+      'title' => 'Logout',
+      'description' => 'Log out',
+      'page callback' => '_pccustomers_callback',
+      'page arguments' => array('logout', 2),
+      'access arguments' => array('access content'),
+  );
+
+  $items['myprintconnect/register'] = array(
+      'title' => 'Register',
+      'description' => 'Register',
+      'page callback' => '_pccustomers_callback',
+      'page arguments' => array('register'),
+      'access arguments' => array('access content'),
+  );
+
+  $items['myprintconnect/addresses'] = array(
+      'title' => 'Addresses',
+      'page callback' => '_pccustomers_callback',
+      'page arguments' => array('addresses'),
+      'access arguments' => array('access content'),
+      'weight' => 100,
+  );
+
+  $items['myprintconnect/addresses'] = array(
+      'title' => 'Addresses',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pccustomers_addresses_form'),
+      'access arguments' => array('access content'),
+      'file' => 'pccustomers.forms.inc',
+      'weight' => 100,
+  );
+
+  $items['myprintconnect/addresses/%'] = array(
+      'title' => 'Address edit',
+      'page arguments' => array('address', 2),
+      'access callback' => 'pccustomers_address_access',
+      'access arguments' => array(2),
+  );
+
+  $items['myprintconnect/addresses/%'] = array(
+      'title' => 'Address edit',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pccustomers_address_form', 2),
+      'access arguments' => array('access content'),
+      'file' => 'pccustomers.forms.inc',
+  );
+  
+
+  $items['myprintconnect/addresses/%/delete'] = array(
+      'title' => 'Address delete',
+      'page arguments' => array('deleteaddress', 2),
+      'access callback' => 'pccustomers_address_access',
+      'access arguments' => array(2),
+  );
+
+   
+  $items['myprintconnect/addresses/new'] = array(
+      'title' => 'New address',
+      'page arguments' => array('newaddress'),
+      'access callback' => 'pccustomers_access',
+  );
+
+  $items['myprintconnect/addresses/new'] = array(
+      'title' => 'New address',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pccustomers_newaddress_form'),
+      'access arguments' => array('access content'),
+      'file' => 'pccustomers.forms.inc',
+  );
+  
+   $items['myprintconnect/editBillingaddresses/%'] = array(
+      'title' => 'Address edit',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pccustomers_address_Billingaddresses_form', 2),
+      'file' => 'pccustomers.forms.inc',
+      'access arguments' => array('access content'),
+      'access callback' => TRUE,
+  );  
+
+   $items['myprintconnect/mybillingaddress/new'] = array(
+      'title' => 'New address',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pccustomers_newaddress_Billingaddresses_form'),
+      'access arguments' => array('access content'),
+      'file' => 'pccustomers.forms.inc',
+      'weight' => 100,
+  );
+
+
+
+  $items['myprintconnect/forgotpassword'] = array(
+      'title' => 'Forgot password',
+      'page arguments' => array('forgotpassword'),
+//'access callback' => 'pccheckout_access',
+      'access arguments' => array('access content'),
+  );
+
+  $items['myprintconnect/forgotpassword'] = array(
+      'title' => 'Forgot your password?',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pccustomers_forgotpassword_form'),
+      'access arguments' => array('access content'),
+      'file' => 'pccustomers.forms.inc',
+  );
+
+  $items['myprintconnect/changepassword'] = array(
+      'title' => 'Change password',
+      'page arguments' => array('changepassword'),
+      'access callback' => 'pccustomers_access',
+      'access arguments' => array('access content'),
+  );
+
+  $items['myprintconnect/changepassword'] = array(
+      'title' => 'Change password',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pccustomers_changepassword_form'),
+      'access arguments' => array('access content'),
+      'file' => 'pccustomers.forms.inc',
+  );
+
+  $items['myprintconnect/loginas'] = array(
+      'title' => 'Log in as',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pccustomers_loginas_form'),
+      'access callback' => 'user_is_logged_in',
+      'type' => MENU_CALLBACK,
+  );
+
+  $items['myprintconnect/loginas/%'] = array(
+      'title' => 'Log in as',
+      'page callback' => 'pccustomers_loginas',
+      'page arguments' => array(2),
+      'access callback' => 'user_is_logged_in',
+      'type' => MENU_CALLBACK,
+  );
+
+
+  $items["js/myprintconnect/address/%"] = array(
+      'page callback' => '_pccustomers_js_callback',
+      'page arguments' => array(2, 3),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+
+  $items["js/myprintconnect/exists/%"] = array(
+      'page callback' => '_pccustomers_js_callback',
+      'page arguments' => array(2, 3),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+
+  $items["myprintconnect/facebook"] = array(
+      'page callback' => 'pccustomers_facebook_callback',
+      'page arguments' => array(),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+  $items["myprintconnect/twitter"] = array(
+      'page callback' => 'pccustomers_twitter_callback',
+      'page arguments' => array(),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+  $items["myprintconnect/google"] = array(
+      'page callback' => 'pccustomers_google_callback',
+      'page arguments' => array(),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+
+  $items['myprintconnect/credit'] = array(
+      'title' => 'Store credit',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pccustomers_credit_form'),
+        'access callback' => 'pccustomers_access',
+      'file' => 'pccustomers.forms.inc',
+  );
+  $items['myprintconnect/credit/redeem'] = array(
+      'title' => 'Redeem',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pccustomers_redeem_form'),
+   //   'access callback' => 'pccustomers_access',
+      'file' => 'pccustomers.forms.inc',
+  );
+
+  return $items;
+}
+
+function pccustomers_pccustomers_logout() {
+  unset($_SESSION['customerid']);
+  pccustomersbase_logout();
+}
+
+function _pccustomers_callback() {
+  $args = func_get_args();
+  $page = array_shift($args);
+  $arg = array_shift($args);
+  $customer = Factory::Current();
+  switch ($page) {
+    case 'dashboard':
+      return drupal_get_form('pccustomers_dashboard_form');
+    case 'profile':
+      _pccustomers_ensureloggedin();
+      return drupal_get_form('pccustomers_profile_form', $customer);
+      break;
+    case 'login':
+      if (!$customer) {
+        return drupal_get_form('pccustomers_login_form', array_shift($args));
+      } else {
+        drupal_goto('myprintconnect');
+      }
+      break;
+    case 'logout':
+      module_invoke_all('loggingout');
+      if ($customer) {
+        Factory::Logout();
+      }
+
+
+      pccustomers_logout();
+      if (!isset($arg)) {
+        drupal_goto('<front>');
+      } else {
+        drupal_goto(urldecode($arg));
+      }
+      break;
+    case 'register':
+      return drupal_get_form('pccustomers_register_form');
+      break;
+    case 'forgotpassword':
+      return drupal_get_form('pccustomers_forgotpassword_form');
+      break;
+    case 'addresses' :
+      _pccustomers_ensureloggedin();
+      $rows = array();
+      $addresses = Addresses\Factory::GetAddresses($customer);
+//return theme('pccustomers_addresses', array('addresses' => $addresses));
+
+      return drupal_get_form('pccustomers_addresses_form');
+      break;
+    case 'address':
+      _pccustomers_ensureloggedin();
+
+      if ($customer->firstName) {
+        drupal_set_title(t('@name, edit an address', array('@name' => $customer->firstName)));
+      } else {
+        drupal_set_title(t('Edit an address'));
+      }
+
+      return drupal_get_form('pccustomers_address_form', $arg);
+      break;
+    case 'newaddress':
+      _pccustomers_ensureloggedin();
+      return drupal_get_form('pccustomers_newaddress_form');
+      break;
+    case 'deleteaddress':
+      _pccustomers_ensureloggedin();
+      $addressId = array_shift($args);
+      $address = Addresses\Factory::Get($addressId);
+      return drupal_get_form('pccustomers_deleteaddress_form', $address);
+      break;
+    case 'changepassword':
+      _pccustomers_ensureloggedin();
+      return drupal_get_form('pccustomers_changepassword_form', $customer);
+      break;
+  }
+}
+
+function pccustomers_login_block_form($form, $form_state) {
+  $form['email'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Email'),
+      '#required' => TRUE,
+      '#size' => 20,
+      '#description' => t('Your email address'),
+  );
+  $form['password'] = array(
+      '#type' => 'password',
+      '#title' => t('Password'),
+      '#required' => TRUE,
+      '#attributes' => array('autocomplete' => 'off'),
+      '#size' => 20,
+      '#description' => t('Your password'),
+  );
+  $form['actions']['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Log in'),
+  );
+
+//$form['#redirect']  =FALSE;
+  return $form;
+}
+
+function pccustomers_login_block_form_validate($form, &$form_state) {
+  try {
+    $customer = Factory::Login($form_state['values']['email'], $form_state['values']['password']);
+    if ($customer) {
+      $form_state['storage']['customer'] = $customer;
+      return true;
+    } else {
+      form_set_error('', t('Cannot log in using the given email and password.'));
+      return false;
+    }
+  } catch (\printconnect\Dal\Exception $ex) {
+    Forms::HandleException($ex, $form, '');
+    return FALSE;
+  }
+}
+
+function pccustomers_login_block_form_submit($form, &$form_state) {
+  $customer = $form_state['storage']['customer'];
+
+  Factory::Save($customer);
+
+  Factory::LoginByObject($customer);
+
+  if (isset($_GET['return'])) {
+    drupal_goto($_GET['return']);
+  } elseif (isset($form_state['storage']['redirect'])) {
+    drupal_goto($form_state['storage']['redirect']);
+  } else {
+    drupal_goto('myprintconnect');
+  }
+}
+
+function pccustomers_register_form($form, $form_state) {
+  $form['email'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Email'),
+      '#required' => TRUE,
+  );
+
+  $form['password'] = array(
+      '#type' => 'password_confirm',
+      '#required' => TRUE,
+      '#attributes' => array('autocomplete' => 'off'),
+          //'#default_value' => $customer->password,
+  );
+  $form['firstName'] = array(
+      '#type' => 'textfield',
+      '#title' => t('First name'),
+      '#required' => TRUE,
+  );
+  $form['lastName'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Last name'),
+      '#required' => TRUE,
+  );
+  $form['company'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Company'),
+      '#required' => FALSE,
+  );
+  $form['phone'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Phone'),
+      '#required' => TRUE,
+  );
+
+  $options = array();
+  $languages = Factory::GetLanguages();
+  foreach ($languages as $language) {
+    $options[$language->id] = $language->displayName;
+  }
+
+  $form['language'] = array(
+      '#type' => 'select',
+      '#title' => t('Language'),
+      '#required' => TRUE,
+      '#options' => $options,
+  );
+
+  $options = array();
+  $genders = Factory::GetGenders();
+  foreach ($genders as $gender) {
+    $options[$gender->gender] = $gender->gender;
+  }
+
+  $form['gender'] = array(
+      '#type' => 'radios',
+      '#title' => t('Gender'),
+      '#required' => TRUE,
+      '#options' => $options,
+  );
+
+  $options = array();
+  $types = Factory::GetTypes();
+  foreach ($types as $type) {
+    $options[$type->customerType] = $type->customerType;
+  }
+
+  $form['type'] = array(
+      '#type' => 'radios',
+      '#title' => t('Type'),
+      '#required' => TRUE,
+      '#options' => $options,
+  );
+
+
+  $options = array();
+  $sectors = Factory::GetSectors();
+  foreach ($sectors as $sector) {
+    $options[$sector->id] = $sector->tag;
+  }
+
+  $form['sector'] = array(
+      '#type' => 'select',
+      '#title' => t('Sector'),
+      '#options' => $options,
+  );
+
+  $options = array();
+  $references = Factory::GetReferences();
+  foreach ($references as $reference) {
+    $options[$reference->id] = $reference->tag;
+  }
+
+  $form['reference'] = array(
+      '#type' => 'select',
+      '#title' => t('Reference'),
+      '#options' => $options,
+  );
+
+  $form['birthday'] = array(
+      '#type' => 'date_popup',
+      '#date_format' => 'd/m/Y',
+      '#title' => t('Birthday'),
+      '#required' => TRUE,
+  );
+
+  $form['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Submit'),
+  );
+
+  return $form;
+}
+
+function pccustomers_register_form_validate($form, &$form_state) {
+  try {
+    $customer = Factory::Create();
+
+    Forms::LoadObject($form_state['values'], $customer);
+
+    $customer->repeatpassword = $customer->password;
+
+    //try gravatar 
+    $url = "https://secure.gravatar.com/" . md5(strtolower(trim($customer->email))) . ".json";
+    $response = drupal_http_request($url);
+    switch ((int) $response->code) {
+      case 200:
+        $gravatarData = json_decode($response->data);
+        if (isset($gravatarData->entry[0]) && isset($gravatarData->entry[0]->name)) {
+          $customer->firstName = $gravatarData->entry[0]->name->givenName;
+          $customer->lastName = $gravatarData->entry[0]->name->familyName;
+        }
+        break;
+    }
+
+
+    Factory::Validate($customer);
+  } catch (\printconnect\Dal\Exception $ex) {
+    Forms::HandleException($ex, $form);
+    return FALSE;
+  }
+}
+
+function pccustomers_register_form_submit($form, &$form_state) {
+  $customer = Factory::Create();
+
+  Forms::LoadObject($form_state['values'], $customer);
+
+  $customer->repeatpassword = $customer->password;
+
+  Factory::Save($customer);
+  $_SESSION['customerid'] = $customer->id;
+}
+
+/**
+ * Defines the delete address form
+ */
+function pccustomers_deleteaddress_form($form, $form_state, $address) {
+  $form['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Submit'),
+  );
+
+  return $form;
+}
+
+/**
+ * Delete address submit
+ */
+function pccustomers_deleteaddress_form_submit($form, &$form_state) {
+  try {
+    $customer = Factory::Current();
+    $address = $form_state['build_info']['args'][0];
+
+    Addresses\Factory::Delete($address);
+    Addresses\Factory::ClearAddressesCache($customer);
+
+    drupal_set_message(t('Deleted'));
+    drupal_goto('myprintconnect/addresses');
+  } catch (\printconnect\Dal\Exception $ex) {
+    Forms::HandleException($ex, $form, '');
+    return FALSE;
+  }
+}
+
+function _pccustomers_ensureloggedin($loginPath = 'myprintconnect/login') {
+  static $customer = FALSE;
+
+  if (!$customer) {
+    $customer = Factory::Current();
+    if (!$customer) {
+      $currentPath = drupal_get_path_alias($_GET["q"]);
+      if ($currentPath != $loginPath) {
+        drupal_goto($loginPath, array('query' => array('return' => $currentPath)));
+      }
+    }
+  }
+    return $customer;
+  
+}
+
+function _pccustomers_js_callback() {
+  $args = func_get_args();
+  $function = array_shift($args);
+
+  switch ($function) {
+    case 'address':
+      $addressId = array_shift($args);
+      $customer = Factory::Current();
+      if ($customer) {
+        $address = Addresses\Factory::Get($addressId);
+        $address->EnsureLoaded();
+        if ($address->customer == $customer->id) {
+          $vat = $address->vatNumber;
+          if (strlen($vat) > 2) {
+            $country = substr($vat, 0, 2);
+            $number = substr($vat, 2);
+          } else {
+            $country = '';
+            $number = $vat;
+          }
+          $address->vatNumber = new stdClass();
+          $address->vatNumber->country = $country;
+          $address->vatNumber->number = $number;
+          print drupal_json_output($address->toArray());
+        }
+        break;
+      }
+    case 'exists':
+      $email = array_shift($args);
+      $customer = Factory::GetByEmail($email);
+      if ($customer) {
+        print drupal_json_output($customer);
+      }
+      break;
+  }
+}
+
+function pccustomers_loginas($customerId) {
+  $customer = Factory::Get($customerId);
+  try {
+// $customer->EnsureLoaded();
+    $shop = \printconnect\Shop\Configuration\Factory::Current();
+//$shop->EnsureLoaded();
+    if ($shop->id == $customer->resellerShop) {
+      pccustomers_logout();
+      pccustomers_login($customerId);
+      drupal_set_message(t('Successfully logged in as %name', array('%name' => $customer->name)));
+    } else {
+      drupal_set_message(t('Customer belongs to another shop'), 'error');
+    }
+    drupal_goto('<front>');
+  } catch (\printconnect\Dal\Exception $ex) {
+    drupal_set_message(t('Customer not found'), 'error');
+  }
+}
+
+function pccustomers_loginas_form($form, &$form_state, $customerId = FALSE) {
+  $customer = Factory::Current();
+
+  if (!$customer) {
+    $form['customerid'] = array(
+        '#type' => 'textfield',
+        '#required' => TRUE,
+        '#title' => t('Customer number'),
+        '#size' => 10,
+        '#default_value' => $customerId,
+    );
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Log in'),
+    );
+  } else {
+    $form['customer'] = array(
+        '#markup' => t('Logged in as %name', array('%name' => $customer->name)),
+    );
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Log out'),
+        '#validate' => array(),
+        '#submit' => array('pccustomers_loginas_form_logout'),
+    );
+  }
+
+  $form_state['storage']['customer'] = $customer;
+
+  return $form;
+}
+
+function pccustomers_loginas_form_validate($form, &$form_state) {
+  if (isset($form_state['values']['customerid'])) {
+    $customer = Factory::Get($form_state['values']['customerid']);
+    try {
+      $shop = \printconnect\Shop\Configuration\Factory::Current();
+      if ($shop->id == $customer->resellerShop) {
+// drupal_set_message(t('Successfully logged in as %name', array('%name' => $customer->name)));
+      } else {
+        form_set_error('customerid', t('Customer belongs to another shop'));
+      }
+
+      $form_state['storage']['customer'] = $customer;
+    } catch (\printconnect\Dal\Exception $ex) {
+      form_set_error('customerid', t('Customer not found'));
+    }
+  }
+}
+
+function pccustomers_loginas_form_submit($form, $form_state) {
+  $customer = $form_state['storage']['customer'];
+  pccustomers_logout();
+  pccustomers_login($form_state['values']['customerid']);
+  drupal_set_message(t('Successfully logged in as %name', array('%name' => $customer->name)));
+}
+
+function pccustomers_loginas_form_logout($form, $form_state) {
+  pccustomers_logout();
+  drupal_set_message(t('Logged out'));
+}
+
+function _pccustomers_order_number($id, $creationDate) {
+//$creationDate = $this->creationDate;
+  $year = date('y', strtotime($creationDate));
+
+  return 'OR' . $year . '-' . $id;
+}
+
+//function pccustomers_init() {
+//  global $customer;
+//  //$customer = Factory::Current();
+//}
+
+function pccustomers_login($customerId) {
+
+//module_invoke_all('login', array('customerId' => $customerId));
+  if (isset($customerId)) {
+    $_SESSION['customerid'] = $customerId;
+    module_invoke_all('loggedin', $customerId);
+  }
+  drupal_session_regenerate();
+}
+
+function pccustomers_logout() {
+//module_invoke_all('login', array('customerId' => $customerId));
+  unset($_SESSION['customerid']);
+  unset($_SESSION['fbuser']);
+  unset($_SESSION['googleuser']);
+  module_invoke_all('loggedout');
+//drupal_session_regenerate();
+//session_destroy();
+}
+
+function pccustomers_facebook_callback() {
+  $fbAppId = variable_get('pc_fbappid', '228019944073196');
+  $fbAppSecret = variable_get('pc_fbappsecret', '06e7cf1e9a3d57bccbb1b7ba9dafd349');
+  $fbCallback = url('myprintconnect/facebook', array('absolute' => TRUE));
+
+  $code = $_GET['code'];
+  $redirect = $_GET['state'];
+
+  if ($code) {
+
+    $link = "https://graph.facebook.com/oauth/access_token?client_id=$fbAppId&redirect_uri=$fbCallback&client_secret=$fbAppSecret&code=$code";
+
+    $response = drupal_http_request($link);
+
+    $data = $response->data;
+
+    $query = array();
+    parse_str($data, $query);
+
+    $token = $query['access_token'];
+    $link = "https://graph.facebook.com/me?access_token=$token";
+
+    $response = drupal_http_request($link);
+
+    $data = json_decode($response->data);
+
+    $customer = Factory::GetByEmail($data->email);
+
+    if (!$customer) {
+
+      $seed = 'xedr386';
+      $pwd = sha1(uniqid($seed . mt_rand(), true));
+      $customer = Factory::Create();
+      $customer->email = $data->email;
+      $customer->password = $pwd;
+      $customer->repeatpassword = $customer->password;
+      Factory::Validate($customer);
+    }
+
+    $customer->firstName = $data->first_name;
+    $customer->lastName = $data->last_name;
+
+    Factory::Save($customer);
+    Factory::LoginByObject($customer);
+
+    $_SESSION['fbuser'] = $data->username;
+  }
+  drupal_goto($redirect);
+}
+
+function pccustomers_google_callback() {
+  $appId = variable_get('pc_googleappid', '630860089189.apps.googleusercontent.com');
+  $appSecret = variable_get('pc_googleappsecret', 'fAtghndyq870V9GlzfCzNp9i');
+  $callback = url('myprintconnect/google', array('absolute' => TRUE));
+
+  $code = $_GET['code'];
+  $redirect = $_GET['state'];
+
+  if ($code) {
+
+    //$link = "https://www.googleapis.com/oauth2/v1/userinfo?access_token=" . $code;
+
+    $link = "https://accounts.google.com/o/oauth2/token";
+
+    $headers = array('Content-Type' => 'application/x-www-form-urlencoded');
+    $data = array();
+    $data[] = "code=$code";
+    $data[] = "client_id=$appId";
+    $data[] = "client_secret=$appSecret";
+    $data[] = "redirect_uri=$callback";
+    $data[] = "grant_type=authorization_code";
+
+    $response = drupal_http_request($link, array('headers' => $headers, 'method' => 'POST', 'data' => implode("&", $data)));
+
+    $data = json_decode($response->data);
+
+    $token = $data->access_token;
+    $link = "https://www.googleapis.com/oauth2/v1/userinfo?access_token=$token";
+
+    $response = drupal_http_request($link);
+
+    $data = json_decode($response->data);
+
+    $customer = Factory::GetByEmail($data->email);
+
+    if (!$customer) {
+      $seed = 'bierentieten';
+      $pwd = sha1(uniqid($seed . mt_rand(), true));
+      $customer = Factory::Create();
+      $customer->email = $data->email;
+      $customer->password = $pwd;
+      $customer->repeatpassword = $customer->password;
+      Factory::Validate($customer);
+    }
+    global $language;
+
+    if (isset($language->id)) {
+      $customer->language = $language->id;
+    } else {
+      $customer->language = 1;
+    }
+
+    $customer->birthday = $data->birthday;
+    $customer->firstName = $data->given_name;
+    $customer->lastName = $data->family_name;
+
+    Factory::Save($customer);
+    Factory::LoginByObject($customer);
+
+    $_SESSION['googleuser'] = $data->id;
+  }
+  drupal_goto($redirect);
+}
+
+function theme_pccustomers_avatar($vars) {
+  if (isset($_SESSION['fbuser'])) {
+    return theme('image', array('path' => 'http://graph.facebook.com/' . $_SESSION['fbuser'] . '/picture?type=square'));
+  } elseif (isset($_SESSION['googleuser'])) {
+    return theme('image', array('path' => 'https://s2.googleusercontent.com/s2/photos/profile/' . $_SESSION['googleuser'] . '?sz=200'));
+  } else {
+    $customer = Factory::Current();
+    if ($customer) {
+      $gravatar = "https://secure.gravatar.com/avatar/" . md5(strtolower(trim($customer->email))) . "?d=mm";
+    } else {
+      $gravatar = "https://secure.gravatar.com/avatar/" . "?d=mm";
+    }
+    return theme('image', array('path' => $gravatar));
+    return theme('image', array('path' => drupal_get_path('module', 'pccustomers') . '/images/noavatar.png'));
+  }
+}
+
+function theme_pccustomers_facebookconnect($vars) {
+  $redirect = $vars['redirect'];
+
+  $title = $vars['title'];
+  if (!$title) {
+    $title = 'Connect using Facebook';
+  }
+  $callback = url('myprintconnect/facebook', array('absolute' => TRUE));
+  $fbAppId = variable_get('pc_fbappid', '228019944073196');
+
+
+  return l($title, "https://www.facebook.com/dialog/oauth?client_id=$fbAppId&redirect_uri=$callback&scope=email,user_birthday&state=$redirect", array('attributes' => array('class' => array('facebookconnect'))));
+}
+
+function theme_pccustomers_googleconnect($vars) {
+  $redirect = $vars['redirect'];
+
+  $title = $vars['title'];
+  if (!$title) {
+    $title = 'Connect using Google';
+  }
+  $callback = url('myprintconnect/google', array('absolute' => TRUE));
+  $appId = variable_get('pc_googleappid', '630860089189.apps.googleusercontent.com');
+
+
+  $url = "https://accounts.google.com/o/oauth2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&state=$redirect&redirect_uri=$callback&response_type=code&client_id=$appId&approval_prompt=force";
+
+
+  return l($title, $url, array('attributes' => array('class' => array('googleconnect'))));
+}

@@ -1,0 +1,472 @@
+<?php
+
+use printconnect\Orders\Factory;
+use printconnect\Customers\Factory as CustomersFactory;
+use printconnect\Diagnostics\Debug;
+use printconnect\Drupal\Functions;
+use printconnect\Drupal\Forms;
+use printconnect\Products;
+use printconnect\Products\Options;
+use printconnect\Products\Configurations;
+use \printconnect\Products\Toolbox;
+use \printconnect\Products\PriceGroups;
+
+function pcorders_access() {
+  return TRUE;
+  printconnect_ensureinitialized();
+  $customer = CustomersFactory::Current();
+  return isset($customer);
+}
+
+function pcorders_order_access($orderId) {
+  global $user;
+
+  if ($user->uid) {
+    return TRUE;
+  } else {
+    printconnect_ensureinitialized();
+    $customer = CustomersFactory::Current();
+    if ($customer) {
+      $order = Factory::Get($orderId);
+      if ($order->customer == $customer->id) {
+        return TRUE;
+      }
+    }
+
+    _pccustomers_ensureloggedin();
+
+    return FALSE;
+  }
+}
+
+function pcorders_menu() {
+  $items['myprintconnect/orders'] = array(
+      'title' => 'Open orders',
+      'page callback' => '_pcorders_callback',
+      'page arguments' => array('list'),
+      'access callback' => 'pcorders_access',
+  );
+  $items['myprintconnect/closedorders'] = array(
+      'title' => 'Closed orders',
+      'page callback' => '_pcorders_callback',
+      'page arguments' => array('closedlist'),
+      'access callback' => 'pcorders_access',
+  );
+  $items['myprintconnect/orders/%'] = array(
+      'title' => 'Orders details',
+      'page arguments' => array('details', 2),
+      'access callback' => 'pcorders_order_access',
+      'access arguments' => array(2),
+  );
+
+  $items['myprintconnect/orders/%'] = array(
+      'title' => 'Orders details',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pcorders_order_form', 2),
+      'access callback' => 'pcorders_order_access',
+      'access arguments' => array(2),
+      'file' => 'pcorders.forms.inc',
+  );
+
+  $items['myprintconnect/orders/%/confirmation'] = array(
+      'title' => 'Orders confirmation',
+      'page arguments' => array('confirmation', 2),
+      'access callback' => 'pcorders_order_access',
+      'access arguments' => array(2),
+  );
+
+  $items['myprintconnect/orders/%/confirmation'] = array(
+      'title' => 'Order confirmation',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pcorders_order_form', 2, TRUE),
+      'access callback' => 'pcorders_order_access',
+      'access arguments' => array(2),
+      'file' => 'pcorders.forms.inc',
+  );
+
+  $items['myprintconnect/orders/designtoolcallback'] = array(
+      'title' => 'Order confirmation',
+      'page callback' => '_pcorders_designtoolcallback',
+      'access arguments' => array('access contenct'),
+      'file' => 'pcorders.forms.inc',
+  );
+
+
+  return $items;
+}
+
+function pcorders_theme() {
+  return array(/*
+            'pcorders_orders' => array(
+            'variables' => array('orders' => NULL),
+            'template' => 'pcorders-orders',
+            ),
+            'pcorders_order_detail' => array(
+            'variables' => array('order' => NULL, 'confirmation' => FALSE),
+            'template' => 'pcorders-order-detail',
+            ), *//*
+            'pcorders_order_form' => array(
+            'render element' => 'form',
+            'template' => 'pcorders-order-form',
+            ), */
+  );
+}
+
+function _pcorders_callback() {
+  $customer = CustomersFactory::Current();
+  $args = func_get_args();
+  $page = array_shift($args);
+
+  $confirmation = FALSE;
+
+  _pccustomers_ensureloggedin();
+
+  switch ($page) {
+    case 'list':
+      $rows = array();
+      $orders = Factory::GetActiveOrders($customer, FALSE);
+
+      /*
+        if ($customer) {
+        drupal_set_title(t('@firstName, thank you for ordering', array('@firstName' => $customer->firstName)));
+        } else {
+        drupal_set_title(t('Thank you for ordering'));
+        }
+       */
+      //  return theme('pcorders_orders', array('orders' => $orders));
+      $content['orders'] = array(
+          '#type' => 'container',
+          '#title' => t('My orders'),
+          '#attributes' => array('class' => array('orders')),
+      );
+
+      $rows = array();
+      foreach ($orders as $order) {
+        $deliveryDate = $order->expectedDeliveryDate;
+        if ($deliveryDate) {
+          $deliveryDate = format_date(strtotime($order->expectedDeliveryDate),  $type = 'medium', 'd-m-Y');
+        } else {
+          $deliveryDate = '';
+        }
+
+        $shippingDate = $order->expectedShippingDate;
+        if ($shippingDate) {
+          $shippingDate = format_date(strtotime($order->expectedShippingDate),  $type = 'medium', 'd-m-Y');
+        } else {
+          $shippingDate = '';
+        }
+
+        $rows[] = array(
+            format_date(strtotime($order->creationDate),  $type = 'medium', 'd-m-Y'),
+            $shippingDate,
+            $deliveryDate,
+            $order->status,
+            l($order->number, "myprintconnect/orders/$order->id", array('html' => TRUE, 'attributes' => array('class' => array('open')))),
+        );
+      }
+//      $content['orders']['list'] = array(
+//          '#markup' => theme('table', array('rows' => $rows, 'header' => array(t('Created'), t('Finished'), t('Expected delivery'), t('Status'), t('Number')), 'empty' => t('No orders'), 'attributes' => array('class' => array('list', 'orders'))))
+//      );
+      $content['orders'] = array(
+          '#theme' => 'table',
+          '#rows' => $rows,
+          '#header' => array(t('Created'), t('Finished'), t('Expected delivery'), t('Status'), t('Number')),
+          '#empty' => t('No orders'),
+          '#attributes' => array('class' => array('list', 'orders')),
+      );
+
+      return $content;
+    case 'closedlist':
+      $rows = array();
+      $orders = Factory::GetClosedOrders($customer);
+
+//      if ($customer) {
+//        drupal_set_title(t('@firstName, thank you for ordering', array('@firstName' => $customer->firstName)));
+//      } else {
+//        drupal_set_title(t('Thank you for ordering'));
+//      }
+      //return theme('pcorders_orders', array('orders' => $orders));
+
+      $content['orders'] = array(
+          '#type' => 'container',
+          '#title' => t('My orders'),
+          '#attributes' => array('class' => array('orders')),
+      );
+
+      $rows = array();
+      foreach ($orders as $order) {
+        $deliveryDate = $order->expectedDeliveryDate;
+        if ($deliveryDate) {
+          $deliveryDate = format_date(strtotime($order->expectedDeliveryDate),  $type = 'medium', 'd-m-Y');
+        } else {
+          $deliveryDate = '';
+        }
+        $rows[] = array(
+            format_date(strtotime($order->creationDate),  $type = 'medium', 'd-m-Y'),
+            $deliveryDate,
+            $order->status,
+            l($order->number, "myprintconnect/orders/$order->id", array('html' => TRUE, 'attributes' => array('class' => array('open')))),
+        );
+      }
+      $content['orders']['list'] = array(
+          '#markup' => theme('table', array('rows' => $rows, 'header' => array(t('Created'), t('Expected delivery'), t('Status'), t('Number')), 'empty' => t('No orders'), 'attributes' => array('class' => array('list', 'orders'))))
+      );
+
+      return $content;
+    case 'confirmation':
+      $confirmation = TRUE;
+      if ($customer) {
+        drupal_set_title(t('@firstName, thank you for ordering', array('@firstName' => $customer->firstName)));
+      } else {
+        drupal_set_title(t('Thank you for ordering'));
+      }
+    case 'details':
+      $id = array_shift($args);
+
+      $order = Factory::Get($id, false);
+
+      foreach ($order->productItems as $item) {
+        $items = array();
+        $itemValue = $item->price;
+        $priceGroup = PriceGroups\Factory::Get($item->productPriceGroupId);
+        $priceGroup->EnsureLoaded();
+
+        $configs = Configurations\Factory::GetByPriceGroup($item->productPriceGroupId);
+        $configs->EnsureLoaded();
+
+        //         $text = array(t('Amount: ' . $item->quantity));
+
+        foreach ($configs as $config) {
+//            $toolboxItem = Toolbox\Factory::Get($config->toolboxItem);
+          $toolboxGroup = Toolbox\Factory::GetGroup($config->toolboxGroup);
+
+          $items[$toolboxGroup->name] = $config->toolboxItem->name;
+        }
+
+
+        $product = Products\Factory::Get($priceGroup->product);
+
+        $product->image = Functions::GetImage('products', $product->id);
+
+        $item->price = $itemValue;
+        $item->items = $items;
+        $item->product = $product;
+
+        $file = $item->files[0];
+        if ($file) {
+          $key = $file->id;
+
+          if (isset($file->thumbnail)) {
+            $thumbnail = printconnect\Files\Factory::Get($file->thumbnail);
+            $item->thumbnail = $tumbnail->url;
+            /* foreach ($thumbnail->attachments as $attachmentKey => $attachment) {
+              $item->thumbnail = $attachment->url;
+              } */
+          }
+          $file = printconnect\Files\Factory::Get($file->file);
+          $item->file = $file->url;
+
+          /* foreach ($file->attachments as $attachmentKey => $attachment) {
+            $item->file = $attachment->url;
+            } */
+        }
+      }
+      $customer = printconnect\Customers\Factory::Get($order->customer);
+      return drupal_get_form('pcorders_order_form', $order, $customer, $confirmation);
+    //return theme('pcorders_order_detail', array('order' => $order, 'confirmation' => $confirmation));
+  }
+}
+
+//function pcorders_order_form($form, &$form_state, $order, $customer, $confirmation) {
+//
+//  $form['confirmation']['#value'] = $confirmation;
+//
+//  $form_state['storage']['order'] = $order;
+//  foreach ($order->orderItems as $item) {
+//    $files = array();
+//    foreach ($item->files as $file) {
+//      $key = $file->id;
+//      $jobId = $file->designToolJobId;
+//
+//      if (isset($file->thumbnail)) {
+//        $thumbnail = printconnect\Files\Factory::Get($file->thumbnail);
+//        $files['thumbnail'] = $thumbnail->url;
+//        /* foreach ($thumbnail->attachments as $attachmentKey => $attachment) {
+//          $files['thumbnail'] = $attachment->url;
+//          } */
+//      }
+//      if (isset($file->file)) {
+//        $file = printconnect\Files\Factory::Get($file->file);
+//        $files['link'] = $file->url;
+//        /* foreach ($file->attachments as $attachmentKey => $attachment) {
+//          $files['link'] = $attachment->url;
+//          } */
+//      }
+//    }
+//
+//    $form['files']['#value'][$item->id] = $files;
+//  }
+//  
+//
+//  $form['order']['#value'] = $order;
+//
+//
+//  $form_state['storage']['order'] = $order;
+//
+//  $form['customer']['#value'] = $customer;
+//  $form['confirmation']['#value'] = $confirmation;
+//  return $form;
+//}
+
+function pcorders_order_created() {
+  $customer = CustomersFactory::Current();
+  CartsFactory::Delete();
+  Factory::ClearCustomerOrdersCache($customer);
+  drupal_set_message('Order created...');
+  drupal_goto('myprintconnect/orders/received');
+}
+
+function pcorders_form_pccustomers_dashboard_form_alter(&$form, &$form_state) {
+  try {
+    $customer = $form_state['storage']['customer'];
+
+    $orders = Factory::GetActiveOrders($customer);
+
+    $rows = array();
+    $i = 0;
+    foreach ($orders as $order) {
+      $rows[] = array(
+          format_date(strtotime($order->creationDate),  $type = 'medium', 'd-m-Y'),
+          //format_date(strtotime($order->expectedShippingDate),  $type = 'medium', 'd-m-Y'),
+          $order->status,
+          l($order->number, "myprintconnect/orders/$order->id", array('html' => TRUE, 'attributes' => array('class' => array('open')))),
+      );
+
+      if (++$i >= 3)
+        break;
+    }
+
+    $form['recentorders'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Recent orders'),
+        '#attributes' => array('class' => array('recentorders')),
+        '#weight' => 50,
+    );
+    $form['recentorders']['list'] = array('#markup' => theme('table', array('rows' => $rows, 'header' => array(t('Created'), /* t('Finished'), */t('Status'), t('Number')), 'empty' => t('No orders'), 'attributes' => array('class' => array('list', 'orders')))));
+
+    $form['recentorders']['all'] = array('#markup' => l(t('All orders'), 'myprintconnect/orders'));
+  } catch (\Exception $ex) {
+    
+  }
+}
+
+function pcorders_form_pcpayments_request_form_alter(&$form, &$form_state) {
+
+    if (isset($form_state['storage']['order'])) {
+    $orderId = $form_state['storage']['order'];
+    $order = Factory::Get($orderId);
+
+    $form['order'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Details of your order @number', array('@number' => $order->number)),
+        '#attributes' => array('class' => array('order')),
+        '#weight'=> 5,
+    );
+
+   $rows[] = array(
+        'no_striping' => TRUE,
+        'data' => array(
+            t('Description'),
+            array(
+                'data' =>  t('Price'),
+                'class' => array('text-right'),
+            ),
+        ),
+    );
+    $description=$form_state['storage']['request']->description;
+    $rows[] = array(
+        'no_striping' => TRUE,
+       'class' => array('productItem'),
+        'data' => array(
+            $description,
+            array(
+                'data' => theme('price', array('value' => $form_state['storage']['totalExclVat'], 'free' => TRUE)),
+                'class' => array('text-right'),
+            ),
+        ),
+    );
+    $rows[] = array(
+        'no_striping' => TRUE,
+        'data' => array(
+            t('VAT'),
+            array(
+                'data' => theme('price', array('value' => ($form_state['storage']['total']-$form_state['storage']['totalExclVat']), 'free' => TRUE)),
+                'class' => array('text-right'),
+            ),
+        ),
+    );
+    $form['order']['list'] = array(
+        '#markup' => theme('table', array('rows' => $rows)),
+    );
+    variable_set("items", $rows);
+  }
+}
+
+function pcorders_block_view_pccustomers_links_alter(&$data, $block) {
+  try {
+    $customer = $data['customer'];
+
+    if ($customer) {
+
+      $activeOrders = Factory::GetActiveOrders($customer);
+      $closedOrders = Factory::GetClosedOrders($customer);
+      $nbActive = 0;
+      foreach ($activeOrders as $order) {
+          $nbActive++;
+      }
+      $nb = 0;
+      foreach ($closedOrders as $order) {
+          $nb++;
+      }
+      $data['content']['orderslinks'] = array(
+          '#theme' => 'item_list',
+          '#items' => array(
+              l(t('Open orders') . '(' . $nbActive . ')', 'myprintconnect/orders'),
+              l(t('Closed orders') . '(' . $nb . ')', 'myprintconnect/closedorders')
+          ),
+          '#weight' => 10,
+      );
+    }
+  } catch (\Exception $ex) {
+    
+  }
+}
+
+function pcorders_block_view_pccustomers_profile_alter(&$data, $block) {
+  try {
+    $customer = $data['customer'];
+    if ($customer) {
+
+      $activeOrders = Factory::GetActiveOrders($customer, false);
+      $nbActive = 0;
+      foreach ($activeOrders as $order) {
+          $nbActive++;
+      }
+      $closedOrders = Factory::GetClosedOrders($customer, false);
+      $nb = 0;
+      foreach ($closedOrders as $order) {
+          $nb++;
+      }
+      $data['content']['orderslinks'] = array(
+          '#theme' => 'item_list',
+          '#items' => array(
+              l(t('Open orders') . '(' . $nbActive . ')', 'myprintconnect/orders'),
+              l(t('Closed orders') . '(' . $nb . ')', 'myprintconnect/closedorders')
+          ),
+          '#weight' => 10,
+      );
+    }
+  } catch (\Exception $ex) {
+    
+  }
+}

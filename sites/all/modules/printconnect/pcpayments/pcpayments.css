@@ -1,0 +1,98 @@
+#pcpayments-request-form .footer .price{
+  float:right;
+  width:50%;
+}
+#block-payments-methods li{
+  list-style: none;
+  float:left;
+}
+#pcpayments-request-form #wrapperDescription {
+    background-color: #F1F1F1;
+    padding: 4px;
+    border-radius: 4px;
+    margin-bottom: 40px;
+    margin-top: 10px;
+     float: left;
+     width: 99%;
+}
+#edit-aboutmethode {
+        background-color: #F1F1F1;
+        margin-top:0px !important;
+        padding: 10px;
+}
+#pcpayments-request-form  label{
+    font-weight: bold;
+    padding-right: 5px;
+    padding-left: 5px;
+    float: left;
+}
+#pcpayments-request-form .textDescription{
+    margin-left: 85px;
+
+}
+#pcpayments-request-form #wrapperPayement_Price fieldset{
+  clear: both;
+
+}
+#pcpayments-request-form .payment .fieldset-wrapper{
+    border-radius: 5px;
+    background-color: #F1F1F1;
+}
+#pcpayments-request-form .methodePayement{
+  width: 100%;
+}
+.methodePayement td.last-child{
+  display: none !important;
+}
+#pcpayments-request-form .methodePayement  tr{
+    margin-top: 7px;
+  width: 16.3%;
+}
+#wrapperPayement_Price .fieldset-wrapper{
+    padding: 5px;
+}
+#wrapperPayement_Price .fieldset-wrapper tr.first-child{
+   border-radius: 5px 0px 0px 5px;
+}
+#wrapperPayement_Price .fieldset-wrapper tr.last-child{
+     border-radius: 0px 5px 5px 0px;
+}
+#wrapperPayement_Price .fieldset-wrapper tr{
+    border: 1px solid #ffffff;
+}
+#pcpayments-request-form .order td.last-child {
+    width: 100px;
+    border-left: 1px solid #F1F1F1;
+    text-align: center;
+}
+#pcpayments-request-form .delivery , #pcpayments-request-form .orderItemPayement{
+    border-top: 1px #F1F1F1 solid;
+}
+#pcpayments-request-form .delivery td.first-child , #pcpayments-request-form .orderItemPayement td.first-child {
+    font-weight: bold;
+}
+#pcpayments-request-form .order table tr:first-child ,#pcpayments-request-form .order table{
+    border: 1px #F1F1F1 solid;
+}
+#pcpayments-request-form .order table tr:first-child ,#pcpayments-request-form .order table tr.last-child {
+    background-color: #F1F1F1;
+    height: 32px;
+}
+#pcpayments-request-form .order table tr:first-child{
+    text-transform: uppercase;
+}
+#pcpayments-request-form .order table  td {
+padding-left: 10px;
+padding-right:  10px;
+}
+#pcpayments-request-form .order .fieldset-wrapper {
+  padding: 0px;
+  margin-bottom: 0px !important ;
+  border-radius: 3px;
+}
+#pcpayments-request-form .order table  .productItem td.first-child {
+  padding-left: 28px;
+}
+#pcpayments-request-form .order table tr.last-child td.last-child span {
+    color: #646464;
+}

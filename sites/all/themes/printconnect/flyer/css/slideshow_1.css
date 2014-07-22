@@ -1,0 +1,704 @@
+
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'revicons';
+    src: url('../font/revicons.svg?5510888#revicons') format('svg');
+  }
+}
+*/
+ 
+
+
+/*********************************
+	-	SPECIAL TP CAPTIONS -
+**********************************/
+.tp-caption .frontcorner		{
+										width: 0;
+										height: 0;
+										border-left: 40px solid transparent;
+										border-right: 0px solid transparent;
+										border-top: 40px solid #00A8FF;
+										position: absolute;left:-40px;top:0px;
+									}
+
+.tp-caption .backcorner		{
+										width: 0;
+										height: 0;
+										border-left: 0px solid transparent;
+										border-right: 40px solid transparent;
+										border-bottom: 40px solid #00A8FF;
+										position: absolute;right:0px;top:0px;
+									}
+
+.tp-caption .frontcornertop		{
+										width: 0;
+										height: 0;
+										border-left: 40px solid transparent;
+										border-right: 0px solid transparent;
+										border-bottom: 40px solid #00A8FF;
+										position: absolute;left:-40px;top:0px;
+									}
+
+.tp-caption .backcornertop		{
+										width: 0;
+										height: 0;
+										border-left: 0px solid transparent;
+										border-right: 40px solid transparent;
+										border-top: 40px solid #00A8FF;
+										position: absolute;right:0px;top:0px;
+									}
+
+/******************************
+	-	WRAPPER STYLES		-
+******************************/
+
+
+
+.rev_slider_wrapper{
+	position:relative;
+}
+
+.rev_slider_wrapper >ul	{
+	visibility:hidden;
+}
+
+.rev_slider{
+	position:relative;
+	overflow:visible;
+}
+
+
+.rev_slider img{
+	max-width:none !important;
+	-moz-transition: none 0;
+	-webkit-transition: none 0;
+	-o-transition: none 0;
+	transition: none 0;
+	margin:0px;
+	padding:0px;
+	border-width:0px;
+	border:none;
+	visibility:visible !important;
+}
+
+.rev_slider .no-slides-text{
+	font-weight:bold;
+	text-align:center;
+	padding-top:80px;
+}
+
+.rev_slider ul{
+	margin:0px;
+	padding:0px;
+	list-style: none !important;
+	list-style-type: none;
+	background-position:0px 0px;
+}
+
+.rev_slider ul li,
+.rev_slider >ul >li,
+.rev_slider >ul >li:before{
+
+	list-style:none !important;
+	position:absolute;
+	visibility:hidden;
+	margin:0px !important;
+	padding:0px !important;
+	overflow-x: visible;
+	overflow-y: visible;
+	list-style-type: none !important;
+	background-image:none;
+	background-position:0px 0px;
+	text-indent: 0em;
+}
+
+.rev_slider .tp-caption,
+.rev_slider .caption, { position:absolute; visibility: hidden; }
+
+.tp-simpleresponsive img	{	max-width:none;}
+
+/* ADDED FOR SLIDELINK MANAGEMENT */
+.tp-caption { z-index:1;}
+
+
+
+.tp_inner_padding	{	box-sizing:border-box;
+						-webkit-box-sizing:border-box;
+						-moz-box-sizing:border-box;
+						max-height:none !important;	}
+
+
+.tp-hide-revslider,.tp-caption.tp-hidden-caption	{	visibility:hidden !important; display:none !important;}
+
+.rev_slider embed,
+.rev_slider iframe,
+.rev_slider object,
+.rev_slider video {max-width: none !important;}
+
+/******************************
+	-	WRAPPER STYLES END	-
+******************************/
+
+/******************************
+	-	IE8 HACKS	-
+*******************************/
+.noFilterClass {
+	filter:none !important;
+}
+/******************************
+	-	IE8 HACKS ENDS	-
+*******************************/
+
+
+ 
+
+ 
+
+/****************************************************************
+
+	-	SET THE ANIMATION EVEN MORE SMOOTHER ON ANDROID   -
+
+******************************************************************/
+
+.tp-simpleresponsive .slotholder *,
+.tp-simpleresponsive img			{ 	/*-webkit-transform: translateZ(0);
+										  -webkit-backface-visibility: hidden;
+										  -webkit-perspective: 1000;*/
+									}
+
+
+/************************************************
+	  - SOME CAPTION MODIFICATION AT START  -
+*************************************************/
+.tp-simpleresponsive .caption,
+.tp-simpleresponsive .tp-caption {
+	/*-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";		-moz-opacity: 0;	-khtml-opacity: 0;	opacity: 0; */
+	position:absolute;
+	-webkit-font-smoothing: antialiased !important;
+}
+
+
+/******************************
+	-	SHADOWS		-
+******************************/
+.tp-bannershadow  {
+		position:absolute;
+
+		margin-left:auto;
+		margin-right:auto;
+		-moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -o-user-select: none;
+	}
+
+
+
+
+/*************************************
+	-	TP ARROWS 	-
+**************************************/
+.tparrows												{	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+															-moz-opacity: 1;
+															-khtml-opacity: 1;
+															opacity: 1;
+															-webkit-transition: opacity 0.2s ease-out; -moz-transition: opacity 0.2s ease-out; -o-transition: opacity 0.2s ease-out; -ms-transition: opacity 0.2s ease-out;
+															-webkit-transform: translateZ(5px);
+
+														}
+.tparrows.hidearrows									{
+															-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+															-moz-opacity: 0;
+															-khtml-opacity: 0;
+															opacity: 0;
+														}
+.tp-leftarrow											{	z-index:100;cursor:pointer; position:relative;	background:url(images/mjslider/large_left.png) no-repeat top left;	width:40px;	height:40px;   }
+.tp-rightarrow											{	z-index:100;cursor:pointer; position:relative;	background:url(images/mjslider/large_right.png) no-repeat top left;	width:40px;	height:40px;   }
+
+
+
+/******************************
+	-	HTML5 VIDEO SETTINGS	-
+********************************/
+
+
+.tp-caption.large_bold_white-ICON {
+font-size:150px;
+line-height:160px;
+font-weight:700;
+font-family:Raleway;
+color:rgb(255, 255, 255);
+text-decoration:none;
+background-color:transparent;
+border-width:0px;
+border-color:rgb(255, 214, 88);
+border-style:none;
+}
+
+.tp-caption.largepinkbg-NAYMA {
+font-size:24px;
+line-height:44px;
+font-weight:300;
+font-family:Raleway;
+color:rgb(255, 255, 255);
+text-decoration:none;
+background-color:rgb(207, 89, 89);
+padding:0px 20px;
+text-shadow:none;
+border-width:0px;
+border-color:rgb(255, 255, 255);
+border-style:none;
+}
+
+.tp-caption.large_bold_white {
+font-size:42px;
+line-height:56px;
+font-weight:700;
+font-family:Raleway;
+color:rgb(255, 255, 255);
+text-decoration:none;
+background-color:transparent;
+border-width:0px;
+border-color:rgb(255, 214, 88);
+border-style:none;
+}
+
+.tp-caption.largewhitebg-NAYMA {
+font-size:20px;
+line-height:40px;
+font-weight:300;
+font-family:Raleway;
+color:rgb(0, 0, 0);
+text-decoration:none;
+background-color:rgb(255, 255, 255);
+padding:0px 15px;
+text-shadow:none;
+border-width:0px;
+border-color:rgb(0, 0, 0);
+border-style:none;
+}
+
+/*!
+ *  Font Awesome 4.0.3 by @davegandy - http://fontawesome.io - @fontawesome
+ *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
+ */
+/* FONT PATH
+ * -------------------------- */
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('http://netdna.bootstrapcdn.com/font-awesome/4.0.3/fonts/fontawesome-webfont.eot?v=4.0.3');
+  src: url('http://netdna.bootstrapcdn.com/font-awesome/4.0.3/fonts/fontawesome-webfont.eot?#iefix&v=4.0.3') format('embedded-opentype'), url('http://netdna.bootstrapcdn.com/font-awesome/4.0.3/fonts/fontawesome-webfont.woff?v=4.0.3') format('woff'), url('http://netdna.bootstrapcdn.com/font-awesome/4.0.3/fonts/fontawesome-webfont.ttf?v=4.0.3') format('truetype'), url('http://netdna.bootstrapcdn.com/font-awesome/4.0.3/fonts/fontawesome-webfont.svg?v=4.0.3#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+.fa {
+  display: inline-block;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/* makes the font 33% larger relative to the icon container */
+
+.fa-ul {
+  padding-left: 0;
+  margin-left: 2.142857142857143em;
+  list-style-type: none;
+}
+.fa-ul > li {
+  position: relative;
+}
+.fa-li {
+  position: absolute;
+  left: -2.142857142857143em;
+  width: 2.142857142857143em;
+  top: 0.14285714285714285em;
+  text-align: center;
+}
+.fa-li.fa-lg {
+  left: -1.8571428571428572em;
+}
+.fa-border {
+  padding: .2em .25em .15em;
+  border: solid 0.08em #eeeeee;
+  border-radius: .1em;
+}
+.pull-right {
+  float: right;
+}
+.pull-left {
+  float: left;
+}
+.fa.pull-left {
+  margin-right: .3em;
+}
+.fa.pull-right {
+  margin-left: .3em;
+}
+.fa-spin {
+  -webkit-animation: spin 2s infinite linear;
+  -moz-animation: spin 2s infinite linear;
+  -o-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear;
+}
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(359deg);
+  }
+}
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+  }
+}
+@-o-keyframes spin {
+  0% {
+    -o-transform: rotate(0deg);
+  }
+  100% {
+    -o-transform: rotate(359deg);
+  }
+}
+@-ms-keyframes spin {
+  0% {
+    -ms-transform: rotate(0deg);
+  }
+  100% {
+    -ms-transform: rotate(359deg);
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}
+.fa-rotate-90 {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+.fa-rotate-180 {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.fa-rotate-270 {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+.fa-flip-horizontal {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1);
+  -webkit-transform: scale(-1, 1);
+  -moz-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+}
+.fa-flip-vertical {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1);
+  -webkit-transform: scale(1, -1);
+  -moz-transform: scale(1, -1);
+  -ms-transform: scale(1, -1);
+  -o-transform: scale(1, -1);
+  transform: scale(1, -1);
+}
+.fa-stack {
+  position: relative;
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  line-height: 2em;
+  vertical-align: middle;
+}
+.fa-stack-1x,
+.fa-stack-2x {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+.fa-stack-1x {
+  line-height: inherit;
+}
+.fa-stack-2x {
+  font-size: 2em;
+}
+.fa-inverse {
+  color: #ffffff;
+}
+/* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
+   readers do not read off random characters that represent icons */
+.fa-glass:before {
+  content: "\f000";
+}
+.fa-music:before {
+  content: "\f001";
+}
+.fa-search:before {
+  content: "\f002";
+}
+.fa-envelope-o:before {
+  content: "\f003";
+}
+.fa-heart:before {
+  content: "\f004";
+}
+.fa-star:before {
+  content: "\f005";
+}
+.fa-star-o:before {
+  content: "\f006";
+}
+.fa-user:before {
+  content: "\f007";
+}
+.fa-film:before {
+  content: "\f008";
+}
+.fa-th-large:before {
+  content: "\f009";
+}
+.fa-th:before {
+  content: "\f00a";
+}
+.fa-th-list:before {
+  content: "\f00b";
+}
+.fa-check:before {
+  content: "\f00c";
+}
+.fa-times:before {
+  content: "\f00d";
+}
+.fa-search-plus:before {
+  content: "\f00e";
+}
+.fa-search-minus:before {
+  content: "\f010";
+}
+.fa-power-off:before {
+  content: "\f011";
+}
+.fa-signal:before {
+  content: "\f012";
+}
+.fa-gear:before,
+.fa-cog:before {
+  content: "\f013";
+}
+.fa-trash-o:before {
+  content: "\f014";
+}
+.fa-home:before {
+  content: "\f015";
+}
+.fa-file-o:before {
+  content: "\f016";
+}
+.fa-clock-o:before {
+  content: "\f017";
+}
+.fa-road:before {
+  content: "\f018";
+}
+.fa-download:before {
+  content: "\f019";
+}
+.fa-arrow-circle-o-down:before {
+  content: "\f01a";
+}
+.fa-arrow-circle-o-up:before {
+  content: "\f01b";
+}
+.fa-inbox:before {
+  content: "\f01c";
+}
+
+.fa-pencil:before {
+  content: "\f040";
+}
+.fa-map-marker:before {
+  content: "\f041";
+}
+.fa-adjust:before {
+  content: "\f042";
+}
+.fa-tint:before {
+  content: "\f043";
+}
+.fa-edit:before,
+.fa-pencil-square-o:before {
+  content: "\f044";
+}
+.fa-share-square-o:before {
+  content: "\f045";
+}
+.fa-check-square-o:before {
+  content: "\f046";
+}
+.fa-arrows:before {
+  content: "\f047";
+}
+.fa-step-backward:before {
+  content: "\f048";
+}
+.fa-fast-backward:before {
+  content: "\f049";
+}
+.fa-backward:before {
+  content: "\f04a";
+}
+.fa-play:before {
+  content: "\f04b";
+}
+.fa-pause:before {
+  content: "\f04c";
+}
+.fa-stop:before {
+  content: "\f04d";
+}
+.fa-forward:before {
+  content: "\f04e";
+}
+.fa-fast-forward:before {
+  content: "\f050";
+}
+.fa-step-forward:before {
+  content: "\f051";
+}
+.fa-eject:before {
+  content: "\f052";
+}
+.fa-chevron-left:before {
+  content: "\f053";
+}
+.fa-chevron-right:before {
+  content: "\f054";
+}
+.fa-plus-circle:before {
+  content: "\f055";
+}
+.fa-minus-circle:before {
+  content: "\f056";
+}
+.fa-times-circle:before {
+  content: "\f057";
+}
+.fa-check-circle:before {
+  content: "\f058";
+}
+
+
+.fa-shopping-cart:before {
+  content: "\f07a";
+}
+
+ 
+ 
+.fa-upload:before {
+  content: "\f093";
+}
+
+.fa-github:before {
+  content: "\f09b";
+}
+.fa-unlock:before {
+  content: "\f09c";
+}
+.fa-credit-card:before {
+  content: "\f09d";
+}
+
+ 
+
+.fa-briefcase:before {
+  content: "\f0b1";
+}
+.fa-arrows-alt:before {
+  content: "\f0b2";
+}
+.fa-group:before,
+.fa-users:before {
+  content: "\f0c0";
+}
+.fa-chain:before,
+.fa-link:before {
+  content: "\f0c1";
+}
+
+
+
+ 
+.site-header-type2 .menu-slider a {
+	color: #111;	
+}
+
+.site-description {
+	font-size: 15px;
+	color: #232527;
+}
+.site-info {
+	 color: #dcd8d8;
+}
+.widgetized-header {
+	display:none;
+	width:100%;
+	padding:40px 4% 0;
+	background:#eee;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box
+}
+
+
+ 
+::selection {
+	background-color: #319f9b;
+}
+
+
+
+#post-1540 h2 span, #post-1546 h2 span, #post-1551 h2 span, #post-1553 h2 span, #post-1563 h2 span, #post-1568 h2 span, #post-1596 h2 span, #post-1598 h2 span, #post-1601 h2 span, #post-1612 h2 span {
+	line-height: 95px;
+}
+
+
+@media only screen
+and (max-width: 759px) {
+#post-1540 h2 span, #post-1546 h2 span, #post-1551 h2 span, #post-1553 h2 span, #post-1563 h2 span, #post-1568 h2 span, #post-1596 h2 span, #post-1598 h2 span, #post-1601 h2 span, #post-1612 h2 span {
+    font-size: 60px !important;	
+    line-height: 66px !important;
+}
+}
+
+
+
+#post-1618 { background-color: #cf5959; } #post-1152 h1.mod-title { color: #319F9B; } #post-1152 .mod-title:after { background-color: #319F9B; } #post-1055 { background-color: #E5E2E2; }
+
+
+ 

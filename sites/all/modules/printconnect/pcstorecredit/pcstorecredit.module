@@ -1,0 +1,545 @@
+<?php
+
+use printconnect\Customers\Credit\Factory;
+use printconnect\Customers\Factory as CustomersFactory;
+use printconnect\Carts\Factory as CartsFactory;
+
+function pcstorecredit_menu() {
+  $items['myprintconnect/credit'] = array(
+      'title' => 'Store credit',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pcstorecredit_overview_form'),
+      'access callback' => 'pccustomers_access',
+  );
+  $items['myprintconnect/credit/redeem'] = array(
+      'title' => 'Redeem',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pcstorecredit_redeem_form'),
+      'access callback' => 'pccustomers_access',
+  );
+  return $items;
+}
+
+function pcstorecredit_overview_form($form, &$form_state) {
+  _pccustomers_ensureloggedin();
+  $customer = CustomersFactory::Current();
+
+  $account = Factory::Get($customer, FALSE);
+
+  $form['storecredit'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Store credit'),
+  );
+
+  $form['storecredit']['value'] = array(
+      '#type' => 'item',
+      '#markup' => t('Your store credit amount : !value', array('!value' => theme('price', array('value' => $account->credits)))),
+  );
+
+  $form['storecredit']['text'] = array(
+      '#type' => 'item',
+      '#markup' => t('Use your store credit to pay your next orders'),
+  );
+
+
+  $rows = array();
+
+  $transactions = $account->history;
+
+  usort($transactions, function ($a, $b) {
+            return strtotime($a->creationDate) < strtotime($b->creationDate);
+          });
+
+
+  foreach ($transactions as $transaction) {
+    $orderLink = '';
+
+    if (isset($transaction->order)) {
+      $order = \printconnect\Orders\Factory::Get($transaction->order);
+      $orderLink = l(t('Payment of order @id', array('@id' => $transaction->order)), 'myprintconnect/orders/' . $transaction->order);
+      $orderLink = l($order->number, 'myprintconnect/orders/' . $transaction->order);
+      $reference = t('Payment of order !order', array('!order' => $orderLink));
+    } else {
+      $reference = $transaction->reference;
+    }
+    $debet = '';
+    $credit = '';
+
+    if ($transaction->convertedAmount > 0) {
+      $credit = theme('price', array('value' => $transaction->convertedAmount));
+    } else {
+      $debet = theme('price', array('value' => abs($transaction->convertedAmount)));
+    }
+
+    $rows[] = array(
+        format_date(strtotime($transaction->creationDate), 'short'),
+        $reference,
+        $credit,
+        $debet,
+    );
+  }
+
+  $table = theme('table', array('rows' => $rows, 'empty' => t('No data found'), 'header' => array(t('Date'), t('Reference'), t('Credit++'), t('Debet++')), 'attributes' => array('class' => array('grid'))));
+
+  $form['storecredit']['history'] = array(
+      '#type' => 'item',
+      '#markup' => $table,
+  );
+
+
+  return $form;
+}
+
+function pcstorecredit_redeem_form($form, &$form_state) {
+  _pccustomers_ensureloggedin();
+  $form['code'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Code'),
+      '#required' => TRUE,
+  );
+  $form['redeem'] = array(
+      '#type' => 'submit',
+      '#value' => t('Redeem'),
+  );
+
+  return $form;
+}
+
+function pcstorecredit_redeem_form_validate($form, &$form_state) {
+  try {
+    Factory::Redeem(CustomersFactory::Current(), $form_state['values']['code']);
+  } catch (\printconnect\Dal\Exception $ex) {
+    form_set_error('code', implode("\n", $ex->errors));
+  }
+}
+
+function pcstorecredit_redeem_form_submit($form, &$form_state) {
+  drupal_goto('myprintconnect/credit');
+}
+
+function pcstorecredit_form_pccheckout_checkout_form_alter(&$form, $form_state, $form_id) {
+  if ($form_state['storage']['step'] == 'payment') {
+
+    $cart = CartsFactory::Current();
+    if ($cart && $cart->uniqueVatPercentage && $cart->subTotalAmount > 0) {
+
+      $customer = CustomersFactory::Current();
+      if ($customer) {
+        $account = Factory::Get($customer, FALSE);
+        if ($account && $account->credits > 0) {
+          if (!isset($form_state['values']['payment']['credit']['use'])) {
+            $default = 'yes';
+            $defaultAmount = 0;
+            foreach ($cart->orderItemsPayment as $payment) {
+              if ($payment->type == 'credit') {
+                $default = 'yes';
+                $defaultAmount += $payment->convertedPrice;
+              }
+            }
+            if (!$defaultAmount) {
+              $defaultAmount = min($cart->subTotalAmount, $account->credits);
+
+              $cart->storeCredit = $defaultAmount;
+
+              if ($cart->storeCredit == $cart->subTotalWithoutPayment) {
+                $cart->payment_method = 0;
+              }
+
+              CartsFactory::Save($cart);
+              drupal_goto('checkout/payment');
+            } else {
+              $defaultAmount = -$defaultAmount;
+            }
+          }
+
+
+          $form['payment']['credit'] = array(
+              '#type' => 'container',
+              '#attributes' => array('class' => array('credit')),
+          );
+
+
+          $form['payment']['credit']['title'] = array(
+              '#markup' => t('Pay with your store credit'),
+              '#prefix' => '<h2>',
+              '#suffix' => '</h2>',
+          );
+
+
+          $form['payment']['credit']['use'] = array(
+              '#type' => 'checkbox',
+              '#title' => t('You have !amount in store credit', array('!amount' => theme('price', array('value' => $account->credits)))),
+              '#default_value' => $default,
+                  /*  '#ajax' => array(
+                    'callback' => 'pcstorecredit_form_pccheckout_checkout_form_callback',
+                    'wrapper' => 'pccheckout_checkout_form',
+                    'method' => 'replace',
+                    'effect' => 'fade',
+                    'progress' => array(
+                    'message' => NULL,
+                    'type' => NULL,
+                    ),
+                    ), */
+          );
+
+          $options = array(
+              'yes' => t('I want to pay with my store credit'),
+              'no' => t('I\'d rather pay the normal way'),
+          );
+
+          $form['payment']['credit']['use'] = array(
+              '#type' => 'radios',
+              '#options' => $options,
+              '#title' => t('You have !amount in store credit', array('!amount' => theme('price', array('value' => $account->credits)))),
+              '#default_value' => $default,
+                  /*  '#ajax' => array(
+                    'callback' => 'pcstorecredit_form_pccheckout_checkout_form_callback',
+                    'wrapper' => 'pccheckout_checkout_form',
+                    'method' => 'replace',
+                    'effect' => 'fade',
+                    'progress' => array(
+                    'message' => NULL,
+                    'type' => NULL,
+                    ),
+                    ), */
+          );
+
+
+          $form['payment']['credit']['amount'] = array(
+              '#type' => 'textfield',
+              '#title' => t('Choose the amount'),
+              '#default_value' => $defaultAmount,
+              '#states' => array(
+                  'visible' => array(
+                      'input[name="payment[credit][use]"]' => array('value' => 'yes'),
+                  ),
+                  'required' => array(
+                      'input[name="payment[credit][use]"]' => array('value' => 'yes'),
+                  ),
+              ),
+              '#element_validate' => array('pcstorecredit_amount_validate'),
+                  /*
+                    '#ajax' => array(
+                    'callback' => 'pcstorecredit_form_pccheckout_checkout_form_callback',
+                    'wrapper' => 'pccheckout_checkout_form',
+                    'method' => 'replace',
+                    'effect' => 'fade',
+                    'progress' => array(
+                    'message' => NULL,
+                    'type' => NULL,
+                    ),
+                    ), */
+          );
+
+//
+//          $form['payment']['credit']['line'] = array(
+//              '#markup' => '<hr/>',
+//          );
+        }
+      }
+    }
+  }
+  /*  $cart = \printconnect\Carts\Factory::Current();
+    $paymentMethodId = FALSE;
+
+    $methods = $form['payment']['methods']['#value'];
+
+    foreach ($methods as $id => $method) {
+    if ($method['code'] == 'credit') {
+    $paymentMethodId = $id;
+    }
+    }
+
+    if ($paymentMethodId) {
+    if ($cart) {
+    $customer = CustomersFactory::Current();
+    if ($customer) {
+    $account = Factory::Get($customer);
+    if ($cart->convertedTotalAmount < $account->credits) {
+    $form['payment']['methods']['#value'][$paymentMethodId]['name'] .=  ' (' . theme('price', array('value' => $account->credits)) . ' ' . t('available') . ')';
+    return true;
+    }
+    }
+    }
+    unset($form['payment']['method'][$paymentMethodId]);
+    }
+    }
+   */
+}
+
+function pcstorecredit_form_pccheckout_checkout_form_callback($form, &$form_state) {
+  return $form;
+}
+
+function pcstorecredit_amount_validate($element, &$form_state, $form) {
+  $max = 0;
+  $cart = CartsFactory::Current();
+  if ($cart) {
+    $customer = CustomersFactory::Current();
+    if ($customer) {
+      $account = Factory::Get($customer, FALSE);
+      $max = $account->credits;
+    }
+  }
+
+  $value = floatval($element['#value']);
+  if (!is_numeric($value)) {
+    form_error($element, t('Not a number.'));
+    $value = 0;
+  }
+
+  if ($value > $max) {
+//      form_error($element, t('Too large.'));
+    form_set_value($element, $max, $form_state);
+  } else {
+    form_set_value($element, $value, $form_state);
+  }
+}
+
+function pcstorecredit_form_pccustomers_dashboard_form_alter(&$form, &$form_state) {
+  $customer = $form_state['storage']['customer'];
+
+  $account = Factory::Get($customer, FALSE);
+
+  if ($account->credits > 0) {
+    $form['storecredit'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Store credit'),
+        '#attributes' => array('class' => array('storecredit')),
+    );
+
+    $form['storecredit']['value'] = array(
+        '#type' => 'item',
+        '#markup' => t('Your store credit amount : !value', array('!value' => theme('price', array('value' => $account->credits)))),
+    );
+    /*
+      $form['storecredit']['text'] = array(
+      '#type' => 'item',
+      '#markup' => t('Use your store credit to pay your next orders'),
+      );
+     */
+    $form['storecredit']['history'] = array('#markup' => l('History', 'myprintconnect/credit'));
+  }
+}
+
+/*
+  function pcstorecredit_block_view_pccustomers_links_alter(&$data, $block) {
+  $customer = $data['customer'];
+
+  if ($customer) {
+  $account = Factory::Get($customer);
+  if ($account->credits > 0) {
+  $data['content']['links']['storecredit'] = array(
+  '#markup' => theme('item_list', array('items' => array(
+  l(t('Store credit') . ' (' . theme('price', array('value' => $account->credits)) . ')', 'myprintconnect/credit', array('html' => TRUE)),
+  ))));
+  }
+  }
+  }
+
+ */
+
+
+function pcstorecredit_form_alter(&$form, &$form_state, $form_id) {
+  switch ($form_id) {
+    case 'pccheckout_payment_form':
+    case 'pccheckout_payment_form2':
+
+    $cart = $form_state['storage']['cart'];
+      if ($cart && $cart->uniqueVatPercentage /* && $cart->subTotalAmountWithoutPayment > 0 */) {
+       $customer = CustomersFactory::Current();
+        CustomersFactory::LoadCustomer($customer);
+        $account = Factory::Get($customer,$customer->billingAccount->id , FALSE);
+        Factory::LoadAccount($account);
+
+ if ($account && $account->credits > 0) {
+              $default = 'no';
+              $defaultAmount = min($cart->totalAmount, $account->credits);
+          try {
+              $customer = printconnect\Customers\Factory::Current();
+              if ($customer) {
+                  $billingAccounts = printconnect\Customers\BillingAccounts\Factory::GetBillingAccounts($customer, false);
+                  printconnect\Customers\BillingAccounts\Factory::LoadBillingAccounts($billingAccounts);
+                  $ba = null;
+                  foreach ($billingAccounts as $value) {
+                      if ($value->isDefault) {
+                          $ba = $value;
+                          break;
+                      }
+                  }
+                  $ba = printconnect\Customers\BillingAccounts\Factory::Get($ba->id);
+                  printconnect\Customers\BillingAccounts\Factory::LoadBillingAccount($ba,FALSE);
+                  if ($ba->discountCode!= null) {
+                      $discount = Discounts\Factory::Create($cart->id ,$ba->discountCode);
+                      Discounts\Factory::Save($discount);
+                      $_SESSION['discount_'.$ba->id.'_'.$cart->id] = $discount->id;
+                  }
+              }
+              
+          } catch(Exception $ex) {
+              
+          }
+          $cart->cache = false;
+          printconnect\Carts\Factory::LoadCart($cart);
+          $form['payment']['credit'] = array(
+              '#type' => 'fieldset',
+              '#title' => t('Store credit'),
+              '#attributes' => array('class' => array('credit')),
+              '#weight' => -10,
+          );
+
+          $options = array(
+              'yes' => t('I want to pay with my store credit'),
+              'no' => t('I\'d rather pay the normal way'),
+          );
+          
+          $form['payment']['credit']['use'] = array(
+              '#type' => 'radios',
+              '#options' => $options,
+              '#title' => t('You have !amount in store credit', array('!amount' => theme('price', array('value' => $account->credits)))),
+              '#default_value' => $default,
+              '#ajax' => array(
+                  'callback' => 'pcstorecredit_form_pccheckout_payment_form_callback',
+                  'wrapper' => 'pccheckout-payment-form',
+                  'method' => 'replace',
+                  'effect' => 'fade',
+                  'progress' => array(
+                      'message' => NULL,
+                      'type' => NULL,
+                  ),
+              ),
+          );
+
+          $form['payment']['credit']['amount'] = array(
+              '#type' => 'textfield',
+              '#title' => t('Choose the amount'),
+              '#default_value' => $defaultAmount,
+              '#prefix' => '<div style="display: none;">',
+              '#suffix' => '</div>',
+              '#states' => array(
+                  'visible' => array(
+                      'input[name="payment[credit][use]"]' => array('value' => 'yes'),
+                  ),
+                  'required' => array(
+                      'input[name="payment[credit][use]"]' => array('value' => 'yes'),
+                  ),
+              ),
+              '#element_validate' => array('pcstorecredit_amount_validate'),
+              '#ajax' => array(
+                  'callback' => 'pcstorecredit_form_pccheckout_payment_form_callback',
+                  'wrapper' => 'pccheckout-payment-form',
+                  'method' => 'replace',
+                  'effect' => 'fade',
+                  'progress' => array(
+                      'message' => NULL,
+                      'type' => NULL,
+                  ),
+              ),
+          );
+        }
+      }
+      break;
+  }
+}
+
+function pcstorecredit_form_pccheckout_payment_form_callback(&$form, &$form_state) {
+  $cart = $form_state['storage']['cart'];
+  if ($form_state['values']['payment']['credit']['use'] == 'no') {
+    $cart->storeCredit = 0;
+  } else {
+    $customer = CustomersFactory::Current();
+    CustomersFactory::LoadCustomer($customer);
+    $account = Factory::Get($customer,$customer->billingAccount->id , FALSE);   
+    $cart->storeCredit = $account->credits;
+    if ($cart->storeCredit >= $cart->totalAmount) {
+      $cart->storeCredit = $cart->totalAmount;
+      $cart->payment_method = 0;
+      $cart->totalAmount = 0;
+      $cart->subTotalAmount = 0;
+      $cart->vatAmount = 0;
+      $cart->codAmount = 0;
+    } else {
+    $totalAmount = ($cart->totalAmount - $cart->storeCredit);
+    $vat = (float) $_SESSION['shop_vat'];
+    $subTotalAmount = round(($totalAmount) / (1 + $vat), 2);
+    $vatAmount = ($totalAmount) - $subTotalAmount;
+    $cart->totalAmount = $totalAmount;
+    $cart->subTotalAmount = $subTotalAmount;
+    $cart->vatAmount = $vatAmount;
+    $cart->codAmount = $subTotalAmount;   
+    }
+    
+    $creditObj = (object) array(
+      'order' => $cart->id,
+      'price' => - ($cart->storeCredit),
+      'discount' => 0,
+      'vat' => 0,
+      'description' => 'Store Credit',
+      'convertedPrice' => -$cart->storeCredit,
+      'type' => 'credit'
+    );
+    $tmpArr = $cart->orderItemsPayment;
+    $tmpArr[] = $creditObj;
+
+    $cart->orderItemsPayment = $tmpArr;
+  }
+
+//    CartsFactory::Save($cart);
+//    $cart = CartsFactory::Current(FALSE);
+
+  $form_state['storage']['cart'] = $cart;
+
+  if (isset($form['payment']['footer']['priceblock'])) {
+    $form['payment']['footer']['priceblock']['#subtotal'] = $cart->subTotalAmount;
+    $form['payment']['footer']['priceblock']['#vatAmount'] = $cart->vatAmount;
+    $form['payment']['footer']['priceblock']['#total'] = $cart->totalAmout;
+  }
+
+  if (isset($form['overview'])) {
+    $form['overview'] = _pccheckout_payment_form_build_overview($cart);
+  }
+
+  if (isset($form['actions']['price'])) {
+    $form['actions']['price']['#value'] = $cart->totalAmount;
+  }
+
+  pccheckout_payment_form_build_methods($form, $form_state);
+
+//drupal_goto('checkout/payment');
+
+  return $form;
+}
+
+function pcstorecredit_block_view_pccustomers_profile_alter(&$data, $block) {
+  $customer = $data['customer'];
+  if ($customer) {
+    $account = \printconnect\Customers\Credit\Factory::Get($customer);
+    if ($account->credits > 0) {
+      $data['content']['credit'] = array(
+          '#theme' => 'item_list',
+          '#items' => array(
+              0 => l(t('Store credit') . ' (' . theme('price', array('value' => $account->credits)) . ')', 'myprintconnect/credit', array('html' => TRUE)),
+          ),
+          '#weight' => 10,
+      );
+    }
+  }
+}
+
+function pcstorecredit_block_view_pccustomers_links_alter(&$data, $block) {
+  $customer = $data['customer'];
+  if ($customer) {
+    $account = \printconnect\Customers\Credit\Factory::Get($customer);
+
+    if ($account->credits > 0) {
+
+      $data['content']['links']['credit'] = array(
+          '#theme' => 'item_list',
+          '#items' => array(
+              l(t('Store credit') . ' (' . theme('price', array('value' => $account->credits)) . ')', 'myprintconnect/credit', array('html' => TRUE)),
+          ),
+      );
+    }
+  }
+}
+

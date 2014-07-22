@@ -1,0 +1,7 @@
+name = Clicktale
+description = Clicktale integration
+package = printconnect
+core = 7.x
+
+
+

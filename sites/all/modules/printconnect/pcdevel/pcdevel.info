@@ -1,0 +1,7 @@
+name = Development (TODELETE?)
+description = Development aids
+package = printconnect
+core = 7.x
+
+dependencies[] = printconnect
+files[] = pcdevel.module

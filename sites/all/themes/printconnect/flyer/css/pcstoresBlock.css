@@ -1,0 +1,91 @@
+#pcstores-search-form #result .ui-accordion .ui-accordion-header{
+padding:13px !important;
+}
+
+#pcstores-search-form #result .ui-widget{
+color: #646464;
+font-family: 'Open Sans',sans-serif;
+font-weight: 600;
+
+}
+
+#pcstores-search-form #result .ui-state-active,
+#pcstores-search-form #result .ui-state-focus{
+ border:0px !important;
+background: #F3F3F3 !important;
+font-weight: normal;
+color: #646464;
+}
+
+ #pcstores-search-form #result .ui-corner-all,.ui-corner-top{
+ border-radius:0px !important;
+ }
+
+#pcstores-search-form #result .stores-form {
+clear: both;
+}
+#pcstores-search-form #result #edit-stores{
+  margin-top: 14px;
+  
+  }
+#pcstores-search-form #result #edit-stores ul {
+  list-style: disc;
+  padding: 0px;
+  margin-left: -4px;
+  
+  }
+#pcstores-search-form #result #edit-stores ul li{
+  padding-bottom: 10px;
+  list-style:none;
+  color: #646464;
+  font-family: 'Open Sans',sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  margin-right: 20px;
+  float:left;
+  width:122px;
+  }
+#pcstores-search-form #result #edit-stores ul li:hover{
+  color:#f60;
+  cursor:pointer;
+  }
+  
+#pcstores-search-form #result .treediv{
+   float: left;
+   padding: 0px;   
+   padding-left: 20px;
+   }
+#pcstores-search-form #result .ui-accordion .ui-accordion-header .ui-icon {
+  position: absolute;
+  left: 52.5em !important;
+  top: 40%;
+  margin-top: -8px;
+  }
+
+ #pcstores-search-form #result .ui-state-default{
+   background-color:#F1F1F1;
+   background-image:none !important;
+   border:none;
+  }
+  #pcstores-search-form #result .ui-widget-content{
+   border: 1px solid #F3F3F3;
+   }
+ #pcstores-search-form #result .ui-state-default .ui-icon{
+  background-image:none !important;
+  }
+ #pcstores-search-form #result .ui-icon.ui-icon-triangle-1-e{
+    background-image:url(images/arrow_down4.png) !important;
+   background-size:cover !important;
+   } 
+#pcstores-search-form #result .ui-icon.ui-icon-triangle-1-s{
+    background-image:url(images/arrow_down5.png) !important;
+   background-size:cover !important;
+   }
+   
+#pcstores-search-form #result .ui-icon-triangle-1-e,.ui-icon-triangle-1-s {
+background-position: 0px !important;
+}
+#pcstores-search-form #result .ui-icon {
+width: 23px !important;
+height: 21px !important;
+}

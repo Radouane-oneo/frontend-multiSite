@@ -1,0 +1,16 @@
+name = Cart
+description = Cart module
+package = printconnect
+core = 7.x
+
+#dependencies[] = pccartbase
+dependencies[] = pccustomers
+dependencies[] = pcfiles
+#dependencies[] = pcshipping
+
+stylesheets[all][] = pccart.css
+
+scripts[] = pccart.js
+
+
+

@@ -1718,7 +1718,10 @@ body.front .subscribe-block .content:after {
 	display: inline !important;
 }
 .block.twitterinput {
-	left: 0;
+    left: 0;
+    position: absolute !important;
+    top: 200px !important;
+    margin-left: 10px !important;
 }
 /* ---- END - FRONT ------ */
 
@@ -7223,6 +7226,112 @@ left: 400px;
     display: none;
 }
 
+
+.page-checkout #footer .block-pcpayments {
+	width: 550px !important;
+	margin-left: 0px !important;
+}
+.address {
+	min-height: 0px !important;
+}
+.page-myprintconnect #edit-recentoffers{
+	margin-top: 30px;
+}
+.page-myprintconnect table th {
+    text-align: justify !important;
+}
+.whitebox {
+background: #fff;
+border-radius: 4px 4px 4px 4px;
+padding: 10px 10px 30px 10px;
+}
+.list tr td:nth-child(2) {
+   padding-right: 30px;
+}
+
+.page-myprintconnect table th, .page-myprintconnect table tr td {
+    vertical-align: top;
+}
+.page-myprintconnect table th {
+
+    font-size: 13px !important;
+}
+.page-myprintconnect .region-content {
+  margin-left: 5px;
+}
+.myoffers .list.offers.sticky-enabled td.first-child {
+    width: 11% !important;
+}
+.description table .vacations { 
+border-collapse: inherit  !important; 
+}
+#pccustomers-dashboard-form{margin-left: -8px!important; }
+.page-cart #pccart-cart-form .shipping table tbody tr{ 
+    font-size: 11px !important;
+}
+div.myoffers table.list thead tr th:nth-child(2){
+  width: 82px !important;
+ }
+.searcheresolte h2{text-align: center; font-size: 12px !important; padding-bottom: 21px;}
+
+.twitter_block_user_name{
+display: none !important;
+}
+#replace_stores {
+height: 604px !important;
+}
+#gostor {
+top: 610px !important;
+}
+
+
 #pccheckout-invoiceanddelivery-form  #Mapimg{
     width: auto;
+}
+
+.region-sidebar-first .block .view-id-deals h2 a{
+color: #646464;
+font-size: 13px;
+display: none;
+}
+
+.region-sidebar-first .block .view-id-deals h2{
+    padding-bottom: 3px;
+    text-transform: capitalize;
+}
+.region-sidebar-first .block .view-id-deals .views-row{
+background: #FAFAFA;
+padding: 0 10px;
+border-style: solid;
+border-width: 1px;
+border-bottom: 1px;
+border-color: #DFD8D8;
+}
+
+.region-sidebar-first .block .view-id-deals .views-row-first{
+ border-radius: 5px 5px  0 0;
+
+}
+.region-sidebar-first .block .view-id-deals .views-row-last{
+background: #FAFAFA;
+padding: 0 10px;
+border-style: solid;
+border-width: 1px;
+border-color: #DFD8D8;
+border-radius: 0 0 5px 5px;
+}
+
+.region-sidebar-first .block .view-id-deals .more-link{
+margin-top: 5px;
+display: block;
+font-weight: 400;
+font-size: 14px;
+padding: 8px 10px;
+border-radius: 4px 4px 4px 4px;
+border: none;
+text-align: center;
+background: #77b800;
+}
+.region-sidebar-first .block .view-id-deals .more-link a{
+  color: #fff !important;  
 }

@@ -5,7 +5,9 @@ sites/*/settings*.php
 sites/*/files
 sites/*/private
 .idea/
-
+.htaccess
+sites/default/global_settings.php
+sites/files/
 nbproject/
 cache/
 vendor

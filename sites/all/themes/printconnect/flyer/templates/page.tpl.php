@@ -75,17 +75,6 @@ if (/*@cc_on!@*/false) {
             <?php endif; ?>
 
             <div id="content">
-
-                <?php if ($page['highlightedFlyer']): ?>
-                <div style="width: auto;">
-                    <?php if ($tabs && $is_admin): print '<div id="tabs-wrapper" class="clearfix">';
-                    endif; ?>                                                                                
-                    <?php if ($tabs && $is_admin): print render($tabs) ."</div>";
-                    endif; ?>                                                                                                                                                                                                                                                         
-                <?php if ($show_messages && $messages): print $messages;
-                endif; ?>  
-                </div>
-
                 <?php if ($page['highlightedFlyer']): ?>
                 <div id="highlightedFlyer">
                 <?php print render($page['highlightedFlyer']); ?>

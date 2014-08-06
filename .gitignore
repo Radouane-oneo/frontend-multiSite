@@ -1,6 +1,3 @@
-
-/nbproject/private/
-=======
 # Ignore configuration files that may contain sensitive information.
 sites/*/settings*.php
 
@@ -9,8 +6,7 @@ sites/*/files
 sites/*/private
 .idea/
 .htaccess
-sites/default/global_settings.php
-sites/files/
+
 nbproject/
 cache/
 vendor

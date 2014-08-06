@@ -25,14 +25,13 @@ if (/*@cc_on!@*/false) {
   <div class="bg_header"></div>
   <div class="container">
 
-    <?php error_reporting(E_ALL); ?>
     <?php if ($page['top']): ?>
       <div id="top">
         <?php print render($page['top']); ?>
       </div>
     <?php endif; ?>
 
-    <div id="header">
+        <div id="header">
 
       <?php if ($logo): ?>
         <div id="header_left">
@@ -110,7 +109,7 @@ if (/*@cc_on!@*/false) {
           <?php endif; ?>
 
           <?php if ($messages): ?>
-            <?php //print $messages; ?>
+            <?php print $messages; ?>
           <?php endif; ?>
 
           <?php print render($page['help']); ?>

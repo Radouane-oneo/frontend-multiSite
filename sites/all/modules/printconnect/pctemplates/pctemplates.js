@@ -172,6 +172,24 @@
                                 return false;
                             });
                     });
+                    
+        var segments = [];   
+        $('select#edit-segments').find('option').each(function() {
+                 segments.push($(this).text());
+    	});
+       
+	$("#edit-inputsegments").autocomplete({	
+            source: segments,
+            select: function( event, ui ) {                  
+                $("select#edit-segments option").filter(function() {
+                    return $(this).text() == ui.item.value; 
+                }).attr('selected', true);                  
+            },
+	});
+     
+                        
+                        
+                    
             }
         }
     })(jQuery);

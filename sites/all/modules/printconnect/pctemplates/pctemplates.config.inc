@@ -849,33 +849,47 @@ $product = Products\Factory::Get($productId);
       if ($parent->itemDetail && $parent->groupId > 0) {
         $text .= ' (' . $parent->itemDetail . ')';
       }
-
-      if($dkey <= 0){ 
-        $form['items'][$parent->groupId]['select'] = array(
-            '#type' => 'select',
-            '#title' => $parent->type,
-            '#id' => 'group-' . $parent->groupId,
-            '#ajax' => $ajax,
-        );
-
-        if($parent->groupId == 0) {
-            $txtDescription = t('Select a product');
-        }else {
-            $txtDescription = t('description on toolbox ' . $parent->groupId);
-        }
-
-        $form['items'][$parent->groupId]['select']['#description'] = $txtDescription;
+//      if($dkey == 0){ 
+//          
+//        $form['items'][$parent->groupId]['select'] = array(
+//            '#type' => 'select',
+//            '#title' => $parent->type,
+//            '#id' => 'group-' . $parent->groupId,
+//            '#ajax' => $ajax,
+//        );
+//
+//        if($parent->groupId == 0) {
+//            $txtDescription = t('Select a product');
+//        }else {
+//            $txtDescription = t('description on toolbox ' . $parent->groupId);
+//        }
+//
+//        $form['items'][$parent->groupId]['select']['#description'] = $txtDescription;
+//        if(!$parentId) {
+//            $form['items'][$parent->groupId]['select']['#default_value'] = $parent->id . '-' . $parent->primaryId;
+//        }
+//      }
+//
+//      $form['items'][$parent->groupId]['select']['#options'][$parent->id . '-' . $parent->primaryId] = $text;
+//      if($parentId && $parentId == $parent->primaryId) {
+//          $form['items'][$parent->groupId]['select']['#default_value'] = $parent->id . '-' . $parent->primaryId;
+//      }
+        if ($dkey == 0) { 
+            $txtDescription = (0 == $parent->groupId)
+                ? t('Select a product')
+                : t(sprintf('description on toolbox %s', $parent->groupId));
+            $text = $form['items'][$parent->groupId]['select']['#description'] = $txtDescription;
         if(!$parentId) {
-            $form['items'][$parent->groupId]['select']['#default_value'] = $parent->id . '-' . $parent->primaryId;
+           $text =  $form['items'][$parent->groupId]['select']['#default_value'] = sprintf('%s-%s', $parent->id, $parent->primaryId);
         }
-      }
-
-      $form['items'][$parent->groupId]['select']['#options'][$parent->id . '-' . $parent->primaryId] = $text;
-      if($parentId && $parentId == $parent->primaryId) {
-          $form['items'][$parent->groupId]['select']['#default_value'] = $parent->id . '-' . $parent->primaryId;
+        $form['items'][$parent->groupId]['select'] = array(
+            '#type'   => 'item',
+            '#title'  => $parent->type,
+            '#markup' => sprintf('<div class="text">%s</div>', $parent->itemName),
+        );
       }
   }
-  
+
   if($parentId && property_exists($template->templateItems, $parentId)){
       $section = $template->templateItems->$parentId;
   }else {
@@ -923,7 +937,6 @@ $product = Products\Factory::Get($productId);
       
       $form['items'][$dItems[0]->groupId]['select']['#description'] = $txtDescription;
   }    
-
   $price = '';
   $pricePerPiece = '';
   $subtotal = 0;

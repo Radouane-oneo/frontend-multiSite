@@ -800,17 +800,18 @@ function pcproducts_products_form($form, &$form_state) {
 
   foreach ($products as $product) {
     $build = array();
+    
+    $build['image'] = array(
+        '#theme' => 'image',
+        '#path' => printconnect_getimage('products', $product->id),
+        '#weight' => 10,  
+        '#prefix' => '<div class="blocprd"><a href="products/' . $product->id.'">',
+    );
     $build['name'] = array(
         // '#markup' => l($product->name, 'products/' . $product->id, array('html' => true, 'title' => $product->name)),
         '#markup' => $product->name,
         '#prefix' => '<h2>',
-        '#suffix' => '</h2>',
-        '#weight' => 10,
-    );
-
-    $build['image'] = array(
-        '#theme' => 'image',
-        '#path' => printconnect_getimage('products', $product->id),
+        '#suffix' => '</h2></a></div>',
         '#weight' => 20,
     );
 
@@ -828,18 +829,17 @@ function pcproducts_products_form($form, &$form_state) {
       );
     }
 
-
     $build['from'] = array(
         '#type' => 'container',
         '#attributes' => array('class' => array('from')),
         '#weight' => 40,
     );
     $build['from']['text'] = array(
-        '#markup' => '<span>' . t('from_price') . '</span> ' . theme('price', array('value' => $product->sellPrice)),
+        '#markup' => '<span class="txt">' . t('from_price') . '</span> ' . theme('price', array('value' => $product->sellPrice)),
     );
     $build['order'] = array(
-        '#type' => 'container',
-        '#attributes' => array('class' => array('order')),
+        '#prefix' => '<a class="order btn-cmd" href="products/' . $product->id.'"><span class="flesh"></span>',
+        '#suffix' => '</a>',
         '#weight' => 50,
     );
     $build['order']['text'] = array(
@@ -848,10 +848,11 @@ function pcproducts_products_form($form, &$form_state) {
         '#markup' => t('Order now'),
     );
 
-    $items[] = array(
-        'data' => l(drupal_render($build), 'products/' . $product->id, array('html' => true, 'title' => $product->name)),  
-            //  'class' => array($class),
-    );
+     $items[] = drupal_render($build);
+      /*  $items[] = array(
+          'data' => l(drupal_render($build), 'products/' . $product->id, array('html' => true, 'title' => $product->name)),  
+              //  'class' => array($class),
+      );*/
   }
 
   $form['products']['list']['#markup'] = theme('item_list', array('items' => $items, 'attributes' => array('class' => array('clearfix'))));

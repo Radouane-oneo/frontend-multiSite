@@ -14,7 +14,7 @@ function pcanalytics_page_alter(&$page) {
             '#tag' => 'meta',
             '#attributes' => array(
                 'name' => 'google-site-verification',
-                'content' => $verification
+                'content' => 'MIpcVBcbx01kNcLQVJJhyprawfKD0PZUYP9QBkhBVVU'
             )
         ),
         'google-site-verification'

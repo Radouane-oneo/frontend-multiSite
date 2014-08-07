@@ -2,8 +2,16 @@ jQuery(document).ready(function(e) {
 
     if (jQuery('#homeSlider').length) {
         jQuery('#homeSlider ul').cycle({
-    	    pager:'#pagerSliderHolder',
-    	    fx:'scrollUp'
+            pager:'#pagerSliderHolder',
+            fx:'scrollUp'
+        });
+    }
+
+    if (jQuery('#slideIside ul').length) {
+        jQuery('#slideIside ul').cycle({
+    	    pager:'#sliderPager',
+            fx:'turnDown',
+            timeout: 5300
     	});
     }
     

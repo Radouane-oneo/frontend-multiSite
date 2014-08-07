@@ -208,8 +208,8 @@ $databases = array (
   
   'database' => 'flyer_fr',
       'username' => 'root',
-      'password' => 'xedr386',
-      'host' => 'flyer_fr.dev',
+      'password' => '',
+      'host' => 'localhost',
       'port' => '',
       'driver' => 'mysql',
       'prefix' => '',

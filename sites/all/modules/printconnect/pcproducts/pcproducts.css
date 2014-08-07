@@ -1,11 +1,29 @@
 #pcproducts-products-form ul li, #pcproducts-productoverview-form ul li, #pcproducts-productconfig-form .other li, #block-pcproducts-other li{
   float:left;
-  width:27%;
-  margin: 0;
+  width:32%;
+  margin: 0 2% 10px 0;
   list-style:none;
-  padding:3%;
-  text-align:center;
+  padding:0;
+  border: 1px solid #ececec;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;         /* Opera/IE 8+ */
 }
+
+#pcproducts-products-form ul li:nth-child(3n){
+  margin-right: 0;
+}
+#pcproducts-products-form ul li:nth-child(3n + 1){
+  clear: both;
+}
+
+#pcproducts-products-form .blocprd{
+  padding: 9px;
+}
+
 #pcproducts-productconfig-form .options{
   clear:both;
 }
@@ -34,21 +52,95 @@
   margin-left: 0;
   margin-right:2%;
 }
-#pcproducts-products-form ul li:nth-child(3n+4),  #pcproducts-productoverview-form ul li:nth-child(3n+4){
-  clear:left;
-}
-
-#pcproducts-products-form ul li img{
-  width:100%;
-}
 
 #pcproducts-products-form ul, #pcproducts-productoverview-form ul , #pcproducts-productconfig-form .other ul, #block-pcproducts-other ul{
   margin:0;
   padding:0;
 }
 
+#pcproducts-products-form li a,
+#pcproducts-products-form li a:hover{
+  text-decoration: none;
+}
+
 #pcproducts-products-form ul img, #pcproducts-productoverview-form ul img , #pcproducts-productconfig-form .other img, #block-pcproducts-other ul li img{
   width:100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+#pcproducts-products-form .blocprd h2{
+  font-size: 13px;
+  color: #646464;
+  line-height: 15px;
+  text-transform: capitalize;
+}
+#pcproducts-products-form .from{
+  clear: both;
+  border-top: 1px solid #ececec;
+  overflow: hidden;
+  background-color: #fafafa;
+}
+#pcproducts-products-form .from .txt{
+  line-height: 37px;
+  text-indent: 8px;
+  color: #999999;
+  font-size: 12px;
+  float: left;
+}
+#pcproducts-products-form .from .price{
+  line-height: 37px;
+  color: #ff6600;
+  font-size: 17px;
+  float: right;
+  padding: 0 14px;
+  border-left: 1px solid #ececec;
+  background-color: white;
+  font-weight: bold;
+}
+
+#pcproducts-products-form .from .price .decimals{
+  font-size: small;
+  vertical-align: top;
+  font-weight: normal;
+}
+#pcproducts-products-form .from .price .decimalpoint{
+  font-size: small;
+  vertical-align: top;
+  font-weight: normal;
+}
+
+#pcproducts-products-form .btn-cmd{
+  color: #333333;
+  display: block;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  padding: 8px;
+  border-radius: 0 0 4px 4px;
+  border: none;
+  margin: 0;
+  text-align: center;
+  border-top: 1px solid #ececec;
+  transition:background-color 1s;
+}
+
+#pcproducts-products-form .btn-cmd span.flesh{
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  margin-right: 5px;
+  background-position: 0 -18px;
+  position: relative;
+  top: 3px;
+}
+
+#pcproducts-products-form .btn-cmd:hover{
+  background-color: #77b700;
+  color: #fff;
+}
+#pcproducts-products-form .btn-cmd:hover span.flesh{
+  background-position: 0 0;
 }
 
 #pcproducts-productconfig-form .form-type-checkboxes .form-type-checkbox{

@@ -17,3 +17,4 @@
       </li>
     <?php endforeach; ?>
   </ul>
+  <div id="sliderPager"></div>

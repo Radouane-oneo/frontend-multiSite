@@ -303,25 +303,27 @@ function pctemplates_selection_form2($form, &$form_state) {
     );
     asort($availableProducts);
     asort($availableSegments);
-    if (count($availableProducts) > 0) {
-        $items = array();
-        $items[0]= t('choose');
-        foreach ($availableProducts as $productId => $name) {
-            $class = array();
-            $newProducts = $products;
-            $newProducts[] = $productId;
-            $items[$productId] = $name;
-        }
-
-        if (count($items) > 1) {
-            $form['filters']['products'] = array(
-                '#type' => 'select',
-                '#title' => t('product'),
-                '#options' => $items,
-            );
-        }
-    }
-   
+    
+    // filters by prodacts commenté le 06082014 flyer fr
+//    if (count($availableProducts) > 0) {
+//        $items = array();
+//        $items[0]= t('choose');
+//        foreach ($availableProducts as $productId => $name) {
+//            $class = array();
+//            $newProducts = $products;
+//            $newProducts[] = $productId;
+//            $items[$productId] = $name;
+//        }
+//
+//        if (count($items) > 1) {
+//            $form['filters']['products'] = array(
+//                '#type' => 'select',
+//                '#title' => t('product'),
+//                '#options' => $items,
+//            );
+//        }
+//    }
+//   
     if (count($availableSegments) > 0) {
         $items = array();
         $items[0] = t('choose');
@@ -337,8 +339,17 @@ function pctemplates_selection_form2($form, &$form_state) {
                 '#options' => $items,
             );
         }
+         $form['filters']['inputsegments'] = array(
+                '#type' => 'textfield',
+                '#title' => t('segment'),
+                '#size'=>'20',
+                '#required' => TRUE,
+                '#attributes' => array('placeholder' => 'Rechercher'),  
+             
+         ); 
     }
-    
+//     // filters by autres filters commenté le 06082014 flyer fr
+     
     foreach ($availableFilters as $filterId => $filter) {
         $items = array();
         $inputType = 'select';

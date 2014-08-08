@@ -186,10 +186,11 @@ function pctemplates_block_view($delta = '') {
         case 'Top10':
         $templatestop10 = \printconnect\Templates\Factory::getTop10Template();
         $ts =\printconnect\Templates\Factory::LoadTop10Template($templatestop10);
-        
+         
+        $block['content']['nosmodel']= array('#markup' => "<div class='nosmodel'><span>Personalisez un modèle</span><a href='#'>Tous nos modèles GRATUIT</a></div>");
         $block['content']['startul']= array('#markup' => "<div id='SliderCreaHomePage'><ul>");
          $i=0;
-             foreach($ts as $valueItems ) {
+            foreach($ts as $valueItems ) {
                 $block['content']['contentitem1'.$i]= array('#markup' => "<li>");
                 $block['content']['contentlink1'.$i] = array('#markup' =>"<a id='top10Template' href='templates/" . $valueItems->id . "'>");
                 $block['content']['thumb'.$i] = array('#markup' => theme('pcfilesthumb', array('file' => $valueItems->thumbnail->file, 'alt' => array('#markup' =>$valueItems->name),)));
@@ -198,8 +199,9 @@ function pctemplates_block_view($delta = '') {
                 $block['content']['link'.$i] = array('#markup' => l(t('Utiliser cette créa'), 'templates/' .  $valueItems->id),);
                 $block['content']['contentitem2'.$i]= array('#markup' => "</li>");
                 $i++;
+                if($i==3) break;
             }
-        $block['content']['endul']= array('#markup' => "</ul><a class='nextCrea' href='#'>next </a><a class='prevCrea' href='#'>prev </a></div>");
+        $block['content']['endul']= array('#markup' => "</ul></div>");
             break;     
      }  
 

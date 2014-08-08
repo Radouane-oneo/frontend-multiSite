@@ -335,8 +335,10 @@ function pctemplates_selection_form2($form, &$form_state) {
         if (count($items) > 1) {
             $form['filters']['segments'] = array(
                 '#type' => 'select',
-                '#title' => t('segment'),
+                '#title' => '',
+//                '#label_display' => 'none',
                 '#options' => $items,
+                 '#attributes' => array('style' => 'display:none'),  
             );
         }
          $form['filters']['inputsegments'] = array(
@@ -349,7 +351,7 @@ function pctemplates_selection_form2($form, &$form_state) {
          ); 
     }
 //     // filters by autres filters commenté le 06082014 flyer fr
-     
+     /*
     foreach ($availableFilters as $filterId => $filter) {
         $items = array();
         $inputType = 'select';
@@ -404,10 +406,10 @@ function pctemplates_selection_form2($form, &$form_state) {
             }
         }
     }
-
+*/
     $form['filters']['submit']= array(
         '#type' => 'submit',
-        '#value' => t("search")
+        '#value' => t("search"),
     );
 
 
@@ -447,8 +449,10 @@ function pctemplates_selection_form2($form, &$form_state) {
 }
 
 function pctemplates_selection_form2_submit($form, &$form_state) {
+    
    list($page, $products, $segments, $filters, $search) = _pctemplates_selection_readQueryString(TRUE);
-   drupal_goto('templates', array('query' => _pctemplates_selection_getQueryString(null, $products, $segments, $filters, $search)));
+
+    drupal_goto('templates', array('query' => _pctemplates_selection_getQueryString(null, $products, $segments, $filters, $search)));
 }
 
 function _pctemplates_filter2($templates) {
@@ -510,9 +514,10 @@ function _pctemplates_selection_readQueryString($typeArgs = FALSE) {
     if ($typeArgs) {
         $args =$_POST;
     }
+   
      if(isset($_GET['segments'])) {
-       $args ['segments']= $_GET['segments'];
-    }
+       //$args ['segments']= $_GET['segments'];
+    } 
     $filters = array();
     $result = array();
     $page = 1;

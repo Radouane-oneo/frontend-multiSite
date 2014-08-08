@@ -178,6 +178,7 @@
                  segments.push($(this).text());
     	});
        
+       if($('#edit-inputsegments').length){
 	$("#edit-inputsegments").autocomplete({	
             source: segments,
             select: function( event, ui ) {                  
@@ -186,7 +187,7 @@
                 }).attr('selected', true);                  
             },
 	});
-     
+     }
                         
                         
                     

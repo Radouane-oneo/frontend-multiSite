@@ -101,13 +101,13 @@ jQuery(document).ready(function(e) {
             $('.videosOptionsBar li a').click(function (e) {
                 return false;
             });
-            $('#SliderCreaHomePage').jCarouselLite({
+            /*$('#SliderCreaHomePage').jCarouselLite({
                 btnPrev: ".nextCrea",
                 btnNext: ".prevCrea",
                 visible: 4,
                 speed: 500,
                 circular: true
-            });
+            });*/
             $('a.nextCrea ,a.prevCrea').click(function (e) {
                 return false;
             });

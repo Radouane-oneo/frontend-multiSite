@@ -38,6 +38,10 @@ function pccustomers_block_info() {
       'info' => t('Customer profile links'),
       'cache' => DRUPAL_NO_CACHE,
   );
+//  $blocks['loginnew'] = array(
+//      'info' => t('Login new'),
+//      'cache' => DRUPAL_NO_CACHE,
+//  );
   return $blocks;
 }
 
@@ -113,7 +117,7 @@ function pccustomers_block_view($delta = '') {
         } */
       return $block;
       break;
-
+      
     case 'loginas':
       if ($user->uid) {
         $block['subject'] = t('Customer login as');
@@ -261,6 +265,13 @@ function pccustomers_block_view($delta = '') {
 
         break;
       }
+      
+//    case 'loginnew' :
+//        $block['subject'] = t('Login new');
+//        $form = drupal_get_form('pccustomers_loginnew_form');
+//        $block['content'] = drupal_render($form);
+//    break;
+
   }
   return $block;
 }
@@ -353,6 +364,7 @@ function pccustomers_menu() {
   $items['myprintconnect/login'] = array(
       'title' => 'Login',
       //'page callback' => 'pccustomers_login_forms',
+      'page callback' => 'drupal_get_form',
       'page arguments' => array('pccustomers_login_form'),
       'access arguments' => array('access content'),
       'file' => 'pccustomers.forms.inc',

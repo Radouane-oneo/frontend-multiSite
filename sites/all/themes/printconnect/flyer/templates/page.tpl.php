@@ -89,7 +89,10 @@ if (/*@cc_on!@*/false) {
           print $breadcrumb;
         }
         ?>
-
+          
+          <?php print $messages; ?>
+          
+          
         <?php if ($page['contenttop']): ?>
 
           <?php print render($page['contenttop']); ?>

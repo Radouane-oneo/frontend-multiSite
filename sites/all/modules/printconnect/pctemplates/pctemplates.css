@@ -176,8 +176,8 @@
   width:50%;
   float:left;
   box-sizing:border-box;
-  -moz-box-sizing:border-box;  Firefox 
-   -webkit-box-sizing:border-box; Safari 
+  -moz-box-sizing:border-box;  //Firefox 
+   -webkit-box-sizing:border-box; //Safari 
 }
 
 .page-templates form .dropdown li{

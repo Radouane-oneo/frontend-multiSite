@@ -250,27 +250,39 @@ function pctemplates_selection_form2($form, &$form_state) {
         );
     }
 
-
     $templatesPerPage = $limit;
     $rangeFrom = (($page - 1) * $templatesPerPage) + 1;
     $rangeTo = $page * $templatesPerPage;
     $items = array();
-    foreach ($selectedTemplates as $template) {
-        $build = array(
-            'image' => array(
-                '#theme' => 'pcfilesthumb',
-                '#file' => $template->thumbnail->file,
-            ),
-            'name' => array(
-                '#markup' => $template->name,
-            )
-        );
+    foreach ($selectedTemplates as $template) { 
+        
         $templateUrl = 'templates/' . $template->id;
         if(isset($params['productId'])){
             $templateUrl .= '/product/' . $params['productId'];
         }
+        $build = array();
+        $build['range'] = array(         
+                '#prefix' => '<div class="blocprd"><a href="'.$templateUrl.'">',
+             );
+
+             $build['range']['image'] = array(
+                '#theme' => 'pcfilesthumb',
+                '#file' => $template->thumbnail->file,
+            );
+            $build['range']['name'] =  array(
+                '#markup' => '<h2>'.$template->name.'</h2>',
+                '#suffix' => '</a></div>',
+            );
+           $build['flesh'] = array(
+                '#markup' => '<a class="btn-cmd" href="'.$templateUrl.'">
+                                    <span class="flesh"></span>
+                                    Utiliser ce modèle
+                                </a>'
+            );
+       
+       
         
-        $items[] = l(drupal_render($build), $templateUrl , array('html' => true));
+        $items[] = drupal_render($build);
     }
 
     if (count($items)) {

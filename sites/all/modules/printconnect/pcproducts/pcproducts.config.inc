@@ -453,9 +453,14 @@ if($productId != 88){
 
      $form['custom'] = array(
       '#type' => 'textfield',
-      '#ajax' => $ajax,
       '#description' => t('Enter your amount'),
-  );
+      );
+     
+    $form['calculer'] = array(
+       '#type' => 'button',
+       '#value' => t('Calculer'),
+       '#ajax' => $ajax,
+    );
 }
 
   if (!$listHasQuantity) {

@@ -693,6 +693,7 @@ div#cart{
 	padding: 0;
 	margin: -15px 0 0;
 	overflow: hidden;
+	display: none;
 }
 #content {
 	width: 1020px;
@@ -1098,7 +1099,7 @@ a.button.request:active {
 	background:#77b800;
 }
 
-#pcproducts-products-form .btn-cmd span.flesh{
+a.btn-cmd span.flesh{
 	background-image: url(images/flesh-button.png);
 }
 .newDesignUpload .owndesigntop:hover, 
@@ -6530,32 +6531,14 @@ body.page-cobranding .region-contenttop {
 body.page-cobranding #block-block-13 {
 	display: none !important;
 }
-#SliderCreaHomePage {
+
+/*#SliderCreaHomePage {
 	margin: 10px 0px 0px -8px;
 	height: 237px !important;
 	width: 678px !important;
 	float:left;
-}
-#SliderCreaHomePage li {
-	list-style: none;
-	float: left;
-	min-width: 150px !important;
-	height: 224px !important;
-	margin-left: 15px;
-	max-width: 150px;
-	border: 1px solid #cecece;
-	position: relative;
-}
-#SliderCreaHomePage li img {
-	max-height: 160px !important;
-	position: relative;
-	z-index: 10;
-	border-bottom: 1px solid #cecece;
-	min-width: 100%;
-	max-height: 100%;
-	width: 149.767px;
-	height: 223.767px;
-}
+}*/
+
 a.nextCrea {
 	position: absolute;
 	left: 5px;
@@ -6594,12 +6577,12 @@ a.disabled {
 	width: 100%;
 	text-align: center;
 }
-#SliderCreaHomePage li a {
+/*#SliderCreaHomePage li a {
 	text-align: center;
 	display: block;
 	position: relative;
 	top: 34px;
-}
+}*/
 #pctemplates-selection-form #edit-submit {
 	background: url(images/designSearchButton.png) no-repeat;
 	width: 143px;
@@ -7603,4 +7586,39 @@ div.myoffers table.list thead tr th:nth-child(2){
 	font-weight: 600;
 	color: #666666;
 	margin: 15px 0;
+}
+
+.front .region-contenttop{
+	padding-left: 0;
+}
+.front .region-contenttop .view-best-sales{
+	padding: 10px;
+	background: #fff;
+	border-style:solid;
+	border-color: #e7e3e3;
+	border-width: 1px 1px 0 1px;
+	-webkit-border-radius: 4px 4px 0 0;
+	-moz-border-radius: 4px 4px 0 0;
+	border-radius: 4px 4px 0 0;
+}
+.block-pctemplates .nosmodel,
+.view-best-sales .headproduct{
+	overflow: hidden;
+	padding-bottom: 15px;
+}
+
+.view-best-sales .headproduct > h2{
+	float: left;
+}
+
+.block-pctemplates .nosmodel > a,
+.view-best-sales .headproduct > a{
+	font-family: 'Open Sans', sans-serif;
+	float: right;
+	font-size: 12px;
+	color: #333333;
+	padding-left: 20px;
+	background: url(images/plus_icone.png) no-repeat 0 0;
+	line-height: 15px;
+	font-weight: 600;
 }

@@ -1,4 +1,4 @@
-#pcproducts-products-form ul li, #pcproducts-productoverview-form ul li, #pcproducts-productconfig-form .other li, #block-pcproducts-other li{
+.block-pctemplates ul li,.view-best-sales ul li,#pcproducts-products-form ul li, #pcproducts-productoverview-form ul li, #pcproducts-productconfig-form .other li, #block-pcproducts-other li{
   float:left;
   width:32%;
   margin: 0 2% 10px 0;
@@ -13,17 +13,30 @@
   box-sizing: border-box;         /* Opera/IE 8+ */
 }
 
-#pcproducts-products-form ul li:nth-child(3n){
+.block-pctemplates ul li:nth-child(3n),.view-best-sales ul li:nth-child(3n),#pcproducts-products-form ul li:nth-child(3n){
   margin-right: 0;
 }
+.block-pctemplates ul li:nth-child(3n + 1),
+.view-best-sales ul li:nth-child(3n + 1),
 #pcproducts-products-form ul li:nth-child(3n + 1){
   clear: both;
 }
-
+.block-pctemplates ul li a:hover,
+.view-best-sales ul li a:hover,
+#pcproducts-products-form ul li a:hover,
+.block-pctemplates ul li a,
+.view-best-sales ul li a,
+#pcproducts-products-form ul li a{
+  text-decoration: none;
+}
+.block-pctemplates .blocprd,
+.view-best-sales .blocprd,
 #pcproducts-products-form .blocprd{
   padding: 9px;
 }
 
+.block-pctemplates .options,
+.view-best-sales .options,
 #pcproducts-productconfig-form .options{
   clear:both;
 }
@@ -53,9 +66,12 @@
   margin-right:2%;
 }
 
-#pcproducts-products-form ul, #pcproducts-productoverview-form ul , #pcproducts-productconfig-form .other ul, #block-pcproducts-other ul{
+.view-best-sales ul,#pcproducts-products-form ul, #pcproducts-productoverview-form ul , #pcproducts-productconfig-form .other ul, #block-pcproducts-other ul{
   margin:0;
   padding:0;
+}
+.view-best-sales ul{
+  overflow: hidden;
 }
 
 #pcproducts-products-form li a,
@@ -63,24 +79,30 @@
   text-decoration: none;
 }
 
-#pcproducts-products-form ul img, #pcproducts-productoverview-form ul img , #pcproducts-productconfig-form .other img, #block-pcproducts-other ul li img{
+.block-pctemplates ul img,.view-best-sales ul img,#pcproducts-products-form ul img, #pcproducts-productoverview-form ul img , #pcproducts-productconfig-form .other img, #block-pcproducts-other ul li img{
   width:100%;
   height: auto;
   margin-bottom: 10px;
 }
 
+.block-pctemplates .blocprd h2,
+.view-best-sales .blocprd h2,
 #pcproducts-products-form .blocprd h2{
   font-size: 13px;
   color: #646464;
   line-height: 15px;
-  text-transform: capitalize;
+  text-transform: uppercase;
 }
+
+.view-best-sales .from,
+.view-best-sales .from,
 #pcproducts-products-form .from{
   clear: both;
   border-top: 1px solid #ececec;
   overflow: hidden;
   background-color: #fafafa;
 }
+.view-best-sales .from .txt,
 #pcproducts-products-form .from .txt{
   line-height: 37px;
   text-indent: 8px;
@@ -88,6 +110,8 @@
   font-size: 12px;
   float: left;
 }
+
+.view-best-sales .from .price,
 #pcproducts-products-form .from .price{
   line-height: 37px;
   color: #ff6600;
@@ -99,18 +123,22 @@
   font-weight: bold;
 }
 
+.view-best-sales .from .price .decimals,
 #pcproducts-products-form .from .price .decimals{
   font-size: small;
   vertical-align: top;
   font-weight: normal;
 }
+
+.view-best-sales .from .price .decimalpoint,
 #pcproducts-products-form .from .price .decimalpoint{
   font-size: small;
   vertical-align: top;
   font-weight: normal;
 }
 
-#pcproducts-products-form .btn-cmd{
+a.btn-cmd:visited,
+a.btn-cmd{
   color: #333333;
   display: block;
   font-family: 'Open Sans', sans-serif;
@@ -120,12 +148,14 @@
   border-radius: 0 0 4px 4px;
   border: none;
   margin: 0;
+  text-decoration: none;
   text-align: center;
   border-top: 1px solid #ececec;
   transition:background-color 1s;
+  font-weight: bold;
 }
 
-#pcproducts-products-form .btn-cmd span.flesh{
+a.btn-cmd span.flesh{
   display: inline-block;
   width: 17px;
   height: 17px;
@@ -135,11 +165,12 @@
   top: 3px;
 }
 
-#pcproducts-products-form .btn-cmd:hover{
+a.btn-cmd:hover{
   background-color: #77b700;
   color: #fff;
+  text-decoration: none;
 }
-#pcproducts-products-form .btn-cmd:hover span.flesh{
+a.btn-cmd:hover span.flesh{
   background-position: 0 0;
 }
 

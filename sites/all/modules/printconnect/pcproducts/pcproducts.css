@@ -338,7 +338,7 @@
 
 
 #pcproducts-config-form .form-type-select, #pcproducts-config-form .form-type-item{
-  background: #F1F1F1;
+  background: #fbfbfb;
   padding:5px;
   margin:2px 0;
   clear:both;
@@ -374,23 +374,20 @@
 #pcproducts-config-form .dropdown img{
   width:100%;
 }
-#pcproducts-config-form .description .text{
-
-  width:50%;
-}
-
-#pcproducts-config-form .description .image{
-  float:right;
-  width:50%;
-}
 #pcproducts-config-form .description .image img{
   width:100%;
+  height: auto;
+  margin-bottom: 10px;
+  display: block;
 }
 
 #pcproducts-config-form .description .image h3{
   text-align:center;
+  color: #646464;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
 }
-
 
 #pcproducts-config-form table{
   width:100%;

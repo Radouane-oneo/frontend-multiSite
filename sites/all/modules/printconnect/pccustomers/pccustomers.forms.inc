@@ -1142,57 +1142,36 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
     );
   }
 
-  $form['login']['options'] = array(
-      '#type' => 'radios',
-      '#default_value' => 'existing',
-      '#options' => array(
-          'existing' => t("I'm a customer already"),
-          'new' => t("I'm not a customer yet"),
-      ),
-  );
-
+//  $form['login']['options'] = array(
+//      '#type' => 'radios',
+//      '#default_value' => 'existing',
+//      '#options' => array(
+//          'existing' => t("I'm a customer already"),
+//          'new' => t("I'm not a customer yet"),
+//      ),
+//  );
+   $form['login']['decription'] = array(
+       '#markup'=>"Déja client? ".l('Connectez-vous.','#',array('attributes' => array('class' => 'logbl'))),
+        '#weight' => 6,
+   );
   $form['login']['email'] = array(
       '#type' => 'textfield',
       '#title' => t('Email'),
       '#required' => TRUE,
-      '#size' => 71,
+      '#weight' => 7,
       '#attributes' => array('class' => array('customer-email', 'hint')),
       '#description' => t('Your email address'),
   );
   $form['login']['password'] = array(
       '#type' => 'password',
       '#title' => t('Password'),
-      //'#required' => TRUE,
-      '#attributes' => array('autocomplete' => 'off', 'class' => array('hint')),
-      '#size' => 71,
-      '#description' => t('Your password'),
-      '#states' => array(
-          'visible' => array(
-              'input[name="options"]' => array('value' => 'existing'),
-          ),
-          'required' => array(
-              'input[name="options"]' => array('value' => 'existing'),
-          ),
-      ),
-  );
-
-  $form['login']['newpassword'] = array(
-      '#type' => 'password',
-      '#title' => t('Choose your password'),
       '#required' => TRUE,
       '#attributes' => array('autocomplete' => 'off', 'class' => array('hint')),
-      '#size' => 71,
+      '#weight' => 8,
       '#description' => t('Your password'),
-      '#states' => array(
-          'visible' => array(
-              'input[name="options"]' => array('value' => 'new'),
-          ),
-          'required' => array(
-              'input[name="options"]' => array('value' => 'new'),
-          ),
-      ),
   );
-
+  
+  
   $form['login']['actions'] = array(
       '#type' => 'actions',
       '#attributes' => array('class' => array('form-actions', 'clearfix')),
@@ -1204,42 +1183,57 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
   );
 
   $form['login']['actions']['login'] = array(
-//  '#name' => 'login',
       '#type' => 'submit',
       '#value' => t('Login'),
+      '#weight' => 9,
       '#validate' => array('pccustomers_login_form_login_validate'),
       '#submit' => array('pccustomers_login_form_submit'),
       '#attributes' => array('class' => array('action', 'large', 'login', 'noreplace', 'button')),
-      '#states' => array(
-          'visible' => array(
-              'input[name="options"]' => array('value' => 'existing'),
-          //'#edit-forgot' => array('collapsed' => TRUE),
-          ),
-      ),
       '#limit_validation_errors' => array(
           array('email'),
           array('password'),
       ),
   );
 
-  $form['login']['actions']['register'] = array(
-//'#name' => 'register',
+   /*Secont form */
+  
+  
+   $form['login']['decriptionnew'] = array(
+       '#markup'=>"Nouveau client? ".l('Créer votre compte.','#',array('attributes' => array('class' => 'logbl'))),
+        '#weight' => 10,
+   );
+   $form['login']['emailnew'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Email'),
+        '#required' => TRUE,
+        '#weight' => 11,
+        '#attributes' => array('class' => array('customer-email', 'hint')),
+        '#description' => t('Your email address'),
+    );
+  $form['login']['newpassword'] = array(
+      '#type' => 'password',
+      '#title' => t('Choose your password'),
+      '#required' => TRUE,
+      '#attributes' => array('autocomplete' => 'off', 'class' => array('hint')),
+      '#weight' => 12,
+      '#description' => t('Your password'),
+  );
+    $form['login']['actions']['register'] = array(
+ 
       '#type' => 'submit',
       '#value' => t('Register'),
+      '#weight' => 13,
       '#validate' => array('pccustomers_login_form_register_validate'),
       '#submit' => array('pccustomers_login_form_submit'),
       '#attributes' => array('class' => array('action', 'large', 'register', 'noreplace', 'button')),
-      '#states' => array(
-          'visible' => array(
-              'input[name="options"]' => array('value' => 'new'),
-          //  '#edit-forgot' => array('collapsed' => TRUE),
-          ),
-      ),
       '#limit_validation_errors' => array(
-          array('email'),
+          array('emailnew'),
           array('newpassword'),
       ),
-  );
+    );
+  /* End second form */
+    
+    
   /*
     $form['forgot'] = array(
     '#type' => 'fieldset',
@@ -1276,7 +1270,6 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
     '#limit_validation_errors' => array(
     array('forgot', 'email'),
     ),
-
     );
 
    */
@@ -1288,6 +1281,59 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
   return $form;
 }
 
+
+/**
+ * Deuxieme form authentification
+ * @param type $form
+ * @param type $form_state
+ */
+function pccustomers_loginnew_form($form, &$form_state) {
+ 
+
+    $form['login']['emailnew'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Email'),
+        '#required' => TRUE,
+        '#size' => 71,
+        '#attributes' => array('class' => array('customer-email', 'hint')),
+        '#description' => t('Your email address'),
+    );
+  $form['login']['newpassword'] = array(
+      '#type' => 'password',
+      '#title' => t('Choose your password'),
+      '#required' => TRUE,
+      '#attributes' => array('autocomplete' => 'off', 'class' => array('hint')),
+      '#size' => 71,
+      '#description' => t('Your password'),
+  );
+    $form['login']['actions']['register'] = array(
+        //'#name' => 'register',
+      '#type' => 'submit',
+      '#value' => t('Register'),
+      '#validate' => array('pccustomers_login_form_register_validate'),
+      '#submit' => array('pccustomers_login_form_submit'),
+      '#attributes' => array('class' => array('action', 'large', 'register', 'noreplace', 'button')),
+//      '#states' => array(
+//          'visible' => array(
+//              'input[name="options"]' => array('value' => 'new'),
+//          //  '#edit-forgot' => array('collapsed' => TRUE),
+//          ),
+//      ),
+
+      '#limit_validation_errors' => array(
+          array('emailnew'),
+          array('newpassword'),
+      ),
+  );
+  
+    $form_state['storage']['redirect'] = urldecode($redirect);
+
+  $form['#tree'] = FALSE;
+  $form['#cache'] = TRUE;
+  return $form;
+  
+  
+}
 //
 //function pccustomers_login_forms() {
 //  $build = array();
@@ -1332,19 +1378,20 @@ function pccustomers_login_form_login_validate(&$form, &$form_state) {
 function pccustomers_login_form_register_validate(&$form, &$form_state) {
   global $language;
 
-  if (!valid_email_address($form_state['values']['email'])) {
-    form_set_error('email', t('Not a valid email address'));
+  if (!valid_email_address($form_state['values']['emailnew'])) {
+    form_set_error('emailnew', t('Not a valid email address'));
     return;
   }
   if (!isset($form_state['values']['newpassword']) || strlen($form_state['values']['newpassword']) < 5) {
     form_set_error('newpassword', t('Password not long enough'));
     return;
   }
-  $customer = Factory::GetByEmail($form_state['values']['email']);
+  $customer = Factory::GetByEmail($form_state['values']['emailnew']);
   if ($customer) {
-    form_set_error('email', t('This email address is already registered'));
+    form_set_error('emailnew', t('This email address is already registered'));
     return FALSE;
   } else {
+    $form_state['values']['email']=$form_state['values']['emailnew'];
     $customer = Factory::Create();
     Forms::LoadObject($form_state['values'], $customer);
     $customer->password = $form_state['values']['newpassword'];
@@ -1390,7 +1437,6 @@ function pccustomers_login_form_register_validate(&$form, &$form_state) {
 
 function pccustomers_login_form_submit($form, &$form_state) {
   $customer = $form_state['storage']['customer'];
-
   Factory::Save($customer);
 
   Factory::LoginByObject($customer);

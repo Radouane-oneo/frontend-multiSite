@@ -68,20 +68,29 @@ function pccobranding_menu() {
   return $items;
 }
 
-function _pccobranding_callback($partnerId) {
-  global $copartnerRequirePassword;
-  $shop = \printconnect\Shop\Configuration\Factory::Current();
+function pccobranding_block_info() {
 
-  drupal_set_title($shop->description);
-  module_load_include('inc', 'pccobranding', 'pccobranding.forms');
+  $blocks['cobranding_block'] = array(
+      'info' => t('cobranding_Block'),
+      'cache' => DRUPAL_NO_CACHE,
+  );
+    return $blocks;
+}
 
+function pccobranding_block_view($delta = '') {
+$block = FALSE;
+global $copartnerRequirePassword;
+$shop = \printconnect\Shop\Configuration\Factory::Current();
+drupal_set_title($shop->description);
+module_load_include('inc', 'pccobranding', 'pccobranding.forms');
   if ($copartnerRequirePassword) {
     $items[] = drupal_render(drupal_get_form('pccobranding_login_form'));
   }
+  switch ($delta) {
+    case 'cobranding_block':
 
   $background = url('file/' . $shop->background . '/' . variable_get('css_js_query_string', '0'));
-
-  $build = array(
+  $block = array(
       'content' => array(
           'image' => array(
               '#type' => 'container',
@@ -95,6 +104,28 @@ function _pccobranding_callback($partnerId) {
                   '#markup' => $shop->homePageText,
               ),
           ),
+      ),
+  );
+        return $block;
+      break;
+    }
+    
+}
+
+function _pccobranding_callback($partnerId) {
+  global $copartnerRequirePassword;
+  $shop = \printconnect\Shop\Configuration\Factory::Current();
+
+  drupal_set_title($shop->description);
+  module_load_include('inc', 'pccobranding', 'pccobranding.forms');
+
+  if ($copartnerRequirePassword) {
+    $items[] = drupal_render(drupal_get_form('pccobranding_login_form'));
+  }
+
+ $background = url('file/' . $shop->background . '/' . variable_get('css_js_query_string', '0'));
+  $build = array(
+      'content' => array(
       ),
   );
   return $build;

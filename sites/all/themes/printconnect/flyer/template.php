@@ -8,8 +8,14 @@ function flyer_breadcrumb($vars) {
   }
 }
 function flyer_preprocess_page(&$variables) {
-  drupal_add_library('system', 'ui.button');
-//  drupal_add_css('http://fonts.googleapis.com/css?family=Magra:400,700', array('type' => 'external'));
+    drupal_add_library('system', 'ui.button');
+    
+    //  drupal_add_css('http://fonts.googleapis.com/css?family=Magra:400,700', array('type' => 'external'));
+    if( arg(0) == "taxonomy" && arg(1) == "term") {
+           $variables['page']['content']['system_main']['main'] = null;
+           $variables['title']=t('Aide');   
+    }
+    
 }
 
 /**

@@ -53,11 +53,6 @@ if (/*@cc_on!@*/false) {
         <?php print theme('links__system_main_menu', array('links' => $main_menu, 'attributes' => array('id' => 'main-menu'))); ?>
         </div>
       <?php endif; ?>
-
-
-
-
-
     </div>
     <?php if ($page['cart']): ?>
       <div id="cart">
@@ -112,7 +107,7 @@ if (/*@cc_on!@*/false) {
           <?php endif; ?>
 
           <?php if ($messages): ?>
-            <?php //print $messages; ?>
+            <?php print $messages; ?>
           <?php endif; ?>
 
           <?php print render($page['help']); ?>

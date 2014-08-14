@@ -559,5 +559,5 @@ $conf['pc_fbappsecret'] = '5c7a8171fcecfa2653be45dd118a17b0';
 $conf['pc_googleappid'] = '630860089189.apps.googleusercontent.com';
 $conf['pc_googleappsecret'] = 'fAtghndyq870V9GlzfCzNp9i';
 
-$conf['cobrandedshops']['internal']['pc_apikey'] = 'fc097e4b269cea7f07589577b3279387c7513c16';
+$conf['cobrandedshops']['immopret']['pc_apikey'] = 'f344ca7284a5be3845607e1345a272f5919db3f3';
 $conf['default_printing_office'] = '22';

@@ -453,7 +453,7 @@ if($productId != 88){
 
      $form['custom'] = array(
       '#type' => 'textfield',
-      '#description' => t('Enter your amount'),
+      '#title'=>  t('Enter your amount'),
       );
      
     $form['calculer'] = array(

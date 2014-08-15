@@ -1119,6 +1119,10 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
 //if (variable_get('pc_fbappid', '187894038012933') || variable_get('pc_googleappid', '630860089189.apps.googleusercontent.com')) {
   if (variable_get('pc_fbappid', FALSE) || variable_get('pc_googleappid', FALSE)) {
 
+    $form['login']['intro'] = array(
+        '#markup' => '<h3 class="login-title">Connectez-vous via votre réseau social.</h3>',
+    );
+
     $form['login']['openauth'] = array(
         '#type' => 'container',
         '#attributes' => array('class' => array('openauth')),
@@ -1151,8 +1155,10 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
 //      ),
 //  );
    $form['login']['decription'] = array(
-       '#markup'=>"Déja client? ".l('Connectez-vous.','#',array('attributes' => array('class' => 'logbl'))),
-        '#weight' => 6,
+      '#prefix'=> '<div class="login-form-item first-item"><p>',
+      '#markup'=>"Déja client? ".l('Connectez-vous.','#',array('attributes' => array('class' => 'logbl'))),
+      '#weight' => 6,
+      '#suffix'=>'</p>',
    );
   $form['login']['email'] = array(
       '#type' => 'textfield',
@@ -1172,20 +1178,16 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
   );
   
   
-  $form['login']['actions'] = array(
+  /*$form['login']['actions'] = array(
       '#type' => 'actions',
       '#attributes' => array('class' => array('form-actions', 'clearfix')),
-  );
+  );*/
 
-
-  $form['login']['actions']['forgot'] = array(
-      '#markup' => l(t('Forgot your password?'), 'myprintconnect/forgotpassword', array('query' => array('return' => $redirect), 'attributes' => array('class' => array('link')))),
-  );
-
-  $form['login']['actions']['login'] = array(
+  $form['login']['login'] = array(
       '#type' => 'submit',
       '#value' => t('Login'),
       '#weight' => 9,
+      '#suffix'=>'</div>',
       '#validate' => array('pccustomers_login_form_login_validate'),
       '#submit' => array('pccustomers_login_form_submit'),
       '#attributes' => array('class' => array('action', 'large', 'login', 'noreplace', 'button')),
@@ -1194,13 +1196,18 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
           array('password'),
       ),
   );
-
+  $form['login']['forgot'] = array(
+        '#markup' => l(t('Forgot your password?'), 'myprintconnect/forgotpassword', array('query' => array('return' => $redirect), 'attributes' => array('class' => array('link')))),
+        '#weight' => 9,
+    );
    /*Secont form */
   
   
    $form['login']['decriptionnew'] = array(
-       '#markup'=>"Nouveau client? ".l('Créer votre compte.','#',array('attributes' => array('class' => 'logbl'))),
-        '#weight' => 10,
+      '#prefix'=> '<div class="login-form-item last-item"><p>',
+      '#markup'=>"Nouveau client? ".l('Créer votre compte.','#',array('attributes' => array('class' => 'logbl'))),
+      '#weight' => 10,
+      '#suffix'=>'</p>',
    );
    $form['login']['emailnew'] = array(
         '#type' => 'textfield',
@@ -1218,10 +1225,10 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
       '#weight' => 12,
       '#description' => t('Your password'),
   );
-    $form['login']['actions']['register'] = array(
- 
+    $form['login']['register'] = array(
+      '#suffix'=>'</div>',
       '#type' => 'submit',
-      '#value' => t('Register'),
+      '#value' => t('S’inscrire'),
       '#weight' => 13,
       '#validate' => array('pccustomers_login_form_register_validate'),
       '#submit' => array('pccustomers_login_form_submit'),

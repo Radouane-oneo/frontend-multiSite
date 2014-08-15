@@ -10,7 +10,7 @@
 #edit-billingaddresses{
     margin-top: 36px;
 }
-
+/*
 a.twitterconnect,
 a:visited.twitterconnect,
 a.facebookconnect,
@@ -47,7 +47,7 @@ a.googleconnect,
 a:visited.googleconnect{
   float: left;
   margin-right: 10px;
-}
+}*/
 .page-myprintconnect-addresses #pccustomers-address-form input[type="submit"]{
     margin-left: 0!important;
     background: url(images/calc_btn.png) no-repeat 27px center,-webkit-linear-gradient(top, #77b800 0%, #669c02 100%);

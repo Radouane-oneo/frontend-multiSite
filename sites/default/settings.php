@@ -208,7 +208,7 @@ $databases = array (
   
   'database' => 'flyer_fr',
       'username' => 'root',
-      'password' => '',
+      'password' => 'xedr386',
       'host' => 'localhost',
       'port' => '',
       'driver' => 'mysql',
@@ -528,7 +528,7 @@ $conf['404_fast_html'] = '<html xmlns="http://www.w3.org/1999/xhtml"><head><titl
 
 
 $conf['pc_url'] = 'http://admin.printconcept.com/rest/';
-$conf['pc_designtoolurl'] = 'http://192.168.1.91/';
+$conf['pc_designtoolurl'] = 'http://designtool.stg.printconcept.com/';
 //$conf['pc_apikey'] = '4ff078f212caf2815cc2eed09b57163cafb16476';
 //$conf['pc_apikey'] = '70817cdde5fdca7c4e2b0a8d3d119fd392406a0e'; //be
 $conf['pc_apikey'] = '829dc7b162f77ed761be6cac0ae8782c0ee1866b'; // flyer.fr
@@ -540,7 +540,7 @@ $conf['pc_apikey'] = '829dc7b162f77ed761be6cac0ae8782c0ee1866b'; // flyer.fr
 
 $conf['pccheckout_stepsenabled'] = true;
 $conf['pc_cache'] = true;
-$conf['pc_images'] = 'http://images.flyer.eu';
+$conf['pc_images'] = 'https://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr';
 //$conf['pc_images'] = 'https://s3-eu-west-1.amazonaws.com/printconnectimages/flyer';
 //$conf['pc_images'] = 'https://printconnectimages.s3.amazonaws.com/flyer';
 
@@ -559,5 +559,5 @@ $conf['pc_fbappsecret'] = '5c7a8171fcecfa2653be45dd118a17b0';
 $conf['pc_googleappid'] = '630860089189.apps.googleusercontent.com';
 $conf['pc_googleappsecret'] = 'fAtghndyq870V9GlzfCzNp9i';
 
-$conf['cobrandedshops']['internal']['pc_apikey'] = 'fc097e4b269cea7f07589577b3279387c7513c16';
+$conf['cobrandedshops']['immopret']['pc_apikey'] = 'f344ca7284a5be3845607e1345a272f5919db3f3';
 $conf['default_printing_office'] = '22';

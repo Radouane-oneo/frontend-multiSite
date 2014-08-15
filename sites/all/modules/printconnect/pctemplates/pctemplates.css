@@ -392,6 +392,10 @@
 	font-weight: bold;
 }
 
+#pctemplates-selection-form .ui-helper-reset input[type="submit"]:hover{
+	margin: 16px 0 0 10px;
+}
+
 #pctemplates-selection-form input[type="submit"]:hover{
 	margin: 0;
 	background: #77b800;
@@ -494,10 +498,6 @@ margin: 0 16px -10px 0px !important;
 	color: #646464;
 	font-weight: bold;
 	text-transform: uppercase;
-}
-.block-pctemplates .nosmodel > a{
-	background-position: 0 -18px !important;
-	color: #9b9b9b !important;
 }
 
 .block-pctemplates ul{

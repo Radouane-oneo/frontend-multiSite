@@ -3,12 +3,12 @@
 	<li class="faq">
 		<h3>Besoin d’aide?</h3>
 
-            <p><a href="categories/commandes">Visitez notre FAQ</a></p>
+            <p><a href="<?php print base_path() ?>frfr/categories/commandes">Visitez notre FAQ</a></p>
 	</li>
 	<li class="num">
 		<h3>03 20 38 24 53</h3>
 
-                <p><?php print $items ;?></p>
+                <?php print $items ;?>
 	</li>
 </ul>
 

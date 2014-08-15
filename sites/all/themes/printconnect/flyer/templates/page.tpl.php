@@ -85,7 +85,7 @@ if (/*@cc_on!@*/false) {
         }
         ?>
           
-          <?php print $messages; ?>
+          <?php //print $messages; ?>
           
           
         <?php if ($page['contenttop']): ?>

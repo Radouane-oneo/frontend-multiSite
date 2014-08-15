@@ -1,0 +1,7 @@
+name = FormPopup 
+description = Form contact popup front
+package = printconnect
+core = 7.x
+dependencies[] = printconnect
+
+

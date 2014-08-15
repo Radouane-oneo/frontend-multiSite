@@ -1,17 +1,14 @@
 
 <ul>
 	<li class="faq">
-		<h3>
-			Besoin d’aide?</h3>
+		<h3>Besoin d’aide?</h3>
 
-		<p><?php print $items ;?> </p>
+            <p><a href="categories/commandes">Visitez notre FAQ</a></p>
 	</li>
 	<li class="num">
-		<h3>
-			03 20 38 24 53</h3>
+		<h3>03 20 38 24 53</h3>
 
-		<p>
-			je souhaite être rappelé(e)</p>
+                <p><?php print $items ;?></p>
 	</li>
 </ul>
 

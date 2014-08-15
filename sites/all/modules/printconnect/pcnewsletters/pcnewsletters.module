@@ -89,6 +89,7 @@ function pcnewsletters_subscribe_form($form, $form_state) {
         '#title' => t('Email'),
         '#default_value' => $email,
         '#description' => t('Email'),
+        '#required' => TRUE,
         '#attributes' => array('class' => array('hint')),
     );
     $form['actions']['submit'] = array(
@@ -136,7 +137,13 @@ function pcnewsletters_subscribe_form_submit($form, &$form_state) {
   // }
   //drupal_set_message(t('Subscribed'));
 }
-
+function  pcnewsletters_subscribe_form_validate(&$form, &$form_state, $form_id) {
+ 
+        if (!valid_email_address($form_state['values']['email'])) {
+             form_set_error('email', t('You must enter a valid e-mail address.'));
+        }
+           
+}   
 function pcnewsletters_subscribe_form_callback($form, $form_state) {
   return $form;
 }

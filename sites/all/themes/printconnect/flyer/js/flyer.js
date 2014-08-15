@@ -15,7 +15,8 @@ jQuery(document).ready(function(e) {
     	});
     }
     
-	jQuery('#helppanel').find('.center-wrapper').eq(0).remove();
+    jQuery('#helppanel').find('.center-wrapper').eq(0).remove();
+	jQuery( "#accordion-list" ).accordion({autoHeight: false});
 	
 });
 

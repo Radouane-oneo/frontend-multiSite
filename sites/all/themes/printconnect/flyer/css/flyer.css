@@ -64,7 +64,7 @@ input, select {
 @media screen and (-webkit-min-device-pixel-ratio:0) {
 select {
 	-webkit-appearance: none;
-	background: #fff url("images/arrow_down3.png") no-repeat right !important;
+	background: #fff url("images/arrow_down3.png") no-repeat 97% center !important;
 }
 }
 input[type="text"], 
@@ -683,8 +683,8 @@ div#cart{
 .whitebox {
 	background: #fff;
 	border: 1px solid #e7e3e3;
-	border-radius: 4px 4px 4px 4px;
-	padding: 10px;
+	border-radius: 3px;
+	padding: 16px 10px 10px;
 	margin-bottom: 10px;
 }
 .front .whitebox {
@@ -715,7 +715,7 @@ body.two-sidebars #content {
 .region-sidebar-first .block, 
 .region-sidebar-second .block {
 	margin-bottom: 10px;
-	padding: 10px;
+	padding: 10px 8px;
 	border-radius: 4px 4px 4px 4px;
 	background: #fff;
 	border: 1px solid #e7e3e3;
@@ -1048,8 +1048,9 @@ a.button.request:active {
 	background: none;
 }
 .button.owndesign > .ui-button-text {
-	background: url("images/button_owndesign.png") no-repeat left;
-	padding-left: 25px;
+	background: url(images/flesh-button.png) no-repeat left -35px;
+	padding-left: 22px;
+	line-height: 20px;
 }
 .button.action.designtool > .ui-button-text {
 	background: url("images/button_order.png") no-repeat left;
@@ -1175,14 +1176,28 @@ a.button.download:active {
 }
 input.upload, 
 input.ui-button.upload {
-	background: #77b800 url("images/button_upload.png") no-repeat left;
-	padding-left: 55px;
+	/*background: #77b800 url("images/button_upload.png") no-repeat left;*/
+	background: #75b300 url("images/telecharger_big.png") no-repeat 15px center;
+	padding-left: 60px;
+	float: right;
+	margin: 0 !important;
+	float: right;
+	border-style: solid;
+	border-color: #5a8a02;
+	border-width: 1px 0;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+}
+#pccheckout-invoiceanddelivery-form input.upload{
+	height: 62px;
+	padding-left: 60px;
 }
 input.upload.ui-state-hover, 
 input.upload:hover, 
 input.ui-button.upload.ui-state-hover, 
 input.ui-button.upload:hover {
-	background-image: url("images/button_upload_hover.png");
+	background-color: #679e02;
 }
 input.upload.ui-state-active, 
 input.upload:active, 
@@ -1285,8 +1300,8 @@ a.button.cart .ui-button-text {
 #block-pccustomers-profile {
 	top: -78px;
 	margin-bottom: 3px;
-background: url("images/subMenuSpriteIconsModified.png") no-repeat;
-background-position:-436px -444px;
+	background: url("images/subMenuSpriteIconsModified.png") no-repeat;
+	background-position:-436px -444px;
 	display: block;
 	width: 159px;
 	padding: 0 0 0 20px;
@@ -1294,8 +1309,9 @@ background-position:-436px -444px;
 	position: relative;
 	height: 350px; /* before: 317px; before before: 297px; */
 	left: -13px;
+	border: 0;
 }
-#block-pccustomers-profile .item-list > ul {
+#block-pccustomers-profile .item-list > ul{
 	border-bottom: 1px solid #ffaa66;
 	padding-bottom: 5px;
 	margin-bottom: 5px;
@@ -1653,13 +1669,13 @@ body.front #block-block-13:after {
 	clear: both;
 }
 
-body.front .subscribe-block .content .form-item, body.front .subscribe-block .content .form-actions {
+.subscribe-block .content .form-item, .subscribe-block .content .form-actions {
 	margin: 0 !important;
 }
-body.front .subscribe-block .content label, body.front .subscribe-block .content .description {
+.subscribe-block .content label, .subscribe-block .content .description {
 	display: none;
 }
-body.front .subscribe-block .content input[type="text"] {
+.subscribe-block .content input[type="text"] {
 	width: 145px;
 	padding: 8px 9px;
 	border-radius: 4px 4px 4px 4px;
@@ -1673,11 +1689,11 @@ body.front .subscribe-block .content input[type="text"] {
   	box-sizing: border-box;         /* Opera/IE 8+ */
 }
 
-body.front .subscribe-block .content input[type="submit"]{
+.subscribe-block .content input[type="submit"]{
 	width: 145px;
 }
 
-body.front .subscribe-block .content .text{
+.subscribe-block .content .text{
 	font-size: 12px;
 	color: #646464;
 	line-height: 14px;
@@ -2079,6 +2095,10 @@ body.front .subscribe-block .content .text{
 .page-products #block-system-main .form-type-item, 
 .page-templates- #block-system-main .form-type-item {
 	background-image: none;
+	border-style: solid;
+	border-color: #e1e1e1;
+	border-width: 0 1px 1px 1px;
+	margin: 0;
 }
 .page-products #block-system-main .form-type-select a, 
 .page-products #block-system-main .form-type-item a:visited, 
@@ -2299,6 +2319,7 @@ body.front .subscribe-block .content .text{
 .page-templates- #block-system-main .delivery .form-item {
 	background-color: transparent;
 	cursor: default;
+	border: 0;
 }
 .page-products #block-system-main .deadline label, 
 .page-products #block-system-main .delivery label, 
@@ -2380,6 +2401,9 @@ body.front .subscribe-block .content .text{
 	width: inherit !important;
 	float: none !important;
 }
+#pccheckout-payment-form .form-wrapper.actions,
+.page-checkout-upload #edit-actions,
+#pccheckout-invoiceanddelivery-form .form-actions,
 .page-products #block-system-main .form-wrapper.actions,
 .page-cart #block-system-main .form-wrapper.actions{
 	background: #3c3c3c;
@@ -2392,6 +2416,9 @@ body.front .subscribe-block .content .text{
 	box-shadow: 0px 0px 10px 1px #000 inset;
 	overflow: hidden;
 }
+#pccheckout-invoiceanddelivery-form .form-actions{
+	margin: 0;
+}
 
 .page-cart #block-system-main .form-wrapper.actions{
 	margin-bottom: 0;
@@ -2400,6 +2427,7 @@ body.front .subscribe-block .content .text{
 	display: none;
 }
 
+#pccheckout-payment-form .form-actions span.price,
 .page-cart #block-system-main .form-wrapper.actions span.price,
 .page-products #block-system-main .form-wrapper.actions span.price {
 	float: left;
@@ -2410,18 +2438,21 @@ body.front .subscribe-block .content .text{
 	font-weight: bold;
 	font-family: arial;
 }
+#pccheckout-payment-form .form-actions span.price .currency,
 .page-cart #block-system-main .form-wrapper.actions span.price .currency,
 .page-products #block-system-main .form-wrapper.actions span.price .currency {
 	 font-size: 33px;
 	margin-right: -10px;
 	vertical-align: inherit;
 }
+#pccheckout-payment-form .form-actions span.price .decimals ,#pccheckout-payment-form .form-actions span.price .decimalpoint,
 .page-cart #block-system-main .form-wrapper.actions span.price .decimalpoint, .page-cart #block-system-main .form-wrapper.actions span.price .decimals,
 .page-products #block-system-main .form-wrapper.actions span.price .decimalpoint, .page-products #block-system-main .form-wrapper.actions span.price .decimals {
 	font-size: 25px;
 	vertical-align: middle;
 	line-height: 30px;
 }
+#pccheckout-payment-form .form-actions input,
 .page-cart #block-system-main .form-wrapper.actions input,
 .page-products #block-system-main .form-wrapper.actions input {
 	height: 62px;
@@ -2432,6 +2463,7 @@ body.front .subscribe-block .content .text{
 	-moz-border-radius: 0;
 	border-radius: 0;
 	font-weight: bold;
+	text-align: left;
 }
 .page-products #pcproducts-config-form table.grid {
 	-webkit-border-radius: 5px;
@@ -2482,18 +2514,53 @@ body.front .subscribe-block .content .text{
 }
 
 .page-products #pcproducts-config-form table.grid tbody tr.custom{
-	background-color: white;
+	background-color: white !important;
+	position: relative;
+}
+.page-products #pcproducts-config-form table.grid tr.custom td:nth-child(2){
+	padding-left: 0;
+	border: 0;
+	position: relative;
+	height: 42px;
+}
+.page-products #pcproducts-config-form table.grid tbody tr.custom td:first-child .form-item{
+	display: none;
+	visibility: hidden;
+}
+.page-products #pcproducts-config-form tr.custom .form-item label{
+	float: left;
+	font-size: 13px;
+	color: #999999;
+	line-height: 16px;
+}
+.page-products #pcproducts-config-form tr.custom .form-item input[type="text"]{
+	float: right;
+	padding: 8px 10px;
+	height: 15px;
+	line-height: 15px;
+	border-color: #e1e1e1;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	width: 190px;
+	font-size: 13px;
+	color: #999999;
+	position: absolute;
+	right: -215px;
+	top: 0px;
 }
 .page-products #pcproducts-config-form table.grid tbody tr.custom td:nth-child(4),
 .page-products #pcproducts-config-form table.grid tbody tr.custom td:nth-child(3){
 	border: 0;
 }
 
-.page-products #pcproducts-config-form table.grid tbody tr td .currency {
-	
-}
-.page-products #pcproducts-config-form table.grid tbody tr td .price {
-	
+.page-products #pcproducts-config-form table.grid + input#edit-calculer[type='submit']{
+	background: url(images/flesh-button-seul.png) no-repeat 17px center #77b800;
+	padding-left: 40px;
+	font-weight: bold;
+	position: relative;
+	right: -545px;
+	top: -57px;
 }
 .page-products #pcproducts-config-form table.grid tbody tr td .price.old {
 	color: #aaa;
@@ -2555,6 +2622,7 @@ body.front .subscribe-block .content .text{
 .page-products #pcproducts-config-form table.grid tr td:nth-child(2) {
 	padding-left: 25px;
 	text-align: left;
+	width: 275px;
 }
 .page-products #pcproducts-config-form table.grid tr th:nth-child(2){
 	padding-left: 0;
@@ -2654,9 +2722,10 @@ body.front .subscribe-block .content .text{
     float: left;
     width: 150px;
     margin-right: 45px;
+    min-height: 135px;
 }
 #pcproducts-config-form .templates > .fieldset-wrapper, #pcdesigner-upload-form .templates > .fieldset-wrapper {
-	border-radius: 4px 4px 4px 4px;
+	border-radius: 3px;
 	background: #f1f1f1;
 	margin: 0;
 	padding: 25px 15px;
@@ -2702,8 +2771,10 @@ body.front .subscribe-block .content .text{
 	cursor: default;
 	padding: 0;
 	font-size: 12px;
-        height: 0;
+    border: 0;
 }
+.invoice a#toggle-invoice-form,
+.shipping a#toggle-shipping-form,
 .page-products #block-system-main #templates .form-item.form-type-item a {
 	display: block;
 	padding: 10px 15px;
@@ -2712,6 +2783,12 @@ body.front .subscribe-block .content .text{
 	font-size: 13px;
 	color: #666666;
 	font-weight: 600;
+}
+.invoice a#toggle-invoice-form,
+.shipping a#toggle-shipping-form{
+	padding: 7px 15px;
+	display: inline-block;
+	margin-top: 10px;
 }
 .page-products #block-system-main #templates .form-item.form-type-item label ,    #pcdesigner-upload-form .templates label{
 	display: inline;
@@ -2812,7 +2889,7 @@ body.front .subscribe-block .content .text{
 	height: 95px;
 }
 .page-cart .whitebox {
-	padding-bottom: 48px;
+	/*padding-bottom: 48px;*/
 }
 .page-cart h1 {
 	margin-top: 10px;
@@ -3108,17 +3185,26 @@ background: url(images/subMenuSpriteIconsModified.png) no-repeat -456px -49px;
 	padding: 0;
 	width: 100%;
 }
+.page-cart .ref.discount .form-type-item{
+	line-height: 35px;
+	width: 330px;
+}
+
+.page-cart .ref.discount .form-type-textfield input[type="text"]{
+	width: 290px !important;
+}
+
 .page-cart #edit-cart-footer-discount {
 	margin: 10px 0 !important;
 }
 .page-cart .discount .form-type-item {
 	float: left;
-	width: 295px; /* was 190px */
-	margin: 0 15px 0 0;
-	line-height: 35px;
+	width: 295px;
+	margin: 3px 15px 0 0;
+	line-height: 17px;
 }
 .page-cart .discount .form-type-textfield {
-	float: right;
+	float: left;
 	margin: 0;
 }
 .page-cart .discount input[type="submit"] {
@@ -3378,6 +3464,7 @@ background: url(images/subMenuSpriteIconsModified.png) no-repeat -456px -49px;
 .page-cart .items .fieldset-wrapper {
 	background: transparent;
 	padding: 0;
+	border: 0;
 }
 .page-cart form .priceblock {
 	position: relative;
@@ -3392,10 +3479,12 @@ background: url(images/subMenuSpriteIconsModified.png) no-repeat -456px -49px;
 /* ---- END - CART PAGE -- */ 
 /* ---- LOGIN ------------ */
 #pccustomers-login-form {
-	background: #f1f1f1;
-	border-radius: 4px 4px 4px 4px;
-	margin-top: 10px;
-	margin-bottom: 30px;
+	background: #efeff0;
+	border-radius: 3px;
+	margin-top: 20px;
+	padding: 10px;
+	border: 1px solid #dfdfdf;
+	overflow: hidden;
 }
 #pccustomers-login-form .form-radios {
 	margin-left: 160px;
@@ -3408,41 +3497,36 @@ background: url(images/subMenuSpriteIconsModified.png) no-repeat -456px -49px;
 #pccustomers-login-form .form-radios .form-item-options input {
 	margin: 0;
 }
-#pccustomers-login-form .form-item-email, 
-#pccustomers-login-form .form-item-password, 
-#pccustomers-login-form .form-item-newpassword {
-	margin: 0;
-	clear: both;
-}
+
 #pccustomers-login-form .form-item-email label, 
 #pccustomers-login-form .form-item-password label, 
 #pccustomers-login-form .form-item-newpassword label, 
 #pccustomers-login-form #edit-forgot .form-item label {
-	float: left;
+	/*float: left;
 	text-align: right;
 	width: 140px;
 	margin-right: 20px;
 	line-height: 46px;
 	text-transform: uppercase;
-	font-weight: 400;
+	font-weight: 400;*/
 }
 #pccustomers-login-form .form-item-email input {
-	width: 320px;
+	/*width: 320px;
 	border: 1px solid #e6e6e6;
 	padding: 10px;
 	height: 24px;
 	line-height: 24px;
-	border-radius: 4px 4px 0 0;
+	border-radius: 4px 4px 0 0;*/
 }
 #pccustomers-login-form .form-item-password input, 
 #pccustomers-login-form .form-item-newpassword input {
-	width: 320px;
+	/*width: 320px;
 	border: 1px solid #e6e6e6;
 	border-top: none;
 	padding: 10px;
 	height: 24px;
 	line-height: 24px;
-	border-radius: 0 0 4px 4px;
+	border-radius: 0 0 4px 4px;*/
 }
 #pccustomers-login-form .form-item-email input.error, 
 #pccustomers-login-form .form-item-password input.error, 
@@ -3472,27 +3556,45 @@ background: url(images/subMenuSpriteIconsModified.png) no-repeat -456px -49px;
 	line-height: 24px;
 	padding: 10px;
 }
-#edit-openauth {
-	margin-left: 160px;
+#edit-openauth{
 	padding-top: 10px;
-	width: 342px;
+	padding-bottom: 28px;
+	border-bottom: 1px solid #dfdfdf;
+	position: relative;
+}
+#edit-openauth:after{
+	content: ' ';
+	clear: both;
+	display: block;
+	width: 100%;
+	height: 1px;
 }
 #edit-openauth #edit-openauth-text, 
 #edit-openauth #edit-text {
+	border: 4px solid #dfdfdf;
+	width: 27px;
+	height: 27px;
+	line-height: 27px;
 	text-align: center;
-	line-height: 18px;
-	background: url("images/orline.png") no-repeat center center;
-	clear: left;
-	position: relative;
-	top: 5px;
+	position: absolute;
+	bottom: -15px;
+	left: 50%;
+	margin-left: -6px;
+	font-size: 11px;
+	color: #646464;
+	background-color: white;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	margin-top: 0;
+	margin-bottom: 0;
+	font-weight: bold;
 }
+
 #edit-openauth a {
-	margin: 10px 0;
+	margin: 0 0 10px;
 }
-#edit-openauth a.googleconnect {
-	margin-right: 0 !important;
-	float: right !important;
-}
+
 #pccustomers-login-form #edit-forgot {
 	margin-left: 160px;
 	width: 342px;
@@ -3523,7 +3625,7 @@ background: url(images/subMenuSpriteIconsModified.png) no-repeat -456px -49px;
 
 a.twitterconnect, a:visited.twitterconnect, a.facebookconnect, a:visited.facebookconnect, a.googleconnect, a:visited.googleconnect {
 	display: block;
-	width: 162px;
+	width: 183px;
 	height: 39px;
 	line-height: 39px;
 	text-indent: -9999em;
@@ -3536,30 +3638,16 @@ a.twitterconnect, a:visited.twitterconnect, a.facebookconnect, a:visited.faceboo
 a.twitterconnect {
 	background-position: 0 0;
 }
-a:hover.twitterconnect {
-	background-position: 0 -39px;
-}
-a:active.twitterconnect {
-	background-position: 0 -78px;
-}
 a.facebookconnect {
-	background-position: -162px 0;
+	background-position: 0 0;
+	margin-left: 135px !important;
+	margin-right: 20px !important;
 }
-a:hover.facebookconnect {
-	background-position: -162px -39px;
-}
-a:active.facebookconnect {
-	background-position: -162px -78px;
-}
+
 a.googleconnect {
-	background-position: -324px 0;
+	background-position: -187px 0;
 }
-a:hover.googleconnect {
-	background-position: -324px -39px;
-}
-a:active.googleconnect {
-	background-position: -324px -78px;
-}
+
 /* END - FACEBOOK & GOOGLE CONNECT */
 
 /* ---- END - LOGIN ------ */
@@ -3587,7 +3675,6 @@ a:active.googleconnect {
 	content: '';
 	display: block;
 	height: 0;
-
 	overflow: hidden;
 }
 .page-checkout #pccheckout-personal-form label {
@@ -3598,7 +3685,7 @@ a:active.googleconnect {
 	text-transform: uppercase;
 	float: left;
 	padding-right: 20px;
-	width: 140px;
+	width: 150px;
 	text-align: right;
 	line-height: 19px;
 	padding-top: 10px;
@@ -3614,10 +3701,11 @@ a:active.googleconnect {
 	margin: 0;
 }
 .page-checkout #pccheckout-personal-form select {
-	width: 480px;
+	width: 465px;
+	background-position: 95% center!important;
 }
 .page-checkout #pccheckout-personal-form input[type="text"] {
-	width: 458px; /*478px - padding */
+	width: 445px; /*478px - padding */
 }
 .page-checkout #pccheckout-personal-form input.country {
 	width: 20px;
@@ -3640,7 +3728,7 @@ a:active.googleconnect {
 	border-radius: 4px 0 0 4px;
 }
 .page-checkout #pccheckout-personal-form input#edit-city {
-	width: 388px;
+	width: 375px;
 	border-left: none;
 	border-radius: 0 4px 4px 0;
 }
@@ -3655,6 +3743,11 @@ a:active.googleconnect {
 #pccheckout-invoiceanddelivery-form fieldset legend {
 	display: block;
 	font-size: 14px;
+	color: #666666;
+	font-weight: 700;
+	position: relative;
+	top: -10px;
+	margin: 0;
 }
 #pccheckout-invoiceanddelivery-form fieldset.collapsible > legend {
 	display: none;
@@ -3662,23 +3755,24 @@ a:active.googleconnect {
 .page-checkout #pccheckout-personal-form {
 	border-radius: 4px 4px 4px 4px;
 }
-.page-checkout #pccheckout-invoiceanddelivery-form .invoice {
-	border-bottom: 1px solid #fff;
-	border-right: 1px solid #fff;
-	padding: 10px;
+.page-checkout #pccheckout-invoiceanddelivery-form .invoice{
+	padding: 0 10px 10px 25px;
 	position: relative;
-	width: 310px;
+	width: 290px;
 	float: left;
 	min-height: 182px;
 }
 .page-checkout #pccheckout-invoiceanddelivery-form .shipping {
-	border-bottom: 1px solid #fff;
-	border-left: 1px solid #fff;
+	border-left: 1px solid #e1e1e1;
 	margin-left: -2px;
 	padding: 10px 9px 10px 10px;
 	position: relative;
-	width: 310px;
+	width: 305px;
 	min-height: 182px;
+}
+.page-checkout #pccheckout-invoiceanddelivery-form .invoice > .fieldset-wrapper,
+.page-checkout #pccheckout-invoiceanddelivery-form .shipping > .fieldset-wrapper{
+	padding: 0 0 0 5px;
 }
 .page-checkout-invoiceanddelivery .invoice h3, 
 .page-checkout-invoiceanddelivery .shipping h3 {
@@ -3902,15 +3996,11 @@ a:active.googleconnect {
 	width: 200px;
 }
 #pccheckout-upload-form .item .form-type-checkbox {
-	background: #dfdfdf;
-	border-radius: 0 0 4px 4px;
 	clear: left;
-	/*margin: 0 -10px -10px;*/
 	padding: 10px;
 	bottom: -30px;
 	display: block;
-	width: 640px;
-	margin: 10px -10px 0 -10px;
+	margin: 0;
 }
 .page-upload #pccheckout-upload-form .item .form-type-checkbox {
 	border-radius: 0 0 0 0;
@@ -3959,11 +4049,12 @@ a:active.googleconnect {
 	margin: 0;
 }
 .page-checkout-upload .item {
-	border-radius: 4px 4px 4px 4px;
+	border-radius: 3px;
 	background: #f1f1f1;
 	padding: 10px 10px 0 10px;
 	margin: 0 0 10px 0;
 	position: relative;
+	border: 1px solid #e1e1e1;
 }
 .page-checkout-upload .item .description {
 	position: relative;
@@ -4129,12 +4220,24 @@ a:active.googleconnect {
 }
 .page-checkout-payment table.grid {
 	width: 662px;
-	border: 1px solid #fff;
+	border: 1px solid #e1e1e1;
 	border-collapse: separate;
-	border-radius: 4px 4px 4px 4px;
+	border-radius: 3px;
 	border-spacing: 0;
 	margin: -11px auto 0 -11px;
 	padding: 0;
+}
+#pccheckout-payment-form table.grid {
+	width: 660px;
+	border: 1px solid #e1e1e1;
+	border-collapse: separate;
+	border-radius: 3px;
+	border-spacing: 0;
+	margin: -11px auto 0 -10px;
+	padding: 0;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
 }
 .page-paymentrequest-key table.grid.clearfix:after, 
 .page-checkout-payment table.grid.clearfix:after {
@@ -4152,16 +4255,20 @@ a:active.googleconnect {
 }
 .page-paymentrequest-key table.grid tr, 
 .page-checkout-payment table.grid tr {
-	color: #646464; /* maincolor */
+	color: #646464;
 	float: left;
-	border-bottom: 1px solid #fff;
-	border-right: 1px solid #fff;
+	border-bottom: none;
+	border-right: 1px solid #e1e1e1;
 	width: 70px;
 	height: 138px;
 	padding: 10px;
 	text-align: center;
 	cursor: pointer;
 }
+ .page-checkout-payment table.grid tr:first-child{
+	width: 109px !important;
+ }
+
 .page-paymentrequest-key table.grid tr:nth-child(7n), 
 .page-checkout-payment table.grid tr:nth-child(7n) {
 	border-right: none;
@@ -4253,16 +4360,22 @@ a:active.googleconnect {
 	margin-left: 10px;
 }
 .page-checkout-payment .form-item-agree {
-	background: #f60;
+	/*background: #f60;
 	padding: 5px 10px;
 	color: #fff;
+	margin: 0;*/
+	background: #e1e1e1;
+	padding: 10px 20px;
+	color: #fff;
 	margin: 0;
+	color: #646464;
+	font-size: 13px;
 }
 .page-checkout-payment .form-item-actions-agree input {
 	height: inherit !important;
 }
 .page-checkout-payment .form-item-agree a {
-	color: #fff !important;
+	color: #646464;
 }
 .page-checkout-payment .overview h2 {
 	margin-top: 30px;
@@ -4334,15 +4447,16 @@ a:active.googleconnect {
 	text-align: right;
 	float: right;
 	color: #f60;
-	font-weight: 600;
+	font-weight: 700;
+	font-size: 14px;
 }
 .page-checkout-payment .overview table tr td .price .value {
 	display: inline-block;
 	min-width: 60px;
 }
 .page-checkout-payment .overview table tr td .price .value .currency {
-	float: left;
-	text-align: left;
+	/*float: left;
+	text-align: left;*/
 }
 .page-checkout-payment .overview table tr:last-child td .price {
 	color: #646464; /* maincolor */
@@ -4376,6 +4490,17 @@ a:active.googleconnect {
 }
 .page-checkout-invoiceanddelivery #pccheckout-invoiceanddelivery-form {
 	clear: both;
+	padding-top: 0;
+}
+.page-checkout-invoiceanddelivery #pccheckout-invoiceanddelivery-form > div > .summary{
+	border-color: #e1e1e1;
+	border-style: solid;
+	border-width:1px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	padding-bottom: 10px;
+	padding-top: 30px;
 }
 .page-checkout-invoiceanddelivery .shipping {
 	float: left;
@@ -4958,37 +5083,11 @@ a:active.googleconnect {
 	margin: 0;
 	padding: 0;
 }
-#pctemplates-selection-form .templates li:nth-child(3n+1) {
-	clear: none !important;
-}
-#pctemplates-selection-form .templates li:nth-child(4n+5) {
-	clear: left !important;
-}
 #pctemplates-selection-form .templates {
 	background: #f1f1f1;
 	border-radius: 4px 4px 4px 4px;
 	-webkit-border-radius: 4px 4px 4px 4px;
 	-moz-border-radius: 4px 4px 4px 4px;
-}
-#pctemplates-selection-form .templates li {
-	box-sizing: border-box;
-	-moz-box-sizing: border-box; /* Firefox */
-	-webkit-box-sizing: border-box; /* Safari */
-	border-radius: 4px 4px 4px 4px;
-	margin: 0.5%;
-	width: 24% !important;
-	min-height: 110px;
-}
-#pctemplates-selection-form .templates li a {
-	text-align: center;
-	display: block;
-}
-#pctemplates-selection-form .templates li a img {
-	margin: 0 auto;
-	display: block;
-	max-height: 150px;
-	max-width: 100%;
-	width: inherit !important;
 }
 #pctemplates-selection-form .selected {
 	border-bottom: 1px solid #F1F1F1;
@@ -5053,23 +5152,36 @@ a:active.googleconnect {
 .page-templates ul.pager li.first, .page-templates ul.pager li.last {
 	display: none;
 }
-.page-templates ul.pager li {
-	margin: 0 5px 0 0;
+.page-templates ul.pager li{
+	margin: 0 10px 0 0;
+	padding: 0;
+	float: left;
+	line-height: 30px;
+}
+.page-templates .item-list .pager{
+	overflow: hidden;
+	margin: 0;
 	padding: 0;
 }
 .page-templates ul.pager li a {
-	display: inline-block;
-	height: 24px;
-	line-height: 24px;
-	width: 24px;
+	font-size: 13px;
+	color: #545454;
+	font-weight: bold;
+	display: block;
+	height: 30px;
+	line-height: 30px;
+	width: 30px;
 	padding: 0;
 	margin: 0;
-	border-radius: 12px 12px 12px 12px;
+	border-radius: 2px;
+	text-align: center;
 	background: #f1f1f1;
+	border: 1px solid #e7e3e3;
 }
 .page-templates ul.pager li a.current {
-	background-color: #f60;
+	background-color: #ff6600;
 	color: #fff;
+	border-color: #eb5e00;
 }
 .page-tempaltes .templates-page-own-design a {
 	width: 660px !important;
@@ -5287,8 +5399,7 @@ div.error, table tr.error {
 	color: #fff;
 }
 #block-system-main .form-wrapper.actions {
-	padding: 15px 10px;
-	position: relative;;
+	margin-bottom: 0;
 }
 .region-content .form-actions input[type=submit] {
 	height: 55px;
@@ -6584,13 +6695,13 @@ a.disabled {
 	top: 34px;
 }*/
 #pctemplates-selection-form #edit-submit {
-	background: url(images/designSearchButton.png) no-repeat;
+	/*background: url(images/designSearchButton.png) no-repeat;
 	width: 143px;
 	height: 32px;
 	padding-left: 35px;
 	font-size: 14px;
 	float: left;
-	margin-top: 6px;
+	margin-top: 6px;*/
 }
 .button.owndesigntop > .ui-button-text {
 	background: url("images/button_owndesign.png") no-repeat left;
@@ -6697,10 +6808,8 @@ a#playLinkIntroPage {
 }
 #edit-userforms .form-type-textfield label {
 	float: left;
-
 	color: #5f5f5f;
 	font-size: 13px;
-
 	line-height: 41px;
 }
 #edit-userforms .form-type-textfield input {
@@ -6928,7 +7037,7 @@ margin-bottom:10px;
 }
 
 #pcproducts-config-form #edit-actions {
-    margin-top: 0;
+    margin-top: -50px;
 }
 
 .contactIcon {
@@ -6995,7 +7104,6 @@ font-size: 14px !important;
 
 .store table.vacations tbody , .store table.vacations tbody td{
     background: none !important;
-
 }
 
 
@@ -7227,10 +7335,19 @@ div.store div.description table.vacations {
 }
 .page-checkout #pccheckout-invoiceanddelivery-form  
 div.store div.description table.openinghours caption{
-padding-bottom: 8px;
-padding-top: 13px;
+	padding-bottom: 8px;
+	padding-top: 10px;
+	font-size: 13px;
+	color: #333333;
 }
 
+.page-checkout #pccheckout-invoiceanddelivery-form table.openinghours td{
+	padding: 5px 0;
+	line-height: 13px;
+	font-size: 13px;
+	color: #646464;
+	font-weight: 600;
+}
 
 
 
@@ -7550,20 +7667,21 @@ div.myoffers table.list thead tr th:nth-child(2){
 #footer .block.search-footer{
 	float: left;
 	background: url("images/subMenuSpriteIcons_fr.png") no-repeat 0 0;
-	width: 179px;
+	width: 182px;
 	height: 226px;
 	position: relative;
-	padding: 14px 13px 0;
+	padding: 14px 11px 0;
 }
+
 #footer .block.search-footer a.button{
 	position: absolute;
 	bottom: 4px;
 	width: 96%;
 	left: 0;
 	background: none;
-	-webkit-border-radius: 0 0 5px 5px;
-	-moz-border-radius: 0 0 5px 5px;
-	border-radius: 0 0 5px 5px;
+	-webkit-border-radius: 0 0 3px 3px;
+	-moz-border-radius: 0 0 3px 3px;
+	border-radius: 0 0 3px 3px;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */
@@ -7571,14 +7689,14 @@ div.myoffers table.list thead tr th:nth-child(2){
 
 .page-products #block-system-main .description + .form-type-select{
 	border-top-width: 1px;
-	-webkit-border-radius: 5px 5px 0 0;
-	-moz-border-radius: 5px 5px 0 0;
-	border-radius: 5px 5px 0 0;
+	-webkit-border-radius: 3px 3px 0 0;
+	-moz-border-radius: 3px 3px 0 0;
+	border-radius: 3px 3px 0 0;
 }
 .page-products #block-system-main  form > div > div.form-item-options{
-	-webkit-border-radius: 0 0 5px 5px;
-	-moz-border-radius: 0 0 5px 5px;
-	border-radius: 0 0 5px 5px;
+	-webkit-border-radius: 0 0 3px 3px;
+	-moz-border-radius: 0 0 3px 3px;
+	border-radius: 0 0 3px 3px;
 }
 
 #pccart-cart-form fieldset legend{
@@ -7597,9 +7715,9 @@ div.myoffers table.list thead tr th:nth-child(2){
 	border-style:solid;
 	border-color: #e7e3e3;
 	border-width: 1px 1px 0 1px;
-	-webkit-border-radius: 4px 4px 0 0;
-	-moz-border-radius: 4px 4px 0 0;
-	border-radius: 4px 4px 0 0;
+	-webkit-border-radius: 3px 3px 0 0;
+	-moz-border-radius: 3px 3px 0 0;
+	border-radius: 3px 3px 0 0;
 }
 .block-pctemplates .nosmodel,
 .view-best-sales .headproduct{
@@ -7621,4 +7739,159 @@ div.myoffers table.list thead tr th:nth-child(2){
 	background: url(images/plus_icone.png) no-repeat 0 0;
 	line-height: 15px;
 	font-weight: 600;
+}
+
+.item-list .pager li{
+	float: left;
+}
+
+.login-form-item{
+	float: left;
+	width: 320px;
+	padding-top: 45px;
+}
+.login-form-item.first-item{
+	padding-right: 10px;
+	border-right: 1px solid #dfdfdf;
+}
+.login-form-item.last-item{
+	width: 295px;
+	padding-left: 10px;
+}
+.login-form-item > p{
+	margin: 0 0 15px;
+	font-size: 13px;
+	color: #333333;
+	font-weight: bold;
+}
+.login-form-item > p a{
+	color: #666666;
+}
+.login-form-item label{
+	color: #333333;
+	font-size: 13px;
+	display: block;
+	text-transform: uppercase;
+	font-weight: 500;
+	margin-bottom: 5px;
+}
+.login-form-item .form-item{
+	margin: 0 0 13px;
+}
+.login-form-item input[type="password"],
+.login-form-item input[type="text"]{
+	color: #999999;
+	font-size: 14px;
+	display: block;
+	height: 43px;
+	width: 100%;
+	padding: 10px 15px;
+	background-color: white;
+	border: 2px solid #dfdfdf;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+.login-form-item a.link{
+	float: right;
+	font-size: 12px;
+	color: #999999;
+	line-height: 40px;
+}
+.login-form-item input[type="submit"]{
+	float: left;
+	font-size: 14px;
+	color: #ffffff;
+	line-height: 25px;
+	height: 40px;
+	font-weight: bold;
+	background: url(images/flesh-button-seul.png) no-repeat 17px center #6faa01 !important;
+	padding: 8px 20px 8px 45px;
+	border: 0;
+	margin: 0;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	text-align: left;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;/* Opera/IE 8+ */
+}
+.login-form-item input[type="submit"]:hover{
+	background-color: #679e02 !important;
+}
+
+.login-title{
+	font-weight: bold;
+	font-size: 14px;
+	color: #333333;
+	text-transform: capitalize;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+form#pccheckout-payment-form fieldset legend{
+	font-size: 14px;
+	color: #666666;
+	font-weight: 700;
+	display: block;
+	padding: 18px 0;
+}
+form#pccheckout-payment-form fieldset#edit-payment-method legend{
+	background-color: #f1f1f1;
+	border-color: #e1e1e1;
+	border-style: solid;
+	border-width: 1px 1px 0 1px;
+	width: 628px;
+	margin: 0;
+	-webkit-border-radius: 3px 3px 0 0;
+	-moz-border-radius: 3px 3px 0 0;
+	border-radius: 3px 3px 0 0;
+	padding: 18px 15px;
+}
+
+form#pccheckout-payment-form fieldset#edit-payment-method .fieldset-wrapper{
+	padding-bottom: 0;
+	margin-bottom: 0;
+}
+form#pccheckout-payment-form .overview table.sticky-enabled th{
+	background-color: #ff6600;
+	border:1px solid #e95e01;
+	padding: 11px 20px;
+	font-size: 13px;
+	color: #fff;
+	font-weight: bold;
+	text-align: right;
+	height: 10px;
+	line-height: 13px;
+}
+form#pccheckout-payment-form .overview  table.sticky-enabled th:first-child{
+	text-align: left;
+}
+form#pccheckout-payment-form .overview table.sticky-enabled{
+	border-radius: 3px 3px 0 0;
+}
+form#pccheckout-payment-form .overview table.sticky-enabled tr{
+	border: 0;
+}
+form#pccheckout-payment-form .overview table.sticky-enabled td{
+	background-color: #eeeeee;
+	padding: 3px 20px;
+	font-size: 13px;
+	color: #666666;
+	line-height: 13px;
+	border-style: solid;
+	border-width: 1px 1px 0 0;
+	border-color: #e1e1e1;
+	height: 30px;
+}
+form#pccheckout-payment-form .overview table.sticky-enabled td:first-child{
+	border-width: 1px 1px 0 1px;
+}
+form#pccheckout-payment-form .overview table.sticky-enabled tr.last-child td{
+	border-top: 0;
 }

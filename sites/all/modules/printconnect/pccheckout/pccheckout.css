@@ -50,15 +50,18 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
   height: 34px;
 }
 .lineSeparator {
-    background: none repeat scroll 0 0 white;
-    padding: 8px 0px;
+    margin: 0;
+    background-color: white;
+    padding: 18px 3px;
     text-transform: uppercase;
-    line-height: 21px;
-    font-size: 20px;
+    line-height: 20px;
+    font-size: 18px;
     font-weight: 600;
+    color: #666666;
+    font-weight: bold;
 }
 .page-checkout-invoiceanddelivery #shipping-address a{
-    width: 180px;
+  width: 180px;
 	margin-left: 5px;
 }
 
@@ -187,6 +190,48 @@ margin-left: 0px !important;
     margin: 0;
     text-align: left;
     background: #EB1616;
+}
 
+#edit-shipping-neutral-text{
+  padding: 20px 10px;
+  background-color: #f1f1f1;
+  border-style: solid;
+  border-color: #e1e1e1;
+  border-width: 1px 1px 0 1px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  margin: 0;
+}
 
+#edit-shipping-neutral-text > p{
+  margin: 0;
+  font-size: 13px;
+  color: #666666;
+  line-height: 15px;
+}
+#pccheckout-invoiceanddelivery-form #edit-shipping-neutral-text + .form-item-shipping-neutral-check{
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
+
+#pccheckout-invoiceanddelivery-form #edit-shipping-neutral-text + .form-item-shipping-neutral-check label{
+  font-size: 14px;
+  color: #a8a7a7;
+}
+
+#pccheckout-upload-form .form-actions input.ui-button.payment{
+  height: 62px;
+  border-radius: 0 0 3px 0;
+  float: right;
+  margin: 0;
+  font-weight: bold;
+  text-align: left;
+  font-size: 17px;
+  background-position: left 5px;
+  background-color: #77b800;
+  border-bottom: 1px solid #5a8a02;
+  border-top: 1px solid #5a8a02;
+  line-height: 48px;
 }

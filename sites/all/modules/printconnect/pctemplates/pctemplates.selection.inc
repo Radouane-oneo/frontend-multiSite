@@ -345,6 +345,9 @@ function pctemplates_selection_form2($form, &$form_state) {
         }
 
         if (count($items) > 1) {
+            $form['filters']['description'] = array(
+                '#markup' => "<div class='intro'><h2>Personnaliser un modèle en ligne</h2><p>Des milliers de modèles classés par secteur d'activité, prêts à être personnalisés en ligne.</p></div>", 
+         ); 
             $form['filters']['segments'] = array(
                 '#type' => 'select',
                 '#title' => '',
@@ -355,10 +358,10 @@ function pctemplates_selection_form2($form, &$form_state) {
         }
          $form['filters']['inputsegments'] = array(
                 '#type' => 'textfield',
-                '#title' => t('segment'),
+                '#title' => '',
                 '#size'=>'20',
                 '#required' => TRUE,
-                '#attributes' => array('placeholder' => 'Rechercher'),  
+                '#attributes' => array('placeholder' => 'Rechercher'), 
              
          ); 
     }

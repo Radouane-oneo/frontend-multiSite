@@ -506,7 +506,7 @@ body.page-cobranding #header_left img {
 	margin: 0;
 	padding: 0;
 	position: absolute;
-	left: 182px;
+	left: 220px;
 	top: 145px;
 	font-size: 12px;
 }
@@ -2536,27 +2536,27 @@ body.front #block-block-13:after {
 	border-left: 1px solid #f1f1f1;
 }
 
-.page-products #pcproducts-config-form table.grid tbody tr.custom{
+.page-products #pcproducts-config-form table.grid tbody tr.last{
 	background-color: white !important;
 	position: relative;
 }
-.page-products #pcproducts-config-form table.grid tr.custom td:nth-child(2){
+.page-products #pcproducts-config-form table.grid tr.last td:nth-child(2){
 	padding-left: 0;
 	border: 0;
 	position: relative;
 	height: 42px;
 }
-.page-products #pcproducts-config-form table.grid tbody tr.custom td:first-child .form-item{
+.page-products #pcproducts-config-form table.grid tbody tr.last td:first-child .form-item{
 	display: none;
 	visibility: hidden;
 }
-.page-products #pcproducts-config-form tr.custom .form-item label{
+.page-products #pcproducts-config-form tr.last .form-item label{
 	float: left;
 	font-size: 13px;
 	color: #999999;
 	line-height: 16px;
 }
-.page-products #pcproducts-config-form tr.custom .form-item input[type="text"]{
+.page-products #pcproducts-config-form tr.last .form-item input[type="text"]{
 	float: right;
 	padding: 8px 10px;
 	height: 15px;
@@ -2572,12 +2572,14 @@ body.front #block-block-13:after {
 	right: -215px;
 	top: 0px;
 }
-.page-products #pcproducts-config-form table.grid tbody tr.custom td:nth-child(4),
-.page-products #pcproducts-config-form table.grid tbody tr.custom td:nth-child(3){
+.page-products #pcproducts-config-form table.grid tbody tr.last td:nth-child(4),
+.page-products #pcproducts-config-form table.grid tbody tr.last td:nth-child(3){
 	border: 0;
+	font-size: 0;
+	text-indent: -4444px;
 }
 
-.page-products #pcproducts-config-form table.grid + input#edit-calculer[type='submit']{
+.page-products #pcproducts-config-form table.grid + input.ajax-calculate[type='submit']{
 	background: url(images/flesh-button-seul.png) no-repeat 17px center #77b800;
 	padding-left: 40px;
 	font-weight: bold;
@@ -7529,6 +7531,15 @@ div.myoffers table.list thead tr th:nth-child(2){
 	line-height: 14px;
 	margin: 0;
 }
+.info-bloc li a{
+	color: #666666;
+}
+
+.info-bloc #magical-modal-link a{
+	font-size: 12px;
+	color: #666666;
+	line-height: 14px;
+}
 
 .info-bloc .rappele-img{
 	position: absolute;
@@ -8068,6 +8079,7 @@ form#pccheckout-payment-form .overview table.sticky-enabled tr.last-child td{
 	border-radius: 3px;
 	border-bottom: 0;
 	width: 217px;
+	clear: left;
 }
 .consulte-block h2{
 	padding: 13px 15px;
@@ -8128,3 +8140,53 @@ ul.ui-autocomplete{
 	list-style: none
 }
 .subscribe-block .content input[type="text"].error {    border: 2px solid red;}
+
+.block-views .view-deals-promotion .img{
+	margin-bottom: 10px;
+	border-bottom: 1px solid #ececec;
+}
+.block-views .view-deals-promotion .img img{
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.block-views .view-deals-promotion .boxing{
+	text-align: center;
+}
+.block-views .view-deals-promotion .boxing h3{
+	font-size: 14px;
+	color: #646464;
+	font-weight: bold;
+	margin-bottom: 2px;
+}
+.block-views .view-deals-promotion .boxing .price-box{
+	display: none;
+}
+.block-views .view-deals-promotion .boxing #prixdeal{
+	margin: 0;
+	font-size: 12px;
+	color: #999999;
+	line-height: 14px;
+}
+.block-views .view-deals-promotion #prixdeal .newpricedeal,
+.block-views .view-deals-promotion #prixdeal .neweuro{
+	font-size: 17px;
+	color: #ff6600;
+	line-height: 18px;
+	font-weight: bold;
+}
+
+.block-views .view-deals-promotion #prixdeal .pricedeal,
+.block-views .view-deals-promotion #prixdeal .euro{
+	font-size: 14px;
+	color: #999999;
+	line-height: 15px;
+	font-weight: bold;
+}
+.block-views .view-deals-promotion #prixdeal .neweuro{
+	margin-right: 5px;
+}
+.block-views .view-deals-promotion #prixdeal .euro{
+	margin-left: 5px;
+}

@@ -460,6 +460,7 @@ if($productId != 88){
        '#type' => 'button',
        '#value' => t('Calculer'),
        '#ajax' => $ajax,
+       '#attributes' => array('class' => array('ajax-calculate')),
     );
 }
 

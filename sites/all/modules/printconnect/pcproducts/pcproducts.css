@@ -1,13 +1,13 @@
 .block-pctemplates ul li,.view-best-sales ul li,#pcproducts-products-form ul li, #pcproducts-productoverview-form ul li, #pcproducts-productconfig-form .other li, #block-pcproducts-other li{
   float:left;
-  width:32%;
-  margin: 0 2% 10px 0;
+  width:212px;
+  margin: 0 10px 10px 0;
   list-style:none;
   padding:0;
   border: 1px solid #ececec;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box;    /* Firefox, other Gecko */
   box-sizing: border-box;         /* Opera/IE 8+ */

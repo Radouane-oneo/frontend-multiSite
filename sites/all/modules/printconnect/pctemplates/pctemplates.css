@@ -479,7 +479,7 @@ margin: 0 16px -10px 0px !important;
     left: 0px !important;
 }
 .front .region-contenttop .block-pctemplates{
-	padding: 10px 10px 0;
+	padding: 0 10px 0;
 	background: #fff;
 	border-style:solid;
 	border-color: #e7e3e3;

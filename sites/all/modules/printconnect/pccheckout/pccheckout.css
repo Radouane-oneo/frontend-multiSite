@@ -229,9 +229,7 @@ margin-left: 0px !important;
   font-weight: bold;
   text-align: left;
   font-size: 17px;
-  background-position: left 5px;
-  background-color: #77b800;
   border-bottom: 1px solid #5a8a02;
   border-top: 1px solid #5a8a02;
-  line-height: 48px;
+  border-right: 1px solid #5a8a02;
 }

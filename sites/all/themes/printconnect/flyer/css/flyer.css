@@ -728,7 +728,10 @@ body.one-sidebar #content {
 
 body.two-sidebars #content {
 	width: 680px;
-	margin-bottom: 14px;
+	margin-bottom: 10px;
+}
+body.two-sidebars #content .whitebox{
+	margin-bottom: 0;
 }
 #content .region-content {
 	position: relative;
@@ -2543,12 +2546,14 @@ body.front #block-block-13:after {
 .page-products #pcproducts-config-form table.grid tbody tr.last-child{
 	background-color: white !important;
 	position: relative;
+	height: 43px;
+	border: 0;
 }
 .page-products #pcproducts-config-form table.grid tr.last-child td:nth-child(2){
 	padding-left: 0;
 	border: 0;
 	position: relative;
-	height: 42px;
+	height: 43px;
 }
 .page-products #pcproducts-config-form table.grid tbody tr.last-child td:first-child .form-item{
 	display: none;
@@ -2563,18 +2568,21 @@ body.front #block-block-13:after {
 .page-products #pcproducts-config-form tr.last-child .form-item input[type="text"]{
 	float: right;
 	padding: 8px 10px;
-	height: 15px;
+	height: 32px;
 	line-height: 15px;
 	border-color: #e1e1e1;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
-	width: 190px;
+	width: 215px;
 	font-size: 13px;
 	color: #999999;
 	position: absolute;
 	right: -215px;
-	top: 0px;
+	top: -4px;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
 }
 .page-products #pcproducts-config-form table.grid tbody tr.last-child td:nth-child(4),
 .page-products #pcproducts-config-form table.grid tbody tr.last-child td:nth-child(3),
@@ -2590,7 +2598,7 @@ body.front #block-block-13:after {
 	font-weight: bold;
 	position: relative;
 	right: -545px;
-	top: -57px;
+	top: -55px;
 }
 .page-products #pcproducts-config-form table.grid tbody tr td .price.old {
 	color: #aaa;
@@ -7730,6 +7738,7 @@ div.myoffers table.list thead tr th:nth-child(2){
 	-webkit-border-radius: 0 0 3px 3px;
 	-moz-border-radius: 0 0 3px 3px;
 	border-radius: 0 0 3px 3px;
+	background: url(images/footer_search.png) no-repeat 32px center;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */
@@ -8167,6 +8176,12 @@ ul.ui-autocomplete{
 
 .block-views .view-deals-promotion .boxing{
 	text-align: center;
+	border: 1px solid #ececec;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
 }
 .block-views .view-deals-promotion .boxing h3{
 	font-size: 14px;
@@ -8183,24 +8198,49 @@ ul.ui-autocomplete{
 	color: #999999;
 	line-height: 14px;
 }
-.block-views .view-deals-promotion #prixdeal .newpricedeal,
-.block-views .view-deals-promotion #prixdeal .neweuro{
+.block-views .view-deals-promotion #prixdeal .newpricedeal{
 	font-size: 17px;
 	color: #ff6600;
 	line-height: 18px;
 	font-weight: bold;
+	margin-right: 5px;
 }
 
-.block-views .view-deals-promotion #prixdeal .pricedeal,
-.block-views .view-deals-promotion #prixdeal .euro{
+.block-views .view-deals-promotion #prixdeal .pricedeal{
 	font-size: 14px;
 	color: #999999;
 	line-height: 15px;
 	font-weight: bold;
-}
-.block-views .view-deals-promotion #prixdeal .neweuro{
-	margin-right: 5px;
-}
-.block-views .view-deals-promotion #prixdeal .euro{
+	text-decoration: line-through;
 	margin-left: 5px;
+}
+
+.count-down .cont_down_txt{
+	padding-bottom: 4px;
+}
+.count-down .cont_down_txt img{
+	display: block;
+}
+.count-down .jquery-countdown-timer-processed > span{
+	float: left;
+}
+.count-down .jquery-countdown-timer-processed > span.countDiv{
+	width: 4px;
+	height: 20px;
+}
+.count-down .jquery-countdown-timer-processed > span > span{
+	float: left;
+	background-color: #414141;
+	border: 1px solid #343434;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	width: 13px;
+	text-align: center;
+	height: 22px;
+	line-height: 22px;
+	margin-right: 2px;
+	font-size: 14px;
+	color: #fff;
+	font-weight: bold;
 }

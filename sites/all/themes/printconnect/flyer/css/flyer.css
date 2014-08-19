@@ -1715,6 +1715,10 @@ body.front #block-block-13:after {
   	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
   	box-sizing: border-box;         /* Opera/IE 8+ */
 }
+.subscribe-block .content input[type="text"].error {
+	border-color: #ed1c24;
+	background-color: #f6e3e3;
+}
 
 .subscribe-block .content input[type="submit"]{
 	width: 145px;
@@ -1724,6 +1728,23 @@ body.front #block-block-13:after {
 	font-size: 12px;
 	color: #646464;
 	line-height: 14px;
+}
+.subscribe-block .confirmation .icone-newsletter{
+	background: url(images/news-confirm.png) no-repeat center;
+	padding: 30px 0;
+	height: 35px;
+}
+.subscribe-block .confirmation p{
+	font-size: 12px;
+	color: #646464;
+	margin: 0;
+	line-height: 14px;
+}
+.subscribe-block .text p{
+	font-size: 12px;
+	color: #646464;
+	margin: 0 0 14px;
+	line-height: 18px;
 }
 
 .front .block_tab-titles {
@@ -8162,7 +8183,6 @@ ul.ui-autocomplete li,
 ul.ui-autocomplete{
 	list-style: none
 }
-.subscribe-block .content input[type="text"].error {    border: 2px solid red;}
 
 .block-views .view-deals-promotion .img{
 	margin-bottom: 10px;
@@ -8217,6 +8237,7 @@ ul.ui-autocomplete{
 
 .count-down .cont_down_txt{
 	padding-bottom: 4px;
+	clear: both;
 }
 .count-down .cont_down_txt img{
 	display: block;

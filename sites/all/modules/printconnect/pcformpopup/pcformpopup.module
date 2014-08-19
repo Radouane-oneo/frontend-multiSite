@@ -60,7 +60,7 @@ function pcformpopup_theme($existing, $type, $theme, $path){
 function _pcformpopup_make_link($link_text = '') {
   // Set a default value if no text in supplied.
   if (empty($link_text)) {
-    $link_text = 'je souhaite être rappelé(e)';
+    $link_text = 'Je souhaite être rappelé(e)';
   }
  
   return '<div id="magical-modal-link">' . l($link_text, 'pcformpopup/nojs', array('attributes' => array('class' => 'ctools-use-modal'))) . '</div>';
@@ -94,7 +94,7 @@ function pcformpopup_page() {
     ),
     );
     drupal_add_js($sample_style, 'setting'); 
-  return _pcformpopup_make_link('je souhaite être rappelé(e)');
+  return _pcformpopup_make_link('Je souhaite être rappelé(e)');
 }
 
 /**

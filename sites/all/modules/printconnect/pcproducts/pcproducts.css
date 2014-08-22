@@ -81,7 +81,7 @@
 
 .block-pctemplates ul img,.view-best-sales ul img,#pcproducts-products-form ul img, #pcproducts-productoverview-form ul img , #pcproducts-productconfig-form .other img, #block-pcproducts-other ul li img{
   height: auto;
-  max-width: 100%;
+  max-width: 100%; 
   margin-bottom: 10px;
 }
 

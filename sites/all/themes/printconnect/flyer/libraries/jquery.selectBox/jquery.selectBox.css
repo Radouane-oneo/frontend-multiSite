@@ -105,14 +105,22 @@ select.selectBox{
   margin: 0;
 }
 
-.selectBox-options LI A {
+.selectBox-options li a {
   line-height: 1.5;
   padding: 0 .5em;
   white-space: nowrap;
   overflow: hidden;
   background: 6px center no-repeat;
+  font-weight: bold;
+  cursor: pointer;
 }
-
+.selectBox-options.type_product-selectBox-dropdown-menu li a{
+  font-size: 11px;
+  text-decoration: none !important;
+}
+.selectBox-options.type_product-selectBox-dropdown-menu li a:hover{
+  text-decoration: underline !important;
+}
 .selectBox-options LI.selectBox-hover A {
   background-color: #EEE;
 }

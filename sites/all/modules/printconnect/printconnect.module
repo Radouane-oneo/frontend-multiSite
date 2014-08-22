@@ -21,7 +21,7 @@ function printconnect_init() {
                         'nl' => 'nlnl',
                         'lu' => 'lufr',
                             );
-  if(isset($arrayExtention["$uriExtention"])){
+  if(isset($arrayExtention["$uriExtention"]) && is_array($arrayExtention["$uriExtention"])){
     if(array_key_exists($uriRequest[1], $arrayExtention["$uriExtention"]) == TRUE OR !is_array($arrayExtention["$uriExtention"])){
         if(is_array($arrayExtention["$uriExtention"])){
             $uriLang = $arrayExtention["$uriExtention"]["$uriRequest[1]"];

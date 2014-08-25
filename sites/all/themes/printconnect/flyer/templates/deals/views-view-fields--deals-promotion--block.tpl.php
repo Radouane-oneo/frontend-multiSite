@@ -67,8 +67,7 @@
 
             <a href="<?php if($inactivebtn=="") print $fields['field_lien_deal']->content; else print "javascript:void(0)" ?>" class="ui-button plusinfobtn <?php print $inactivebtn;?>" >
                 <span class="flesh"></span>
-                    PLus d’info
-                </span>
+                    J’en profite !
             </a>
         <?php endif; ?>
 <?php endif; ?>	

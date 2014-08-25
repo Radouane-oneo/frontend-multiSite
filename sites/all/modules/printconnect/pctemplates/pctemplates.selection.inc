@@ -269,13 +269,10 @@ function pctemplates_selection_form2($form, &$form_state) {
                 '#theme' => 'pcfilesthumb',
                 '#file' => $template->thumbnail->file,
             );
-             $build['range']['segment'] =  array(
-                '#markup' => '<p class="segmentmodel">'.$template->products[0]->name.'</p>',
-            );
-            
             $build['range']['name'] =  array(
                 '#markup' => '<h2>'.$template->name.'</h2>',
-                '#suffix' => '</a></div>',
+                '#suffix' => '</a></div>
+                <div class="from"><span class="txt">'.$template->products[0]->name.'</span></div>',
             );
            $build['flesh'] = array(
                 '#markup' => '<a class="btn-cmd" href="'.$templateUrl.'">

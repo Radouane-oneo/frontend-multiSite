@@ -218,7 +218,7 @@ table tr.even, table tr.odd {
 	margin: 0 auto;
 	padding: 0;
 	position: relative;
-	width: 1039px;
+	width: 1032px;
 }
 a, a:visited {
 	color: #f60;
@@ -266,7 +266,6 @@ h2 {
 }
 
 .region-contenttop {
-	margin-bottom: 10px;
 	padding-left: 10px;
 }
 .page-cart .region-contenttop , 
@@ -688,7 +687,7 @@ div#cart{
 }
 #sidebar-first{
 	float: left;
-	margin-right: 14px;
+	margin-right: 10px;
 }
 #sidebar-second {
 	float: right;
@@ -800,7 +799,7 @@ body.two-sidebars #content .whitebox{
 #footer .block-twitter-block {
 	float: left;
 	background: url("images/subMenuSpriteIcons_fr.png") no-repeat -205px 0;
-	width: 561px;
+	width: 558px;
 	height: 215px;
 	padding: 15px 22px 14px 45px;
 	position: relative;
@@ -838,8 +837,8 @@ body.two-sidebars #content .whitebox{
 }
 #footer #block-block-6 {
 	float: left;
-	background: url("images/subMenuSpriteIcons_fr.png") no-repeat -833px 0;
-	width: 180px;
+	background: url("images/subMenuSpriteIcons_fr.png") no-repeat -831px 0;
+	width: 177px;
 	height: 225px;
 	padding: 15px 7px 0 20px;
 	position: relative;
@@ -935,7 +934,7 @@ body.two-sidebars #content .whitebox{
 #footer #block-pcproducts-list {
 	margin: 10px 5px 0 0;
 	float: left;
-	width: 650px;
+	width: 645px;
 }
 #footer #block-pcproducts-list p, 
 #footer #block-menu-menu-footer p, 
@@ -1380,7 +1379,7 @@ a.button.cart .ui-button-text {
 	display: block;
 	padding: 0 0 0 10px;
 	height: 296px;
-	left: -2px;
+	left: 0;
 	margin-bottom: -70px;
 	position: relative;
 	top: -78px;
@@ -2475,6 +2474,11 @@ body.front #block-block-13:after {
 	display: none;
 }
 
+a.ui-button.inactivebtn{
+	background: #ccc;
+	cursor: default;
+}
+
 #pccheckout-payment-form .form-actions span.price,
 .page-cart #block-system-main .form-wrapper.actions span.price,
 .page-products #block-system-main .form-wrapper.actions span.price {
@@ -2619,7 +2623,8 @@ body.front #block-block-13:after {
 	font-weight: bold;
 	position: relative;
 	right: -545px;
-	top: -55px;
+	height: 32px;
+	top: -62px;;/*-55px;*/
 }
 .page-products #pcproducts-config-form table.grid tbody tr td .price.old {
 	color: #aaa;
@@ -2922,6 +2927,7 @@ body.front #block-block-13:after {
 	border-radius: 4px 4px 4px 4px;
 	height: 90px; /* 110px - padding */
 	padding: 10px;
+	margin-bottom: 10px;
 }
 #block-printconnect-progress ul {
 	margin: 0;
@@ -7104,7 +7110,8 @@ margin-bottom:10px;
     padding : 0px!important;
 }
 
-#pcproducts-config-form #edit-actions {
+/*#pcproducts-config-form #edit-actions {*/
+#pcproducts-config-form .ajax-calculate + .actions.form-actions {
     margin-top: -50px;
 }
 
@@ -7747,7 +7754,7 @@ div.myoffers table.list thead tr th:nth-child(2){
 #footer .block.search-footer{
 	float: left;
 	background: url("images/subMenuSpriteIcons_fr.png") no-repeat 0 0;
-	width: 182px;
+	width: 181px;
 	height: 226px;
 	position: relative;
 	padding: 14px 11px 0;
@@ -7808,6 +7815,8 @@ div.myoffers table.list thead tr th:nth-child(2){
 
 .view-best-sales .headproduct > h2{
 	float: left;
+	font-size: 16px;
+	font-weight: 600;
 }
 
 .block-pctemplates .nosmodel > a,
@@ -7820,6 +7829,7 @@ div.myoffers table.list thead tr th:nth-child(2){
 	background: url(images/plus_icone.png) no-repeat 0  -18px;
 	line-height: 15px;
 	font-weight: 600;
+	text-decoration: none;
 }
 .block-pctemplates .nosmodel > a:hover,
 .view-best-sales .headproduct > a:hover{
@@ -8267,4 +8277,15 @@ ul.ui-autocomplete{
 	font-size: 14px;
 	color: #fff;
 	font-weight: bold;
+	position: relative;
+	overflow: hidden;
+}
+.count-down .jquery-countdown-timer-processed span.digit{
+	position: absolute;
+	display: block;width: 100%;
+}
+#slider_animate{
+	height: 288px;
+	overflow: hidden;
+	margin-bottom: 10px;
 }

@@ -1156,7 +1156,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
 //  );
    $form['login']['decription'] = array(
       '#prefix'=> '<div class="login-form-item first-item"><p>',
-      '#markup'=>"Déja client? ".l('Connectez-vous.','#',array('attributes' => array('class' => 'logbl'))),
+      '#markup'=>"Déja client? ", //l('Connectez-vous.','#',array('attributes' => array('class' => 'logbl')))
       '#weight' => 6,
       '#suffix'=>'</p>',
    );
@@ -1205,7 +1205,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
   
    $form['login']['decriptionnew'] = array(
       '#prefix'=> '<div class="login-form-item last-item"><p>',
-      '#markup'=>"Nouveau client? ".l('Créer votre compte.','#',array('attributes' => array('class' => 'logbl'))),
+      '#markup'=>"Nouveau client? ", // .l('Créer votre compte.','#',array('attributes' => array('class' => 'logbl')))
       '#weight' => 10,
       '#suffix'=>'</p>',
    );

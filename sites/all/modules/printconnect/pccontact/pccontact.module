@@ -48,6 +48,12 @@ function pccontact_menu() {
       'access arguments' => array('access content'),
       'file' => 'pccontact.forms.inc',
   );
+   $items['contact/popup'] = array(
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('pccontact_popup_form', 1),
+      'access arguments' => array('access content'),
+      'file' => 'pccontact.forms.inc',
+  );
   $items['contact/stores'] = array(
       'title' => 'Contact',
       'page callback' => 'drupal_get_form',

@@ -195,6 +195,7 @@ function pctemplates_block_view($delta = '') {
                 $block['content']['contentlink1'.$i] = array('#markup' =>"<a id='top10Template' href='templates/" . $valueItems->id . "'>");
                 $block['content']['thumb'.$i] = array('#markup' => theme('pcfilesthumb', array('file' => $valueItems->thumbnail->file, 'alt' => array('#markup' =>$valueItems->name),)));
                 $block['content']['name'.$i] = array('#markup' => "<h2>". $valueItems->name ."</h2></a></div>",);
+                $block['content']['productName'.$i] = array('#markup' =>'<div class="from"><span class="txt">'.$valueItems->products[0]->name.'</span></div>');
                 $block['content']['link'.$i] = array('#markup' =>'<a class="btn-cmd" href="templates/'.$valueItems->id.'"><span class="flesh"></span>Utiliser ce modèle</a>');
                 $block['content']['contentitem2'.$i]= array('#markup' => "</li>");
                 $i++;

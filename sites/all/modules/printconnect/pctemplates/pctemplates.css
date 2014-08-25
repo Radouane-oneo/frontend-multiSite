@@ -409,6 +409,7 @@
 #pctemplates-selection-form .form-actions {
 	background: none;
 	padding-right: 0;
+	padding-bottom: 0;
 }
 
 #pctemplates-selection-form .owndesign{
@@ -496,7 +497,7 @@ margin: 0 16px -10px 0px !important;
 .block-pctemplates .nosmodel > span{
 	font-size: 16px;
 	color: #646464;
-	font-weight: bold;
+	font-weight: 600;
 	text-transform: uppercase;
 }
 

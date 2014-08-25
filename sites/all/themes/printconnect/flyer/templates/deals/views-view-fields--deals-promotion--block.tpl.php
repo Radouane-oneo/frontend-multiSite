@@ -15,12 +15,57 @@
     </div>
     
     <div class="count-down">
-        <?php print $fields['field_temps_deal']->content; ?>
-        <div class="cont_down_txt"><img src="/sites/all/themes/printconnect/flyer/css/images/cont_down_txt.jpg"></div>
+        <?php
+            $inactivebtn = "";
+            if($fields['field_temps_deal_1']->content >= time()):
+                
+                    print $fields['field_temps_deal']->content;   
+            
+        ?>
+           
+         <?php else :?>
+             
+             <?php $inactivebtn = "inactivebtn";?>
+            <div class="field-content">
+                <div id="field-countdown-timer-0-96310000-1408967684" class="jquery-countdown-timer-processed countdownHolder">
+
+                        <span class="countDays">
+                            <span class="position">
+                                <span class="digit static" style="top: 0px; opacity: 1;">0</span>	
+                            </span>				
+                            <span class="position">					
+                                <span class="digit static" style="top: 0px; opacity: 1;">0</span>	
+                            </span></span>
+                                    <span class="countDiv countDiv0"></span><span class="countHours">
+                                <span class="position">					
+                                    <span class="digit static" style="top: 0px; opacity: 1;">0</span>	
+                                </span>				
+                                        <span class="position">				
+                                    <span class="digit static" style="top: 0px; opacity: 1;">0</span>		
+                                </span></span><span class="countDiv countDiv1"></span><span class="countMinutes">
+                                    <span class="position">					
+                                        <span class="digit static" style="top: 0px; opacity: 1;">0</span>	
+                                    </span>				<span class="position">			
+                                        <span class="digit static" style="top: 0px; opacity: 1;">0</span>	
+                                    </span></span><span class="countDiv countDiv2"></span><span class="countSeconds"><span class="position">	
+                                            <span class="digit static" style="top: 0px; opacity: 1;">0</span>	
+                                        </span>		
+                                        <span class="position">
+                                            <span class="digit" style="top: 0.174072em; opacity: 0.930371;">0</span>			
+                                        </span></span>
+                </div>
+                <div id="field-countdown-timer-note-0-96310000-1408967684" style="display:none;">0 jour, 21 heures, 4 minutes and 36 seconds left</div>
+
+            </div>
+        <?php endif; ?>
+          <div class="cont_down_txt"><img src="<?php print base_path(); ?>sites/all/themes/printconnect/flyer/css/images/cont_down_txt.jpg"></div>
+        
+            
     </div>
     
-        <?php if(!empty($fields['field_lien_deal']->content)):?>	
-            <a href="<?php print $fields['field_lien_deal']->content; ?>" class="ui-button plusinfobtn" >
+        <?php if(!empty($fields['field_lien_deal']->content)):?>
+
+            <a href="<?php if($inactivebtn=="") print $fields['field_lien_deal']->content; else print "javascript:void(0)" ?>" class="ui-button plusinfobtn <?php print $inactivebtn;?>" >
                 <span class="flesh"></span>
                     J’en profite !
             </a>

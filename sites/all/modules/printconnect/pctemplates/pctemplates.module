@@ -184,27 +184,26 @@ function pctemplates_block_view($delta = '') {
             }
             break;
         case 'Top10':
-        $templatestop10 = \printconnect\Templates\Factory::getTop10Template();
-        $ts =\printconnect\Templates\Factory::LoadTop10Template($templatestop10);
-         
-        $block['content']['nosmodel']= array('#markup' => "<div class='nosmodel'><span>Personnalisez un modèle</span><a href='#'>Tous nos modèles GRATUITS</a></div>");
-        $block['content']['startul']= array('#markup' => "<div id='SliderCreaHomePage'><ul>");
-         $i=0;
-            foreach($ts as $valueItems ) {
-                $block['content']['contentitem1'.$i]= array('#markup' => "<li><div class='blocprd'>");
-                $block['content']['contentlink1'.$i] = array('#markup' =>"<a id='top10Template' href='templates/" . $valueItems->id . "'>");
-                $block['content']['thumb'.$i] = array('#markup' => theme('pcfilesthumb', array('file' => $valueItems->thumbnail->file, 'alt' => array('#markup' =>$valueItems->name),)));
-                $block['content']['name'.$i] = array('#markup' => "<h2>". $valueItems->name ."</h2></a></div>",);
-                $block['content']['productName'.$i] = array('#markup' =>'<div class="from"><span class="txt">'.$valueItems->products[0]->name.'</span></div>');
-                $block['content']['link'.$i] = array('#markup' =>'<a class="btn-cmd" href="templates/'.$valueItems->id.'"><span class="flesh"></span>Utiliser ce modèle</a>');
-                $block['content']['contentitem2'.$i]= array('#markup' => "</li>");
-                $i++;
-                if($i==3) break;
-            }
-        $block['content']['endul']= array('#markup' => "</ul></div>");
-            break;     
-     }  
+       
+                $templatesItems = array( 
+                array("id" => "1092", "thumbnail" => "0a77f1158c2c67096ca79c70a5bea8bb2c2c2c47", "name" =>"White & Orange" , "productsname" =>"ROLL UP"),
+                array("id" => "4652", "thumbnail" => "701be0210abe3b057d3870e191edd468ac75993c", "name" =>"Montagne Calendar", "productsname" =>"CALENDRIERS"),
+                array("id" => "1510", "thumbnail" => "253e420d182f04b0f6b4b8e693d49a2cd5429abe", "name" =>"House of the DJ", "productsname" =>"AFFICHES"), );
 
+                $block['content']['nosmodel']= array('#markup' => "<div class='nosmodel'><span>Personnalisez un modèle</span><a href='#'>Tous nos modèles GRATUITS</a></div>");
+                $block['content']['startul']= array('#markup' => "<div id='SliderCreaHomePage'><ul>");
+                $i=0; 
+                foreach($templatesItems as $valueItems ) {
+                $block['content']['contentitem1'.$i]= array('#markup' => "<li><div class='blocprd'>"); 
+                $block['content']['contentlink1'.$i] = array('#markup' =>"<a id='top10Template' href='templates/" . $valueItems["id"] . "'>"); 
+                $block['content']['thumb'.$i] = array('#markup' => theme('pcfilesthumb', array('file' => $valueItems["thumbnail"], 'alt' => array('#markup'=>$valueItems->name),))); 
+                $block['content']['name'.$i] = array('#markup' => "<h2>". $valueItems["name"] ."</h2></a></div>",); 
+                $block['content']['productName'.$i] = array('#markup' =>'<div class="from"><span class="txt">'.$valueItems["productsname"].'</span></div>');
+                $block['content']['link'.$i] = array('#markup' =>'<a class="btn-cmd" href="templates/'.$valueItems["id"].'"><span class="flesh"></span>Utiliser ce modèle</a>');
+                $block['content']['contentitem2'.$i]= array('#markup' => "</li>"); $i++; } 
+                $block['content']['endul']= array('#markup' => "</ul></div>");
+                break;
+        }
 //   dpm(debug_backtrace());
     return $block;
 }

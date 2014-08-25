@@ -1360,7 +1360,7 @@ function pcproducts_calculator_form($form, &$form_state) {
         if ($detail) {
           $text .= ' (' . $detail . ')';
         }
-        $items[$item->id] = $text;
+        $items[$GLOBALS['base_url'] . '/products/' . $productId . '/' . $item->id] = $text;
       };
 
       $form['type']['#options'] = $items;

@@ -22,8 +22,7 @@
         <?php if(!empty($fields['field_lien_deal']->content)):?>	
             <a href="<?php print $fields['field_lien_deal']->content; ?>" class="ui-button plusinfobtn" >
                 <span class="flesh"></span>
-                    PLus d’info
-                </span>
+                    J’en profite !
             </a>
         <?php endif; ?>
 <?php endif; ?>	

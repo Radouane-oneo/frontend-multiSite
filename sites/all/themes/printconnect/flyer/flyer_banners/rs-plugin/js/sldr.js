@@ -6,11 +6,11 @@ var revapi;
 						{
 							delay:6000,
 							startwidth:1170,
-							startheight:500,
+							startheight:495	,
 							hideThumbs:10,
 
 							thumbWidth:100,
-							thumbHeight:50,
+							thumbHeight:100,
 							thumbAmount:5,
 
 							navigationType:"both",

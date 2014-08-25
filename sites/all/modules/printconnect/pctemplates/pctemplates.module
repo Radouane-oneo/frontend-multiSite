@@ -187,7 +187,7 @@ function pctemplates_block_view($delta = '') {
         $templatestop10 = \printconnect\Templates\Factory::getTop10Template();
         $ts =\printconnect\Templates\Factory::LoadTop10Template($templatestop10);
          
-        $block['content']['nosmodel']= array('#markup' => "<div class='nosmodel'><span>Personalisez un modèle</span><a href='#'>Tous nos modèles GRATUIT</a></div>");
+        $block['content']['nosmodel']= array('#markup' => "<div class='nosmodel'><span>Personnalisez un modèle</span><a href='#'>Tous nos modèles GRATUITS</a></div>");
         $block['content']['startul']= array('#markup' => "<div id='SliderCreaHomePage'><ul>");
          $i=0;
             foreach($ts as $valueItems ) {

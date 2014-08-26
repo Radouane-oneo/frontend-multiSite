@@ -228,7 +228,7 @@ a:hover, a:active {
 	text-decoration: underline
 }
 .page-templates h1 {
-	padding-top: 10px !important;
+	padding-top: 0;
 }
 h1, h2, h3, h4, h5, h6 {
 	margin: 0;
@@ -7663,6 +7663,28 @@ div.myoffers table.list thead tr th:nth-child(2){
 #slideIside li img{
 	display: block;
 }
+#slideIside div.img{
+	border-style: solid;
+	border-width: 1px 1px 0 1px;
+	border-color: #8c8c8a;
+	-webkit-border-radius: 3px 3px 0 0 ;
+	-moz-border-radius: 3px 3px 0 0 ;
+	border-radius: 3px 3px 0 0 ;
+}
+#slideIside h3.title{
+	margin: 0;
+	padding: 8px;
+	font-size: 13px;
+	color: #646464;
+	font-weight: bold;
+	line-height: 16px;
+	border: 1px solid #ebebeb;
+	-webkit-border-radius: 0 0 3px 3px;
+	-moz-border-radius: 0 0 3px 3px;
+	border-radius: 0 0 3px 3px;
+	text-transform: none;
+	text-align: center;
+}
 #slideIside #sliderPager{
 	clear: both;
 	padding: 7px 0;
@@ -7673,8 +7695,8 @@ div.myoffers table.list thead tr th:nth-child(2){
 	display: inline-block;
 	margin-right: 4px;
 	color: #fff;
-	width: 10px;
-	height: 10px;
+	width: 9px;
+	height: 9px;
 	text-indent: -9999px;
 	letter-spacing: normal;
 	background-color: #e7e3e3;

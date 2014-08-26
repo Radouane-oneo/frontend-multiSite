@@ -84,8 +84,7 @@ var submitProductForm= function(callback) {
           var resultvalue = parseFloat(stringValue.substring(startIndex));
           resultvalue*=100;
           return padLeft(Math.round(resultvalue, 2));
-        }
-        else{
+        }else{
           return '00';
         }
         
@@ -486,6 +485,10 @@ var submitProductForm= function(callback) {
         if ( e.which == 13 ) e.preventDefault();
       });
       
+      $('.type_product').change(function(){
+        var url = $(this).val();
+        window.location.href= url;
+        });
     }
   }
 })(jQuery);

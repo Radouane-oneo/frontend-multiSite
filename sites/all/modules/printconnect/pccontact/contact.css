@@ -301,6 +301,10 @@ margin-top: 14px;
         border-radius: 3px;
         width: 100%;
 }
+.popin_overlay .form-item input[type="text"].error{
+    border-color: #ed1c24;
+    background-color: #f6e3e3;
+}
 .popin_overlay .submit input[type="submit"]{
         display: block;
         color: #fff;
@@ -378,6 +382,7 @@ margin-top: 14px;
 }
 
 .popin_overlay #messageSent{
+    display: none;
     text-align: center;
     padding-top: 65px;
     margin-top: -10px;

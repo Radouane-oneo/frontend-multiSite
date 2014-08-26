@@ -8310,3 +8310,31 @@ ul.ui-autocomplete{
 	overflow: hidden;
 	margin-bottom: 10px;
 }
+
+
+/* popup cart*/
+#lean_overlay {
+position: fixed;
+z-index:100;
+top: 0px;
+left: 0px;
+height:100%;
+width:100%;
+background: #000;
+opacity: 0.5;
+}
+#lean_info{
+position: absolute;
+z-index: 2100;
+background-color: #FFF;
+border-radius: 4px;
+width: 534px;
+margin: 0 auto;
+left: 0px;;
+}
+
+#popup_overlay {
+display :none;
+padding-left: 250px;
+padding-right: 250px;
+}

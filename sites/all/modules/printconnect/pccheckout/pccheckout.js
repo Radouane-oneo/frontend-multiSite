@@ -84,7 +84,10 @@
 //        return true;
 //      });
       
-      
+   $(".popupOverlay").live('click', function(){
+   $('#popup_overlay').css('display', 'block');
+  });
+  
        jQuery('#pccheckout-invoiceanddelivery-form fieldset.tohiding legend').hide();
        jQuery('#pccheckout-invoiceanddelivery-form fieldset.tohiding div').hide();
        var hash = location.hash;

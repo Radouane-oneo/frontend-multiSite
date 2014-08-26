@@ -9,6 +9,13 @@ use printconnect\Drupal\Functions;
  *
  * Urls
  */
+
+function pccontact_init() {
+    //drupal_add_js(drupal_get_path('module', 'pccontact') . '/popup_ajax.js');
+}
+function pccontact_perm () {
+  return array('access pccontact via ajax',);
+}
 function pccontact_menu() {
   $items['mailme/%/%'] = array(
       'title' => 'Mail me',
@@ -48,12 +55,19 @@ function pccontact_menu() {
       'access arguments' => array('access content'),
       'file' => 'pccontact.forms.inc',
   );
-   $items['contact/popup'] = array(
-      'page callback' => 'drupal_get_form',
-      'page arguments' => array('pccontact_popup_form', 1),
-      'access arguments' => array('access content'),
-      'file' => 'pccontact.forms.inc',
-  );
+//   $items['contact/popup'] = array(
+//      'page callback' => 'drupal_get_form',
+//      'page arguments' => array('pccontact_popup_form', 1),
+//      'access arguments' => array('access content'),
+//      'file' => 'pccontact.forms.inc',
+//  );
+   $items['popup/ajax'] = array(
+        'title' => t('je souhaite etre appelé'),
+        'page callback' => 'pccontact_ajax_callback',    
+        'access arguments' => array('access pccontact via ajax'),
+        'type' => MENU_CALLBACK,
+    );
+   
   $items['contact/stores'] = array(
       'title' => 'Contact',
       'page callback' => 'drupal_get_form',
@@ -480,4 +494,10 @@ function pccontact_contact_form_submit($form, &$form_state) {
 
 function pccontact_contact_form_callback($form, &$form_state) {
   return $form;
+}
+function pccontact_ajax_callback(){
+    if (empty($_POST["js"])){ die(); }
+  $result = array('msg' => 'my_module_example - hello from php','valid' => true);
+  drupal_json($result);
+  exit();
 }

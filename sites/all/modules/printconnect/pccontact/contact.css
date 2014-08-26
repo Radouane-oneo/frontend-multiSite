@@ -220,3 +220,178 @@ border-radius: 5px;
 margin-right: -6px;
 margin-top: 14px;
 }
+/*css popup contact*/
+.popin_overlay{
+    width: 423px;
+    border:1px solid #000000;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0px 0px 5px 0px #222222;
+    -moz-box-shadow:    0px 0px 5px 0px #222222;
+    box-shadow:         0px 0px 5px 0px #222222;
+    margin: 0 auto;
+    font-family: 'Open Sans',sans-serif;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.popin_overlay .head{
+        padding: 10px 0 6px 18px;
+        overflow: hidden;
+        background: #333333;
+        border-bottom: 1px solid #181818;
+}
+
+.popin_overlay .head img{
+        float: left;
+}
+.popin_overlay form{
+    margin: 0;
+    padding: 0;
+}
+.popin_overlay fieldset{
+    padding: 30px 30px 20px;
+    margin: 0;
+    border: 0;
+    background-color: #fcfcfc;
+}
+.popin_overlay fieldset h3{
+    color: #333333;
+    font-size: 15px;
+    line-height: 16px;
+    margin: 0 0 8px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.popin_overlay fieldset p{
+        color: #646464;
+        font-size: 13px;
+        line-height: 14px;
+        margin: 0 0 20px;
+}
+
+.popin_overlay fieldset .form-item{
+    margin:0 0 16px;
+}
+
+.popin_overlay .form-item label{
+        display: block;
+        color: #646464;
+        font-size: 13px;
+        line-height: 14px;
+        margin: 0 0 8px;
+        font-weight: bold;
+}
+.popin_overlay .form-item input[type="text"]{
+        display: block;
+        color: #646464;
+        font-size: 13px;
+        line-height: 14px;
+        margin: 0;
+        height: 35px;
+        border: 1px solid #c1c1c1;
+        padding: 10px;
+        -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+        -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+        box-sizing: border-box;         /* Opera/IE 8+ */
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        width: 100%;
+}
+.popin_overlay .form-item input[type="text"].error{
+    border-color: #ed1c24;
+    background-color: #f6e3e3;
+}
+.popin_overlay .submit input[type="submit"]{
+        display: block;
+        color: #fff;
+        font-size: 13px;
+        line-height: 14px;
+        margin: 0;
+        height: 34px;
+        border: 0;
+        padding: 0 15px 0 38px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        width: 120px;
+        background: url(http://flyer_fr.dev/sites/all/themes/printconnect/flyer/css/images/calc_btn.png) no-repeat 13px center #6fab01;
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+        cursor: pointer;
+        -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+        -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+        box-sizing: border-box;         /* Opera/IE 8+ */
+}
+.popin_overlay .submit input[type="submit"]:hover{
+        background-color: #689f02;
+}
+.popin_overlay .submit{
+        padding: 20px 25px;
+        background-color: #fff;
+        border-top: 1px solid #f0f0f0;
+}
+.popin_overlay .form-item.form-item-nom{
+        float: left;
+        width: 168px;
+        margin-right: 25px;
+}
+.popin_overlay .form-item.form-item-prenom{
+        float: left;
+        width: 168px;
+}
+.popin_overlay p.required-msg{
+        color: #646464;
+        font-size: 12px;
+        margin: 0;
+}
+.popin_overlay .required{
+        color: #ea5b0c;
+}
+
+#lean_overlay { position: fixed; z-index:100; top: 0px; left: 0px; height:100%; width:100%; background: #000; opacity: 0.5; } #lean_info{ top: 170px; position: fixed; z-index: 2100; background-color: #FFF; border-radius: 4px; width: 534px; }
+
+#popup_overlay { display :none; padding-left: 250px; padding-right: 250px; }
+#remove{ cursor: pointer; position: absolute; margin-left: 513px; } 
+.info-bloc #lean_info{
+    background-color: #fff;
+    border-radius: 4px;
+    left: 35%;
+    max-width: 425px;
+    position: fixed;
+    top: 30px;
+    width: 534px;
+    z-index: 2100;
+}
+.popin_overlay .form-actions{
+    margin: 0;
+}
+
+.info-bloc .head .close{
+    background: url(img/close.png);
+    display: block;
+    width: 11px;
+    height: 10px;
+    cursor: pointer;
+    float: right;
+    margin: 25px 20px 0 0;
+}
+
+.popin_overlay #messageSent{
+    display: none;
+    text-align: center;
+    padding-top: 65px;
+    margin-top: -10px;
+    background: url(img/succes.png) no-repeat center 0;
+}
+.popin_overlay #messageSent p{
+    margin-bottom: 10px;
+}
+.popin_overlay #messageSent p.orange{
+    color: #ea5b0c;
+    margin-bottom: 0;
+}

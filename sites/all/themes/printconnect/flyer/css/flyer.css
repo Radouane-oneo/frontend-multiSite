@@ -7683,6 +7683,7 @@ div.myoffers table.list thead tr th:nth-child(2){
 	-moz-border-radius: 0 0 3px 3px;
 	border-radius: 0 0 3px 3px;
 	text-transform: none;
+	text-align: center;
 }
 #slideIside #sliderPager{
 	clear: both;

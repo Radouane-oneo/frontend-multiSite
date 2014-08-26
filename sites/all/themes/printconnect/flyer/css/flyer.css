@@ -228,7 +228,7 @@ a:hover, a:active {
 	text-decoration: underline
 }
 .page-templates h1 {
-	padding-top: 10px !important;
+	padding-top: 0;
 }
 h1, h2, h3, h4, h5, h6 {
 	margin: 0;

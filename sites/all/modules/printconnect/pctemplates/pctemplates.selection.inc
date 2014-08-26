@@ -270,9 +270,9 @@ function pctemplates_selection_form2($form, &$form_state) {
                 '#file' => $template->thumbnail->file,
             );
             $build['range']['name'] =  array(
-                '#markup' => '<h2>'.$template->name.'</h2>',
+                '#markup' => '<h2>'. $template->products[0]->name.'</h2>',
                 '#suffix' => '</a></div>
-                <div class="from"><span class="txt">'.$template->products[0]->name.'</span></div>',
+                <div class="from"><span class="txt">'.$template->name.'</span></div>',
             );
            $build['flesh'] = array(
                 '#markup' => '<a class="btn-cmd" href="'.$templateUrl.'">

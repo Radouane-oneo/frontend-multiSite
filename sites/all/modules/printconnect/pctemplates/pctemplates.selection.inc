@@ -255,8 +255,6 @@ function pctemplates_selection_form2($form, &$form_state) {
     $rangeTo = $page * $templatesPerPage;
     $items = array(); 
     foreach ($selectedTemplates as $template) { 
-//         dsm($template->segments[1]->name->name);
-//      echo "<pre>"; print_r($template);echo "</pre>";
         $templateUrl = 'templates/' . $template->id;
         if(isset($params['productId'])){
             $templateUrl .= '/product/' . $params['productId'];
@@ -271,13 +269,10 @@ function pctemplates_selection_form2($form, &$form_state) {
                 '#theme' => 'pcfilesthumb',
                 '#file' => $template->thumbnail->file,
             );
-             $build['range']['segment'] =  array(
-                '#markup' => '<p class="segmentmodel">'.$template->segments[1]->name->name.'</p>',
-            );
-            
             $build['range']['name'] =  array(
                 '#markup' => '<h2>'.$template->name.'</h2>',
-                '#suffix' => '</a></div>',
+                '#suffix' => '</a></div>
+                <div class="from"><span class="txt">'.$template->products[0]->name.'</span></div>',
             );
            $build['flesh'] = array(
                 '#markup' => '<a class="btn-cmd" href="'.$templateUrl.'">

@@ -16,6 +16,98 @@ function pccontact_email_form($form, &$form_state) {
 function pccontact_email_form_submit($form, &$form_state) {
   drupal_mail('pccontact', 'email', variable_get('pccontact_email', 'info@printconcept.com'));
 }
+function pccontact_popup_form($form, &$form_state, $key = 'popup') {
+    
+  $customer = \printconnect\Customers\Factory::Current();
+
+
+  //$emails = array('info@Flyer.fr', 'info@Flyer.lu');
+  
+ 
+  
+    $form['popup'] = array(
+        "#prefix"=>'<fieldset>',
+        "#suffix"=>'</fieldset>',
+        );
+    
+    $form['header'] = array(
+        '#markup' => '<d class="head"><img src ="img/logo.png"></div>',
+    );
+  
+    $form['popup']['description'] = array(
+        '#markup' =>'<h3>Je souhaite être rappelé(e)</h3>
+                      <p>Merci de remplir le formulaire suivant afin qu\'un opérateur <br /> 
+                      FLYER puisse prendre contact avec vous par téléphone.</p>',
+    ); 
+
+    $form['popup']['nom'] = array(
+        '#type' => 'textfield',
+        '#required' => TRUE,
+        '#title' => t('Nom'),
+        '#default_value' => $customer ? $customer->name : '',
+        '#attributes' => array('data-nameError' => t('name is required'))
+    );
+      $form['popup']['prenom'] = array(
+        '#type' => 'textfield',
+        '#required' => TRUE,
+        '#title' => t('Prénom'),
+        //'#default_value' => $customer ? $customer->name : '',
+        '#attributes' => array('data-nameError' => t('name is required'))
+    );
+    $form['popup']['telephone'] = array(
+        '#type' => 'textfield',
+        '#required' => TRUE,
+        '#title' => t('Téléphone'),
+        '#default_value' => $customer ? $customer->phone : '',
+        '#attributes' => array('data-phoneError' => t('phone is required'))
+    );
+    $form['popup']['email'] = array(
+        '#type' => 'textfield',
+        '#required' => TRUE,
+        '#title' => t('Adresse email'),
+        '#default_value' => $customer ? $customer->email : '',
+        '#attributes' => array('data-mailError' => t('email is required'))
+    );
+  
+    $form['popup']['error'] = array(
+      '#markup' =>'<p class="required-msg">Les champs avec un astérisque (<span class="required">*</span>) sont à remplir obligatoirement.</p>',
+    );  
+    
+$form['actions'] = array(
+      '#type' => 'actions',
+  );
+
+  $form['actions']['submit'] = array(
+      '#prefix' => '<div id="submit">',
+      '#type' => 'submit',
+      '#value' => t('ENVOYER'),
+      "#suffix"=>'</div>'
+  );
+//  $form_state['cache'] = TRUE;
+  $form['#id'] = 'pccontact_popup_form';
+  $form['#attributes'] = array('data-globalError' => t('fields are required'));
+  return $form;
+}
+function pccontact_popup_form_submit($form, &$form_state) {
+    if (isset($form_state['build_info']['args'][0])) {
+      $key = $form_state['build_info']['args'][0];
+    } else {
+      $key = 'popup';
+    }
+
+    $send = TRUE;
+    $result = drupal_mail('pccontact', $key, variable_get('pccontact_email', 'nabil.b@oneoweb.com'),
+                      '', $form_state['values'],NULL, $send); 
+    
+    $sendMeail = FALSE;
+    if ($result['result'] == TRUE) {
+        $sendMeail = TRUE;
+        drupal_set_message(t('Your message has been sent.'));
+    } else {
+        drupal_set_message(t('Your message has  not been sent'), 'error');
+    }
+}
+// general form 
 
 function pccontact_general_form($form, &$form_state, $key = 'general') {
   $customer = \printconnect\Customers\Factory::Current();

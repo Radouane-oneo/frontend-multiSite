@@ -1380,9 +1380,9 @@ a.button.cart .ui-button-text {
 	padding: 0 0 0 10px;
 	height: 296px;
 	left: 0;
-	margin-bottom: -70px;
+	margin-bottom: -67px;
 	position: relative;
-	top: -78px;
+	top: -75px;
 	color: #fff;
 	border: 0;
 }
@@ -8310,4 +8310,30 @@ ul.ui-autocomplete{
 	height: 288px;
 	overflow: hidden;
 	margin-bottom: 10px;
+}
+
+.page-show{
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	overflow: hidden;
+	clear: both;
+	margin-bottom: 20px;
+}
+.page-show > img{
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+a.seemore{
+	display: inline-block;
+	color: #ff6600;
+	font-size: 13px;
+	padding-left: 10px;
+	background: url(images/plus.png) no-repeat 0 center;
+}
+.lp-container h2.title{
+	background: url(images/icone_title.png) no-repeat 0 center;
+	padding-left: 20px;
 }

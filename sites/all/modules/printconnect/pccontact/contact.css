@@ -222,17 +222,18 @@ margin-top: 14px;
 }
 /*css popup contact*/
 .popin_overlay{
-        width: 423px;
-        border:1px solid #000000;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        border-radius: 3px;
-        -webkit-box-shadow: 0px 0px 5px 0px #222222;
-        -moz-box-shadow:    0px 0px 5px 0px #222222;
-        box-shadow:         0px 0px 5px 0px #222222;
-        margin: 0 auto;
-        font-family: 'Open Sans',sans-serif;
-        margin: 0 auto;
+    width: 423px;
+    border:1px solid #000000;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0px 0px 5px 0px #222222;
+    -moz-box-shadow:    0px 0px 5px 0px #222222;
+    box-shadow:         0px 0px 5px 0px #222222;
+    margin: 0 auto;
+    font-family: 'Open Sans',sans-serif;
+    margin: 0 auto;
+    overflow: hidden;
 }
 
 .popin_overlay .head{
@@ -246,21 +247,22 @@ margin-top: 14px;
         float: left;
 }
 .popin_overlay form{
-        margin: 0;
-        padding: 0;
+    margin: 0;
+    padding: 0;
 }
 .popin_overlay fieldset{
-        padding: 20px 15px 16px 26px;
-        margin: 0;
-        border: 0;
-        background-color: #fcfcfc;
+    padding: 30px 30px 20px;
+    margin: 0;
+    border: 0;
+    background-color: #fcfcfc;
 }
 .popin_overlay fieldset h3{
-        color: #333333;
-        font-size: 15px;
-        line-height: 16px;
-        margin: 0 0 8px;
-        text-transform: uppercase;
+    color: #333333;
+    font-size: 15px;
+    line-height: 16px;
+    margin: 0 0 8px;
+    text-transform: uppercase;
+    font-weight: bold;
 }
 
 .popin_overlay fieldset p{
@@ -270,11 +272,11 @@ margin-top: 14px;
         margin: 0 0 20px;
 }
 
-.popin_overlay fieldset .form-lign{
-        margin-bottom:16px;
+.popin_overlay fieldset .form-item{
+    margin:0 0 16px;
 }
 
-.popin_overlay .form-lign label{
+.popin_overlay .form-item label{
         display: block;
         color: #646464;
         font-size: 13px;
@@ -282,7 +284,7 @@ margin-top: 14px;
         margin: 0 0 8px;
         font-weight: bold;
 }
-.popin_overlay .form-lign input[type="text"]{
+.popin_overlay .form-item input[type="text"]{
         display: block;
         color: #646464;
         font-size: 13px;
@@ -329,12 +331,12 @@ margin-top: 14px;
         background-color: #fff;
         border-top: 1px solid #f0f0f0;
 }
-.popin_overlay .form-lign.name{
+.popin_overlay .form-item.form-item-nom{
         float: left;
         width: 168px;
         margin-right: 25px;
 }
-.popin_overlay .form-lign.prenom{
+.popin_overlay .form-item.form-item-prenom{
         float: left;
         width: 168px;
 }
@@ -357,7 +359,34 @@ margin-top: 14px;
     left: 35%;
     max-width: 425px;
     position: fixed;
-    top: 50px;
+    top: 30px;
     width: 534px;
     z-index: 2100;
+}
+.popin_overlay .form-actions{
+    margin: 0;
+}
+
+.info-bloc .head .close{
+    background: url(img/close.png);
+    display: block;
+    width: 11px;
+    height: 10px;
+    cursor: pointer;
+    float: right;
+    margin: 25px 20px 0 0;
+}
+
+.popin_overlay #messageSent{
+    text-align: center;
+    padding-top: 65px;
+    margin-top: -10px;
+    background: url(img/succes.png) no-repeat center 0;
+}
+.popin_overlay #messageSent p{
+    margin-bottom: 10px;
+}
+.popin_overlay #messageSent p.orange{
+    color: #ea5b0c;
+    margin-bottom: 0;
 }

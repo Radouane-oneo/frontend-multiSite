@@ -27,7 +27,7 @@ function pccontact_popup_form($form, &$form_state, $key = 'popup') {
         "#suffix"=>'</div>',
     );
    $form['container']['header'] = array(
-        '#markup' => '<div class="head"><img src ="'.base_path().drupal_get_path('module', 'pccontact') . '/img/logo.png"></div>',
+        '#markup' => '<div class="head"><img src ="'.base_path().drupal_get_path('module', 'pccontact') . '/img/logo.png"><span class="close"></span></div>',
     );
     $form['container']['popup'] = array(
         "#prefix"=>'<fieldset>',
@@ -36,7 +36,7 @@ function pccontact_popup_form($form, &$form_state, $key = 'popup') {
     
   
     $form['container']['popup']['description'] = array(
-        '#markup' =>'<h3>Je souhaite être rappelé(e)</h3>
+        '#markup' =>'<div id="popupContent"><h3>Je souhaite être rappelé(e)</h3>
                       <p>Merci de remplir le formulaire suivant afin qu\'un opérateur <br /> 
                       FLYER puisse prendre contact avec vous par téléphone.</p>',
     ); 
@@ -71,7 +71,7 @@ function pccontact_popup_form($form, &$form_state, $key = 'popup') {
     );
   
     $form['container']['popup']['error'] = array(
-      '#markup' =>'<p class="required-msg">Les champs avec un astérisque (<span class="required">*</span>) sont à remplir obligatoirement.</p>',
+      '#markup' =>'<p class="required-msg">Les champs avec un astérisque (<span class="required">*</span>) sont à remplir obligatoirement.</p></div>',
     );  
     
 $form['container']['actions'] = array(
@@ -85,6 +85,13 @@ $form['container']['actions'] = array(
       '#id'=>'submit',
       "#suffix"=>'</div>'
   );
+
+  $form['container']['popup']['messageSent']  =array(
+        '#markup' => '<div id="messageSent"><h3>VOTRE DEMANDE A BIEN ÉTÉ PRISE EN COMPTE !</h3><p>Un conseiller vous répondra dans les plus brefs délais.
+Nous vous remercions de votre confiance.</p><p class="orange">
+Vous avez reçu un email de confirmation</p></div>'
+  );
+
   $form['#id'] = 'pccontact_popup_form';
   $form['#attributes'] = array('data-globalError' => t('fields are required'));
   return $form;

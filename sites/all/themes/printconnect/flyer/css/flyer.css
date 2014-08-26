@@ -7585,7 +7585,7 @@ div.myoffers table.list thead tr th:nth-child(2){
 	color: #666666;
 }
 
-.info-bloc #magical-modal-link a{
+.info-bloc a.popupOverlay{
 	font-size: 12px;
 	color: #666666;
 	line-height: 14px;

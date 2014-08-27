@@ -1,4 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800&subset=latin,latin-ext);
+@import url(landingpages.css);
 /* Browser text selection */
 ::selection {
 	color: #fff;
@@ -7713,6 +7714,7 @@ div.myoffers table.list thead tr th:nth-child(2){
 
 .block.nos-avantages .content a{
 	text-decoration: none;
+	color: #646464;
 }
 .block.nos-avantages ul{
 	list-style: none;

@@ -19,7 +19,6 @@ function pccontact_email_form_submit($form, &$form_state) {
 
 function pccontact_popup_form($form, &$form_state, $key = 'popup') {
     
-  $customer = \printconnect\Customers\Factory::Current();
 
   //$emails = array('info@Flyer.fr', 'info@Flyer.lu');
     $form['container'] = array(
@@ -45,30 +44,33 @@ function pccontact_popup_form($form, &$form_state, $key = 'popup') {
         '#type' => 'textfield',
         '#required' => TRUE,
         '#title' => t('Nom'),
-        '#default_value' => $customer ? $customer->name : '',
         '#attributes' => array('data-nameError' => t('name is required')),
-        '#markup'=>"<span>name is required</span>",
+        '#prefix' => '<div class="edit-nom">',
+        '#suffix' => '<span class="required">'.t('name is required').'</span></div>',
     );
       $form['container']['popup']['prenom'] = array(
         '#type' => 'textfield',
         '#required' => TRUE,
         '#title' => t('Prénom'),
-        //'#default_value' => $customer ? $customer->name : '',
-        '#attributes' => array('data-nameError' => t('name is required'))
+        '#attributes' => array('data-nameError' => t('name is required')),
+        '#prefix' => '<div class="edit-prenom">',
+        '#suffix' => '<span class="required">'.t('last name is required').'</span></div>',
     );
     $form['container']['popup']['telephone'] = array(
         '#type' => 'textfield',
         '#required' => TRUE,
         '#title' => t('Téléphone'),
-        '#default_value' => $customer ? $customer->phone : '',
-        '#attributes' => array('data-phoneError' => t('phone is required'))
+        '#attributes' => array('data-phoneError' => t('phone is required')),
+        '#prefix' => '<div class="edit-telephone">',
+        '#suffix' => '<span class="required">'.t('phone is required').'</span></div>',
     );
     $form['container']['popup']['email'] = array(
         '#type' => 'textfield',
         '#required' => TRUE,
         '#title' => t('Adresse email'),
-        '#default_value' => $customer ? $customer->email : '',
-        '#attributes' => array('data-mailError' => t('email is required'))
+        '#attributes' => array('data-mailError' => t('email is required')),
+        '#prefix' => '<div class="edit-email">',
+        '#suffix' => '<span class="required">'.t('email is required').'</span></div>',
     );
   
     $form['container']['popup']['error'] = array(

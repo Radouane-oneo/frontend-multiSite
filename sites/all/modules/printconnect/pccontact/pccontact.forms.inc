@@ -37,8 +37,7 @@ function pccontact_popup_form($form, &$form_state, $key = 'popup') {
     $form['container']['popup']['description'] = array(
         '#markup' =>'<div id="popupContent"><h3>Je souhaite être rappelé(e)</h3>
                       <p>Merci de remplir le formulaire suivant afin qu\'un opérateur <br /> 
-                      FLYER puisse prendre contact avec vous par téléphone.</p>
-                <a id="sendme" href="javascript:void(0);">Send me</a>',
+                      FLYER puisse prendre contact avec vous par téléphone.</p>',
     ); 
    
 

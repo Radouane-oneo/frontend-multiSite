@@ -355,7 +355,7 @@ margin-top: 14px;
 
 #lean_overlay { position: fixed; z-index:100; top: 0px; left: 0px; height:100%; width:100%; background: #000; opacity: 0.5; } #lean_info{ top: 170px; position: fixed; z-index: 2100; background-color: #FFF; border-radius: 4px; width: 534px; }
 
-#popup_overlay { display :none; padding-left: 250px; padding-right: 250px; }
+#popup_overlay2 { display :none; padding-left: 250px; padding-right: 250px; }
 #remove{ cursor: pointer; position: absolute; margin-left: 513px; } 
 .info-bloc #lean_info{
     background-color: #fff;

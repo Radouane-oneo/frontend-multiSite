@@ -63,7 +63,7 @@ function pccontact_popup_form($form, &$form_state, $key = 'popup') {
         '#title' => t('Téléphone'),
         '#attributes' => array('data-phoneError' => t('phone is required')),
         '#prefix' => '<div class="global-error edit-telephone">',
-        '#suffix' => '<span class="required">'.t('phone is required').'</span></div>',
+        '#suffix' => '<span class="required">'.t('phone is required').'</span><span class="required2">'.t('Votre numéro de téléphone doit être une valeur numérique').'</span></div>',
     );
     $form['container']['popup']['email'] = array(
         '#type' => 'textfield',
@@ -71,7 +71,7 @@ function pccontact_popup_form($form, &$form_state, $key = 'popup') {
         '#title' => t('Adresse email'),
         '#attributes' => array('data-mailError' => t('email is required')),
         '#prefix' => '<div class="global-error edit-email">',
-        '#suffix' => '<span class="required">'.t('email is required').'</span></div>',
+        '#suffix' => '<span class="required">'.t('email is required').'</span><span class="required2">'.t('votre adresse email est invalide').'</span></div>',
     );
   
     $form['container']['popup']['error'] = array(

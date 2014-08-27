@@ -406,7 +406,7 @@ margin-top: 14px;
     float: left;
     margin:0 0 16px;
 }
-#pccontact_popup_form .global-error span.required{
+#pccontact_popup_form .global-error span.required,#pccontact_popup_form .global-error span.required2{
     float: left;
     clear: both;
     font-size: 12px;

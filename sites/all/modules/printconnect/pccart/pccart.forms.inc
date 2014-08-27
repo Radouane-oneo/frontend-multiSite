@@ -77,7 +77,7 @@ function pccart_cart_form2($form, &$form_state) {
                 'data' => l(drupal_render($build), 'products/' . $product->id, array('html' => true, 'title' => $product->name)),
             );
 
-            if (count($items) >= 8) {
+            if (count($items) >= 6) {
                 break;
             }
         }

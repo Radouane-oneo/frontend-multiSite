@@ -318,7 +318,7 @@ margin-top: 14px;
         -moz-border-radius: 3px;
         border-radius: 3px;
         width: 120px;
-        background: url(http://flyer_fr.dev/sites/all/themes/printconnect/flyer/css/images/calc_btn.png) no-repeat 13px center #6fab01;
+        background: url(/sites/all/themes/printconnect/flyer/css/images/calc_btn.png) no-repeat 13px center #6fab01;
         font-size: 14px;
         font-weight: bold;
         text-transform: uppercase;

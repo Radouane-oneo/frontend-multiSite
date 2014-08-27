@@ -22,6 +22,12 @@
                     print $fields['field_temps_deal']->content;   
             
         ?>
+
+        <script type="text/javascript">
+            //if (jQuery('#countlandingpage').length) {
+              //  jQuery('.jquery-countdown-timer-processed').clone().prependTo('#countlandingpage');
+            //};
+        </script>
            
          <?php else :?>
              

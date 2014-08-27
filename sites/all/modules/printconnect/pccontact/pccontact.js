@@ -64,15 +64,15 @@ jQuery(document).ready(function (e) {
         // hide all error span message
       
         jQuery("#callme").live('click', function(){
-            jQuery('.info-bloc #popup_overlay span.required').hide();
-            jQuery('.info-bloc #popup_overlay').show(); 
-            jQuery('.info-bloc #popup_overlay #edit-actions').show(); 
+            jQuery('.info-bloc #popup_overlay2 span.required').hide();
+            jQuery('.info-bloc #popup_overlay2').show(); 
+            jQuery('.info-bloc #popup_overlay2 #edit-actions').show(); 
 
         });
-         jQuery(".info-bloc #popup_overlay .close").live('click', function(){
+         jQuery(".info-bloc #popup_overlay2 .close").live('click', function(){
 
-            jQuery('.info-bloc #popup_overlay').hide(); 
-            jQuery('.info-bloc #popup_overlay #edit-actions').hide(); 
+            jQuery('.info-bloc #popup_overlay2').hide(); 
+            jQuery('.info-bloc #popup_overlay2 #edit-actions').hide(); 
 
         });
         jQuery('#pccontact_popup_form').submit(function () {
@@ -101,8 +101,8 @@ jQuery(document).ready(function (e) {
                         
                                                
                         jQuery('#popupContent').hide(); 
-                        jQuery('#popup_overlay #edit-actions').hide(); 
-            		jQuery('#popup_overlay #messageSent').show();
+                        jQuery('.info-bloc #popup_overlay2 #edit-actions').hide(); 
+            		jQuery('.info-bloc #popup_overlay2 #messageSent').show();
                    return false;       
             }			
     });
@@ -111,7 +111,21 @@ jQuery(document).ready(function (e) {
         if( jQuery("#"+id).val() === ""){            
             jQuery("#"+id).addClass('error');
             jQuery("."+id+' span.required').show();
-        }else{                 
+        }else if ( !emailReg.test( email ) ) {
+//                    var MailError = jQuery('#pccontact_general_form').find('#edit-email').attr('data-MailError');
+//                    jQuery(document).find('.errorForms').remove();
+//                    jQuery(document).find('#pccontact_general_form #edit-actions')
+//                            .append('<p class="errorForms">'+MailError+'</p>').hide().fadeIn().show();
+                    jQuery('#edit-email').addClass('error');   
+                return false;
+            }else if (!phoneReg.test( phone ) ) {
+//			var PhoneError = jQuery('#pccontact_general_form').find('#edit-phone').attr('data-PhoneError');
+//			jQuery(document).find('.errorForms').remove();
+//			jQuery(document).find('#pccontact_general_form #edit-actions')
+//				.append('<p class="errorForms"> '+PhoneError+'</p>').hide().fadeIn().show();
+                        jQuery('#edit-telephone').addClass('error');   
+                return false;
+            }else{                 
             jQuery("#"+id).removeClass('error');
             jQuery("."+id+' span.required').hide();
         }

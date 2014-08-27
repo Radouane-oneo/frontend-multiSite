@@ -7512,8 +7512,8 @@ left: 400px;
     font-size: 13px !important;
 }
 .page-myprintconnect .region-content {
-  margin-left: 5px;
-}
+  /*margin-left: 5px;*/
+} 
 .myoffers .list.offers.sticky-enabled td.first-child {
     width: 11% !important;
 }

@@ -47,8 +47,19 @@ jQuery(document).ready(function (e) {
         // hide all error span message
       
         jQuery("#callme").live('click', function(){
+            
+            jQuery('#edit-nom').val('');
+            jQuery('#edit-prenom').val('');
+            jQuery('#edit-telephone').val('');
+            jQuery('#edit-email').val('');
+            
+            jQuery('.info-bloc #popup_overlay2 #messageSent').hide();
             jQuery('.info-bloc #popup_overlay2 span.required').hide();
-            jQuery('.info-bloc #popup_overlay2').show(); 
+            jQuery('.info-bloc #popup_overlay2 input:text').removeClass('error');
+            jQuery('.info-bloc #popup_overlay2').show();
+            jQuery('.info-bloc #popup_overlay2 #popupContent').show(); 
+            jQuery('.info-bloc #popup_overlay2 #edit-actions').show();
+            
         });
          jQuery(".info-bloc #popup_overlay2 .close").live('click', function(){
             jQuery('.info-bloc #popup_overlay2').hide(); 
@@ -67,11 +78,9 @@ jQuery(document).ready(function (e) {
             telRes = errorInput('edit-telephone');
             emailRes =  errorInput('edit-email');
 
-            if (!nameRes  || !prenomRes || !telRes || !emailRes) {
-                    var GlobalError = jQuery('#pccontact_popup_form').attr('data-GlobalError');
-                     jQuery(document).find('.errorForms').remove();
-                     jQuery(document).find('#pccontact_popup_form #edit-actions').append('<p class="errorForms">'+GlobalError+'</p>').hide().fadeIn().show();
- 
+            if (!nameRes  || !prenomRes || !telRes || !emailRes) {  
+                     //jQuery(document).find('.errorForms').remove();
+
             }else if (!phoneReg.test( phone ) ) {                                   
                     jQuery('#edit-telephone').addClass('error'); 
                     jQuery('.edit-telephone span.required').show();
@@ -99,7 +108,10 @@ jQuery(document).ready(function (e) {
                                }
                         },
                         error: function(xhr, status) {  			
-                               alert('Unknown ' + status); 					
+                                alert('Unknown ' + status); 
+                                jQuery('#popupContent').hide(); 
+                                jQuery('.info-bloc #popup_overlay2 #edit-actions').hide();
+                                jQuery('.info-bloc #popup_overlay2 #messageSent').show();
                         }
                         });
                         

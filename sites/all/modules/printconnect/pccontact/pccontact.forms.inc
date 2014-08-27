@@ -46,7 +46,7 @@ function pccontact_popup_form($form, &$form_state, $key = 'popup') {
         '#required' => TRUE,
         '#title' => t('Nom'),
         '#attributes' => array('data-nameError' => t('name is required')),
-        '#prefix' => '<div class="edit-nom">',
+        '#prefix' => '<div class="global-error edit-nom">',
         '#suffix' => '<span class="required">'.t('name is required').'</span></div>',
     );
       $form['container']['popup']['prenom'] = array(
@@ -54,7 +54,7 @@ function pccontact_popup_form($form, &$form_state, $key = 'popup') {
         '#required' => TRUE,
         '#title' => t('Prénom'),
         '#attributes' => array('data-nameError' => t('name is required')),
-        '#prefix' => '<div class="edit-prenom">',
+        '#prefix' => '<div class="global-error edit-prenom">',
         '#suffix' => '<span class="required">'.t('last name is required').'</span></div>',
     );
     $form['container']['popup']['telephone'] = array(
@@ -62,7 +62,7 @@ function pccontact_popup_form($form, &$form_state, $key = 'popup') {
         '#required' => TRUE,
         '#title' => t('Téléphone'),
         '#attributes' => array('data-phoneError' => t('phone is required')),
-        '#prefix' => '<div class="edit-telephone">',
+        '#prefix' => '<div class="global-error edit-telephone">',
         '#suffix' => '<span class="required">'.t('phone is required').'</span></div>',
     );
     $form['container']['popup']['email'] = array(
@@ -70,7 +70,7 @@ function pccontact_popup_form($form, &$form_state, $key = 'popup') {
         '#required' => TRUE,
         '#title' => t('Adresse email'),
         '#attributes' => array('data-mailError' => t('email is required')),
-        '#prefix' => '<div class="edit-email">',
+        '#prefix' => '<div class="global-error edit-email">',
         '#suffix' => '<span class="required">'.t('email is required').'</span></div>',
     );
   

@@ -180,9 +180,15 @@
   -moz-box-sizing:border-box; /* Firefox */
   -webkit-box-sizing:border-box; /* Safari */
   float:left;
-  width:25%;
-  margin:0;
+  width:32%;
+  margin:0 2% 0 0;
   list-style:none;
+}
+#pccart-cart-form .products li:nth-child(3n){
+  margin-right: 0;
+}
+#pccart-cart-form .products li:nth-child(3n + 1){
+  clear: both;
 }
 #pccart-cart-form .products li img{
   width:100%;

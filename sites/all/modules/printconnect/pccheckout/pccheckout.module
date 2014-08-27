@@ -338,7 +338,7 @@ function pccheckout_form_pccart_cart_form2_alter(&$form, $form_state, $form_id) 
             $form['actions']['checkout'] = array(
                 '#prefix' => '<div class="button-wrapper">',
                 '#suffix' => '</div>',
-                '#markup' => '<input class="action large payment button form-submit ui-button ui-widget ui-state-default ui-corner-all popupOverlay" type="button" id="edit-actions-checkout" name="op" value="Secure payment2" role="button">'
+                '#markup' => '<input class="action large payment button form-submit ui-button ui-widget ui-state-default ui-corner-all popupOverlay" type="button" id="edit-actions-checkout" name="op" value="Secure payment" role="button">'
             );
         }
 

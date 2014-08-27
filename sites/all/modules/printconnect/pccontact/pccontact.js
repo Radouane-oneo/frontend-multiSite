@@ -62,7 +62,7 @@ jQuery(document).ready(function (e) {
     });
    
    
-        jQuery(".popupOverlay").live('click', function(){
+        jQuery("#callme").live('click', function(){
             jQuery('#popup_overlay').show(); 
             jQuery('#popup_overlay #edit-actions').show(); 
 

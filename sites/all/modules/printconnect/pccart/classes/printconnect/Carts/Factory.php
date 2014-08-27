@@ -56,7 +56,8 @@ use printconnect\Customers;
     }
 
     public static function LoadItem(Item $object) {
-      return Dal::Load($object, 'cart-item', array('id' => $object->id, 'cart' => $object->cart));
+      Dal::Load($object, 'cart-item', array('id' => $object->id, 'cart' => $object->cart), FALSE);
+      return $object;
     }
 
     public static function LoadCart(Cart $object) {

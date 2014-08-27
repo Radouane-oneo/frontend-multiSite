@@ -16,97 +16,118 @@ function pccontact_email_form($form, &$form_state) {
 function pccontact_email_form_submit($form, &$form_state) {
   drupal_mail('pccontact', 'email', variable_get('pccontact_email', 'info@printconcept.com'));
 }
+
 function pccontact_popup_form($form, &$form_state, $key = 'popup') {
     
-  $customer = \printconnect\Customers\Factory::Current();
-
 
   //$emails = array('info@Flyer.fr', 'info@Flyer.lu');
-  
- 
-  
-    $form['popup'] = array(
+    $form['container'] = array(
+        "#prefix"=>'<div class="popin_overlay">',
+        "#suffix"=>'</div>',
+    );
+   $form['container']['header'] = array(
+        '#markup' => '<div class="head"><img src ="'.base_path().drupal_get_path('module', 'pccontact') . '/img/logo.png"><span class="close"></span></div>',
+    );
+    $form['container']['popup'] = array(
         "#prefix"=>'<fieldset>',
         "#suffix"=>'</fieldset>',
         );
     
-    $form['header'] = array(
-        '#markup' => '<d class="head"><img src ="img/logo.png"></div>',
-    );
   
-    $form['popup']['description'] = array(
-        '#markup' =>'<h3>Je souhaite être rappelé(e)</h3>
+    $form['container']['popup']['description'] = array(
+        '#markup' =>'<div id="popupContent"><h3>Je souhaite être rappelé(e)</h3>
                       <p>Merci de remplir le formulaire suivant afin qu\'un opérateur <br /> 
                       FLYER puisse prendre contact avec vous par téléphone.</p>',
     ); 
 
-    $form['popup']['nom'] = array(
+    $form['container']['popup']['nom'] = array(
         '#type' => 'textfield',
         '#required' => TRUE,
         '#title' => t('Nom'),
-        '#default_value' => $customer ? $customer->name : '',
-        '#attributes' => array('data-nameError' => t('name is required'))
+        '#attributes' => array('data-nameError' => t('name is required')),
+        '#prefix' => '<div class="edit-nom">',
+        '#suffix' => '<span class="required">'.t('name is required').'</span></div>',
     );
-      $form['popup']['prenom'] = array(
+      $form['container']['popup']['prenom'] = array(
         '#type' => 'textfield',
         '#required' => TRUE,
         '#title' => t('Prénom'),
-        //'#default_value' => $customer ? $customer->name : '',
-        '#attributes' => array('data-nameError' => t('name is required'))
+        '#attributes' => array('data-nameError' => t('name is required')),
+        '#prefix' => '<div class="edit-prenom">',
+        '#suffix' => '<span class="required">'.t('last name is required').'</span></div>',
     );
-    $form['popup']['telephone'] = array(
+    $form['container']['popup']['telephone'] = array(
         '#type' => 'textfield',
         '#required' => TRUE,
         '#title' => t('Téléphone'),
-        '#default_value' => $customer ? $customer->phone : '',
-        '#attributes' => array('data-phoneError' => t('phone is required'))
+        '#attributes' => array('data-phoneError' => t('phone is required')),
+        '#prefix' => '<div class="edit-telephone">',
+        '#suffix' => '<span class="required">'.t('phone is required').'</span></div>',
     );
-    $form['popup']['email'] = array(
+    $form['container']['popup']['email'] = array(
         '#type' => 'textfield',
         '#required' => TRUE,
         '#title' => t('Adresse email'),
-        '#default_value' => $customer ? $customer->email : '',
-        '#attributes' => array('data-mailError' => t('email is required'))
+        '#attributes' => array('data-mailError' => t('email is required')),
+        '#prefix' => '<div class="edit-email">',
+        '#suffix' => '<span class="required">'.t('email is required').'</span></div>',
     );
   
-    $form['popup']['error'] = array(
-      '#markup' =>'<p class="required-msg">Les champs avec un astérisque (<span class="required">*</span>) sont à remplir obligatoirement.</p>',
+    $form['container']['popup']['error'] = array(
+      '#markup' =>'<p class="required-msg">Les champs avec un astérisque (<span class="required">*</span>) sont à remplir obligatoirement.</p></div>',
     );  
     
-$form['actions'] = array(
+$form['container']['actions'] = array(
       '#type' => 'actions',
   );
 
-  $form['actions']['submit'] = array(
-      '#prefix' => '<div id="submit">',
+  $form['container']['actions']['submit'] = array(
+      '#prefix' => '<div class="submit">',
       '#type' => 'submit',
       '#value' => t('ENVOYER'),
+      '#id'=>'submit',
       "#suffix"=>'</div>'
   );
-//  $form_state['cache'] = TRUE;
+
+  $form['container']['popup']['messageSent']  =array(
+        '#markup' => '<div id="messageSent"><h3>VOTRE DEMANDE A BIEN ÉTÉ PRISE EN COMPTE !</h3><p>Un conseiller vous répondra dans les plus brefs délais.
+Nous vous remercions de votre confiance.</p><p class="orange">
+Vous avez reçu un email de confirmation</p></div>'
+  );
+
   $form['#id'] = 'pccontact_popup_form';
   $form['#attributes'] = array('data-globalError' => t('fields are required'));
   return $form;
 }
-function pccontact_popup_form_submit($form, &$form_state) {
-    if (isset($form_state['build_info']['args'][0])) {
-      $key = $form_state['build_info']['args'][0];
-    } else {
-      $key = 'popup';
-    }
-
-    $send = TRUE;
-    $result = drupal_mail('pccontact', $key, variable_get('pccontact_email', 'nabil.b@oneoweb.com'),
-                      '', $form_state['values'],NULL, $send); 
-    
-    $sendMeail = FALSE;
-    if ($result['result'] == TRUE) {
-        $sendMeail = TRUE;
-        drupal_set_message(t('Your message has been sent.'));
-    } else {
-        drupal_set_message(t('Your message has  not been sent'), 'error');
-    }
+function pccontact_popup_form_validate($form, &$form_state) {
+  if (!valid_email_address($form_state['values']['email'])) {
+    form_set_error('email', t('E-mail address is not valid'));
+  }
 }
+function pccontact_popup_ajax_submit() {
+ 
+    print_r($_POST);
+    
+//    $result = drupal_mail('pccontact', t('Je souhaite être rappelé(e)'), variable_get('pccontact_email', 'nabil.b@oneoweb.com,n_bentounsi@yahoo.com'), NULL, $form_state['values'],NULL,TRUE);
+//
+//    if ($result['result'] == TRUE) {
+//        drupal_set_message(t('Your message has been sent.'));
+//    } else {
+//        drupal_set_message(t('Your message has  not been sent'), 'error');
+//    }
+  
+}
+//function pccontact_popup_form_submit($form, &$form_state) {
+// 
+//    $result = drupal_mail('pccontact', t('Je souhaite être rappelé(e)'), variable_get('pccontact_email', 'nabil.b@oneoweb.com,n_bentounsi@yahoo.com'), NULL, $form_state['values'],NULL,TRUE);
+//
+//    if ($result['result'] == TRUE) {
+//        drupal_set_message(t('Your message has been sent.'));
+//    } else {
+//        drupal_set_message(t('Your message has  not been sent'), 'error');
+//    }
+//  
+//}
 // general form 
 
 function pccontact_general_form($form, &$form_state, $key = 'general') {

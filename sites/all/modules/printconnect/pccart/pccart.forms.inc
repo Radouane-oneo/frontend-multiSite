@@ -41,7 +41,16 @@ function getPreflight($jobId) {
 
 function pccart_cart_form2($form, &$form_state) {
     global $language;
-
+    
+    $cart = Factory::Current();
+    $endarray = end($cart->orderItems);
+    if($cart->supplementProduct == 1 || $endarray->price == 43){
+        $endarray = printconnect\Carts\Factory::GetItem($cart, $endarray->id);
+        $endarray = printconnect\Carts\Factory::LoadItem($endarray);
+        $endarray->price = 10;
+        printconnect\Carts\Factory::SaveItem($endarray);   
+    }
+    
     $cart = Factory::Current(FALSE);
     // delete fotolias data on backend
     Factory::deleteFotolias($cart);
@@ -81,6 +90,9 @@ function pccart_cart_form2($form, &$form_state) {
     $emailDesigner = FALSE;
 
     if (!$cart || !$cart->isFilled) {
+ 
+        
+        
         $form['empty'] = array(
             '#type' => 'container',
             '#attributes' => array('class' => array('box')),
@@ -133,7 +145,46 @@ function pccart_cart_form2($form, &$form_state) {
             '#items' => $items,
         );
     } else {
-       
+        
+       $form['popup_overlay'] = array(
+            '#prefix' => '<div id="popup_overlay" class="popin_overlay"><div id="lean_info"><div class="headpopin">
+			<span>Profitez de notre offre exclusive !</span></div>',
+             '#suffix' => '</div><div id="lean_overlay"></div></div>',
+        );
+         $form['popup_overlay']['cont'] = array(
+'#prefix' => '<div class="containerbg">',
+             '#suffix' => '</div>',
+        );
+         
+         
+        $form['popup_overlay']['cont']['info'] = array(
+            '#type' => 'item',
+            '#markup' => '<p><span class="icone"></span>
+ 	    <strong>Rajoutez</strong> <span class="priceing">10 €</span> à votre commande
+		et recevez <span class="priceing">250 </span><strong>cartes de visite.</strong>
+		La créa vous est offerte*</p>',
+        );
+        
+        $form['popup_overlay']['cont']['ok'] = array(
+            '#type' => 'submit',
+            '#submit' => array('pccart_cart_form2_popup_overlay_ok_submit'),
+            '#value' => t('ok'),
+            
+        );
+        $form['popup_overlay']['cont']['no'] = array(
+            '#type' => 'submit',
+            '#value' => t('no'),
+            '#submit' => array('pccart_cart_form2_submit'),
+            '#attributes' => array('class' => array('cancel')),
+        );
+       $form['popup_overlay']['cont']['test'] = array('#markup' => ' <ul>
+ 		<li class="coloriz">*Validité de l’offre</li>
+		<li>• Offre valable du 1er au 07 Septembre 2014.</li>
+		<li>* Carte de visite premium - papier 400 g maco mat</li>
+		<li>* Créa gratuite disponible dans la rubrique “Nos modèles”.</li>
+	</ul>', );
+
+        
         $form['cart'] = array(
             '#type' => 'container',
             '#title' => t('Shopping cart'),
@@ -1007,6 +1058,15 @@ function pccart_cart_form2_validate($form, &$form_state) {
             break;
     }
 }
+function pccart_cart_form2_popup_overlay_ok_submit($form, &$form_state) {
+    $cart = Factory::Current();
+    if($cart->supplementProduct == 0){
+     $cart->supplementProduct = 1;
+    \printconnect\Carts\Factory::Save($cart);
+    drupal_goto($GLOBALS['base_url'].'/cart/add/%7B%22items%22%3A%5B%7B%22productPriceGroupId%22%3A8476%2C%22quantity%22%3A250%2C%22vat%22%3A%220.2100%22%7D%5D%7D');
+  
+    }
+}
 
 function pccart_cart_form2_submit($form, &$form_state) {
     global $conf;
@@ -1092,7 +1152,7 @@ function pccart_cart_form2_submit($form, &$form_state) {
         }
     }
     $cart->shipping_type = $form_state['values']['cart']['shipping']['type'];
-    //new ref
+
     $referenceValue = $form_state['values']['cart']['reference']['input']; 
     $cart->customer_reference = $referenceValue;
     \printconnect\Carts\Factory::Save($cart);

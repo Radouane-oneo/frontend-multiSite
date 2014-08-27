@@ -228,7 +228,7 @@ a:hover, a:active {
 	text-decoration: underline
 }
 .page-templates h1 {
-	padding-top: 10px !important;
+	padding-top: 0;
 }
 h1, h2, h3, h4, h5, h6 {
 	margin: 0;
@@ -1380,9 +1380,9 @@ a.button.cart .ui-button-text {
 	padding: 0 0 0 10px;
 	height: 296px;
 	left: 0;
-	margin-bottom: -70px;
+	margin-bottom: -67px;
 	position: relative;
-	top: -78px;
+	top: -75px;
 	color: #fff;
 	border: 0;
 }
@@ -7593,7 +7593,7 @@ div.myoffers table.list thead tr th:nth-child(2){
 	color: #666666;
 }
 
-.info-bloc #magical-modal-link a{
+.info-bloc a.popupOverlay2{
 	font-size: 12px;
 	color: #666666;
 	line-height: 14px;
@@ -8318,4 +8318,147 @@ ul.ui-autocomplete{
 	height: 288px;
 	overflow: hidden;
 	margin-bottom: 10px;
+}
+
+/* popup cart*/
+#lean_overlay {
+position: fixed;
+z-index:100;
+top: 0px;
+left: 0px;
+height:100%;
+width:100%;
+background: #000;
+opacity: 0.5;
+}
+#lean_info{
+position: absolute;
+z-index: 2100;
+background-color: #FFF;
+border-radius: 4px;
+width: 534px;
+margin: 0 auto;
+left: 0px;;
+}
+
+#popup_overlay {
+display :none;
+padding-left: 250px;
+padding-right: 250px;
+}
+.page-show{
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	overflow: hidden;
+	clear: both;
+	margin-bottom: 20px;
+}
+.page-show > img{
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+a.seemore{
+	display: inline-block;
+	color: #ff6600;
+	font-size: 13px;
+	padding-left: 10px;
+	background: url(images/plus.png) no-repeat 0 center;
+}
+.lp-container h2.title{
+	background: url(images/icone_title.png) no-repeat 0 center;
+	padding-left: 20px;
+
+}
+
+#popup_overlay.popin_overlay{
+    padding: 0;
+    width: 612px;
+    overflow: hidden;
+}
+.popin_overlay .form-type-item{
+    margin: 0;
+}
+
+#popup_overlay.popin_overlay #lean_info{
+    left: 5%;
+    width: 613px;
+    top: 70px;
+}
+
+.containerbg input.form-submit{
+    background: url(images/submit.png) no-repeat;
+    float: left;
+    width: 171px;
+    height: 41px;
+    float: left;
+    padding: 0;
+    margin: 0;
+    font-size: 0;
+}
+.containerbg input.form-submit.cancel{
+    background: url(images/cancel.png) no-repeat;
+    float: left;
+    width: 107px;
+    height: 35px;
+    float: left;
+    padding: 0;
+    margin: 3px 0 0 5px;
+    font-size: 0;
+}
+.containerbg{
+    padding : 18px 35px 15px 270px;
+    background: url(images/bg_pop_panier.jpg) no-repeat 0;
+}
+.headpopin{
+    padding: 18px;
+    border: 1px solid #181818;
+    font-weight: 600;
+    background: #333333;
+}
+.headpopin span{
+    font-size: 20px;
+    color: #ff6600;
+}
+.containerbg p{
+    color: #353535;
+    font-size: 18px;
+    line-height: 22px;
+    margin: 0 0 18px;
+    font-weight: bold;
+}
+.containerbg p strong{
+    color: #000000;
+    font-weight: bold;
+}
+.containerbg p .priceing{
+    color: #ff6600;
+    font-weight: bold;
+}
+.containerbg ul{
+    clear: both;
+    padding: 15px 0 0;
+    margin: 0;
+}
+.containerbg ul li{
+    color: #777777;
+    font-size: 11px;
+    line-height: 13px;
+    list-style: none;
+    margin-bottom: 3px;
+}
+.containerbg ul li.coloriz{
+    color: #ff6600;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.containerbg span.icone{
+    background:url(images/iconegreen.png) no-repeat 0 0;
+    float:left;
+    width:17px;
+    height:17px;
+    margin-top: 3px;margin-right: 3px;
 }

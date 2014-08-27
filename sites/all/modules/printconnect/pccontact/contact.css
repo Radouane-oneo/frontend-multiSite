@@ -395,3 +395,10 @@ margin-top: 14px;
     color: #ea5b0c;
     margin-bottom: 0;
 }
+
+.popin_overlay .errorForms{
+    top: auto;
+    bottom: 20px;
+    right: 15px;
+    margin: 0;
+}

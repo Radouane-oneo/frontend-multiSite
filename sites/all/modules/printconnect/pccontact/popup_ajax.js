@@ -22,23 +22,23 @@ jQuery(document).ready(function ($) {
 //    });  
   
   
-  
-    $("#sendme").live('click', function(){	
-
-                    $.ajax({			
-                        type: "GET",
-                        url:Drupal.settings.basePath+'popup/ajax',
-                        dataType: 'json',	
-                        data: 'nom='+$('#edit-nom').val()+'&prenom='+$('#edit-prenom').val()+'&phone='+$('#edit-telephone').val()+'&email='+$('#edit-email').val(),
-                        contentType: "application/json",
-                        success: function(res) {		
-                                alert(res.data);
-                        },
-                        error: function(xhr, status) {  			
-                                alert('Unknown ' + status); 					
-                        }
-                    });							
-                   				
-           				
-    });
+//  
+//    $("#sendme").live('click', function(){	
+//
+//                    $.ajax({			
+//                        type: "GET",
+//                        url:Drupal.settings.basePath+'popup/ajax',
+//                        dataType: 'json',	
+//                        data: 'nom='+$('#edit-nom').val()+'&prenom='+$('#edit-prenom').val()+'&phone='+$('#edit-telephone').val()+'&email='+$('#edit-email').val(),
+//                        contentType: "application/json",
+//                        success: function(res) {		
+//                                alert(res.data);
+//                        },
+//                        error: function(xhr, status) {  			
+//                                alert('Unknown ' + status); 					
+//                        }
+//                    });							
+//                   				
+//           				
+//    });
 });

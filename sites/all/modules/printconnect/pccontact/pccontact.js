@@ -55,6 +55,7 @@ jQuery(document).ready(function (e) {
             
             jQuery('.info-bloc #popup_overlay2 #messageSent').hide();
             jQuery('.info-bloc #popup_overlay2 span.required').hide();
+            jQuery('.info-bloc #popup_overlay2 span.required2').hide();
             jQuery('.info-bloc #popup_overlay2 input:text').removeClass('error');
             jQuery('.info-bloc #popup_overlay2').show();
             jQuery('.info-bloc #popup_overlay2 #popupContent').show(); 
@@ -83,10 +84,12 @@ jQuery(document).ready(function (e) {
 
             }else if (!phoneReg.test( phone ) ) {                                   
                     jQuery('#edit-telephone').addClass('error'); 
-                    jQuery('.edit-telephone span.required').show();
+                    jQuery('.edit-telephone span.required2').show();
+                    
             }else if ( !emailReg.test( email ) ) {                                     
                     jQuery('#edit-email').addClass('error');  
-                    jQuery('.edit-email span.required').show();
+                    jQuery('.edit-email span.required2').show();
+                   
             }else{
                         jQuery.ajax({			
                         type: "GET",
@@ -125,6 +128,7 @@ jQuery(document).ready(function (e) {
  
         if( jQuery("#"+id).val() === ""){            
             jQuery("#"+id).addClass('error');
+            jQuery("."+id+' span.required2').hide();
             jQuery("."+id+' span.required').show();
             return false;
         }else{                 

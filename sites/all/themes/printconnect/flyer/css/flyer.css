@@ -8327,13 +8327,14 @@ background: #000;
 opacity: 0.5;
 }
 #lean_info{
-position: absolute;
+position: fixed;
 z-index: 2100;
 background-color: #FFF;
 border-radius: 4px;
 width: 534px;
 margin: 0 auto;
-left: 0px;;
+top: -150px;
+left: 23px;
 }
 
 #popup_overlay {
@@ -8378,9 +8379,9 @@ a.seemore{
 }
 
 #popup_overlay.popin_overlay #lean_info{
-    left: 5%;
+    left: 28%;
     width: 613px;
-    top: 70px;
+    top: 120px;
 }
 
 .containerbg input.form-submit{
@@ -8456,4 +8457,14 @@ a.seemore{
     width:17px;
     height:17px;
     margin-top: 3px;margin-right: 3px;
+}
+
+.closeme{
+    background: url(images/X.png);
+    display: block;
+    width: 32px;
+    height: 36px;
+    cursor: pointer;
+    float: right;
+    margin: -6px -8px 0 0;
 }

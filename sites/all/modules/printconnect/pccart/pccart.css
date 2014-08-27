@@ -234,3 +234,28 @@ float: right;
     right: 30px;
     top: -11px;
 }
+
+.fotolia-items, .preflight-items{
+    float: left;
+    margin-left: -9px;
+    padding-left: 9px;
+    width: 100%;   
+}
+
+.fotolia-items ul, .preflight-items ul {
+    margin: 0;
+}
+
+.fotolia-items ul li, .preflight-items ul li{
+    list-style: none outside none;
+    padding-left: 40px;
+    margin: 0;
+}
+
+.fotolia-price {
+    color: #FF6600;
+    float: right;
+    font-size: 15px;
+    margin-right: 10px;
+    font-weight: bold;
+}

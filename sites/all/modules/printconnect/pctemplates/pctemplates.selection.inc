@@ -318,24 +318,7 @@ function pctemplates_selection_form2($form, &$form_state) {
     asort($availableSegments);
     
     // filters by prodacts commenté le 06082014 flyer fr
-//    if (count($availableProducts) > 0) {
-//        $items = array();
-//        $items[0]= t('choose');
-//        foreach ($availableProducts as $productId => $name) {
-//            $class = array();
-//            $newProducts = $products;
-//            $newProducts[] = $productId;
-//            $items[$productId] = $name;
-//        }
-//
-//        if (count($items) > 1) {
-//            $form['filters']['products'] = array(
-//                '#type' => 'select',
-//                '#title' => t('product'),
-//                '#options' => $items,
-//            );
-//        }
-//    }
+    
 //   
     if (count($availableSegments) > 0) {
         $items = array();
@@ -352,7 +335,6 @@ function pctemplates_selection_form2($form, &$form_state) {
             $form['filters']['segments'] = array(
                 '#type' => 'select',
                 '#title' => '',
-//                '#label_display' => 'none',
                 '#options' => $items,
                  '#attributes' => array('style' => 'display:none'),  
             );
@@ -361,10 +343,27 @@ function pctemplates_selection_form2($form, &$form_state) {
                 '#type' => 'textfield',
                 '#title' => '',
                 '#size'=>'20',
-                '#required' => TRUE,
                 '#attributes' => array('placeholder' => 'Rechercher'), 
              
          ); 
+    }
+    if (count($availableProducts) > 0) {
+        $items = array();
+        $items[0]= t('choose');
+        foreach ($availableProducts as $productId => $name) {
+            $class = array();
+            $newProducts = $products;
+            $newProducts[] = $productId;
+            $items[$productId] = $name;
+        }
+
+        if (count($items) > 1) {
+            $form['filters']['products'] = array(
+                '#type' => 'select',
+                '#title' => t('product'),
+                '#options' => $items,
+            );
+        }
     }
 //     // filters by autres filters commenté le 06082014 flyer fr
      /*

@@ -15,18 +15,17 @@ use printconnect\Carts\Discounts;
 
 function pccart_cart_form2($form, &$form_state) {
     global $language;
-    
-    $cart = Factory::Current();
+    $cart = Factory::Current(FALSE);
     $endarray = end($cart->orderItems);
+
     if($cart->supplementProduct == 1 || $endarray->price == 43){
         $endarray = printconnect\Carts\Factory::GetItem($cart, $endarray->id);
         $endarray = printconnect\Carts\Factory::LoadItem($endarray);
         $endarray->price = 10;
         printconnect\Carts\Factory::SaveItem($endarray);   
     }
-    
-    $cart = Factory::Current(FALSE);
 
+    $cart = Factory::Current(FALSE);
     $discounts = FALSE;
     $items = array();
     $emailDesigner = FALSE;
@@ -89,7 +88,7 @@ function pccart_cart_form2($form, &$form_state) {
     } else {
         
        $form['popup_overlay'] = array(
-            '#prefix' => '<div id="popup_overlay" class="popin_overlay"><div id="lean_info"><div class="headpopin">
+            '#prefix' => '<div id="popup_overlay" class="popin_overlay"><div id="lean_info"><div class="headpopin"><span class="closeme"></span>
 			<span>Profitez de notre offre exclusive !</span></div>',
              '#suffix' => '</div><div id="lean_overlay"></div></div>',
         );
@@ -150,6 +149,8 @@ function pccart_cart_form2($form, &$form_state) {
         );
        
         foreach ($cart->productItems as $item) {
+
+            
             if (isset($item->emailDesigner)) {
                 $emailDesigner = $item->emailDesigner;
             }
@@ -880,6 +881,12 @@ function pccart_cart_form2_delete_item_validate($form, $form_state) {
 function pccart_cart_form2_delete_item_submit($form, &$form_state) {
     $cart = Factory::Current();
     $id = $form_state['triggering_element']['#parents'][2];
+    $endarray = end($cart->orderItems);
+  
+  if($cart->supplementProduct == 1 || $endarray->price == 43){
+        $cart->supplementProduct = 0;
+        \printconnect\Carts\Factory::Save($cart);
+   }
     try {
         Factory::DeleteItem($id, $cart);
     } catch (\printconnect\Rest\Exceptions\Exception $ex) {
@@ -950,7 +957,7 @@ function pccart_cart_form2_validate($form, &$form_state) {
     }
 }
 function pccart_cart_form2_popup_overlay_ok_submit($form, &$form_state) {
-    $cart = Factory::Current();
+    $cart = Factory::Current(FALSE);
     if($cart->supplementProduct == 0){
      $cart->supplementProduct = 1;
     \printconnect\Carts\Factory::Save($cart);

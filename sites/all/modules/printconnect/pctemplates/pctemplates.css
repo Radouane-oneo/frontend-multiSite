@@ -364,7 +364,7 @@
 	display: none;
 }
 #pctemplates-selection-form .form-type-select{
-	display: none;
+	/*display: none;*/
 }
 #pctemplates-selection-form .form-item-inputsegments{
 	float: left;

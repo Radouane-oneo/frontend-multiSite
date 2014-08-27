@@ -46,7 +46,8 @@ function pccontact_popup_form($form, &$form_state, $key = 'popup') {
         '#required' => TRUE,
         '#title' => t('Nom'),
         '#default_value' => $customer ? $customer->name : '',
-        '#attributes' => array('data-nameError' => t('name is required'))
+        '#attributes' => array('data-nameError' => t('name is required')),
+        '#markup'=>"<span>name is required</span>",
     );
       $form['container']['popup']['prenom'] = array(
         '#type' => 'textfield',

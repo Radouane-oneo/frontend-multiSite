@@ -11,10 +11,10 @@ use printconnect\Drupal\Functions;
  */
 
 function pccontact_init() {
-    //drupal_add_js(drupal_get_path('module', 'pccontact') . '/popup_ajax.js');
+    drupal_add_js(drupal_get_path('module', 'pccontact') . '/popup_ajax.js');
 }
 function pccontact_perm () {
-  return array('access pccontact via ajax',);
+  return array('access pccontact',);
 }
 function pccontact_menu() {
   $items['mailme/%/%'] = array(
@@ -62,11 +62,12 @@ function pccontact_menu() {
 //      'file' => 'pccontact.forms.inc',
 //  );
    $items['popup/ajax'] = array(
-        'title' => t('je souhaite etre appelé'),
-        'page callback' => 'pccontact_ajax_callback',    
-        'access arguments' => array('access pccontact via ajax'),
-        'type' => MENU_CALLBACK,
+        'page callback' => 'ajax_back',
+        'access callback' => TRUE,	
+        'access arguments' => array('access content'),		
+        'type' => MENU_CALLBACK		
     );
+   
    
   $items['contact/stores'] = array(
       'title' => 'Contact',
@@ -495,9 +496,57 @@ function pccontact_contact_form_submit($form, &$form_state) {
 function pccontact_contact_form_callback($form, &$form_state) {
   return $form;
 }
-function pccontact_ajax_callback(){
-    if (empty($_POST["js"])){ die(); }
-  $result = array('msg' => 'my_module_example - hello from php','valid' => true);
-  drupal_json($result);
-  exit();
+function ajax_back(){
+    
+      if( isset($_GET['nom']) && !empty($_GET['nom']) ){
+        
+
+        $my_module = 'pccontact';
+        $my_mail_token = 'fr-fr';
+        $from = 'nabil.b@oneoweb.com';
+      
+        $body = '<br/><b>' . t('Contact') . '</b>: ';
+        $body .= $_GET['nom'].' '.$_GET['prenom'];
+        $body .= '<br/><b>' . t('Telephone') . '</b>: ';
+        $body .= $_GET['phone'];
+        $body .= '<br/><b>' . t('Email') . '</b>: ';
+        $body .= $_GET['email'].' <br/>';
+        
+        
+      
+        $message = array(
+         'id' => $my_module . '_' . $my_mail_token,
+         'to' => 'n_bentounsi@yahoo.com',
+         'subject' => 'Je souhaite etre rappele(e)',
+         'body' =>  $body,
+         'headers' => array(
+           'From' => $from,
+           'Sender' => $from,
+           'Return-Path' => $from,
+            'MIME-Version' => '1.0',
+            'Content-Type' => 'text/html; charset=iso-8859-1; format=flowed',
+            'Content-Transfer-Encoding' => '8Bit',
+            'X-Mailer' => 'Drupal',
+         ),
+        );  
+
+        $system = drupal_mail_system($my_module, $my_mail_token);
+      //  $message = $system->format($message);
+        
+        if ($system->mail($message)) {
+          $data = true;
+        }
+        else {
+          $data = false;
+        }
+        
+      }else{
+          
+          $data = false;
+          
+      }
+        
+       
+    drupal_json_output(array( 'data' => $data));
+
 }

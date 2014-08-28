@@ -8334,7 +8334,7 @@ ul.ui-autocomplete{
 /* popup cart*/
 #lean_overlay {
 position: fixed;
-z-index:100;
+z-index:200;
 top: 0px;
 left: 0px;
 height:100%;
@@ -8358,6 +8358,8 @@ display :none;
 padding-left: 250px;
 padding-right: 250px;
 }
+
+
 .page-show{
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -8484,3 +8486,4 @@ a.seemore{
     float: right;
     margin: -6px -8px 0 0;
 }
+

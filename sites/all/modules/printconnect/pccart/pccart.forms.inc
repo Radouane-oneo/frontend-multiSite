@@ -18,7 +18,7 @@ function pccart_cart_form2($form, &$form_state) {
     $cart = Factory::Current(FALSE);
     $endarray = end($cart->orderItems);
 
-    if($cart->supplementProduct == 1 || $endarray->price == 43){
+    if($cart->supplementProduct == 1 && $endarray->price == 43){
         $endarray = printconnect\Carts\Factory::GetItem($cart, $endarray->id);
         $endarray = printconnect\Carts\Factory::LoadItem($endarray);
         $endarray->price = 10;
@@ -32,8 +32,6 @@ function pccart_cart_form2($form, &$form_state) {
 
     if (!$cart || !$cart->isFilled) {
  
-        
-        
         $form['empty'] = array(
             '#type' => 'container',
             '#attributes' => array('class' => array('box')),
@@ -1095,7 +1093,7 @@ function pccart_cart_form2_submit($form, &$form_state) {
     $cart->customer_reference = $referenceValue;
     \printconnect\Carts\Factory::Save($cart);
     \printconnect\Carts\Factory::Refresh($cart);
-    //Factory::Save($cart);
+    drupal_goto('checkout');
 }
 
 function pccart_cart_form_filecheck_callback($form, &$form_state) {

@@ -353,23 +353,23 @@ function pccheckout_form_pccart_cart_form2_alter(&$form, $form_state, $form_id) 
     }
 }
 
-function pccheckout_pccart_cart_form2_validate($form, $form_state) {
-  $cart = Carts\Factory::Current(FALSE);
- //ne pas supprimer c pour tva6%
-//    foreach($cart->orderItems as $orderItem){
-//       if ($form_state['values']['cart']['items'][$orderItem]['description']['tva']['case'] == 1){
-//          $orderItem->vat = 0.06;
-//          $orderItem->priceIncVAT = $orderItem->price * (1 + 0.06);
-//       }  
-//    }
-//   
-//  \printconnect\Carts\Factory::Save($cart);
-//  \printconnect\Carts\Factory::Refresh($cart);
-}
-
-function pccheckout_pccart_cart_form2_submit($form, $form_state) {
-  drupal_goto('checkout');
-}
+//function pccheckout_pccart_cart_form2_validate($form, $form_state) {
+//  $cart = Carts\Factory::Current(FALSE);
+// //ne pas supprimer c pour tva6%
+////    foreach($cart->orderItems as $orderItem){
+////       if ($form_state['values']['cart']['items'][$orderItem]['description']['tva']['case'] == 1){
+////          $orderItem->vat = 0.06;
+////          $orderItem->priceIncVAT = $orderItem->price * (1 + 0.06);
+////       }  
+////    }
+////   
+////  \printconnect\Carts\Factory::Save($cart);
+////  \printconnect\Carts\Factory::Refresh($cart);
+//}
+//
+//function pccheckout_pccart_cart_form2_submit($form, $form_state) {
+//  drupal_goto('checkout');
+//}
 
 function _pccheckout_set_callback($property, $value) {
   if ($property == 'shipping') {

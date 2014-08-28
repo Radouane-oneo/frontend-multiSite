@@ -8498,5 +8498,6 @@ max-height: 247px !important;
 }
 .type_product-selectBox-dropdown-menu li{
 float:none !important;
+overflow-x: hidden;
 }
 

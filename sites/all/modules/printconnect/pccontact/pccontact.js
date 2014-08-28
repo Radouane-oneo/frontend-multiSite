@@ -67,30 +67,14 @@ jQuery(document).ready(function (e) {
             jQuery('.info-bloc #popup_overlay2 #edit-actions').hide(); 
         });
         jQuery('#pccontact_popup_form').submit(function () {
-  
-            var phone = jQuery('#pccontact_popup_form').find('#edit-telephone').val();
-            var email = jQuery('#pccontact_popup_form').find('#edit-email').val();
-       
-            var emailReg = /^^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z.]{2,5}$/i;
-            var phoneReg = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
-            	
+	
             nameRes =  errorInput('edit-nom');
             prenomRes = errorInput('edit-prenom');
             telRes = errorInput('edit-telephone');
             emailRes =  errorInput('edit-email');
 
-            if (!nameRes  || !prenomRes || !telRes || !emailRes) {  
-                     //jQuery(document).find('.errorForms').remove();
+            if (nameRes  && prenomRes && telRes && emailRes ) { 
 
-            }else if (!phoneReg.test( phone ) ) {                                   
-                    jQuery('#edit-telephone').addClass('error'); 
-                    jQuery('.edit-telephone span.required2').show();
-                    
-            }else if ( !emailReg.test( email ) ) {                                     
-                    jQuery('#edit-email').addClass('error');  
-                    jQuery('.edit-email span.required2').show();
-                   
-            }else{
                         jQuery.ajax({			
                         type: "GET",
                         url:Drupal.settings.basePath+'popup/ajax',
@@ -117,9 +101,7 @@ jQuery(document).ready(function (e) {
                                 jQuery('.info-bloc #popup_overlay2 #messageSent').show();
                         }
                         });
-                        
-                       
- 
+  
             }	
                return false;  
     });
@@ -131,10 +113,38 @@ jQuery(document).ready(function (e) {
             jQuery("."+id+' span.required2').hide();
             jQuery("."+id+' span.required').show();
             return false;
-        }else{                 
+        }else{   
+            var mail = true; 
+            var tel = true;
+            var emailReg = /^^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z.]{2,5}$/i;
+            var phoneReg = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
             jQuery("#"+id).removeClass('error');
             jQuery("."+id+' span.required').hide();
-            return true;
+            // test tel valid
+            if( id === "edit-telephone"){ 
+                if (!phoneReg.test( jQuery("#"+id).val() ) ) {                                   
+                    jQuery('#edit-telephone').addClass('error'); 
+                    jQuery('.edit-telephone span.required2').show();
+                    tel = false;
+                }else {  
+                    jQuery('.edit-telephone span.required2').hide();
+                    tel = true;
+                }
+            }
+            // test email valid
+            if( id === "edit-email"){ 
+                if ( !emailReg.test( jQuery("#"+id).val() )  ) {                                     
+                    jQuery('#edit-email').addClass('error');  
+                    jQuery('.edit-email span.required2').show(); 
+                    mail = false;
+                }else {
+                    jQuery('.edit-email span.required2').hide();
+                    mail = true;
+                }
+            }
+            if(mail && tel) return true;
+            else return false;
+            
         }
     };
     

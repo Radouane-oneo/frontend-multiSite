@@ -823,7 +823,47 @@ function pccart_cart_form2($form, &$form_state) {
     $form['#cache'] = TRUE;
     $form['#tree'] = TRUE;
     $form['#id'] = 'pccart-cart-form';
+    
+     /* Start bloc TOP produits */
+    
+        $form['products'] = array(
+            '#type' => 'fieldset',
+            '#title' => t('Top products'),
+            '#attributes' => array('class' => array('products')),
+        );
 
+        $items = array();
+        $products = \printconnect\Products\Factory::GetTop();
+
+        foreach ($products as $product) {
+            $build = array();
+
+            $build['image'] = array(
+                '#theme' => 'image',
+                '#path' => printconnect_getimage('products', $product->id),
+            );
+            $build['name'] = array(
+                '#type' => 'container',
+                '#attributes' => array('class' => array('text')),
+                'content' => array(
+                    '#markup' => $product->name,
+                ),
+            );
+
+            $items[] = array(
+                'data' => l(drupal_render($build), 'products/' . $product->id, array('html' => true, 'title' => $product->name)),
+            );
+
+            if (count($items) >= 6) {
+                break;
+            }
+        }
+
+        $form['products']['list'] = array(
+            '#theme' => 'item_list',
+            '#items' => $items,
+        );
+   /* END bloc TOP produits */
     return $form;
 }
 

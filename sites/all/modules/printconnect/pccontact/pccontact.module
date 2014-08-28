@@ -55,11 +55,11 @@ function pccontact_menu() {
       'access arguments' => array('access content'),
       'file' => 'pccontact.forms.inc',
   );
-//   $items['popup/sendmail'] = array(
-//      'title' => 'Send mail test',
-//      'page callback' => 'sendmail',
-//      'access arguments' => array('access content'),
-//  );
+   $items['popup/sendmail'] = array(
+      'title' => 'Send mail test',
+      'page callback' => 'sendmail',
+      'access arguments' => array('access content'),
+  );
    $items['popup/ajax'] = array(
         'page callback' => 'ajax_back',
         'access callback' => TRUE,	
@@ -499,24 +499,29 @@ function ajax_back(){
     
       if( isset($_GET['nom']) && !empty($_GET['nom']) ){
    
- 
-        $body = '<br/><b>' . t('Contact') . '</b>: ';
+    $body  = '<div id="messageSent" style="display: block;text-align: center;">
+                    <h3>VOTRE DEMANDE A BIEN ÉTÉ PRISE EN COMPTE !</h3>
+                    <p>Un conseiller vous répondra dans les plus brefs délais.
+                    Nous vous remercions de votre confiance.</p><p class="orange">
+                    Vous avez reçu un email de confirmation</p>
+                    </div>';
+        $body .= '<p><br/><b>' . t('Contact') . '</b>: ';
         $body .= $_GET['nom'].' '.$_GET['prenom'];
-        $body .= '<br/><b>' . t('Telephone') . '</b>: ';
+        $body .= '<br/><b>' . t('Téléphone') . '</b>: ';
         $body .= $_GET['phone'];
-        $body .= '<br/><b>' . t('Email') . '</b>: ';
-        $body .= $_GET['email'].' <br/>';
+        $body .= '<br/><b>' . t('E-mail') . '</b>: ';
+        $body .= $_GET['email'].' <br/></p>';
         
         $my_module = 'pccontact';
         $my_mail_token = microtime();
       
         $from = variable_get('system_mail', 'support@flyer.fr');
-        $to = variable_get('system_mail', 'nabil.b@oneoweb.com,n_bentounsi@yahoo.com');
+        $to = variable_get('system_mail', 'n_bentounsi@yahoo.com');
  
         $message = array(
             'id' => $my_module . '_' . $my_mail_token,
             'to' => $to,
-            'subject' => 'Je souhaite etre rappele(e)',
+            'subject' => 'Je souhaite être rappelé(e)',
             'body' => array($body),
             'headers' => array(
                 'From' => $from,
@@ -552,22 +557,25 @@ function ajax_back(){
 }
 // fonction de test mail 
 function sendmail(){
-    /*
-   $message2  = 'Nom : <br />';
-   $message2 .= 'Prénom : <br />';
-   $message2 .= 'Tél : <br />';
-   $message2 .= 'Email : <br />';
+ 
+   $message2  = '<div id="messageSent" style="display: block;text-align: center;">
+                    <h3>VOTRE DEMANDE A BIEN ÉTÉ PRISE EN COMPTE !</h3>
+                    <p>Un conseiller vous répondra dans les plus brefs délais.
+                    Nous vous remercions de votre confiance.</p><p class="orange">
+                    Vous avez reçu un email de confirmation</p>
+                    </div>';
+  
 
            $my_module = 'pccontact';
            $my_mail_token = microtime();
       
             $from = variable_get('system_mail', 'support@flyer.fr');
-            $to = variable_get('system_mail', 'nabil.b@oneoweb.com,n_bentounsi@yahoo.com');
+            $to = variable_get('system_mail', 'n_bentounsi@yahoo.com');
  
         $message = array(
             'id' => $my_module . '_' . $my_mail_token,
-            'to' => 'n_bentounsi@yahoo.com',
-            'subject' => 'test',
+            'to' => $to,
+            'subject' => 'mail flyer',
             'body' => array($message2),
             'headers' => array(
                 'From' => $from,
@@ -587,5 +595,5 @@ function sendmail(){
            print  'Erreur d\'envoie !';
         }
      
-     */
+  
 }    

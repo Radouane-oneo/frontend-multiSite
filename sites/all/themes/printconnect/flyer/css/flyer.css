@@ -8370,7 +8370,7 @@ padding-right: 250px;
 }
 .page-show > img{
 	display: block;
-	max-width: 100%;
+	/*max-width: 100%;*/
 	height: auto;
 }
 
@@ -8485,5 +8485,18 @@ a.seemore{
     cursor: pointer;
     float: right;
     margin: -6px -8px 0 0;
+}
+
+.type_product-selectBox-dropdown-menu {
+/* background: transparent url("images/NewCalcDropdown.png") no-repeat top left !important; */
+padding: 15px 10px 5px 10px !important;
+width: 340px !important;
+margin-top: -10px !important;
+border-radius: 0 0 4px 4px !important;
+/* box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2) !important; */
+max-height: 247px !important;
+}
+.type_product-selectBox-dropdown-menu li{
+float:none !important;
 }
 

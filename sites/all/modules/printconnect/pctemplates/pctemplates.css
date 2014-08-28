@@ -10,7 +10,7 @@
 	border-radius: 5px;
 	background-color: #f6f6f6;
 	margin-top: 15px;
-	padding-bottom: 15px;
+	padding-bottom: 10px;
 }
 
 #pctemplates-selection-form .intro{
@@ -365,12 +365,22 @@
 }
 #pctemplates-selection-form .form-type-select{
 	/*display: none;*/
+	float: left;
+	width: 245px;
+	padding-right: 10px;
+	border-right: 1px solid #e6e6e6;
+	margin: 10px 10px 0;
+}
+#pctemplates-selection-form .form-type-select select {
+	width:245px;
+}
+#pctemplates-selection-form .form-type-select.form-item-segments{
+	display: none;
 }
 #pctemplates-selection-form .form-item-inputsegments{
 	float: left;
-	width: 490px;
-	margin: 15px 0 0 10px;
-	clear: both;
+	width: 235px;
+	margin: 10px 0 0 0;
 }
 #pctemplates-selection-form .form-item-inputsegments input[type="text"]{
 	display: block;
@@ -397,7 +407,7 @@
 	padding: 11px 20px;
 	border-radius: 5px;
 	border: none;
-	margin: 16px 0 0 10px;
+	margin: 10px 0 0 10px;
 	text-align: left;
 	background:#77b800;
 	background: -webkit-linear-gradient(top, #77b800 0%, #669c02 100%);

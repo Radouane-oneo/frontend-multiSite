@@ -8279,13 +8279,16 @@ ul.ui-autocomplete{
 .count-down .cont_down_txt img{
 	display: block;
 }
-.count-down .jquery-countdown-timer-processed > span{
+.count-down .jquery-countdown-timer-processed > span,
+#countlandingpage .jquery-countdown-timer-processed > span{
 	float: left;
 }
+#countlandingpage .jquery-countdown-timer-processed > span.countDiv,
 .count-down .jquery-countdown-timer-processed > span.countDiv{
 	width: 4px;
 	height: 20px;
 }
+#countlandingpage .jquery-countdown-timer-processed > span > span,
 .count-down .jquery-countdown-timer-processed > span > span{
 	float: left;
 	background-color: #414141;
@@ -8304,6 +8307,19 @@ ul.ui-autocomplete{
 	position: relative;
 	overflow: hidden;
 }
+
+#countlandingpage{
+	margin-top: -9px;
+	margin-left: -3px;
+}
+
+#countlandingpage .jquery-countdown-timer-processed > span > span{
+	width: 20px;
+	height: 30px;
+	line-height: 30px;
+}
+
+#countlandingpage .jquery-countdown-timer-processed span.digit,
 .count-down .jquery-countdown-timer-processed span.digit{
 	position: absolute;
 	display: block;width: 100%;
@@ -8354,7 +8370,7 @@ padding-right: 250px;
 }
 .page-show > img{
 	display: block;
-	max-width: 100%;
+	/*max-width: 100%;*/
 	height: auto;
 }
 
@@ -8469,5 +8485,18 @@ a.seemore{
     cursor: pointer;
     float: right;
     margin: -6px -8px 0 0;
+}
+
+.type_product-selectBox-dropdown-menu {
+/* background: transparent url("images/NewCalcDropdown.png") no-repeat top left !important; */
+padding: 15px 10px 5px 10px !important;
+width: 340px !important;
+margin-top: -10px !important;
+border-radius: 0 0 4px 4px !important;
+/* box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2) !important; */
+max-height: 247px !important;
+}
+.type_product-selectBox-dropdown-menu li{
+float:none !important;
 }
 

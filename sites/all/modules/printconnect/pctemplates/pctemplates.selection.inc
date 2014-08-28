@@ -319,35 +319,12 @@ function pctemplates_selection_form2($form, &$form_state) {
     
     // filters by prodacts commenté le 06082014 flyer fr
     
-//   
-    if (count($availableSegments) > 0) {
-        $items = array();
-        $items[0] = t('choose');
-
-        foreach ($availableSegments as $segmentId => $name) {
-            $items[$segmentId] = str_replace('&amp;', '&', $name);
-        }
-
-        if (count($items) > 1) {
-            $form['filters']['description'] = array(
+//  
+    $form['filters']['description'] = array(
                 '#markup' => "<div class='intro'><h2>Personnaliser un modèle en ligne</h2><p>Des milliers de modèles classés par secteur d'activité, prêts à être personnalisés en ligne.</p></div>", 
-         ); 
-            $form['filters']['segments'] = array(
-                '#type' => 'select',
-                '#title' => '',
-                '#options' => $items,
-                 '#attributes' => array('style' => 'display:none'),  
-            );
-        }
-         $form['filters']['inputsegments'] = array(
-                '#type' => 'textfield',
-                '#title' => '',
-                '#size'=>'20',
-                '#attributes' => array('placeholder' => 'Rechercher'), 
-             
-         ); 
-    }
-    if (count($availableProducts) > 0) {
+         );
+
+  if (count($availableProducts) > 0) {
         $items = array();
         $items[0]= t('choose');
         foreach ($availableProducts as $productId => $name) {
@@ -365,6 +342,34 @@ function pctemplates_selection_form2($form, &$form_state) {
             );
         }
     }
+
+
+    if (count($availableSegments) > 0) {
+        $items = array();
+        $items[0] = t('choose');
+
+        foreach ($availableSegments as $segmentId => $name) {
+            $items[$segmentId] = str_replace('&amp;', '&', $name);
+        }
+
+        if (count($items) > 1) {
+             
+            $form['filters']['segments'] = array(
+                '#type' => 'select',
+                '#title' => '',
+                '#options' => $items,
+                 '#attributes' => array('style' => 'display:none'),  
+            );
+        }
+         $form['filters']['inputsegments'] = array(
+                '#type' => 'textfield',
+                '#title' => '',
+                '#size'=>'20',
+                '#attributes' => array('placeholder' => 'Rechercher'), 
+             
+         ); 
+    }
+  
 //     // filters by autres filters commenté le 06082014 flyer fr
      /*
     foreach ($availableFilters as $filterId => $filter) {

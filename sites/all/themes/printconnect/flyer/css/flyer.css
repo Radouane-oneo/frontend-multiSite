@@ -8279,13 +8279,16 @@ ul.ui-autocomplete{
 .count-down .cont_down_txt img{
 	display: block;
 }
-.count-down .jquery-countdown-timer-processed > span{
+.count-down .jquery-countdown-timer-processed > span,
+#countlandingpage .jquery-countdown-timer-processed > span{
 	float: left;
 }
+#countlandingpage .jquery-countdown-timer-processed > span.countDiv,
 .count-down .jquery-countdown-timer-processed > span.countDiv{
 	width: 4px;
 	height: 20px;
 }
+#countlandingpage .jquery-countdown-timer-processed > span > span,
 .count-down .jquery-countdown-timer-processed > span > span{
 	float: left;
 	background-color: #414141;
@@ -8304,6 +8307,19 @@ ul.ui-autocomplete{
 	position: relative;
 	overflow: hidden;
 }
+
+#countlandingpage{
+	margin-top: -9px;
+	margin-left: -3px;
+}
+
+#countlandingpage .jquery-countdown-timer-processed > span > span{
+	width: 20px;
+	height: 30px;
+	line-height: 30px;
+}
+
+#countlandingpage .jquery-countdown-timer-processed span.digit,
 .count-down .jquery-countdown-timer-processed span.digit{
 	position: absolute;
 	display: block;width: 100%;

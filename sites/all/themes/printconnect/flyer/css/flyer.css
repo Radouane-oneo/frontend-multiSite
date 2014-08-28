@@ -8501,3 +8501,7 @@ float:none !important;
 overflow-x: hidden;
 }
 
+
+#pctemplates-selection-form .templates .blocprd{
+	background: url(images/bg_modele.png) no-repeat 8px 9px;
+}

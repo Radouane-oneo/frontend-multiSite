@@ -199,7 +199,7 @@ table tr.even, table tr.odd {
 	height: 42px;
 }
 #canvas {
-	background:url('images/bg.png') repeat-x 0 123px #f1f1f1;
+	background:url('images/bg.png') repeat-x 0 123px;
 	position: relative;
 }
 .bg_header{

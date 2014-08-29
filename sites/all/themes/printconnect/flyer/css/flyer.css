@@ -8258,7 +8258,7 @@ ul.ui-autocomplete{
 }
 .block-views .view-deals-promotion #prixdeal .newpricedeal{
 	font-size: 17px;
-	color: #ff6600;
+	color: #6ea901;
 	line-height: 18px;
 	font-weight: bold;
 	margin-right: 5px;
@@ -8266,7 +8266,7 @@ ul.ui-autocomplete{
 
 .block-views .view-deals-promotion #prixdeal .pricedeal{
 	font-size: 14px;
-	color: #999999;
+	color: #ff6600;
 	line-height: 15px;
 	font-weight: bold;
 	text-decoration: line-through;

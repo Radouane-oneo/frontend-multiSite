@@ -58,21 +58,36 @@ function pccart_cart_form2($form, &$form_state) {
         foreach ($products as $product) {
             $build = array();
 
-            $build['image'] = array(
-                '#theme' => 'image',
-                '#path' => printconnect_getimage('products', $product->id),
-            );
-            $build['name'] = array(
-                '#type' => 'container',
-                '#attributes' => array('class' => array('text')),
-                'content' => array(
+                $build['image'] = array(
+                    '#theme' => 'image',
+                    '#path' => printconnect_getimage('products', $product->id),
+                    '#weight' => 10,  
+                    '#prefix' => '<div class="blocprd"><a href="products/' . $product->id.'">',
+                );   
+                $build['name'] = array(                   
                     '#markup' => $product->name,
-                ),
-            );
-
-            $items[] = array(
-                'data' => l(drupal_render($build), 'products/' . $product->id, array('html' => true, 'title' => $product->name)),
-            );
+                    '#prefix' => '<h2>',
+                    '#suffix' => '</h2></a></div>',
+                    '#weight' => 20,
+                 );
+            
+                $build['from'] = array(
+                    '#type' => 'container',
+                    '#attributes' => array('class' => array('from')),
+                    '#weight' => 40,
+                );
+                $build['from']['text'] = array(
+                    '#markup' => '<span class="txt">' . t('from_price') . '</span> ' . theme('price', array('value' => $product->sellPrice)),
+                );
+                $build['order'] = array(
+                    '#prefix' => '<a class="order btn-cmd" href="products/' . $product->id.'"><span class="flesh"></span>',
+                    '#suffix' => '</a>',
+                    '#weight' => 50,
+                );
+                $build['order']['text'] = array(
+                    '#markup' => t('Order now'),
+                );
+             $items[] = drupal_render($build);
 
             if (count($items) >= 6) {
                 break;
@@ -836,21 +851,36 @@ function pccart_cart_form2($form, &$form_state) {
         foreach ($products as $product) {
             $build = array();
 
-            $build['image'] = array(
-                '#theme' => 'image',
-                '#path' => printconnect_getimage('products', $product->id),
-            );
-            $build['name'] = array(
-                '#type' => 'container',
-                '#attributes' => array('class' => array('text')),
-                'content' => array(
+                $build['image'] = array(
+                    '#theme' => 'image',
+                    '#path' => printconnect_getimage('products', $product->id),
+                    '#weight' => 10,  
+                    '#prefix' => '<div class="blocprd"><a href="products/' . $product->id.'">',
+                );   
+                $build['name'] = array(                   
                     '#markup' => $product->name,
-                ),
-            );
-
-            $items[] = array(
-                'data' => l(drupal_render($build), 'products/' . $product->id, array('html' => true, 'title' => $product->name)),
-            );
+                    '#prefix' => '<h2>',
+                    '#suffix' => '</h2></a></div>',
+                    '#weight' => 20,
+                 );
+            
+                $build['from'] = array(
+                    '#type' => 'container',
+                    '#attributes' => array('class' => array('from')),
+                    '#weight' => 40,
+                );
+                $build['from']['text'] = array(
+                    '#markup' => '<span class="txt">' . t('from_price') . '</span> ' . theme('price', array('value' => $product->sellPrice)),
+                );
+                $build['order'] = array(
+                    '#prefix' => '<a class="order btn-cmd" href="products/' . $product->id.'"><span class="flesh"></span>',
+                    '#suffix' => '</a>',
+                    '#weight' => 50,
+                );
+                $build['order']['text'] = array(
+                    '#markup' => t('Order now'),
+                );
+             $items[] = drupal_render($build);
 
             if (count($items) >= 6) {
                 break;

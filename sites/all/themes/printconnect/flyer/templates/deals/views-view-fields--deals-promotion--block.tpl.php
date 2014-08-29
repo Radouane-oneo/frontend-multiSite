@@ -58,7 +58,13 @@
 
             </div>
         <?php endif; ?>
-          <div class="cont_down_txt"><img src="<?php print base_path(); ?>sites/all/themes/printconnect/flyer/css/images/cont_down_txt.jpg"></div>
+          <div class="cont_down_txt">
+            <!-- img src="<?php //print base_path(); ?>sites/all/themes/printconnect/flyer/css/images/cont_down_txt.jpg" -->
+                <span class="day">Jours</span>
+                <span class="hours">Heures</span>
+                <span class="min">Minutes</span>
+                <span class="sec">Secondes</span>
+            </div>
         
             
     </div>

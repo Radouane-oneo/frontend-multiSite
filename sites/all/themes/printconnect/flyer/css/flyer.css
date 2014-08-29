@@ -741,8 +741,8 @@ body.two-sidebars #content .whitebox{
 .region-sidebar-first .block, 
 .region-sidebar-second .block {
 	margin-bottom: 10px;
-	padding: 16px 8px 10px;
-	border-radius: 4px 4px 4px 4px;
+	padding: 16px 10px 10px;
+	border-radius: 3px;
 	background: #fff;
 	border: 1px solid #e7e3e3;
 	overflow: hidden;
@@ -8239,6 +8239,7 @@ ul.ui-autocomplete{
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
+	overflow: hidden;
 }
 .block-views .view-deals-promotion .boxing h3{
 	font-size: 14px;
@@ -8257,7 +8258,7 @@ ul.ui-autocomplete{
 }
 .block-views .view-deals-promotion #prixdeal .newpricedeal{
 	font-size: 17px;
-	color: #ff6600;
+	color: #6ea901;
 	line-height: 18px;
 	font-weight: bold;
 	margin-right: 5px;
@@ -8265,7 +8266,7 @@ ul.ui-autocomplete{
 
 .block-views .view-deals-promotion #prixdeal .pricedeal{
 	font-size: 14px;
-	color: #999999;
+	color: #ff6600;
 	line-height: 15px;
 	font-weight: bold;
 	text-decoration: line-through;
@@ -8275,9 +8276,25 @@ ul.ui-autocomplete{
 .count-down .cont_down_txt{
 	padding-bottom: 4px;
 	clear: both;
+	overflow: hidden;
 }
-.count-down .cont_down_txt img{
-	display: block;
+.count-down .cont_down_txt span{
+	float: left;
+	font-size: 8px;
+	color: #646464;
+	width: 32px;
+	text-align: center;
+	margin-left: 4px;
+}
+.count-down .cont_down_txt span:first-child{
+	margin-left: 0 !important;
+}
+#countlandingpage .cont_down_txt span{
+	font-size: 10px;
+	width: 44px;
+	margin-left: 6px;
+}
+
 }
 .count-down .jquery-countdown-timer-processed > span,
 #countlandingpage .jquery-countdown-timer-processed > span{
@@ -8285,8 +8302,9 @@ ul.ui-autocomplete{
 }
 #countlandingpage .jquery-countdown-timer-processed > span.countDiv,
 .count-down .jquery-countdown-timer-processed > span.countDiv{
-	width: 4px;
+	width: 2px;
 	height: 20px;
+	float: left;
 }
 #countlandingpage .jquery-countdown-timer-processed > span > span,
 .count-down .jquery-countdown-timer-processed > span > span{

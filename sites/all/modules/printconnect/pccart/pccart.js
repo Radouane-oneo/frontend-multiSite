@@ -79,7 +79,7 @@
       //  $('#pccart-cart-form .vat').html('<span decimal_separator="," class="price"><span class="currency">€</span>&nbsp;<span class="value">'+tvaActuel +'</span></span>');
     } 
     
-    reloadFormPcCart();
+    //reloadFormPcCart();
      
       function updatCartItemVat(cartItem, status) {
         $.post('cart/updatItemVat/id/'+cartItem+'/status/'+status,{},function(){

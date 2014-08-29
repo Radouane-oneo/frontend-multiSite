@@ -16,9 +16,17 @@ use printconnect\Carts\Discounts;
 function pccart_cart_form2($form, &$form_state) {
     global $language;
     $cart = Factory::Current(FALSE);
+    $cart->payment_method = null;
+    Factory::Save($cart);
     $endarray = end($cart->orderItems);
-
-    if($cart->supplementProduct == 1 && $endarray->price == 43){
+    $jobs = $cart->orderItems;
+    for($i=count($cart->orderItems); $i> 0; $i--){
+      $job = $jobs[$i];
+      if ($job->price > 0) {
+       $endarray = $job;
+      }
+    }
+    if($cart->supplementProduct == 1 && $endarray->price == 43 && $endarray->price > 0){
         $endarray = printconnect\Carts\Factory::GetItem($cart, $endarray->id);
         $endarray = printconnect\Carts\Factory::LoadItem($endarray);
         $endarray->price = 10;
@@ -637,7 +645,7 @@ function pccart_cart_form2($form, &$form_state) {
             $options = $newoptions;
             $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop;
         } elseif ($shop->id == 23) {
-            $_SESSION['defaultindex'] = 86;
+            $_SESSION['defaultindex'] = 351;
         } elseif ($shop->id == 33) {
             $_SESSION['defaultindex'] = 168;
         } elseif ($shop->id == 34) {

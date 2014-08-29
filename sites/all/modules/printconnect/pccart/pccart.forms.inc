@@ -420,30 +420,6 @@ function pccart_cart_form2($form, &$form_state) {
         }
 /* Discount */ 
         $customer = printconnect\Customers\Factory::Current();
-    
-        if ($customer) {
-              try {
-                $billingAccounts = printconnect\Customers\BillingAccounts\Factory::GetBillingAccounts($customer, false);
-                printconnect\Customers\BillingAccounts\Factory::LoadBillingAccounts($billingAccounts);
-                $ba = null;
-                foreach ($billingAccounts as $value) {
-                    if ($value->isDefault == true) {
-                        $ba = $value;
-                    }
-                }
-                $ba = printconnect\Customers\BillingAccounts\Factory::Get($ba->id);
-                printconnect\Customers\BillingAccounts\Factory::LoadBillingAccount($ba, FALSE);
-                $cart = Factory::Current();
-                if ($ba->discountCode != null) {
-                    $discount = Discounts\Factory::Create($cart->id ,$ba->discountCode);
-                    Discounts\Factory::Save($discount);
-                    $cart = Factory::Refresh($cart);
-                    $_SESSION['oldba'] = $ba->id ;
-                    $_SESSION['discount_'.$ba->id.'_'.$cart->id] = $ba->discountCode;
-                } 
-        } catch(Exception $ex) {
-            
-        }
         if (count($cart->discountItems)) {
             $form['cart']['discounts'] = array(
                 '#type' => 'fieldset',
@@ -486,7 +462,6 @@ function pccart_cart_form2($form, &$form_state) {
                     ),
                 );
             }
-        }
         }
 /* end discount */   
            
@@ -965,7 +940,6 @@ function pccart_cart_form2_delete_item_submit($form, &$form_state) {
 function pccart_cart_form2_add_discount_validate($form, &$form_state) {
     $customer = CustomersFactory::Current();
     if (!$customer){
-    form_set_error('', t('Please log customer'));
     }
 }
 
@@ -973,10 +947,6 @@ function pccart_cart_form2_add_discount_submit($form, &$form_state) {
     $cart = Factory::Current();
     $customer = CustomersFactory::Current();
     try {
-        if ($customer) {
-           $cart->customer = $customer->id;
-           Factory::Save($cart);
-
          if ($form_state['storage']['giftvoucher']) {
             \printconnect\GiftVouchers\Factory::Redeem($customer, $form_state['values']['cart']['discount']['code']);
             drupal_set_message(t('Your voucher code has been converted to store credit... You may use this credit while checking out your order.'));
@@ -986,7 +956,6 @@ function pccart_cart_form2_add_discount_submit($form, &$form_state) {
              drupal_set_message(t('Your discount code has been converted checkout your order.'));
         }
         $cart = Factory::Refresh($cart);
-        }
     } catch (\printconnect\Rest\Exceptions\Exception $ex) {
         drupal_set_message(t($ex->errors[0]), 'error');
         $form_state['storage']['message'] = t($ex->errors[0]);

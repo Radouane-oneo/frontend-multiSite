@@ -136,34 +136,36 @@ function pccontact_general_form($form, &$form_state, $key = 'general') {
   );
   
   $form['container']['image'] = array(
-      '#markup' => '<p id="shopIco" >
-          <img style="width: 105px;height: 82px;padding-top: 48px;" src ="'.$path.'"></p>',
+      '#markup' => '<div class="head">
+          <img src="/sites/all/modules/printconnect/pccontact/img/logo.png"><span class="close"></span></div>',
   );
   
   $form['container']['title'] = array(
       '#prefix' => '<div id ="infoContainer">',
       '#markup' => '<p id="titleContact">
           <strong> '.t('HEB JE EEN VRAAG').' ?</strong>
-          </p><strong id ="sub1"> '.t('Zinnetje over customer service').'</strong>',
+          </p><p id ="sub1"> '.t('Zinnetje over customer service').'</p>',
   );
   
   $form['container']['imageCallIcon'] = array(
       '#markup' => 
-      '<p id ="imgsContacts">
+      '<div id ="imgsContacts">
+          <div class="elm">
           <img src ="'.base_path().'sites/all/themes/printconnect/flyer/css/images/call-contact.png">
               <strong class="phones"> '.$phones[$language->prefix].'</strong>
+            </div><div class="elm">
           <img src ="'.base_path().'sites/all/themes/printconnect/flyer/css/images/msg-contact.png">
-              <strong class="mails"> '.$emails[$language->prefix].'</strong>
-       </p>',
+              <strong class="mails"> '.$emails[$language->prefix].'</strong></div>
+       </div>',
        '#suffix' => '</div>'
     
   );
   
   $form['container']['callBack'] = array(
-       '#prefix' => '<div id ="fieldContainer">',
+       '#prefix' => '<fieldset>',
       '#markup' => '<p id="callBackContact">
           <strong> '.t('TERUGBELLEN').'</strong>
-          </p><strong id= "sub2"> '.t('Zinnetje over terug').'</strong>',
+          </p><p id= "sub2"> '.t('Zinnetje over terug').'</p>',
   );
   
   $form['name'] = array(
@@ -192,7 +194,7 @@ function pccontact_general_form($form, &$form_state, $key = 'general') {
       '#required' => TRUE,
       '#title' => t('Remarks'),
       '#attributes' => array('data-commentError' => t('comment is required')),
-      '#suffix' => '</div>',
+      '#suffix' => '</fieldset>',
   );
 
   $form['actions'] = array(
@@ -206,7 +208,10 @@ function pccontact_general_form($form, &$form_state, $key = 'general') {
   );
 //  $form_state['cache'] = TRUE;
   $form['#id'] = 'pccontact_general_form';
-  $form['#attributes'] = array('data-globalError' => t('fields are required'));
+  $form['#attributes'] = array(
+    'data-globalError' => t('fields are required'),
+    'class' => 'popin_overlay'
+    );
   return $form;
 }
 

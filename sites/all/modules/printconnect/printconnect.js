@@ -72,11 +72,12 @@ window.alert = function(arg) {
                     jQuery('#fancybox-close').css('right', targetElement.attr('closeposition')+'px');
                     jQuery("#fancybox_preloader").remove();
                     jQuery('#fancybox-frame').css('overflow', 'hidden');
-                    jQuery('#fancybox-frame').css('border-radius', '1px');
+                    //jQuery('#fancybox-frame').css('border-radius', '1px');
                     jQuery('#fancybox-frame').contents().css('border-radius', '10px');
                     jQuery('#fancybox-frame').contents().find('body').css('overflow', 'hidden');
-                    jQuery('#fancybox-frame').contents().find('.whitebox').last().css('margin-top', '-68px');
-                    jQuery('#fancybox-frame').contents().find('.whitebox').last().css('background-color', '#f1f1f1');
+                    //jQuery('#fancybox-frame').contents().find('.whitebox').last().css('margin-top', '-68px');
+                    //jQuery('#fancybox-frame').contents().find('.whitebox').last().css('background-color', '#f1f1f1');
+                    jQuery('#fancybox-frame').contents().find('iframe').height('753px');
                     jQuery('#fancybox-frame').contents().find('#messages .error').hide();
                     jQuery("iframe[src*='contact']").parents("#fancybox-content").css("margin-left","26px");
                     jQuery("iframe[src*='contact']").parents('#fancybox-outer').find(".fancybox-bg").css("background","none");

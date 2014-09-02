@@ -25,7 +25,7 @@
            
          <?php else :?>
              
-             <?php $inactivebtn = "inactivebtn";?>
+             <?php $inactivebtn = "inactivebtn"; ?>
             <div class="field-content">
                 <div id="field-countdown-timer-0-96310000-1408967684" class="jquery-countdown-timer-processed countdownHolder">
 
@@ -71,10 +71,11 @@
     
         <?php if(!empty($fields['field_lien_deal']->content)):?>
 
-            <a href="<?php if($inactivebtn=="") print $fields['field_lien_deal']->content; else print "javascript:void(0)" ?>" class="ui-button plusinfobtn <?php print $inactivebtn;?>" >
+            <a href="<?php if($inactivebtn=="") print urldecode($fields['field_lien_deal']->content); else print "javascript:void(0)" ?>" class="ui-button plusinfobtn <?php print $inactivebtn;?>" >
                 <span class="flesh"></span>
                     J’en profite !
             </a>
+
         <?php endif; ?>
 <?php endif; ?>	
 

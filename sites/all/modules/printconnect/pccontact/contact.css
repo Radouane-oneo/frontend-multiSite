@@ -22,6 +22,9 @@ background: linear-gradient(to bottom, #77b800 25%, #669c02 100%);
     padding: 10px !important;
     width: 90% ;
 }
+.page-contact #pccontact_general_form .form-item input[type='text']{
+    width:100%;
+}
 #pccontact_stors_form .form-item input, #pccontact_stors_form edit-comment{
     padding: 10px !important;
 }

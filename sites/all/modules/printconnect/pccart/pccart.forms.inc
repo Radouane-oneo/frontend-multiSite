@@ -42,15 +42,17 @@ function getPreflight($jobId) {
 function pccart_cart_form2($form, &$form_state) {
     global $language;
     $cart = Factory::Current(FALSE);
-    $endarray = end($cart->orderItems);
-    $jobs = $cart->orderItems;
-    for($i=count($cart->orderItems); $i> 0; $i--){
-      $job = $jobs[$i];
-      if ($job->price > 0) {
-       $endarray = $job;
-      }
+    $endarray = $cart != null ? end($cart->orderItems): null;
+    $jobs = $cart != null ? $cart->orderItems : array();
+    if ($cart != null) {
+        for($i=count($cart->orderItems); $i> 0; $i--){
+            $job = $jobs[$i];
+            if ($job->price > 0) {
+               $endarray = $job;
+            }
+       }
     }
-    if($cart->supplementProduct == 1 && $endarray->price == 43 && $endarray->price > 0){
+    if($cart && $cart->supplementProduct == 1 && $endarray->price == 43 && $endarray->price > 0){
         $endarray = printconnect\Carts\Factory::GetItem($cart, $endarray->id);
         $endarray = printconnect\Carts\Factory::LoadItem($endarray);
         $endarray->price = 10;
@@ -59,7 +61,8 @@ function pccart_cart_form2($form, &$form_state) {
     
     $cart = Factory::Current(FALSE);
     // delete fotolias data on backend
-    Factory::deleteFotolias($cart);
+    if ($cart)
+        Factory::deleteFotolias($cart);
     $fotoliaPrice = 0;
     $preflightPrice = 0;
     $mypreflight = 0;

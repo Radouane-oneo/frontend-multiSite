@@ -39,13 +39,14 @@ function pccontact_popup_form($form, &$form_state, $key = 'popup') {
                       <p>Merci de remplir le formulaire suivant afin qu\'un opérateur <br /> 
                       FLYER puisse prendre contact avec vous par téléphone.</p>',
     ); 
+   
 
     $form['container']['popup']['nom'] = array(
         '#type' => 'textfield',
         '#required' => TRUE,
         '#title' => t('Nom'),
         '#attributes' => array('data-nameError' => t('name is required')),
-        '#prefix' => '<div class="edit-nom">',
+        '#prefix' => '<div class="global-error edit-nom">',
         '#suffix' => '<span class="required">'.t('name is required').'</span></div>',
     );
       $form['container']['popup']['prenom'] = array(
@@ -53,7 +54,7 @@ function pccontact_popup_form($form, &$form_state, $key = 'popup') {
         '#required' => TRUE,
         '#title' => t('Prénom'),
         '#attributes' => array('data-nameError' => t('name is required')),
-        '#prefix' => '<div class="edit-prenom">',
+        '#prefix' => '<div class="global-error edit-prenom">',
         '#suffix' => '<span class="required">'.t('last name is required').'</span></div>',
     );
     $form['container']['popup']['telephone'] = array(
@@ -61,16 +62,16 @@ function pccontact_popup_form($form, &$form_state, $key = 'popup') {
         '#required' => TRUE,
         '#title' => t('Téléphone'),
         '#attributes' => array('data-phoneError' => t('phone is required')),
-        '#prefix' => '<div class="edit-telephone">',
-        '#suffix' => '<span class="required">'.t('phone is required').'</span></div>',
+        '#prefix' => '<div class="global-error edit-telephone">',
+        '#suffix' => '<span class="required">'.t('phone is required').'</span><span class="required2">'.t('Votre numéro de téléphone doit être une valeur numérique').'</span></div>',
     );
     $form['container']['popup']['email'] = array(
         '#type' => 'textfield',
         '#required' => TRUE,
         '#title' => t('Adresse email'),
         '#attributes' => array('data-mailError' => t('email is required')),
-        '#prefix' => '<div class="edit-email">',
-        '#suffix' => '<span class="required">'.t('email is required').'</span></div>',
+        '#prefix' => '<div class="global-error edit-email">',
+        '#suffix' => '<span class="required">'.t('email is required').'</span><span class="required2">'.t('votre adresse email est invalide').'</span></div>',
     );
   
     $form['container']['popup']['error'] = array(
@@ -88,6 +89,7 @@ $form['container']['actions'] = array(
       '#id'=>'submit',
       "#suffix"=>'</div>'
   );
+ 
 
   $form['container']['popup']['messageSent']  =array(
         '#markup' => '<div id="messageSent"><h3>VOTRE DEMANDE A BIEN ÉTÉ PRISE EN COMPTE !</h3><p>Un conseiller vous répondra dans les plus brefs délais.
@@ -104,30 +106,7 @@ function pccontact_popup_form_validate($form, &$form_state) {
     form_set_error('email', t('E-mail address is not valid'));
   }
 }
-function pccontact_popup_ajax_submit() {
- 
-    print_r($_POST);
-    
-//    $result = drupal_mail('pccontact', t('Je souhaite être rappelé(e)'), variable_get('pccontact_email', 'nabil.b@oneoweb.com,n_bentounsi@yahoo.com'), NULL, $form_state['values'],NULL,TRUE);
-//
-//    if ($result['result'] == TRUE) {
-//        drupal_set_message(t('Your message has been sent.'));
-//    } else {
-//        drupal_set_message(t('Your message has  not been sent'), 'error');
-//    }
-  
-}
-//function pccontact_popup_form_submit($form, &$form_state) {
-// 
-//    $result = drupal_mail('pccontact', t('Je souhaite être rappelé(e)'), variable_get('pccontact_email', 'nabil.b@oneoweb.com,n_bentounsi@yahoo.com'), NULL, $form_state['values'],NULL,TRUE);
-//
-//    if ($result['result'] == TRUE) {
-//        drupal_set_message(t('Your message has been sent.'));
-//    } else {
-//        drupal_set_message(t('Your message has  not been sent'), 'error');
-//    }
-//  
-//}
+
 // general form 
 
 function pccontact_general_form($form, &$form_state, $key = 'general') {
@@ -157,34 +136,36 @@ function pccontact_general_form($form, &$form_state, $key = 'general') {
   );
   
   $form['container']['image'] = array(
-      '#markup' => '<p id="shopIco" >
-          <img style="width: 105px;height: 82px;padding-top: 48px;" src ="'.$path.'"></p>',
+      '#markup' => '<div class="head">
+          <img src="/sites/all/modules/printconnect/pccontact/img/logo.png"></div>',
   );
   
   $form['container']['title'] = array(
       '#prefix' => '<div id ="infoContainer">',
       '#markup' => '<p id="titleContact">
           <strong> '.t('HEB JE EEN VRAAG').' ?</strong>
-          </p><strong id ="sub1"> '.t('Zinnetje over customer service').'</strong>',
+          </p><p id ="sub1"> '.t('Zinnetje over customer service').'</p>',
   );
   
   $form['container']['imageCallIcon'] = array(
       '#markup' => 
-      '<p id ="imgsContacts">
+      '<div id ="imgsContacts">
+          <div class="elm">
           <img src ="'.base_path().'sites/all/themes/printconnect/flyer/css/images/call-contact.png">
               <strong class="phones"> '.$phones[$language->prefix].'</strong>
+            </div><div class="elm">
           <img src ="'.base_path().'sites/all/themes/printconnect/flyer/css/images/msg-contact.png">
-              <strong class="mails"> '.$emails[$language->prefix].'</strong>
-       </p>',
+              <strong class="mails"> '.$emails[$language->prefix].'</strong></div>
+       </div>',
        '#suffix' => '</div>'
     
   );
   
   $form['container']['callBack'] = array(
-       '#prefix' => '<div id ="fieldContainer">',
+       '#prefix' => '<fieldset>',
       '#markup' => '<p id="callBackContact">
           <strong> '.t('TERUGBELLEN').'</strong>
-          </p><strong id= "sub2"> '.t('Zinnetje over terug').'</strong>',
+          </p><p id= "sub2"> '.t('Zinnetje over terug').'</p>',
   );
   
   $form['name'] = array(
@@ -213,7 +194,7 @@ function pccontact_general_form($form, &$form_state, $key = 'general') {
       '#required' => TRUE,
       '#title' => t('Remarks'),
       '#attributes' => array('data-commentError' => t('comment is required')),
-      '#suffix' => '</div>',
+      '#suffix' => '</fieldset>',
   );
 
   $form['actions'] = array(
@@ -227,7 +208,10 @@ function pccontact_general_form($form, &$form_state, $key = 'general') {
   );
 //  $form_state['cache'] = TRUE;
   $form['#id'] = 'pccontact_general_form';
-  $form['#attributes'] = array('data-globalError' => t('fields are required'));
+  $form['#attributes'] = array(
+    'data-globalError' => t('fields are required'),
+    'class' => 'popin_overlay'
+    );
   return $form;
 }
 

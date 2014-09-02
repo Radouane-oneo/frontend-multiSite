@@ -27,10 +27,11 @@ background: linear-gradient(to bottom, #77b800 25%, #669c02 100%);
 }
 
 #pccontact_general_form #edit-actions {
-    width: 460px !important;
-    float: left;
-    padding: 15px 6px !important;
-    margin-left: -10px;
+    margin: 0;
+    background: none;
+    padding: 20px 25px;
+    background-color: #fff;
+    border-top: 1px solid #f0f0f0;
 }
 
 #pccontact_stors_form #edit-actions {
@@ -54,12 +55,11 @@ background-color: #fff !important;
 
 #fieldContainer, #infoContainer {
     background: #ffffff;
-    border-radius: 5px 12px 5px 5px;
 }
 
 #infoContainer {
-     margin-top: -12px;
-     padding: 5px 12px 2px 5px
+    /*margin-top: -12px;
+    padding: 5px 12px 2px 5px*/
 }
 
 #fieldContainer {
@@ -68,36 +68,43 @@ background-color: #fff !important;
     margin-top: 6px;
     margin-bottom: -4px;
 }
+#imgsContacts{
+    font-size: 14px;
+    color: #333333
+}
 #imgsContacts img{
-    width: 26px;
-    height: 26px;
-    vertical-align: middle;
-    padding-left: 10px;
+    float: left;
 }
 
 #imgsContacts strong {
-    margin-left: 10px;
-    margin-right: 8px;
+    float: left;
 }
-
-#pccontact_general_form #titleContact strong, #pccontact_general_form #callBackContact strong{
-    font-size: 20px;
-    background: #ffffff;
-    padding-left: 10px;
-    color: #6B6B6B;
-}
-#pccontact_general_form #titleContact, #callBackContact {
+#callBackContact {
     margin-bottom: -5px;
 }
 
-#pccontact_general_form #edit-comment {
-    width: 363px ;
+#pccontact_general_form #titleContact{
+    margin: 0;
+    font-size: 15px;
+    color: #333333;
+    text-transform: uppercase;
+}
+#pccontact_general_form #sub1{
+    margin: 0 0 15px;
+    font-size: 13px;
+    color: #646464;
+    line-height: 13px;
+}
+
+#pccontact_general_form #edit-comment{
+    
 }
 
 #pccontact_general_form label {
-    padding-bottom: 6px;
-    padding-top: 6px;
-    color: #A9A9A9;
+}
+
+#pccontact_general_form strong{
+    font-weight: 700;
 }
 
 
@@ -123,35 +130,25 @@ background-color: #fff !important;
 
 
 #shopIco img {
-    width: 105px;
+    /*width: 105px;
     height: 82px;
-    padding-top: 48px;
-}
-
-#pccontact_general_form .form-type-textfield, #pccontact_general_form #edit-comment {
-    margin-left: 10px;
-}
-#pccontact_stors_form .form-type-textfield, #pccontact_stors_form #edit-comment {
-    margin-left: 10px;
+    padding-top: 48px;*/
 }
 
 #sub1, #sub2 {
-    margin-left: 10px !important;
+    /*margin-left: 10px !important;
     color: #A9A9A9;
     display: block;
-    margin-right: 10px !important;
+    margin-right: 10px !important;*/
 }
 
 #pccontact_general_form #edit-submit {
- padding-left: 32px !important;
- min-width: 150px !important;
- height: 34px;
- padding-top: 6px;
+
 }
 
 #pccontact_general_form .grippie{
-    margin-left: 10px;
-    width: 361px;
+    /*margin-left: 10px;
+    width: 361px;*/
 }
 
 #pccontact_stors_form #edit-submit {
@@ -273,7 +270,7 @@ margin-top: 14px;
 }
 
 .popin_overlay fieldset .form-item{
-    margin:0 0 16px;
+    margin:0;
 }
 
 .popin_overlay .form-item label{
@@ -305,6 +302,7 @@ margin-top: 14px;
     border-color: #ed1c24;
     background-color: #f6e3e3;
 }
+#pccontact_general_form input[type="submit"],
 .popin_overlay .submit input[type="submit"]{
         display: block;
         color: #fff;
@@ -318,22 +316,27 @@ margin-top: 14px;
         -moz-border-radius: 3px;
         border-radius: 3px;
         width: 120px;
-        background: url(http://flyer_fr.dev/sites/all/themes/printconnect/flyer/css/images/calc_btn.png) no-repeat 13px center #6fab01;
+        background: url(/sites/all/themes/printconnect/flyer/css/images/calc_btn.png) no-repeat 13px center #6fab01 !important;
         font-size: 14px;
         font-weight: bold;
         text-transform: uppercase;
         cursor: pointer;
+        min-width: 70px;
+        width: auto;
+        float: left;
         -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
         -moz-box-sizing: border-box;    /* Firefox, other Gecko */
         box-sizing: border-box;         /* Opera/IE 8+ */
 }
+#pccontact_general_form input[type="submit"]:hover,
 .popin_overlay .submit input[type="submit"]:hover{
-        background-color: #689f02;
+        background-color: #689f02 !important;
 }
 .popin_overlay .submit{
         padding: 20px 25px;
         background-color: #fff;
         border-top: 1px solid #f0f0f0;
+        overflow: hidden;
 }
 .popin_overlay .form-item.form-item-nom{
         float: left;
@@ -371,6 +374,7 @@ margin-top: 14px;
     margin: 0;
 }
 
+#pccontact_general_form .head .close,
 .info-bloc .head .close{
     background: url(img/close.png);
     display: block;
@@ -379,6 +383,17 @@ margin-top: 14px;
     cursor: pointer;
     float: right;
     margin: 25px 20px 0 0;
+}
+
+#fancybox-close{
+    background: url(img/close.png) !important;
+    display: block !important;
+    width: 11px !important;
+    height: 10px !important;
+    cursor: pointer !important;
+    float: right !important;
+    margin: 51px 39px 0 0 !important;
+    
 }
 
 .popin_overlay #messageSent{
@@ -401,4 +416,67 @@ margin-top: 14px;
     bottom: 20px;
     right: 15px;
     margin: 0;
+}
+#pccontact_popup_form .global-error{
+    float: left;
+    margin:0 0 16px;
+}
+#pccontact_popup_form .global-error span.required,#pccontact_popup_form .global-error span.required2{
+    float: left;
+    clear: both;
+    font-size: 12px;
+    color: #ff0000;
+    line-height: 13px;
+    padding-top: 3px;
+}
+
+.page-contact-general .whitebox{
+    padding: 0;
+    border: 0;
+    margin: 0;
+}
+
+#pccontact_general_form #shopIco{
+    margin: 0;
+}
+
+#pccontact_general_form #infoContainer{
+    padding: 20px 30px;
+    border-bottom: 1px solid #e6e6e6;
+}
+#pccontact_general_form #imgsContacts{
+    margin: 0;
+    overflow: hidden;
+}
+
+#pccontact_general_form #imgsContacts .elm{
+    float: left;
+    width:50%;
+}
+#pccontact_general_form #imgsContacts .elm strong{
+    color: #333333;
+    line-height: 22px;
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+#pccontact_general_form fieldset #callBackContact{
+    margin: 0 0 10px;
+    color: #333333;
+    font-size: 15px;
+    line-height: 16px;
+    font-weight: bold;
+}
+#pccontact_general_form #sub2{
+    margin: 0 0 15px;
+    color: #646464;
+    font-size: 13px;
+    line-height: 18px;
+}
+#pccontact_general_form .form-item{
+    margin: 0 0 10px;
+}
+
+#pccontact_general_form #spanBack{
+    display: none;
 }

@@ -176,17 +176,77 @@
 
 
 #pccart-cart-form .products li{
-  box-sizing:border-box;
-  -moz-box-sizing:border-box; /* Firefox */
-  -webkit-box-sizing:border-box; /* Safari */
-  float:left;
-  width:25%;
-  margin:0;
-  list-style:none;
+  float: left;
+  width: 212px;
+  margin: 0 10px 10px 0;
+  list-style: none;
+  padding: 0;
+  border: 1px solid #ececec;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#pccart-cart-form .products li:nth-child(3n){
+  margin-right: 0;
+}
+#pccart-cart-form .products li:nth-child(3n + 1){
+  clear: both;
 }
 #pccart-cart-form .products li img{
   width:100%;
-}  
+}
+#pccart-cart-form .products li .blocprd {
+  padding: 9px 8px;
+}
+#pccart-cart-form .products li a {
+text-decoration: none;
+}
+#pccart-cart-form .products li a img{
+  height: auto;
+  max-width: 100%;
+  margin-bottom: 10px;
+}
+#pccart-cart-form .products li a h2{
+  font-size: 13px;
+  color: #646464;
+  line-height: 15px;
+  text-transform: uppercase
+}
+#pccart-cart-form .products li .from{
+  clear: both;
+  border-top: 1px solid #ececec;
+  overflow: hidden;
+  background-color: #fafafa;
+}
+#pccart-cart-form .products li .from .txt {
+  line-height: 37px;
+  text-indent: 8px;
+  color: #999999;
+  font-size: 12px;
+  float: left;
+}
+#pccart-cart-form .products li .from .price {
+  line-height: 37px;
+  color: #ff6600;
+  font-size: 17px;
+  float: right;
+  padding: 0 14px;
+  border-left: 1px solid #ececec;
+  background-color: white;
+  font-weight: bold;
+}
+
+#pccart-cart-form .products li .from .price .currency,
+#pccart-cart-form .products li .from .price .decimals,
+#pccart-cart-form .products li .from .price .decimalpoint{
+  vertical-align: baseline;
+  line-height: 37px;
+  font-size: 17px;
+}
+
 #pccart-cart-form .products li .text{
   text-align:center;
 }  
@@ -258,4 +318,30 @@ float: right;
     font-size: 15px;
     margin-right: 10px;
     font-weight: bold;
+}
+
+#pccart-cart-form fieldset.products .fieldset-wrapper{
+  padding: 0;
+  border: 0;
+  background: none;
+  margin-bottom: 0;
+}
+
+#pccart-cart-form .products li:nth-child(6n),
+#pccart-cart-form .products li:nth-child(4n),
+#pccart-cart-form .products li:nth-child(5n){
+  margin-bottom: 0;
+}
+
+#pccart-cart-form .download{
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+#pccart-cart-form ul{
+  margin: 0;
+  overflow: hidden;
+}
+
+#pccart-cart-form fieldset.products > legend{
+  padding-top: 16px;
 }

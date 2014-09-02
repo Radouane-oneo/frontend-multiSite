@@ -11,10 +11,10 @@ use printconnect\Drupal\Functions;
  */
 
 function pccontact_init() {
-    //drupal_add_js(drupal_get_path('module', 'pccontact') . '/popup_ajax.js');
+  //  drupal_add_js(drupal_get_path('module', 'pccontact') . '/popup_ajax.js');
 }
 function pccontact_perm () {
-  return array('access pccontact via ajax',);
+  return array('access pccontact',);
 }
 function pccontact_menu() {
   $items['mailme/%/%'] = array(
@@ -55,18 +55,18 @@ function pccontact_menu() {
       'access arguments' => array('access content'),
       'file' => 'pccontact.forms.inc',
   );
-//   $items['contact/popup'] = array(
-//      'page callback' => 'drupal_get_form',
-//      'page arguments' => array('pccontact_popup_form', 1),
-//      'access arguments' => array('access content'),
-//      'file' => 'pccontact.forms.inc',
-//  );
+   $items['popup/sendmail'] = array(
+      'title' => 'Send mail test',
+      'page callback' => 'sendmail',
+      'access arguments' => array('access content'),
+  );
    $items['popup/ajax'] = array(
-        'title' => t('je souhaite etre appelé'),
-        'page callback' => 'pccontact_ajax_callback',    
-        'access arguments' => array('access pccontact via ajax'),
-        'type' => MENU_CALLBACK,
+        'page callback' => 'ajax_back',
+        'access callback' => TRUE,	
+        'access arguments' => array('access content'),		
+        'type' => MENU_CALLBACK		
     );
+   
    
   $items['contact/stores'] = array(
       'title' => 'Contact',
@@ -495,9 +495,253 @@ function pccontact_contact_form_submit($form, &$form_state) {
 function pccontact_contact_form_callback($form, &$form_state) {
   return $form;
 }
-function pccontact_ajax_callback(){
-    if (empty($_POST["js"])){ die(); }
-  $result = array('msg' => 'my_module_example - hello from php','valid' => true);
-  drupal_json($result);
-  exit();
+
+function ajax_back(){
+    
+      if( isset($_GET['nom']) && !empty($_GET['nom']) ){
+          
+            $bodyClt = '<table valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0">
+                                <tr>
+                                  <td width="30"></td>
+                                  <td>
+                                    <font style="font-family:Helvetica,arial;font-size:16px;color:#646464;line-height:16px;"><strong>
+                                      Bonjour '.$_GET['nom'].' '.$_GET['prenom'].',</strong></font>
+                                  </td>
+                                  <td width="15"></td> 
+                                </tr>
+                                <tr height="17px">
+                                <td>&nbsp;</td> <td>&nbsp;</td> <td>&nbsp;</td>
+                                 </tr>
+                                <tr>
+                                  <td height="48"></td>
+                                  <td>
+                                    <font style="font-family:Helvetica,arial;font-size:14px;color:#646464;line-height:16px;"><strong>
+                                   Nous vous remercions  de l’intérêt que vous portez à notre site <a style="color:#ff6600;" href="www.flyer.fr">Flyer.fr</a>.<br> 
+                                   </strong></font><br>
+                 <font style="font-family:Helvetica,arial;font-size:15px;color:#646464;line-height:16px;">
+                                      Votre demande de rappel a bien été prise en compte.<br>
+                Un conseiller Flyer.fr va prendre contact avec vous.</font>
+                                  </td>
+                                  <td></td> 
+                             </tr>
+                                <tr height="17px">
+                                <td>&nbsp;</td> <td>&nbsp;</td> <td>&nbsp;</td>
+                                 </tr>
+                                <tr>
+                                  <td width="14"></td>
+                                  <td>
+
+                                  </td>
+                                  <td width="15"></td> 
+                                </tr>
+
+                            </table>';
+            
+            $bodyAdmin =  '<table valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0">
+                                <tr>
+                                  <td width="30"></td>
+                                  <td>
+                                    <font style="font-family:Helvetica,arial;font-size:16px;color:#646464;line-height:16px;"><strong>
+                                      Bonjour,</strong></font>
+                                  </td>
+                                  <td width="15"></td> 
+                                </tr>
+                                <tr height="17px">
+                                <td>&nbsp;</td> <td>&nbsp;</td> <td>&nbsp;</td>
+                                 </tr>
+                                <tr>
+                                  <td height="48"></td>
+                                  <td>
+                                    <font style="font-family:Helvetica,arial;font-size:14px;color:#646464;line-height:16px;"><strong>
+                                        Un nouveau client vient de déposer une demande sur le site <a style="color:#ff6600;" href="www.flyer.fr">Flyer.fr</a>.<br> 
+                                   </strong></font><br>
+                 <font style="font-family:Helvetica,arial;font-size:15px;color:#646464;line-height:16px;">
+                                      Détail d\'infos :<br>
+                                    </font>
+                                 <p><br/><b>' . t('Contact') . '</b>: '. $_GET['nom'].' '.$_GET['prenom'].'<br/><b>' . t('Téléphone') . '</b>: '.$_GET['phone'].'<br/><b>E-mail</b>: '.$_GET['email'].'<br/></p>
+                                </td>
+                                  <td></td> 
+                             </tr>
+                                <tr height="17px">
+                                <td>&nbsp;</td> <td>&nbsp;</td> <td>&nbsp;</td>
+                                 </tr>
+                                <tr>
+                                  <td width="14"></td>
+                                  <td>
+
+                                  </td>
+                                  <td width="15"></td> 
+                                </tr>
+
+                            </table>';
+        
+        
+    $bodyHeader  = '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+                <html>
+                  <head>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                    <title>Mail bienvenue inscription</title>
+                  </head>
+                  <style>
+                    img{border:0px !important}
+                    a{text-decoration:none;}
+                    table{font-family: arial;}
+                  </style>
+                  <body bgcolor="#ffffff" style="background-color:#ffffff;">
+                    <table valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td>
+                            <table valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0">
+                                <tr>
+                                  <td>
+                                    <a style="text-decoration:none;" target="_blank" href=""><img width="140" height="49" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/home.jpg"></a>
+                                  </td>
+                                  <td>
+                                    <a style="text-decoration:none;" target="_blank" href=""><img width="154" height="49" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/nosprod.jpg"></a>
+                                  </td>
+                                  <td>
+                                    <a style="text-decoration:none;" target="_blank" href=""><img width="146" height="49" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/nosmodel.jpg"></a>
+                                  </td>
+                                  <td>
+                                    <a style="text-decoration:none;" target="_blank" href=""><img width="181" height="49" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/bonneaffaire.jpg"></a>
+                                  </td> 
+                                </tr>
+                            </table>
+                        </td> 
+                      </tr>
+
+                      <tr>
+                        <td height="14">
+                        </td> 
+                      </tr>
+
+
+                      <tr>
+                        <td>';
+    
+        $bodyFooter ='</td> 
+                      </tr>
+                      <tr>
+                        <td height="7"></td> 
+                      </tr>
+                        <td height="10">
+
+                        </td> 
+                      </tr>
+                      <tr>
+                        <td>
+                            <img width="620" height="134" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/block.jpg" />
+                        </td> 
+                      </tr>
+
+                  </table>
+                  </body>
+                </html>';
+
+        $my_module = 'pccontact';
+        $my_mail_token = microtime();
+        
+        $system = drupal_mail_system($my_module, $my_mail_token);
+        
+        $from = variable_get('system_mail', 'support@flyer.fr');
+       
+    // info mail admin
+        $to = variable_get('system_mail', 'nabil.b@oneoweb.com');
+        $message = array(
+            'id' => $my_module . '_' . $my_mail_token,
+            'to' => $to,
+            'subject' => 'Demande de rappel - Mail de confirmation',
+            'body' => array($bodyAdmin),
+            'headers' => array(
+                'From' => $from,
+                'Sender' => $from,
+                'Return-Path' => $from,
+                'MIME-Version' => '1.0',
+                'Content-Type' => 'text/html; charset=UTF-8; format=flowed',
+                'Content-Transfer-Encoding' => '8Bit',
+                'X-Mailer' => 'Drupal',
+            ),
+        );
+       
+        $message = $system->format($message);
+        $resAdmin = $system->mail($message);   
+            
+    // info mail client
+        $to = variable_get('system_mail', $_GET['email']);
+        $message = array(
+                    'id' => $my_module . '_' . $my_mail_token,
+                    'to' => $to,
+                    'subject' => 'Demande de rappel - Mail de confirmation',
+                    'body' => array($bodyHeader.$bodyClt.$bodyFooter),
+                    'headers' => array(
+                        'From' => $from,
+                        'Sender' => $from,
+                        'Return-Path' => $from,
+                        'MIME-Version' => '1.0',
+                        'Content-Type' => 'text/html; charset=UTF-8; format=flowed',
+                        'Content-Transfer-Encoding' => '8Bit',
+                        'X-Mailer' => 'Drupal',
+                    ),
+            );
+          
+            $message = $system->format($message);
+            $resClt = $system->mail($message);
+
+            if ($resClt && $resAdmin) {
+                $data = true;
+            } else {
+               $data = false;
+            }
+
+        }else{
+          
+          $data = false;
+          
+        }
+
+    drupal_json_output(array( 'data' => $data));
 }
+
+// fonction de test mail 
+//function sendmail(){
+// 
+//   $message2  = '<div id="messageSent" style="display: block;text-align: center;">
+//                    <h3>VOTRE DEMANDE A BIEN ÉTÉ PRISE EN COMPTE !</h3>
+//                    <p>Un conseiller vous répondra dans les plus brefs délais.
+//                    Nous vous remercions de votre confiance.</p><p class="orange">
+//                    Vous avez reçu un email de confirmation</p>
+//                    </div>';
+//  
+//
+//           $my_module = 'pccontact';
+//           $my_mail_token = microtime();
+//      
+//            $from = variable_get('system_mail', 'support@flyer.fr');
+//            $to = variable_get('system_mail', 'n_bentounsi@yahoo.com');
+// 
+//        $message = array(
+//            'id' => $my_module . '_' . $my_mail_token,
+//            'to' => $to,
+//            'subject' => 'mail flyer',
+//            'body' => array($message2),
+//            'headers' => array(
+//                'From' => $from,
+//                'Sender' => $from,
+//                'Return-Path' => $from,
+//                'MIME-Version' => '1.0',
+//                'Content-Type' => 'text/html; charset=UTF-8; format=flowed',
+//                'Content-Transfer-Encoding' => '8Bit',
+//                'X-Mailer' => 'Drupal',
+//            ),
+//        );
+//        $system = drupal_mail_system($my_module, $my_mail_token);
+//        $message = $system->format($message);
+//        if ($system->mail($message)) {
+//            print   t('Vos coordonnées ont bien été envoyées');
+//        } else {
+//           print  'Erreur d\'envoie !';
+//        }
+//     
+//  
+//} 
+

@@ -23,7 +23,7 @@ function pccheckout_personal_form($form, &$form_state) {
     $defaultShippingAddress = FALSE;
     $defaultBillingAddress = FALSE;
     $countries = array();
-
+    $cart = \printconnect\Carts\Factory::Current(FALSE);
     $customer = \printconnect\Customers\Factory::Current();
 
     $shopConfig = \printconnect\Shop\Configuration\Factory::Current();
@@ -41,7 +41,11 @@ function pccheckout_personal_form($form, &$form_state) {
     foreach (\printconnect\Countries\Factory::GetAll() as $country) {
         $countries[$country->id] = $country->tag;
     }
-
+    if ($cart->orderItemShipping->shippingTypeResellerShop == 351) {
+	$countries = array();
+        $country = \printconnect\Countries\Factory::Get(73);
+	$countries[$country->id] = $country->tag;
+    }
     if ($defaultBillingAddress) {
         $country = \printconnect\Countries\Factory::Get($defaultBillingAddress->country);
     } else {
@@ -110,7 +114,6 @@ function pccheckout_personal_form($form, &$form_state) {
             'placeholder' => t('Brussel'),
         )
     );
-
     $form['address']['country'] = array(
         '#type' => 'select',
         '#title' => t('Country'),
@@ -360,6 +363,11 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
             if ($country->active) {
                 $deliveryCountries[$country->id] = $country->tag;
             }
+        }
+	if ($cart->orderItemShipping->shippingTypeResellerShop == 351) {
+            $deliveryCountries = array();
+            $country = \printconnect\Countries\Factory::Get(73);
+            $deliveryCountries[$country->id] = $country->tag;
         }
     }
    

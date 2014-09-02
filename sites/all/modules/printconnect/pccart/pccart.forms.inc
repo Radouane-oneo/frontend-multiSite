@@ -41,10 +41,18 @@ function getPreflight($jobId) {
 
 function pccart_cart_form2($form, &$form_state) {
     global $language;
-    
-    $cart = Factory::Current();
+    $cart = Factory::Current(FALSE);
+    $cart->payment_method = null;
+    Factory::Save($cart);
     $endarray = end($cart->orderItems);
-    if($cart->supplementProduct == 1 || $endarray->price == 43){
+    $jobs = $cart->orderItems;
+    for($i=count($cart->orderItems); $i> 0; $i--){
+      $job = $jobs[$i];
+      if ($job->price > 0) {
+       $endarray = $job;
+      }
+    }
+    if($cart->supplementProduct == 1 && $endarray->price == 43 && $endarray->price > 0){
         $endarray = printconnect\Carts\Factory::GetItem($cart, $endarray->id);
         $endarray = printconnect\Carts\Factory::LoadItem($endarray);
         $endarray->price = 10;
@@ -85,14 +93,13 @@ function pccart_cart_form2($form, &$form_state) {
             $result = Factory::SavePreflight($cart->id, $orderItem->id, $preflights);
         }
     }
+    $cart = Factory::Current(FALSE);
     $discounts = FALSE;
     $items = array();
     $emailDesigner = FALSE;
 
     if (!$cart || !$cart->isFilled) {
  
-        
-        
         $form['empty'] = array(
             '#type' => 'container',
             '#attributes' => array('class' => array('box')),
@@ -119,23 +126,38 @@ function pccart_cart_form2($form, &$form_state) {
         foreach ($products as $product) {
             $build = array();
 
-            $build['image'] = array(
-                '#theme' => 'image',
-                '#path' => printconnect_getimage('products', $product->id),
-            );
-            $build['name'] = array(
-                '#type' => 'container',
-                '#attributes' => array('class' => array('text')),
-                'content' => array(
+                $build['image'] = array(
+                    '#theme' => 'image',
+                    '#path' => printconnect_getimage('products', $product->id),
+                    '#weight' => 10,  
+                    '#prefix' => '<div class="blocprd"><a href="products/' . $product->id.'">',
+                );   
+                $build['name'] = array(                   
                     '#markup' => $product->name,
-                ),
-            );
+                    '#prefix' => '<h2>',
+                    '#suffix' => '</h2></a></div>',
+                    '#weight' => 20,
+                 );
+            
+                $build['from'] = array(
+                    '#type' => 'container',
+                    '#attributes' => array('class' => array('from')),
+                    '#weight' => 40,
+                );
+                $build['from']['text'] = array(
+                    '#markup' => '<span class="txt">' . t('from_price') . '</span> ' . theme('price', array('value' => $product->sellPrice)),
+                );
+                $build['order'] = array(
+                    '#prefix' => '<a class="order btn-cmd" href="products/' . $product->id.'"><span class="flesh"></span>',
+                    '#suffix' => '</a>',
+                    '#weight' => 50,
+                );
+                $build['order']['text'] = array(
+                    '#markup' => t('Order now'),
+                );
+             $items[] = drupal_render($build);
 
-            $items[] = array(
-                'data' => l(drupal_render($build), 'products/' . $product->id, array('html' => true, 'title' => $product->name)),
-            );
-
-            if (count($items) >= 8) {
+            if (count($items) >= 6) {
                 break;
             }
         }
@@ -147,7 +169,7 @@ function pccart_cart_form2($form, &$form_state) {
     } else {
         
        $form['popup_overlay'] = array(
-            '#prefix' => '<div id="popup_overlay" class="popin_overlay"><div id="lean_info"><div class="headpopin">
+            '#prefix' => '<div id="popup_overlay" class="popin_overlay"><div id="lean_info"><div class="headpopin"><span class="closeme"></span>
 			<span>Profitez de notre offre exclusive !</span></div>',
              '#suffix' => '</div><div id="lean_overlay"></div></div>',
         );
@@ -208,6 +230,8 @@ function pccart_cart_form2($form, &$form_state) {
         );
        
         foreach ($cart->productItems as $item) {
+
+            
             if (isset($item->emailDesigner)) {
                 $emailDesigner = $item->emailDesigner;
             }
@@ -515,30 +539,6 @@ function pccart_cart_form2($form, &$form_state) {
         }
 /* Discount */ 
         $customer = printconnect\Customers\Factory::Current();
-    
-        if ($customer) {
-              try {
-                $billingAccounts = printconnect\Customers\BillingAccounts\Factory::GetBillingAccounts($customer, false);
-                printconnect\Customers\BillingAccounts\Factory::LoadBillingAccounts($billingAccounts);
-                $ba = null;
-                foreach ($billingAccounts as $value) {
-                    if ($value->isDefault == true) {
-                        $ba = $value;
-                    }
-                }
-                $ba = printconnect\Customers\BillingAccounts\Factory::Get($ba->id);
-                printconnect\Customers\BillingAccounts\Factory::LoadBillingAccount($ba, FALSE);
-                $cart = Factory::Current();
-                if ($ba->discountCode != null) {
-                    $discount = Discounts\Factory::Create($cart->id ,$ba->discountCode);
-                    Discounts\Factory::Save($discount);
-                    $cart = Factory::Refresh($cart);
-                    $_SESSION['oldba'] = $ba->id ;
-                    $_SESSION['discount_'.$ba->id.'_'.$cart->id] = $ba->discountCode;
-                } 
-        } catch(Exception $ex) {
-            
-        }
         if (count($cart->discountItems)) {
             $form['cart']['discounts'] = array(
                 '#type' => 'fieldset',
@@ -581,7 +581,6 @@ function pccart_cart_form2($form, &$form_state) {
                     ),
                 );
             }
-        }
         }
 /* end discount */   
            
@@ -757,7 +756,7 @@ function pccart_cart_form2($form, &$form_state) {
             $options = $newoptions;
             $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop;
         } elseif ($shop->id == 23) {
-            $_SESSION['defaultindex'] = 86;
+            $_SESSION['defaultindex'] = 351;
         } elseif ($shop->id == 33) {
             $_SESSION['defaultindex'] = 168;
         } elseif ($shop->id == 34) {
@@ -931,7 +930,62 @@ function pccart_cart_form2($form, &$form_state) {
     $form['#cache'] = TRUE;
     $form['#tree'] = TRUE;
     $form['#id'] = 'pccart-cart-form';
+    
+     /* Start bloc TOP produits */
+    
+        $form['products'] = array(
+            '#type' => 'fieldset',
+            '#title' => t('Top products'),
+            '#attributes' => array('class' => array('products')),
+        );
 
+        $items = array();
+        $products = \printconnect\Products\Factory::GetTop();
+
+        foreach ($products as $product) {
+            $build = array();
+
+                $build['image'] = array(
+                    '#theme' => 'image',
+                    '#path' => printconnect_getimage('products', $product->id),
+                    '#weight' => 10,  
+                    '#prefix' => '<div class="blocprd"><a href="products/' . $product->id.'">',
+                );   
+                $build['name'] = array(                   
+                    '#markup' => $product->name,
+                    '#prefix' => '<h2>',
+                    '#suffix' => '</h2></a></div>',
+                    '#weight' => 20,
+                 );
+            
+                $build['from'] = array(
+                    '#type' => 'container',
+                    '#attributes' => array('class' => array('from')),
+                    '#weight' => 40,
+                );
+                $build['from']['text'] = array(
+                    '#markup' => '<span class="txt">' . t('from_price') . '</span> ' . theme('price', array('value' => $product->sellPrice)),
+                );
+                $build['order'] = array(
+                    '#prefix' => '<a class="order btn-cmd" href="products/' . $product->id.'"><span class="flesh"></span>',
+                    '#suffix' => '</a>',
+                    '#weight' => 50,
+                );
+                $build['order']['text'] = array(
+                    '#markup' => t('Order now'),
+                );
+             $items[] = drupal_render($build);
+
+            if (count($items) >= 6) {
+                break;
+            }
+        }
+
+        $form['products']['list'] = array(
+            '#theme' => 'item_list',
+            '#items' => $items,
+        );
+   /* END bloc TOP produits */
     return $form;
 }
 
@@ -989,6 +1043,12 @@ function pccart_cart_form2_delete_item_validate($form, $form_state) {
 function pccart_cart_form2_delete_item_submit($form, &$form_state) {
     $cart = Factory::Current();
     $id = $form_state['triggering_element']['#parents'][2];
+    $endarray = end($cart->orderItems);
+  
+  if($cart->supplementProduct == 1 || $endarray->price == 43){
+        $cart->supplementProduct = 0;
+        \printconnect\Carts\Factory::Save($cart);
+   }
     try {
         Factory::DeleteItem($id, $cart);
     } catch (\printconnect\Rest\Exceptions\Exception $ex) {
@@ -999,7 +1059,6 @@ function pccart_cart_form2_delete_item_submit($form, &$form_state) {
 function pccart_cart_form2_add_discount_validate($form, &$form_state) {
     $customer = CustomersFactory::Current();
     if (!$customer){
-    form_set_error('', t('Please log customer'));
     }
 }
 
@@ -1007,10 +1066,6 @@ function pccart_cart_form2_add_discount_submit($form, &$form_state) {
     $cart = Factory::Current();
     $customer = CustomersFactory::Current();
     try {
-        if ($customer) {
-           $cart->customer = $customer->id;
-           Factory::Save($cart);
-
          if ($form_state['storage']['giftvoucher']) {
             \printconnect\GiftVouchers\Factory::Redeem($customer, $form_state['values']['cart']['discount']['code']);
             drupal_set_message(t('Your voucher code has been converted to store credit... You may use this credit while checking out your order.'));
@@ -1020,7 +1075,6 @@ function pccart_cart_form2_add_discount_submit($form, &$form_state) {
              drupal_set_message(t('Your discount code has been converted checkout your order.'));
         }
         $cart = Factory::Refresh($cart);
-        }
     } catch (\printconnect\Rest\Exceptions\Exception $ex) {
         drupal_set_message(t($ex->errors[0]), 'error');
         $form_state['storage']['message'] = t($ex->errors[0]);
@@ -1059,7 +1113,7 @@ function pccart_cart_form2_validate($form, &$form_state) {
     }
 }
 function pccart_cart_form2_popup_overlay_ok_submit($form, &$form_state) {
-    $cart = Factory::Current();
+    $cart = Factory::Current(FALSE);
     if($cart->supplementProduct == 0){
      $cart->supplementProduct = 1;
     \printconnect\Carts\Factory::Save($cart);
@@ -1157,7 +1211,7 @@ function pccart_cart_form2_submit($form, &$form_state) {
     $cart->customer_reference = $referenceValue;
     \printconnect\Carts\Factory::Save($cart);
     \printconnect\Carts\Factory::Refresh($cart);
-    //Factory::Save($cart);
+    drupal_goto('checkout');
 }
 
 function pccart_cart_form_filecheck_callback($form, &$form_state) {

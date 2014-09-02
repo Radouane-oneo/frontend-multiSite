@@ -526,13 +526,13 @@ $conf['404_fast_html'] = '<html xmlns="http://www.w3.org/1999/xhtml"><head><titl
 # $conf['allow_authorize_operations'] = FALSE;
 
 
-$conf['pc_url'] = 'http://admin.stg.printconcept.com/rest/';
-$conf['pc_designtoolurl'] = 'http://designtool.stg.printconcept.com';
+$conf['pc_url'] = 'http://admin.printconcept.com/rest/';
+$conf['pc_designtoolurl'] = 'http://designtool.prd.flyer.fr';
 
 $conf['pc_apikey'] = '829dc7b162f77ed761be6cac0ae8782c0ee1866b'; // flyer
 $conf['pccheckout_stepsenabled'] = true;
 $conf['pc_cache'] = true;
-$conf['pc_images'] = 'https://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr';
+$conf['pc_images'] = 'https://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu';
 
 $conf['pc_files'] = 'http://files.prd.printconcept.com/';
 

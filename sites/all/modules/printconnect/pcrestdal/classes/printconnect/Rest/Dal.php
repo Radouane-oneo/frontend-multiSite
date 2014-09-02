@@ -183,6 +183,9 @@ use printconnect\Dal\ForbiddenException;
       $start = microtime(true);
       if ($properties) {
         $data = json_encode($properties);
+	if ($entity == 'order-discount-code') {
+	    var_dump($data, $url);die;
+	}
         $response = drupal_http_request($url, array('header' => $header, 'method' => 'POST', 'data' => $data));
       } else {
         $data = array();

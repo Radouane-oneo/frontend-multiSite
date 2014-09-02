@@ -1,6 +1,3 @@
-<?php //dsm($fields);?>
-
-
 <?php if(!empty($fields['field_vignette_deal']->content)):?>	
     <div class="boxing">
         <div class="img"><?php print $fields['field_vignette_deal']->content; ?></div>
@@ -80,4 +77,3 @@
 <?php endif; ?>	
 
 <?php  print  $fields['contextual_links']->content ; ?>
-   

@@ -36,8 +36,8 @@ function pccontact_popup_form($form, &$form_state, $key = 'popup') {
   
     $form['container']['popup']['description'] = array(
         '#markup' =>'<div id="popupContent"><h3>Je souhaite être rappelé(e)</h3>
-                      <p>Merci de remplir le formulaire suivant afin qu\'un opérateur <br /> 
-                      FLYER puisse prendre contact avec vous par téléphone.</p>',
+                      <p>Merci de remplir le formulaire suivant afin qu\'un conseiller <br /> 
+                      FLYER.FR puisse prendre contact avec vous par téléphone.</p>',
     ); 
    
 
@@ -45,33 +45,33 @@ function pccontact_popup_form($form, &$form_state, $key = 'popup') {
         '#type' => 'textfield',
         '#required' => TRUE,
         '#title' => t('Nom'),
-        '#attributes' => array('data-nameError' => t('name is required')),
+        '#attributes' => array('data-nameError' => 'Nom est requis'),
         '#prefix' => '<div class="global-error edit-nom">',
-        '#suffix' => '<span class="required">'.t('name is required').'</span></div>',
+        '#suffix' => '<span class="required">Nom est requis</span></div>',
     );
       $form['container']['popup']['prenom'] = array(
         '#type' => 'textfield',
         '#required' => TRUE,
         '#title' => t('Prénom'),
-        '#attributes' => array('data-nameError' => t('name is required')),
+        '#attributes' => array('data-nameError' => 'Prénom est requis'),
         '#prefix' => '<div class="global-error edit-prenom">',
-        '#suffix' => '<span class="required">'.t('last name is required').'</span></div>',
+        '#suffix' => '<span class="required">Prénom est requis</span></div>',
     );
     $form['container']['popup']['telephone'] = array(
         '#type' => 'textfield',
         '#required' => TRUE,
         '#title' => t('Téléphone'),
-        '#attributes' => array('data-phoneError' => t('phone is required')),
+        '#attributes' => array('data-phoneError' => 'Téléphone est requis'),
         '#prefix' => '<div class="global-error edit-telephone">',
-        '#suffix' => '<span class="required">'.t('phone is required').'</span><span class="required2">'.t('Votre numéro de téléphone doit être une valeur numérique').'</span></div>',
+        '#suffix' => '<span class="required">Téléphone est requis</span><span class="required2">'.t('Votre numéro de téléphone doit être une valeur numérique').'</span></div>',
     );
     $form['container']['popup']['email'] = array(
         '#type' => 'textfield',
         '#required' => TRUE,
         '#title' => t('Adresse email'),
-        '#attributes' => array('data-mailError' => t('email is required')),
+        '#attributes' => array('data-mailError' => 'Adresse email est requise'),
         '#prefix' => '<div class="global-error edit-email">',
-        '#suffix' => '<span class="required">'.t('email is required').'</span><span class="required2">'.t('votre adresse email est invalide').'</span></div>',
+        '#suffix' => '<span class="required">Adresse email est requise</span><span class="required2">'.t('votre adresse email est invalide').'</span></div>',
     );
   
     $form['container']['popup']['error'] = array(

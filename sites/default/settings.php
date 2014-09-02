@@ -527,7 +527,7 @@ $conf['404_fast_html'] = '<html xmlns="http://www.w3.org/1999/xhtml"><head><titl
 # $conf['allow_authorize_operations'] = FALSE;
 
 
-$conf['pc_url'] = 'http://admin.printconcept.com/rest/';
+$conf['pc_url'] = 'http://admin.stg.printconcept.com/rest/';
 $conf['pc_designtoolurl'] = 'http://designtool.stg.printconcept.com/';
 //$conf['pc_apikey'] = '4ff078f212caf2815cc2eed09b57163cafb16476';
 //$conf['pc_apikey'] = '70817cdde5fdca7c4e2b0a8d3d119fd392406a0e'; //be

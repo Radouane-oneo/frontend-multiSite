@@ -1001,7 +1001,7 @@ function pccart_cart_form_shipping_type_callback(&$form, &$form_state) {
 
     if (variable_get('pc_flow', '') == 'flyer') {
         foreach (element_children($form['cart']['shipping']['type']['#options']) as $key) {
-            unset($form['cart']['shipping']['type']['#options'][$key]['price']);
+//            unset($form['cart']['shipping']['type']['#options'][$key]['price']);
         }
         $form['cart']['shipping']['type']['#options'][$cart->shipping_type]['price'] = theme('price', array('value' => $cart->orderItemShipping->convertedPrice, 'free' => TRUE));
     }

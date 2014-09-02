@@ -430,6 +430,9 @@ margin-top: 14px;
     padding-top: 3px;
 }
 
+body.page-contact-general{
+    background: none;
+}
 .page-contact-general .whitebox{
     padding: 0;
     border: 0;

@@ -16,8 +16,6 @@ use printconnect\Carts\Discounts;
 function pccart_cart_form2($form, &$form_state) {
     global $language;
     $cart = Factory::Current(FALSE);
-    $cart->payment_method = null;
-    Factory::Save($cart);
     $endarray = end($cart->orderItems);
     $jobs = $cart->orderItems;
     for($i=count($cart->orderItems); $i> 0; $i--){
@@ -645,7 +643,7 @@ function pccart_cart_form2($form, &$form_state) {
             $options = $newoptions;
             $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop;
         } elseif ($shop->id == 23) {
-            $_SESSION['defaultindex'] = 351;
+            $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop != null ? $cart->orderItemShipping->shippingTypeResellerShop : 351;
         } elseif ($shop->id == 33) {
             $_SESSION['defaultindex'] = 168;
         } elseif ($shop->id == 34) {

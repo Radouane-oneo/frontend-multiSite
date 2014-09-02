@@ -72,7 +72,7 @@ window.alert = function(arg) {
                 jQuery('#fancybox-frame').load(function(){
                     jQuery('#fancybox-close').css('right', targetElement.attr('closeposition')+'px');
                     jQuery("#fancybox_preloader").remove();
-                    jQuery('#fancybox-frame').css('overflow', 'hidden').height('753px');
+                    jQuery('#fancybox-frame').css('overflow', 'hidden');
                     //jQuery('#fancybox-frame').css('border-radius', '1px');
                     jQuery('#fancybox-frame').contents().css('border-radius', '10px');
                     jQuery('#fancybox-frame').contents().find('body').css('overflow', 'hidden');

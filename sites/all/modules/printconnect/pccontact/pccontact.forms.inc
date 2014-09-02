@@ -137,7 +137,7 @@ function pccontact_general_form($form, &$form_state, $key = 'general') {
   
   $form['container']['image'] = array(
       '#markup' => '<div class="head">
-          <img src="/sites/all/modules/printconnect/pccontact/img/logo.png"><span class="close"></span></div>',
+          <img src="/sites/all/modules/printconnect/pccontact/img/logo.png"></div>',
   );
   
   $form['container']['title'] = array(

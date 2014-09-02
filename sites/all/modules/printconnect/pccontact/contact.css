@@ -373,6 +373,7 @@ margin-top: 14px;
     margin: 0;
 }
 
+#pccontact_general_form .head .close,
 .info-bloc .head .close{
     background: url(img/close.png);
     display: block;
@@ -381,6 +382,17 @@ margin-top: 14px;
     cursor: pointer;
     float: right;
     margin: 25px 20px 0 0;
+}
+
+#fancybox-close{
+    background: url(img/close.png) !important;
+    display: block !important;
+    width: 11px !important;
+    height: 10px !important;
+    cursor: pointer !important;
+    float: right !important;
+    margin: 51px 39px 0 0 !important;
+    
 }
 
 .popin_overlay #messageSent{

@@ -295,7 +295,7 @@ if ($result['result'] == TRUE) {
   switch ($key) {
   case 'envoi_email_clent':
         $message['headers']['Content-Type'] = 'text/html; charset=UTF-8; format=flowed';
-        $message['subject'] =  t('Flyer.fr vous remercie d’avoir participé à son jeu-concours !');
+        $message['subject'] =  t('Newsletter Flyer.fr');
         $message['body'][] = $params;
       break;
   

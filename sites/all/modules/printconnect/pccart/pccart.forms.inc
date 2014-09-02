@@ -742,9 +742,11 @@ function pccart_cart_form2($form, &$form_state) {
                 'class' => 'hnaa',
             );
 
-            if (variable_get('pc_flow', '') == 'flyer' && $cart->orderItemShipping->shippingTypeResellerShop == $type->id) {
-                $options[$type->id]['price'] = theme('price', array('value' => $type->price, 'free' => TRUE));
-            }
+//            if (variable_get('pc_flow', '') == 'flyer' && $cart->orderItemShipping->shippingTypeResellerShop == $type->id) {
+//                $options[$type->id]['price'] = theme('price', array('value' => $type->price, 'free' => TRUE));
+//            }
+              $options[$type->id]['price'] = theme('price', array('value' => $type->price, 'free' => TRUE));
+
         }
     $shop = printconnect\Shop\Configuration\Factory::Current();
         $newoptions = array("134" => $options[134], "123" => $options[123], "204" => $options[204], "121" => $options[121], "122" => $options[122]);

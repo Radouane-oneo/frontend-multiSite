@@ -1568,6 +1568,19 @@ function _pccheckout_payment_form_build_overview($cart) {
                 );
             }
         }
+	
+	$cartItemsFull = printconnect\Carts\Factory::GetItems($cart);
+        foreach ($cartItemsFull as $cartItem) {
+            if ($cartItem->parentId != null) {
+                $rows[] = array(
+                    'data' => array(
+                        $cartItem->description,
+                        theme('price', array('value' => $cartItem->price)),
+                    ),
+                    'class' => array('orderItemsAdditional'),
+                );
+            }
+        }
 
         if ($cart->orderItemsAdditional) {
             foreach ($cart->orderItemsAdditional as $item) {

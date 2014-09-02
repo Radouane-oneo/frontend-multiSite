@@ -13,11 +13,35 @@ use \printconnect\Products;
 use printconnect\Customers\Factory as CustomersFactory;
 use printconnect\Carts\Discounts;
 
+function getFotolia($jobId) {
+    $url = variable_get('pc_designtoolurl');
+    $url .= '/rest/get-fotolia-images/j/' . $jobId;
+    
+    $response = file_get_contents($url);
+    
+    $response = json_decode($response, 1);
+    if(isset($response['data']['Fotolia'])){
+        return $response['data']['Fotolia'];
+    }else {
+        return array();
+    }
+}
+
+function getPreflight($jobId) {
+    $url = variable_get('pc_designtoolurl');
+    $url .= '/rest/getpreflightinfo?j='.$jobId;
+    $response = file_get_contents($url);
+    $response = json_decode($response, 1);
+    if(isset($response['data']['preflightInfo']) &&  !empty($response['data']['preflightInfo'])){
+        return $response['data']['preflightInfo'];
+    }else {
+        return array();
+    }
+}
+
 function pccart_cart_form2($form, &$form_state) {
     global $language;
     $cart = Factory::Current(FALSE);
-    $cart->payment_method = null;
-    Factory::Save($cart);
     $endarray = end($cart->orderItems);
     $jobs = $cart->orderItems;
     for($i=count($cart->orderItems); $i> 0; $i--){
@@ -32,7 +56,41 @@ function pccart_cart_form2($form, &$form_state) {
         $endarray->price = 10;
         printconnect\Carts\Factory::SaveItem($endarray);   
     }
-
+    
+    $cart = Factory::Current(FALSE);
+    // delete fotolias data on backend
+    Factory::deleteFotolias($cart);
+    $fotoliaPrice = 0;
+    $preflightPrice = 0;
+    $mypreflight = 0;
+    if($cart->fotoliaPrice){
+        $fotoliaPrice = $cart->fotoliaPrice;
+        $preflightPrice = $cart->preflightPrice;
+    }
+    
+    $fotolia = array();
+    $preflight = array();
+    $fotoliaPrice = str_replace('.', ',', $fotoliaPrice);
+    $preflightPrice = str_replace('.', ',', $preflightPrice);  
+    foreach ($cart->orderItems as $orderItem) {
+        $fotoliaImages = getFotolia($orderItem->id);
+        if (!empty($fotoliaImages)) {
+            foreach($fotoliaImages as $image) {
+                $pricefotolias = Factory::getFotoliaPrice($image['type']);
+                $fotoliaPrice = str_replace('.', ',', $pricefotolias->price);
+                $fotolia[$orderItem->id][] = '<span>'.t('Image').'&nbsp;"'.$image['id'].'"</span><div class="fotolia-price">€&nbsp;'.$fotoliaPrice.'</div>';
+            } 
+            $resultfotolia = Factory::SaveFotolia($cart->id, $orderItem->id, $fotoliaImages);
+        }
+	
+        $preflights = getPreflight($orderItem->id);
+        if (!empty($preflights)) {
+            foreach($preflights as $singlePreflight) {
+                $preflight[$orderItem->id][] = '<span>"'.t('Preflight').'&nbsp;"</span><div class="fotolia-price">€&nbsp;'.$preflightPrice.'</div>';
+            }
+            $result = Factory::SavePreflight($cart->id, $orderItem->id, $preflights);
+        }
+    }
     $cart = Factory::Current(FALSE);
     $discounts = FALSE;
     $items = array();
@@ -374,6 +432,20 @@ function pccart_cart_form2($form, &$form_state) {
                     $checkableItems[] = $item->id;
                 }
             }
+	    if (count($item->files)) {
+	        $myfiles = $item->files[0];
+	        $form['cart']['items'][$item->id]['proflink'] = array(
+                        '#theme' => 'designtoolproflink',
+                        '#templateId' => $template->id,
+                        '#title' => $product->name . ' ' . $firstConfig->name,
+                        '#params' => array(
+                            'id' => $item->id,
+                            'cartid' => $cart->id,
+			    'j' => $myfiles->designToolJobId,
+                        ),
+                        '#attributes' => array('class' => array('proupload', 'designtool', 'iframe', 'reupload')),
+                    );
+	    }
             if ($offerId === null) {
                 $form['cart']['items'][$item->id]['description']['actions'] = array(
                     '#type' => 'container',
@@ -404,7 +476,44 @@ function pccart_cart_form2($form, &$form_state) {
           
             }
         }
-
+	
+	if (!empty($fotolia)) {
+            $form['cart']['fotolias'] = array(
+                '#type' => 'fieldset',
+                '#attributes' => array('class' => array('file-check', 'clearfix')),
+                '#title' => t('FOTOLIA'),
+                '#weight' => 70,
+            );
+            foreach ($cart->orderItems as $orderItem) {
+		if (isset($fotolia[$orderItem->id])) {
+                    $form['cart']['fotolias']['items'][$orderItem->id]['fotolia'] = array(
+                        '#theme' => 'item_list',
+                        '#prefix' => '<div class="fotolia-items">',
+                        '#suffix' => '</div>',
+                        '#items' => $fotolia[$orderItem->id]
+                    );
+		}
+            }
+        }
+        
+        if (!empty($preflight)) {
+            $form['cart']['preflights'] = array(
+                '#type' => 'fieldset',
+                '#attributes' => array('class' => array('file-check', 'clearfix')),
+                '#title' => t('PREFLIGHT'),
+                '#weight' => 70,
+            );
+            foreach ($cart->orderItems as $orderItem) {
+                if (isset($preflight[$orderItem->id])) {
+                    $form['cart']['preflights']['items'][$orderItem->id]['preflight'] = array(
+                        '#theme' => 'item_list',
+                        '#prefix' => '<div class="preflight-items">',
+                        '#suffix' => '</div>',
+                        '#items' => $preflight[$orderItem->id]
+                    );
+		}
+            }
+        }
         $orderItemsAdditional = $cart->orderItemsAdditional;
         if (count($orderItemsAdditional)) {
             $form['cart']['additionalItems'] = array(
@@ -647,7 +756,7 @@ function pccart_cart_form2($form, &$form_state) {
             $options = $newoptions;
             $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop;
         } elseif ($shop->id == 23) {
-            $_SESSION['defaultindex'] = 351;
+            $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop != null ? $cart->orderItemShipping->shippingTypeResellerShop : 351;
         } elseif ($shop->id == 33) {
             $_SESSION['defaultindex'] = 168;
         } elseif ($shop->id == 34) {

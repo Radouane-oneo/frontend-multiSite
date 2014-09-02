@@ -3323,7 +3323,6 @@ background: url(images/subMenuSpriteIconsModified.png) no-repeat -456px -49px;
 }
 .page-cart .shipping  .fieldset-wrapper,
 .page-cart .file-check .fieldset-wrapper{
-	padding-bottom: 0;
 	padding-right: 0;
 }
 .page-cart .file-check table,
@@ -7226,6 +7225,15 @@ background-color:-webkit-linear-gradient(top, #77B800 0%, #669C02 100%) ;
 padding-left: 61px;
 }
 
+.fotolia-items ul li {
+    background: url("images/rsz_fotolia-icon.png") no-repeat scroll 0 2px / 28px auto transparent;
+}
+
+.preflight-items ul li {
+    background: none;
+    margin-left: -6%;
+}
+
 div.content ol.search-results div.results-Contenu li.search-result h3.title{
     padding-left: 162px;
     margin-top: 28px;
@@ -8347,7 +8355,6 @@ ul.ui-autocomplete{
 	overflow: hidden;
 	margin-bottom: 10px;
 }
-
 
 /* popup cart*/
 #lean_overlay {

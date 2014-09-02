@@ -71,7 +71,7 @@ function pccontact_popup_form($form, &$form_state, $key = 'popup') {
         '#title' => t('Adresse email'),
         '#attributes' => array('data-mailError' => 'Adresse email est requise'),
         '#prefix' => '<div class="global-error edit-email">',
-        '#suffix' => '<span class="required">Adresse email est requise</span><span class="required2">'.t('votre adresse email est invalide').'</span></div>',
+        '#suffix' => '<span class="required">Adresse email est requise</span><span class="required2">'.t('Votre adresse email est invalide').'</span></div>',
     );
   
     $form['container']['popup']['error'] = array(

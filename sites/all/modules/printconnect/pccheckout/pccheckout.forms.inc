@@ -1187,9 +1187,66 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
     }
 }
 
+function getFotolia($jobId) {
+    $url = variable_get('pc_designtoolurl');
+    $url .= '/rest/get-fotolia-images/j/' . $jobId;
+    
+    $response = file_get_contents($url);
+    
+    $response = json_decode($response, 1);
+    if(isset($response['data']['Fotolia'])){
+        return $response['data']['Fotolia'];
+    }else {
+        return array();
+    }
+}
+
+function getPreflight($jobId) {
+    $url = variable_get('pc_designtoolurl');
+    $url .= '/rest/getpreflightinfo?j='.$jobId;
+    $response = file_get_contents($url);
+    $response = json_decode($response, 1);
+    if(isset($response['data']['preflightInfo']) &&  !empty($response['data']['preflightInfo'])){
+        return $response['data']['preflightInfo'];
+    }else {
+        return array();
+    }
+}
 function pccheckout_upload_form($form, &$form_state) {
     _pccustomers_ensureloggedin();
     $cart = \printconnect\Carts\Factory::Current(FALSE);
+    \printconnect\Carts\Factory::deleteFotolias($cart);
+    $fotoliaPrice = 0;
+    $preflightPrice = 0;
+    $mypreflight = 0;
+    if($cart->fotoliaPrice){
+        $fotoliaPrice = $cart->fotoliaPrice;
+        $preflightPrice = $cart->preflightPrice;
+    }
+    
+    $fotolia = array();
+    $preflight = array();
+    $fotoliaPrice = str_replace('.', ',', $fotoliaPrice);
+    $preflightPrice = str_replace('.', ',', $preflightPrice); 
+    foreach ($cart->orderItems as $orderItem) {
+        $fotoliaImages = getFotolia($orderItem->id);
+        if (!empty($fotoliaImages)) {
+            foreach($fotoliaImages as $image) {
+                $pricefotolias = \printconnect\Carts\Factory::getFotoliaPrice($image['type']);
+                $fotoliaPrice = str_replace('.', ',', $pricefotolias->price);
+                $fotolia[$orderItem->id][] = '<span>'.t('Image').'&nbsp;"'.$image['id'].'"</span><div class="fotolia-price">€&nbsp;'.$fotoliaPrice.'</div>';
+            } 
+            $resultfotolia = \printconnect\Carts\Factory::SaveFotolia($cart->id, $orderItem->id, $fotoliaImages);
+        }
+	
+        $preflights = getPreflight($orderItem->id);
+        if (!empty($preflights)) {
+            foreach($preflights as $singlePreflight) {
+                $preflight[$orderItem->id][] = '<span>"'.t('Preflight').'&nbsp;"</span><div class="fotolia-price">€&nbsp;'.$preflightPrice.'</div>';
+            }
+            $result = \printconnect\Carts\Factory::SavePreflight($cart->id, $orderItem->id, $preflights);
+        }
+    }
     $emailDesigner = FALSE;
     $weight = 0;
     if ($cart) {

@@ -60,7 +60,7 @@ function pccontact_menu() {
       'page callback' => 'sendmail',
       'access arguments' => array('access content'),
   );
-   $items['popup/ajax'] = array(
+   $items['popup/ajax2'] = array(
         'page callback' => 'ajax_back',
         'access callback' => TRUE,	
         'access arguments' => array('access content'),		
@@ -389,12 +389,21 @@ function pccontact_mail($key, &$message, $params) {
       $message['subject'] = 'Email';
       $message['body'][] = 'test';
       break;
+   case 'demande_rappel_clt':
+        $message['subject'] =  t('Demande de rappel - Mail de confirmation');
+        $message['body'][] = $params;
+      break;
+   case 'demande_rappel_admin':   
+        $message['subject'] =  t('Demande de rappel - Mail de confirmation');
+        $message['body'][] = $params;
+      break;
   }
-
-  $message['body'][] = '<br/><b>' . t('Site') . '</b>: ';
-  $message['body'][] = $_SERVER['HTTP_HOST'];
-  $message['body'][] = '<br/><b>' . t('Language') . '</b>: ';
-  $message['body'][] = $language->language;
+    if($key !=="demande_rappel_clt" || $key !=="demande_rappel_admin"  ){
+      $message['body'][] = '<br/><b>' . t('Site') . '</b>: ';
+      $message['body'][] = $_SERVER['HTTP_HOST'];
+      $message['body'][] = '<br/><b>' . t('Language') . '</b>: ';
+      $message['body'][] = $language->language;
+    }
 }
 
 function pccontact_success($idName, $userName) {
@@ -495,26 +504,27 @@ function pccontact_contact_form_submit($form, &$form_state) {
 function pccontact_contact_form_callback($form, &$form_state) {
   return $form;
 }
-
-function ajax_back(){
+/* code de test */
+/*
+function ajax_back2(){
     
       if( isset($_GET['nom']) && !empty($_GET['nom']) ){
           
             $bodyClt = '<table valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0">
                                 <tr>
-                                  <td width="30"></td>
-                                  <td>
+                                  <td border="0"  width="30"></td>
+                                  <td border="0" >
                                     <font style="font-family:Helvetica,arial;font-size:16px;color:#646464;line-height:16px;"><strong>
                                       Bonjour '.$_GET['nom'].' '.$_GET['prenom'].',</strong></font>
                                   </td>
-                                  <td width="15"></td> 
+                                  <td border="0"  width="15"></td> 
                                 </tr>
                                 <tr height="17px">
-                                <td>&nbsp;</td> <td>&nbsp;</td> <td>&nbsp;</td>
+                                <td border="0" >&nbsp;</td> <td border="0" >&nbsp;</td> <td border="0" >&nbsp;</td>
                                  </tr>
                                 <tr>
-                                  <td height="48"></td>
-                                  <td>
+                                  <td border="0"  height="48"></td>
+                                  <td border="0" >
                                     <font style="font-family:Helvetica,arial;font-size:14px;color:#646464;line-height:16px;"><strong>
                                    Nous vous remercions  de l’intérêt que vous portez à notre site <a style="color:#ff6600;" href="www.flyer.fr">Flyer.fr</a>.<br> 
                                    </strong></font><br>
@@ -522,36 +532,36 @@ function ajax_back(){
                                       Votre demande de rappel a bien été prise en compte.<br>
                 Un conseiller Flyer.fr va prendre contact avec vous.</font>
                                   </td>
-                                  <td></td> 
+                                  <td border="0" ></td> 
                              </tr>
                                 <tr height="17px">
-                                <td>&nbsp;</td> <td>&nbsp;</td> <td>&nbsp;</td>
+                                <td border="0" >&nbsp;</td> <td border="0" >&nbsp;</td> <td border="0" >&nbsp;</td>
                                  </tr>
                                 <tr>
-                                  <td width="14"></td>
-                                  <td>
+                                  <td border="0"  width="14"></td>
+                                  <td border="0" >
 
                                   </td>
-                                  <td width="15"></td> 
+                                  <td border="0"  width="15"></td> 
                                 </tr>
 
                             </table>';
             
             $bodyAdmin =  '<table valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0">
                                 <tr>
-                                  <td width="30"></td>
-                                  <td>
+                                  <td border="0"  width="30"></td>
+                                  <td border="0" >
                                     <font style="font-family:Helvetica,arial;font-size:16px;color:#646464;line-height:16px;"><strong>
                                       Bonjour,</strong></font>
                                   </td>
-                                  <td width="15"></td> 
+                                  <td border="0"  width="15"></td> 
                                 </tr>
                                 <tr height="17px">
-                                <td>&nbsp;</td> <td>&nbsp;</td> <td>&nbsp;</td>
+                                <td border="0" >&nbsp;</td> <td border="0" >&nbsp;</td> <td border="0" >&nbsp;</td>
                                  </tr>
                                 <tr>
-                                  <td height="48"></td>
-                                  <td>
+                                  <td border="0"  height="48"></td>
+                                  <td border="0" >
                                     <font style="font-family:Helvetica,arial;font-size:14px;color:#646464;line-height:16px;"><strong>
                                         Un nouveau client vient de déposer une demande sur le site <a style="color:#ff6600;" href="www.flyer.fr">Flyer.fr</a>.<br> 
                                    </strong></font><br>
@@ -560,17 +570,17 @@ function ajax_back(){
                                     </font>
                                  <p><br/><b>' . t('Contact') . '</b>: '. $_GET['nom'].' '.$_GET['prenom'].'<br/><b>' . t('Téléphone') . '</b>: '.$_GET['phone'].'<br/><b>E-mail</b>: '.$_GET['email'].'<br/></p>
                                 </td>
-                                  <td></td> 
+                                  <td border="0" ></td> 
                              </tr>
                                 <tr height="17px">
-                                <td>&nbsp;</td> <td>&nbsp;</td> <td>&nbsp;</td>
+                                <td border="0" >&nbsp;</td> <td border="0" >&nbsp;</td> <td border="0" >&nbsp;</td>
                                  </tr>
                                 <tr>
-                                  <td width="14"></td>
-                                  <td>
+                                  <td border="0"  width="14"></td>
+                                  <td border="0" >
 
                                   </td>
-                                  <td width="15"></td> 
+                                  <td border="0"  width="15"></td> 
                                 </tr>
 
                             </table>';
@@ -590,19 +600,19 @@ function ajax_back(){
                   <body bgcolor="#ffffff" style="background-color:#ffffff;">
                     <table valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0">
                       <tr>
-                        <td>
+                        <td border="0" >
                             <table valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0">
                                 <tr>
-                                  <td>
+                                  <td border="0" >
                                     <a style="text-decoration:none;" target="_blank" href=""><img width="140" height="49" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/home.jpg"></a>
                                   </td>
-                                  <td>
+                                  <td border="0" >
                                     <a style="text-decoration:none;" target="_blank" href=""><img width="154" height="49" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/nosprod.jpg"></a>
                                   </td>
-                                  <td>
+                                  <td border="0" >
                                     <a style="text-decoration:none;" target="_blank" href=""><img width="146" height="49" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/nosmodel.jpg"></a>
                                   </td>
-                                  <td>
+                                  <td border="0" >
                                     <a style="text-decoration:none;" target="_blank" href=""><img width="181" height="49" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/bonneaffaire.jpg"></a>
                                   </td> 
                                 </tr>
@@ -611,25 +621,25 @@ function ajax_back(){
                       </tr>
 
                       <tr>
-                        <td height="14">
+                        <td border="0"  height="14">
                         </td> 
                       </tr>
 
 
                       <tr>
-                        <td>';
+                        <td border="0" >';
     
         $bodyFooter ='</td> 
                       </tr>
                       <tr>
-                        <td height="7"></td> 
+                        <td border="0"  height="7"></td> 
                       </tr>
-                        <td height="10">
+                        <td border="0"  height="10">
 
                         </td> 
                       </tr>
                       <tr>
-                        <td>
+                        <td border="0" >
                             <img width="620" height="134" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/block.jpg" />
                         </td> 
                       </tr>
@@ -701,47 +711,210 @@ function ajax_back(){
 
     drupal_json_output(array( 'data' => $data));
 }
+*/
+// function mail ajax new
 
-// fonction de test mail 
-//function sendmail(){
-// 
-//   $message2  = '<div id="messageSent" style="display: block;text-align: center;">
-//                    <h3>VOTRE DEMANDE A BIEN ÉTÉ PRISE EN COMPTE !</h3>
-//                    <p>Un conseiller vous répondra dans les plus brefs délais.
-//                    Nous vous remercions de votre confiance.</p><p class="orange">
-//                    Vous avez reçu un email de confirmation</p>
-//                    </div>';
-//  
-//
-//           $my_module = 'pccontact';
-//           $my_mail_token = microtime();
-//      
-//            $from = variable_get('system_mail', 'support@flyer.fr');
-//            $to = variable_get('system_mail', 'n_bentounsi@yahoo.com');
-// 
-//        $message = array(
-//            'id' => $my_module . '_' . $my_mail_token,
-//            'to' => $to,
-//            'subject' => 'mail flyer',
-//            'body' => array($message2),
-//            'headers' => array(
-//                'From' => $from,
-//                'Sender' => $from,
-//                'Return-Path' => $from,
-//                'MIME-Version' => '1.0',
-//                'Content-Type' => 'text/html; charset=UTF-8; format=flowed',
-//                'Content-Transfer-Encoding' => '8Bit',
-//                'X-Mailer' => 'Drupal',
-//            ),
-//        );
-//        $system = drupal_mail_system($my_module, $my_mail_token);
-//        $message = $system->format($message);
-//        if ($system->mail($message)) {
-//            print   t('Vos coordonnées ont bien été envoyées');
-//        } else {
-//           print  'Erreur d\'envoie !';
-//        }
-//     
-//  
-//} 
+function ajax_back(){
+    
+      if( isset($_GET['nom']) && !empty($_GET['nom']) ){
+          
+$bodyClt = '<html>
+      <head>
+      </head>
+      <style>
+        img{border:0px !important}
+        a{text-decoration:none;}
+        table{font-family: arial;}
+      </style>
+      <body bgcolor="#ffffff" style="background-color:#ffffff;">
+        <table valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0">
+        <tr>
+            <td><table border="0" width="100%">
+<tr>
+<td border="0" width="25px"></td>
+<td border="0" height="85"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/logo.png" border="0" /></td><td border="0" align="right"><strong style="color:#76b700;font-size:24px;">Mail de confirmation</strong><br /><span style="color:#646464;font-size:17px">Demande de rappel</span></td><td border="0" width="25px"></td>
+</tr>
+</table></td>
+        </tr>
+          <tr>
+            <td border="0" >
+                <table valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0">
+                    <tr >
+                    <td border="0"  >
+                    <table valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0">
+                    <tr>
+                    <td border="0" >
+                    <a style="text-decoration:none;" target="_blank" href="http://flyer.fr/frfr/"><img width="140" height="49" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/home.jpg"></a>
+                    </td>
+                    <td border="0" >
+                    <a style="text-decoration:none;" target="_blank" href="http://flyer.fr/frfr/nos-produits"><img width="154" height="49" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/nosprod.jpg"></a>
+                    </td>
+                    <td border="0" >
+                    <a style="text-decoration:none;" target="_blank" href="http://flyer.fr/frfr/créations-en-ligne"><img width="146" height="49" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/nosmodel.jpg"></a>
+                    </td>
+                    <td border="0" >
+                    <a style="text-decoration:none;" target="_blank" href="http://flyer.fr/frfr/bonneaffaire"><img width="181" height="49" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/bonneaffaire.jpg"></a>
+                    </td> 
+                    </tr>
+                </table>
+            </td> 
+          </tr>
+
+          <tr>
+            <td border="0"  height="14">
+            </td> 
+          </tr>
+<!-- corps -->
+          <tr>
+            <td border="0" >
+                                    <table valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td border="0"  width="30"></td>
+                      <td border="0" >
+                        <font style="font-family:Helvetica,arial;font-size:16px;color:#646464;line-height:16px;"><strong>
+                          Bonjour '.$_GET['nom'].' '.$_GET['prenom'].',</strong></font>
+                      </td>
+                      <td border="0"  width="15"></td> 
+                    </tr>
+                    <tr height="17px">
+                    <td border="0" >&nbsp;</td> <td border="0" >&nbsp;</td> <td border="0" >&nbsp;</td>
+                     </tr>
+                    <tr>
+                      <td border="0"  height="48"></td>
+                      <td border="0" >
+                        <font style="font-family:Helvetica,arial;font-size:14px;color:#646464;line-height:16px;"><strong>
+                       Nous vous remercions  de l’intérêt que vous portez à notre site <a style="color:#ff6600;" href="www.flyer.fr">Flyer.fr</a>.<br> 
+                       </strong></font><br>
+     <font style="font-family:Helvetica,arial;font-size:15px;color:#646464;line-height:16px;">
+                          Votre demande de rappel a bien été prise en compte.<br>
+    Un conseiller Flyer.fr va prendre contact avec vous.</font>
+                      </td>
+                      <td border="0" ></td> 
+                 </tr>
+                    <tr height="17px">
+                    <td border="0" >&nbsp;</td> <td border="0" >&nbsp;</td> <td border="0" >&nbsp;</td>
+                     </tr>
+                    <tr>
+                      <td border="0"  width="14"></td>
+                      <td border="0" >
+
+                      </td>
+                      <td border="0"  width="15"></td> 
+                    </tr>
+
+                </table>
+
+                                            <!-- footer -->
+                                            </td> 
+          </tr>
+
+          <tr>
+            <td height="151" border="0" >
+                <img width="620" height="134" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/block.jpg" />
+            </td> 
+          </tr>
+<tr>
+<td height="45" border="0" align="center">
+<table width="25%" align="center" border="0">
+<tr>
+<td border="0"><a href="#"><img src="http://pc-images.s3-eu-west-1.amazonaws.com/images.flyer.fr/emailling/l1.png" /></a></td>
+<td border="0"><a href="#"><img src="http://pc-images.s3-eu-west-1.amazonaws.com/images.flyer.fr/emailling/l2.png" /></a></td>
+<td border="0"><a href="#"><img src="http://pc-images.s3-eu-west-1.amazonaws.com/images.flyer.fr/emailling/l3.png" /></a></td>
+<td border="0"><a href="#"><img src="http://pc-images.s3-eu-west-1.amazonaws.com/images.flyer.fr/emailling/l4.png" /></a></td>
+</tr>
+</table>
+
+</td>
+</tr>
+<tr>
+<td height="26" align="center" border="0" style="color:#999999;font-size:12px;">Si vous ne souhaitez plus recevoir ces messages de la part de FLYER.FR, veuillez vous <a href="http://flyer.fr/frfr/newsletter/unsubscribe" style="color:#666666;text-decoration:none;">désabonner</a>.</td>
+</tr>
+<tr>
+<td align="center" border="0" style="color:#434343;font-size:12px;">© 2014 FLYER.FR | Tous droits réservés.</td>
+</tr>
+      </table>
+      </body>
+    </html>';
+            
+            $bodyAdmin =  '<table valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0">
+                                <tr>
+                                  <td border="0"  width="30"></td>
+                                  <td border="0" >
+                                    <font style="font-family:Helvetica,arial;font-size:16px;color:#646464;line-height:16px;"><strong>
+                                      Bonjour,</strong></font>
+                                  </td>
+                                  <td border="0"  width="15"></td> 
+                                </tr>
+                                <tr height="17px">
+                                <td border="0" >&nbsp;</td> <td border="0" >&nbsp;</td> <td border="0" >&nbsp;</td>
+                                 </tr>
+                                <tr>
+                                  <td border="0"  height="48"></td>
+                                  <td border="0" >
+                                    <font style="font-family:Helvetica,arial;font-size:14px;color:#646464;line-height:16px;"><strong>
+                                        Un nouveau client vient de déposer une demande de rappel sur le site <a style="color:#ff6600;" href="www.flyer.fr">Flyer.fr</a>.<br> 
+                                   </strong></font><br>
+                 <font style="font-family:Helvetica,arial;font-size:15px;color:#646464;line-height:16px;">
+                                      Détail d\'infos :<br>
+                                    </font>
+                                 <p><br/><b>' . t('Contact') . '</b>: '. $_GET['nom'].' '.$_GET['prenom'].'<br/><b>' . t('Téléphone') . '</b>: '.$_GET['phone'].'<br/><b>E-mail</b>: '.$_GET['email'].'<br/></p>
+                                </td>
+                                  <td border="0" ></td> 
+                             </tr>
+                                <tr height="17px">
+                                <td border="0" >&nbsp;</td> <td border="0" >&nbsp;</td> <td border="0" >&nbsp;</td>
+                                 </tr>
+                                <tr>
+                                  <td border="0"  width="14"></td>
+                                  <td border="0" >
+
+                                  </td>
+                                  <td border="0"  width="15"></td> 
+                                </tr>
+
+                            </table>';
+        
+        
+        
+        // info mail admin
+                $module = 'pccontact_mail';
+                $key = 'demande_rappel_admin';
+                $to = variable_get('system_mail', 'nabil.b@oneoweb.com');
+                $from = 'info@flyer.fr';
+                $language = language_default();
+                $send = TRUE;
+                $params = $bodyAdmin;
+                $result = drupal_mail($module, $key, $to, $language, $params, $from, $send );
+                $resAdmin = FALSE;
+                if ($result['result'] == TRUE) {
+                    $resAdmin = TRUE;
+                }
+      
+    // info mail client
+                $module = 'pccontact_mail';
+                $key = 'demande_rappel_clt';
+                $to = variable_get('system_mail', $_GET['email']);
+                $from = 'info@flyer.fr';
+                $language = language_default();
+                $send = TRUE;
+                $params = $bodyClt;
+                $result = drupal_mail($module, $key, $to, $language, $params, $from, $send );
+                $resClt = FALSE;
+                if ($result['result'] == TRUE) {
+                    $resClt = TRUE;
+                }
+
+            if ($resClt && $resAdmin) {
+                $data = true;
+            } else {
+               $data = false;
+            }
+
+        }else{         
+          $data = false;         
+        }
+
+    drupal_json_output(array( 'data' => $data));
+}
+
 

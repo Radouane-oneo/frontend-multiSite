@@ -1459,7 +1459,7 @@ function pccustomers_login_form_submit($form, &$form_state) {
 function pccustomers_login_form_send_mail($form, &$form_state) {
 $module = 'pccustomers';
 $key = 'customers_send_mail';
-$to = 'bik8yg@gmail.com';
+$to = 'salim@agenceoneo.com';
 $from = 'info@flyer.fr';
 $params = t("Email : ") . $form_state['values']['emailnew'];
 $language = language_default();

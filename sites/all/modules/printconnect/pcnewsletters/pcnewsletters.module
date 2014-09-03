@@ -195,7 +195,7 @@ function pcnewsletters_mail_send_client($form, &$form_state) {
 $module = 'pcnewsletters';
 $key = 'envoi_email_client';
 $to = $form_state['values']['email'];
-$from = 'info@flyer.fr';
+$from = 'support@flyer.fr';
 $params = '<html>
 <head>
 </head>
@@ -206,10 +206,10 @@ border:0px;
 font-family:Arial, Helvetica, sans-serif;
 }
 </style>
-<table width="618px" border="" cellpadding="0" cellspacing="0" style="background-color:#fff;border:0px;width:618px;margin:0px auto;">
+<table width="618px" border="0px" cellpadding="0" cellspacing="0" style="background-color:#fff;border:0px;width:618px;margin:0px auto;">
 <tr>
 <td border="0">
-<table border="0" width="100%">
+<table border="0px" width="100%">
 <tr>
 <td border="0" width="25px"></td>
 <td border="0" height="85"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/logo.png" border="0" /></td><td border="0" align="right"><strong style="color:#76b700;font-size:24px;">Mail de confirmation</strong><br /><span style="color:#646464;font-size:17px">Demande de rappel</span></td><td border="0" width="25px"></td>
@@ -219,7 +219,7 @@ font-family:Arial, Helvetica, sans-serif;
 </tr>
 <tr >
 <td border="0"  >
-<table valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0">
+<table valign="top" width="620" border="0px" align="center" cellpadding="0" cellspacing="0">
 <tr>
 <td border="0" >
 <a style="text-decoration:none;" target="_blank" href="http://flyer.fr/frfr/"><img width="140" height="49" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/home.jpg"></a>
@@ -242,7 +242,7 @@ font-family:Arial, Helvetica, sans-serif;
 </tr> 
 <tr>
 <td border="0"  style="">
-<table style="border:0px;" valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0">
+<table style="border:0px;" valign="top" width="620" border="0px" align="center" cellpadding="0" cellspacing="0">
 <tbody>
 <tr>
 <td border="0"  height="15" width="30px"></td>
@@ -269,7 +269,7 @@ Nous vous remercions de l\'intérêt que vous portez à Flyer.fr et de votre ins
 </tr>
 <tr>
 <td border="0"  align="center">
-<table align="center" width="100%" border="0" style="border:0px;">
+<table align="center" width="100%" border="0px" style="border:0px;">
 <tr>
 <td border="0"  width="51%" height="322" align="center"><a style="text-decoration:none;" target="_blank" href="http://flyer.fr/frfr/flyerfr-vous-chouchoute"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/im1.jpg" /></a></td>
 <td border="0"  align="center" width="48%"><a style="text-decoration:none;" target="_blank" href="http://flyer.fr/frfr/bonneaffaire"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/im2.jpg" /></a></td>
@@ -294,7 +294,7 @@ Nous vous remercions de l\'intérêt que vous portez à Flyer.fr et de votre ins
 </tr>
 <tr>
 <td height="42" border="0" align="center">
-<table width="25%" align="center" border="0">
+<table width="25%" align="center" border="0px">
 <tr>
 <td border="0"><a href="#"><img src="http://pc-images.s3-eu-west-1.amazonaws.com/images.flyer.fr/emailling/l1.png" /></a></td>
 <td border="0"><a href="#"><img src="http://pc-images.s3-eu-west-1.amazonaws.com/images.flyer.fr/emailling/l2.png" /></a></td>
@@ -305,7 +305,7 @@ Nous vous remercions de l\'intérêt que vous portez à Flyer.fr et de votre ins
 </td>
 </tr>
 <tr>
-	<td height="26" align="center" border="0" style="color:#999999;font-size:12px;">Si vous ne souhaitez plus recevoir ces messages de la part de FLYER.FR, veuillez vous <a href="#" style="color:#666666;text-decoration:none;">désabonner</a>.</td>
+	<td height="26" align="center" border="0" style="color:#999999;font-size:12px;">Si vous ne souhaitez plus recevoir ces messages de la part de FLYER.FR, veuillez vous <a href="http://flyer.fr/frfr/newsletter/unsubscribe" style="color:#666666;text-decoration:none;">désabonner</a>.</td>
 </tr>
 <tr>
 	<td align="center" border="0" style="color:#434343;font-size:12px;">© 2014 FLYER.FR | Tous droits réservés.</td>
@@ -324,9 +324,9 @@ if ($result['result'] == TRUE) {
 // mail info insc NL admin
     $module = 'pcnewsletters';
     $key = 'envoi_email_admin';
-    $to = $form_state['values']['email'];
-    $from = 'info@flyer.fr';
-    $parms = '<table valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0">
+    $to = 'info@flyer.fr,contact@agenceoneo.com,nabil.b@oneoweb.com';
+    $from = 'support@flyer.fr';
+    $parms = '<table valign="top" width="620" border="0px" align="center" cellpadding="0" cellspacing="0">
                                 <tr>
                                   <td border="0"  width="30"></td>
                                   <td border="0" >

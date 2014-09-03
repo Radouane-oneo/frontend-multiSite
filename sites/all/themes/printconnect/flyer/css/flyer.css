@@ -3031,6 +3031,8 @@ legend {
 	width: inherit;
 	background: #fff;
 	border-radius: 3px 3px 3px 3px;
+	margin-bottom: 5px;
+	min-height: 85px;
 }
 .page-cart #pccart-cart-form .item .image div {
 	display: block;
@@ -3043,7 +3045,7 @@ legend {
 	font-weight: 600;
 	background: rgba(255, 255, 255, 0.8) url("images/preview.png") no-repeat 5px;
 	position: relative;
-	bottom: 66px;
+	bottom: 58px;
 }
 .page-cart #pccart-cart-form .item .designtool {
 }
@@ -3069,6 +3071,7 @@ legend {
 	padding-top: 6px;
 	padding-bottom: 6px;
 	max-height: 36px;
+	clear: left;
 }
 .page-checkout-upload .item .designtool.proupload {
 	margin-top: 20px;

@@ -202,7 +202,7 @@ function pccart_cart_form2($form, &$form_state) {
         );
        $form['popup_overlay']['cont']['test'] = array('#markup' => ' <ul>
  		<li class="coloriz">*Validité de l’offre</li>
-		<li>• Offre valable du 1er au 07 Septembre 2014.</li>
+		<li>• Offre valable du 03 au 31 Septembre 2014.</li>
 		<li>* Carte de visite premium - papier 400 g maco mat</li>
 		<li>* Créa gratuite disponible dans la rubrique “Nos modèles”.</li>
 	</ul>', );

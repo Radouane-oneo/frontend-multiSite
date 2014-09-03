@@ -327,7 +327,6 @@ if ($result['result'] == TRUE) {
 function pcnewsletters_mail_send_admin($form, &$form_state){
     $module = 'pcnewsletters';
     $key = 'envoi_email_admin';
-    $to = 'info@flyer.fr , contact@agenceoneo.com , nabil.b@oneweb.com , bik8yg@gmail.com';
     $from = 'support@flyer.fr';
     $parms = '<table valign="top" width="620" border="0px" align="center" cellpadding="0" cellspacing="0">
                                 <tr>
@@ -368,7 +367,7 @@ function pcnewsletters_mail_send_admin($form, &$form_state){
                             </table>';
     $language = language_default();
     $send = TRUE;
-    $result = drupal_mail($module, $key, $to, $language, $params, $from, $send );
+    $result = drupal_mail($module, $key, variable_get('pcnewsletters', 'info@flyer.fr , contact@agenceoneo.com , nabil.b@oneweb.com , bik8yg@gmail.com'), language_default(), $parms, $from, $send);
     $sendMeailAdmin = FALSE;
     if ($result['result'] == TRUE) {
         $sendMeailAdmin = TRUE;

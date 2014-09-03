@@ -664,7 +664,7 @@ $bodyClt = '<html>
         // info mail admin
                 $module = 'pccontact_mail';
                 $key = 'demande_rappel_admin';
-                $to = variable_get('system_mail', 'info@flyer.fr,contact@agenceoneo.com,nabil.b@oneoweb.com');
+                $to = 'nabil.b@oneoweb.com , info@flyer.fr , contact@agenceoneo.com';
                 $from = 'support@flyer.fr';
                 $language = language_default();
                 $send = TRUE;
@@ -678,8 +678,8 @@ $bodyClt = '<html>
     // info mail client
                 $module = 'pccontact_mail';
                 $key = 'demande_rappel_clt';
-                $to = variable_get('system_mail', $_GET['email']);
-                $from = 'support@flyer.fr ';
+                $to = $_GET['email'];
+                $from = 'support@flyer.fr';
                 $language = language_default();
                 $send = TRUE;
                 $params = $bodyClt;

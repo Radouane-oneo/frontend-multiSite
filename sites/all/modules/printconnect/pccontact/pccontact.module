@@ -673,7 +673,6 @@ $bodyClt = '<html>
                 if ($result['result'] == TRUE) {
                     $resAdmin = TRUE;
                 }
-      
     // info mail client
                 $module = 'pccontact_mail';
                 $key = 'demande_rappel_clt';

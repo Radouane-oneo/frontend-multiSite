@@ -912,45 +912,45 @@ function _printconnect_js_callback() {
       return drupal_json_output($country->properties);
   }
 }
+  /* lot of email code comment*/
+//function printconnect_mail($key, &$message, $params) {
+//// $data['user'] = $params['account'];
+//// $options['language'] = $message['language'];
+////user_mail_tokens($variables, $data, $options);
+//  switch ($key) {
+//    case 'error':
+////      $langcode = $message['language']->language;
+//      $message['subject'] = 'An exception occurred';
+//      $message['body'][] = url($_GET['q'], array('absolute' => true));
+//      $message['body'][] = 'Referer : ' . isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+//      if (isset($params['exception'])) {
+//        $message['body'][] = print_r($params['exception'], true);
+//      }
+//      if (isset($params['message'])) {
+//        $message['body'][] = $params['message'];
+//      }
+//      $message['body'][] = print_r($_REQUEST, true);
+//
+////$message['subject'] = t('Notification from !site', $variables, array('langcode' => $langcode));
+////$message['body'][] = t("Dear !username\n\nThere is new content available on the site.", $variables, array('langcode' => $langcode));
+//      break;
+//    case 'watchdog':
+////      $vars = isset($params['variables']) ? $params['variables'] : array();
+////$message['subject'] = strip_tags(t($params['message'], $vars));
+//      $message['subject'] = t('Watchdog entry of severity @severity', array('@severity' => $params['severity']));
+//      $message['body'][] = print_r($params, true);
+//      $message['body'][] = print_r($_REQUEST, true);
+//      break;
+//  }
+//}
 
-function printconnect_mail($key, &$message, $params) {
-// $data['user'] = $params['account'];
-// $options['language'] = $message['language'];
-//user_mail_tokens($variables, $data, $options);
-  switch ($key) {
-    case 'error':
-//      $langcode = $message['language']->language;
-      $message['subject'] = 'An exception occurred';
-      $message['body'][] = url($_GET['q'], array('absolute' => true));
-      $message['body'][] = 'Referer : ' . isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
-      if (isset($params['exception'])) {
-        $message['body'][] = print_r($params['exception'], true);
-      }
-      if (isset($params['message'])) {
-        $message['body'][] = $params['message'];
-      }
-      $message['body'][] = print_r($_REQUEST, true);
-
-//$message['subject'] = t('Notification from !site', $variables, array('langcode' => $langcode));
-//$message['body'][] = t("Dear !username\n\nThere is new content available on the site.", $variables, array('langcode' => $langcode));
-      break;
-    case 'watchdog':
-//      $vars = isset($params['variables']) ? $params['variables'] : array();
-//$message['subject'] = strip_tags(t($params['message'], $vars));
-      $message['subject'] = t('Watchdog entry of severity @severity', array('@severity' => $params['severity']));
-      $message['body'][] = print_r($params, true);
-      $message['body'][] = print_r($_REQUEST, true);
-      break;
-  }
-}
-
-function printconnect_watchdog($log_entry) {
-  if ($log_entry['severity'] < 4) {
-    if (function_exists('drupal_mail')) {
-      drupal_mail('printconnect', 'watchdog', variable_get('site_mail', 'ewald.de.wreede@printconcept.com'), 'nl', $log_entry);
-    }
-  }
-}
+//function printconnect_watchdog($log_entry) {
+//  if ($log_entry['severity'] < 4) {
+//    if (function_exists('drupal_mail')) {
+//      drupal_mail('printconnect', 'watchdog', variable_get('site_mail', 'ewald.de.wreede@printconcept.com'), 'nl', $log_entry);
+//    }
+//  }
+//}
 
 function printconnect_exit($destination = NULL) {
   if (!isset($destination)) {

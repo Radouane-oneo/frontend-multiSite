@@ -337,6 +337,11 @@ float: right;
   margin-top: 10px;
   margin-bottom: 0;
 }
+
+#pccart-cart-form .download + fieldset{
+  clear: both;
+}
+
 #pccart-cart-form ul{
   margin: 0;
   overflow: hidden;

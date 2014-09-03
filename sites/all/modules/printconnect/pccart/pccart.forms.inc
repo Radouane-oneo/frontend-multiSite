@@ -730,9 +730,9 @@ function pccart_cart_form2($form, &$form_state) {
      }
         
         foreach ($enabledTypes as $type) {
-            if ($cart->socialcardsOnly) {
+            /*if ($cart->socialcardsOnly) {
                 $type->price = 0;
-            }
+            }*/
 
             $label = $type->shippingType->tag;
 

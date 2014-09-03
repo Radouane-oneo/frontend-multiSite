@@ -1393,7 +1393,6 @@ function pccheckout_upload_form($form, &$form_state) {
                             'attributes' => array('class' => array('upload', 'designtool', 'iframe', 'display-block')),
                         )),
                     );
-
                     $form['cart']['items'][$item->id]['proflink'] = array(
                         '#theme' => 'designtoolproflink',
                         '#templateId' => $template->id,
@@ -1401,6 +1400,8 @@ function pccheckout_upload_form($form, &$form_state) {
                         '#params' => array(
                             'id' => $item->id,
                             'cartid' => $cart->id,
+			    'currencyPreflight' => 'euro',
+                            'pricePreflight' =>$cart->preflightPrice,
                         ),
                         '#attributes' => array('class' => array('proupload', 'designtool', 'iframe')),
                     );

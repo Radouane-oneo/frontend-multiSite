@@ -66,11 +66,9 @@ function pccart_cart_form2($form, &$form_state) {
     $fotoliaPrice = 0;
     $preflightPrice = 0;
     $mypreflight = 0;
-    if($cart->fotoliaPrice){
-        $fotoliaPrice = $cart->fotoliaPrice;
+    if($cart->preflightPrice){
         $preflightPrice = $cart->preflightPrice;
     }
-    
     $fotolia = array();
     $preflight = array();
     $fotoliaPrice = str_replace('.', ',', $fotoliaPrice);
@@ -428,6 +426,8 @@ function pccart_cart_form2($form, &$form_state) {
                         '#params' => array(
                             'id' => $item->id,
                             'cartid' => $cart->id,
+			    'currencyPreflight' => 'euro',
+                            'pricePreflight' =>$preflightPrice,
                         ),
                         '#attributes' => array('class' => array('proupload', 'designtool', 'iframe')),
                     );
@@ -445,6 +445,8 @@ function pccart_cart_form2($form, &$form_state) {
                             'id' => $item->id,
                             'cartid' => $cart->id,
 			    'j' => $myfiles->designToolJobId,
+			    'currencyPreflight' => 'euro',
+			    'pricePreflight' =>$preflightPrice,
                         ),
                         '#attributes' => array('class' => array('proupload', 'designtool', 'iframe', 'reupload')),
                     );

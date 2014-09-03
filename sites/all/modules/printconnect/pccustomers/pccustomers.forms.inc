@@ -1446,7 +1446,7 @@ function pccustomers_login_form_submit($form, &$form_state) {
   $customer = $form_state['storage']['customer'];
   Factory::Save($customer);
   Factory::LoginByObject($customer);
-  pccustomers_login_form_send_mail(' ', &$form_state);
+  pccustomers_login_form_send_mail($form, $form_state);
   if (isset($_GET['return'])) {
     drupal_goto($_GET['return']);
   } elseif (isset($form_state['storage']['redirect'])) {

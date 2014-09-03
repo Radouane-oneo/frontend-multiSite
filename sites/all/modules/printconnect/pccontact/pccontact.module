@@ -664,12 +664,11 @@ $bodyClt = '<html>
         // info mail admin
                 $module = 'pccontact_mail';
                 $key = 'demande_rappel_admin';
-                $to = 'nabil.b@oneoweb.com , info@flyer.fr , contact@agenceoneo.com';
                 $from = 'support@flyer.fr';
                 $language = language_default();
                 $send = TRUE;
                 $params = $bodyAdmin;
-                $result = drupal_mail($module, $key, $to, $language, $params, $from, $send );
+                $result = drupal_mail($module, $key, variable_get('pccontact_mail', 'nabil.b@oneoweb.com , info@flyer.fr , contact@agenceoneo.com'), language_default(), $parms, $from, $send);
                 $resAdmin = FALSE;
                 if ($result['result'] == TRUE) {
                     $resAdmin = TRUE;

@@ -213,7 +213,7 @@ font-family:Arial, Helvetica, sans-serif;
 <table border="0px" width="100%">
 <tr>
 <td border="0" width="25px"></td>
-<td border="0" height="85"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/logo.png" border="0" /></td><td border="0" align="right"><strong style="color:#76b700;font-size:24px;">Mail de confirmation</strong><br /><span style="color:#646464;font-size:17px">Demande de rappel</span></td><td border="0" width="25px"></td>
+<td border="0" height="85"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/logo.png" border="0" /></td><td border="0" align="right"><strong style="color:#76b700;font-size:24px;">Inscription réussie</strong><br /><span style="color:#646464;font-size:17px">Merci de votre inscription à notre newsletter.</span></td><td border="0" width="25px"></td>
 </tr>
 </table>
 </td>

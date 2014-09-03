@@ -408,18 +408,20 @@ function _pcorders_order_form_build_overview($order) {
 
     if ($order->discountItems) {
       foreach ($order->discountItems as $discount) {
+        $label = t('Discount');
+        if($discount->productName == 'Fotolia Image') {
+          $label = t('Supplément');
+        }
         $rows[] = array(
             'data' => array(
-                t('Discount'),
+                $label,
                 $discount->productName,
-                //array('data' => '', 'class' => array('filler')),
                 theme('price', array('value' => $discount->price, 'block' => TRUE)),
             ),
             'class' => array('discount'),
         );
       }
     }
-
     if (isset($order->orderItemShipping)) {
       $type = \printconnect\Shipping\Types\Factory::Get($order->orderItemShipping->shippingTypeResellerShop);
       $rows[] = array(

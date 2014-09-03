@@ -315,9 +315,9 @@ float: right;
 .fotolia-price {
     color: #FF6600;
     float: right;
-    font-size: 15px;
+    font-size: 20px;
     margin-right: 10px;
-    font-weight: bold;
+    font-weight: 700;
 }
 
 #pccart-cart-form fieldset.products .fieldset-wrapper{

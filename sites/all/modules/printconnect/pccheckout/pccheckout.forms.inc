@@ -101,7 +101,7 @@ function pccheckout_personal_form($form, &$form_state) {
         '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->postalCode : '',
         '#size' => 30,
         '#attributes' => array(
-            'placeholder' => '1000',
+            'placeholder' => '75000',
         )
     );
     $form['address']['city'] = array(
@@ -111,7 +111,7 @@ function pccheckout_personal_form($form, &$form_state) {
         '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->city : '',
         '#size' => 30,
         '#attributes' => array(
-            'placeholder' => t('Brussel'),
+            'placeholder' => t('Paris'),
         )
     );
     $form['address']['country'] = array(

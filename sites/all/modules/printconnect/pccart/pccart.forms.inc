@@ -761,7 +761,7 @@ function pccart_cart_form2($form, &$form_state) {
             $options = $newoptions;
             $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop;
         } elseif ($shop->id == 23) {
-            $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop != null ? $cart->orderItemShipping->shippingTypeResellerShop : 351;
+            $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop != null ? $cart->orderItemShipping->shippingTypeResellerShop : 349;
         } elseif ($shop->id == 33) {
             $_SESSION['defaultindex'] = 168;
         } elseif ($shop->id == 34) {

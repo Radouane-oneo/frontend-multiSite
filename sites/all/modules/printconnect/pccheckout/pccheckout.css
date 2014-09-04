@@ -116,10 +116,11 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 .payment-origin-price {
     float: right;
     font-family: Tahoma;
-    font-size: 10px;
+    font-size: 11px;
     position: relative;
-    top: -8px;
-    }
+    top: 2px;
+}
+
 #light .form-submit{
     float: right;
 margin-left: 0px !important;

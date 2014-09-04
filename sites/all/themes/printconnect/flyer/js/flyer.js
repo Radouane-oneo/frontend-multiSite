@@ -1,5 +1,5 @@
 jQuery(document).ready(function(e) {
-
+    
     if (jQuery('#homeSlider').length) {
         jQuery('#homeSlider ul').cycle({
             pager:'#pagerSliderHolder',
@@ -17,6 +17,12 @@ jQuery(document).ready(function(e) {
     
     jQuery('#helppanel').find('.center-wrapper').eq(0).remove();
 	jQuery( "#accordion-list" ).accordion({autoHeight: false, collapsible: true});
+
+    /*if (jQuery('#countlandingpage').length) {
+        setTimeout(function(){
+            jQuery('.jquery-countdown-timer-processed').clone().prependTo('#countlandingpage');
+        }, 2000);
+    };*/
 	
 });
 
@@ -27,6 +33,27 @@ jQuery(document).ready(function(e) {
 	
 	Drupal.behaviors.textarea = {
   attach: function (context, settings) {
+      
+    $(".fancybox-media").click(function() {
+    $.fancybox({
+            'padding'       : 0,
+            'autoScale'     : false,
+            'transitionIn'  : 'none',
+            'transitionOut' : 'none',
+            'title'         : this.title,
+            'width'     : 680,
+            'height'        : 495,
+            'href'          : this.href.replace(new RegExp("watch\\?v=", "i"), 'v/'),
+            'type'          : 'swf',
+            'swf'           : {
+                 'wmode'        : 'transparent',
+                'allowfullscreen'   : 'true'
+            }
+        });
+
+    return false;
+    });
+      
     $('.form-textarea-wrapper.resizable', context).once('textarea', function () {
       var staticOffset = null;
       var textarea = $(this).addClass('resizable-textarea').find('textarea');

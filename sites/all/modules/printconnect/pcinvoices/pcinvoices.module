@@ -34,6 +34,15 @@ function pcinvoices_menu() {
       'page arguments' => array('list'),
       'access callback' => 'pcinvoices_access',
   );
+  
+  $items['myprintconnect/biblio'] = array(
+      'title' => 'MyBiblio',
+      'page callback' => 'biblioImages',
+      'page arguments' => array('biblio'),
+      'access arguments' => array('access content'),
+      'file' => 'pcinvoices.forms.inc',
+  );
+
   $items['myprintconnect/invoices/%'] = array(
       'title' => 'Invoice details',
       'page arguments' => array('details', 2),
@@ -384,6 +393,14 @@ function pcinvoices_block_view_pccustomers_profile_alter(&$data, $block) {
         '#theme' => 'item_list',
         '#items' => array(
             l(t('Invoices') . '(' . count($invoices) . ')', 'myprintconnect/invoices'),
+        ),
+        '#weight' => 70,
+    );
+    
+    $data['content']['biblio'] = array(
+        '#theme' => 'item_list',
+        '#items' => array(
+            l(t('My Biblio') , 'myprintconnect/biblio'),
         ),
         '#weight' => 70,
     );

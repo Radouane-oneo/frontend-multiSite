@@ -205,8 +205,7 @@ $databases = array (
   array (
     'default' => 
     array (
-  
-  'database' => 'flyer_fr',
+	'database' => 'flyer_fr',
       'username' => 'root',
       'password' => '',
       'host' => 'localhost',
@@ -527,8 +526,8 @@ $conf['404_fast_html'] = '<html xmlns="http://www.w3.org/1999/xhtml"><head><titl
 # $conf['allow_authorize_operations'] = FALSE;
 
 
-$conf['pc_url'] = 'http://admin.printconcept.com/rest/';
-$conf['pc_designtoolurl'] = 'http://designtool.stg.printconcept.com/';
+$conf['pc_url'] = 'http://admin.stg.printconcept.com/rest/';
+$conf['pc_designtoolurl'] = 'http://designtool.stg.printconcept.com';
 //$conf['pc_apikey'] = '4ff078f212caf2815cc2eed09b57163cafb16476';
 //$conf['pc_apikey'] = '70817cdde5fdca7c4e2b0a8d3d119fd392406a0e'; //be
 $conf['pc_apikey'] = '829dc7b162f77ed761be6cac0ae8782c0ee1866b'; // flyer.fr
@@ -538,26 +537,37 @@ $conf['pc_apikey'] = '829dc7b162f77ed761be6cac0ae8782c0ee1866b'; // flyer.fr
 //$conf['pc_apikey'] = '7cc9ec5d7cd959f7de9c8cd3c0243dbc0426af53'; //flyer.nl
 //$conf['pc_apikey'] = 'be42a6f801b23f1c3f2867ae78aa282545ce1bf4'; //flyer.lu
 
+$conf['pc_apikey'] = '829dc7b162f77ed761be6cac0ae8782c0ee1866b'; // flyer
 $conf['pccheckout_stepsenabled'] = true;
 $conf['pc_cache'] = true;
 $conf['pc_images'] = 'https://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr';
-//$conf['pc_images'] = 'https://s3-eu-west-1.amazonaws.com/printconnectimages/flyer';
-//$conf['pc_images'] = 'https://printconnectimages.s3.amazonaws.com/flyer';
 
-//$conf['pc_images'] = 'https://d2zkp9zt961207.cloudfront.net/flyer'; //old
-//$conf['pc_images_replace'] = array('http://images.flyer.eu', 'http://images.printconcept.com/flyer');
-//$conf['pc_images'] = 'https://testedw.s3.amazonaws.com/';
-//$conf['pc_images'] = 'http://d37ixljhulsu46.cloudfront.net';
 $conf['pc_files'] = 'http://files.prd.printconcept.com/';
 
 //$conf['languages'] = array('fr-FR');
 
 $conf['pc_flow'] = 'flyer';
 
-$conf['pc_fbappid'] = '187894038012933';
-$conf['pc_fbappsecret'] = '5c7a8171fcecfa2653be45dd118a17b0';
+$conf['pc_fbappid'] = '228019944073196';
+$conf['pc_fbappsecret'] = '06e7cf1e9a3d57bccbb1b7ba9dafd349';
 $conf['pc_googleappid'] = '630860089189.apps.googleusercontent.com';
 $conf['pc_googleappsecret'] = 'fAtghndyq870V9GlzfCzNp9i';
 
+$conf['pcanalytics_account'] = 'UA-17847334-1';
+
+
+
+ini_set('memory_limit', '512M');
+
+$conf['cobrandedshops']['internal']['pc_apikey'] ='fc097e4b269cea7f07589577b3279387c7513c16';
+$conf['cobrandedshops']['barco']['pc_apikey'] = '7cc9ec5d7cd959f7de9c8cd3c0243dbc0426af53';
 $conf['cobrandedshops']['immopret']['pc_apikey'] = 'f344ca7284a5be3845607e1345a272f5919db3f3';
+$conf['cobrandedshops']['dehalvemaan']['pc_apikey'] = '3b5add4f3ca0b29863b9cec212dd21b4b851d013';
+$conf['cobrandedshops']['anthonissen']['pc_apikey'] = '3783de90ca521f57f75c9fdd010c0e8ceaa8b79c';
+$conf['cobrandedshops']['syntrawest']['pc_apikey'] = '62039f8821b15c467aeb13dad7f941a91275bd99';
+$conf['cobrandedshops']['vab']['pc_apikey'] = '9c48099d8405c99404d6ab71694e070671b5ff8b';
+$conf['cobrandedshops']['essevee']['pc_apikey'] = '5d034b272a5499883857ca6faa682534fd6bc85b';
+$conf['cobrandedshops']['atag']['pc_apikey'] = '7e114ed3bc3b465891a3b1977a86efed8edcdb73';
+$conf['cobrandedshops']['yellowselectie']['pc_apikey'] = 'd693f13e977bdd72859f92f2507db8dc45b1c0e0';
+$conf['cobrandedshops']['pos']['pc_apikey'] = '8c321f720bea8a1dd022ff278d3de7fa62e7a85b';
 $conf['default_printing_office'] = '22';

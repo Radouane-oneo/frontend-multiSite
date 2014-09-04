@@ -23,7 +23,7 @@ function pccheckout_personal_form($form, &$form_state) {
     $defaultShippingAddress = FALSE;
     $defaultBillingAddress = FALSE;
     $countries = array();
-
+    $cart = \printconnect\Carts\Factory::Current(FALSE);
     $customer = \printconnect\Customers\Factory::Current();
 
     $shopConfig = \printconnect\Shop\Configuration\Factory::Current();
@@ -41,7 +41,11 @@ function pccheckout_personal_form($form, &$form_state) {
     foreach (\printconnect\Countries\Factory::GetAll() as $country) {
         $countries[$country->id] = $country->tag;
     }
-
+    if ($cart->orderItemShipping->shippingTypeResellerShop == 351) {
+	$countries = array();
+        $country = \printconnect\Countries\Factory::Get(73);
+	$countries[$country->id] = $country->tag;
+    }
     if ($defaultBillingAddress) {
         $country = \printconnect\Countries\Factory::Get($defaultBillingAddress->country);
     } else {
@@ -97,7 +101,7 @@ function pccheckout_personal_form($form, &$form_state) {
         '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->postalCode : '',
         '#size' => 30,
         '#attributes' => array(
-            'placeholder' => '1000',
+            'placeholder' => '75000',
         )
     );
     $form['address']['city'] = array(
@@ -107,10 +111,9 @@ function pccheckout_personal_form($form, &$form_state) {
         '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->city : '',
         '#size' => 30,
         '#attributes' => array(
-            'placeholder' => t('Brussel'),
+            'placeholder' => t('Paris'),
         )
     );
-
     $form['address']['country'] = array(
         '#type' => 'select',
         '#title' => t('Country'),
@@ -360,6 +363,11 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
             if ($country->active) {
                 $deliveryCountries[$country->id] = $country->tag;
             }
+        }
+	if ($cart->orderItemShipping->shippingTypeResellerShop == 351) {
+            $deliveryCountries = array();
+            $country = \printconnect\Countries\Factory::Get(73);
+            $deliveryCountries[$country->id] = $country->tag;
         }
     }
    
@@ -1179,9 +1187,66 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
     }
 }
 
+function getFotolia($jobId) {
+    $url = variable_get('pc_designtoolurl');
+    $url .= '/rest/get-fotolia-images/j/' . $jobId;
+    
+    $response = file_get_contents($url);
+    
+    $response = json_decode($response, 1);
+    if(isset($response['data']['Fotolia'])){
+        return $response['data']['Fotolia'];
+    }else {
+        return array();
+    }
+}
+
+function getPreflight($jobId) {
+    $url = variable_get('pc_designtoolurl');
+    $url .= '/rest/getpreflightinfo?j='.$jobId;
+    $response = file_get_contents($url);
+    $response = json_decode($response, 1);
+    if(isset($response['data']['preflightInfo']) &&  !empty($response['data']['preflightInfo'])){
+        return $response['data']['preflightInfo'];
+    }else {
+        return array();
+    }
+}
 function pccheckout_upload_form($form, &$form_state) {
     _pccustomers_ensureloggedin();
     $cart = \printconnect\Carts\Factory::Current(FALSE);
+    \printconnect\Carts\Factory::deleteFotolias($cart);
+    $fotoliaPrice = 0;
+    $preflightPrice = 0;
+    $mypreflight = 0;
+    if($cart->fotoliaPrice){
+        $fotoliaPrice = $cart->fotoliaPrice;
+        $preflightPrice = $cart->preflightPrice;
+    }
+    
+    $fotolia = array();
+    $preflight = array();
+    $fotoliaPrice = str_replace('.', ',', $fotoliaPrice);
+    $preflightPrice = str_replace('.', ',', $preflightPrice); 
+    foreach ($cart->orderItems as $orderItem) {
+        $fotoliaImages = getFotolia($orderItem->id);
+        if (!empty($fotoliaImages)) {
+            foreach($fotoliaImages as $image) {
+                $pricefotolias = \printconnect\Carts\Factory::getFotoliaPrice($image['type']);
+                $fotoliaPrice = str_replace('.', ',', $pricefotolias->price);
+                $fotolia[$orderItem->id][] = '<span>'.t('Image').'&nbsp;"'.$image['id'].'"</span><div class="fotolia-price">€&nbsp;'.$fotoliaPrice.'</div>';
+            } 
+            $resultfotolia = \printconnect\Carts\Factory::SaveFotolia($cart->id, $orderItem->id, $fotoliaImages);
+        }
+	
+        $preflights = getPreflight($orderItem->id);
+        if (!empty($preflights)) {
+            foreach($preflights as $singlePreflight) {
+                $preflight[$orderItem->id][] = '<span>"'.t('Preflight').'&nbsp;"</span><div class="fotolia-price">€&nbsp;'.$preflightPrice.'</div>';
+            }
+            $result = \printconnect\Carts\Factory::SavePreflight($cart->id, $orderItem->id, $preflights);
+        }
+    }
     $emailDesigner = FALSE;
     $weight = 0;
     if ($cart) {
@@ -1328,7 +1393,6 @@ function pccheckout_upload_form($form, &$form_state) {
                             'attributes' => array('class' => array('upload', 'designtool', 'iframe', 'display-block')),
                         )),
                     );
-
                     $form['cart']['items'][$item->id]['proflink'] = array(
                         '#theme' => 'designtoolproflink',
                         '#templateId' => $template->id,
@@ -1336,6 +1400,8 @@ function pccheckout_upload_form($form, &$form_state) {
                         '#params' => array(
                             'id' => $item->id,
                             'cartid' => $cart->id,
+			    'currencyPreflight' => 'euro',
+                            'pricePreflight' =>$cart->preflightPrice,
                         ),
                         '#attributes' => array('class' => array('proupload', 'designtool', 'iframe')),
                     );
@@ -1557,6 +1623,19 @@ function _pccheckout_payment_form_build_overview($cart) {
                             theme('price', array('value' => $itemValue)),
                         ),
                         'class' => array('item'),
+                );
+            }
+        }
+	
+	$cartItemsFull = printconnect\Carts\Factory::GetItems($cart);
+        foreach ($cartItemsFull as $cartItem) {
+            if ($cartItem->parentId != null) {
+                $rows[] = array(
+                    'data' => array(
+                        $cartItem->description,
+                        theme('price', array('value' => $cartItem->price)),
+                    ),
+                    'class' => array('orderItemsAdditional'),
                 );
             }
         }

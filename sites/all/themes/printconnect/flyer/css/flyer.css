@@ -1697,6 +1697,13 @@ body.front #block-block-13:after {
 	clear: both;
 }
 
+#fancybox-overlay.designtool + #fancybox-wrap #fancybox-close{
+	top: -1px;
+	right: -39px;
+	background-color: white !important;
+	border: 3px solid white;
+}
+
 .subscribe-block .content .form-item, .subscribe-block .content .form-actions {
 	margin: 0 !important;
 }

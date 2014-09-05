@@ -1,8 +1,0 @@
-RewriteEngine on
-# Redirect non www to www
-RewriteCond %{HTTP_HOST} !^www\.
-RewriteRule ^.*$ http://www.flyer.eu/ [L]
-# Redirect not existing files and folders to www.flyer.eu
-RewriteCond %{REQUEST_URI} !"^/$"
-RewriteCond %{REQUEST_URI} flyer.eu/images
-RewriteRule (.+) http://%{HTTP_HOST}/ [R=301,L]

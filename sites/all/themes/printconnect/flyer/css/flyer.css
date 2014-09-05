@@ -8577,3 +8577,7 @@ width: 203px !important;
 body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintconnect-addresses.page-myprintconnect table tr td:nth-child(2) {
 	width: 106px !important;
 }
+
+body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect span.fieldset-legend {
+    margin-left: 6px !important;
+}

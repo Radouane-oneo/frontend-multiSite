@@ -26,8 +26,8 @@
 */
       if ($.fancybox){
                 $('.designtool').fancybox({
-                    width: 815,
-                    height: 640,
+                    width: 1024,
+                    height: 780,
                     padding: 5,
                     margin: 0,
                     scrolling: false,
@@ -40,9 +40,17 @@
                         jQuery("#fancybox-outer").append("<div id='dt_preloader' class='dt_preloader'></div>");
                     },
                     onComplete: function() {
-                        $("#fancybox-wrap").find("#fancybox-content").css({"margin": "auto", "background-color": "#fff"});
-                        $("#fancybox-wrap").find("#fancybox-frame").css({"width": "800px", "margin": "5px auto"});
+                        $("#fancybox-overlay").addClass("designtool");
+                        $("#fancybox-wrap").find("#fancybox-content").css({"margin": "auto"});
+                        $("#fancybox-wrap").find("#fancybox-frame").css({"width": "1024px", "margin": "0px auto"});
                         jQuery("#fancybox-outer").find("#dt_preloader").remove();
+                        $("#fancybox-wrap").css("width", "1024px");
+                        var vague = jQuery("#canvas").Vague({intensity: 9});
+                        vague.blur();
+		    },
+		    onClosed: function() {
+                        $("#canvas").attr("style","");
+                        $("#fancybox-overlay").removeClass("designtool");
                     }
                 });
       }

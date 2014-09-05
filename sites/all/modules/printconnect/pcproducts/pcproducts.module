@@ -1368,11 +1368,6 @@ function pcproducts_calculator_form($form, &$form_state) {
     }
   }
 
-  $form['calculate'] = array(
-      '#type' => 'submit',
-      '#value' => t('Calculate'),
-      '#attributes' => array('class' => array('cart', 'button')),
-  );
 
   $form['#cache'] = TRUE;
   $form_state['cache'] = TRUE;

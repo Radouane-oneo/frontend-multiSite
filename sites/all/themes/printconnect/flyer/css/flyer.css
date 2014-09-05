@@ -1,4 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800&subset=latin,latin-ext);
+@import url(landingpages.css);
 /* Browser text selection */
 ::selection {
 	color: #fff;
@@ -198,7 +199,7 @@ table tr.even, table tr.odd {
 	height: 42px;
 }
 #canvas {
-	background:url('images/bg.png') repeat-x 0 123px #f1f1f1;
+	background:url('images/bg.png') repeat-x 0 123px;
 	position: relative;
 }
 .bg_header{
@@ -740,8 +741,8 @@ body.two-sidebars #content .whitebox{
 .region-sidebar-first .block, 
 .region-sidebar-second .block {
 	margin-bottom: 10px;
-	padding: 16px 8px 10px;
-	border-radius: 4px 4px 4px 4px;
+	padding: 16px 10px 10px;
+	border-radius: 3px;
 	background: #fff;
 	border: 1px solid #e7e3e3;
 	overflow: hidden;
@@ -1375,10 +1376,11 @@ a.button.cart .ui-button-text {
 /* ---- END - PROFILE ---------- */
 /* ---- CALCULATOR ------------- */
 #block-pcproducts-calculator {
+	border-radius: 0 0 5px 0px;
 	background: url("images/bg_orange.png") no-repeat 0 0;
 	display: block;
 	padding: 0 0 0 10px;
-	height: 296px;
+	height: 245px;
 	left: 0;
 	margin-bottom: -67px;
 	position: relative;
@@ -3030,6 +3032,8 @@ legend {
 	width: inherit;
 	background: #fff;
 	border-radius: 3px 3px 3px 3px;
+	margin-bottom: 5px;
+	min-height: 85px;
 }
 .page-cart #pccart-cart-form .item .image div {
 	display: block;
@@ -3042,7 +3046,7 @@ legend {
 	font-weight: 600;
 	background: rgba(255, 255, 255, 0.8) url("images/preview.png") no-repeat 5px;
 	position: relative;
-	bottom: 66px;
+	bottom: 58px;
 }
 .page-cart #pccart-cart-form .item .designtool {
 }
@@ -3068,6 +3072,7 @@ legend {
 	padding-top: 6px;
 	padding-bottom: 6px;
 	max-height: 36px;
+	clear: left;
 }
 .page-checkout-upload .item .designtool.proupload {
 	margin-top: 20px;
@@ -3322,7 +3327,6 @@ background: url(images/subMenuSpriteIconsModified.png) no-repeat -456px -49px;
 }
 .page-cart .shipping  .fieldset-wrapper,
 .page-cart .file-check .fieldset-wrapper{
-	padding-bottom: 0;
 	padding-right: 0;
 }
 .page-cart .file-check table,
@@ -7225,6 +7229,15 @@ background-color:-webkit-linear-gradient(top, #77B800 0%, #669C02 100%) ;
 padding-left: 61px;
 }
 
+.fotolia-items ul li {
+    background: url("images/rsz_fotolia-icon.png") no-repeat scroll 0 2px / 28px auto transparent;
+}
+
+.preflight-items ul li {
+    background: none;
+    margin-left: -6%;
+}
+
 div.content ol.search-results div.results-Contenu li.search-result h3.title{
     padding-left: 162px;
     margin-top: 28px;
@@ -7511,8 +7524,8 @@ left: 400px;
     font-size: 13px !important;
 }
 .page-myprintconnect .region-content {
-  margin-left: 5px;
-}
+  /*margin-left: 5px;*/
+} 
 .myoffers .list.offers.sticky-enabled td.first-child {
     width: 11% !important;
 }
@@ -7585,7 +7598,7 @@ div.myoffers table.list thead tr th:nth-child(2){
 	color: #666666;
 }
 
-.info-bloc #magical-modal-link a{
+.info-bloc a.popupOverlay2{
 	font-size: 12px;
 	color: #666666;
 	line-height: 14px;
@@ -7713,6 +7726,7 @@ div.myoffers table.list thead tr th:nth-child(2){
 
 .block.nos-avantages .content a{
 	text-decoration: none;
+	color: #646464;
 }
 .block.nos-avantages ul{
 	list-style: none;
@@ -8237,6 +8251,7 @@ ul.ui-autocomplete{
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
+	overflow: hidden;
 }
 .block-views .view-deals-promotion .boxing h3{
 	font-size: 14px;
@@ -8255,7 +8270,7 @@ ul.ui-autocomplete{
 }
 .block-views .view-deals-promotion #prixdeal .newpricedeal{
 	font-size: 17px;
-	color: #ff6600;
+	color: #6ea901;
 	line-height: 18px;
 	font-weight: bold;
 	margin-right: 5px;
@@ -8263,7 +8278,7 @@ ul.ui-autocomplete{
 
 .block-views .view-deals-promotion #prixdeal .pricedeal{
 	font-size: 14px;
-	color: #999999;
+	color: #ff6600;
 	line-height: 15px;
 	font-weight: bold;
 	text-decoration: line-through;
@@ -8273,17 +8288,37 @@ ul.ui-autocomplete{
 .count-down .cont_down_txt{
 	padding-bottom: 4px;
 	clear: both;
+	overflow: hidden;
 }
-.count-down .cont_down_txt img{
-	display: block;
+.count-down .cont_down_txt span{
+	float: left;
+	font-size: 8px;
+	color: #646464;
+	width: 32px;
+	text-align: center;
+	margin-left: 4px;
 }
-.count-down .jquery-countdown-timer-processed > span{
+.count-down .cont_down_txt span:first-child{
+	margin-left: 0 !important;
+}
+#countlandingpage .cont_down_txt span{
+	font-size: 10px;
+	width: 44px;
+	margin-left: 6px;
+}
+
+}
+.count-down .jquery-countdown-timer-processed > span,
+#countlandingpage .jquery-countdown-timer-processed > span{
 	float: left;
 }
+#countlandingpage .jquery-countdown-timer-processed > span.countDiv,
 .count-down .jquery-countdown-timer-processed > span.countDiv{
-	width: 4px;
+	width: 2px;
 	height: 20px;
+	float: left;
 }
+#countlandingpage .jquery-countdown-timer-processed > span > span,
 .count-down .jquery-countdown-timer-processed > span > span{
 	float: left;
 	background-color: #414141;
@@ -8302,6 +8337,19 @@ ul.ui-autocomplete{
 	position: relative;
 	overflow: hidden;
 }
+
+#countlandingpage{
+	margin-top: -9px;
+	margin-left: -3px;
+}
+
+#countlandingpage .jquery-countdown-timer-processed > span > span{
+	width: 20px;
+	height: 30px;
+	line-height: 30px;
+}
+
+#countlandingpage .jquery-countdown-timer-processed span.digit,
 .count-down .jquery-countdown-timer-processed span.digit{
 	position: absolute;
 	display: block;width: 100%;
@@ -8311,6 +8359,35 @@ ul.ui-autocomplete{
 	overflow: hidden;
 	margin-bottom: 10px;
 }
+
+/* popup cart*/
+#lean_overlay {
+position: fixed;
+z-index:200;
+top: 0px;
+left: 0px;
+height:100%;
+width:100%;
+background: #000;
+opacity: 0.5;
+}
+#lean_info{
+position: fixed;
+z-index: 2100;
+background-color: #FFF;
+border-radius: 4px;
+width: 534px;
+margin: 0 auto;
+top: -150px;
+left: 23px;
+}
+
+#popup_overlay {
+display :none;
+padding-left: 250px;
+padding-right: 250px;
+}
+
 
 .page-show{
 	-webkit-border-radius: 3px;
@@ -8322,7 +8399,7 @@ ul.ui-autocomplete{
 }
 .page-show > img{
 	display: block;
-	max-width: 100%;
+	/*max-width: 100%;*/
 	height: auto;
 }
 
@@ -8336,4 +8413,124 @@ a.seemore{
 .lp-container h2.title{
 	background: url(images/icone_title.png) no-repeat 0 center;
 	padding-left: 20px;
+
+}
+
+#popup_overlay.popin_overlay{
+    padding: 0;
+    width: 612px;
+    overflow: hidden;
+}
+.popin_overlay .form-type-item{
+    margin: 0;
+}
+
+#popup_overlay.popin_overlay #lean_info{
+    left: 28%;
+    width: 613px;
+    top: 120px;
+}
+
+.containerbg input.form-submit{
+    background: url(images/submit.png) no-repeat;
+    float: left;
+    width: 171px;
+    height: 41px;
+    float: left;
+    padding: 0;
+    margin: 0;
+    font-size: 0;
+}
+.containerbg input.form-submit.cancel{
+    background: url(images/cancel.png) no-repeat;
+    float: left;
+    width: 107px;
+    height: 35px;
+    float: left;
+    padding: 0;
+    margin: 3px 0 0 5px;
+    font-size: 0;
+}
+.containerbg{
+    padding : 18px 35px 15px 270px;
+    background: url(images/bg_pop_panier.jpg) no-repeat 0;
+}
+.headpopin{
+    padding: 18px;
+    border: 1px solid #181818;
+    font-weight: 600;
+    background: #333333;
+}
+.headpopin span{
+    font-size: 20px;
+    color: #ff6600;
+}
+.containerbg p{
+    color: #353535;
+    font-size: 18px;
+    line-height: 22px;
+    margin: 0 0 18px;
+    font-weight: bold;
+}
+.containerbg p strong{
+    color: #000000;
+    font-weight: bold;
+}
+.containerbg p .priceing{
+    color: #ff6600;
+    font-weight: bold;
+}
+.containerbg ul{
+    clear: both;
+    padding: 15px 0 0;
+    margin: 0;
+}
+.containerbg ul li{
+    color: #777777;
+    font-size: 11px;
+    line-height: 13px;
+    list-style: none;
+    margin-bottom: 3px;
+}
+.containerbg ul li.coloriz{
+    color: #ff6600;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.containerbg span.icone{
+    background:url(images/iconegreen.png) no-repeat 0 0;
+    float:left;
+    width:17px;
+    height:17px;
+    margin-top: 3px;margin-right: 3px;
+}
+
+.closeme{
+    background: url(images/X.png);
+    display: block;
+    width: 32px;
+    height: 36px;
+    cursor: pointer;
+    float: right;
+    margin: -6px -8px 0 0;
+}
+
+.type_product-selectBox-dropdown-menu {
+/* background: transparent url("images/NewCalcDropdown.png") no-repeat top left !important; */
+padding: 15px 10px 5px 10px !important;
+width: 340px !important;
+margin-top: -10px !important;
+border-radius: 0 0 4px 4px !important;
+/* box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2) !important; */
+max-height: 247px !important;
+}
+.type_product-selectBox-dropdown-menu li{
+float:none !important;
+overflow-x: hidden;
+}
+
+
+#pctemplates-selection-form .templates .blocprd{
+	background: url(images/bg_modele.png) no-repeat 8px 9px;
 }

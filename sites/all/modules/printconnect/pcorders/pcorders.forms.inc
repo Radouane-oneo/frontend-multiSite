@@ -32,7 +32,7 @@ function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALS
     );
 
     $form['status']['history']['title'] = array(
-        '#prefix' => '<h2>',
+        '#prefix' => '<img src="//drs2.veinteractive.com/DataReceiverService.asmx/Pixel?journeycode=88106375-6036-4D45-8034-757F36A59936" width="1" height="1"/><h2>',
         '#markup' => t('From order to delivery'),
         '#suffix' => '</h2>',
     );
@@ -408,18 +408,20 @@ function _pcorders_order_form_build_overview($order) {
 
     if ($order->discountItems) {
       foreach ($order->discountItems as $discount) {
+        $label = t('Discount');
+        if($discount->productName == 'Fotolia Image') {
+          $label = t('Supplément');
+        }
         $rows[] = array(
             'data' => array(
-                t('Discount'),
+                $label,
                 $discount->productName,
-                //array('data' => '', 'class' => array('filler')),
                 theme('price', array('value' => $discount->price, 'block' => TRUE)),
             ),
             'class' => array('discount'),
         );
       }
     }
-
     if (isset($order->orderItemShipping)) {
       $type = \printconnect\Shipping\Types\Factory::Get($order->orderItemShipping->shippingTypeResellerShop);
       $rows[] = array(

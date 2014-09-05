@@ -1376,10 +1376,11 @@ a.button.cart .ui-button-text {
 /* ---- END - PROFILE ---------- */
 /* ---- CALCULATOR ------------- */
 #block-pcproducts-calculator {
+	border-radius: 0 0 5px 0px;
 	background: url("images/bg_orange.png") no-repeat 0 0;
 	display: block;
 	padding: 0 0 0 10px;
-	height: 296px;
+	height: 245px;
 	left: 0;
 	margin-bottom: -67px;
 	position: relative;

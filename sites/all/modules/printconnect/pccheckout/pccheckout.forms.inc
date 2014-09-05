@@ -101,7 +101,7 @@ function pccheckout_personal_form($form, &$form_state) {
         '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->postalCode : '',
         '#size' => 30,
         '#attributes' => array(
-            'placeholder' => '1000',
+            'placeholder' => '75000',
         )
     );
     $form['address']['city'] = array(
@@ -111,7 +111,7 @@ function pccheckout_personal_form($form, &$form_state) {
         '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->city : '',
         '#size' => 30,
         '#attributes' => array(
-            'placeholder' => t('Brussel'),
+            'placeholder' => t('Paris'),
         )
     );
     $form['address']['country'] = array(
@@ -1393,7 +1393,6 @@ function pccheckout_upload_form($form, &$form_state) {
                             'attributes' => array('class' => array('upload', 'designtool', 'iframe', 'display-block')),
                         )),
                     );
-
                     $form['cart']['items'][$item->id]['proflink'] = array(
                         '#theme' => 'designtoolproflink',
                         '#templateId' => $template->id,
@@ -1401,6 +1400,8 @@ function pccheckout_upload_form($form, &$form_state) {
                         '#params' => array(
                             'id' => $item->id,
                             'cartid' => $cart->id,
+			    'currencyPreflight' => 'euro',
+                            'pricePreflight' =>$cart->preflightPrice,
                         ),
                         '#attributes' => array('class' => array('proupload', 'designtool', 'iframe')),
                     );

@@ -1697,6 +1697,13 @@ body.front #block-block-13:after {
 	clear: both;
 }
 
+#fancybox-overlay.designtool + #fancybox-wrap #fancybox-close{
+	top: -1px;
+	right: -39px;
+	background-color: white !important;
+	border: 3px solid white;
+}
+
 .subscribe-block .content .form-item, .subscribe-block .content .form-actions {
 	margin: 0 !important;
 }
@@ -3228,6 +3235,7 @@ background: url(images/subMenuSpriteIconsModified.png) no-repeat -456px -49px;
 	color: #646464; /* maincolor */
 	border: none;
 	height: inherit;
+	padding: 0;
 }
 .page-cart #pccart-cart-form .shipping table tbody tr td:first-child {
 	width: 20px;
@@ -3331,19 +3339,22 @@ background: url(images/subMenuSpriteIconsModified.png) no-repeat -456px -49px;
 }
 .page-cart .file-check table,
 .page-cart #pccart-cart-form .shipping table{
-	width: 656px;
 	background: #e7e7e7;
 	padding: 0;
-	margin: 0 0 0 -10px;
 	border-collapse: separate;
 	border-spacing: 0;
+	margin: 0 0 0 -10px;
+}
+.page-cart .file-check table,
+.page-cart #pccart-cart-form .shipping .fieldset-wrapper > table{
+	width: 656px;
 	border-radius: 0 0 4px 4px;
 }
 .page-cart #pccart-cart-form .shipping table{
 	background: none;
 }
 .page-cart #pccart-cart-form .shipping table #allresault{
-	display: none;
+    display:none;	
 }
 .page-cart #pccart-cart-form .shipping .fieldset-wrapper{
 	padding-top: 0;
@@ -3369,8 +3380,8 @@ background: url(images/subMenuSpriteIconsModified.png) no-repeat -456px -49px;
 	font-size: 13px;
 	color: #666666;
 	line-height: 20px;
-	height: 40px;
-	vertical-align: middle !important;
+	min-height: 40px;
+	vertical-align: middle;
 }
 .page-cart .shipping table tr td.first-child,
 .page-cart .file-check table tr td.first-child{
@@ -5673,7 +5684,7 @@ body.page-stores-picker {
 }
 .store .description {
 	width: 100%;
-	margin-right: 2%;
+	margin-right: 0;
 }
 .store img.thumb {
 	max-width: 100%;
@@ -5718,7 +5729,7 @@ margin-left: 12px;*/
 }
 .store table.openinghours {
 	margin: 10px 0;
-	width: 200%;
+	width: 95%;
 }
 .store table.openinghours caption {
 	font-size: 14px;
@@ -5732,6 +5743,13 @@ margin-left: 12px;*/
 .store table.openinghours tr td.last-child {
 	text-align: right;
 }
+
+.page-cart .store table.openinghours td{
+	border: 0;
+	padding: 2px;
+	font-size: 12px;
+}
+
 .store .info {
 width: 94% !important;
 margin-left: 0 !important;
@@ -5747,14 +5765,23 @@ height:80px !important;
 }
 .page-cart .store .description {
 	width: 100%;
+	position: relative;
+	padding-top: 15px;
 }
 .page-cart .store .description > div, 
 .page-cart .store .description > table.openinghours {
-	width: 50% !important;
-	float: left;
+	/*width: 50% !important;
+	float: left;*/
 }
 .page-cart .store .description > table.openinghours {
 	margin-top: 30px;
+}
+
+.page-cart .store .description .separateur{
+	float: left;
+	width: 50%;
+	margin-left: 15px;
+	margin-top: 5px;
 }
 /* ---- END - Flyer Store Box ---------- */
 
@@ -7172,9 +7199,9 @@ display: none;
      width: 102px !important;
       padding-left: 216px !important;
  }
-.page-cart #pccart-cart-form .store.clearfix.store.clearfix .description h2 {
-margin-top: 29px !important;
-font-size: 14px !important;
+.page-cart #pccart-cart-form .store.clearfix .description h2 {
+	margin-top: 10px !important;
+	font-size: 14px !important;
 }
 .page-cart #pccart-cart-form .shipping table tbody tr{ 
     font-size: 11px !important;
@@ -7477,10 +7504,10 @@ float:left;
     border-radius: 5px;
  }
 
-#pccart-cart-form #detail {
-position: absolute;
-top: 74px;
-left: 400px;
+#pccart-cart-form #detail{
+	position: absolute;
+	top: 57px;
+	left: 400px;
 }
 .node-type-front-page div#block-block-43 .block .block-block{
     background-color: #77B800;
@@ -8530,7 +8557,27 @@ float:none !important;
 overflow-x: hidden;
 }
 
-
 #pctemplates-selection-form .templates .blocprd{
 	background: url(images/bg_modele.png) no-repeat 8px 9px;
+}
+
+#pccart-cart-form #Mapimg{
+	width: 501px;
+	padding: 10px 0;
+}
+
+body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintconnect-addresses.page-myprintconnect table,body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintconnect-orders table,body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintconnect-closedorders table {
+	margin-left: -7px !important;
+	margin-top: 16px !important;
+}
+body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintconnect-addresses.page-myprintconnect table tr td:first-child {
+width: 203px !important;
+}
+
+body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintconnect-addresses.page-myprintconnect table tr td:nth-child(2) {
+	width: 106px !important;
+}
+
+body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect span.fieldset-legend {
+    margin-left: 6px !important;
 }

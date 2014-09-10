@@ -127,7 +127,7 @@ function pcpayments_request_form($form, &$form_state, $key) {
       '#attributes' => array('id' => 'price'),
       '#title' => t('VAT incl.'),
     );
-  $form['actions']['submit'] = array(
+  $form['actions']['button'] = array(
       '#type' => 'submit',
       '#value' => t('Proceed'),
       '#attributes' => array('class' => array('button', 'action', 'continue', 'large', 'right')),

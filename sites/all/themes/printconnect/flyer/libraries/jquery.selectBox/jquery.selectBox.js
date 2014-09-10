@@ -8,7 +8,7 @@
  *  Licensed under both the MIT license and the GNU GPLv2 (same as jQuery: http://jquery.org/license)
  *
  */
-if (jQuery)(function($) {
+if (jQuery)(function($) { 
 	$.extend($.fn, {
 		selectBox: function(method, data) {
 			var typeTimer, typeSearch = '',

@@ -78,7 +78,7 @@ function pccart_cart_form2($form, &$form_state) {
         if (!empty($fotoliaImages)) {
             foreach($fotoliaImages as $image) {
                 $pricefotolias = Factory::getFotoliaPrice($image['type']);
-                $fotoliaPrice = str_replace('.', ',', $pricefotolias->price);
+                $fotoliaPrice = str_replace('.', ',', number_format($pricefotolias->price,2));
                 $fotolia[$orderItem->id][] = '<span>'.t('Image').'&nbsp;"'.$image['id'].'"</span><div class="fotolia-price">€&nbsp;'.$fotoliaPrice.'</div>';
             } 
             $resultfotolia = Factory::SaveFotolia($cart->id, $orderItem->id, $fotoliaImages);

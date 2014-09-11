@@ -6,21 +6,33 @@ function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALS
   $order = \printconnect\Orders\Factory::Get($orderId, false);
   $customer = \printconnect\Customers\Factory::Get($order->customer);
   drupal_set_title(t('Details of your order @number : @status', array('@number' => $order->number, '@status' => $order->status)));
- drupal_add_js('<script>(function() {
-var _fbq = window._fbq || (window._fbq = []);
-if (!_fbq.loaded)
-{ var fbds = document.createElement("script"); fbds.async = true; fbds.src = "//connect.facebook.net/en_US/fbds.js"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(fbds, s); _fbq.loaded = true; }
-})();
-window._fbq = window._fbq || [];
-window._fbq.push(["track", "6018439902582",
-{"value":"0.01","currency":"EUR"}
-]);
-</script>
-<noscript><img height="1" width="1" alt="" style="display:none" src="
-https://www.facebook.com/tr?ev=6018439902582&amp;cd[value]=0.01&amp;cd[currency]=EUR&amp;noscript=1"
-/></noscript>',
-    array('type' => 'inline', 'scope' => 'header', 'weight' => 5)
-  );
+ 
+      $inline_script ="<!-- Facebook Conversion Code for Commande Flyer.fr -->
+                        <script>(function() {
+                        var _fbq = window._fbq || (window._fbq = []);
+                        if (!_fbq.loaded) {
+                        var fbds = document.createElement('script');
+                        fbds.async = true;
+                        fbds.src = '//connect.facebook.net/en_US/fbds.js';
+                        var s = document.getElementsByTagName('script')[0];
+                        s.parentNode.insertBefore(fbds, s);
+                        _fbq.loaded = true;
+                        }
+                        })();
+                        window._fbq = window._fbq || [];
+                        window._fbq.push(['track', '6018439902582', {'value':'0.01','currency':'EUR'}]);
+                        </script>
+                        <noscript><img class='fcb_price' height='1' width='1' alt='' style='display:none' src='https://www.facebook.com/tr?ev=6018439902582&amp;cd[value]=0.01&amp;cd[currency]=EUR&amp;noscript=1' /></noscript>";
+
+    $element_fcb = array(
+                        '#type' => 'markup',
+                        '#markup' => $inline_script,
+                        '#weight' => 5
+                    );
+ 
+    drupal_add_html_head($element_fcb, 'script_tag_fcb');
+  
+
   // drupal_set_title(t('Order confirmation - @number - ', array('@number' => $order->number)));
 
   $form['status'] = array(

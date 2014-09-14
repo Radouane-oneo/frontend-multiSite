@@ -5,9 +5,9 @@
         <?php print $fields['body']->content; ?>
         
         <p id="prixdeal">
+            à 
             <span class="newpricedeal"><?php print $fields['field_prix_deal']->content ?>€</span>
-             au lieu de 
-            <span class="pricedeal"><?php print $fields['field_prix_promotion']->content; ?>€</span>
+             seulement ! 
         </p>
     </div>
     

@@ -289,7 +289,6 @@ function flyer_css_alter(&$css) {
 	unset($css['sites/all/modules/printconnect/pcpayments/pcpayments.css']);
 	unset($css['sites/all/modules/printconnect/pcsamplepacks/pcsamplepacks.css']);
 	unset($css['sites/all/modules/printconnect/pcsegments/pcsegments.css']);
-	unset($css['sites/all/modules/printconnect/pctemplates/pctemplates.css']);
 	unset($css['modules/search/search.css']);
 	unset($css['sites/all/modules/contrib/ckeditor/ckeditor.css']);
 	unset($css['sites/all/modules/contrib/ctools/css/ctools.css']);

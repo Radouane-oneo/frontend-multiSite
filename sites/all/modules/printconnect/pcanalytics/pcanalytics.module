@@ -188,7 +188,7 @@ function pcanalytics_form_pcorders_order_form_alter(&$form, $form_state, $form_i
                     '$quantity'         // quantity - required
                 ]);";
         }
-
+/*
         $googlePurchaseTracking .= "
         _gaq.push(['_trackTrans']); //submits transaction to the Analytics servers
 
@@ -201,7 +201,7 @@ function pcanalytics_form_pcorders_order_form_alter(&$form, $form_state, $form_i
             s . parentNode . insertBefore(ga, s);
         })();
         ";
-
+*/
         drupal_add_js($googlePurchaseTracking, array('scope' => 'footer', 'type' => 'inline'));
     }
 }

@@ -1,6 +1,3 @@
-<?php //dsm($fields);?>
-
-
 <?php if(!empty($fields['field_vignette_deal']->content)):?>	
     <div class="boxing">
         <div class="img"><?php print $fields['field_vignette_deal']->content; ?></div>
@@ -8,9 +5,9 @@
         <?php print $fields['body']->content; ?>
         
         <p id="prixdeal">
+            à 
             <span class="newpricedeal"><?php print $fields['field_prix_deal']->content ?>€</span>
-             au lieu de 
-            <span class="pricedeal"><?php print $fields['field_prix_promotion']->content; ?>€</span>
+             seulement ! 
         </p>
     </div>
     
@@ -25,7 +22,7 @@
            
          <?php else :?>
              
-             <?php $inactivebtn = "inactivebtn";?>
+             <?php $inactivebtn = "inactivebtn"; ?>
             <div class="field-content">
                 <div id="field-countdown-timer-0-96310000-1408967684" class="jquery-countdown-timer-processed countdownHolder">
 
@@ -58,19 +55,25 @@
 
             </div>
         <?php endif; ?>
-          <div class="cont_down_txt"><img src="<?php print base_path(); ?>sites/all/themes/printconnect/flyer/css/images/cont_down_txt.jpg"></div>
+          <div class="cont_down_txt">
+            <!-- img src="<?php //print base_path(); ?>sites/all/themes/printconnect/flyer/css/images/cont_down_txt.jpg" -->
+                <span class="day">Jours</span>
+                <span class="hours">Heures</span>
+                <span class="min">Minutes</span>
+                <span class="sec">Secondes</span>
+            </div>
         
             
     </div>
     
         <?php if(!empty($fields['field_lien_deal']->content)):?>
 
-            <a href="<?php if($inactivebtn=="") print $fields['field_lien_deal']->content; else print "javascript:void(0)" ?>" class="ui-button plusinfobtn <?php print $inactivebtn;?>" >
+            <a href="<?php if($inactivebtn=="") print urldecode($fields['field_lien_deal']->content); else print "javascript:void(0)" ?>" class="ui-button plusinfobtn <?php print $inactivebtn;?>" >
                 <span class="flesh"></span>
                     J’en profite !
             </a>
+
         <?php endif; ?>
 <?php endif; ?>	
 
 <?php  print  $fields['contextual_links']->content ; ?>
-   

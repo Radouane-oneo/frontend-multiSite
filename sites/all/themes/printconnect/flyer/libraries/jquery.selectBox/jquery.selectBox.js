@@ -8,7 +8,7 @@
  *  Licensed under both the MIT license and the GNU GPLv2 (same as jQuery: http://jquery.org/license)
  *
  */
-if (jQuery)(function($) {
+if (jQuery)(function($) { 
 	$.extend($.fn, {
 		selectBox: function(method, data) {
 			var typeTimer, typeSearch = '',
@@ -612,6 +612,7 @@ if (jQuery)(function($) {
 						event.preventDefault();
 					});
 				};
+                                
 			var generateOptions = function(self, options) {
 					var li = $('<li />'),
 						a = $('<a />');
@@ -621,8 +622,19 @@ if (jQuery)(function($) {
 					li.append(a);
 					var real=a.attr('rel');
 					a.before('<span/> ');
-					li.find('span').addClass('subMenuIcon' + real);
-					if (self.attr('disabled')) li.addClass('selectBox-disabled');
+                    var lastChar = real.substr(real.length - 3);
+                    var yes = lastChar.indexOf("/");
+                    if (yes == "-1"){
+                     li.find('span').addClass('sub-items' + lastChar); 
+                    }else{
+                      	lastChar = real.substr(real.length - 2);
+                     	lastChar = lastChar.replace('/', '');
+                      	li.find('span').addClass('sub-items' + lastChar);  
+                    }
+
+					li.find('span').addClass('subMenuIcon' + real );
+					li.find('span').addClass('subIconeItem');
+                                       	if (self.attr('disabled')) li.addClass('selectBox-disabled');
 					if (self.attr('selected')) li.addClass('selectBox-selected');
 					options.append(li);
 				};

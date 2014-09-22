@@ -152,15 +152,22 @@ namespace printconnect {
     }
 
     public static function Save(Object &$object, $entity, $params, $validateOnly = FALSE) {
+      
       $dal = Dal::GetDal();
       $properties = $object->GetProperties();
       if ($object->id) {
      
         $data = $dal->Update($properties, $entity, $params, $validateOnly);
+//          if($entity == 'cart-item'){
+//            die('2ll');
+//        }
         $object->LoadProperties($data);
       } else {
           
         $data = $dal->Create($properties, $entity, $params, $validateOnly);
+//         if($entity == 'cart-item'){
+//            die('3ll');
+//        }
         $object->LoadProperties($data);
       }
 

@@ -1001,13 +1001,31 @@ body.two-sidebars #content .whitebox{
 	margin-right: 5px;
 	line-height: 16px;
 }
+#footer #block-block-14 .info{
+	clear: both;
+	padding-top: 5px;
+}
 #footer #block-block-14 .tel{
 	font-weight: bold;
 	font-size: 14px;
 	color: #ff6600;
 	line-height: 22px;
 	padding-left: 30px;
-	background: url(images/tel_orange.png) no-repeat 0 center;
+	background: url(images/social_cart.png) no-repeat 0 0;
+	/*background: url(images/tel_orange.png) no-repeat 0 center;*/
+}
+#footer #block-block-14 .facebook,
+#footer #block-block-14 .twitter{
+	display: block;
+	width: 25px;
+	height: 25px;
+	background: url(images/social_cart.png) no-repeat 0 -28px;
+	font-size: 0;
+	float: left;
+	margin-right: 3px;
+}
+#footer #block-block-14 .twitter{
+	background-position: 0 -59px;
 }
 
 #footer #block-block-14 h2 {
@@ -7597,12 +7615,12 @@ div.myoffers table.list thead tr th:nth-child(2){
 .info-bloc li{
 	float: left;
 	list-style: none;
-	background: url(images/info-bloc-icons.png) no-repeat 0 0;
+	background: url(images/social_cart.png) no-repeat 0 0;
 	padding-left: 32px;
 	font-family: arial;
 }
 .info-bloc li.faq{
-	background-position: 0 5px;
+	background-position: 0 -85px;
 	margin-right: 60px;
 }
 .info-bloc li.num{
@@ -7710,6 +7728,8 @@ div.myoffers table.list thead tr th:nth-child(2){
 	-webkit-border-radius: 3px 3px 0 0 ;
 	-moz-border-radius: 3px 3px 0 0 ;
 	border-radius: 3px 3px 0 0 ;
+	min-height: 130px;
+	overflow: hidden;
 }
 #slideIside h3.title{
 	margin: 0;
@@ -7746,7 +7766,9 @@ div.myoffers table.list thead tr th:nth-child(2){
 	letter-spacing: normal;
 	word-spacing: normal;
 }
-
+#slideIside{
+	min-height: 167px;
+}
 #slideIside #sliderPager a.activeSlide, #slideIside #sliderPager a:hover{
 	background-color: #ff6600;
 }
@@ -7754,6 +7776,9 @@ div.myoffers table.list thead tr th:nth-child(2){
 .block.nos-avantages .content a{
 	text-decoration: none;
 	color: #646464;
+	display: block;
+	padding-left: 30px;
+	background: url(images/avantages_icons.png) no-repeat 0 0;
 }
 .block.nos-avantages ul{
 	list-style: none;
@@ -7767,14 +7792,6 @@ div.myoffers table.list thead tr th:nth-child(2){
 	padding: 0;
 	overflow: hidden;
 }
-.block.nos-avantages li .icone{
-	float: left;
-	width: 25px;
-	margin-right: 5px;
-}
-.block.nos-avantages li .icone img{
-	display: block;
-}
 .block.nos-avantages li p{
 	font-size: 12px;
 	color: #646464;
@@ -7783,20 +7800,24 @@ div.myoffers table.list thead tr th:nth-child(2){
 	margin: 0;
 	padding: 0;
 }
-.block.nos-avantages .item_1 .icone{
-	margin-top: 2px;
-}
 .block.nos-avantages .item_2 p{
 	line-height: 18px;
 }
-.block.nos-avantages .item_3 .icone{
-	margin-top: 10px;
+.block.nos-avantages .item_1 a{
+	background-position: 0px 2px;
 }
-.block.nos-avantages .item_4 .icone{
-	margin-top: 5px;
+.block.nos-avantages .item_2 a{
+	background-position: 0px -48px;
+	line-height: 24px;
 }
-.block.nos-avantages .item_5 .icone{
-	margin-top: 5px;
+.block.nos-avantages .item_3 a{
+	background-position: 0px -84px;
+}
+.block.nos-avantages .item_4 a{
+	background-position: 0px -124px;
+}
+.block.nos-avantages .item_5 a{
+	background-position: 0px -164px;
 }
 
 #block-views-deals-block .view-deals{

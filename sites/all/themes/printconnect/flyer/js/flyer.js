@@ -8,11 +8,13 @@ jQuery(document).ready(function(e) {
     }
 
     if (jQuery('#slideIside ul').length) {
-        jQuery('#slideIside ul').cycle({
-    	    pager:'#sliderPager',
-            fx:'turnDown',
-            timeout: 5300
-    	});
+        setTimeout(function(){
+            jQuery('#slideIside ul').cycle({
+                pager:'#sliderPager',
+                fx:'turnDown',
+                timeout: 5300
+            });
+        }, 4000);   
     }
     
     jQuery('#helppanel').find('.center-wrapper').eq(0).remove();

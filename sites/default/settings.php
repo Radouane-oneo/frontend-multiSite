@@ -1,5 +1,7 @@
 <?php
-// $Id: default.settings.php,v 1.51 2010/10/11 23:49:48 dries Exp $
+
+
+
 
 /**
  * @file
@@ -23,19 +25,19 @@
  * http://www.drupal.org/mysite/test/, the 'settings.php'
  * is searched in the following directories:
  *
- *  1. sites/www.drupal.org.mysite.test
- *  2. sites/drupal.org.mysite.test
- *  3. sites/org.mysite.test
+ * - sites/www.drupal.org.mysite.test
+ * - sites/drupal.org.mysite.test
+ * - sites/org.mysite.test
  *
- *  4. sites/www.drupal.org.mysite
- *  5. sites/drupal.org.mysite
- *  6. sites/org.mysite
+ * - sites/www.drupal.org.mysite
+ * - sites/drupal.org.mysite
+ * - sites/org.mysite
  *
- *  7. sites/www.drupal.org
- *  8. sites/drupal.org
- *  9. sites/org
+ * - sites/www.drupal.org
+ * - sites/drupal.org
+ * - sites/org
  *
- * 10. sites/default
+ * - sites/default
  *
  * If you are installing on a non-standard port number, prefix the
  * hostname with that number. For example,
@@ -154,6 +156,29 @@
  * @endcode
  * NOTE: MySQL and SQLite's definition of a schema is a database.
  *
+ * Advanced users can add or override initial commands to execute when
+ * connecting to the database server, as well as PDO connection settings. For
+ * example, to enable MySQL SELECT queries to exceed the max_join_size system
+ * variable, and to reduce the database connection timeout to 5 seconds:
+ *
+ * @code
+ * $databases['default']['default'] = array(
+ *   'init_commands' => array(
+ *     'big_selects' => 'SET SQL_BIG_SELECTS=1',
+ *   ),
+ *   'pdo' => array(
+ *     PDO::ATTR_TIMEOUT => 5,
+ *   ),
+ * );
+ * @endcode
+ *
+ * WARNING: These defaults are designed for database portability. Changing them
+ * may cause unexpected behavior, including potential data loss.
+ *
+ * @see DatabaseConnection_mysql::__construct
+ * @see DatabaseConnection_pgsql::__construct
+ * @see DatabaseConnection_sqlite::__construct
+ *
  * Database configuration format:
  * @code
  *   $databases['default']['default'] = array(
@@ -183,12 +208,12 @@ $databases = array (
   array (
     'default' => 
     array (
-      'driver' => 'mysql',
-      'database' => 'drupal',
+	'database' => 'drupal_flyer_fr_dev',
       'username' => 'root',
-      'password' => '',
-      'host' => '127.0.0.1',
+      'password' => 'xedr386',
+      'host' => 'localhost',
       'port' => '',
+      'driver' => 'mysql',
       'prefix' => '',
     ),
   ),
@@ -211,10 +236,10 @@ $update_free_access = FALSE;
  * Salt for one-time login links and cancel links, form tokens, etc.
  *
  * This variable will be set to a random value by the installer. All one-time
- * login links will be invalidated if the value is changed.  Note that this
- * variable must have the same value on every web server.  If this variable is
- * empty, a hash of the serialized database credentials will be used as a
- * fallback salt.
+ * login links will be invalidated if the value is changed. Note that if your
+ * site is deployed on a cluster of web servers, you must ensure that this
+ * variable has the same value on each server. If this variable is empty, a hash
+ * of the serialized database credentials will be used as a fallback salt.
  *
  * For enhanced security, you may set this variable to a value using the
  * contents of a file outside your docroot that is never saved together
@@ -224,7 +249,7 @@ $update_free_access = FALSE;
  *   $drupal_hash_salt = file_get_contents('/home/example/salt.txt');
  *
  */
-$drupal_hash_salt = 'WZvBQBXyPPbUV88H1VH1bWrNG9y8zoCF2zBvYmkaAdM';
+$drupal_hash_salt = 'D4jzMqIDxCt5Qzv2fgdPZJYojeFAiV6f4lAhovJ7jwA';
 
 /**
  * Base URL (optional).
@@ -254,7 +279,7 @@ $drupal_hash_salt = 'WZvBQBXyPPbUV88H1VH1bWrNG9y8zoCF2zBvYmkaAdM';
  * To see what PHP settings are possible, including whether they can be set at
  * runtime (by using ini_set()), read the PHP documentation:
  * http://www.php.net/manual/en/ini.list.php
- * See drupal_initialize_variables() in includes/bootstrap.inc for required
+ * See drupal_environment_initialize() in includes/bootstrap.inc for required
  * runtime settings and the .htaccess file for non-runtime settings. Settings
  * defined there should not be duplicated here so as to avoid conflict issues.
  */
@@ -296,13 +321,14 @@ ini_set('session.cookie_lifetime', 2000000);
 
 /**
  * Drupal automatically generates a unique session cookie name for each site
- * based on on its full domain name. If you have multiple domains pointing at
- * the same Drupal site, you can either redirect them all to a single domain
- * (see comment in .htaccess), or uncomment the line below and specify their
- * shared base domain. Doing so assures that users remain logged in as they
- * cross between your various domains.
+ * based on its full domain name. If you have multiple domains pointing at the
+ * same Drupal site, you can either redirect them all to a single domain (see
+ * comment in .htaccess), or uncomment the line below and specify their shared
+ * base domain. Doing so assures that users remain logged in as they cross
+ * between your various domains. Make sure to always start the $cookie_domain
+ * with a leading dot, as per RFC 2109.
  */
-# $cookie_domain = 'example.com';
+# $cookie_domain = '.example.com';
 
 /**
  * Variable overrides:
@@ -336,41 +362,49 @@ ini_set('session.cookie_lifetime', 2000000);
 # $conf['maintenance_theme'] = 'bartik';
 
 /**
- * Enable this setting to determine the correct IP address of the remote
- * client by examining information stored in the X-Forwarded-For headers.
- * X-Forwarded-For headers are a standard mechanism for identifying client
- * systems connecting through a reverse proxy server, such as Squid or
- * Pound. Reverse proxy servers are often used to enhance the performance
+ * Reverse Proxy Configuration:
+ *
+ * Reverse proxy servers are often used to enhance the performance
  * of heavily visited sites and may also provide other site caching,
- * security or encryption benefits. If this Drupal installation operates
- * behind a reverse proxy, this setting should be enabled so that correct
- * IP address information is captured in Drupal's session management,
- * logging, statistics and access management systems; if you are unsure
- * about this setting, do not have a reverse proxy, or Drupal operates in
- * a shared hosting environment, this setting should remain commented out.
+ * security, or encryption benefits. In an environment where Drupal
+ * is behind a reverse proxy, the real IP address of the client should
+ * be determined such that the correct client IP address is available
+ * to Drupal's logging, statistics, and access management systems. In
+ * the most simple scenario, the proxy server will add an
+ * X-Forwarded-For header to the request that contains the client IP
+ * address. However, HTTP headers are vulnerable to spoofing, where a
+ * malicious client could bypass restrictions by setting the
+ * X-Forwarded-For header directly. Therefore, Drupal's proxy
+ * configuration requires the IP addresses of all remote proxies to be
+ * specified in $conf['reverse_proxy_addresses'] to work correctly.
+ *
+ * Enable this setting to get Drupal to determine the client IP from
+ * the X-Forwarded-For header (or $conf['reverse_proxy_header'] if set).
+ * If you are unsure about this setting, do not have a reverse proxy,
+ * or Drupal operates in a shared hosting environment, this setting
+ * should remain commented out.
+ *
+ * In order for this setting to be used you must specify every possible
+ * reverse proxy IP address in $conf['reverse_proxy_addresses'].
+ * If a complete list of reverse proxies is not available in your
+ * environment (for example, if you use a CDN) you may set the
+ * $_SERVER['REMOTE_ADDR'] variable directly in settings.php.
+ * Be aware, however, that it is likely that this would allow IP
+ * address spoofing unless more advanced precautions are taken.
  */
 # $conf['reverse_proxy'] = TRUE;
 
 /**
- * Set this value if your proxy server sends the client IP in a header other
- * than X-Forwarded-For.
- *
- * The "X-Forwarded-For" header is a comma+space separated list of IP addresses,
- * only the last one (the left-most) will be used.
- */
-# $conf['reverse_proxy_header'] = 'HTTP_X_CLUSTER_CLIENT_IP';
-
-/**
- * reverse_proxy accepts an array of IP addresses.
- *
- * Each element of this array is the IP address of any of your reverse
- * proxies. Filling this array Drupal will trust the information stored
- * in the X-Forwarded-For headers only if Remote IP address is one of
- * these, that is the request reaches the web server from one of your
- * reverse proxies. Otherwise, the client could directly connect to
- * your web server spoofing the X-Forwarded-For headers.
+ * Specify every reverse proxy IP address in your environment.
+ * This setting is required if $conf['reverse_proxy'] is TRUE.
  */
 # $conf['reverse_proxy_addresses'] = array('a.b.c.d', ...);
+
+/**
+ * Set this value if your proxy server sends the client IP in a header
+ * other than X-Forwarded-For.
+ */
+# $conf['reverse_proxy_header'] = 'HTTP_X_CLUSTER_CLIENT_IP';
 
 /**
  * Page caching:
@@ -383,8 +417,7 @@ ini_set('session.cookie_lifetime', 2000000);
  * the cache. If the site has mostly anonymous users except a few known
  * editors/administrators, the Vary header can be omitted. This allows for
  * better caching in HTTP proxies (including reverse proxies), i.e. even if
- * clients send different cookies, they still get content served from the cache
- * if aggressive caching is enabled and the minimum cache time is non-zero.
+ * clients send different cookies, they still get content served from the cache.
  * However, authenticated users should access the site directly (i.e. not use an
  * HTTP proxy, and bypass the reverse proxy if one is used) in order to avoid
  * getting cached pages from the proxy.
@@ -444,6 +477,42 @@ ini_set('session.cookie_lifetime', 2000000);
 # );
 
 /**
+ * Fast 404 pages:
+ *
+ * Drupal can generate fully themed 404 pages. However, some of these responses
+ * are for images or other resource files that are not displayed to the user.
+ * This can waste bandwidth, and also generate server load.
+ *
+ * The options below return a simple, fast 404 page for URLs matching a
+ * specific pattern:
+ * - 404_fast_paths_exclude: A regular expression to match paths to exclude,
+ *   such as images generated by image styles, or dynamically-resized images.
+ *   If you need to add more paths, you can add '|path' to the expression.
+ * - 404_fast_paths: A regular expression to match paths that should return a
+ *   simple 404 page, rather than the fully themed 404 page. If you don't have
+ *   any aliases ending in htm or html you can add '|s?html?' to the expression.
+ * - 404_fast_html: The html to return for simple 404 pages.
+ *
+ * Add leading hash signs if you would like to disable this functionality.
+ */
+$conf['404_fast_paths_exclude'] = '/\/(?:styles)\//';
+$conf['404_fast_paths'] = '/\.(?:txt|png|gif|jpe?g|css|js|ico|swf|flv|cgi|bat|pl|dll|exe|asp)$/i';
+$conf['404_fast_html'] = '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL "@path" was not found on this server.</p></body></html>';
+
+/**
+ * By default, fast 404s are returned as part of the normal page request
+ * process, which will properly serve valid pages that happen to match and will
+ * also log actual 404s to the Drupal log. Alternatively you can choose to
+ * return a 404 now by uncommenting the following line. This will reduce server
+ * load, but will cause even valid pages that happen to match the pattern to
+ * return 404s, rather than the actual page. It will also prevent the Drupal
+ * system log entry. Ensure you understand the effects of this before enabling.
+ *
+ * To enable this functionality, remove the leading hash sign below.
+ */
+# drupal_fast_404();
+
+/**
  * Authorized file system operations:
  *
  * The Update manager module included with Drupal provides a mechanism for
@@ -460,23 +529,40 @@ ini_set('session.cookie_lifetime', 2000000);
 # $conf['allow_authorize_operations'] = FALSE;
 
 
-//$conf['pc_url'] = 'http://admin.stg.printconcept.com/rest/';
-$conf['pc_url'] = 'http://admin.stg.printconcept.com/rest/';
-$conf['pc_apikey'] = '5366f78ef949b76f75cd2efa5098e984c309c563'; //be
-//$conf['pc_apikey'] = '5edf6554d9f13e2403cc9bb4732e6db5585755b8'; //joico
-//$conf['pc_apikey'] = '3b335909727e906f4f64b829c9fd47a3d9000a59'; //flyer stg
-//$conf['pc_apikey'] = '829dc7b162f77ed761be6cac0ae8782c0ee1866b'; //flyer prd
-//$conf['pc_apikey'] = '8a50ee63058e39a8fc82cf3fd34f5fc756a5cee6'; //discounter prd
-//$conf['pc_apikey'] = '6c5e8f72e2acda811c506fad69bb54d9fb9e92ad'; //itba3
-//$conf['pc_apikey'] = '120aaaaa90fcd5fe7bb59d389899b9270c37592b'; //nl
+$conf['pc_url'] = 'http://speed.dev.printconcept.com/rest/';
+$conf['pc_designtoolurl'] = 'http://designtool.prd.flyer.fr';
 
-$conf['pc_files'] = 'http://files.stg.printconcept.com/';
-$conf['pc_designtoolurl'] = 'http://designtool.stg.printconcept.com';
+$conf['pc_apikey'] = '829dc7b162f77ed761be6cac0ae8782c0ee1866b'; // flyer
+$conf['pccheckout_stepsenabled'] = true;
+$conf['pc_cache'] = true;
+$conf['pc_images'] = 'https://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr';
+
+$conf['pc_files'] = 'http://files.prd.printconcept.com/';
+
+//$conf['languages'] = array('fr-FR');
 
 $conf['pc_flow'] = 'flyer';
-//$conf['pc_flow'] = 'whitelabel';
-//$conf['pc_flow'] = 'printconcept';
 
-$conf['pc_images'] = 'http://images.printconcept.com/site/images';
-$conf['pc_cache'] = TRUE;
-$conf['pc_timeout'] = 1080;
+$conf['pc_fbappid'] = '228019944073196';
+$conf['pc_fbappsecret'] = '06e7cf1e9a3d57bccbb1b7ba9dafd349';
+$conf['pc_googleappid'] = '630860089189.apps.googleusercontent.com';
+$conf['pc_googleappsecret'] = 'fAtghndyq870V9GlzfCzNp9i';
+
+$conf['pcanalytics_account'] = 'UA-17847334-1';
+
+
+
+ini_set('memory_limit', '512M');
+
+$conf['cobrandedshops']['internal']['pc_apikey'] ='fc097e4b269cea7f07589577b3279387c7513c16';
+$conf['cobrandedshops']['barco']['pc_apikey'] = '7cc9ec5d7cd959f7de9c8cd3c0243dbc0426af53';
+$conf['cobrandedshops']['immopret']['pc_apikey'] = 'f344ca7284a5be3845607e1345a272f5919db3f3';
+$conf['cobrandedshops']['dehalvemaan']['pc_apikey'] = '3b5add4f3ca0b29863b9cec212dd21b4b851d013';
+$conf['cobrandedshops']['anthonissen']['pc_apikey'] = '3783de90ca521f57f75c9fdd010c0e8ceaa8b79c';
+$conf['cobrandedshops']['syntrawest']['pc_apikey'] = '62039f8821b15c467aeb13dad7f941a91275bd99';
+$conf['cobrandedshops']['vab']['pc_apikey'] = '9c48099d8405c99404d6ab71694e070671b5ff8b';
+$conf['cobrandedshops']['essevee']['pc_apikey'] = '5d034b272a5499883857ca6faa682534fd6bc85b';
+$conf['cobrandedshops']['atag']['pc_apikey'] = '7e114ed3bc3b465891a3b1977a86efed8edcdb73';
+$conf['cobrandedshops']['yellowselectie']['pc_apikey'] = 'd693f13e977bdd72859f92f2507db8dc45b1c0e0';
+$conf['cobrandedshops']['pos']['pc_apikey'] = '8c321f720bea8a1dd022ff278d3de7fa62e7a85b';
+$conf['default_printing_office'] = '22';

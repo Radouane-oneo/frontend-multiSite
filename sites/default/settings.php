@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 /**
  * @file
  * Drupal site-specific configuration file.
@@ -208,9 +205,9 @@ $databases = array (
   array (
     'default' => 
     array (
-	'database' => 'drupal_flyer_fr_dev',
+     'database' => 'flyer_fr_dev',    
       'username' => 'root',
-      'password' => 'xedr386',
+      'password' => '',
       'host' => 'localhost',
       'port' => '',
       'driver' => 'mysql',
@@ -529,8 +526,17 @@ $conf['404_fast_html'] = '<html xmlns="http://www.w3.org/1999/xhtml"><head><titl
 # $conf['allow_authorize_operations'] = FALSE;
 
 
-$conf['pc_url'] = 'http://speed.dev.printconcept.com/rest/';
-$conf['pc_designtoolurl'] = 'http://designtool.prd.flyer.fr';
+$conf['pc_url'] = 'http://prd.printconcept.com/rest/';
+//$conf['pc_url'] = 'http://speed.dev.printconcept.com/rest/';
+$conf['pc_designtoolurl'] = 'http://designtool.prd.printconcept.com';
+//$conf['pc_apikey'] = '4ff078f212caf2815cc2eed09b57163cafb16476';
+//$conf['pc_apikey'] = '70817cdde5fdca7c4e2b0a8d3d119fd392406a0e'; //be
+$conf['pc_apikey'] = '829dc7b162f77ed761be6cac0ae8782c0ee1866b'; // flyer.fr
+//$conf['pc_apikey'] = 'b33e4f8dc5fd4f848dc1540f765630cde13321f0'; //openvld
+//$conf['pc_apikey'] = '5edf6554d9f13e2403cc9bb4732e6db5585755b8'; //joico
+//$conf['pc_apikey'] = '70817cdde5fdca7c4e2b0a8d3d119fd392406a0e'; //flyer.be
+//$conf['pc_apikey'] = '7cc9ec5d7cd959f7de9c8cd3c0243dbc0426af53'; //flyer.nl
+//$conf['pc_apikey'] = 'be42a6f801b23f1c3f2867ae78aa282545ce1bf4'; //flyer.lu
 
 $conf['pc_apikey'] = '829dc7b162f77ed761be6cac0ae8782c0ee1866b'; // flyer
 $conf['pccheckout_stepsenabled'] = true;

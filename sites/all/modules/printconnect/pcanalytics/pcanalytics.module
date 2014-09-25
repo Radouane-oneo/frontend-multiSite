@@ -133,7 +133,6 @@ function pcanalytics_form_pcorders_order_form_alter(&$form, $form_state, $form_i
         $orderId = $path[2];
         $order = \printconnect\Orders\Factory::Get($orderId);
         $customer = $order->customer;
-
         $account = variable_get('pcanalytics_account', 'account');
 
         if (isset($order->orderBillingAddress)) {
@@ -185,10 +184,22 @@ function pcanalytics_form_pcorders_order_form_alter(&$form, $form_state, $form_i
                     '$product',         // product name
                     '$category',        // category or variation
                     '$item->price',     // unit price - required
-                    '$quantity'         // quantity - required
+                    '$quantity'         // quantity - required                       
                 ]);";
+           
         }
-        
+     
+        foreach($form_state['storage']["order"]->discountItems as $codePromo){
+            
+              $googlePurchaseTracking .= "
+                _gaq.push(['_setCustomVar',
+                    '1',
+                    'SummerPromoFlyer.fr', //  promo site
+                    '$codePromo->productName', // code promo
+                    '3'
+                    ]);";
+        }
+    
         $googlePurchaseTracking .= "
         _gaq.push(['_trackTrans']); //submits transaction to the Analytics servers
 

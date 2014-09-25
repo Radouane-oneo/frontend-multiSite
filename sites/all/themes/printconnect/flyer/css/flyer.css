@@ -5962,15 +5962,11 @@ body {
 
 
 .selectBox-dropdown-menu {
-	/*background: transparent url("images/NewCalcDropdown.png") no-repeat top left !important;*/
 	padding: 15px 10px 5px 10px !important;
-	width: 817px !important; /* 689px - padding */
+	width: 817px !important;
 	border: none !important;
-	/* max-height:  490px !important; /* 329px !important; /* 349px - padding */
- /* height: 490px !important; /* 349px - padding */
 	margin-top: -10px !important;
 	border-radius: 0 0 4px 4px !important;
-	/* box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2) !important;*/
 	max-height: none !important;
 	
 }
@@ -8570,10 +8566,7 @@ a.seemore{
 }
 
 ul.type_product-selectBox-dropdown-menu {
-	/* background: transparent url("images/NewCalcDropdown.png") no-repeat top left !important; */
 	padding: 15px 10px 5px 10px !important;
-	/*width: 340px !important;
-	margin-top: -10px !important;*/
 	border-radius: 0 0 4px 4px !important;
 	box-shadow: 0 2px 6px rgba(0, 0, 0, .2) !important;
 }

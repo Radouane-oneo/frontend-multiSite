@@ -804,6 +804,7 @@ function pcproducts_products_form($form, &$form_state) {
     $build['image'] = array(
         '#theme' => 'image',
         '#path' => printconnect_getimage('products', $product->id),
+        '#attributes' => array('width' =>'194', 'height' => '187'),
         '#weight' => 10,  
         '#prefix' => '<div class="blocprd"><a href="products/' . $product->id.'">',
     );

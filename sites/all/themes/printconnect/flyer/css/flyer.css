@@ -1130,7 +1130,7 @@ a.button.request:active {
 	width: 17px;
 	height: 17px;
 	margin-right: 5px;
-	background: url(images/flesh-button.png) no-repeat 0 0;
+	background: url(images/sprite_icons.png) no-repeat -9px -400px;
 	position: relative;
 	top: 3px;
 }
@@ -2300,7 +2300,6 @@ body.front #block-block-13:after {
 	background-image: url("images/arrow_down4.png");
 	background-position: right center;
 	background-repeat: no-repeat;
-	/*background: url(images/flesh-button.png) no-repeat 0 0;*/
 	padding: 8px 8px 10px 15px;
 	clear: left;
 	font-size: 13px;

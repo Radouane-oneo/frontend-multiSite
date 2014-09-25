@@ -47,7 +47,6 @@ function printconnect_init() {
 
       $browser = $info['browser'];
       $version = $info['majorver'];
-
       switch ($browser) {
         case 'IE':
           if ($version < 8) {
@@ -130,18 +129,10 @@ function printconnect_init() {
           break;
         }
       }
-
-      //   setcookie('pc_language', $language->language, time() + 60 * 60 * 24 * 365, '/');
       $_SESSION['pc_language'] = $language->language;
     }
-
-  //  
-  //  drupal_add_js('http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.pack.js');
-  //  drupal_add_css('http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.css', array('type' => 'external'));
-
     $shop = \printconnect\Shop\Configuration\Factory::Current();
       \printconnect\Shop\Configuration\Factory::LoadConfiguration($shop);
-
       if(!isset($_SESSION['shop_vat'])){
       $_SESSION['shop_vat']= $shop->defaultvat;
       }
@@ -408,8 +399,6 @@ function theme_price($vars) {
     $title = '';
   }
 
-  //$attributes['decimal_separator'] = $decimalSeparator;
-
   if (!is_numeric($price)) {
     return '<' . $container . ' ' . drupal_attributes($attributes) . '>' . $title . '<span class="value">' . $price . $suffix . " </span></$container>";
   } else {
@@ -495,9 +484,7 @@ function theme_number($vars) {
   if (!is_numeric($number)) {
     return '<span ' . drupal_attributes($attributes) . '>' . $number . ' ' . $vars['suffix'] . "</span>";
   } else {
-//$parts = explode(',', number_format($price, $decimals, ',', '.'));
-//return '<' . $container . ' class="' . $class . '">' . ($currency ? '<span class="currency">&euro;</span>&nbsp;' : '') . '<span class="whole">' . $parts[0] . '</span><span class="decimalpoint">,</span><span class="decimals">' . $parts[1] . "</span></$container>";
-    return '<span ' . drupal_attributes($attributes) . '><span class="value">' . number_format($number, $vars['decimals'], $decimalSeparator, $thousandSeparator) . '</span> ' . $vars['suffix'] . '</span>';
+      return '<span ' . drupal_attributes($attributes) . '><span class="value">' . number_format($number, $vars['decimals'], $decimalSeparator, $thousandSeparator) . '</span> ' . $vars['suffix'] . '</span>';
   }
 }
 
@@ -515,8 +502,6 @@ function theme_priceblock($vars) {
 
   $attributes = $vars['attributes'];
   $attributes['class'][] = 'priceblock';
-// $attributes['class'][] = 'clearfix';
-
 
   return '<div ' . drupal_attributes($attributes) . '>'
           . theme('price', array('value' => $subtotal, 'title' => t('Total excl. VAT'), 'block' => TRUE, 'attributes' => array('class' => array('clearfix', 'subtotal'))))
@@ -562,7 +547,6 @@ function theme_address($vars) {
   $address = $vars['address'];
   $attributes = $vars['attributes'];
   $attributes['class'][] = 'address';
-// $result = '';
   if ($address) {
 
     $result['address'] = array(
@@ -570,11 +554,7 @@ function theme_address($vars) {
         '#attributes' => $attributes,
     );
 
-
-//$result = '<div class="address">';
-
     if (isset($address->pickupPointId) && $address->pickupPointId) {
-//$result .= htmlentities($address->pickupPointName) . '<br/>';
       $result['address']['pickuppoint'] = array(
           '#type' => 'container',
           '#attributes' => array('class' => array('pickuppoint')),
@@ -584,8 +564,6 @@ function theme_address($vars) {
       );
     }
     if ($address->name) {
-//  if (isset($address->name) && $address->name) {
-//$result .= '<div class="name">' . htmlentities($address->name) . '</div>';
       $result['address']['name'] = array(
           '#type' => 'container',
           '#attributes' => array('class' => array('name')),
@@ -595,7 +573,6 @@ function theme_address($vars) {
       );
     }
     if (isset($address->company) && $address->company) {
-//$result .= '<div class="company">' . htmlentities($address->company) . '</div>';
       $result['address']['company'] = array(
           '#type' => 'container',
           '#attributes' => array('class' => array('company')),
@@ -605,7 +582,6 @@ function theme_address($vars) {
       );
     }
     if (isset($address->street) && $address->street) {
-//$result .= htmlentities($address->street) . '<br/>';
       $result['address']['street'] = array(
           '#type' => 'container',
           '#attributes' => array('class' => array('street')),
@@ -619,26 +595,14 @@ function theme_address($vars) {
       $country = \printconnect\Countries\Factory::Get($address->country);
       $iso = $country->iso;
       if (isset($iso)) {
-//$result .= $country->iso . '- ';
-//        $result['address']['country']['content'] = array(
-//            '#markup' => $country->iso . '- ',
-//        );
         $place = $country->iso . ' - ';
       }
     }
     if (isset($address->postalCode) && $address->postalCode) {
-//$result .= htmlentities($address->postalCode) . ' ';
-//      $result['address']['postalCode']['content'] = array(
-//          '#markup' => $address->postalCode . ' ',
-//      );
       $place .= $address->postalCode . ' ';
     }
 
     if (isset($address->city) && $address->city) {
-//$result .= htmlentities($address->city) . '<br/>';
-//      $result['address']['city']['content'] = array(
-//          '#markup' => $address->city . ' ',
-//      );
       $place .= $address->city;
     }
 
@@ -654,7 +618,6 @@ function theme_address($vars) {
 
 
     if (isset($address->vatNumber) && $address->vatNumber != '') {
-//$result .= $address->vatNumber . '<br/>';
       $result['address']['vatNumber'] = array(
           '#type' => 'container',
           '#attributes' => array('class' => array('vatNumber')),
@@ -664,7 +627,6 @@ function theme_address($vars) {
       );
     }
     if (isset($address->phone) && $address->phone) {
-//$result .= htmlentities($address->phone) . '<br/>';
       $result['address']['phone'] = array(
           '#type' => 'container',
           '#attributes' => array('class' => array('phone')),
@@ -673,7 +635,6 @@ function theme_address($vars) {
           '#markup' => $address->phone,
       );
     }
-//$result .= '</div>';
   }
   return drupal_render($result);
 }
@@ -804,19 +765,14 @@ function printconnect_block_view($delta = '') {
                   ->condition('n.nid', $node->nid, '<>')
                   ->condition('language', $language->language)
                   ->orderBy('created', 'DESC')
-//->range(0, 50)
                   ->addTag('node_access')
                   ->execute();
 
-//  $build['list'] = node_title_list($result);
-//$block['content'] = theme('printconnect_more_block', array('nodes' => $result));
           $block['content']['more'] = array(
               '#type' => 'fieldset',
               '#title' => t('More like this'),
           );
           $block['content']['more']['list'] = array('#markup' => drupal_render(node_title_list($result)));
-
-
 
           return $block;
         }
@@ -870,17 +826,6 @@ function printconnect_block_view($delta = '') {
     case 'browserwarning':
       global $browscap;
 
-//      
-//      if (!$browscap) {
-//        $block['content'] = array(
-//            '#type' => 'container',
-//            '#attributes' => array('class' => array('browserwarning')),
-//            'warning' => array(
-//                '#markup' => 'Your browser is out of date, and may not be compatible with our website.',
-//            ),
-//        );
-//        
-
       if ((!isset($_SESSION['printconnect_browserwarning']) || !$_SESSION['printconnect_browserwarning']) && !$browscap) {
         $block['content']['form'] = drupal_get_form('printconnect_browserwarning_form');
         return $block;
@@ -912,51 +857,11 @@ function _printconnect_js_callback() {
       return drupal_json_output($country->properties);
   }
 }
-  /* lot of email code comment*/
-//function printconnect_mail($key, &$message, $params) {
-//// $data['user'] = $params['account'];
-//// $options['language'] = $message['language'];
-////user_mail_tokens($variables, $data, $options);
-//  switch ($key) {
-//    case 'error':
-////      $langcode = $message['language']->language;
-//      $message['subject'] = 'An exception occurred';
-//      $message['body'][] = url($_GET['q'], array('absolute' => true));
-//      $message['body'][] = 'Referer : ' . isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
-//      if (isset($params['exception'])) {
-//        $message['body'][] = print_r($params['exception'], true);
-//      }
-//      if (isset($params['message'])) {
-//        $message['body'][] = $params['message'];
-//      }
-//      $message['body'][] = print_r($_REQUEST, true);
-//
-////$message['subject'] = t('Notification from !site', $variables, array('langcode' => $langcode));
-////$message['body'][] = t("Dear !username\n\nThere is new content available on the site.", $variables, array('langcode' => $langcode));
-//      break;
-//    case 'watchdog':
-////      $vars = isset($params['variables']) ? $params['variables'] : array();
-////$message['subject'] = strip_tags(t($params['message'], $vars));
-//      $message['subject'] = t('Watchdog entry of severity @severity', array('@severity' => $params['severity']));
-//      $message['body'][] = print_r($params, true);
-//      $message['body'][] = print_r($_REQUEST, true);
-//      break;
-//  }
-//}
-
-//function printconnect_watchdog($log_entry) {
-//  if ($log_entry['severity'] < 4) {
-//    if (function_exists('drupal_mail')) {
-//      drupal_mail('printconnect', 'watchdog', variable_get('site_mail', 'ewald.de.wreede@printconcept.com'), 'nl', $log_entry);
-//    }
-//  }
-//}
-
 function printconnect_exit($destination = NULL) {
   if (!isset($destination)) {
 //    \printconnect\Diagnostics\Debug::Clear();
   }
-  //unset($_COOKIE);
+ 
 }
 
 function printconnect_preprocess_page(&$vars) {
@@ -970,37 +875,21 @@ function printconnect_preprocess_page(&$vars) {
     }
 
     $vars['theme_hook_suggestion'] = 'page__empty';
-
-
-//$vars['theme_hook_suggestion'] = 'page__empty';
-//    foreach (element_children($vars['page']) as $region) {
-//      if ($region != 'content') {
-//        unset($vars['page'][$region]);
-////        foreach (element_children($vars['page'][$region]) as $block) {
-////          if ($block != 'system_main' && $block != 'pccart_cart' && $block != 'pclivecom_smallchat' && $block != 'printconnect_progress' && $block != 'pcpayments_secure' && $block != 'pcdevel_debug') {
-////            hide($vars['page'][$region][$block]);
-////          }
-////        }
-//      }
-//    }
   }
 
 
-//$vars['logo'] = $GLOBALS['base_url'] . $vars['logo'];
+
 
   if (isset($vars['node'])) {
     $vars['theme_hook_suggestions'][] = 'page__' . str_replace('_', '-', $vars['node']->type);
     $vars['theme_hook_suggestions'][] = 'page__' . str_replace('_', '-', $vars['node']->type) . '__' . $vars['node']->nid;
   }
-
-  //drupal_add_css(theme_get_setting('pc_css'), array('group' => CSS_THEME, 'type' => 'inline', 'every_page' => TRUE, 'weight' => 100));
 }
 
 function printconnect_getimage($type, $id) {
   global $theme_key;
   $image = FALSE;
 
-  //$paths = &drupal_static(__FUNCTION__ . 'paths');
   $paths = cache_get('printconnect_getimage_paths');
 
   if (!$paths) {
@@ -1011,8 +900,6 @@ function printconnect_getimage($type, $id) {
     $paths = $paths->data;
   }
 
-
-  //$images = &drupal_static(__FUNCTION__ . 'images');
   $images = cache_get('printconnect_getimage_images');
 
   if (!$images) {
@@ -1020,8 +907,6 @@ function printconnect_getimage($type, $id) {
   } else {
     $images = $images->data;
   }
-
-
   if (array_key_exists($type, $images) && array_key_exists($id, $images[$type])) {
     return $images[$type][$id];
   }
@@ -1067,8 +952,6 @@ function printconnect_getimagepath() {
 
 function printconnect_language_switch_links_alter(array &$result, $type, $path) {
   global $conf;
-//  unset($result['en']);
-
   if (isset($conf['languages'])) {
     $languages = $conf['languages'];
     if ($languages && count($languages)) {
@@ -1090,15 +973,6 @@ $pathPrefix = $GLOBALS['base_url'].'/befr';
 if( strstr($queryprefix, $prefix)) {
 drupal_goto($pathPrefix , array('language' => $newLanguage, 'query' => $query), 301);
 } 
-//  foreach ($result as $key => $value) {
-//    $path = path_load(array(
-//                'source' => $language['href'],
-//                'language' => $key,
-//            ));
-//    if ($path) {
-//      $result[$key]['href'] = $path['alias'];
-//    }
-//  }
 }
 
 function printconnect_form_system_site_information_settings_alter(&$form, &$form_state) {
@@ -1147,9 +1021,6 @@ function printconnect_form_system_theme_settings_alter(&$form, &$form_state) {
         '#description' => t('Specify extra css rules to be loaded in the theme, do not use the &lt;style&gt; tag.'),
     );
 
-//    $form['color'] += color_scheme_form($form, $form_state, $theme);
-//    $form['#validate'][] = 'color_scheme_form_validate';
-//    $form['#submit'][] = 'color_scheme_form_submit';
   }
 }
 
@@ -1169,10 +1040,6 @@ function printconnect_form_system_regional_settings_alter(&$form, &$form_state) 
       '#title' => t('The currency to be used when displaying prices'),
       '#default_value' => variable_get('printconnect_currency_symbol', '&euro;'),
   );
-
-//    $form['color'] += color_scheme_form($form, $form_state, $theme);
-//    $form['#validate'][] = 'color_scheme_form_validate';
-//    $form['#submit'][] = 'color_scheme_form_submit';
 }
 
 function printconnect_form_search_form_alter(&$form, $form_state) {

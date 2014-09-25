@@ -166,7 +166,7 @@ a.btn-cmd span.flesh{
   width: 17px;
   height: 17px;
   margin-right: 5px;
-  background-position: 0 -18px;
+  background-position: -9px -418px;
   position: relative;
   top: 3px;
 }
@@ -177,7 +177,7 @@ a.btn-cmd:hover{
   text-decoration: none;
 }
 a.btn-cmd:hover span.flesh{
-  background-position: 0 0;
+  background-position: -9px -400px;
 }
 
 #pcproducts-productconfig-form .form-type-checkboxes .form-type-checkbox{

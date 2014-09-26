@@ -12,7 +12,6 @@ dependencies[] = pcdesigns
 
 scripts[] = jquery.ui.position.min.js
 scripts[] = jquery.ui.autocomplete.min.js
-scripts[] = autocomplete.js
 scripts[] = pctemplates.js
 
 stylesheets[all][] = pctemplates.css

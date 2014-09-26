@@ -111,6 +111,7 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
     $form['description']['image']['image'] = array(
         '#theme' => 'image',
         '#path' => _pcproducts_getimage('products', $productId),
+        '#attributes' => array('width'=>'178','height'=>'172'),
     );
     $form['description']['image']['name'] = array(
         '#prefix' => '<h3>',
@@ -775,7 +776,8 @@ function pcproducts_form_pcproducts_config_form_alter(&$form, &$form_state) {
             $build = array(
                 'image' => array(
                     '#theme' => 'image',
-                    '#path' => _pcproducts_getimage('products', $product->id)
+                    '#path' => _pcproducts_getimage('products', $product->id),
+                    '#attributes' => array('width'=>'154','height'=>'148')
                 ),
                 'text' => array(
                     '#type' => 'container',
@@ -839,7 +841,8 @@ function pcproducts_form_pcproducts_config_form_alter(&$form, &$form_state) {
                 $build = array(
                     'image' => array(
                         '#theme' => 'image',
-                        '#path' => _pcproducts_getimage('items', $key)
+                        '#path' => _pcproducts_getimage('items', $key),
+                        '#attributes' => array('width'=>'154','height'=>'154'),
                     ),
                     'text' => array(
                         '#type' => 'container',

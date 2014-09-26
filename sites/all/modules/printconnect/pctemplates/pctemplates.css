@@ -499,12 +499,6 @@ margin: 0 16px -10px 0px !important;
 .newDesignUpload a{
 	margin:0 !important;	
 }
-#top10Template{
-    top: 0px !important;
-    bottom: 0px !important;
-    right: 0px !important;
-    left: 0px !important;
-}
 .front .region-contenttop .block-pctemplates{
 	padding: 0 10px 0;
 	background: #fff;

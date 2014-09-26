@@ -1156,7 +1156,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
 //  );
    $form['login']['decription'] = array(
       '#prefix'=> '<div class="login-form-item first-item"><p>',
-      '#markup'=>"Déja client? ".l('Connectez-vous.','#',array('attributes' => array('class' => 'logbl'))),
+      '#markup'=>"Déja client? ", //l('Connectez-vous.','#',array('attributes' => array('class' => 'logbl')))
       '#weight' => 6,
       '#suffix'=>'</p>',
    );
@@ -1205,7 +1205,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
   
    $form['login']['decriptionnew'] = array(
       '#prefix'=> '<div class="login-form-item last-item"><p>',
-      '#markup'=>"Nouveau client? ".l('Créer votre compte.','#',array('attributes' => array('class' => 'logbl'))),
+      '#markup'=>"Nouveau client? ", // .l('Créer votre compte.','#',array('attributes' => array('class' => 'logbl')))
       '#weight' => 10,
       '#suffix'=>'</p>',
    );
@@ -1445,9 +1445,8 @@ function pccustomers_login_form_register_validate(&$form, &$form_state) {
 function pccustomers_login_form_submit($form, &$form_state) {
   $customer = $form_state['storage']['customer'];
   Factory::Save($customer);
-
   Factory::LoginByObject($customer);
-
+  pccustomers_login_form_send_mail($form, $form_state);
   if (isset($_GET['return'])) {
     drupal_goto($_GET['return']);
   } elseif (isset($form_state['storage']['redirect'])) {
@@ -1457,6 +1456,31 @@ function pccustomers_login_form_submit($form, &$form_state) {
   }
 }
 
+function pccustomers_login_form_send_mail($form, &$form_state) {
+$module = 'pccustomers';
+$key = 'customers_send_mail';
+$to = 'salim@agenceoneo.com';
+$from = 'info@flyer.fr';
+$params = t("Email : ") . $form_state['values']['emailnew'];
+$language = language_default();
+$send = TRUE;
+$result = drupal_mail($module, $key, $to, $language, $params, $from, $send );
+$sendMeail = FALSE;
+    if ($result['result'] == TRUE) {
+        $sendMeail = TRUE;
+    }
+}
+
+function pccustomers_mail($key, &$message, $params) {
+  switch ($key) {
+  case 'customers_send_mail':
+        $message['headers']['Content-Type'] = 'text/html; charset=UTF-8; format=flowed';
+        $message['subject'] =  t('New customers on flyer.fr');
+        $message['body'][] = $params;
+      break;
+  
+  }
+}
 /*
   function pccustomers_login_form_forgot_validate($form, &$form_state) {
   try {

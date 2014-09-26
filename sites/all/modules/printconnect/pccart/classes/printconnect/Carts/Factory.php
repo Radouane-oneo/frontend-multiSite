@@ -56,7 +56,8 @@ use printconnect\Customers;
     }
 
     public static function LoadItem(Item $object) {
-      return Dal::Load($object, 'cart-item', array('id' => $object->id, 'cart' => $object->cart));
+      Dal::Load($object, 'cart-item', array('id' => $object->id, 'cart' => $object->cart), FALSE);
+      return $object;
     }
 
     public static function LoadCart(Cart $object) {
@@ -297,7 +298,36 @@ use printconnect\Customers;
     public static function GetLast($customerId) {
       return new Cart(array('customerId' => $customerId), FALSE);
     }
-
+    
+    public static function SaveFotolia($cartId, $parentId, $fotolia) {
+        $object = new Item();
+        
+        $object->cartId = $cartId;
+        $object->parentId = $parentId;
+        $object->fotolia = $fotolia;
+        
+        return Dal::Create($object, 'fotolia', array());
+    }
+    
+    public static function getFotoliaPrice($type) {
+        $object = new Item();
+        $object->type = $type;
+        Dal::Load($object, 'fotolia', array('type' => $type), False); 
+        return $object;
+    }
+    
+    public static function deleteFotolias($order) {
+        return Dal::Delete('fotolia', array('cart' => $order->id));
+    }
+    
+    public static function SavePreflight($cartId, $orderItemId, $preflight) {
+        $object = new \printconnect\Object();
+        $object->cartId = $cartId;
+        $object->orderItemId = $orderItemId;
+        $object->preflight = $preflight;
+        
+        return Dal::Create($object, 'preflight', array());
+    }
   }
 
 } 

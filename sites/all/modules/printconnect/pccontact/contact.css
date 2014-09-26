@@ -22,15 +22,19 @@ background: linear-gradient(to bottom, #77b800 25%, #669c02 100%);
     padding: 10px !important;
     width: 90% ;
 }
+.page-contact #pccontact_general_form .form-item input[type='text']{
+    width:100%;
+}
 #pccontact_stors_form .form-item input, #pccontact_stors_form edit-comment{
     padding: 10px !important;
 }
 
 #pccontact_general_form #edit-actions {
-    width: 460px !important;
-    float: left;
-    padding: 15px 6px !important;
-    margin-left: -10px;
+    margin: 0;
+    background: none;
+    padding: 20px 25px;
+    background-color: #fff;
+    border-top: 1px solid #f0f0f0;
 }
 
 #pccontact_stors_form #edit-actions {
@@ -54,12 +58,11 @@ background-color: #fff !important;
 
 #fieldContainer, #infoContainer {
     background: #ffffff;
-    border-radius: 5px 12px 5px 5px;
 }
 
 #infoContainer {
-     margin-top: -12px;
-     padding: 5px 12px 2px 5px
+    /*margin-top: -12px;
+    padding: 5px 12px 2px 5px*/
 }
 
 #fieldContainer {
@@ -68,36 +71,43 @@ background-color: #fff !important;
     margin-top: 6px;
     margin-bottom: -4px;
 }
+#imgsContacts{
+    font-size: 14px;
+    color: #333333
+}
 #imgsContacts img{
-    width: 26px;
-    height: 26px;
-    vertical-align: middle;
-    padding-left: 10px;
+    float: left;
 }
 
 #imgsContacts strong {
-    margin-left: 10px;
-    margin-right: 8px;
+    float: left;
 }
-
-#pccontact_general_form #titleContact strong, #pccontact_general_form #callBackContact strong{
-    font-size: 20px;
-    background: #ffffff;
-    padding-left: 10px;
-    color: #6B6B6B;
-}
-#pccontact_general_form #titleContact, #callBackContact {
+#callBackContact {
     margin-bottom: -5px;
 }
 
-#pccontact_general_form #edit-comment {
-    width: 363px ;
+#pccontact_general_form #titleContact{
+    margin: 0;
+    font-size: 15px;
+    color: #333333;
+    text-transform: uppercase;
+}
+#pccontact_general_form #sub1{
+    margin: 0 0 15px;
+    font-size: 13px;
+    color: #646464;
+    line-height: 13px;
+}
+
+#pccontact_general_form #edit-comment{
+    
 }
 
 #pccontact_general_form label {
-    padding-bottom: 6px;
-    padding-top: 6px;
-    color: #A9A9A9;
+}
+
+#pccontact_general_form strong{
+    font-weight: 700;
 }
 
 
@@ -123,35 +133,25 @@ background-color: #fff !important;
 
 
 #shopIco img {
-    width: 105px;
+    /*width: 105px;
     height: 82px;
-    padding-top: 48px;
-}
-
-#pccontact_general_form .form-type-textfield, #pccontact_general_form #edit-comment {
-    margin-left: 10px;
-}
-#pccontact_stors_form .form-type-textfield, #pccontact_stors_form #edit-comment {
-    margin-left: 10px;
+    padding-top: 48px;*/
 }
 
 #sub1, #sub2 {
-    margin-left: 10px !important;
+    /*margin-left: 10px !important;
     color: #A9A9A9;
     display: block;
-    margin-right: 10px !important;
+    margin-right: 10px !important;*/
 }
 
 #pccontact_general_form #edit-submit {
- padding-left: 32px !important;
- min-width: 150px !important;
- height: 34px;
- padding-top: 6px;
+
 }
 
 #pccontact_general_form .grippie{
-    margin-left: 10px;
-    width: 361px;
+    /*margin-left: 10px;
+    width: 361px;*/
 }
 
 #pccontact_stors_form #edit-submit {
@@ -219,4 +219,270 @@ right: -6px;
 border-radius: 5px;
 margin-right: -6px;
 margin-top: 14px;
+}
+/*css popup contact*/
+.popin_overlay{
+    width: 423px;
+    border:1px solid #000000;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0px 0px 5px 0px #222222;
+    -moz-box-shadow:    0px 0px 5px 0px #222222;
+    box-shadow:         0px 0px 5px 0px #222222;
+    margin: 0 auto;
+    font-family: 'Open Sans',sans-serif;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.popin_overlay .head{
+        padding: 10px 0 6px 18px;
+        overflow: hidden;
+        background: #333333;
+        border-bottom: 1px solid #181818;
+}
+
+.popin_overlay .head img{
+        float: left;
+}
+.popin_overlay form{
+    margin: 0;
+    padding: 0;
+}
+.popin_overlay fieldset{
+    padding: 30px 30px 20px;
+    margin: 0;
+    border: 0;
+    background-color: #fcfcfc;
+}
+.popin_overlay fieldset h3{
+    color: #333333;
+    font-size: 15px;
+    line-height: 16px;
+    margin: 0 0 8px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.popin_overlay fieldset p{
+        color: #646464;
+        font-size: 13px;
+        line-height: 14px;
+        margin: 0 0 20px;
+}
+
+.popin_overlay fieldset .form-item{
+    margin:0;
+}
+
+.popin_overlay .form-item label{
+        display: block;
+        color: #646464;
+        font-size: 13px;
+        line-height: 14px;
+        margin: 0 0 8px;
+        font-weight: bold;
+}
+.popin_overlay .form-item input[type="text"]{
+        display: block;
+        color: #646464;
+        font-size: 13px;
+        line-height: 14px;
+        margin: 0;
+        height: 35px;
+        border: 1px solid #c1c1c1;
+        padding: 10px;
+        -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+        -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+        box-sizing: border-box;         /* Opera/IE 8+ */
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        width: 100%;
+}
+.popin_overlay .form-item input[type="text"].error{
+    border-color: #ed1c24;
+    background-color: #f6e3e3;
+}
+#pccontact_general_form input[type="submit"],
+.popin_overlay .submit input[type="submit"]{
+        display: block;
+        color: #fff;
+        font-size: 13px;
+        line-height: 14px;
+        margin: 0;
+        height: 34px;
+        border: 0;
+        padding: 0 15px 0 38px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        width: 120px;
+        background: url(/sites/all/themes/printconnect/flyer/css/images/calc_btn.png) no-repeat 13px center #6fab01 !important;
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+        cursor: pointer;
+        min-width: 70px;
+        width: auto;
+        float: left;
+        -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+        -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+        box-sizing: border-box;         /* Opera/IE 8+ */
+}
+#pccontact_general_form input[type="submit"]:hover,
+.popin_overlay .submit input[type="submit"]:hover{
+        background-color: #689f02 !important;
+}
+.popin_overlay .submit{
+        padding: 20px 25px;
+        background-color: #fff;
+        border-top: 1px solid #f0f0f0;
+        overflow: hidden;
+}
+.popin_overlay .form-item.form-item-nom{
+        float: left;
+        width: 168px;
+        margin-right: 25px;
+}
+.popin_overlay .form-item.form-item-prenom{
+        float: left;
+        width: 168px;
+}
+.popin_overlay p.required-msg{
+        color: #646464;
+        font-size: 12px;
+        margin: 0;
+}
+.popin_overlay .required{
+        color: #ea5b0c;
+}
+
+#lean_overlay { position: fixed; z-index:100; top: 0px; left: 0px; height:100%; width:100%; background: #000; opacity: 0.5; } #lean_info{ top: 170px; position: fixed; z-index: 2100; background-color: #FFF; border-radius: 4px; width: 534px; }
+
+#popup_overlay2 { display :none; padding-left: 250px; padding-right: 250px; }
+#remove{ cursor: pointer; position: absolute; margin-left: 513px; } 
+.info-bloc #lean_info{
+    background-color: #fff;
+    border-radius: 4px;
+    left: 35%;
+    max-width: 425px;
+    position: fixed;
+    top: 30px;
+    width: 534px;
+    z-index: 2100;
+}
+.popin_overlay .form-actions{
+    margin: 0;
+}
+
+#pccontact_general_form .head .close,
+.info-bloc .head .close{
+    background: url(img/close.png);
+    display: block;
+    width: 11px;
+    height: 10px;
+    cursor: pointer;
+    float: right;
+    margin: 25px 20px 0 0;
+}
+
+#fancybox-close{
+    background: url(img/close.png) !important;
+    display: block !important;
+    width: 11px !important;
+    height: 10px !important;
+    cursor: pointer !important;
+    float: right !important;
+    margin: 51px 39px 0 0 !important;
+    
+}
+
+.popin_overlay #messageSent{
+    display: none;
+    text-align: center;
+    padding-top: 65px;
+    margin-top: -10px;
+    background: url(img/succes.png) no-repeat center 0;
+}
+.popin_overlay #messageSent p{
+    margin-bottom: 10px;
+}
+.popin_overlay #messageSent p.orange{
+    color: #ea5b0c;
+    margin-bottom: 0;
+}
+
+.popin_overlay .errorForms{
+    top: auto;
+    bottom: 20px;
+    right: 15px;
+    margin: 0;
+}
+#pccontact_popup_form .global-error{
+    float: left;
+    margin:0 0 16px;
+}
+#pccontact_popup_form .global-error span.required,#pccontact_popup_form .global-error span.required2{
+    float: left;
+    clear: both;
+    font-size: 12px;
+    color: #ff0000;
+    line-height: 13px;
+    padding-top: 3px;
+}
+
+body.page-contact-general{
+    background: none;
+}
+.page-contact-general .whitebox{
+    padding: 0;
+    border: 0;
+    margin: 0;
+}
+
+#pccontact_general_form #shopIco{
+    margin: 0;
+}
+
+#pccontact_general_form #infoContainer{
+    padding: 20px 30px;
+    border-bottom: 1px solid #e6e6e6;
+}
+#pccontact_general_form #imgsContacts{
+    margin: 0;
+    overflow: hidden;
+}
+
+#pccontact_general_form #imgsContacts .elm{
+    float: left;
+    width:50%;
+}
+#pccontact_general_form #imgsContacts .elm strong{
+    color: #333333;
+    line-height: 22px;
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+#pccontact_general_form fieldset #callBackContact{
+    margin: 0 0 10px;
+    color: #333333;
+    font-size: 15px;
+    line-height: 16px;
+    font-weight: bold;
+}
+#pccontact_general_form #sub2{
+    margin: 0 0 15px;
+    color: #646464;
+    font-size: 13px;
+    line-height: 18px;
+}
+#pccontact_general_form .form-item{
+    margin: 0 0 10px;
+}
+
+#pccontact_general_form #spanBack{
+    display: none;
 }

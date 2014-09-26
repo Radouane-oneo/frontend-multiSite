@@ -10,7 +10,7 @@
 	border-radius: 5px;
 	background-color: #f6f6f6;
 	margin-top: 15px;
-	padding-bottom: 15px;
+	padding-bottom: 10px;
 }
 
 #pctemplates-selection-form .intro{
@@ -80,14 +80,14 @@
 
 #pctemplates-selection-form .templates li{
   float:left;
-  width:32%;
-  margin: 0 2% 10px 0;
+  width:212px;
+  margin: 0 10px 10px 0;
   list-style:none;
   padding:0;
   border: 1px solid #ececec;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box;    /* Firefox, other Gecko */
   box-sizing: border-box;         /* Opera/IE 8+ */
@@ -110,8 +110,23 @@
 }
 
 #pctemplates-selection-form .templates .blocprd{
-  padding: 9px;
+  padding: 9px 8px;
 }
+
+#pctemplates-selection-form .templates .from{
+  clear: both;
+  border-top: 1px solid #ececec;
+  overflow: hidden;
+  background-color: #fafafa;
+}
+#pctemplates-selection-form .templates .txt{
+  line-height: 37px;
+  text-indent: 8px;
+  color: #999999;
+  font-size: 12px;
+  float: left;
+}
+
 #pctemplates-selection-form .templates .blocprd h2{
   font-size: 13px;
   color: #646464;
@@ -349,13 +364,24 @@
 	display: none;
 }
 #pctemplates-selection-form .form-type-select{
+	/*display: none;*/
+	float: left;
+	width: 245px;
+	padding-right: 10px;
+	border-right: 1px solid #e6e6e6;
+	margin: 10px 10px 0;
+}
+#pctemplates-selection-form .form-type-select select {
+	width:245px;
+	height: 42px;
+}
+#pctemplates-selection-form .form-type-select.form-item-segments{
 	display: none;
 }
 #pctemplates-selection-form .form-item-inputsegments{
 	float: left;
-	width: 490px;
-	margin: 15px 0 0 10px;
-	clear: both;
+	width: 235px;
+	margin: 10px 0 0 0;
 }
 #pctemplates-selection-form .form-item-inputsegments input[type="text"]{
 	display: block;
@@ -382,7 +408,7 @@
 	padding: 11px 20px;
 	border-radius: 5px;
 	border: none;
-	margin: 16px 0 0 10px;
+	margin: 10px 0 0 10px;
 	text-align: left;
 	background:#77b800;
 	background: -webkit-linear-gradient(top, #77b800 0%, #669c02 100%);
@@ -393,7 +419,7 @@
 }
 
 #pctemplates-selection-form .ui-helper-reset input[type="submit"]:hover{
-	margin: 16px 0 0 10px;
+	margin: 10px 0 0 10px;
 }
 
 #pctemplates-selection-form input[type="submit"]:hover{
@@ -505,4 +531,10 @@ margin: 0 16px -10px 0px !important;
 	overflow: hidden;
 	margin: 0;
 	padding: 0;
+}
+
+#pctemplates-selection-form .form-actions{
+	float: right;
+	clear: none;
+	margin-top: -50px;
 }

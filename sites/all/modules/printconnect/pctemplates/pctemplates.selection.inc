@@ -255,8 +255,6 @@ function pctemplates_selection_form2($form, &$form_state) {
     $rangeTo = $page * $templatesPerPage;
     $items = array(); 
     foreach ($selectedTemplates as $template) { 
-//         dsm($template->segments[1]->name->name);
-//      echo "<pre>"; print_r($template);echo "</pre>";
         $templateUrl = 'templates/' . $template->id;
         if(isset($params['productId'])){
             $templateUrl .= '/product/' . $params['productId'];
@@ -271,13 +269,10 @@ function pctemplates_selection_form2($form, &$form_state) {
                 '#theme' => 'pcfilesthumb',
                 '#file' => $template->thumbnail->file,
             );
-             $build['range']['segment'] =  array(
-                '#markup' => '<p class="segmentmodel">'.$template->segments[1]->name->name.'</p>',
-            );
-            
             $build['range']['name'] =  array(
-                '#markup' => '<h2>'.$template->name.'</h2>',
-                '#suffix' => '</a></div>',
+                '#markup' => '<h2>'. $template->products[0]->name.'</h2>',
+                '#suffix' => '</a></div>
+                <div class="from"><span class="txt">'.$template->name.'</span></div>',
             );
            $build['flesh'] = array(
                 '#markup' => '<a class="btn-cmd" href="'.$templateUrl.'">
@@ -323,25 +318,32 @@ function pctemplates_selection_form2($form, &$form_state) {
     asort($availableSegments);
     
     // filters by prodacts commenté le 06082014 flyer fr
-//    if (count($availableProducts) > 0) {
-//        $items = array();
-//        $items[0]= t('choose');
-//        foreach ($availableProducts as $productId => $name) {
-//            $class = array();
-//            $newProducts = $products;
-//            $newProducts[] = $productId;
-//            $items[$productId] = $name;
-//        }
-//
-//        if (count($items) > 1) {
-//            $form['filters']['products'] = array(
-//                '#type' => 'select',
-//                '#title' => t('product'),
-//                '#options' => $items,
-//            );
-//        }
-//    }
-//   
+    
+//  
+    $form['filters']['description'] = array(
+                '#markup' => "<div class='intro'><h2>Personnaliser un modèle en ligne</h2><p>Des milliers de modèles classés par secteur d'activité, prêts à être personnalisés en ligne.</p></div>", 
+         );
+
+  if (count($availableProducts) > 0) {
+        $items = array();
+        $items[0]= t('choose');
+        foreach ($availableProducts as $productId => $name) {
+            $class = array();
+            $newProducts = $products;
+            $newProducts[] = $productId;
+            $items[$productId] = $name;
+        }
+
+        if (count($items) > 1) {
+            $form['filters']['products'] = array(
+                '#type' => 'select',
+                '#title' => t('product'),
+                '#options' => $items,
+            );
+        }
+    }
+
+
     if (count($availableSegments) > 0) {
         $items = array();
         $items[0] = t('choose');
@@ -351,13 +353,10 @@ function pctemplates_selection_form2($form, &$form_state) {
         }
 
         if (count($items) > 1) {
-            $form['filters']['description'] = array(
-                '#markup' => "<div class='intro'><h2>Personnaliser un modèle en ligne</h2><p>Des milliers de modèles classés par secteur d'activité, prêts à être personnalisés en ligne.</p></div>", 
-         ); 
+             
             $form['filters']['segments'] = array(
                 '#type' => 'select',
                 '#title' => '',
-//                '#label_display' => 'none',
                 '#options' => $items,
                  '#attributes' => array('style' => 'display:none'),  
             );
@@ -366,11 +365,11 @@ function pctemplates_selection_form2($form, &$form_state) {
                 '#type' => 'textfield',
                 '#title' => '',
                 '#size'=>'20',
-                '#required' => TRUE,
                 '#attributes' => array('placeholder' => 'Rechercher'), 
              
          ); 
     }
+  
 //     // filters by autres filters commenté le 06082014 flyer fr
      /*
     foreach ($availableFilters as $filterId => $filter) {

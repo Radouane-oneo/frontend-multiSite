@@ -9,7 +9,10 @@ function flyer_breadcrumb($vars) {
 }
 function flyer_preprocess_page(&$variables) {
     drupal_add_library('system', 'ui.button');
-    
+    $_SESSION['isfront']=0;
+    if ($variables['is_front']) {
+        $_SESSION['isfront']=1;
+    }
     //  drupal_add_css('http://fonts.googleapis.com/css?family=Magra:400,700', array('type' => 'external'));
     if( arg(0) == "taxonomy" && arg(1) == "term") {
            $variables['page']['content']['system_main']['main'] = null;
@@ -230,6 +233,36 @@ function flyer_preprocess_html(&$vars) {
 }
 
  function flyer_js_alter(&$javascript) {
+	if ($_SESSION['isfront'] == 1) {
+            unset($javascript['sites/all/modules/printconnect/pcbpost/pcbpost.js']);
+unset($javascript['sites/all/modules/printconnect/pcdesigns/pcdesigns.js']);
+unset($javascript['sites/all/modules/printconnect/pcdesigntool/pcdesigntool.js']);
+unset($javascript['sites/all/modules/printconnect/pcflyerstores/pcflyerstores.js']);
+unset($javascript['sites/all/modules/printconnect/pcpayments/pcpayments.js']);
+unset($javascript['sites/all/modules/printconnect/pctemplates/jquery.ui.position.min.js']);
+unset($javascript['sites/all/modules/printconnect/pctemplates/jquery.ui.autocomplete.min.js']);
+unset($javascript['sites/all/modules/printconnect/pcvat/pcvat.js']);
+unset($javascript['sites/all/modules/printconnect/pcrotator/jquery.rotate.js']);
+unset($javascript['sites/all/modules/printconnect/pcrotator/pcrotator.js']);
+unset($javascript['sites/all/libraries/jquery.masonry/jquery.masonry.min.js']);
+unset($javascript['sites/all/modules/printconnect/pcanalytics/pcanalytics.js']);
+unset($javascript['sites/all/modules/printconnect/pccheckout/pccheckout.js']);
+unset($javascript['sites/all/modules/printconnect/pccustomers/pccustomers.js']);
+unset($javascript['sites/all/modules/printconnect/pcdesigner/pcdesigner.js']);
+unset($javascript['sites/all/modules/printconnect/pcflyerstores/pcflyerstores_map.js']);
+unset($javascript['sites/all/modules/printconnect/pcflyerstores/lib/isotope.pkgd.min.js']);
+unset($javascript['sites/all/modules/printconnect/pcflyerstores/lib/jquery.jcarousel.js']);	  unset($javascript['sites/all/modules/printconnect/pccart/pccart.js']);
+unset($javascript['sites/all/modules/printconnect/pcsegments/pcsegments.js']);
+
+unset($javascript['sites/all/modules/printconnect/pctemplates/autocomplete.js']);
+unset($javascript['sites/all/modules/printconnect/pctemplates/pctemplates.js']);
+unset($javascript['sites/default/files/languages/fr-FR_QWeOKmQMsmBnHhrmoNY7dbJ-x7DwPdy_2c8mJnefIL0.js']);
+unset($javascript['https://maps.googleapis.com/maps/api/js?key=AIzaSyBS0SrsMbBXJ_v2kkgCvbiqwFUatl1pd_s&sensor=true&language=nl']);
+unset($javascript['https://maps.googleapis.com/maps/api/js?libraries=geometry,places']);
+unset($javascript['sites/all/modules/contrib/panels/js/panels.js']);
+unset($javascript['sites/all/modules/contrib/block_tab/js/block_tab.js']); 
+unset($javascript['sites/all/modules/printconnect/pcflyerstores/pcflyerstores.js']);
+	}
         unset($javascript['misc/tableheader.js']);
         //We define the path of our new jquery core file
         //assuming we are using the minified version 1.8.3
@@ -244,4 +277,23 @@ function flyer_preprocess_html(&$vars) {
         //Then we remove the Drupal core version
         unset($javascript['misc/jquery.js']);
     }
-
+function flyer_css_alter(&$css) {
+    if ($_SESSION['isfront'] == 1) {
+	unset($css['sites/all/modules/printconnect/pcbpost/pcbpost.css']);
+	unset($css['sites/all/modules/printconnect/pcdesigner/pcdesigner.css']);
+	unset($css['sites/all/modules/printconnect/pcdesigns/pcdesigns.css']);
+	unset($css['sites/all/modules/printconnect/pcdesigntool/pcdesigntool.css']);
+	unset($css['sites/all/modules/printconnect/pcflyerstores/pcflyerstores.css']);
+	unset($css['sites/all/modules/printconnect/pcoffers/pcoffers.css']);
+	unset($css['sites/all/modules/printconnect/pcorders/pcorders.css']);
+	unset($css['sites/all/modules/printconnect/pcpayments/pcpayments.css']);
+	unset($css['sites/all/modules/printconnect/pcsamplepacks/pcsamplepacks.css']);
+	unset($css['sites/all/modules/printconnect/pcsegments/pcsegments.css']);
+	unset($css['modules/search/search.css']);
+	unset($css['sites/all/modules/contrib/ckeditor/ckeditor.css']);
+	unset($css['sites/all/modules/contrib/ctools/css/ctools.css']);
+	unset($css['sites/all/modules/contrib/panels/css/panels.css']);
+	unset($css['sites/all/modules/printconnect/pcrotator/pcrotator.css']);
+	unset($css['sites/all/modules/contrib/block_tab/css/block_tab.css']);
+    }
+}

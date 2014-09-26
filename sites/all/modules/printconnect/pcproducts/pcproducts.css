@@ -34,6 +34,10 @@
 #pcproducts-products-form .blocprd{
   padding: 9px 8px;
 }
+.block-pctemplates .blocprd > a{
+  display: block;
+  background: url(images/bg_modele_top.jpg) no-repeat center 0;
+}
 
 .block-pctemplates .options,
 .view-best-sales .options,
@@ -96,6 +100,7 @@
 
 .view-best-sales .from,
 .view-best-sales .from,
+.block-pctemplates .from,
 #pcproducts-products-form .from{
   clear: both;
   border-top: 1px solid #ececec;
@@ -103,6 +108,7 @@
   background-color: #fafafa;
 }
 .view-best-sales .from .txt,
+.block-pctemplates .from .txt,
 #pcproducts-products-form .from .txt{
   line-height: 37px;
   text-indent: 8px;

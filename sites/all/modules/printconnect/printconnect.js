@@ -5,7 +5,7 @@ window.alert = function(arg) {
 };
 
 
-(jQuery)(function ($) {
+(function ($) {
 
   Drupal.behaviors.printconnect = {
     detach: function (context) {
@@ -96,4 +96,4 @@ window.alert = function(arg) {
       }
     }
   }
-});
+})(jQuery);

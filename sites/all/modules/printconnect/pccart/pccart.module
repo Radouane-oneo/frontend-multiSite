@@ -16,6 +16,7 @@ use printconnect\Customers\Factory as CustomersFactory;
 use printconnect\Carts\Discounts;
 
 function pccart_menu() {
+    
   $items['cart'] = array(
       'title' => 'Cart',
       'page callback' => '_pccart_callback',
@@ -106,6 +107,7 @@ function pccart_menu() {
  */
 
 function pccart_theme() {
+    
   return array(
 //      'pccart_cart_block' => array(
 //          'render element' => 'cart',
@@ -120,9 +122,11 @@ function pccart_theme() {
 //          'template' => 'pccart-save-form',
 //      ),
   );
+  
 }
 
 function pccart_progress() {
+    
   return array(
       array(
           'title' => t('Choose a product'),
@@ -155,9 +159,11 @@ function pccart_block_info() {
       'cache' => DRUPAL_NO_CACHE,
   );
   return $blocks;
+  
 }
 
 function pccart_block_view($delta = '') {
+    
   printconnect_ensureinitialized();
   // try {
   switch ($delta) {
@@ -175,28 +181,21 @@ function pccart_block_view($delta = '') {
     case 'cart':
       $cart = Factory::Current();
       $block = FALSE;
-      $discounts = FALSE;
       $items = array();
       if ($cart && $cart->isFilled) {
         $block['cart'] = $cart;
-
-
+        
         foreach ($cart->productItems as $item) {
 //foreach ($items as $item) {
-          $text = array();
           $list = array();
-
           $itemValue = $item->price;
-
           $configs = $item->configuration->config;
 
           foreach ($configs as $config) {
             $list[] = $config->groupName . ': ' . $config->name;
           }
 
-          if (count($item->options) == 0) {
-            
-          } else {
+          if (0 !== count($item->options)) {
             $optionsText = array();
             foreach ($item->options as $option) {
               $optionsText[] = $option->optionName;
@@ -210,7 +209,6 @@ function pccart_block_view($delta = '') {
               '#attributes' => array('class' => array('item', 'clearfix')),
               '#weight' => 10,
           );
-
 
           $content['items'][$item->id]['image'] = array(
               '#type' => 'container',
@@ -301,7 +299,6 @@ function pccart_block_view($delta = '') {
           }
         }
 
-
         if ($cart->discountItems) {
 
 //          $content['discounts'] = array(
@@ -324,8 +321,8 @@ function pccart_block_view($delta = '') {
             );
 
             $content['discounts'][$discount->id]['description'] = array(
-//                '#prefix' => '<h3>',
-//                '#suffix' => '</h3>',
+            //                '#prefix' => '<h3>',
+            //                '#suffix' => '</h3>',
                 '#markup' => $discount->productName,
             );
           }
@@ -342,12 +339,12 @@ function pccart_block_view($delta = '') {
         );
 
         if ($cart->expectedShippingDate) {
-          $content['shipping']['header']['shipping'] = array(
-              '#type' => 'item',
-              '#attributes' => array('class' => array('clearfix')),
-              '#title' => t('My order will be shipped on:'),
-              '#markup' => format_date(strtotime($cart->expectedShippingDate), 'short'),
-          );
+            $content['shipping']['header']['shipping'] = array(
+                '#type' => 'item',
+                '#attributes' => array('class' => array('clearfix')),
+                '#title' => t('My order will be shipped on:'),
+                '#markup' => format_date(strtotime($cart->expectedShippingDate), 'short'),
+            );
         }
 
 
@@ -383,9 +380,6 @@ function pccart_block_view($delta = '') {
         $content['shipping']['description'] = array(
             '#markup' => $type->shippingType->tag,
         );
-
-
-
 
         if (count($cart->orderItemsPayment)) {
 
@@ -439,8 +433,8 @@ function pccart_block_view($delta = '') {
     case 'shipping':
       $cart = Factory::Current();
       $block = FALSE;
-      $discounts = FALSE;
       $items = array();
+      
       if ($cart && $cart->isFilled) {
         $block['cart'] = $cart;
         $block['title'] = t('Delivery');
@@ -503,6 +497,7 @@ function pccart_block_view($delta = '') {
 //        break;
   }
   return FALSE;
+  
 //  } catch (\Exception $ex) {
 //    Functions::HandleException($ex);
 //  }
@@ -517,11 +512,11 @@ function pccart_preprocess_block(&$variables) {
 }
 
 function pccart_form_pcproducts_product_form_alter(&$form, &$form_state, $form_id) {
+    
   global $pccart_editItemId;
 
   if (isset($form_state['storage']['qty']) && isset($form_state['storage']['priceGroupId'])) {
     if ($pccart_editItemId) {
-
       $form['addToCart'] = array(
           '#type' => 'submit',
           '#value' => t('Update'),
@@ -543,9 +538,11 @@ function pccart_form_pcproducts_product_form_alter(&$form, &$form_state, $form_i
     }
   }
   return true;
+  
 }
 
 function pccart_form_pcproducts_productconfig_form_alter(&$form, &$form_state, $form_id) {
+    
   global $pccart_editItemId;
 
   if (isset($form_state['storage']['qty']) && isset($form_state['storage']['priceGroupId'])) {
@@ -592,9 +589,11 @@ function pccart_form_pcproducts_productconfig_form_alter(&$form, &$form_state, $
     }
   }
   return true;
+  
 }
 
 function pccart_form_pcproducts_config_form_alter(&$form, &$form_state, $form_id) {
+    
   global $pccart_editItemId;
 
   if (isset($form_state['storage']['qty']) && isset($form_state['storage']['priceGroupId'])) {
@@ -621,15 +620,19 @@ function pccart_form_pcproducts_config_form_alter(&$form, &$form_state, $form_id
     }
   }
   return true;
+  
 }
 
 function pccart_addtocart_validate($form, &$form_state) {
+    
   if (!$form_state['storage']['quantity'] && !$form_state['values']['quantity']) {
     form_set_error(NULL, t('Please select a quantity'));
   }
+  
 }
 
 function pccart_addtocart_submit($form, &$form_state) {
+    
   $options = array();
   $priceGroupId = $form_state['values']['priceGroupId'];
   if (isset($form_state['values']['options'])) {
@@ -644,61 +647,57 @@ function pccart_addtocart_submit($form, &$form_state) {
   if (!$qty) {
     $qty = $form_state['storage']['quantity'];
   }
-  $items = $form_state['storage']['items'];
-
   $vatpercentage = FALSE;
   if (isset($form_state['storage']['vatpercentage'])) {
     $vatpercentage = $form_state['storage']['vatpercentage'];
   }
-
   _pccart_add($productId, $qty, $options, $priceGroupId, $vatpercentage);
+  
 }
 
 function pccart_addtocart_validate2($form, &$form_state) {
 
   $qty = $form_state['storage']['quantity'];
-  
   if (!$qty) {
     $qty = $form_state['values']['quantity'];
-    if ($qty == 'custom') {
+    if ('custom' == $qty) {
       $qty = $form_state['values']['custom'];
     }
   }
   if (!is_numeric($qty)) {
     form_set_error('', t('Please select a quantity'));
   }
- 
+  
 }
 
 function pccart_addtocart_submit2($form, &$form_state) {
+    
   $options = array();
   $priceGroupId = $form_state['storage']['priceGroupId'];
   $options = $form_state['storage']['options'];
-
   $productId = $form_state['storage']['productId'];
   $qty = $form_state['storage']['quantity'];
   if (!$qty) {
     $qty = $form_state['values']['quantity'];
-    if ($qty == 'custom') {
+    if ('custom' == $qty) {
       $qty = $form_state['values']['custom'];
     }
   }
-  $items = $form_state['storage']['items'];
-
   $vatpercentage = FALSE;
   if (isset($form_state['storage']['vatpercentage'])) {
     $vatpercentage = $form_state['storage']['vatpercentage'];
   }
-
   _pccart_add($productId, $qty, $options, $priceGroupId, $vatpercentage);
+  
 }
 
 function pccart_editcartitem_submit($form, &$form_state) {
+    
   $itemId = $form_state['storage']['cart']['itemId'];
-
   $options = array();
   $priceGroupId = $form_state['values']['priceGroupId'];
-  $priceGroupId =isset($priceGroupId)?$priceGroupId :$form_state['storage']['priceGroupId'];
+  $priceGroupId = isset($priceGroupId)?$priceGroupId :$form_state['storage']['priceGroupId'];
+  
   if (isset($form_state['values']['options'])) {
     foreach ($form_state['values']['options'] as $key => $value) {
       if ($value) {
@@ -706,28 +705,24 @@ function pccart_editcartitem_submit($form, &$form_state) {
       }
     }
   }
-  $productId = $form_state['storage']['productId'];
   
+  $productId = $form_state['storage']['productId'];
   $qty = $form_state['storage']['quantity'];
+  
   if (!$qty) {
     $qty = $form_state['values']['quantity'];
-    if ($qty == 'custom') {
+    if ('custom' == $qty) {
       $qty = $form_state['values']['custom'];
     }
   }
+  
   $items = $form_state['storage']['items'];
-
   $cart = Factory::Current();
-
   $item = Factory::GetItem($cart, $itemId);
   $item->EnsureLoaded();
 
-
-
   if (isset($_SESSION['cart']['items'][$itemId]['template'])) {
-       
     $templates = Products\Templates\Factory::GetTemplates($productId, $items);
-
     if (count($templates->items)) {
       $template = $templates->items[0];
       if ($template->id != $_SESSION['cart']['items'][$itemId]['template']) {
@@ -736,6 +731,7 @@ function pccart_editcartitem_submit($form, &$form_state) {
       }
     }
   }
+  
   $item->productPriceGroupId = $priceGroupId;
   $item->quantity = $qty;
   $item->options = $options;
@@ -744,26 +740,19 @@ function pccart_editcartitem_submit($form, &$form_state) {
     $vatpercentage = $form_state['storage']['vatpercentage'];
     $item->vatCustom = $vatpercentage;
   }
-
   Factory::SaveItem($item);
- 
   Factory::Refresh($cart);
-  
   unset($_SESSION['cart']['items'][$itemId]);
-
   drupal_goto('cart');
+  
 }
 
 function pccart_editcartitem_submit2($form, &$form_state) {
+    
   $itemId = $form_state['storage']['cart']['itemId'];
-
   $priceGroupId = $form_state['storage']['priceGroupId'];
   $options = $form_state['storage']['options'];
-
-  $productId = $form_state['storage']['productId'];
   $qty = $form_state['storage']['quantity'];
-  $items = $form_state['storage']['items'];
-
   $cart = Factory::Current();
   if ($cart) {
     $item = Factory::GetItem($cart, $itemId);
@@ -779,12 +768,11 @@ function pccart_editcartitem_submit2($form, &$form_state) {
     }
 
     Factory::SaveItem($item);
-
     Factory::Refresh($cart);
-
     unset($_SESSION['cart']['items'][$itemId]);
   }
   drupal_goto('cart');
+  
 }
 
 function _pccart_add($productId, $qty, $options, $priceGroupId, $vat = FALSE) {
@@ -808,14 +796,15 @@ function _pccart_add($productId, $qty, $options, $priceGroupId, $vat = FALSE) {
 //$cart->items->Add(Factory::CreateItem($cart, $defaults->priceGroupId, $qty, $description, $relatedProducts, $options));
 //$cart->items->Add(Factory::CreateItem($cart, $priceGroupId, $qty, $description, $relatedProducts, $options));
 
-  $item = Factory::CreateItem($cart, $priceGroupId, $qty, $description, $relatedProducts, $options, $vat);
-
+  Factory::CreateItem($cart, $priceGroupId, $qty, $description, $relatedProducts, $options, $vat);
   Factory::Refresh($cart);
 
   drupal_goto('cart');
+  
 }
 
 function _pccart_callback() {
+    
   global $pccart_editItemId;
   $pccart_editItemId = FALSE;
   try {
@@ -835,7 +824,6 @@ function _pccart_callback() {
         return drupal_get_form('pccart_cart_form');
       case 'cartblock':
         $cart = Factory::Current();
-
         $action = array_shift($args);
         $property = array_shift($args);
         if ($action == 'set') {
@@ -856,16 +844,13 @@ function _pccart_callback() {
               break;
             case 'discount' :
               $cart = Factory::Current();
-              $discount = Discounts\Factory::Create($cart->id, $array_shift($args));
-
+              $discount = Discounts\Factory::Create($cart->id, array_shift($args));
               Discounts\Factory::Save($discount);
-
               $cart = Factory::Refresh($cart);
           }
 
           Factory::Save($cart);
         }
-
 
         print theme('pccart_cartblock_form', drupal_get_form('pccart_cartblock_form'));
         exit;
@@ -887,7 +872,6 @@ function _pccart_callback() {
         } else {
           $options = array();
         }
-
         _pccart_add($productId, $items, $qty, $options);
         return 'added';
         break;
@@ -919,7 +903,6 @@ function _pccart_callback() {
         $cart = Factory::Current();
         Discounts\Factory::Delete($cartId, $discountId);
         Factory::Refresh($cart);
-
         drupal_goto($_SERVER['HTTP_REFERER']);
         return t('The discount was deleted');
       case 'edit':
@@ -942,29 +925,25 @@ function _pccart_callback() {
           $options[] = $option->option;
         }
         $qty = $item->quantity;
-
         $pccart_editItemId = $itemId;
 
         return drupal_get_form('pcproducts_product_form', $productId, $items, $options, $qty, $item);
-
 
         break;
     }
   } catch (Exception $ex) {
     return Functions::HandleException($ex);
   }
+  
 }
 
 function pccart_cart_form($form, &$form_state) {
+    
   global $language;
 
   $cart = Factory::Current(FALSE);
-
-  $discounts = FALSE;
   $items = array();
-
   if ($cart) {
-
     foreach ($cart->discountItems as $item) {
       $form['discounts'][$item->discountId]['items'][$item->id] = array(
           'price' => array('#value' => $item->price),
@@ -988,17 +967,12 @@ function pccart_cart_form($form, &$form_state) {
       $itemValue = $item->price;
       $list = array();
 
-      $priceGroup = PriceGroups\Factory::Get($item->productPriceGroupId);
-
 //      $configs = Configurations\Factory::GetByPriceGroup($item->productPriceGroupId);
 //      $configs->EnsureLoaded();
 //      $configs->Sort();
 //      $configs = $configs->items;
 
       $configs = $item->configuration->config;
-
-
-      $list = array();
       $items = array();
 
 //      foreach ($configs as $config) {
@@ -1009,9 +983,7 @@ function pccart_cart_form($form, &$form_state) {
         $items[] = $config->toolboxItemId;
       }
 
-
       $firstConfig = array_shift($configs);
-
 
       foreach ($configs as $config) {
 //$toolboxGroup = Toolbox\Factory::GetGroup($config->toolboxGroup);
@@ -1071,11 +1043,10 @@ function pccart_cart_form($form, &$form_state) {
       );
 
       //$thumbnailUrl = Functions::GetImage('products', $product->id);
-      $thumbnailUrl = printconnect_getimage('products', $product->id);
+//      $thumbnailUrl = printconnect_getimage('products', $product->id);
 
       foreach ($item->files as $file) {
 
-        $key = $file->id;
         $jobId = $file->designToolJobId;
 
         if (isset($file->thumbnail)) {
@@ -1098,7 +1069,6 @@ function pccart_cart_form($form, &$form_state) {
 
 //   $file = printconnect\Files\Factory::Get($file->file);
 
-
         $options = array();
 
         foreach ($item->options as $option) {
@@ -1110,7 +1080,6 @@ function pccart_cart_form($form, &$form_state) {
         if (isset($_SESSION['savedDesigns'][$item->id])) {
           $savedDesignId = $_SESSION['savedDesigns'][$item->id];
         }
-
 
         $form['items'][$item->id]['file']['link'] = array(
             '#markup' => theme('designtoollink', array(
@@ -1139,7 +1108,6 @@ function pccart_cart_form($form, &$form_state) {
                 'attributes' => array('class' => array('designtool', 'iframe', 'display-block')),
             )),
         );
-
 
         /* foreach ($file->attachments as $attachmentKey => $attachment) {
           $form['items'][$item->id]['file']['name'] = array(
@@ -1194,9 +1162,7 @@ function pccart_cart_form($form, &$form_state) {
 //          );
 //        }
 
-
         $_SESSION['cart']['items'][$item->id]['template'] = $template->id;
-
         $options = array();
 
         foreach ($item->options as $option) {
@@ -1225,16 +1191,13 @@ function pccart_cart_form($form, &$form_state) {
         );
       }
 
-
 //build link 
-
       global $user;
 
       if ($user->uid) {
         $params = new stdClass();
 
         foreach ($cart->discountItems as $item) {
-
           $params->codes[] = $item->discountId;
         }
 
@@ -1244,9 +1207,7 @@ function pccart_cart_form($form, &$form_state) {
           $object->quantity = $item->quantity;
           $params->items[] = $object;
         }
-
         $url = url('cart/add/' . json_encode($params), array('absolute' => TRUE));
-
         $form['link'] = array(
             '#type' => 'item',
             '#title' => t('Direct link'),
@@ -1256,7 +1217,6 @@ function pccart_cart_form($form, &$form_state) {
     }
 
     $types = Shipping\Types\Factory::GetAll();
-
     $enabledTypes = array();
 
     if ($cart->onlyPostal) {
@@ -1292,11 +1252,9 @@ function pccart_cart_form($form, &$form_state) {
     }
 
     $form['shipping_type']['#value'] = $cart->orderItemShipping->shippingTypeResellerShop;
-
     $form_state['storage']['shipping']['type'] = $cart->orderItemShipping->shippingTypeResellerShop;
 
     foreach ($enabledTypes as $type) {
-
       if ($cart->socialcardsOnly) {
         $type->price = 0;
       }
@@ -1325,13 +1283,11 @@ function pccart_cart_form($form, &$form_state) {
       }
     }
 
-
     $form['pickup']['#value'] = FALSE;
-
     $pickuppoint = FALSE;
+    
     if ($cart->pickuppoint && $cart->isPickup) {
       $form['pickup']['#value'] = TRUE;
-
       $pickuppoint = PickupPoints\Factory::Get($cart->pickuppoint->id, $cart->pickuppoint->country);
       $form['pup']['name'] = array(
           '#value' => $pickuppoint->name,
@@ -1399,7 +1355,6 @@ function pccart_cart_form($form, &$form_state) {
     $product->link = 'products/' . $product->id;
     $form['other']['#value'][] = $product;
     $i++;
-
     if ($i >= 3) {
       break;
     }
@@ -1408,23 +1363,22 @@ function pccart_cart_form($form, &$form_state) {
   if (isset($form_state['storage']['uploadrequired'])) {
     $form['uploadrequired']['#value'] = true;
     drupal_add_js('jQuery(document).ready(function () {
-jQuery.fancybox({
-"autoScale": true,
-"transitionIn": "fade",
-"transitionOut": "fade",
-"hideOnOverlayClick" : true,
-"showCloseButton" : true,
-"enableEscapeButton" :true,
-"href": "#upload-required",
-onClosed: function(){
-jQuery("#upload-required").hide();
-}
-});
-});', 'inline');
+                    jQuery.fancybox({
+                    "autoScale": true,
+                    "transitionIn": "fade",
+                    "transitionOut": "fade",
+                    "hideOnOverlayClick" : true,
+                    "showCloseButton" : true,
+                    "enableEscapeButton" :true,
+                    "href": "#upload-required",
+                    onClosed: function(){
+                    jQuery("#upload-required").hide();
+                    }
+                    });
+                    });', 'inline');
   } else {
     $form['uploadrequired']['#value'] = false;
   }
-
 
   if (isset($form_state['storage']['message'])) {
     $form['message'] = array(
@@ -1434,15 +1388,10 @@ jQuery("#upload-required").hide();
     unset($form_state['storage']['message']);
   }
 
-
-
-
   $form['isFilled'] = array('#value' => $cart->isFilled);
   $form['#cache'] = TRUE;
   $form['#tree'] = TRUE;
-
   $form_state['storage']['cart'] = $cart;
-
 
   return $form;
 }
@@ -1463,7 +1412,7 @@ function pccart_cart_form_delete_item_submit($form, &$form_state) {
   if (isset($_SESSION['files'][$id])) {
     unset($_SESSION['files'][$id]);
   }
-  $cart = Factory::Refresh($cart);
+  Factory::Refresh($cart);
   $form_state['rebuild'] = TRUE;
 }
 
@@ -1476,7 +1425,7 @@ function pccart_cart_form_delete_discount_submit($form, &$form_state) {
   $cart = Factory::Current();
   $discountId = $form_state['triggering_element']['#parents'] [1];
   Discounts\Factory::Delete($cart->id, $discountId);
-  $cart = Factory::Refresh($cart);
+  Factory::Refresh($cart);
   $form_state['rebuild'] = TRUE;
 }
 
@@ -1507,7 +1456,7 @@ function pccart_cart_form_add_discount_submit($form, &$form_state) {
       $discount = Discounts\Factory::Create($cart->id, $form_state['values']['discount']['code']);
       Discounts\Factory::Save($discount);
     }
-    $cart = Factory::Refresh($cart);
+    Factory::Refresh($cart);
   } catch (\printconnect\Rest\Exceptions\Exception $ex) {
 
     drupal_set_message(t($ex->errors[0]), 'error');
@@ -1539,10 +1488,8 @@ function pccart_cart_form_validate($form, &$form_state) {
     $cart = Factory::Refresh($cart);
     }
    */
-  if (isset($form_state['input']['op']) && ($form_state['input']['op'] == 'ajax')) {
+  if (!isset($form_state['input']['op']) && ($form_state['input']['op'] !== 'ajax')) {
     $form_state['rebuild'] = TRUE;
-  } else {
-    
   }
 }
 
@@ -1552,13 +1499,12 @@ function startsWith($haystack, $needle) {
 }
 
 function pccart_cart_form_submit($form, &$form_state) {
-
 // drupal_set_message('submit');
 }
 
 function pccart_save_form($form, &$form_state) {
+    
   $item = FALSE;
-
   $cart = Factory::Current();
 
   if ($cart && count($cart->orderItems) && $cart->orderItems[0]) {
@@ -1571,10 +1517,8 @@ function pccart_save_form($form, &$form_state) {
     if ($item) {
       $itemValue = $item->price;
       $list = array();
-
       $priceGroup = PriceGroups\Factory::Get($item->productPriceGroupId);
       $priceGroup->EnsureLoaded();
-
       $configs = $item->configuration->config;
 
       foreach ($configs as $config) {
@@ -1588,7 +1532,6 @@ function pccart_save_form($form, &$form_state) {
       }
 
       $pricings = Pricing\Factory::GetPricings($priceGroup->id);
-
       $upgrade = FALSE;
       $more = 0;
 
@@ -1656,6 +1599,7 @@ function pccart_save_form($form, &$form_state) {
 }
 
 function pccart_save_form_submit($form, &$form_state) {
+    
   if (isset($form_state['storage']['id']) && isset($form_state['storage']['qty'])) {
     $cart = Factory::Current();
     $item = Factory::GetItem($cart, $form_state['storage']['id']);
@@ -1663,12 +1607,13 @@ function pccart_save_form_submit($form, &$form_state) {
     $item->quantity = $form_state['storage']['qty'];
     $item->cart_item = $item->id;
     Factory::SaveItem($item);
-
     Factory::Refresh($cart);
   }
+  
 }
 
 function pccart_callback() {
+    
   if (isset($_GET['userKey'])) {
     $customerId = $_GET['userKey'];
     $hash = $_GET['hash'];
@@ -1713,7 +1658,6 @@ function pccart_callback() {
   }
   switch ($doClose) {
     case 2:
-
     case 1:
       print '<script type="text/javascript">top.location = top.location;</script>';
       break;
@@ -1730,7 +1674,6 @@ function pccart_callback() {
         }
 
 //module_invoke('pcdesigntool', 'save', $jobId, 'design');
-
         $cart = Factory::Current();
         $customer = CustomersFactory::Current();
 
@@ -1749,7 +1692,6 @@ function pccart_callback() {
         $item->thumbnail = $thumbnail;
         $item->design_tool_job_id = $jobId;
         $item->cart_item = $id;
-
         Factory::SaveItem($item);
 //\printconnect\Carts\Factory::RefreshItem($item);
         Factory::Refresh($cart);
@@ -1758,21 +1700,17 @@ function pccart_callback() {
       }
   }
 
-
-
   exit;
 }
 
 function _pccart_add_json($json) {
 
   $cart = Factory::Current();
-
   if (!$cart) {
     $cart = Factory::Create();
   }
 
   $cart->EnsureLoaded();
-
   $object = json_decode($json);
 
   foreach ($object->items as $item) {
@@ -1791,13 +1729,13 @@ function _pccart_add_json($json) {
     }
   }
   Factory::Refresh($cart);
-
   drupal_goto('cart');
 
   return print_r($object, true);
 }
 
 function pccart_form_pcgiftvouchers_config_form_alter(&$form, &$form_state, $form_id) {
+    
   $form['giftvouchers']['footer']['price']['addtocart'] = array(
       '#type' => 'submit',
       '#value' => t('Add to cart'),
@@ -1809,9 +1747,11 @@ function pccart_form_pcgiftvouchers_config_form_alter(&$form, &$form_state, $for
   if ($form_state['storage']['giftvoucher']) {
     $form['giftvouchers']['footer']['price']['addtocart']['#value'] = t('Update');
   }
+  
 }
 
 function pccart_form_pcgiftvouchers_config_form_submit($form, $form_state) {
+    
   $cart = Factory::CurrentOrCreate();
   if (!$form_state['storage']['giftvoucher']) {
     $giftVoucher = printconnect\GiftVouchers\Factory::Create($form_state['storage']['amount'], $cart->id);
@@ -1821,9 +1761,11 @@ function pccart_form_pcgiftvouchers_config_form_submit($form, $form_state) {
   }
   printconnect\GiftVouchers\Factory::Save($giftVoucher);
   drupal_goto('cart');
+  
 }
 
 function pccart_form_pccustomers_loginas_form_alter(&$form, &$form_state, $form_id) {
+    
   $customer = $form_state['storage']['customer'];
   if ($customer) {
     $form['getcart'] = array(
@@ -1832,9 +1774,11 @@ function pccart_form_pccustomers_loginas_form_alter(&$form, &$form_state, $form_
         '#value' => t('Get latest cart'),
     );
   }
+  
 }
 
 function pccart_form_pccustomers_loginas_form_submit($form, &$form_state) {
+    
   $customer = $form_state['storage']['customer'];
   if ($customer) {
     $cart = Factory::GetLast($customer->id);
@@ -1848,9 +1792,11 @@ function pccart_form_pccustomers_loginas_form_submit($form, &$form_state) {
       drupal_set_message('No cart found');
     }
   }
+  
 }
 
 function pccart_loggedin($customerId) {
+    
   $cart = Factory::Current();
   if ($cart) {
     if ($customerId != $cart->customer) {
@@ -1868,9 +1814,11 @@ function pccart_loggedin($customerId) {
       
     }
   }
+  
 }
 
 function pccart_loggedout() {
+    
   try {
     $cart = Factory::Current();
     if ($cart) {
@@ -1879,7 +1827,7 @@ function pccart_loggedout() {
       Factory::Save($cart);
     }
   } catch (\Exception $ex) {
-    
   }
+  
 }
 

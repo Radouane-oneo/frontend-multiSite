@@ -142,10 +142,6 @@ function pcpayments_request_form($form, &$form_state, $key) {
   return $form;
 }
 
-function pcpayments_request_form_validate($form, &$form_state) {
-  
-}
-
 function pcpayments_request_form_submit($form, &$form_state) {
   $paymentgateway = variable_get('pc_paymentgateway', 'pcogone');
   $paymentgateway = 'pcpayments';

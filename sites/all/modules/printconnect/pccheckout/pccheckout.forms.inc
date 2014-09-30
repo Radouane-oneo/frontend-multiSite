@@ -334,7 +334,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
             'type' => NULL,
         )
     );
-
+    
     $customer = \printconnect\Customers\Factory::Current();
     $shippingTypes = \printconnect\Shipping\Types\Factory::GetAll();
     $shippingType = FALSE;
@@ -1554,13 +1554,13 @@ function pccheckout_payment_form($form, &$form_state) {
     );
 
     if($_SESSION['shop_vat'] != 0){
-    $form['actions']['price'] = array(
-        '#id' => 'price',
-        '#title' => t('Total incl. VAT'),
-        '#theme' => 'price',
-        '#value' => $cart->totalAmount,
-        '#attributes' => array('id' => 'price'),
-    );
+        $form['actions']['price'] = array(
+            '#id' => 'price',
+            '#title' => t('Total incl. VAT'),
+            '#theme' => 'price',
+            '#value' => $cart->totalAmount,
+            '#attributes' => array('id' => 'price'),
+        );
     } else{
         $form['actions']['price'] = array(
         '#id' => 'price',
@@ -1671,7 +1671,6 @@ function _pccheckout_payment_form_build_overview($cart) {
                 theme('price', array('value' => $cart->orderItemShipping->price, 'free' => TRUE)),
             ),
         );
-        //echo '<pre>' . print_r($cart, 1) . '</pre>';die;
         if (count($cart->orderItemsPayment)) {
             foreach ($cart->orderItemsPayment as $payment) {
                 $rows[] = array(

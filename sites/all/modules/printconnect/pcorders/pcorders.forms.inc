@@ -6,7 +6,6 @@ function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALS
   $order = \printconnect\Orders\Factory::Get($orderId, false);
   $customer = \printconnect\Customers\Factory::Get($order->customer);
   drupal_set_title(t('Details of your order @number : @status', array('@number' => $order->number, '@status' => $order->status)));
- 
       $inline_script ="<!-- Facebook Conversion Code for Commande Flyer.fr -->
                         <script>(function() {
                         var _fbq = window._fbq || (window._fbq = []);
@@ -139,7 +138,7 @@ function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALS
           '#type' => 'container',
           '#attributes' => array('class' => array('social')),
           'facebook' => array(
-              '#markup' => '<div class="fb-like" data-href="' . $base_url . '" data-send="false" data-width="450" data-show-faces="true" data-action="recommend"></div>
+          '#markup' => '<div class="fb-like" data-href="' . $base_url . '" data-send="false" data-width="450" data-show-faces="true" data-action="recommend"></div>
                         <div id="fb-root"></div>
                       <script>(function(d, s, id) {
                         var js, fjs = d.getElementsByTagName(s)[0];

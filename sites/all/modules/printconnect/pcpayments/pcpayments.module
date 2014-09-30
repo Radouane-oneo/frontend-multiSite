@@ -42,7 +42,6 @@ function pcpayments_create_payment($paymentId, $amount, $params) {
     call_user_func($params['payment_created_callback'], $paymentId, $amount, $params);
   }
 
-//drupal_goto('myprintconnect/orders');
 }
 
 function pcpayments_checkout_form_payment_callback($form, &$form_state) {
@@ -513,7 +512,5 @@ function utf8entities($source) {
     $encodedLetter = '&#' . str_pad($decimalCode, ($thisLen == 1) ? 3 : 5, '0', STR_PAD_LEFT) . ';';
     $encodedString .= $encodedLetter;
   }
-
   return $encodedString;
 }
-

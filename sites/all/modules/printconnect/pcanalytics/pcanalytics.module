@@ -188,15 +188,16 @@ function pcanalytics_form_pcorders_order_form_alter(&$form, $form_state, $form_i
                     '$quantity'         // quantity - required
                 ]);";
         }
-        foreach($form_state['storage']["order"]->discountItems as $codePromo){
+        foreach($order->discountItems as $codePromo){
               $googlePurchaseTracking .= "
                  _gaq.push(['_setCustomVar',
                     '1',
-                    'SummerPromoFlyer.fr', //  promo site
+                    'Code_reduction', //  promo site flyer.fr
                     '$codePromo->productName', // code promo
                     '3'
                     ]);";
         }
+        
         $googlePurchaseTracking .= "
         _gaq.push(['_trackTrans']); //submits transaction to the Analytics servers
 

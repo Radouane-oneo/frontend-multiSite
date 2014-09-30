@@ -14,7 +14,7 @@ use printconnect\Customers\Factory as CustomersFactory;
 use printconnect\Carts\Discounts;
 
 function getFotolia($jobId) {
-    
+    //return array();    
     $url = variable_get('pc_designtoolurl');
     $url .= '/rest/get-fotolia-images/j/' . $jobId;
     $response = file_get_contents($url);
@@ -28,7 +28,7 @@ function getFotolia($jobId) {
 }
 
 function getPreflight($jobId) {
-    
+    //return array(); 
     $url = variable_get('pc_designtoolurl');
     $url .= '/rest/getpreflightinfo?j='.$jobId;
     $response = file_get_contents($url);

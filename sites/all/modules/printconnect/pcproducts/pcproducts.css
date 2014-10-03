@@ -155,8 +155,10 @@ a.btn-cmd{
   border: none;
   margin: 0;
   text-decoration: none;
-  text-align: center;
-  border-top: 1px solid #ececec;
+  text-align: center; 
+  border-color: #ececec transparent transparent transparent;
+  border-width: 1px;
+  border-style: solid;
   transition:background-color 1s;
   font-weight: bold;
 }
@@ -173,6 +175,7 @@ a.btn-cmd span.flesh{
 
 a.btn-cmd:hover{
   background-color: #77b700;
+  border-color: #6ba500;
   color: #fff;
   text-decoration: none;
 }

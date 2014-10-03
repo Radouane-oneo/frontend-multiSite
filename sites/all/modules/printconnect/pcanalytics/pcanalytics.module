@@ -192,10 +192,10 @@ function pcanalytics_form_pcorders_order_form_alter(&$form, $form_state, $form_i
         foreach($order->discountItems as $codePromo){
               $googlePurchaseTracking .= "
                  _gaq.push(['_setCustomVar',
-                    '1',
+                    1,
                     'Code_reduction', //  promo site flyer.fr
                     '$codePromo->productName', // code promo
-                    '3'
+                    3
                     ]);";
         }
         

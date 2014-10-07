@@ -31,7 +31,8 @@ use printconnect\Dal\ForbiddenException;
 
     public function Get($entity, $params, $language = FALSE) {
       $url = $this->GetUrl($entity, $params, FALSE, $language);
-      $json = $this->Call($url);
+      $json = $this->fromCache($url);
+//      $json = $this->Call($url);
       return json_decode($json);
     }
 
@@ -123,7 +124,8 @@ use printconnect\Dal\ForbiddenException;
 
     public function GetList($entity, $params, $language = FALSE) {
       $url = $this->GetUrl($entity, $params, FALSE, $language);
-      $json = $this->Call($url);
+      $json = $this->fromCache($url);
+//      $json = $this->Call($url);
       $items = json_decode($json);
       if ($entity == 'pickuppoint/service/store') {
 	$json = utf8_encode($json);
@@ -240,6 +242,50 @@ use printconnect\Dal\ForbiddenException;
       }
       return $errors;
     }
-
+//--------------file cache-------------------
+   public function fromCache($urlFinal, $fromCache = true){
+        $urls = array('cart','customer');
+        foreach ($urls as $item) {
+            if (preg_match("@$item@", $urlFinal)) {
+                $fromCache = false;
+                break;
+            }  
+        }
+        $data = $this->getCacheData($urlFinal);
+        if ($fromCache && !empty($data)) {
+            return $data;
+        } else {
+            $data = $this->call($urlFinal);
+            $result = json_decode($data);
+            if(isset($result) == true){
+                $this->saveCacheData($urlFinal, $data);
+            }
+        }
+        return $data;
+    }
+    public function saveCacheData($key, $data)
+    {
+        $saveData = "$key|$data\n";
+        $fp = fopen('cache.txt', 'a+');
+        fwrite($fp, $saveData);
+        fclose($fp);
+    }
+    
+    public function getCacheData($key)
+    {
+        $handle = false;
+        if (($handle = fopen("cache.txt", "r")) !== FALSE) {
+            while (($buffer = fgets($handle)) !== false) {
+                $data = explode("|", $buffer);
+                if ($key == $data[0]) {
+                    return $data[1];
+                }
+            }
+            fclose($handle);
+            $handle = false;
+        }
+        return $handle;
+    }
+//---------------------------------    
   }
 }

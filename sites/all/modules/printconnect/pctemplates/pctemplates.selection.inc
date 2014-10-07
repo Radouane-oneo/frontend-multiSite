@@ -264,10 +264,10 @@ function pctemplates_selection_form2($form, &$form_state) {
         $build['range'] = array(         
                 '#prefix' => '<div class="blocprd"><a href="'.$templateUrl.'">',
              );
-
              $build['range']['image'] = array(
                 '#theme' => 'pcfilesthumb',
                 '#file' => $template->thumbnail->file,
+                '#attributes' => array('width' => '194', 'height' => '194')
             );
             $build['range']['name'] =  array(
                 '#markup' => '<h2>'. $template->products[0]->name.'</h2>',

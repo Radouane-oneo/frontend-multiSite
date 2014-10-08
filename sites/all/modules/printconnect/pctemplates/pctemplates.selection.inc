@@ -253,11 +253,13 @@ function pctemplates_selection_form2($form, &$form_state) {
     $templatesPerPage = $limit;
     $rangeFrom = (($page - 1) * $templatesPerPage) + 1;
     $rangeTo = $page * $templatesPerPage;
-    $items = array(); 
+    $items = array();
     foreach ($selectedTemplates as $template) { 
         $templateUrl = 'templates/' . $template->id;
         if(isset($params['productId'])){
             $templateUrl .= '/product/' . $params['productId'];
+        }else{
+            $templateUrl .= '/product/' . $template->products[0]->id;
         }
         $build = array();
       

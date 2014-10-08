@@ -189,19 +189,20 @@ function pcanalytics_form_pcorders_order_form_alter(&$form, $form_state, $form_i
            
         }
 
-        foreach($order->discountItems as $codePromo){
-              $googlePurchaseTracking .= "
-                 _gaq.push(['_setCustomVar',
-                    1,
-                    'Code_reduction', //  promo site flyer.fr
-                    '$codePromo->productName', // code promo
-                    3
-                    ]);";
-        }
-        
-        $googlePurchaseTracking .= "
-        _gaq.push(['_trackTrans']); //submits transaction to the Analytics servers
+        foreach($order->discountItems as $codePromo){ 
+            
+            $googlePurchaseTracking .= "
+                _gaq.push(['_setCustomVar',
+                    1,                   // This custom var is set to slot #1.
+                    'Code reduction',     // Le nom  promo
+                    '$codePromo->productName',               // code promo
+                    3                    // niveau page
+                ]);";
 
+        }
+        $googlePurchaseTracking .= "_gaq.push(['_trackPageview']);";
+        $googlePurchaseTracking .= "
+        _gaq.push(['_trackTrans']);
         (function() {
             var ga = document . createElement('script');
             ga.type = 'text/javascript';
@@ -211,6 +212,6 @@ function pcanalytics_form_pcorders_order_form_alter(&$form, $form_state, $form_i
             s . parentNode . insertBefore(ga, s);
         })();
         ";
-        drupal_add_js($googlePurchaseTracking, array('scope' => 'footer', 'type' => 'inline'));
+        drupal_add_js($googlePurchaseTracking, array('scope' => 'header', 'type' => 'inline'));
     }
 }

@@ -1013,7 +1013,9 @@ body.two-sidebars #content .whitebox{
 	/*background: url(images/tel_orange.png) no-repeat 0 center;*/
 }
 #footer #block-block-14 .facebook,
-#footer #block-block-14 .twitter{
+#footer #block-block-14 .twitter,
+#footer #block-block-14 .google,
+#footer #block-block-14 .youtube{
 	display: block;
 	width: 25px;
 	height: 25px;
@@ -1022,9 +1024,9 @@ body.two-sidebars #content .whitebox{
 	float: left;
 	margin-right: 3px;
 }
-#footer #block-block-14 .twitter{
-	background-position: -3px -59px;
-}
+#footer #block-block-14 .google{     background-position: -3px -589px;}
+#footer #block-block-14 .youtube{    background-position: -3px -559px;}
+#footer #block-block-14 .twitter{    background-position: -3px -59px;}
 
 #footer #block-block-14 h2 {
 	margin-bottom: 3px;

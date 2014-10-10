@@ -28,7 +28,8 @@
     <?php endif; ?>
     <div id="header">
       <?php if ($logo): ?>
-      <div id="header_left"> <a href="<?php print $front_page ?>" title="<?php print $site_name ?>"> <img src="<?php print $logo ?>" alt="<?php print $site_name ?>" title="<?php print $site_name ?>" /> </a> </div>
+      <div id="header_left"> <a href="<?php print $front_page ?>" title="<?php print $site_name ?>"> 
+        <img  width="165" height="120" src="<?php print $logo ?>" alt="<?php print $site_name ?>" title="<?php print $site_name ?>" /> </a> </div>
       <?php endif; ?>
 
             <?php if ($header_right): ?>

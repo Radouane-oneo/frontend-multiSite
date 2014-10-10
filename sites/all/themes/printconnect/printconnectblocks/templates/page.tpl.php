@@ -12,7 +12,7 @@
         <?php if ($logo): ?>
             <div id="header_left">
 				<a href="<?php print $front_page ?>" title="<?php print $site_name_and_slogan ?>">
-                	<img src="<?php print $logo ?>" alt="<?php print $site_name_and_slogan ?>" title="<?php print $site_name_and_slogan ?>" />
+                	<img width="165" height="120" src="<?php print $logo ?>" alt="<?php print $site_name_and_slogan ?>" title="<?php print $site_name_and_slogan ?>" />
 				</a>
             </div>
 		<?php endif; ?>

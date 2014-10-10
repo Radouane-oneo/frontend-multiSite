@@ -208,65 +208,71 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
         $groups = reOrderGroup($tree->items, $idsGroups);
     }
 
-    $idsGroups = array();
-    foreach ($groups as $key => $group) {
-        $idsGroups[$key] = $group->id;
+ $idsGroups = array();
+ foreach ($groups as $key=>$group) {
+    $idsGroups[$key] = $group->id;
 
-        if (count((array) $group->data) > 1) {
-            $form['items'][$group->id]['select'] = array(
-                '#type' => 'select',
-                '#title' => $group->name,
-                '#id' => 'group-' . $group->id,
-                '#ajax' => $ajax,
-            );
+    if (count((array) $group->data) > 1) {
+      $form['items'][$group->id]['select'] = array(
+          '#type' => 'select',
+          '#title' => $group->name,
+          '#id' => 'group-' . $group->id,
+          '#ajax' => $ajax,
+      );
 
-            $defaultValue = false;
-            $fistElement = current($group->data);
-            $newItems[$group->id] = $fistElement->id;
-            foreach ($group->data as $item) {
-                if (in_array($item->id, $newItems)) {
-                    $defaultValue = $item->id;
-                }
-                if (in_array($item->id, $currentItems)) {
-                    $newItems[$group->id] = $item->id;
-                }
-                $detail = $item->detail;
-                $text = $item->name;
-                if ($detail) {
-                    $text .= ' |' . $detail . '|';
-                }
-
-                $form['items'][$group->id]['select']['#options'][$item->id] = $text;
-            }
-            $form['items'][$group->id]['select']['#default_value'] = $defaultValue;
-            $oldValueSelected[] = $defaultValue;
-        } else {
-            $text = '';
-            $fistElement = current($group->data);
-            $newItems[$group->id] = $fistElement->id;
-            foreach ($group->data as $item) {
-                if (in_array($item->id, $currentItems)) {
-                    $newItems[$group->id] = $item->id;
-                }
-                if (in_array($item->id, $items)) {
-                    $detail = $item->detail;
-                    $text = $item->name;
-                    if ($detail) {
-                        
-                    }
-                    continue;
-                }
-            }
-
-            $form['items'][$group->id]['select'] = array(
-                '#type' => 'item',
-                '#title' => $group->name,
-                '#markup' => '<div class="text">' . $text . '</div>',
-            );
+      $defaultValue = false;
+      $fistElement = current($group->data);
+      if($fistElement->id != $productId){
+        $newItems[$group->id] = $fistElement->id;
+      }
+      foreach ($group->data as $item) {
+        if (in_array($item->id, $items)) {
+          $defaultValue = $item->id;
+        }
+        if(in_array($item->id, $currentItems) && $item->id != $productId) {
+          $newItems[$group->id] = $item->id;
+        }
+        $detail = $item->detail;
+        $text = $item->name;
+        if ($detail) {
+          $text .= ' |' . $detail . '|';
         }
 
-        $form['items'][$group->id]['select']['#description'] = t('description on toolbox ' . $group->id);
+        $form['items'][$group->id]['select']['#options'][$item->id] = $text;
+      }
+      $form['items'][$group->id]['select']['#default_value'] = $defaultValue;
+      $oldValueSelected[] = $defaultValue;
+    } else {
+      $text = '';
+      $fistElement = current($group->data);
+      if($fistElement->id != $productId){
+        $newItems[$group->id] = $fistElement->id;
+      }
+      foreach ($group->data as $item) {
+        if(in_array($item->id, $currentItems) && $item->id != $productId) {
+          $newItems[$group->id] = $item->id;
+        }
+        if (in_array($item->id, $items)) {
+          $detail = $item->detail;
+          $text = $item->name;
+          if ($detail) {
+          }
+          continue;
+        }
+      }
+
+      $form['items'][$group->id]['select'] = array(
+          '#type' => 'item',
+          '#title' => $group->name,
+          '#markup' => '<div class="text">' . $text . '</div>',
+      );
+
     }
+
+    $form['items'][$group->id]['select']['#description'] = t('description on toolbox ' . $group->id);
+  }
+
+  $newItems = array_unique($newItems);
 
     $defaults = \printconnect\Products\Configurations\Factory::GetDefaults($productId, $newItems);
     $priceGroupId = $defaults->priceGroupId;

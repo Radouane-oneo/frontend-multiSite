@@ -685,7 +685,7 @@ $product = Products\Factory::Get($productId);
     foreach ($dtTemplate->thumbnails as $thumbnail) {
 
         $page = $thumbnail->page;
-        if ($page == 1) {
+        if ($page%2 == 1) {
             $title = t('Outside');
         } else {
             $title = t('Inside');

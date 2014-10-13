@@ -85,11 +85,23 @@ function pccart_cart_form2($form, &$form_state) {
         }
 	
         $preflights = getPreflight($orderItem->id);
+	$savePreflight = true;
+	$jobsProupload[$orderItem->id] = false;
         if (!empty($preflights)) {
+	    $jobsProupload[$orderItem->id] = true;
             foreach($preflights as $singlePreflight) {
-                $preflight[$orderItem->id][] = '<span>"'.t('Preflight').'&nbsp;"</span><div class="fotolia-price">€&nbsp;'.$preflightPrice.'</div>';
+                $errors = $singlePreflight['errors'];
+                foreach ($errors as $key => $error) {
+                    if ($errors[$key] != 0){
+                       $savePreflight = false;
+                       break;
+                    }
+                }
+                if ($savePreflight)
+                    $preflight[$orderItem->id][] = '<span>"'.t('Preflight').'&nbsp;"</span><div class="fotolia-price">€&nbsp;'.$preflightPrice.'</div>';
             }
-            Factory::SavePreflight($cart->id, $orderItem->id, $preflights);
+            if ($savePreflight)
+                Factory::SavePreflight($cart->id, $orderItem->id, $preflights);
         }
     }
     $cart = Factory::Current(FALSE);
@@ -336,31 +348,38 @@ function pccart_cart_form2($form, &$form_state) {
                     if (isset($_SESSION['savedDesigns'][$item->id])) {
                         $savedDesignId = $_SESSION['savedDesigns'][$item->id];
                     }
-
-                    $form['cart']['items'][$item->id]['file']['link'] = array(
-                        '#theme' => 'designtoollink',
-                        '#title' => $product->name . ' ' . $firstConfig->name,
-                        '#content' => theme('pcfilesthumb', array('file' => $file->thumbnail, 'cache' => FALSE)),
-                        '#html' => TRUE,
-                        '#oi' => array(
-                            'priceGroupId' => $item->productPriceGroupId,
-                            'quantity' => $item->quantity,
-                            'options' => $options,
-                        ),
-                        '#params' => array(
-                            'id' => $item->id,
-                            'cartid' => $cart->id,
-                        ),
-                        '#callback' => 'cart/callback/',
-                        '#versioning' => TRUE,
-                        '#jobId' => $jobId,
-                        '#params' => array(
-                            'id' => $item->id,
-                            'cartid' => $cart->id,
-                        ),
-                        '#savedDesignId' => $savedDesignId,
-                        '#attributes' => array('class' => array('designtool', 'iframe', 'display-block')),
-                    );
+		    if (!$jobsProupload[$orderItem->id]) {
+                        $form['cart']['items'][$item->id]['file']['link'] = array(
+                            '#theme' => 'designtoollink',
+                            '#title' => $product->name . ' ' . $firstConfig->name,
+                            '#content' => theme('pcfilesthumb', array('file' => $file->thumbnail, 'cache' => FALSE)),
+                            '#html' => TRUE,
+                            '#oi' => array(
+                                'priceGroupId' => $item->productPriceGroupId,
+                                'quantity' => $item->quantity,
+                                'options' => $options,
+                            ),
+                            '#params' => array(
+                                'id' => $item->id,
+                                'cartid' => $cart->id,
+                            ),
+                            '#callback' => 'cart/callback/',
+                            '#versioning' => TRUE,
+                            '#jobId' => $jobId,
+                            '#params' => array(
+                                'id' => $item->id,
+                                'cartid' => $cart->id,
+                            ),
+                            '#savedDesignId' => $savedDesignId,
+                            '#attributes' => array('class' => array('designtool', 'iframe', 'display-block')),
+                        );
+		    }
+		    $form['cart']['items'][$item->id]['file']['link'] = array(
+                            '#content' => theme('pcfilesthumb', array('file' => $file->thumbnail, 'cache' => FALSE)),
+                            '#html' => TRUE,
+			    '#markup' => '<img style="width:100px;" class="previewOnly" src= "https://dt-printconcept-production.s3.amazonaws.com/'.$file->thumbnail.'">',
+                            '#attributes' => array('class' => array('designtool', 'iframe', 'display-block')),
+		    );
 
                     $form['cart']['items'][$item->id]['file']['preview'] = array(
                         '#prefix' => '<div>',

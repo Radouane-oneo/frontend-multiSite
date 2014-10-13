@@ -200,6 +200,11 @@ function pcanalytics_form_pcorders_order_form_alter(&$form, $form_state, $form_i
                 ]);";
 
         }
+        $googlePurchaseTracking .= " _gaq.push(['_trackEvent',
+                                        'Orders', // Set your category of activity here
+                                        'Code reduction', 
+                                    ]);";
+
         $googlePurchaseTracking .= "_gaq.push(['_trackPageview']);";
         $googlePurchaseTracking .= "
         _gaq.push(['_trackTrans']);

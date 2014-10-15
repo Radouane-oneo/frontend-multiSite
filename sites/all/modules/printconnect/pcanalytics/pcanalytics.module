@@ -1,4 +1,5 @@
 <?php
+use printconnect\Carts\Cart;
 
 function pcanalytics_page_alter(&$page) {
     $account = variable_get('pcanalytics_account', 'account');
@@ -134,7 +135,12 @@ function pcanalytics_form_pcorders_order_form_alter(&$form, $form_state, $form_i
         $order = \printconnect\Orders\Factory::Get($orderId);
         $customer = $order->customer;
         $account = variable_get('pcanalytics_account', 'account');
-
+        
+      // $cart = \printconnect\Carts\Cart::get_discountItems();
+    
+   
+       // get_discountItems
+//print '<pre>'; var_dump( $_SESSION['discountId']);print '</pre>'; die();
         if (isset($order->orderBillingAddress)) {
             $address = $order->orderBillingAddress;
             $name = $address->company;
@@ -188,22 +194,19 @@ function pcanalytics_form_pcorders_order_form_alter(&$form, $form_state, $form_i
                 ]);";
            
         }
-
-        foreach($order->discountItems as $codePromo){ 
+    if(count($_SESSION['discountId'])>0){
+        foreach($_SESSION['discountId'] as $codePromo){ 
             
             $googlePurchaseTracking .= "
                 _gaq.push(['_setCustomVar',
                     1,                   // This custom var is set to slot #1.
                     'Code reduction',     // Le nom  promo
-                    '$codePromo->productName',               // code promo
+                    '$codePromo',               // code promo
                     3                    // niveau page
                 ]);";
 
         }
-        $googlePurchaseTracking .= " _gaq.push(['_trackEvent',
-                                        'Orders', // Set your category of activity here
-                                        'Code reduction', 
-                                    ]);";
+    }
 
         $googlePurchaseTracking .= "_gaq.push(['_trackPageview']);";
         $googlePurchaseTracking .= "

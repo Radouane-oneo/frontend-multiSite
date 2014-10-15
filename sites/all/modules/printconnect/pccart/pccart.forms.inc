@@ -58,7 +58,7 @@ function pccart_cart_form2($form, &$form_state) {
     if($cart && 1 == $cart->supplementProduct && 43 == $endarray->price && 0 < $endarray->price){
         $endarray = printconnect\Carts\Factory::GetItem($cart, $endarray->id);
         $endarray = printconnect\Carts\Factory::LoadItem($endarray);
-        $endarray->price = 10;
+        $endarray->pPrice = 10;
         printconnect\Carts\Factory::SaveItem($endarray);   
     }
     $cart = Factory::Current(FALSE);

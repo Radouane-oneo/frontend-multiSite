@@ -548,14 +548,16 @@ function pccart_cart_form2($form, &$form_state) {
     }
 /* Discount */ 
         $customer = printconnect\Customers\Factory::Current();
+        
         if (count($cart->discountItems)) {
+            
             $form['cart']['discounts'] = array(
                 '#type' => 'fieldset',
                 '#attributes' => array('class' => array('discounts', 'item')),
                 '#weight' => 50,
                 '#title' => t('Discounts'),
             );
-
+            unset($_SESSION['discountId']);
             foreach ($cart->discountItems as $item) {
                 $form['cart']['discounts'][$item->discountId] = array(
                     '#type' => 'container',
@@ -589,6 +591,8 @@ function pccart_cart_form2($form, &$form_state) {
                         'content' => array('#markup' => $item->productName),
                     ),
                 );
+                $_SESSION['discountId'][]= $item->discountId;
+                //$_SESSION['discountName'][]= $item->productName;
             }
         }
 /* end discount */   

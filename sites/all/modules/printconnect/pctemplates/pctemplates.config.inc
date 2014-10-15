@@ -534,8 +534,15 @@ function pctemplates_callback($type) {
   return;
 }
 
-function getItemParent($form_state) {
+function getItemParent($form_state,$templateItems = null,$productId = null) {
+    
   if(!isset($form_state['values']['items']) || empty($form_state['values']['items'])) {
+     foreach ($templateItems as $key => $item) {
+         $parentId = $key;
+         if(reset($item)->id == $productId){
+             return $parentId ;
+         }
+     }
     return NULL;
   }
 
@@ -608,9 +615,7 @@ function pctemplates_config_form2($form, &$form_state, $templateId, $productId =
     drupal_not_found();
     exit;
   }
-
-  $parentId = getItemParent($form_state);
-
+  $parentId = getItemParent($form_state,$template->templateItems,$productId);
   $title = html_entity_decode($template->designTemplates->name);
   drupal_set_title($title, PASS_THROUGH);
 
@@ -889,15 +894,12 @@ $product = Products\Factory::Get($productId);
         );
       }
   }
-
   if($parentId && property_exists($template->templateItems, $parentId)){
       $section = $template->templateItems->$parentId;
   }else {
       $section = reset($template->templateItems);
   }
-  
   $section = reset($section);
-
   foreach($section->children as $dType => $dItems) {
       if(count($dItems) == 1){
           $text = $dItems[0]->itemName;

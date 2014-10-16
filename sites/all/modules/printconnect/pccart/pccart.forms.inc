@@ -107,7 +107,6 @@ function pccart_cart_form2($form, &$form_state) {
     $cart = Factory::Current(FALSE);
     $items = array();
     $emailDesigner = FALSE;
-
     if (!$cart || !$cart->isFilled) {
  
         $form['empty'] = array(
@@ -348,7 +347,7 @@ function pccart_cart_form2($form, &$form_state) {
                     if (isset($_SESSION['savedDesigns'][$item->id])) {
                         $savedDesignId = $_SESSION['savedDesigns'][$item->id];
                     }
-		    if (!$jobsProupload[$orderItem->id]) {
+		    if ($jobsProupload[$item->id] == false) {
                         $form['cart']['items'][$item->id]['file']['link'] = array(
                             '#theme' => 'designtoollink',
                             '#title' => $product->name . ' ' . $firstConfig->name,
@@ -373,14 +372,14 @@ function pccart_cart_form2($form, &$form_state) {
                             '#savedDesignId' => $savedDesignId,
                             '#attributes' => array('class' => array('designtool', 'iframe', 'display-block')),
                         );
-		    }
-		    $form['cart']['items'][$item->id]['file']['link'] = array(
+		    } else {
+		        $form['cart']['items'][$item->id]['file']['link'] = array(
                             '#content' => theme('pcfilesthumb', array('file' => $file->thumbnail, 'cache' => FALSE)),
                             '#html' => TRUE,
 			    '#markup' => '<img style="width:100px;" class="previewOnly" src= "https://dt-printconcept-production.s3.amazonaws.com/'.$file->thumbnail.'">',
                             '#attributes' => array('class' => array('designtool', 'iframe', 'display-block')),
-		    );
-
+		        );
+		    }
                     $form['cart']['items'][$item->id]['file']['preview'] = array(
                         '#prefix' => '<div>',
                         '#suffix' => '</div>',
@@ -549,14 +548,16 @@ function pccart_cart_form2($form, &$form_state) {
     }
 /* Discount */ 
         $customer = printconnect\Customers\Factory::Current();
+        
         if (count($cart->discountItems)) {
+            
             $form['cart']['discounts'] = array(
                 '#type' => 'fieldset',
                 '#attributes' => array('class' => array('discounts', 'item')),
                 '#weight' => 50,
                 '#title' => t('Discounts'),
             );
-
+            unset($_SESSION['discountId']);
             foreach ($cart->discountItems as $item) {
                 $form['cart']['discounts'][$item->discountId] = array(
                     '#type' => 'container',
@@ -590,6 +591,8 @@ function pccart_cart_form2($form, &$form_state) {
                         'content' => array('#markup' => $item->productName),
                     ),
                 );
+                $_SESSION['discountId'][]= $item->discountId;
+                //$_SESSION['discountName'][]= $item->productName;
             }
         }
 /* end discount */   

@@ -76,10 +76,12 @@ function _pcproducts_url($value, $separator = '-') {
 }
 
 function pcproducts_menu() {
+ //  var_dump(arg); //die;
   if (function_exists('printconnect_ensureinitialized')) {
     printconnect_ensureinitialized();
     $products = Factory::GetAll();
-    $flow = variable_get('pc_flow', 'whitelabel');
+    $flow = variable_get('pc_flow', 'whitelabel');  
+    
     $items['products'] = array(
         'title' => 'Products',
         'description' => t('Product catalog'),
@@ -90,7 +92,7 @@ function pcproducts_menu() {
         'menu_name' => 'main-menu',
         'options' => array('attributes' => array('class' => array('products'))),
     );
-
+      
         foreach ($products as $product) {
           $items["products/$product->id"] = array(
               'title' => 'Configuration',

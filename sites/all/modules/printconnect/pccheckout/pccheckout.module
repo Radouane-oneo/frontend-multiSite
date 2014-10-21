@@ -231,8 +231,7 @@ function pccheckout_menu() {
       $items['checkout/shipping/pickup'] = array(
           'title' => 'Pickup',
           'page callback' => '_pccheckout_set_callback',
-          'page arguments' => array('shipping', 'pickup'),
-          //'access callback' => 'pccheckout_access',
+          'page arguments' => array('pickup'),
           'access arguments' => array('access content'),
           'type' => MENU_CALLBACK,
       );
@@ -240,8 +239,7 @@ function pccheckout_menu() {
       $items['checkout/shipping/delivery'] = array(
           'title' => 'Delivery',
           'page callback' => '_pccheckout_set_callback',
-          'page arguments' => array('shipping', 'delivery'),
-          //'access callback' => 'pccheckout_access',
+          'page arguments' => array('delivery'),
           'access arguments' => array('access content'),
           'type' => MENU_CALLBACK,
       );
@@ -250,7 +248,6 @@ function pccheckout_menu() {
           'title' => 'Payment',
           'page callback' => 'drupal_get_form',
           'page arguments' => array('pccheckout_payment_form2'),
-//          'access callback' => 'pccheckout_access',
           'access arguments' => array('access content'),
           'file' => 'pccheckout.form.inc',
       );
@@ -304,14 +301,6 @@ function pccheckout_pccart_cart_form_submit($form, $form_state) {
       default:
         $cart->pickuppoint = FALSE;
     }
-//    if ($cart->isPickup && isset($form_state['values']['pup']['id']) && !empty($form_state['values']['pup']['id'])) {
-//      $pickuppoint = PickupPoints\Factory::Get($form_state['values']['pup']['id'], $form_state['values']['pup']['countryCode']);
-//      $pickuppoint->EnsureLoaded();
-//      $cart->pickuppoint = $pickuppoint;
-//    } else {
-//      $cart->pickuppoint = FALSE;
-//    }
-// $cart->shipping_type = $form_state['storage']['shipping']['type'];
   }
   Carts\Factory::Save($cart);
   Carts\Factory::Refresh($cart);
@@ -341,15 +330,6 @@ function pccheckout_form_pccart_cart_form2_alter(&$form, $form_state, $form_id) 
                 '#markup' => '<input class="action large payment button form-submit ui-button ui-widget ui-state-default ui-corner-all popupOverlay" type="button" id="edit-actions-checkout" name="op" value="'.t('Secure payment').'" role="button">'
             );
         }
-
-
-        /*
-          $form['checkout'] = array(
-          '#type' => 'markup',
-          '#markup' => l(t('Secure payment'), 'checkout', array('attributes' => array('class' => array('button', 'action', 'large', 'checkout')))),
-          '#weight' => 100,
-          );
-         */
     }
 }
 
@@ -371,29 +351,30 @@ function pccheckout_form_pccart_cart_form2_alter(&$form, $form_state, $form_id) 
 //  drupal_goto('checkout');
 //}
 
-function _pccheckout_set_callback($property, $value) {
-  if ($property == 'shipping') {
+function _pccheckout_set_callback($value) {
     $cart = Carts\Factory::Current();
     $types = \printconnect\Shipping\Types\Factory::GetAll();
-    if ($value == 'pickup') {
-      foreach ($types as $type) {
-        if ($type->isPickup) {
-          $cart->shipping_type = $type->id;
+    switch($value){
+      case 'pickup':
+        foreach ($types as $type) {
+            if ($type->isPickup) {
+            $cart->shipping_type = $type->id;
+            }
         }
-      }
-      $cart->pickuppoint = FALSE;
-    } else {
-      foreach ($types as $type) {
-        if (!$type->isPickup && $type->shippingType->deliveryType != 'deliveryTypePostal') {
-          $cart->shipping_type = $type->id;
-          break;
+        $cart->pickuppoint = FALSE;
+      break;       
+      default:
+        foreach ($types as $type) {
+            if (!$type->isPickup && $type->shippingType->deliveryType != 'deliveryTypePostal') {
+              $cart->shipping_type = $type->id;
+              break;
+            }
         }
-      }
-      $cart->pickuppoint = FALSE;
-    }
+        $cart->pickuppoint = FALSE;
+      break;  
+    }   
     Carts\Factory::Save($cart);
-  }
-  drupal_goto('checkout/shipping');
+    drupal_goto('checkout/shipping');
 }
 
 function _pccheckout_callback() {
@@ -941,7 +922,7 @@ function pccheckout_checkout_form($form, &$form_state, $step) {
   $form['invoice']['address']['reference'] = array(
       '#type' => 'textfield',
       '#title' => t('Reference'),
-      //    '#required' => TRUE,
+      // '#required' => TRUE,
       '#default_value' => $cart ? $cart->customerReference : '',
       '#size' => 30,
   );
@@ -1026,13 +1007,12 @@ function pccheckout_checkout_form($form, &$form_state, $step) {
         //'#required' => TRUE,
         '#options' => $options,
         '#default_value' => $default,
-            //'#title' => t('Payment methods'),
+         //'#title' => t('Payment methods'),
     );
 
     if (array_key_exists($default, $options)) {
       $form['payment']['method']['#default_value'] = $default;
     } else {
-
       $form['payment']['method']['#default_value'] = $first;
     }
   }
@@ -1057,8 +1037,8 @@ function pccheckout_checkout_form($form, &$form_state, $step) {
       '#type' => 'submit',
       '#value' => t('Confirm'),
       '#attributes' => array('class' => array('action', 'button', 'large', 'continue', 'display-block')),
-          //'#submit' => array('pccheckout_checkout_form_payment_submit'),
-//'#limit_validation_errors' => array(array('personal', 'delivery', 'payment')),
+        //'#submit' => array('pccheckout_checkout_form_payment_submit'),
+        //'#limit_validation_errors' => array(array('personal', 'delivery', 'payment')),
   );
 
 
@@ -1472,7 +1452,6 @@ function pccheckout_checkout_form_shipping_validate(&$form, &$form_state) {
         $city = urlencode($form_state['values']['shipping']['delivery']['city']);
         $postal = urlencode($form_state['values']['shipping']['delivery']['postalCode']);
         $url = 'http://maps.googleapis.com/maps/api/distancematrix/json?origins=Belgium&destinations=' . $postal . ',' . $country->name . '&language=nl-BE&sensor=false';
-// form_set_error('shipping][delivery][country', $url);
         $data = drupal_http_request($url);
         $result = json_decode($data->data);
 

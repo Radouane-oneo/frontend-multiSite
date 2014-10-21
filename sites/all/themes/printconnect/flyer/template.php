@@ -254,7 +254,6 @@ unset($javascript['sites/all/modules/printconnect/pcflyerstores/lib/isotope.pkgd
 unset($javascript['sites/all/modules/printconnect/pcflyerstores/lib/jquery.jcarousel.js']);	  unset($javascript['sites/all/modules/printconnect/pccart/pccart.js']);
 unset($javascript['sites/all/modules/printconnect/pcsegments/pcsegments.js']);
 
-unset($javascript['sites/all/modules/printconnect/pctemplates/autocomplete.js']);
 unset($javascript['sites/all/modules/printconnect/pctemplates/pctemplates.js']);
 unset($javascript['sites/default/files/languages/fr-FR_QWeOKmQMsmBnHhrmoNY7dbJ-x7DwPdy_2c8mJnefIL0.js']);
 unset($javascript['https://maps.googleapis.com/maps/api/js?key=AIzaSyBS0SrsMbBXJ_v2kkgCvbiqwFUatl1pd_s&sensor=true&language=nl']);

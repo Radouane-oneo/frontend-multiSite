@@ -1,7 +1,7 @@
 <!-- Google Tag Manager -->
 <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-W44FMM"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+<script type="text/javascript">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
@@ -33,7 +33,7 @@ if (/*@cc_on!@*/false) {
       <?php if ($logo): ?>
         <div id="header_left">
           <a href="<?php print $front_page ?>" title="<?php print $site_name ?>">
-            <img src="<?php print $logo ?>" alt="<?php print $site_name ?>" title="<?php print $site_name ?>" />
+            <img width="165" height="120" src="<?php print $logo ?>" alt="<?php print $site_name ?>" title="<?php print $site_name ?>" />
           </a>
         </div>
       <?php endif; ?>
@@ -162,5 +162,4 @@ if (/*@cc_on!@*/false) {
     </div>
 
   </div>    
-
 </div>

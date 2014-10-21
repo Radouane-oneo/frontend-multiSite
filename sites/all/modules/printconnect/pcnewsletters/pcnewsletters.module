@@ -116,6 +116,12 @@ function pcnewsletters_subscribe_form($form, $form_state) {
             '#markup' => '<p>' . t('Thank you very much for subscribing. Twice a month, you’ll receive the latest promotions and news. Don’t miss out!') . '</p><div class="icone-newsletter"></div><p>Vous avez reçu votre email de bienvenue.</p>',
         ),
     );
+    $form['trackingNews'] = array(
+            '#markup' => '<script type="text/javascript" src="http://action.metaffiliation.com/trk.php?mclic=S4ADAB1013&argann='.$form_state['values']['email'].'" ></script>
+                            <noscript>
+                                <img src="http://action.metaffiliation.com/trk.php?mclic=N4ADAB1013&argann='.$form_state['values']['email'].'" width="1" height="1" border="0" />
+                            </noscript>',
+    );
   }
 
   $form['#id'] = 'pcnewsletters-subscribe-form';
@@ -197,120 +203,255 @@ $module = 'pcnewsletters';
 $key = 'envoi_email_client';
 $to = $form_state['values']['email'];
 $from = 'support@flyer.fr';
-$params = '<html>
+$params = '<!DOCTYPE html>
+<html>
 <head>
+	<meta charset="UTF-8">
+	<title></title>
 </head>
-<body>
-<style>
-td{
-border:0px;
-font-family:Arial, Helvetica, sans-serif;
-}
-</style>
-<table width="618px" border="0px" cellpadding="0" cellspacing="0" style="background-color:#fff;border:0px;width:618px;margin:0px auto;">
-<tr>
-<td border="0">
-<table border="0px" width="100%">
-<tr>
-<td border="0" width="25px"></td>
-<td border="0" height="85"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/logo.png" border="0" /></td><td border="0" align="right"><strong style="color:#76b700;font-size:24px;">Inscription réussie</strong><br /><span style="color:#646464;font-size:17px">Merci de votre inscription à notre newsletter.</span></td><td border="0" width="25px"></td>
-</tr>
-</table>
-</td>
-</tr>
-<tr >
-<td border="0"  >
-<table valign="top" width="620" border="0px" align="center" cellpadding="0" cellspacing="0">
-<tr>
-<td border="0" >
-<a style="text-decoration:none;" target="_blank" href="http://flyer.fr/frfr/"><img width="140" height="49" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/home.jpg"></a>
-</td>
-<td border="0" >
-<a style="text-decoration:none;" target="_blank" href="http://flyer.fr/frfr/nos-produits"><img width="154" height="49" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/nosprod.jpg"></a>
-</td>
-<td border="0" >
-<a style="text-decoration:none;" target="_blank" href="http://flyer.fr/frfr/créations-en-ligne"><img width="146" height="49" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/nosmodel.jpg"></a>
-</td>
-<td border="0" >
-<a style="text-decoration:none;" target="_blank" href="http://flyer.fr/frfr/bonneaffaire"><img width="181" height="49" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/bonneaffaire.jpg"></a>
-</td> 
-</tr>
-</table>
-</td>
-</tr> 
-<tr height="15px">
-<td border="0"  >&nbsp;</td>
-</tr> 
-<tr>
-<td border="0"  style="">
-<table style="border:0px;" valign="top" width="620" border="0px" align="center" cellpadding="0" cellspacing="0">
+<body> 
+<table width="900px" border="0" cellpadding="0" cellspacing="0">
 <tbody>
 <tr>
-<td border="0"  height="15" width="30px"></td>
-<td border="0" >
-<font style="font-family:Helvetica,arial;font-size:16px;color:#646464;line-height:18px;"><strong>
-Nous vous remercions de l\'intérêt que vous portez à Flyer.fr et de votre inscription à notre newsletter.</strong></font>
-</td>
-<td border="0" ></td> 
-</tr>
-<tr height="17px">
-<td border="0"  >&nbsp;</td> <td border="0" >&nbsp;</td> <td border="0" >&nbsp;</td>
-</tr>
+<td>
+<table width="618px" border="0" bgcolor="#ffffff" cellpadding="0" cellspacing="0" style="font-family:Times New Roman;width:618px;margin:0px auto;">
+<tbody>
 <tr>
-<td border="0"  width="14"></td>
-<td border="0"  style="font-family:Helvetica,arial;font-size:15px;color:#646464;line-height:18px;">À partir d\'aujourd\'hui, vous pourrez recevoir nos offres et découvrir toutes  les<br /> nouveautés sur notre activité et nos produits.</td>
-<td border="0"  width="15"></td> 
-</tr>
-<tr>
-<tr height="15px">
-<td border="0"  >&nbsp;</td> <td border="0" >&nbsp;</td> <td border="0" >&nbsp;</td>
-</tr>
-</tbody></table> 
+<td align="center" style="font-size: 11px;line-height: 15px;">
+  <font style="color: #808080;">Pour ouvrir cet email dans un navigateur</font>
+ <a href="http://www.flyer.fr/frfr/sites/all/themes/printconnect/flyer/newsletter/week006.html" style="color:#4e4e4e;text-decoration: underline;">
+ Cliquez-ici
+</a>
 </td>
 </tr>
-<tr>
-<td border="0"  align="center">
-<table align="center" width="100%" border="0px" style="border:0px;">
-<tr>
-<td border="0"  width="51%" height="322" align="center"><a style="text-decoration:none;" target="_blank" href="http://flyer.fr/frfr/flyerfr-vous-chouchoute"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/im1.jpg" /></a></td>
-<td border="0"  align="center" width="48%"><a style="text-decoration:none;" target="_blank" href="http://flyer.fr/frfr/bonneaffaire"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/im2.jpg" /></a></td>
+<tr><td width="635" height="9"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/bermail/top1.jpg" width="635" height="9" style="display:block"></td>
+</tr><tr>
+<td border="1" style="border-right:1px solid #e1e1e1;border-left:1px solid #e1e1e1;font-family:Arial,Helvetica,sans-serif">
+	<table border="0" width="100%">
+	<tbody>
+		<tr>
+			<td border="0" width="22" style="border:0px;font-family:Arial,Helvetica,sans-serif"></td>
+			<td width="154" height="85" style="border:0px;font-family:Arial,Helvetica,sans-serif">
+				<img src="https://ci5.googleusercontent.com/proxy/bh-sihJXwe3z-xsx5MpIKUY3hBeJMzc9IrSBT1f7p4DuMZMa1IvYqUt_Cei_YJUCsNt7IRcFlOINa4xE8ZgP6uZwWyMEU8UhlhW2XQnGBUE8bKnuSAD2a69APrE=s0-d-e1-ft#http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/logo.png" border="0">
+			</td>
+			<td width="400" align="right" style="border:0px;font-family:Arial,Helvetica,sans-serif">
+				<strong style="color:rgb(118,183,0);font-size:24px">Inscription réussie</strong>
+				<br>
+				<span style="color:rgb(100,100,100);font-size:17px">Merci de votre inscription à notre newsletter.</span>
+			</td>
+			<td border="0" width="26" style="border:0px;font-family:Arial,Helvetica,sans-serif"></td>
+		</tr>
+	</tbody>
+	</table>
+</td>
 </tr>
 <tr>
-<td border="0"  align="center"><a style="text-decoration:none;" target="_blank" href="http://flyer.fr/frfr/papier-peint-photo-personnalisé"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/im3.jpg" /></a></td>
-<td border="0"  align="center"><a style="text-decoration:none;" target="_blank" href="http://flyer.fr/frfr/créations-en-ligne"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/im4.jpg" /></a></td>
+<td height="38" style="border-right:1px solid #e1e1e1;border-left:1px solid #e1e1e1;font-family:Arial,Helvetica,sans-serif" border="1">
+	<table valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0">
+	<tbody>
+		<tr bgcolor="#3c3c3a" height="45px">
+            <td width="28" height="45" style="border-bottom: 4px solid #ff6600;" border="0">&nbsp;</td>
+			<td width="22" style="border-bottom: 4px solid #ff6600;"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/bermail/home.jpg"></td>
+			<td width="65" bgcolor="#3c3c3a" style="text-decoration: none;font-size: 13px;color: #ffffff;line-height: 16.52px;border-bottom: 4px solid #ff6600;font-family:Arial,Helvetica,sans-serif" border="0">
+				<a href="http://flyer.fr/frfr/" style="text-decoration: none;font-size: 13px;color: #ffffff;line-height: 19.52px;font-family: Arial,Helvetica,sans-serif;" target="_blank">
+					<font>ACCEUIL</font>
+				</a>
+			</td>
+			<td width="8" border="0" style="border-bottom: 4px solid #ff6600;">&nbsp;</td>
+			<td width="9" style="border-bottom: 4px solid #ff6600;"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/bermail/point.jpg"></td>
+			<td width="9" border="0" style="border-bottom: 4px solid #ff6600;">&nbsp;</td>
+			<td width="140" bgcolor="#3c3c3a" style="border-bottom: 4px solid #ff6600; font-family: Arial,Helvetica,sans-serif; font-size: 13px;" border="0">
+				<a href="http://flyer.fr/frfr/nos-produits" style="text-decoration: none;font-size: 13px;color: #ffffff;line-height:19.52px;font-family:Arial,Helvetica,sans-serif;" target="_blank">
+				<font>NOS PRODUITS</font>
+			</a></td>
+			<td width="8" border="0" style="border-bottom: 4px solid #ff6600;">&nbsp;</td>
+			<td width="9" style="border-bottom: 4px solid #ff6600;"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/bermail/point.jpg"></td>
+			<td width="8" border="0" style="border-bottom: 4px solid #ff6600;">&nbsp;</td>
+			<td width="113" style="border-bottom: 4px solid #ff6600;font-family:Arial,Helvetica,sans-serif" border="0">
+				<a href="http://flyer.fr/frfr/cr%C3%A9ations-en-ligne" style="text-decoration: none;font-size: 13px;color: #ffffff;line-height:19.52px;font-family:Arial,Helvetica,sans-serif;" target="_blank">
+				<font>NOS MODELES</font>
+				</a>
+			</td>
+			<td width="10" border="0" style="border-bottom: 4px solid #ff6600;">&nbsp;</td>
+			<td width="9" style="border-bottom: 4px solid #ff6600;"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/bermail/point.jpg"></td>
+			<td width="9" border="0" style="border-bottom: 4px solid #ff6600;">&nbsp;</td>
+			<td width="143" style="border-bottom: 4px solid #ff6600;font-family:Arial,Helvetica,sans-serif" border="0">
+				<a href="http://flyer.fr/frfr/bonneaffaire" style="text-decoration: none;font-size: 13px;color: #ffffff;line-height: 19.52px;font-family:Arial,Helvetica,sans-serif;" target="_blank">
+					<font> BONNES AFFAIRES</font>
+ 				</a>
+			</td>
+			<td width="30" border="0" style="border-bottom: 4px solid #ff6600;">&nbsp;</td>
+		</tr>
+	</tbody>
+	</table>
+</td>
 </tr>
-<tr height="15px">
-<td border="0"  >&nbsp;</td> <td border="0" >&nbsp;</td> <td border="0"  width="1%">&nbsp;</td>
-</tr> 
+<tr height="30px">
+	<td border="1" style="border-right:1px solid #e1e1e1;border-left:1px solid #e1e1e1;font-family:Arial,Helvetica,sans-serif">&nbsp;</td>
+</tr>
+<tr>
+<td border="1" style="border-right:1px solid #e1e1e1;border-left:1px solid #e1e1e1;font-family:Arial,Helvetica,sans-serif">
+	<table valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0" style="border:0px">
+	<tbody>
+		<tr>
+			<td border="0" height="15" width="30px" style="border:0px;font-family:Arial,Helvetica,sans-serif"></td>
+			<td border="0" style="border:0px;font-family:Arial,Helvetica,sans-serif">
+				<font style="font-family:Helvetica,arial;font-size:18px;color:rgb(100,100,100);line-height:18px">
+					<strong>Nous vous remercions de l\'intérêt que vous portez à Flyer.fr et de votre inscription à notre newsletter.
+</strong>
+				</font>
+			</td>
+			<td border="0" height="15px" style="border:0px;font-family:Arial,Helvetica,sans-serif"></td>
+		</tr>
+		<tr height="17px">
+			<td border="0" style="border:0px;font-family:Arial,Helvetica,sans-serif">&nbsp;</td>
+			<td border="0" style="border:0px;font-family:Arial,Helvetica,sans-serif">&nbsp;</td>
+			<td border="0" style="border:0px;font-family:Arial,Helvetica,sans-serif">&nbsp;</td>
+		</tr>
+		<tr>
+			<td border="0" width="14" style="border:0px;font-family:Arial,Helvetica,sans-serif"></td>
+			<td border="0" style="border:0px;font-family:Helvetica,arial;font-size:13px;color:rgb(100,100,100);line-height:18px">
+				À partir d\'aujourd\'hui, vous pourrez recevoir nos offres et découvrir toutes les           nouveautés sur notre activité et nos produits.</td>
+			<td border="0" width="15" style="border:0px;font-family:Arial,Helvetica,sans-serif"></td>
+		</tr>
+		<tr>			
+		</tr>	
+	</tbody>
+	</table>
+</td>
+</tr>
+<tr>
+<td height="600" align="center" style="border-right:1px solid #e1e1e1;border-left:1px solid #e1e1e1;font-family:Arial,Helvetica,sans-serif" border="1">
+	<table align="center" width="100%" border="0" style="border:0px">
+	<tbody>
+		<tr>
+			<td border="0" width="51%" height="322" align="center" style="border:0px;font-family:Arial,Helvetica,sans-serif">
+				<a href="http://flyer.fr/frfr/flyerfr-vous-chouchoute" style="text-decoration:none" target="_blank">
+					<img src="https://ci4.googleusercontent.com/proxy/hpm8mV3CRimbTEwVqxajpAks1AjgwIvMoRndKpAkEOEUeew11mmpaXx_c3CH1itb3v0K2YY5yqMMyTaRw3ZsJcchErdvheob4FTJER7QpHBlR7puvoyHwwpf9A=s0-d-e1-ft#http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/im1.jpg">
+				</a>
+			</td>
+			<td border="0" align="center" width="48%" style="border:0px;font-family:Arial,Helvetica,sans-serif">
+				<a href="http://www.flyer.fr/cart/add/%7B%22codes%22%3A%5B%22WDEAL42%22%5D%2C%22items%22%3A%5B%7B%22productPriceGroupId%22%3A10268%2C%22quantity%22%3A50%2C%22vat%22%3A%220.2100%22%7D%5D%7D" style="text-decoration:none" target="_blank">
+					<img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/lpbonneaffaire/alterbonneaff/mail_deal_Calander.jpg">
+				</a>
+			</td>
+		</tr>
+		<tr>
+			<td border="0" align="center" style="border:0px;font-family:Arial,Helvetica,sans-serif">
+				<a href="http://flyer.fr/frfr/papier-peint-photo-personnalis%C3%A9" style="text-decoration:none" target="_blank">
+					<img src="https://ci4.googleusercontent.com/proxy/WotOpaGy1loJYb-UHsBwgVrtDKFxdzhp7SNo0o5efOC9BIPb8g41CG7F5FZWkNXGhUhwMBueKhSSpD511w36CJbpgJVtx_nzcW4PmKq6jVwGOJsL3vOHj0Genw=s0-d-e1-ft#http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/im3.jpg">
+				</a>
+			</td>
+			<td border="0" align="center" style="border:0px;font-family:Arial,Helvetica,sans-serif">
+				<a href="http://flyer.fr/frfr/cr%C3%A9ations-en-ligne" style="text-decoration:none" target="_blank">
+					<img src="https://ci5.googleusercontent.com/proxy/IIRrzC4YBVwBavjh-jyPeylwo3QpihffjnxZNeqqvRDjnBI3Ezm2cE-hJLpPgTX7_eP8IkxsMO38OCqplOIrEEsDqtcD_4_lroYy1GA4-2j2l5KH8OvjcBPaGg=s0-d-e1-ft#http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/im4.jpg">
+				</a>
+			</td>
+		</tr>
+		<tr height="14px">
+			<td height="20" style="border:0px;font-family:Arial,Helvetica,sans-serif" border="0">&nbsp;</td>
+			<td border="0" style="border:0px;font-family:Arial,Helvetica,sans-serif">&nbsp;</td>
+			<td border="0" width="1%" style="border:0px;font-family:Arial,Helvetica,sans-serif">&nbsp;</td>
+		</tr>
+	</tbody>
+	</table>
+</td>
+</tr>
+<tr>	 
+	<td height="28" align="center" bgcolor="#ff6600" style="border:0px;font-family:Arial,Helvetica,sans-serif;font-size: 17px;line-height: 20,06px;color: #ffffff;font-weight: bold;text-align: center;" border="0">
+		Nos avantages
+	</td>
+</tr>  
+<tr>
+        <td width="620" height="10" style="border-left:1px solid #e1e2dd;border-right:1px solid #e1e2dd;">
+          <img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/bermail/trans1.jpg" width="633" height="10" style="display:block"></td>
+      </tr>
+      <tr>
+        <td style="border-left:1px solid #e1e1e1;border-right:1px solid #e1e1e1;background-color:#ececec" bgcolor="#ececec"><table width="618" border="0" cellspacing="0" cellpadding="0">
+          <tbody><tr>
+            <td width="125" height="42" align="right" valign="middle"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/bermail/ico1.png"></td>
+            <td width="21" rowspan="2" align="left" valign="middle"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/bermail/trans2.jpg"></td>
+            <td width="105" height="42" align="left" valign="middle"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/bermail/ico2.png"></td>
+             <td width="21" rowspan="2" align="left" valign="middle"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/bermail/trans2.jpg"></td>
+            <td width="97" height="42" align="left" valign="middle"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/bermail/ico3.png"></td>
+             <td width="21" rowspan="2" align="left" valign="middle"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/bermail/trans2.jpg"></td>
+            <td width="82" height="42" align="left" valign="middle"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/bermail/ico4.png"></td>
+             <td width="21" rowspan="2" align="left" valign="middle"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/bermail/trans2.jpg"></td>
+            <td width="125" height="42" align="left" valign="middle"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/bermail/ico5.png"></td>
+          </tr>
+          <tr>
+            <td height="36" align="right" valign="middle"><p style="color:#646464;font-size:11px;font-family:arial;text-align:center;font-weight:bold;display:block">Des impressions de très haute qualité</p></td>
+            <td height="36" align="left" valign="middle"><p style="color:#646464;font-size:11px;font-family:arial;text-align:center;font-weight:bold;display:block">Une livraison ultra rapide</p></td>
+            <td height="36" align="left" valign="middle"><p style="color:#646464;font-size:11px;font-family:arial;text-align:center;font-weight:bold;display:block">Des petits prix</p></td>
+            <td height="36" align="left" valign="middle"><p style="color:#646464;font-size:11px;font-family:arial;text-align:center;font-weight:bold;display:block">Un service rapproché</p></td>
+            <td height="36" align="left" valign="middle"><p style="color:#646464;font-size:11px;font-family:arial;text-align:center;font-weight:bold;display:block">Des processus simplifiés</p></td>
+          </tr>
+        </tbody></table></td>
+      </tr>
+      <tr>
+        <td width="620" height="9"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/bermail/bas1.jpg" width="635" height="9" style="display:block"></td>
+      </tr>
+<tr>	 
+	<td border="" height="156" align="center" style="border-right:1px solid #e1e1e1;border-left:1px solid #e1e1e1;font-family:Arial,Helvetica,sans-serif">
+    <img src="http://pc-images.s3-eu-west-1.amazonaws.com/images.flyer.fr/emailling/footer.png">
+	</td>	 
+</tr>
+
+
+ <tr>
+ 	 
+ 	<td height="15px" style="border-right:1px solid #e1e1e1;border-left:1px solid #e1e1e1;"></td>
+ 	 
+ </tr>
+
+<tr>
+  <td height="42" border="0" align="center" style="border-right:1px solid #e1e1e1;border-left:1px solid #e1e1e1;font-family:Arial,Helvetica,sans-serif">
+    <table width="25%" align="center" border="0">
+      <tbody>
+        <tr>
+          <td border="0" style="border:0px;font-family:Arial,Helvetica,sans-serif">
+            <a>
+              <img src="https://ci6.googleusercontent.com/proxy/0NEFB9LQt7Eu5Uquf_C8XBZWao_mj6azxA3yXWWE28QxcpbU1k2ZVX0xhiR1mBBp8sFT3U7GROo87-kd-Cyx0xmowCkg3YgpQ5ULrGpzMwmj101tmygSrUNiSEWtySP9xl8=s0-d-e1-ft#http://pc-images.s3-eu-west-1.amazonaws.com/images.flyer.fr/emailling/l1.png">
+              </a>
+            </td>
+          <td border="0" style="border:0px;font-family:Arial,Helvetica,sans-serif">
+            <a>
+              <img src="https://ci4.googleusercontent.com/proxy/MGIsjuYK_pBhOQMtkmPTQGgmTAeQtgRgKlQFniToQMna_CLsE4h0fPxqXfR5DiVdOf_efyxn-EeqIzgIX5ZfXBIwuu6xxoB_fElzw0CGyfkjF2qp7z89gn1NiEoDF9K7zLI=s0-d-e1-ft#http://pc-images.s3-eu-west-1.amazonaws.com/images.flyer.fr/emailling/l2.png">
+              </a>
+            </td>
+          <td border="0" style="border:0px;font-family:Arial,Helvetica,sans-serif">
+            <a>
+              <img src="https://ci5.googleusercontent.com/proxy/1zMFwsedxij1YThAcXSHg9G_pgmPxQPDWmHmKH4Fu6qHk7pLvPYGbrq56Gf0JvgcUeTK6CM2SKx33KHjXEvuzpHAAs_npN3rypwmQxwN0pJgOB1VHohG3e-Abeaydf8QlAQ=s0-d-e1-ft#http://pc-images.s3-eu-west-1.amazonaws.com/images.flyer.fr/emailling/l3.png">
+              </a>
+            </td>
+          <td border="0" style="border:0px;font-family:Arial,Helvetica,sans-serif">
+            <a>
+              <img src="https://ci6.googleusercontent.com/proxy/p7OUh4AphqapynFkGg_Dl1IZwlvFJZ715cftaoivjKu2cinavSihJnQnsEK2HZtjKKFcUoRhAQ0qK081f1jA3xnIJR3DlXRyM-10Wyqgq68jo3rHZTqOCzoWdSugqyM0h0g=s0-d-e1-ft#http://pc-images.s3-eu-west-1.amazonaws.com/images.flyer.fr/emailling/l4.png">
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </td>
+</tr>
+<tr>
+	<td height="26" align="center" border="0" style="border-right:1px solid #e1e1e1;border-left:1px solid #e1e1e1;font-family:Arial,Helvetica,sans-serif;color:rgb(153,153,153);font-size:12px">Si vous ne souhaitez plus recevoir ces messages de la part de
+		 <a href="http://FLYER.FR" target="_blank" style="color:#2E79BE">FLYER.FR</a>, veuillez vous&nbsp;
+		 <a href="http://www.flyer.fr/frfr/newsletter/unsubscribe" style="color:#2E79BE;text-decoration:none;">Désabonnez-vous</a>.
+	</td>
+</tr>
+<tr>
+	<td align="center" border="0" style="border-right:1px solid #e1e1e1;border-bottom:1px solid #e1e1e1;border-left:1px solid #e1e1e1;font-family:Arial,Helvetica,sans-serif;color:rgb(67,67,67);font-size:12px">
+	© 2014 <a href="http://FLYER.FR" target="_blank" style="color:#2E79BE">FLYER.FR</a> | Tous droits réservés.
+	</td>
+</tr>
+</tbody>
 </table>
 </td>
 </tr>
 <tr>
-<td height="127" border="0" >
-<img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/block.jpg" />
-</td>
 </tr>
-<tr>
-<td border="0" height="166" align="center"><img src="http://pc-images.s3-eu-west-1.amazonaws.com/images.flyer.fr/emailling/footer.png" /></td>
-</tr>
-<tr>
-<td height="42" border="0" align="center">
-<table width="25%" align="center" border="0px">
-<tr>
-<td border="0"><a href="#"><img src="http://pc-images.s3-eu-west-1.amazonaws.com/images.flyer.fr/emailling/l1.png" /></a></td>
-<td border="0"><a href="#"><img src="http://pc-images.s3-eu-west-1.amazonaws.com/images.flyer.fr/emailling/l2.png" /></a></td>
-<td border="0"><a href="#"><img src="http://pc-images.s3-eu-west-1.amazonaws.com/images.flyer.fr/emailling/l3.png" /></a></td>
-<td border="0"><a href="#"><img src="http://pc-images.s3-eu-west-1.amazonaws.com/images.flyer.fr/emailling/l4.png" /></a></td>
-</tr>
-</table>
-</td>
-</tr>
-<tr>
-	<td height="26" align="center" border="0" style="color:#999999;font-size:12px;">Si vous ne souhaitez plus recevoir ces messages de la part de FLYER.FR, veuillez vous <a href="http://flyer.fr/frfr/newsletter/unsubscribe" style="color:#666666;text-decoration:none;">désabonner</a>.</td>
-</tr>
-<tr>
-	<td align="center" border="0" style="color:#434343;font-size:12px;">© 2014 FLYER.FR | Tous droits réservés.</td>
-</tr>
+</tbody>
 </table>
 </body>
 </html>';
@@ -367,7 +508,7 @@ function pcnewsletters_mail_send_admin($form, &$form_state){
                             </table>';
     $language = language_default();
     $send = TRUE;
-    $result = drupal_mail($module, $key, variable_get('pcnewsletters', 'info@flyer.fr , contact@agenceoneo.com '), language_default(), $parms, $from, $send);
+    $result = drupal_mail($module, $key, variable_get('pcnewsletters', 'contact@flyer.fr , contact@agenceoneo.com '), language_default(), $parms, $from, $send);
     $sendMeailAdmin = FALSE;
     if ($result['result'] == TRUE) {
         $sendMeailAdmin = TRUE;

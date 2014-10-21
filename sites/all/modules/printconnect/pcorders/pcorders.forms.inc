@@ -6,7 +6,6 @@ function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALS
   $order = \printconnect\Orders\Factory::Get($orderId, false);
   $customer = \printconnect\Customers\Factory::Get($order->customer);
   drupal_set_title(t('Details of your order @number : @status', array('@number' => $order->number, '@status' => $order->status)));
- 
       $inline_script ="<!-- Facebook Conversion Code for Commande Flyer.fr -->
                         <script>(function() {
                         var _fbq = window._fbq || (window._fbq = []);
@@ -34,7 +33,7 @@ function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALS
   
 
   // drupal_set_title(t('Order confirmation - @number - ', array('@number' => $order->number)));
-
+  
   $form['status'] = array(
       '#markup' => t('Your order is now in status %status', array('%status' => $order->status)),
   );
@@ -139,7 +138,7 @@ function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALS
           '#type' => 'container',
           '#attributes' => array('class' => array('social')),
           'facebook' => array(
-              '#markup' => '<div class="fb-like" data-href="' . $base_url . '" data-send="false" data-width="450" data-show-faces="true" data-action="recommend"></div>
+          '#markup' => '<div class="fb-like" data-href="' . $base_url . '" data-send="false" data-width="450" data-show-faces="true" data-action="recommend"></div>
                         <div id="fb-root"></div>
                       <script>(function(d, s, id) {
                         var js, fjs = d.getElementsByTagName(s)[0];
@@ -243,8 +242,10 @@ function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALS
     '#suffix' => '</h2>',
     );
    */
+  $totalPrice = 0;
+  $idproducts = null;
   foreach ($order->productItems as $item) {
-
+  
     $form['order']['details']['item'][$item->id] = array(
         '#type' => 'container',
         '#attributes' => array('class' => array('item', 'clearfix'))
@@ -330,7 +331,8 @@ function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALS
         '#markup' => $item->quantity . ' ' . $item->configuration->name,
         '#suffix' => '</h3>',
     );
-
+    
+    $totalPrice += $price; // total product price for tracking vente
 
     $rows = array();
 
@@ -370,9 +372,11 @@ function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALS
         );
       }
     }
+    
+    $idproducts .= $item->id.','; // ids product for tracking
   }
 
-  $form['order']['extra'] = _pcorders_order_form_build_overview($order);
+    $form['order']['extra'] = _pcorders_order_form_build_overview($order);
     if ($_SESSION['shop_vat'] != 0) {
         $form['order']['priceblock'] = array(
             '#markup' => theme('priceblock', array(
@@ -405,8 +409,16 @@ function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALS
   $form_state['storage']['order'] = $order;
   $form_state['storage']['customer'] = $customer;
   $form_state['storage']['confirmation'] = $confirmation;
-
-
+  
+    $form['tracking_vente'] = array(
+      '#markup' => '<script type="text/javascript" src="https://action.metaffiliation.com/trk.php?mclic=S4ADAB1011&argmon='.$totalPrice.'&argann='.$orderId.'" ></script>
+                    <noscript><img src="https://action.metaffiliation.com/trk.php?mclic=N4ADAB1011&argmon='.$totalPrice.'&argann='.$orderId.'" width="1" height="1" border="0" />
+                    </noscript>',
+    );
+    $form['tracking_products'] = array(
+      '#markup' => '<script type="text/javascript" src="http://img.metaffiliation.com/u/15/p44459.js?zone=fincommande&montant='.$totalPrice.'&listeids='.$idproducts.'&idtransaction='.$orderId.'"></script>',
+    );
+   
 //$form['order']['#value'] = $order;
 //$form['customer']['#value'] = $customer;
 //$form['confirmation']['#value'] = $confirmation;

@@ -31,7 +31,8 @@ use printconnect\Dal\ForbiddenException;
 
     public function Get($entity, $params, $language = FALSE) {
       $url = $this->GetUrl($entity, $params, FALSE, $language);
-      $json = $this->Call($url);
+      $json = $this->fromCache($url);
+//      $json = $this->Call($url);
       return json_decode($json);
     }
 
@@ -123,7 +124,8 @@ use printconnect\Dal\ForbiddenException;
 
     public function GetList($entity, $params, $language = FALSE) {
       $url = $this->GetUrl($entity, $params, FALSE, $language);
-      $json = $this->Call($url);
+      $json = $this->fromCache($url);
+//      $json = $this->Call($url);
       $items = json_decode($json);
       if ($entity == 'pickuppoint/service/store') {
 	$json = utf8_encode($json);
@@ -240,6 +242,67 @@ use printconnect\Dal\ForbiddenException;
       }
       return $errors;
     }
+//--------------file cache-------------------
+        public function fromCache($urlFinal, $fromCache = true) {
+            $urls = array('cart', 'customer', 'shipping-date', 'billing-account');
+            $dontCache = false ;
+            foreach ($urls as $item) {
+                if (preg_match("@$item@", $urlFinal)) {
+                    $dontCache = true;
+                    break;
+                }
+            }
+            $data = $this->getCacheData($urlFinal);
+            if ($fromCache && !empty($data)) {
+                return $data;
+            } else {
+                $data = $this->call($urlFinal);
+                $result = json_decode($data);
+                if (isset($result) == true && $dontCache == false) {
+                    $this->saveCacheData($urlFinal, $data);
+                }
+            }
+            return $data;
+        }
 
+        public function saveCacheData($key, $data) {
+            $group = $this->getGroup($key);
+            $saveData = "$group|$key|$data\n";
+            $fp = fopen('cache.txt', 'a+');
+            fwrite($fp, $saveData);
+            fclose($fp);
+        }
+
+        public function getGroup($restUrl) {
+            $groups = array(
+                "price" => "price",
+                "product" => "product",
+                "template" => "template",
+            );
+            $groupKey = "standard" ;
+            foreach ($groups as $key => $group) {
+                if (preg_match("@$group@", $restUrl)==1) {
+                    $groupKey = $key;
+                    break;
+                }
+            }
+            return $groupKey;
+        }
+
+        public function getCacheData($key) {
+            $handle = false;
+            if (($handle = fopen("cache.txt", "r")) !== FALSE) {
+                while (($buffer = fgets($handle)) !== false) {
+                    $data = explode("|", $buffer);
+                    if ($key == $data[1]) {
+                        return $data[2];
+                    }
+                }
+                fclose($handle);
+                $handle = false;
+            }
+            return $handle;
+        }
+//---------------------------------    
   }
 }

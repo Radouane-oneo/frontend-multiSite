@@ -588,6 +588,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
     $form['invoice']['address']['current']['select'] = array(
         '#type' => 'select',
         '#title' => t('Select from addressbook'),
+        '#attributes' => array('class' => array('selectBilling')),
         '#options' => $addresses,
         '#default_value' => $defaultBillingAddress ? $defaultBillingAddress->id : 0,
         '#ajax' => array(
@@ -726,6 +727,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
     $form['shipping']['detail']['current']['select'] = array(
         '#type' => 'select',
         '#title' => t('Select from addressbook'),
+        '#attributes' => array('class' => array('selectBilling')),
         '#options' => $AllShippingAddress,
         '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->id : 0,
         '#ajax' => array(

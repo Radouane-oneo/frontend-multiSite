@@ -65,6 +65,11 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 	margin-left: 5px;
 }
 
+.page-checkout-invoiceanddelivery #shipping-address .select2-container .select2-choice{
+  width: 428px;
+  margin-left: 0;
+}
+
 .page-checkout-invoiceanddelivery #shipping-address .form-item-shipping-detail-contact{
     float: left!important;
 }

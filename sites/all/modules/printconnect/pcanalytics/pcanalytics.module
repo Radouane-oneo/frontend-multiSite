@@ -193,7 +193,6 @@ function pcanalytics_form_pcorders_order_form_alter(&$form, $form_state, $form_i
             }
         }
         $googlePurchaseTracking .= "
-        _gaq.push(['_trackPageview']);
         _gaq.push(['_trackTrans']);
         (function() {
         var ga = document . createElement('script');

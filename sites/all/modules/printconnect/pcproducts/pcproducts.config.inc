@@ -199,6 +199,7 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
         $qty = $defaults->quantity;
     }
     $oldValueSelected = array();
+    $tokeep = $newItems;
     $tree = \printconnect\Products\Configurations\Factory::GetTree($productId, $newItems);
 
 
@@ -274,7 +275,7 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
 
   $newItems = array_unique($newItems);
 
-    $defaults = \printconnect\Products\Configurations\Factory::GetDefaults($productId, $newItems);
+    $defaults = \printconnect\Products\Configurations\Factory::GetDefaults($productId, $tokeep);
     $priceGroupId = $defaults->priceGroupId;
     $allOptions = \printconnect\Products\Options\Factory::GetOptions($productId, $newItems);
     $allOptions = $allOptions->toKeyedArray();
@@ -564,7 +565,7 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
     );
 
     if (count($newItems)) {
-        $templates = \printconnect\Products\Templates\Factory::GetTemplates($productId, $newItems);
+        $templates = \printconnect\Products\Templates\Factory::GetTemplates($productId, $tokeep);
         $templates->EnsureLoaded();
         if (count($templates->items)) {
             $template = $templates->items[0];

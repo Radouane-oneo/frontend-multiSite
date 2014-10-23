@@ -21,7 +21,7 @@ stylesheets-conditional[IE][all][] = css/ie.css
 #stylesheets[all][] = css/stylelsdr2.css
 #stylesheets[all][] = css/style470f.css
 #stylesheets[all][] = css/preview470f.css
-
+stylesheets[all][] = css/select2.css
 
 scripts[] = libraries/jQueryui/jQueryui.js
 scripts[] = libraries/Jcookies/cookies.js
@@ -42,7 +42,7 @@ scripts[] = js/selectivizr-min.js
 
 scripts[] = js/flyer.js
 #scripts[] = js/sldr.js
-
+scripts[] = js/select2.min.js
 
 
 regions[announcements] = Announcements

@@ -910,15 +910,22 @@ function pccart_cart_form2($form, &$form_state) {
                     $params->codes[] = $item->discountId;
                 }
             }
-
+            $listProductId = null;
+            $totalPrice = null;
+            
             foreach ($cart->productItems as $item) {
                 $object = new stdClass();
                 $object->productPriceGroupId = $item->productPriceGroupId;
                 $object->quantity = $item->quantity;
                 $object->vat = $item->vat;
                 $params->items[] = $object;
+                
+                $totalPrice += $item->price;
+                $listProductId .= $item->configuration->productId.',';
             }
-
+            $form['trackingVenteCart'] = array(
+                    '#markup' => '<script type="text/javascript" src="http://img.metaffiliation.com/u/15/p44459.js?zone=panier&montant='.$totalPrice.'&listeids='.$listProductId.'"></script>',
+            );
             $url = url('cart/add/' . json_encode($params), array('absolute' => TRUE));
 
             $form['link'] = array(

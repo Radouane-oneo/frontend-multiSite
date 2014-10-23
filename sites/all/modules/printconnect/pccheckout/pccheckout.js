@@ -18,6 +18,7 @@
   });
 
   $(document).ready(function(){
+    $(".selectBilling").select2();
       if(typeof $("#isUserCompany")[0] != "undefined"){
           
           if($("#companyInput").val() != ''){
@@ -105,6 +106,7 @@
        jQuery('form fieldset.tohiding div').hide();
        jQuery(target + " legend").show();
        jQuery(target + " div").show();
+       jQuery(".select2-display-none").hide();
       });
 
       $('#pccheckout-checkout-form').submit(function(){

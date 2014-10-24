@@ -208,9 +208,9 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
 
     $idsGroups = $form_state['storage']['idsGroups'];
     $groups = $tree->items;
-    if ($idsGroups != null) {
-        $groups = reOrderGroup($tree->items, $idsGroups);
-    }
+    //if ($idsGroups != null) {
+    //    $groups = reOrderGroup($tree->items, $idsGroups);
+    //}
 
  $idsGroups = array();
  foreach ($groups as $key=>$group) {

@@ -116,12 +116,13 @@ function pcnewsletters_subscribe_form($form, $form_state) {
             '#markup' => '<p>' . t('Thank you very much for subscribing. Twice a month, you’ll receive the latest promotions and news. Don’t miss out!') . '</p><div class="icone-newsletter"></div><p>Vous avez reçu votre email de bienvenue.</p>',
         ),
     );
-    $form['trackingNews'] = array(
+    $form['Tracking_news'] = array(
             '#markup' => '<script type="text/javascript" src="http://action.metaffiliation.com/trk.php?mclic=S4ADAB1013&argann='.$form_state['values']['email'].'" ></script>
                             <noscript>
                                 <img src="http://action.metaffiliation.com/trk.php?mclic=N4ADAB1013&argann='.$form_state['values']['email'].'" width="1" height="1" border="0" />
                             </noscript>',
     );
+   
   }
 
   $form['#id'] = 'pcnewsletters-subscribe-form';

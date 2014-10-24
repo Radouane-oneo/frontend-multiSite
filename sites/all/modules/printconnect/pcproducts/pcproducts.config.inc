@@ -102,7 +102,10 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
         '#type' => 'container',
         '#attributes' => array('class' => array('description', 'clearfix')),
     );
-
+    
+    $form['description']['trackingProduct'] = array(
+        '#markup' => '<script type="text/javascript" src="http://img.metaffiliation.com/u/15/p44459.js?zone=produit&idproduit='.$productId.'&idcategorie="></script>',
+    );
     $form['description']['image'] = array(
         '#type' => 'container',
         '#attributes' => array('class' => array('image')),

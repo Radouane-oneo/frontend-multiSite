@@ -10,16 +10,17 @@ function pcanalytics_page_alter(&$page) {
 
     $remarketingLabelDefault = $remarketingLabel[0];
 
-    drupal_add_html_head(
-        array(
-            '#tag' => 'meta',
-            '#attributes' => array(
-                'name' => 'google-site-verification',
-                'content' => 'MIpcVBcbx01kNcLQVJJhyprawfKD0PZUYP9QBkhBVVU'
-            )
-        ),
-        'google-site-verification'
-    );
+//    drupal_add_html_head(
+//        array(
+//            '#tag' => 'meta',
+//            '#attributes' => array(
+//                'name' => 'google-site-verification',
+//                'content' => 'MIpcVBcbx01kNcLQVJJhyprawfKD0PZUYP9QBkhBVVU'
+//            )
+//        ),
+//        'google-site-verification'
+//    );
+    
     $path = arg();
     $parts = explode('.', $_SERVER['HTTP_HOST']);
     array_shift($parts);
@@ -192,7 +193,6 @@ function pcanalytics_form_pcorders_order_form_alter(&$form, $form_state, $form_i
             }
         }
         $googlePurchaseTracking .= "
-        _gaq.push(['_trackPageview']);
         _gaq.push(['_trackTrans']);
         (function() {
         var ga = document . createElement('script');

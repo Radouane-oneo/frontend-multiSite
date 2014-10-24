@@ -232,7 +232,9 @@ function pccart_cart_form2($form, &$form_state) {
         $form['cart']['previousVat'] = array(
             '#markup' =>'<div style="display:none;" id ="oldVat">'.$_SESSION['shop_vat'].'</div>',
         );
-       
+        
+        $listProductId = null;
+        $totalPrice = null;
         foreach ($cart->productItems as $item) {
             
             if (isset($item->emailDesigner)) {
@@ -302,6 +304,10 @@ function pccart_cart_form2($form, &$form_state) {
                 '#theme' => 'item_list',
                 '#items' => $list,
             );
+            
+            $totalPrice += $item->originPrice;
+            $listProductId .= $item->configuration->productId.',';
+            
 
 //            $shop = \printconnect\Shop\Configuration\Factory::Current();
 //            \printconnect\Shop\Configuration\Factory::LoadConfiguration($shop);
@@ -559,6 +565,7 @@ function pccart_cart_form2($form, &$form_state) {
             );
             unset($_SESSION['discountId']);
             foreach ($cart->discountItems as $item) {
+                
                 $form['cart']['discounts'][$item->discountId] = array(
                     '#type' => 'container',
                 );
@@ -910,15 +917,16 @@ function pccart_cart_form2($form, &$form_state) {
                     $params->codes[] = $item->discountId;
                 }
             }
-
+            
             foreach ($cart->productItems as $item) {
                 $object = new stdClass();
                 $object->productPriceGroupId = $item->productPriceGroupId;
                 $object->quantity = $item->quantity;
                 $object->vat = $item->vat;
                 $params->items[] = $object;
+                
             }
-
+           
             $url = url('cart/add/' . json_encode($params), array('absolute' => TRUE));
 
             $form['link'] = array(
@@ -929,6 +937,7 @@ function pccart_cart_form2($form, &$form_state) {
         }
 
         $form['isFilled'] = array('#value' => $cart->isFilled);
+        $form['trackingVenteCart'] = array('#markup' => '<script type="text/javascript" src="http://img.metaffiliation.com/u/15/p44459.js?zone=panier&montant='.$totalPrice.'&listeids='.$listProductId.'"></script>',);
     }
 
     $form_state['storage']['cart'] = $cart;

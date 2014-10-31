@@ -233,6 +233,7 @@ function flyer_preprocess_html(&$vars) {
 }
 
  function flyer_js_alter(&$javascript) {
+	if (arg(0) != 'cart')
 unset($javascript['sites/all/themes/printconnect/flyer/libraries/jquery.selectBox/jquery.selectBox.js']);
 	if ($_SESSION['isfront'] == 1) {
             unset($javascript['sites/all/modules/printconnect/pcbpost/pcbpost.js']);

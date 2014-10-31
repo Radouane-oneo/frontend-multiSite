@@ -1,215 +1,11 @@
-<?php
-
-use \printconnect\Newsletters\Subscriptions\Factory;
-use \printconnect\Customers;
-
-function pcnewsletters_menu() {
-  $items['newsletter'] = array(
-      'title' => 'Newsletter',
-      'page callback' => 'drupal_get_form',
-      'page arguments' => array('pcnewsletters_subscribe_form'),
-      'access arguments' => array('access content'),
-          //'file' => 'pcnewsletters.forms.inc',
-  );
-  $items['newsletter/subscribe'] = array(
-      'title' => 'Subscribe',
-      'access arguments' => array('access content'),
-  );
-  $items['newsletter/unsubscribe'] = array(
-      'title' => 'Unsubscribe',
-      'page callback' => 'drupal_get_form',
-      'page arguments' => array('pcnewsletters_unsubscribe_form'),
-      'access arguments' => array('access content'),
-          // 'file' => 'pcnewsletters.forms.inc',
-  );
-  return $items;
-}
-
-/*
-  function pcnewsletters_block_info() {
-  $blocks['subscribe'] = array(
-  'info' => t('Newsletter subscribe'),
-  );
-  return $blocks;
-  }
-
-  function pcnewsletters_block_view($delta = '') {
-  module_load_include('inc', 'pcnewsletters', 'pcnewsletters.forms');
-  $block['title'] = t('Subscribe');
-  $block['content'] = drupal_get_form('pcnewsletters_subscribe_form');
-  return $block;
-  }
- */
-
-function pcnewsletters_form_pccheckout_checkout_form_alter(&$form, $form_state, $form_id) {
-  if (isset($form['personal'])) {
-    /* $form['personal']['subscribe'] = array(
-      '#type' => 'checkbox',
-      '#title' => t('Subscribe to newsletter'),
-      );
-      array_unshift($form['personal']['submit']['#submit'], 'pcnewsletters_form_pccheckout_form_submit');
-     */
-  }
-}
-
-function pcnewsletters_form_pccheckout_form_submit($form, &$form_state) {
-  if (isset($form_state['values']['personal']['subscribe'])) {
-    $customer = Customers\Factory::Current();
-    if ($customer) {
-      /* $subscription = Factory::GetByEmail($customer->email);
-        if (!$subscription) {
-        $subscription = Factory::Create($customer->email);
-        Factory::Save($subscription);
-        } */
-    }
-    //  drupal_set_message(t('Subscribed'));
-  }
-}
-
-function pcnewsletters_subscribe_form($form, $form_state) {
-  $customer = \printconnect\Customers\Factory::Current();
-  $email = '';
-
-  if ($customer) {
-    $email = $customer->email;
-  }
-
-  if (!isset($form_state['storage']['subscribed'])) {
-
-    $form['text'] = array(
-        '#type' => 'container',
-        '#attributes' => array('class' => array('text')),
-        'content' => array(
-            '#prefix' => '<p>',
-            '#markup' => t('Do you want to learn more about what printconnect.com can do for you?'),
-            '#suffix' => '</p>',
-        ),
-    );
-
-    $form['email'] = array(
-        '#type' => 'textfield',
-        '#title' => t('Email'),
-        '#default_value' => $email,
-        '#description' => t('Email'),
-        '#required' => TRUE,
-        '#attributes' => array('class' => array('hint')),
-    );
-    $form['actions']['submit'] = array(
-        '#type' => 'submit',
-        '#value' => t('Subscribe'),
-        '#ajax' => array(
-            'callback' => 'pcnewsletters_subscribe_form_callback',
-            'wrapper' => 'pcnewsletters-subscribe-form',
-            'method' => 'replace',
-            'effect' => 'fade',
-            'progress' => array(
-                'message' => NULL,
-                'type' => NULL,
-            ),
-        )
-    );
-  } else {
-    $form['confirmation'] = array(
-        '#type' => 'container',
-        '#attributes' => array('class' => array('confirmation')),
-        'content' => array(
-            '#markup' => '<p>' . t('Thank you very much for subscribing. Twice a month, you’ll receive the latest promotions and news. Don’t miss out!') . '</p><div class="icone-newsletter"></div><p>Vous avez reçu votre email de bienvenue.</p>',
-        ),
-    );
-    $form['Tracking_news'] = array(
-            '#markup' => '<script type="text/javascript" src="http://action.metaffiliation.com/trk.php?mclic=S4ADAB1013&argann='.$form_state['values']['email'].'" ></script>
-                            <noscript>
-                                <img src="http://action.metaffiliation.com/trk.php?mclic=N4ADAB1013&argann='.$form_state['values']['email'].'" width="1" height="1" border="0" />
-                            </noscript>',
-    );
-   
-  }
-
-  $form['#id'] = 'pcnewsletters-subscribe-form';
-
-  return $form;
-}
-
-function pcnewsletters_subscribe_form_submit($form, &$form_state) {
-//  $subscription = Factory::GetByEmail($form_state['values']['email']);
-  // $subscription->EnsureLoaded();
-//  if (!$subscription) 
-    
-    
-  try {
-    $subscription = Factory::Create($form_state['values']['email']);
-    Factory::Save($subscription);
-    $form_state['storage']['subscribed'] = TRUE;
-     
-  } catch (\Exception $ex) {
-    
-  }
-
-  $form_state['rebuild'] = TRUE;
-pcnewsletters_mail_send_client('',$form_state); 
-pcnewsletters_mail_send_admin('',$form_state); 
-}
-
-function  pcnewsletters_subscribe_form_validate(&$form, &$form_state, $form_id) {
-        if (!valid_email_address($form_state['values']['email'])) {
-             form_set_error('email', t('You must enter a valid e-mail address.'));
-        }
-           
-}   
-function pcnewsletters_subscribe_form_callback($form, $form_state) {
-  return $form;
-}
-
-function pcnewsletters_unsubscribe_form($form, $form_state) {
-  $customer = \printconnect\Customers\Factory::Current();
-  $email = '';
-
-  if ($customer) {
-    $email = $customer->email;
-  }
-
-  $options = array(
-      '1' => t('No interest'),
-      '2' => t('Too much information'),
-  );
-
-
-  $form['email'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Email'),
-      '#default_value' => $email,
-  );
-
-  $form['reason'] = array(
-      '#type' => 'radios',
-      '#title' => t('Reason'),
-      '#options' => $options,
-  );
-
-  $form['actions']['submit'] = array(
-      '#type' => 'submit',
-      '#value' => t('Unsubscribe'),
-  );
-  return $form;
-}
-
-function pcnewsletters_unsubscribe_form_submit($form, $form_state) {
-  Factory::Delete($form_state['values']['email']);
-  drupal_set_message(t('Unsubscribed'));
-}
-
-
-function pcnewsletters_mail_send_client($form, &$form_state) {
-$module = 'pcnewsletters';
-$key = 'envoi_email_client';
-$to = $form_state['values']['email'];
-$from = 'support@flyer.fr';
-$params = '<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
  <meta charset="UTF-8">
 <title>Flyer.fr</title>
 </head>
+
 <body>
+ 
 <table border="0" cellpadding="0" cellspacing="0" bgcolor="#f0f0f0">
 <tbody>
   <tr>
@@ -224,6 +20,8 @@ $params = '<html xmlns="http://www.w3.org/1999/xhtml">
   <tr>
   <td border="0" width="56"></td>
   <td border="0"> 
+
+
 <table cellspacing="0" cellpadding="0" border="0" width="618px" bgcolor="#f0f0f0" >
 <tbody>
   <tr>
@@ -244,9 +42,9 @@ $params = '<html xmlns="http://www.w3.org/1999/xhtml">
                       <a target="_blank" href="http://www.flyer.fr"><img height="67px" width="85px" style="border:0;display:block;" src="https://ci5.googleusercontent.com/proxy/bh-sihJXwe3z-xsx5MpIKUY3hBeJMzc9IrSBT1f7p4DuMZMa1IvYqUt_Cei_YJUCsNt7IRcFlOINa4xE8ZgP6uZwWyMEU8UhlhW2XQnGBUE8bKnuSAD2a69APrE=s0-d-e1-ft#http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/logo.png" border="0"></a>
                   </td>
                   <td width="400" align="right" style="border:0px;font-family:Arial,Helvetica,sans-serif">
-                     <strong style="color:rgb(118,183,0);font-size:24px">Inscription réussie</strong>
+                     <strong style="color:rgb(118,183,0);font-size:24px">Inscription r�ussie</strong>
                     <br>
-                    <span style="color:rgb(100,100,100);font-size:17px">Merci de votre inscription à notre newsletter.</span>
+                    <span style="color:rgb(100,100,100);font-size:17px">Merci de votre inscription � notre newsletter.</span>
                 </td>
                   <td border="0" width="27px" style="border:0px;font-family:Arial,Helvetica,sans-serif" height="85px"></td>
               </tr>
@@ -298,6 +96,8 @@ $params = '<html xmlns="http://www.w3.org/1999/xhtml">
                   </table> 
         </td>
     </tr>
+    
+
     <!--*********************************Block changable**********************************-->
   <tr>
   <td bgcolor="#ffffff" height="30px" width="618px" border="1" style="border-right:1px solid #e1e1e1;border-left:1px solid #e1e1e1;font-family:Arial,Helvetica,sans-serif">&nbsp;</td>
@@ -310,7 +110,7 @@ $params = '<html xmlns="http://www.w3.org/1999/xhtml">
       <td border="0" height="15" width="28px" style="border:0px;font-family:Arial,Helvetica,sans-serif"></td>
       <td height="34px" width="561px" border="0" style="border:0px;font-family:Arial,Helvetica,sans-serif">
         <font style="font-family:Helvetica,arial;font-size:16px;color:rgb(100,100,100);line-height:18px;font-weight: 700;text-align: justify;display: block;">
-          Nous vous remercions de l\'int&eacute;r&ecirc;t que vous portez &agrave; Flyer.fr et de votre inscription &agrave; notre newsletter.
+          Nous vous remercions de l'int&eacute;r&ecirc;t que vous portez &agrave; Flyer.fr et de votre inscription &agrave; notre newsletter.
         </font>
       </td>
       <td border="0" height="15px" width="35px" style="border:0px;font-family:Arial,Helvetica,sans-serif"></td>
@@ -324,7 +124,7 @@ $params = '<html xmlns="http://www.w3.org/1999/xhtml">
       <td border="0" width="20" style="border:0px;font-family:Arial,Helvetica,sans-serif"></td>
       <td border="0" style="border:0px;font-family:Helvetica,arial;font-size:15px;color:rgb(100,100,100);line-height:18px;text-align: justify;
 ">
-        &Agrave; partir d\'aujourd\'hui, vous pourrez recevoir nos offres et d&eacute;couvrir toutes les nouveaut&eacute;s sur notre activit&eacute; et nos produits.</td>
+        &Agrave; partir d'aujourd'hui, vous pourrez recevoir nos offres et d&eacute;couvrir toutes les nouveaut&eacute;s sur notre activit&eacute; et nos produits.</td>
       <td border="0" width="15" style="border:0px;font-family:Arial,Helvetica,sans-serif"></td>
     </tr> 
   </tbody>
@@ -580,87 +380,18 @@ $params = '<html xmlns="http://www.w3.org/1999/xhtml">
 </tr>
 </tbody>
 </table>
+ 
+
   </td>
   <td border="0" width="56" height="19"></td>
   </tr>
   <tr><td border="0" width="56" height="19"></td><td border="0"></td><td border="0" width="56" height="19"></td></tr>
 </tbody>
 </table>
+
+
+
+
+
 </body>
 </html>
-';
-$language = language_default();
-$send = TRUE;
-$result = drupal_mail($module, $key, $to, $language, $params, $from, $send );
-$sendMeail = FALSE;
-if ($result['result'] == TRUE) {
-    $sendMeail = TRUE;
-}
-// mail info insc NL admin
-   
-}
-function pcnewsletters_mail_send_admin($form, &$form_state){
-    $module = 'pcnewsletters';
-    $key = 'envoi_email_admin';
-    $from = 'support@flyer.fr';
-    $parms = '<table valign="top" width="620" border="0px" align="center" cellpadding="0" cellspacing="0">
-                                <tr>
-                                  <td border="0"  width="30"></td>
-                                  <td border="0" >
-                                    <font style="font-family:Helvetica,arial;font-size:16px;color:#646464;line-height:16px;"><strong>
-                                      Bonjour,</strong></font>
-                                  </td>
-                                  <td border="0"  width="15"></td> 
-                                </tr>
-                                <tr height="17px">
-                                <td border="0" >&nbsp;</td> <td border="0" >&nbsp;</td> <td border="0" >&nbsp;</td>
-                                 </tr>
-                                <tr>
-                                  <td border="0"  height="48"></td>
-                                  <td border="0" >
-                                    <font style="font-family:Helvetica,arial;font-size:14px;color:#646464;line-height:16px;"><strong>
-                                        Un nouveau client vient de déposer une incription newsletter sur le site <a style="color:#ff6600;" href="www.flyer.fr/frfr">Flyer.fr</a>.<br> 
-                                   </strong></font><br>
-                 <font style="font-family:Helvetica,arial;font-size:15px;color:#646464;line-height:16px;">
-                                      Détail d\'infos :<br>
-                                    </font>
-                                 <p><br/><b>' . t('Email') . '</b>: '. $form_state['values']['email'].'<br/></p>
-                                </td>
-                                  <td border="0" ></td> 
-                             </tr>
-                                <tr height="17px">
-                                <td border="0" >&nbsp;</td> <td border="0" >&nbsp;</td> <td border="0" >&nbsp;</td>
-                                 </tr>
-                                <tr>
-                                  <td border="0"  width="14"></td>
-                                  <td border="0" >
-
-                                  </td>
-                                  <td border="0"  width="15"></td> 
-                                </tr>
-
-                            </table>';
-    $language = language_default();
-    $send = TRUE;
-    $result = drupal_mail($module, $key, variable_get('pcnewsletters', 'contact@flyer.fr , contact@agenceoneo.com '), language_default(), $parms, $from, $send);
-    $sendMeailAdmin = FALSE;
-    if ($result['result'] == TRUE) {
-        $sendMeailAdmin = TRUE;
-    }
-}
-
- function pcnewsletters_mail($key, &$message, $params) {
-  switch ($key) {
-    case 'envoi_email_client':
-          $message['headers']['Content-Type'] = 'text/html; charset=UTF-8; format=flowed';         
-          $message['subject'] =  t('Newsletter Flyer.fr');
-          $message['body'][] = $params;
-        break;
-    case 'envoi_email_admin':
-          $message['headers']['Content-Type'] = 'text/html; charset=UTF-8; format=flowed';
-          $message['subject'] =  t('Newsletter Flyer.fr');
-          $message['body'][] = $params;
-        break;
-  
-  }
-}

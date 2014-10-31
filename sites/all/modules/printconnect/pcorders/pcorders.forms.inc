@@ -2,7 +2,6 @@
 
 function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALSE) {
   _pccustomers_ensureloggedin();
-
   $order = \printconnect\Orders\Factory::Get($orderId, false);
   $customer = \printconnect\Customers\Factory::Get($order->customer);
   drupal_set_title(t('Details of your order @number : @status', array('@number' => $order->number, '@status' => $order->status)));
@@ -406,19 +405,20 @@ function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALS
                 );
             }
         }
-  $form_state['storage']['order'] = $order;
-  $form_state['storage']['customer'] = $customer;
-  $form_state['storage']['confirmation'] = $confirmation;
-  
-    $form['tracking_vente'] = array(
-      '#markup' => '<script type="text/javascript" src="https://action.metaffiliation.com/trk.php?mclic=S4ADAB1011&argmon='.$totalPrice.'&argann='.$orderId.'" ></script>
-                    <noscript><img src="https://action.metaffiliation.com/trk.php?mclic=N4ADAB1011&argmon='.$totalPrice.'&argann='.$orderId.'" width="1" height="1" border="0" />
-                    </noscript>',
-    );
-    $form['tracking_products'] = array(
-      '#markup' => '<script type="text/javascript" src="http://img.metaffiliation.com/u/15/p44459.js?zone=fincommande&montant='.$totalPrice.'&listeids='.$idproducts.'&idtransaction='.$orderId.'"></script>',
-    );
-   
+    $form_state['storage']['order'] = $order;
+    $form_state['storage']['customer'] = $customer;
+    $form_state['storage']['confirmation'] = $confirmation;
+
+    if($confirmation){
+          $form['tracking_vente'] = array(
+            '#markup' => '<script type="text/javascript" src="https://action.metaffiliation.com/trk.php?mclic=S4ADAB1011&argmon='.$totalPrice.'&argann='.$orderId.'" ></script>
+                          <noscript><img src="https://action.metaffiliation.com/trk.php?mclic=N4ADAB1011&argmon='.$totalPrice.'&argann='.$orderId.'" width="1" height="1" border="0" />
+                          </noscript>',
+          );
+          $form['tracking_products'] = array(
+            '#markup' => '<script type="text/javascript" src="http://img.metaffiliation.com/u/15/p44459.js?zone=fincommande&montant='.$totalPrice.'&listeids='.$idproducts.'&idtransaction='.$orderId.'"></script>',
+          );
+    }
 //$form['order']['#value'] = $order;
 //$form['customer']['#value'] = $customer;
 //$form['confirmation']['#value'] = $confirmation;

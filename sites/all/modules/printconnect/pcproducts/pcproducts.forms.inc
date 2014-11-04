@@ -18,6 +18,9 @@ function pcproducts_products_form($form, &$form_state) {
  $shop = printconnect\Shop\Configuration\Factory::Current();
   $items = array();
   $products = _pcproducts_activeproducts();
+  usort($products, function (Product $a, Product $b) {
+            return strcmp($a->name, $b->name);
+          });
   $form['products'] = array(
       '#type' => variable_get('pc_flow', '') == 'printconcept' ? 'fieldset' : 'container',
       '#title' => t('Select a product'),

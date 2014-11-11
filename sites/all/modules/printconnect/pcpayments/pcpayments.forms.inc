@@ -29,7 +29,7 @@ function pcpayments_request_form($form, &$form_state, $key) {
   $first = FALSE;
 
   foreach ($paymentMethods as $value) {
-    if ($value->paymentMethod->internalName != 'cod' && $value->paymentMethod->internalName != 'invoice' && $value->paymentMethod->internalName != 'transfer' && $value->paymentMethod->internalName != 'cheque') {
+    if ($value->paymentMethod->internalName != 'cod' && $value->paymentMethod->internalName != 'invoice' && $value->paymentMethod->internalName != 'cheque') {
       if (!$first) {
         $first = $value;
       }

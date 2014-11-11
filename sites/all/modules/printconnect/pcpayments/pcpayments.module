@@ -184,7 +184,8 @@ function pcpayments_processpayment($paymentMethodId, $customerName, $orderId, $a
     $requestInfo = \printconnect\Payments\Requests\Info\Factory::CreatePaymentRequest($orderId, $paymentMethodId);
     //$requestInfo->EnsureLoaded();
     $rid = $request->key;
-    $rid = $requestInfo->orderid;
+    if(176 != $paymentMethodId)
+        $rid = $requestInfo->orderid;
     $requestInfo->back = 'paymentrequest/key/' . $request->key;
   } else {
     $requestInfo = \printconnect\Payments\Requests\Info\Factory::CreateCart($orderId, $paymentMethodId);
@@ -207,8 +208,12 @@ function pcpayments_processpayment($paymentMethodId, $customerName, $orderId, $a
   //$rid = $request->key;
   //$params['customerName'] = $customerName;
   //var_dump($_SESSION[$rid]);
-
-  drupal_goto('payment/redirect/' . $rid . '/' . $paymentMethodId);
+  if(176 == $paymentMethodId){
+      $idOrder = explode('_',$rid);
+      drupal_goto('myprintconnect/orders/' . $idOrder[0] . '/confirmation');
+  }
+  else
+    drupal_goto('payment/redirect/' . $rid . '/' . $paymentMethodId);
   exit;
 }
 
@@ -226,7 +231,7 @@ function pcpayments_redirect_form($form, $form_state, $rid, $paymentMethodId = F
         '#value' => $value,
     );
   }
-
+  
   switch ($requestInfo->type) {
     case 'paymentGatewayOgone':
       $form['HOMEURL'] = array(

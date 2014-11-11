@@ -3,7 +3,7 @@
 }
 
 .page-cart form .item .description{
-  float:right;
+  //float:right;
   width:75%;
 }
 
@@ -135,6 +135,10 @@
 
 #block-pccart-shipping .delivery{
   background:url(../printconnect/images/shipping/pt_icon_3.png) top center no-repeat;
+}
+.poll-form {
+float: left;
+margin-left: 49px;
 }
 
 /*
@@ -349,4 +353,35 @@ float: right;
 
 #pccart-cart-form fieldset.products > legend{
   padding-top: 16px;
+}
+
+#pccart-cart-form .preview {
+float: left;
+margin-left: 25px;
+margin-top: 114px;
+}
+#pccart-cart-form .delete_item{
+background: none!important;
+border: none;
+padding: 0!important;
+cursor: pointer;
+color: #f60;
+font-size: 12px;
+margin-top: 2px;
+}
+/*#pccart-cart-form .delete_item:hover { 
+   border-bottom: 1px solid;
+border-radius: 0;
+}*/
+
+#pccart-cart-form .items_actions {
+    width: 174px;
+    position: absolute;
+    top: 34px;
+    left: 482px;
+}
+#pccart-cart-form .items_remove{
+    margin-left: 61px;
+    margin-top: 19px;
+    
 }

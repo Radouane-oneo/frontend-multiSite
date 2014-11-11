@@ -233,8 +233,13 @@ function flyer_preprocess_html(&$vars) {
 }
 
  function flyer_js_alter(&$javascript) {
+  $node = node_load(arg(1));
+  if($node->type == "webform"){
+    unset($javascript['sites/all/themes/printconnect/flyer/libraries/jquery.selectBox/jquery.selectBox.js']);
+  }
+
 	if ($_SESSION['isfront'] == 1) {
-            unset($javascript['sites/all/modules/printconnect/pcbpost/pcbpost.js']);
+ unset($javascript['sites/all/modules/printconnect/pcbpost/pcbpost.js']);
 unset($javascript['sites/all/modules/printconnect/pcdesigns/pcdesigns.js']);
 unset($javascript['sites/all/modules/printconnect/pcdesigntool/pcdesigntool.js']);
 unset($javascript['sites/all/modules/printconnect/pcflyerstores/pcflyerstores.js']);

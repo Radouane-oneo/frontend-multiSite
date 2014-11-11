@@ -118,7 +118,7 @@ function pccontact_general_form($form, &$form_state, $key = 'general') {
       $imageName=str_replace("logo", "logo_inversed", $match[1]);
       $path='/sites/default/files/'.$imageName;
   }
-
+  $language->prefix = "frfr";
   $emails = array(
       'benl' => 'info@flyer.be',
       'befr' => 'info@flyer.be',

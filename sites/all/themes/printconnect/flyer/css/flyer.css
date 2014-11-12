@@ -2984,7 +2984,7 @@ a.ui-button.inactivebtn{
 	/*padding-bottom: 48px;*/
 }
 .page-cart h1 {
-	margin-top: 10px;
+	margin-top: 5px;
 	margin-bottom: 20px;
 	font-size: 18px; /* font-size: 20px; */
 	text-transform: uppercase;
@@ -3054,11 +3054,12 @@ legend {
 	content: ':';
 }
 .page-cart #pccart-cart-form .item .image {
-	width: inherit;
+	/*width: inherit;*/
 	background: #fff;
 	border-radius: 3px 3px 3px 3px;
 	margin-bottom: 5px;
 	min-height: 85px;
+	margin-right: 3%;
 }
 .page-cart #pccart-cart-form .item .image div {
 	display: block;
@@ -3073,8 +3074,7 @@ legend {
 	position: relative;
 	bottom: 58px;
 }
-.page-cart #pccart-cart-form .item .designtool {
-}
+
 .page-cart #pccart-cart-form .item .designtool img {
 	margin: 10px;
 	max-width: 108px;
@@ -3134,7 +3134,6 @@ legend {
 	bottom: 0;
 	width: 100%;
 }
-.page-cart #pccart-cart-form .item .description input.remove, 
 .page-cart #edit-cart-discounts input.remove {
 background: url(images/subMenuSpriteIconsModified.png) no-repeat -421px -49px;
 width: 24px;
@@ -3147,29 +3146,38 @@ position: absolute;
 top: 14px;
 right: 121px;
 }
-.page-cart #pccart-cart-form .item .description input:hover.remove, 
+
 .page-cart #edit-cart-discounts input:hover.remove {
 background: url(images/subMenuSpriteIconsModified.png) no-repeat -456px -49px;
 }
-.page-cart #pccart-cart-form .item .description {
+/*.page-cart #pccart-cart-form .item .description {
 	width: 480px;
-}
+}*/
 .page-cart #pccart-cart-form .item .description h3 {
-	margin-bottom: 10px;
 	font-weight: 600;
 }
 .page-cart #pccart-cart-form .item .description .price {
 	color: #f60;
-	font-size: 24px;
+	font-size: 40px;
 	top: 10px;
-	right: 40px;
+	right: 10px;
+	font-weight: bold;
 	line-height: normal\9; /* IE HACK */
 }
-.page-cart #pccart-cart-form .item .description .currency, 
+.page-cart #pccart-cart-form .item .description .currency{
+	font-size: 40px;
+	vertical-align: bottom;
+}
+
+.page-cart #pccart-cart-form .item .description .whole{
+	margin-left: -8px;
+	vertical-align: bottom;
+}
+
 .page-cart #pccart-cart-form .item .description .decimalpoint, 
 .page-cart #pccart-cart-form .item .description .decimals {
-	font-size: 14px;
-	line-height: 15px;
+	font-size: 30px;
+	line-height: 30px;
 	vertical-align: top;
 }
 .page-cart #pccart-cart-form .item .description ul {
@@ -3178,12 +3186,14 @@ background: url(images/subMenuSpriteIconsModified.png) no-repeat -456px -49px;
 }
 .page-cart #pccart-cart-form .item .description ul li {
 	list-style: none;
-	margin: 0 0 5px 0;
+	margin: 0;
 	padding: 0;
+	line-height: 18px;
 }
 .page-cart #pccart-cart-form .item .description ul li label {
 	float: left;
 	margin-right: 10px;
+	font-weight: 700;
 }
 .page-cart #pccart-cart-form .item .description ul div.item-list > ul {
 	display: inline-block;
@@ -7196,9 +7206,7 @@ top: -1px;
 .page-templates .button-wrapper a.designtool.button/*,
 .page-cart .button-wrapper input.payment.button*/
 {position: absolute;}
-#pccart-cart-form .item .description h3 {
-width: 64% !important;
-}
+
 div div#edit-info.detail div.store div.description table.vacations { 
 border-collapse: inherit !important;
 }

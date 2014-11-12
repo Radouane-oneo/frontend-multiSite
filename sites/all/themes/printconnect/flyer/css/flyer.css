@@ -9941,3 +9941,194 @@ body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintc
 body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect span.fieldset-legend {
     margin-left: 6px !important;
 }
+
+
+/*****************************Theme soundage************************************/
+
+  .webform-client-form .form-item th.first-child
+ {
+ background-color: #fff !important;
+ border: none;
+ }
+
+ 
+ 
+.webform-client-form table th.checkbox.webform-grid-option {
+
+border: none;
+border-bottom: 1px solid #e95e1d;
+background-color: #fc6620;
+font-size: 13px;
+color: #fff;
+font-family: 'Open Sans',sans-serif;
+padding: 0 14px;
+/* border-right: 1px solid #e95e1d; */
+}
+
+
+
+
+
+	.webform-client-form table th.webform-grid-question.first-child {
+		width: 235px;
+		padding-left: 17px;
+	} 
+
+	.webform-client-form table td.webform-grid-question.first-child{
+		font-size: 13px;
+		color: #646464;
+		font-weight: normal;
+	}
+	
+	.webform-client-form .form-item .odd{
+		background-color: #eeeeee !important;
+		border: 1px solid #e1e1e1; 
+	}
+	.webform-client-form .form-item .even{
+		background-color: #f6f4f4 !important;
+		border: 1px solid #e1e1e1; 
+	}
+
+	.webform-client-form table th:nth-child(2){
+		border-right: 1px solid #e95e1d;
+		border-radius: 5px 0px 0px 0px;
+	}
+	.webform-client-form table th:nth-child(3){
+	  border-right: 1px solid #e95e1d;
+	}
+	.webform-client-form table th:nth-child(4){
+	  border-right: 1px solid #e95e1d;
+	}
+	.webform-client-form table th:nth-child(5){
+	  border-right: 1px solid #e95e1d;
+	}
+	.webform-client-form table th:nth-child(6){
+		border-radius: 0px 5px 0px 0px;
+	}
+
+	.webform-client-form table th.checkbox.webform-grid-option.last-child:after {
+		content: ' ';
+		width: 1px;
+		height: 41px;
+		background: #e95e1d;
+		position: absolute;
+		bottom: 0;
+		right: -1px;
+	} 
+
+    .webform-client-form .form-item>label:nth-child(1) {
+		font-size: 14px;
+		color: #333333;
+		font-weight: bold;
+		font-family: 'Open Sans',sans-serif;
+		position: relative;
+		 
+	}
+
+	label.option {
+		display: inline;
+		font-weight: normal;
+		color: #646464 !important;
+		font-size: 13px;
+	}
+
+	.form-type-radio {
+		margin-left: 7px;
+	}
+
+	.form-item table{
+		margin-top: 21px;
+	}
+    /*.webform-component-9-combien-de-fois-avez-vous-visite-flyerfr-au-cours-des-30-derniers-jours label:after{
+    	content: '1';
+    }
+ 	
+ 	.webform-component--2-avez-vous-ete-satisfait-du-site-flyerfr- label:after{
+    	content: '1';
+    }
+
+  	.form-item>label:nth-child(1):after {
+		width: 22px;
+		height: 22px;
+		background: #fc6920;
+		position: absolute;
+		top: 0px;
+		left: 1px;
+		border-radius: 20px;
+		text-align: center;
+		color: #fff;
+		box-shadow: 0px 0px 0px 1px #ea6222,0px 0px 9px 2px #fb8620 inset; 
+	}*/
+  
+
+	  td .form-type-radio .form-radio input[type="radio"] {
+		border: 1px solid #b0b0b0;
+		border-radius: 10px;
+		cursor: pointer;
+		display: inline-block;
+		height: 15px;
+		width: 15px;
+		-webkit-appearance: none;
+		background-color: #FFFFFF;
+		top: -2px;
+		left: -2px;
+		-webkit-appearance: none;
+		-webkit-box-shadow: inset 0px 0px 0px 0.9px #b0b0b0;
+		box-shadow: inset 0px 0px 0px 0.9px #b0b0b0;
+		background: #ffffff; /* Old browsers */
+		/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+		background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmRmZGYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+		background: -moz-linear-gradient(top,  #ffffff 0%, #e2dfdf 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2dfdf)); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top,  #ffffff 0%,#e2dfdf 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top,  #ffffff 0%,#e2dfdf 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top,  #ffffff 0%,#e2dfdf 100%); /* IE10+ */
+		background: linear-gradient(to bottom,  #ffffff 0%,#e2dfdf 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2dfdf',GradientType=0 ); /* IE6-8 */
+	}
+ 		
+ 		tr:nth-child(1) td.first-child {
+			border-radius: 5px 0px 0px 0px;
+		}
+   
+		input[type="radio"]:after {
+		border: 1px solid #b0b0b0;
+		border-radius: 10px;
+		cursor: pointer;
+		display: inline-block;
+		height: 15px;
+		width: 15px;
+		-webkit-appearance: none;
+		background-color: #FFFFFF;
+		top: -2px;
+		left: -2px;
+		-webkit-appearance: none;
+		-webkit-box-shadow: inset 0px 0px 0px 0.9px #b0b0b0;
+		box-shadow: inset 0px 0px 0px 0.9px #b0b0b0;
+		}
+
+
+	.form-type-radio .form-radio input[type="radio"]:checked:after {
+		border: 1px solid #2686EC;
+		background-color: #3a98fc;
+		border-radius: 10px;
+		cursor: pointer;
+		display: inline-block;
+		height: 15px;
+		width: 15px;
+		-webkit-appearance: none;
+		background-color: #FFFFFF;
+		-webkit-box-shadow: inset 0.3px 0px 1px 4px #e1e1e1;
+		box-shadow: inset 0.3px 0px 1px 4px #2c85fb;
+		top: -2px;
+		left: -2px;
+	}
+
+ .form-textarea-wrapper textarea{
+ 	box-shadow: 1px 0px 6px -3px #d7d7d7 inset;
+ }
+
+
+
+
+/********************************************************************************/

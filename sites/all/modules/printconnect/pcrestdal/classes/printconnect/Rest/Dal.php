@@ -165,6 +165,13 @@ use printconnect\Dal\ForbiddenException;
     public function Update($properties, $entity, $params, $validateOnly = FALSE) {
       $url = $this->GetUrl($entity, $params, $validateOnly);
       $header = array('Content-Type' => 'application/json');
+
+      if($entity == 'cart-item') {
+        if($properties['originPrice'] > $properties['price']) {
+          $properties['pPrice'] = $properties['price'];
+        }
+      }
+
       $data = json_encode($properties);
       
       $start = microtime(true);

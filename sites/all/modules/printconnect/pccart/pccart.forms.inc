@@ -58,7 +58,7 @@ function pccart_cart_form2($form, &$form_state) {
     if($cart && 1 == $cart->supplementProduct && 43 == $endarray->price && 0 < $endarray->price){
         $endarray = printconnect\Carts\Factory::GetItem($cart, $endarray->id);
         $endarray = printconnect\Carts\Factory::LoadItem($endarray);
-        $endarray->pPrice = 10;
+        $endarray->price = 10;
         printconnect\Carts\Factory::SaveItem($endarray);   
     }
     $cart = Factory::Current(FALSE);
@@ -307,37 +307,6 @@ function pccart_cart_form2($form, &$form_state) {
             
             $totalPrice += $item->originPrice;
             $listProductId .= $item->configuration->productId.',';
-            
-
-//            $shop = \printconnect\Shop\Configuration\Factory::Current();
-//            \printconnect\Shop\Configuration\Factory::LoadConfiguration($shop);
-            
-            /* Code for  6% TVA */
-           /* if ($shop->id == 35) {
-
-                $form['cart']['items'][$item->id]['description']['tva'] = array(
-                  '#type' => 'container',
-                  '#attributes' => array('class' => array('tva', 'clearfix')),
-                  );
-
-                
-                $form['cart']['items'][$item->id]['description']['tva']['case'] = array(
-                  '#type' => 'checkbox',
-                  '#title' => t('TVA Exception 6%'), 
-                  '#attributes' => array('class' => array('tvaCase'), 'data-element' => $item->id),
-                );
-                
-                if ((float)$item->vat == 0.06) {
-                    $form['cart']['items'][$item->id]['description']['tva']['case']['#default_value'] = TRUE;
-                }
-                
-
-                $form['cart']['items'][$item->id]['description']['tva']['block'] = array(             
-                  '#markup' =>'<div class="block"></div>',
-                  '#attributes' => array('class' => array('tvablock', 'clearfix')),
-                );
-
-            }*/
             if (count($item->files)) {
                 foreach ($item->files as $file) {
                     $form['cart']['items'][$item->id]['file'] = array(
@@ -386,14 +355,19 @@ function pccart_cart_form2($form, &$form_state) {
                             '#attributes' => array('class' => array('designtool', 'iframe', 'display-block')),
 		        );
 		    }
-                    $form['cart']['items'][$item->id]['file']['preview'] = array(
-                        '#prefix' => '<div>',
+                    
+                    
+                    $form['cart']['items'][$item->id]['preview'] = array(
+                        '#prefix' => '<div class="preview">',
                         '#suffix' => '</div>',
-                        '#markup' => l(t('Download preview'), pcdesigntool_preview_url($jobId), array('attributes' => array('target' => 'blank', 'class' => array('clearfix')))),
+                        '#markup' => l(t('Download preview'), pcdesigntool_preview_url($jobId), array('attributes' => array('target' => 'blank', 'class' => array('')))),
                     );
+                    
                 }
-                 $myfiles = $item->files[0];
+                $myfiles = $item->files[0];
                 $form['cart']['items'][$item->id]['proflink'] = array(
+                    '#prefix' => '<div class="preview">',
+                    '#suffix' => '</div>',
                             '#theme' => 'designtoolproflink',
                             '#templateId' => $template->id,
                             '#title' => $product->name . ' ' . $firstConfig->name,
@@ -404,7 +378,18 @@ function pccart_cart_form2($form, &$form_state) {
                                 'currencyPreflight' => 'euro',
                                 'pricePreflight' =>$preflightPrice,
                             ),
-                            '#attributes' => array('class' => array('proupload', 'designtool', 'iframe', 'reupload')),
+                            '#attributes' => array('class' => array('designtool', 'iframe', 'reupload')),
+                );
+                
+                $form['cart']['items'][$item->id]['remove'] = array(  
+                    '#prefix' => '<div class="preview">',
+                    '#suffix' => '</div>',
+                    '#type' => 'submit',
+                    '#value' => t('Delete'),
+                    '#attributes' => array('class' => array('delete_item')),
+                   // '#validate' => array('pccart_cart_form2_delete_item_validate'),
+                    //'#submit' => array('pccart_cart_form2_delete_item_submit'),
+
                 );
             } else {
                 $templates = Products\Templates\Factory::GetTemplates($item->configuration->productId, $items);
@@ -414,24 +399,17 @@ function pccart_cart_form2($form, &$form_state) {
 
                     $_SESSION['cart']['items'][$item->id]['template'] = $template->id;
 
-                    $uploadBox = array();
-                    $uploadBox['container'] = array(
-                        '#type' => 'container',
-                        '#attributes' => array('class' => array('upload-box', 'box')),
-                    );
-                    $uploadBox['container']['text'] = array(
-                        '#type' => 'container',
-                        '#attributes' => array('class' => array('text')),
-                    );
-                    $uploadBox['container']['text']['content'] = array(
-                        '#markup' => t('Upload'),
-                    );
 
+                    
+                    $form['cart']['items'][$item->id]['product-items'] = array(
+                        '#markup' => '<h1>'.t('Uploas items').'</h1>',
+                    );
                     $form['cart']['items'][$item->id]['upload']['link'] = array(
+                        '#prefix' => '<div class="poll-form"> <p>vous avais déja un fichier ?</p><h3>image 1</h3>',
+                        '#suffix' => '<p>text 1 </p></div> ', 
                         '#theme' => 'designtoollink',
                         '#templateId' => $template->id,
                         '#title' => $product->name . ' ' . $firstConfig->name,
-                        '#content' => drupal_render($uploadBox),
                         '#html' => true,
                         '#oi' => array(
                             'priceGroupId' => $item->productPriceGroupId,
@@ -448,6 +426,8 @@ function pccart_cart_form2($form, &$form_state) {
                     );
 
                     $form['cart']['items'][$item->id]['proflink'] = array(
+                        '#prefix' => '<div class="poll-form"> <p>vous avais déja un fichier ?</p><h3>image 2</h3>',
+                        '#suffix' => '<p>text 2</p></div> ', 
                         '#theme' => 'designtoolproflink',
                         '#templateId' => $template->id,
                         '#title' => $product->name . ' ' . $firstConfig->name,
@@ -457,7 +437,28 @@ function pccart_cart_form2($form, &$form_state) {
                             'currencyPreflight' => 'euro',
                             'pricePreflight' =>$preflightPrice,
                         ),
-                        '#attributes' => array('class' => array('proupload', 'designtool', 'iframe')),
+                        '#attributes' => array('class' => array('designtool', 'iframe')),
+                    );
+                    
+                    $form['cart']['items'][$item->id]['modele'] = array(
+                        '#prefix' => '<div class="poll-form"> <p>personalise un model ?</p><h3>image 3</h3>',
+                        '#suffix' => '<p>text 3</p></div> ', 
+                        '#theme' => 'designtoolModele',
+                        '#templateId' => $template->id,
+                        '#title' => $product->name . ' ' . $firstConfig->name,
+                        '#html' => true,
+                        '#oi' => array(
+                            'priceGroupId' => $item->productPriceGroupId,
+                            'quantity' => $item->quantity,
+                            'options' => $options,
+                        ),
+                        '#params' => array(
+                            'id' => $item->id,
+                            'cartid' => $cart->id,
+                        ),
+                        '#callback' => 'cart/callback/',
+                        '#versioning' => TRUE,
+                        '#attributes' => array('class' => array('upload', 'designtool', 'iframe')),
                     );
 
                     $checkableItems[] = $item->id;
@@ -470,6 +471,8 @@ function pccart_cart_form2($form, &$form_state) {
                 );
 
                 $form['cart']['items'][$item->id]['description']['actions']['remove'] = array(
+                    '#prefix' => '<div class="items_actions"><div class="items_remove">Suprimer du panier</div>',
+                    '#suffix' => '</div>',
                     '#type' => 'submit',
                     '#src' => drupal_get_path('module', 'pccart') . '/images/delete.png',
                     '#name' => 'delete_item_' . $item->id,
@@ -479,18 +482,6 @@ function pccart_cart_form2($form, &$form_state) {
                     '#submit' => array('pccart_cart_form2_delete_item_submit'),
                     '#has_garbage_value' => FALSE,
                 );
-                $form['cart']['items'][$item->id]['description']['actions']['imageEdit']= array(
-                  '#type' =>'container'
-                );
-                $form['cart']['items'][$item->id]['description']['actions']['imageEdit']['editIcon'] = array(
-                    '#markup' => '<span class="editIcon"></span>'
-                );
-
-                $form['cart']['items'][$item->id]['description']['actions']['imageEdit']['edit'] = array(
-                    '#markup' => l(t('Edit this product'), 'products/' . $item->configuration->productId . '/' . implode(',', $items) . '/' . implode(',', $options) . '/' . $item->quantity . '/' . $item->id . '/', array('attributes' => array('class' => array('edit')))),
-                    '#weight' => 100,
-                );
-          
             }
         }
 	

@@ -358,9 +358,9 @@ function pccart_cart_form2($form, &$form_state) {
                     
                     
                     $form['cart']['items'][$item->id]['preview'] = array(
-                        '#prefix' => '<div class="preview">',
+                        '#prefix' => '<div class="btns-box"><div class="preview">',
                         '#suffix' => '</div>',
-                        '#markup' => l(t('Download preview'), pcdesigntool_preview_url($jobId), array('attributes' => array('target' => 'blank', 'class' => array('')))),
+                        '#markup' => l(t('Download preview'), pcdesigntool_preview_url($jobId), array('attributes' => array('target' => 'blank', 'class' => array('previewlink')))),
                     );
                     
                 }
@@ -383,7 +383,7 @@ function pccart_cart_form2($form, &$form_state) {
                 
                 $form['cart']['items'][$item->id]['remove'] = array(  
                     '#prefix' => '<div class="preview">',
-                    '#suffix' => '</div>',
+                    '#suffix' => '</div></div>',
                     '#type' => 'submit',
                     '#value' => t('Delete'),
                     '#attributes' => array('class' => array('delete_item')),
@@ -402,11 +402,11 @@ function pccart_cart_form2($form, &$form_state) {
 
                     
                     $form['cart']['items'][$item->id]['product-items'] = array(
-                        '#markup' => '<h1>'.t('Uploas items').'</h1>',
+                        '#markup' => '<h2 class="title-chose">'.t('Uploas items').'</h2>',
                     );
                     $form['cart']['items'][$item->id]['upload']['link'] = array(
-                        '#prefix' => '<div class="poll-form"> <p>vous avais déja un fichier ?</p><h3>image 1</h3>',
-                        '#suffix' => '<p>text 1 </p></div> ', 
+                        '#prefix' => '<div class="poll-form first"> <p>vous avais déja un fichier ?</p><div class="visu img1"></div>',
+                        '#suffix' => '<p class="txto">Importez votre<br>fichier en ligne</p></div> ', 
                         '#theme' => 'designtoollink',
                         '#templateId' => $template->id,
                         '#title' => $product->name . ' ' . $firstConfig->name,
@@ -426,8 +426,8 @@ function pccart_cart_form2($form, &$form_state) {
                     );
 
                     $form['cart']['items'][$item->id]['proflink'] = array(
-                        '#prefix' => '<div class="poll-form"> <p>vous avais déja un fichier ?</p><h3>image 2</h3>',
-                        '#suffix' => '<p>text 2</p></div> ', 
+                        '#prefix' => '<div class="poll-form"> <p>vous avais déja un fichier ?</p><div class="visu img2"></div>',
+                        '#suffix' => '<p class="txto">Créez votre fichier facilement<br> grâce à notre outil en ligne </p></div> ', 
                         '#theme' => 'designtoolproflink',
                         '#templateId' => $template->id,
                         '#title' => $product->name . ' ' . $firstConfig->name,
@@ -441,8 +441,8 @@ function pccart_cart_form2($form, &$form_state) {
                     );
                     
                     $form['cart']['items'][$item->id]['modele'] = array(
-                        '#prefix' => '<div class="poll-form"> <p>personalise un model ?</p><h3>image 3</h3>',
-                        '#suffix' => '<p>text 3</p></div> ', 
+                        '#prefix' => '<div class="poll-form"> <p>personalise un model ?</p><div class="visu img3"></div>',
+                        '#suffix' => '<p class="txto">Des milliers de modèles <br>gratuits disponibles</p></div> ', 
                         '#theme' => 'designtoolModele',
                         '#templateId' => $template->id,
                         '#title' => $product->name . ' ' . $firstConfig->name,

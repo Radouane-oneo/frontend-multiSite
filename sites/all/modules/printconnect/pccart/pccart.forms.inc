@@ -271,7 +271,7 @@ function pccart_cart_form2($form, &$form_state) {
             $form['cart']['items'][$item->id] = array(
                 '#type' => 'container',
                 '#attributes' => array('class' => array('item', 'clearfix')),
-                '#weight' => $weight,
+               '#weight' => $weight,
             );
 
             $weight--;
@@ -285,6 +285,7 @@ function pccart_cart_form2($form, &$form_state) {
                 '#prefix' => '<h3>',
                 '#suffix' => '</h3>',
                 '#markup' => $item->quantity . ' ' . t('pcs.') . ' ' . $product->name . ' ' . $firstConfig->name,
+                 
                 );
 
             if($itemValue < $item->originPrice){
@@ -310,6 +311,7 @@ function pccart_cart_form2($form, &$form_state) {
             if (count($item->files)) {
                 foreach ($item->files as $file) {
                     $form['cart']['items'][$item->id]['file'] = array(
+                        '#weight' => $weight,
                         '#type' => 'container',
                         '#attributes' => array('class' => array('image')),
                     );
@@ -353,7 +355,8 @@ function pccart_cart_form2($form, &$form_state) {
                             '#html' => TRUE,
 			    '#markup' => '<img style="width:100px;" class="previewOnly" src= "https://dt-printconcept-production.s3.amazonaws.com/'.$file->thumbnail.'">',
                             '#attributes' => array('class' => array('designtool', 'iframe', 'display-block')),
-		        );
+		        
+                            );
 		    }
                     
                     
@@ -386,9 +389,10 @@ function pccart_cart_form2($form, &$form_state) {
                     '#suffix' => '</div></div>',
                     '#type' => 'submit',
                     '#value' => t('Delete'),
+                    '#name' => 'delete_item_' . $item->id,
+                    '#has_garbage_value' => FALSE,
                     '#attributes' => array('class' => array('delete_item')),
-                   // '#validate' => array('pccart_cart_form2_delete_item_validate'),
-                    //'#submit' => array('pccart_cart_form2_delete_item_submit'),
+                    '#submit' => array('pccart_cart_form2_delete_creat_submit'),
 
                 );
             } else {
@@ -1058,6 +1062,14 @@ function pccart_cart_form2_delete_item_submit($form, &$form_state) {
    }
     try {
         Factory::DeleteItem($id, $cart);
+    } catch (\printconnect\Rest\Exceptions\Exception $ex) {
+
+    }
+}
+function pccart_cart_form2_delete_creat_submit($form, &$form_state) {
+    $id = $form_state['triggering_element']['#parents'][2];
+    try {
+        Factory::DeleteItemFile($id);
     } catch (\printconnect\Rest\Exceptions\Exception $ex) {
 
     }

@@ -288,6 +288,9 @@ use printconnect\Customers;
     public static function DeleteItem($id, Cart $cart) {
       return Dal::Delete('cart-item', array('id' => $id, 'cart' => $cart->id));
     }
+    public static function DeleteItemFile($id) {
+      return Dal::Delete('order-item-file', array('orderItemId' => $id));
+    }
 
     public static function Process($cart, $type) {
       $cart->cart = $cart->id;

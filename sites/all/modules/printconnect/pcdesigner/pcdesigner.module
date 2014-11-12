@@ -73,7 +73,7 @@ function pcdesigner_form_alter(&$form, $form_state, $form_id) {
 
             $form['cart']['items'][$item->id]['designer']['check'] = array(
                 '#type' => 'checkbox',
-                '#title' => t('I will not upload a design. My designer will do it for me.'),
+                '#title' => t('I will not upload a design. My designer will do it for me. ++'),
                 '#default_value' => isset($item->emailDesigner),
                     /* '#ajax' => array(
                       'callback' => 'pcdesigner_designer_email_callback',

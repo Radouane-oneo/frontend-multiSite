@@ -7,11 +7,11 @@
   max-width: 73%;
 }
 
-.page-cart form .item .image + .description{
+.page-cart form .item .image + .btns-box + .description{
   max-width: 50%;
   margin-bottom: 25px;
 }
-.page-cart form .item .image + .description h3{
+.page-cart form .item .image + .btns-box + .description h3{
   width: 100% !important;
 }
 
@@ -156,7 +156,6 @@
 .poll-form p{
   color: #ff6600;
   font-size: 12px;
-  font-family: Myriad Pro;
   font-weight: bold;
   margin: 0 0 5px;
   line-height: 14px;

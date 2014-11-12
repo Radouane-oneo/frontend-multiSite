@@ -9944,7 +9944,16 @@ body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect span.fieldset
 
 
 /*****************************Theme soundage************************************/
+.webform-client-form .webform-component-email ,.webform-client-form .webform-component--nom{
+	display: none;
+}
 
+  .webform-client-form .form-item th.first-child
+ {
+ background-color: #fff !important;
+ border: none;
+ }
+ 
   .webform-client-form .form-item th.first-child
  {
  background-color: #fff !important;

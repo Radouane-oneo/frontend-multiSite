@@ -43,7 +43,7 @@ function getPreflight($jobId) {
 
 function pccart_cart_form2($form, &$form_state) {
     
-    global $language;
+ global $language;
     $cart = Factory::Current(FALSE);
     $endarray = $cart != null ? end($cart->orderItems): null;
     $jobs = $cart != null ? $cart->orderItems : array();

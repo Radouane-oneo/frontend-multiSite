@@ -3144,8 +3144,8 @@ cursor: pointer;
 border: none;
 border-radius: 0;
 position: absolute;
-top: 14px;
-right: 121px;
+top: -6px;
+right: -3px;
 }
 .page-cart #pccart-cart-form .item .description input:hover.remove, 
 .page-cart #edit-cart-discounts input:hover.remove {

@@ -789,6 +789,9 @@ function pccart_cart_form2($form, &$form_state) {
             }
             $_SESSION['defaultindex'] = $resolt[0];
         }
+        $i = intval($cart->convertedTotalAmount);
+        if($i<=50){unset($options[349]);};
+
         $form['cart']['shipping']['type'] = array(
             '#type' => 'tableselect',
             '#multiple' => FALSE,

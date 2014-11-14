@@ -10188,6 +10188,13 @@ padding: 0 14px;
 
 
 
+#block-views-deals-promotion-block .view-deals-promotion{
+position:relative !important;
+}
+#block-views-deals-promotion-block .view-deals-promotion .promo-notif { 
+top: -4px !important; 
+}
+
 /********************************************************************************/
 /***********************************************/
 

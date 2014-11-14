@@ -768,6 +768,16 @@ body.two-sidebars #content .whitebox{
 	display: block;
 	clear: both;
 }
+
+.region-sidebar-first .subscribe-block{
+	background: url(images/bg_nwsletter.png) no-repeat 0 0;
+	border-color: #ddd5d2;
+}
+
+.region-sidebar-first .subscribe-block h2{
+	color: #574742;
+}
+
 /* ---- FOOTER ------------------------------ */
 
 /* footer helemaal vanonder */
@@ -1735,8 +1745,8 @@ body.front #block-block-13:after {
 	background: #fff;
 	display: block;
 	border: 1px solid #e7e4e4;
-	margin-bottom: 10px;
-	margin-top: 10px;
+	margin-bottom: 11px;
+	margin-top: 11px;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
   	box-sizing: border-box;         /* Opera/IE 8+ */
@@ -1767,10 +1777,15 @@ body.front #block-block-13:after {
 	line-height: 14px;
 }
 .subscribe-block .text p{
-	font-size: 12px;
+	font-size: 14px;
 	color: #646464;
-	margin: 0 0 14px;
-	line-height: 18px;
+	margin: 20px 0 10px;
+	line-height: 20px;
+}
+.subscribe-block .text p span{
+	font-size: 18px;
+	color: #ff6600;
+	font-weight: 900;
 }
 
 .front .block_tab-titles {
@@ -10137,6 +10152,25 @@ padding: 0 14px;
  	box-shadow: 1px 0px 6px -3px #d7d7d7 inset;
  }
 
+.promo-notif{
+	background: url(images/promo_notif.png);
+	display: block;
+	width: 76px;
+	height: 75px;
+	position: absolute;
+	top: -6px;
+	right: -6px;
+}
+.promo-notif span{
+	font-size: 15px;
+	color: #ffffff;
+	font-weight: bold;
+	display: block;
+	-moz-transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+	transform: rotate(45deg);
+	margin: 23px 0 0 20px;
+}
 
 
 

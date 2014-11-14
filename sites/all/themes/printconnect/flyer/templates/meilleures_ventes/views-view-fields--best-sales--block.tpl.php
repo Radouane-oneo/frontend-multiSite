@@ -1,5 +1,4 @@
 <?php //dsm($fields);
-
 list($prix1, $prix2) = split('[,.]', $fields['field_prix']->content);
 ?>
 

@@ -10181,10 +10181,16 @@ padding: 0 14px;
 /********************************************************************************/
 /***********************************************/
 
-#block-views-nouveautes-block{
- background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/theblocks/therightbg.png") no-repeat 0px 12px !important;
+#block-views-nouveautes-block {
+background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/theblocks/therightbg.png") no-repeat 0px 12px #fff !important;
 }
 
 #block-views-nouveautes-block >h2{
  visibility: hidden !important;
+}
+#slideIside h3.title {
+border-top: 0px !important;
+}
+#slideIside div.img {
+border: 0px !important;
 }

@@ -7830,6 +7830,10 @@ div.myoffers table.list thead tr th:nth-child(2){
 .block.nos-avantages .item_5 a{
 	background-position: -3px -294px;
 }
+.block.nos-avantages .item_6 a{
+	background:url(images/icons_24.png) no-repeat 0 center;
+	line-height: 25px;
+}
 
 #block-views-deals-block .view-deals{
 	position: relative;

@@ -372,7 +372,7 @@ function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALS
       }
     }
     
-    $idproducts .= $item->id.','; // ids product for tracking
+    $idproducts .= $item->configuration->productId.','; // ids product for tracking
   }
 
     $form['order']['extra'] = _pcorders_order_form_build_overview($order);

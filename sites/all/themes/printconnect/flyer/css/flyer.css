@@ -8340,6 +8340,7 @@ ul.ui-autocomplete{
 	font-size: 12px;
 	color: #999999;
 	line-height: 14px;
+	display: none;
 }
 .block-views .view-deals-promotion #prixdeal .newpricedeal{
 	font-size: 17px;

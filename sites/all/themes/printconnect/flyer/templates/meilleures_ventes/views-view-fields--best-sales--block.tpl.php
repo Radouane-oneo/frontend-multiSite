@@ -3,10 +3,10 @@ list($prix1, $prix2) = split('[,.]', $fields['field_prix']->content);
 ?>
 
 <div class="blocprd">
-    <?php if(!empty($fields['field_vignette_vente']->content)):?>	
+    <?php if(!empty($fields['field_vignette_vente_1']->content)):?>	
         <a href="<?php print $fields['field_lien_vente_1']->content; ?>">
             
-            <?php print $fields['field_vignette_vente']->content; ?>
+            <?php print $fields['field_vignette_vente_1']->content; ?>
             <h2><?php print $fields['title']->content; ?></h2>
             
         </a>

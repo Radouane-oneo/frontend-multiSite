@@ -13,7 +13,7 @@ $i=0;
   <ul class="clearfix">
     <?php foreach ($rows as $id => $row): ?>
       <li style="position:relative;" <?php if ($classes_array[$id]) { print ' class="' . $classes_array[$id] .'"';  } ?>>
-        <?php if($i==0) echo '<span class="promo-notif"><span>- 10%</span></span>'; ?>
+        <?php //if($i==0) echo '<span class="promo-notif"><span>- 10%</span></span>'; ?>
         
         <?php print $row; ?>
       </li>

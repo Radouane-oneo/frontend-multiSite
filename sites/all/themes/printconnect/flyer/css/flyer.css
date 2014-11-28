@@ -10045,11 +10045,20 @@ border: none;
 		border-radius: 0px 5px 0px 0px;
 	} 
 
-	.webform-client-form table th.checkbox.webform-grid-option.last-child:after {
+	.table-s1 table th.checkbox.webform-grid-option.last-child:after {
 		content: ' ';
 		width: 1px;
-		height: 41px;
-		background: #e95e1d;
+		height: 52px;
+		background: #F25C16;
+		position: absolute;
+		bottom: 0;
+		right: -1px;
+	} 
+	.table-s2 table th.checkbox.webform-grid-option.last-child:after {
+		content: ' ';
+		width: 1px;
+		height: 33px;
+		background: #F25C16;
 		position: absolute;
 		bottom: 0;
 		right: -1px;
@@ -10107,7 +10116,7 @@ border: none;
 	}*/
   
 
-	  td .form-type-radio .form-radio input[type="radio"] {
+	  .table-soundage input[type="radio"] {
 		border: 1px solid #b0b0b0;
 		border-radius: 10px;
 		cursor: pointer;
@@ -10131,26 +10140,77 @@ border: none;
 		background: -ms-linear-gradient(top,  #ffffff 0%,#e2dfdf 100%); /* IE10+ */
 		background: linear-gradient(to bottom,  #ffffff 0%,#e2dfdf 100%); /* W3C */
 		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2dfdf',GradientType=0 ); /* IE6-8 */
-	}
+		} 
+		.table-soundage input[type="radio"]:checked {
+			border: 1px solid #3b8bfa;
+			border-radius: 10px;
+			cursor: pointer;
+			display: inline-block;
+			height: 15px;
+			width: 15px;
+			-webkit-appearance: none;
+			background-color: #FFFFFF;
+			top: -2px;
+			left: -2px;
+			-webkit-appearance: none;
+			-webkit-box-shadow: inset 0px 0px 0px 3px #3b99fc;
+			box-shadow: inset 0px 0px 0px 3px #3b99fc;
+		}
+
+		.table-soundage thead {
+		    background: none repeat scroll 0% 0% #FFF !important;
+		    color: #FFF;
+		    height: 44px;
+		    line-height: 44px;
+		}
+
+		.ctn-choixradio input[type="radio"]:checked{
+			border: 1px solid #3b8bfa;
+			border-radius: 10px;
+			cursor: pointer;
+			display: inline-block;
+			height: 15px;
+			width: 15px; 
+			appearance:none;
+			-moz-appearance:none; /* Firefox */
+			-webkit-appearance:none; /* Safari and Chrome */ 
+			background-color: #FFFFFF;
+			top: -2px;
+			left: -2px; 
+			-webkit-box-shadow: inset 0px 0px 0px 3px #3b99fc;
+			box-shadow: inset 0px 0px 0px 3px #3b99fc;
+		}
+		.ctn-choixradio input[type="radio"]{
+			border: 1px solid #9e9e9e;
+			border-radius: 10px;
+			cursor: pointer;
+			display: inline-block;
+			height: 15px;
+			width: 15px;
+			background-color: #fff;
+			appearance:none;
+			-moz-appearance:none; /* Firefox */
+			-webkit-appearance:none; /* Safari and Chrome */ 
+		}
  		
  		tr:nth-child(1) td.first-child {
 			border-radius: 5px 0px 0px 0px;
 		}
    
 		input[type="radio"]:after {
-		border: 1px solid #b0b0b0;
-		border-radius: 10px;
-		cursor: pointer;
-		display: inline-block;
-		height: 15px;
-		width: 15px;
-		-webkit-appearance: none;
-		background-color: #FFFFFF;
-		top: -2px;
-		left: -2px;
-		-webkit-appearance: none;
-		-webkit-box-shadow: inset 0px 0px 0px 0.9px #b0b0b0;
-		box-shadow: inset 0px 0px 0px 0.9px #b0b0b0;
+			border: 1px solid #3b8bfa;
+			border-radius: 10px;
+			cursor: pointer;
+			display: inline-block;
+			height: 15px;
+			width: 15px;
+			-webkit-appearance: none;
+			background-color: #FFFFFF;
+			top: -2px;
+			left: -2px;
+			-webkit-appearance: none;
+			-webkit-box-shadow: inset 0px 0px 0px 3px #3b99fc;
+			box-shadow: inset 0px 0px 0px 3px #3b99fc;
 		}
 
 
@@ -10222,14 +10282,20 @@ margin-right: 0;
 -moz-border-radius: 3px;
 border-radius: 3px;
 font-weight: bold;
-text-align: left;
-
+text-align: left; 
 text-align: center;
 position: relative;
 background-color: #77b800 ,url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/flyersoundage/puce-soundage.png) no-repeat;
 background: url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/flyersoundage/puce-soundage.png) no-repeat 22px center,-webkit-linear-gradient(top, #77b800 0%, #669c02 100%);
 background: -moz-linear-gradient(top, #77b800 0%, #669c02 100%);
 background: -o-linear-gradient(top, #77b800 0%, #669c02 100%);
+border-bottom: none;
+border-top: none;
+border-right: none;
+}
+
+.last-div-soundage label {
+margin-bottom: 12px;
 }
 /********************************************************************************/
 /***********************************************/

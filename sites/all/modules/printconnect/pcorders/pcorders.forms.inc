@@ -18,9 +18,9 @@ function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALS
                         }
                         })();
                         window._fbq = window._fbq || [];
-                        window._fbq.push(['track', '6018439902582', {'value':'0.01','currency':'EUR'}]);
+                        window._fbq.push(['track', '6018439902582', {'value':'$order->totalAmount','currency':'EUR'}]);
                         </script>
-                        <noscript><img class='fcb_price' height='1' width='1' alt='' style='display:none' src='https://www.facebook.com/tr?ev=6018439902582&amp;cd[value]=0.01&amp;cd[currency]=EUR&amp;noscript=1' /></noscript>";
+                        <noscript><img class='fcb_price' height='1' width='1' alt='' style='display:none' src='https://www.facebook.com/tr?ev=6018439902582&amp;cd[value]=$order->totalAmount&amp;cd[currency]=EUR&amp;noscript=1' /></noscript>";
 
     $element_fcb = array(
                         '#type' => 'markup',

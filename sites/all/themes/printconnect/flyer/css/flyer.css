@@ -10045,10 +10045,13 @@ border: none;
 		border-radius: 0px 5px 0px 0px;
 	} 
 
+	.table-soundage table th.checkbox.webform-grid-option.last-child{
+		position: relative;
+	}
 	.table-s1 table th.checkbox.webform-grid-option.last-child:after {
 		content: ' ';
 		width: 1px;
-		height: 52px;
+		height: 33px;
 		background: #F25C16;
 		position: absolute;
 		bottom: 0;
@@ -10057,7 +10060,7 @@ border: none;
 	.table-s2 table th.checkbox.webform-grid-option.last-child:after {
 		content: ' ';
 		width: 1px;
-		height: 33px;
+		height: 52px;
 		background: #F25C16;
 		position: absolute;
 		bottom: 0;
@@ -10079,6 +10082,9 @@ border: none;
 
 	.last-div-soundage{
 		margin-bottom: 10px;
+	}
+	.last-div-soundage .grippie{
+		display: none;
 	}
 	label.option {
 		display: inline;
@@ -10191,6 +10197,7 @@ border: none;
 			appearance:none;
 			-moz-appearance:none; /* Firefox */
 			-webkit-appearance:none; /* Safari and Chrome */ 
+			margin: -2px 3px 0px 5px !important;
 		}
  		
  		tr:nth-child(1) td.first-child {

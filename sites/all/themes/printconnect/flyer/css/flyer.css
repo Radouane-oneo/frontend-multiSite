@@ -10191,7 +10191,7 @@ border: none;
 			position: absolute;
 		}*/
 
-		 .ctn-choixradio input[type="radio"]:checked + label:after{
+		 .ctn-choixradio input[type="radio"]:checked:after{
 			border: 1px solid #3b8bfa;
 			border-radius: 10px;
 			cursor: pointer;
@@ -10209,7 +10209,7 @@ border: none;
 			content: '';
 			position: absolute;
 		}
-		.ctn-choixradio input[type="radio"] + label:after{
+		.ctn-choixradio input[type="radio"]:after{
 			border: 1px solid #9e9e9e;
 			border-radius: 10px;
 			cursor: pointer;

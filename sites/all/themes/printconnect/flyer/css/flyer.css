@@ -10184,8 +10184,8 @@ border: none;
 			-moz-appearance:none; /* Firefox */
 			-webkit-appearance:none; /* Safari and Chrome */ 
 			background-color: #FFFFFF;
-			top: -2px;
-			left: -2px; 
+			top: -3px;
+			left: -8px;
 			-webkit-box-shadow: inset 0px 0px 0px 3px #3b99fc;
 			box-shadow: inset 0px 0px 0px 3px #3b99fc;
 			content: '';
@@ -10203,8 +10203,8 @@ border: none;
 			-moz-appearance:none; /* Firefox */
 			-webkit-appearance:none; /* Safari and Chrome */ 
 			margin: -2px 3px 0px 5px !important;
-			top: -2px;
-			left: -2px;
+			top: -3px;
+			left: -8px;
 			content: '';
 			position: absolute;
 		}

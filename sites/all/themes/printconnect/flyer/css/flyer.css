@@ -8429,8 +8429,12 @@ ul.ui-autocomplete{
 	display: block;width: 100%;
 }
 #slider_animate{
+	/* ex css slider animantion
 	height: 288px;
-	overflow: hidden;
+	overflow: hidden;*/
+	/* new css slider animation*/
+	height: 300px;
+	overflow: visible;
 	margin-bottom: 10px;
 }
 

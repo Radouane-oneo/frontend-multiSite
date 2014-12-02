@@ -1399,7 +1399,7 @@ $form['#submit'][]= 'webform_client_form_600_callback';
 
 
 function webform_client_form_600_callback($form,$form_state){
-    $params = '    <table valign="top" width="730" border="0" align="center" cellpadding="0" cellspacing="0">
+    $params = '<table valign="top" width="730" border="0" align="center" cellpadding="0" cellspacing="0">
       <tr>
           <td height="15"></td>
       </tr>
@@ -1435,7 +1435,7 @@ function webform_client_form_600_callback($form,$form_state){
                                   <td align="right" valign="middel">
                                     <strong style="color:rgb(118,183,0);font-size:24px">Mail de confirmation</strong>
         <br>
-        <span style="color:rgb(100,100,100);font-size:17px">Merci d avoir participé à notre sondage</span>
+        <span style="color:rgb(100,100,100);font-size:17px">Merci d'."'".'avoir participé à notre sondage</span>
                                   </td>
                                   <td width="30"></td>
                                   <td width="1" bgcolor="#e1e1e1">
@@ -1446,7 +1446,6 @@ function webform_client_form_600_callback($form,$form_state){
                        </tr>
                        <tr>
                         <td>
-                                    
                             <table valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0">
                             <tbody><tr>
                             <td>
@@ -1464,15 +1463,11 @@ function webform_client_form_600_callback($form,$form_state){
                             </tr>
                             </tbody>
                           </table>
-
-
                         </td>
                        </tr>
-
                        <tr>
                         <td>
                             <table bgcolor="#ffffff" style="background-color:#ffffff;" valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0">
-                               
                               <tr>
                                 <td width="1" bgcolor="#e1e1e1" style="background-color:#e1e1e1;"></td>
                                 <td width="14"></td>
@@ -1481,8 +1476,6 @@ function webform_client_form_600_callback($form,$form_state){
                                        <tr>
                                           <td bgcolor="#ffffff" style="background-color:#ffffff;" height="15"></td>
                                         </tr>                                        
-  
-                                        
                                         <tr>
                                           <td>
                                             <table valign="top" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#fff">
@@ -1495,15 +1488,12 @@ function webform_client_form_600_callback($form,$form_state){
                                                    <table valign="top" border="0" align="center" cellpadding="0" cellspacing="0">
                                                       <tr>
                                                         <td bgcolor="#ffffff" style="background-color:#ffffff;">
-                                                           <p style="color:#878787;font-family:Arial;font-size:14px;line-height:1.14em;font-weight:normal;font-style:normal;text-transform:none;margin-top:0.5em;margin-left:0;margin-right:0;margin-bottom:0.5em;padding:0">
-                                                             <b>Bonjour,</b>
-                                                          </p>
                                                            </td>  
-                                                         </tr>
-                                                                                                              
-														                        	<tr>
+                                                         </tr>                                                 
+													 <tr>
                                                         <td bgcolor="#ffffff" style="background-color:#ffffff;">
                                                        <font style="font-family:Arial,Helvetica,sans-serif;font-size: 15px;color: #646464;">
+													     Bonjour,<br><br>
                                                          Nous vous remercions d avoir pris le temps de répondre à notre sondage.<br>
                                                          Nous accordons une grande importance à vos commentaires et suggestions pour améliorer la qualité de nos services.
                                                         </font>
@@ -1523,15 +1513,12 @@ function webform_client_form_600_callback($form,$form_state){
                                                       <tr> 
                                                         <td border="0" height="14px"></td> 
                                                       </tr>
-
-
                                                       <tr>
                                                         <td bgcolor="#ffffff" style="background-color:#ffffff;" height="10"></td>
                                                       </tr>
-
                                                       <tr>       
                                                         <td height="34px" border="0" align="center">
-                                                          <font style="font-family:Arial,Helvetica,sans-serif;font-size: 15px;color: #646464;font-weight: bold;">Qu attendez-vous pour en profiter ?</font>
+                                                          <font style="font-family:Arial,Helvetica,sans-serif;font-size: 15px;color: #646464;font-weight: bold;">Qu'."'".'attendez-vous pour en profiter ?</font>
                                                         </td>                                                      
                                                       </tr>
                                                       <tr> 
@@ -1544,9 +1531,6 @@ function webform_client_form_600_callback($form,$form_state){
                                                         </a>
                                                       </td>
                                                       </tr>
-                                                     
-                                                     
-                                               
                                                     </table>
                                                 </td>
                                                 <td bgcolor="#fffffff" style="background:#ffffff;" width="15"></td>
@@ -1628,8 +1612,8 @@ function webform_client_form_600_callback($form,$form_state){
       <tr>
           <td align="center" border="0" height="15"></td>
       </tr>
-
-  </table>';
+  </table>
+';
     $module = 'printconnect';
     $key = 'sondage';
     $to = $form['submitted']['email']['#value'];
@@ -1648,7 +1632,7 @@ function printconnect_mail($key, &$message, $params) {
  $message['headers']['Content-Type'] = 'text/html; charset=UTF-8; format=flowed';
   switch ($key) {
     case 'sondage':
-      $message['subject'] = t('Sondage');
+      $message['subject'] = t('Félicitiations ! Vous venez de bénéficier d’une remise de 10%');
         $message['body'][] = $params; 
       break;
         }   

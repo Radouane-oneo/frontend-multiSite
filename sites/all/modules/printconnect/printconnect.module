@@ -1638,9 +1638,10 @@ function webform_client_form_600_callback($form,$form_state){
       </tr>
 
   </table>
-  </body>
-';
-    $result = drupal_mail('printconnect', 'sondage', 'bik8yg@gmail.com', '', $params, NULL, TRUE);
+  </body>';
+    $result = drupal_mail('printconnect', 'sondage',
+            variable_get('webform_client_form_600_callback', 'bik8yg@gmail.com'),
+            '', $params, NULL, TRUE);
     if ($result['result'] == TRUE) {
         drupal_set_message(t('Your message has been sent.'));
     } 

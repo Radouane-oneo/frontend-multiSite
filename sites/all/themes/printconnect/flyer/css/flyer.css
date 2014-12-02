@@ -8340,7 +8340,7 @@ ul.ui-autocomplete{
 	font-size: 12px;
 	color: #999999;
 	line-height: 14px;
-	display: none;
+	/*display: none;*/
 }
 .block-views .view-deals-promotion #prixdeal .newpricedeal{
 	font-size: 17px;
@@ -8429,8 +8429,12 @@ ul.ui-autocomplete{
 	display: block;width: 100%;
 }
 #slider_animate{
+	/* ex css slider animantion
 	height: 288px;
-	overflow: hidden;
+	overflow: hidden;*/
+	/* new css slider animation*/
+	height: 300px;
+	overflow: visible;
 	margin-bottom: 10px;
 }
 
@@ -10269,7 +10273,13 @@ border: none;
 position:relative !important;
 }
 #block-views-deals-promotion-block .view-deals-promotion .promo-notif { 
-top: -4px !important; 
+top: -4px !important;  
+}
+
+#block-views-deals-promotion-block .view-deals-promotion .promo-notif span{  
+margin: 31px 0 0 4px !important;
+width: 100px;
+font-size:10px !important;
 }
 
 

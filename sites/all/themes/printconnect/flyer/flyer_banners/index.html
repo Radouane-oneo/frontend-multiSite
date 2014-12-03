@@ -15,7 +15,7 @@
 	<!-- REVOLUTION BANNER CSS SETTINGS -->
 	<link rel="stylesheet" type="text/css" href="rs-plugin/css/settings470f.css?rev=4.0.1" media="screen" /> 
 	<div style="height:288px;width:680px;overflow:visible;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px; " >
-	<div class="fullwidthbanner-container roundedcorners">
+	<div class="fullwidthbanner-container roundedcorners  slideranimation">
 		<div class="fullwidthbanner" >
 			<ul>	<!-- SLIDE  -->
 				<!-- SLIDE  -->
@@ -66,7 +66,7 @@
                 <!-- SLIDE  -->
                 
 				<!-- SLIDE  -->
-				<li data-transition="zoomout" data-slotamount="7" data-masterspeed="600" style="overflow:visible !important;" >
+				<li class="liplian" data-transition="zoomout" data-slotamount="7" data-masterspeed="600" style="overflow:visible !important;" >
 					<!-- MAIN IMAGE -->
 					<a class="link-item" href="/nos-bonnes-affaires"></a>
 					<img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/lpbonneaffaire/alterbonneaff/DealBash0212/bannier-deal-bash.png"  alt="videobg1"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
@@ -131,7 +131,7 @@
 				</li>
                 <!-- SLIDE  -->
 
-                <li data-transition="zoomout" data-slotamount="7" data-masterspeed="1000" style="overflow:visible !important;">
+                <li class="liplian" data-transition="zoomout" data-slotamount="7" data-masterspeed="1000" style="overflow:visible !important;">
 					<a class="link-item" href="/logique-ou-pas-logique"></a>
 					<img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/FRFR/frontbanners/l-ou-p-l.jpg"  alt="darkblurbg"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
 					<!-- LAYER NR. NEW -->
@@ -333,6 +333,9 @@
  </div>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
  <style>
+  .slideranimation .liplian{
+ 	overflow: visible !important;
+ }
  ul li{
  	position: relative;
  }

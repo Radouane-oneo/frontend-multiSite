@@ -9975,6 +9975,9 @@ body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintc
 body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect span.fieldset-legend {
     margin-left: 6px !important;
 }
+.block-views .view-deals-promotion .boxing #prixdeal{
+	display: none !important;
+}
 
 
 /*****************************Theme soundage************************************/
@@ -10329,8 +10332,3 @@ border-top: 0px !important;
 #slideIside div.img {
 border: 0px !important;
 }
-
-
-/***********************/
-
- 

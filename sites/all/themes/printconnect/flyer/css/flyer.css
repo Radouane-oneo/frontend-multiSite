@@ -10368,7 +10368,7 @@ text-align: left;
 	margin-top: 0;
 }
 
-form#webform-client-form .webform-component > input[type="text"]{
+form.webform-client-form .webform-component > input[type="text"]{
 	margin-left: 5px;
 	width: 295px;
 }

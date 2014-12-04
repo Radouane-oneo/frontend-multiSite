@@ -7641,10 +7641,15 @@ div.myoffers table.list thead tr th:nth-child(2){
 }
 .info-bloc li.faq{
 	background-position: -3px -86px;
-	margin-right: 60px;
+	margin-right: 29px;
 }
-.info-bloc li.num{
-	background-position: -3px -70px;
+.info-bloc li.num{ 
+	background-position: -2px 5px;
+	height: 25px;
+	padding-top: 5px;
+ }
+ .info-bloc li.num>h3 {
+  line-height: 21px;
 }
 .info-bloc li h3{
 	font-size: 14px;

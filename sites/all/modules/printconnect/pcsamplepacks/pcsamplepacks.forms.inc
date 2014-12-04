@@ -49,32 +49,32 @@ function pcsamplepacks_request_form($form, $form_state) {
  $form['description']['contspan']['p1'] = array(
     '#prefix' => '<p class="title">',
     '#suffix' => '</p>',
-    '#markup' => t('Free Sample Flips are ready at the Flyer Store in your area for you! All the papers that we offer are here. So you can see and feel what is on your printed paper created. If you have any questions, free advice from a specialist than happy to help our Flyer Store you further.'),
+    '#markup' => t('Des SampleFlips gratuits sont à votre disposition dans le FlyerStore près de chez vous ! Vous y trouverez tous les type de papier que nous offrons. Vous pouvez ainsi sentir le papier sur lequel vos impressions seront tirées. Si vous avez d’autres questions ou besoin de l’avis d’un spécialiste, l’équipe de notre FlyerStore se fera un plaisir de vous aider.'),
    );
 
  $form['description']['contspan']['p2'] = array(
     '#prefix' => '<p class="title">',
     '#suffix' => '</p>',
-    '#markup' => t('Come in and get through the Flyer Stores Free paper samples with a discount code 5% on your first order. Many Flyer Stores are also open on Saturday. Easier and faster can not.'),
+    '#markup' => t('Entrez dans l’un des FlyerStores et recevez vos échantillons gratuits ainsi qu’un bon de réduction de 5% sur votre première commande. Un grand nombre des FlyerStore sont aussi ouverts le samedi. On ne peut pas faire plus simple et plus rapide que ça.'),
    );
  $form['description']['contspan']['p3'] = array(
     '#prefix' => '<p class="title">',
     '#suffix' => '</p>',
-    '#markup' => t('Find your nearest Flyer Store in your area:'),
+    '#markup' => t('Trouvez le FlyerStore près de chez vous:'),
    );
    
   $form['description']['contspan']['link'] = array(
     '#type' => 'link',
     '#prefix'=>'<p class="ctn-searchprocess">',
     '#suffix'=>'</p>',
-    '#title' => t('Zoek in je buurt'),
+    '#title' => t('Trouvez un FlyerStore'),
     '#href' => 'mystores',
     '#id' => 'searchprocess',
     '#attributes' => array('class' => array($classSF, 'searchprocess', 'button', 'request', 'ui-button', 'ui-widget', 'ui-state-default', 'ui-corner-all', 'ui-button-text-only'),),
   );
 
  $form['formtitle'] =array(
-      '#markup' => '<p class="title">' . t('If you have to visit one of our Stores Flyer, no possibility you can also apply for the Sample Flip through the application form below:') . '</p>',
+      '#markup' => '<p class="title">' . t('Si vous n’êtes pas en mesure de vous rendre dans l’un de nos FlyerStores, il est également possible de commander un SampleFlip via le formulaire ci-dessous.') . '</p>',
     );
  
   $defaultAddress = FALSE;
@@ -109,61 +109,61 @@ function pcsamplepacks_request_form($form, $form_state) {
 
     $form['name'] = array(
         '#type' => 'textfield',
-        '#title' => t('Name'),
+        '#title' => t('Nom'),
         '#default_value' => $defaultAddress ? $customer->lastName : '',
         '#required' => TRUE,
     );
     $form['firstName'] = array(
         '#type' => 'textfield',
-        '#title' => t('First Name'),
+        '#title' => t('Prénom'),
         '#default_value' => $defaultAddress ? $customer->firstName : '',
         '#required' => TRUE,
     );
 
     $form['company'] = array(
         '#type' => 'textfield',
-        '#title' => t('Company'),
+        '#title' => t('Société'),
         '#default_value' => $defaultAddress ? $defaultAddress->company : '',
         '#required' => FALSE,
     );
     $form['street'] = array(
         '#type' => 'textfield',
-        '#title' => t('Street'),
+        '#title' => t('Rue'),
         '#default_value' => $defaultAddress ? $defaultAddress->street : '',
         '#required' => TRUE,
     );
      $form['houseNumberBus'] = array(
         '#type' => 'textfield',
-        '#title' => t('House number & bus'),
+        '#title' => t('Numéro et boîte'),
         '#required' => TRUE,
     );
     $form['postalCode'] = array(
         '#type' => 'textfield',
-        '#title' => t('Postal code'),
+        '#title' => t('Code Postal'),
         '#default_value' => $defaultAddress ? $defaultAddress->postalCode : '',
         '#required' => TRUE,
     );
     $form['city'] = array(
         '#type' => 'textfield',
-        '#title' => t('City'),
+        '#title' => t('Localité'),
         '#default_value' => $defaultAddress ? $defaultAddress->city : '',
         '#required' => TRUE,
     );
     $form['phone'] = array(
       '#type' => 'textfield',
-      '#title' => t('Telephone number'),
+      '#title' => t('Numéro téléphone'),
       '#default_value' => $defaultAddress ? $defaultAddress->phone : '',
       '#required' => TRUE,
     );
     $form['email'] = array(
       '#type' => 'textfield',
-      '#title' => t('Email adress'),
+      '#title' => t('Adresse e-mail'),
       '#default_value' => $email ? $email : '' ,
       '#required' => TRUE,
     );
     $form['country'] = array(
         '#type' => 'select',
-        '#title' => t('Country'),
+        '#title' => t('Pays'),
         '#options' => $countries,
         '#default_value' => $defaultAddress ? $defaultAddress->country : $shopConfig->defaultCountry,
         '#required' => TRUE,
@@ -176,8 +176,8 @@ function pcsamplepacks_request_form($form, $form_state) {
     }else{   
         $form['isCustomer'] = array(
             '#type' => 'radios',
-            '#title' => t('Are you already a customer?'), 
-            '#options' => array(0 => t('Nooo'),1 => t('Yes')),     
+            '#title' => t('Etes-vous déjà client chez Flyer.be ?'), 
+            '#options' => array(0 => t('Non'),1 => t('Oui')),     
             '#default_value' => 0,
             '#required' => TRUE,
         );
@@ -186,7 +186,7 @@ function pcsamplepacks_request_form($form, $form_state) {
         $form['response'] = array(
           '#type' => 'radios',
        // '#type' => 'checkboxes',
-          '#title' => t('Why do you need a sample flip?'),
+          '#title' => t('Pourquoi avez-vous besoin d’un SampleFlip ?'),
           '#options' => $needSFs,
           '#required'=>TRUE,
         );
@@ -338,7 +338,7 @@ function pcsamplepacks_requested_form($form, $form_state) {
   $form['description']['contspan']['title'] = array(
       '#prefix' => '<span style="font-size:15px;margin-bottom: 30px;">',
       '#suffix' => '</span>',
-      '#markup' => t('ADRES'),
+      '#markup' => t('Adresse :'),
      );
    $form['description']['contspan']['street'] = array(
       '#markup' => '<span>'.$samplePack->name.'</span> <span>'.$samplePack->street.'</span>',
@@ -350,13 +350,13 @@ function pcsamplepacks_requested_form($form, $form_state) {
       '#markup' =>  $place.$samplePack->postalCode.' '.$samplePack->city,
      );
  $form['description']['contspan']['helpmsg'] = array(
-      '#markup' => '<span>'.t('Do you have any questions about paper, finishes or our product range, please feel free to visit at a Flyer Store in your neighborhood. They love to help you!
+      '#markup' => '<span>'.t('Besoin d’informations supplémentaires sur les différents types de papiers, les finitions ou notre gamme de produits, n’hésitez pas à rendre visite à votre FlyerStore le plus proche. Ils sont à votre disposition.
    ').'</span>',
      );
    
   $form['description']['contspan']['link'] = array(
     '#type' => 'link',
-    '#title' => t('FlyerStores in jouw buurt'),
+    '#title' => t('Tous les FlyerStores'),
     '#prefix'=>'<p class="ctn-searchprocess">',
     '#suffix'=>'</p>',
     '#href' => 'mystores',

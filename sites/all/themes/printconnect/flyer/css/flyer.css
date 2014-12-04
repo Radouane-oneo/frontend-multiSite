@@ -5055,7 +5055,6 @@ a.googleconnect {
 	display: block;
 	margin: 0;
 	font-weight: 400;
-	text-transform: uppercase;
 	float: left;
 	padding-right: 20px;
 	width: 140px;
@@ -5087,9 +5086,9 @@ a.googleconnect {
 	margin-top: 0;
 }
 .page-samplepack #pcsamplepacks-request-form input#edit-postalcode {
-	width: 50px;
+	/*width: 50px;
 	padding-right: 9px;
-	border-radius: 4px 0 0 4px;
+	border-radius: 4px 0 0 4px;*/
 }
 .page-samplepack #pcsamplepacks-request-form input#edit-city {
 	width: 388px;
@@ -10330,3 +10329,44 @@ border-top: 0px !important;
 #slideIside div.img {
 border: 0px !important;
 }
+
+
+/* ---- SAMPLEPACK REQUEST ---- */
+
+#edit-iscustomer .form-item-isCustomer input[type="radio"]{
+    position: relative;
+left: -174px;
+top: -3px;
+}
+#edit-iscustomer .form-item-isCustomer label{
+    
+    position: relative;
+right: -32px;
+top: 2px;
+text-align: left;
+}
+#edit-response .form-item-response input[type="radio"]{
+      left: 0;
+    position: relative;
+    top: -3px;
+}
+#edit-response .form-item-response label{
+  position: relative;
+    right: -32px;
+    top: -20px;
+    width: 100%;
+    text-align: left;
+}
+#pcsamplepacks-request-form #edit-response{float:left;}
+.page-samplepack #pcsamplepacks-request-form input[type="text"] {
+	width: 390px;
+}
+
+.page-samplepack #pcsamplepacks-request-form .form-item-city, 
+.page-samplepack #pcsamplepacks-request-form .form-item-postalCode {
+	float: left;
+	margin-top: 0;
+}
+
+
+/* ---- END - SAMPLEPACK REQUEST ---- */

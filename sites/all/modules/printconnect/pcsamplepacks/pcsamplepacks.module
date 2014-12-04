@@ -74,7 +74,7 @@ function pcsamplepacks_menu() {
 function pcsamplepacks_block_info() {
   $blocks['request'] = array(
       'info' => t('Sample packs'),
-      'cache' => DRUPAL_CACHE_GLOBAL,
+       'cache' => DRUPAL_NO_CACHE,
   );
   return $blocks;
 }

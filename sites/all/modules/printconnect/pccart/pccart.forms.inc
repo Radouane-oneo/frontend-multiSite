@@ -438,8 +438,9 @@ function pccart_cart_form2($form, &$form_state) {
                     $form['cart']['items'][$item->id]['product-container']['product-items'] = array(
                         '#markup' => '<h2 class="title-chose">' . t('Uploas items') . '</h2>',
                     );
+                    
                     $form['cart']['items'][$item->id]['product-container']['upload']['link'] = array(
-                        '#prefix' => '<div class="poll-form first"> <p>vous avais déja un fichier ?</p><div class="visu img1"></div>',
+                        '#prefix' => '<div class="poll-form first"> <p>vous avais déja un fichier ?</p><div class="visu img2"></div>',
                         '#suffix' => '<p class="txto">Importez votre<br>fichier en ligne</p></div> ',
                         '#theme' => 'designtoollink',
                         '#templateId' => $template->id,
@@ -453,6 +454,7 @@ function pccart_cart_form2($form, &$form_state) {
                         '#params' => array(
                             'id' => $item->id,
                             'cartid' => $cart->id,
+                            'shop_apikey' => variable_get('pc_apikey'),
                         ),
                         '#callback' => 'cart/callback/',
                         '#versioning' => TRUE,
@@ -460,7 +462,7 @@ function pccart_cart_form2($form, &$form_state) {
                     );
 
                     $form['cart']['items'][$item->id]['product-container']['proflink'] = array(
-                        '#prefix' => '<div class="poll-form"> <p>vous avais déja un fichier ?</p><div class="visu img2"></div>',
+                        '#prefix' => '<div class="poll-form"> <p>vous avais déja un fichier ?</p><div class="visu img1"></div>',
                         '#suffix' => '<p class="txto">Créez votre fichier facilement<br> grâce à notre outil en ligne </p></div> ',
                         '#theme' => 'designtoolproflink',
                         '#templateId' => $template->id,
@@ -489,6 +491,8 @@ function pccart_cart_form2($form, &$form_state) {
                         '#params' => array(
                             'id' => $item->id,
                             'cartid' => $cart->id,
+                            'shop_apikey' => variable_get('pc_apikey'),
+                            'insertModel' => '1',
                         ),
                         '#callback' => 'cart/callback/',
                         '#versioning' => TRUE,

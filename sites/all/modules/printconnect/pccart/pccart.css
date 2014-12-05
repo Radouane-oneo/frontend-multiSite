@@ -45,17 +45,18 @@
   right:30px;
 }
 
-#pccart-cart-form .item .remove{
-  position:absolute;
-  top:0;
-  right:0;
-  border:none; 
-  height: 16px;
-  margin: 0;
-  padding: 0;
-  text-indent: -9999em;
-  width: 16px;
-  cursor: pointer;
+#pccart-cart-form .item .remove {
+position: absolute;
+border: none;
+height: 20px;
+margin: 0;
+padding: 0;
+text-indent: -9999em;
+width: 20px;
+cursor: pointer;
+background: url(images/bg_btns.png) no-repeat 0 0;
+top: 23px;
+right: 121px;
 }
 
 #pccart-cart-form .shipping td{
@@ -408,4 +409,107 @@ float: right;
 
 #pccart-cart-form fieldset.products > legend{
   padding-top: 16px;
+}
+
+
+
+
+#pccart-cart-form fieldset.products .fieldset-wrapper{
+  padding: 0;
+  border: 0;
+  background: none;
+  margin-bottom: 0;
+}
+
+#pccart-cart-form .products li:nth-child(6n),
+#pccart-cart-form .products li:nth-child(4n),
+#pccart-cart-form .products li:nth-child(5n){
+  margin-bottom: 0;
+}
+
+#pccart-cart-form .download{
+  margin-top: -40px;
+  margin-bottom: 0;
+}
+
+#pccart-cart-form .download + fieldset{
+  clear: both;
+}
+
+#pccart-cart-form ul{
+  margin: 0;
+  overflow: hidden;
+}
+
+#pccart-cart-form fieldset.products > legend{
+  padding-top: 16px;
+}
+
+#pccart-cart-form .preview {
+  float: left;
+  margin-right: 15px;
+  margin-top: 5px;
+}
+#pccart-cart-form .btns-box{
+  overflow: hidden;
+  float: left;
+  bottom: 10px;
+  margin-left: 5px;
+}
+
+#pccart-cart-form .preview input,
+#pccart-cart-form .preview a{
+  color: #666666;
+  font-size: 13px;
+  float: left;
+  padding-left: 25px;
+  background: url(images/bg_btns.png) no-repeat 0 -26px;
+}
+#pccart-cart-form .preview a.designtool{
+  background-position: 0 -55px;
+}
+#pccart-cart-form .preview input.delete_item{
+  background-position: 0 -84px;
+  border: none;
+  padding: 0 0 0 20px;
+  cursor: pointer;
+}
+#pccart-cart-form .delete_item{
+/*background: none!important;
+border: none;
+padding: 0!important;
+cursor: pointer;
+color: #f60;
+font-size: 12px;
+margin-top: 2px;*/
+}
+/*#pccart-cart-form .delete_item:hover { 
+   border-bottom: 1px solid;
+border-radius: 0;
+}*/
+
+#pccart-cart-form .items_actions {
+    width: 174px;
+    position: absolute;
+    top: 34px;
+    left: 482px;
+}
+
+#pccart-cart-form .items_remove{
+    margin-left: 61px;
+    margin-top: 19px;
+    
+}
+
+.page-cart .title-chose{
+  clear: both;
+  padding-top: 10px;
+  margin-top: 15px;
+  font-size: 16px;
+  line-height: 16px;
+  color: #666666;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-bottom: 15px;
+  background: url(images/bg_title.png) repeat-x 0 0;
 }

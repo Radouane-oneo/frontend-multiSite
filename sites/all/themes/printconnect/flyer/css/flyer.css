@@ -10294,25 +10294,25 @@ clear: both;
 }
 
 form[action="/sondage-satisfaction-client"] .form-actions input[type=submit] {
-height: 49px;
-min-width: 173px;
-display: inline-block;
-float: left;
-margin-right: 0;
--webkit-border-radius: 3px;
--moz-border-radius: 3px;
-border-radius: 3px;
-font-weight: bold;
-text-align: left; 
-text-align: center;
-position: relative;
-background-color: #77b800 ,url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/flyersoundage/puce-soundage.png) no-repeat;
-background: url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/flyersoundage/puce-soundage.png) no-repeat 22px center,-webkit-linear-gradient(top, #77b800 0%, #669c02 100%);
-background: -moz-linear-gradient(top, #77b800 0%, #669c02 100%);
-background: -o-linear-gradient(top, #77b800 0%, #669c02 100%);
-border-bottom: none;
-border-top: none;
-border-right: none;
+	height: 37px !important;
+	min-width: 144px;
+	display: inline-block;
+	float: left;
+	margin-right: 0;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	font-weight: bold;
+	text-align: left;
+	text-align: center;
+	position: relative;
+	background: url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/flyersoundage/puce-soundage.png) no-repeat 18px center,-webkit-linear-gradient(top, #77b800 0%, #669c02 100%) !important;
+	background: -moz-linear-gradient(top, #77b800 0%, #669c02 100%);
+	background: -o-linear-gradient(top, #77b800 0%, #669c02 100%);
+	border-bottom: none;
+	border-top: none;
+	border-right: none;
+	width: 144px !important;
 }
 
 .last-div-soundage label {
@@ -10371,6 +10371,11 @@ text-align: left;
 .page-samplepack #pcsamplepacks-request-form .form-item-postalCode {
 	float: left;
 	margin-top: 0;
+}
+
+form.webform-client-form .webform-component > input[type="text"]{
+	margin-left: 5px;
+	width: 295px;
 }
 
 

@@ -55,8 +55,8 @@ text-indent: -9999em;
 width: 20px;
 cursor: pointer;
 background: url(images/bg_btns.png) no-repeat 0 0;
-top: 23px;
-right: 121px;
+right: 113px;
+top: 22px;
 }
 
 #pccart-cart-form .shipping td{
@@ -194,6 +194,10 @@ right: 121px;
   font-weight: normal;
   color: #444444;
   font-size: 11px;
+  margin-top: 10px;
+}
+.img2 .text {
+margin-right: 23px;
 }
 
 
@@ -512,4 +516,8 @@ border-radius: 0;
   font-weight: bold;
   margin-bottom: 15px;
   background: url(images/bg_title.png) repeat-x 0 0;
+}
+
+.visu .text {
+padding-top: 86px;
 }

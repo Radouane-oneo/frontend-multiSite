@@ -439,10 +439,28 @@ function pccart_cart_form2($form, &$form_state) {
                         '#markup' => '<h2 class="title-chose">' . t('Uploas items') . '</h2>',
                     );
                     
-                    $form['cart']['items'][$item->id]['product-container']['upload']['link'] = array(
-                        '#prefix' => '<div class="poll-form first"> <p>vous avais déja un fichier ?</p><div class="visu img2"></div>',
+                  
+                    $form['cart']['items'][$item->id]['product-container']['proflink'] = array(
+                        '#prefix' => '<div class="poll-form first"> <p>Vous avais déja un fichier ?</p>',
                         '#suffix' => '<p class="txto">Importez votre<br>fichier en ligne</p></div> ',
+                        '#content'=> array('#markup' => '<div class="visu img1"><div class="text">'.t('IMPORTEZ-LE').'</div></div>',),
+                        '#theme' => 'designtoolproflink',
+                        '#templateId' => $template->id,
+                        '#title' => $product->name . ' ' . $firstConfig->name,
+                        '#params' => array(
+                            'id' => $item->id,
+                            'cartid' => $cart->id,
+                            'currencyPreflight' => 'euro',
+                            'pricePreflight' => $preflightPrice,
+                        ),
+                        '#attributes' => array('class' => array('designtool', 'iframe')),
+                    );
+            
+                        $form['cart']['items'][$item->id]['product-container']['upload']['link'] = array(
+                        '#prefix' => '<div class="poll-form "> <p>Vous n\'avais déja un fichier ?</p>',
+                        '#suffix' => '<p class="txto">Créez votre fichier facilement<br> grâce à notre outil en ligne </p></div> ',
                         '#theme' => 'designtoollink',
+                        '#content'=> array('#markup' => '<div class="visu img2"><div class="text">'.t('CREEZ-LE').'</div></div>',),
                         '#templateId' => $template->id,
                         '#title' => $product->name . ' ' . $firstConfig->name,
                         '#html' => true,
@@ -460,26 +478,12 @@ function pccart_cart_form2($form, &$form_state) {
                         '#versioning' => TRUE,
                         '#attributes' => array('class' => array('upload', 'designtool', 'iframe')),
                     );
-
-                    $form['cart']['items'][$item->id]['product-container']['proflink'] = array(
-                        '#prefix' => '<div class="poll-form"> <p>vous avais déja un fichier ?</p><div class="visu img1"></div>',
-                        '#suffix' => '<p class="txto">Créez votre fichier facilement<br> grâce à notre outil en ligne </p></div> ',
-                        '#theme' => 'designtoolproflink',
-                        '#templateId' => $template->id,
-                        '#title' => $product->name . ' ' . $firstConfig->name,
-                        '#params' => array(
-                            'id' => $item->id,
-                            'cartid' => $cart->id,
-                            'currencyPreflight' => 'euro',
-                            'pricePreflight' => $preflightPrice,
-                        ),
-                        '#attributes' => array('class' => array('designtool', 'iframe')),
-                    );
-
+                        
                     $form['cart']['items'][$item->id]['product-container']['modele'] = array(
-                        '#prefix' => '<div class="poll-form"> <p>personalise un model ?</p><div class="visu img3"></div>',
+                        '#prefix' => '<div class="poll-form"> <p>Personalise un modèle ?</p>',
                         '#suffix' => '<p class="txto">Des milliers de modèles <br>gratuits disponibles</p></div> ',
                         '#theme' => 'designtoolModele',
+                         '#content'=> array('#markup' => '<div class="visu img3"><div class="text">'.t('CHOISISSZ-LE').'</div></div>',),
                         '#templateId' => $template->id,
                         '#title' => $product->name . ' ' . $firstConfig->name,
                         '#html' => true,

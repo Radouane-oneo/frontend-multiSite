@@ -6,13 +6,14 @@ function printconnect_init() {
   global $browscap;
   global $base_url;
   
-  $data = getdatabyip();
-//  if(isset($data)){
+ $data = getdatabyip();
+ if(isset($data)){
   $_SESSION["region"] = $data['region'] ;
   $_SESSION["data"] = $data;
-//  }else{
-//    $_SESSION["data"]= "ip web services is down" ;
-//  }
+ }else{
+  $_SESSION["region"]= "ipdown";
+ $_SESSION["data"]= "ipdown" ;
+ }
           
   $uriRequest = split('/', request_uri());
   unset($uriRequest[0]);

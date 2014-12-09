@@ -324,6 +324,8 @@ function pccart_cart_form2($form, &$form_state) {
 
 
                     $form['cart']['items'][$item->id]['description'] = array(
+                    '#prefix' => '<div class="preview1">',
+                    '#suffix' => '</div>',
                         '#type' => 'container',
                         '#attributes' => array('class' => array('description')),
                     );
@@ -359,7 +361,7 @@ function pccart_cart_form2($form, &$form_state) {
                     $form['cart']['items'][$item->id]['preview'] = array(
                         '#prefix' => '<div class="btns-box"><div class="preview">',
                         '#suffix' => '</div>',
-                        '#markup' => l(t('Download preview'), pcdesigntool_preview_url($jobId), array('attributes' => array('target' => 'blank', 'class' => array('previewlink')))),
+                        '#markup' => l(t('Prévisualiser'), pcdesigntool_preview_url($jobId), array('attributes' => array('target' => 'blank', 'class' => array('previewlink')))),
                     );
                 }
                 $myfiles = $item->files[0];
@@ -394,6 +396,8 @@ function pccart_cart_form2($form, &$form_state) {
 
 
                 $form['cart']['items'][$item->id]['description'] = array(
+                    '#prefix' => '<div class="preview2">',
+                    '#suffix' => '</div>',
                     '#type' => 'container',
                     '#attributes' => array('class' => array('description')),
                 );

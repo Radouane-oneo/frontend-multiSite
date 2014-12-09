@@ -3080,12 +3080,13 @@ legend {
 	content: ':';
 }
 .page-cart #pccart-cart-form .item .image {
-width: inherit;
-background: #fff;
-border-radius: 3px 3px 3px 3px;
-margin-bottom: 5px;
-min-height: 85px;
-margin-right: 3%;
+	width: 200px;
+	background: #fff;
+	border-radius: 3px 3px 3px 3px;
+	margin-bottom: 5px;
+	min-height: 85px;
+	margin-right: 10px;
+	border: 1px solid #ff6600;
 }
 .page-cart #pccart-cart-form .item .image div {
 	display: block;
@@ -3100,12 +3101,11 @@ margin-right: 3%;
 	position: relative;
 	bottom: 58px;
 }
-.page-cart #pccart-cart-form .item .designtool {
-}
+
 .page-cart #pccart-cart-form .item .designtool img {
-	margin: 10px;
-	max-width: 108px;
-	max-height: 108px;
+	margin: 5px;
+	max-width: 200px;
+	max-height: 230px;
 	border-radius: 3px 3px 3px 3px;
 }
 .page-cart #pccart-cart-form .item .proupload, 
@@ -3163,11 +3163,16 @@ margin-right: 3%;
 }
 
 .page-cart #pccart-cart-form .item .description {
+	width: 280px;
+	margin-bottom: 30px;
+}
+
+.page-cart #pccart-cart-form .item .preview2 .description {
 	width: 480px;
 }
 .page-cart #pccart-cart-form .item .description h3 {
-	margin-bottom: 10px;
-	font-weight: 600;
+	margin-bottom: 0;
+	font-weight: 700;
 }
 .page-cart #pccart-cart-form .item .description .price {
 color: #f60;
@@ -3198,12 +3203,15 @@ vertical-align: bottom;
 }
 .page-cart #pccart-cart-form .item .description ul li {
 	list-style: none;
-	margin: 0 0 5px 0;
+	margin: 0 0 3px 0;
 	padding: 0;
+	font-size: 13px;
+	line-height: 15px;
 }
 .page-cart #pccart-cart-form .item .description ul li label {
 	float: left;
 	margin-right: 10px;
+	font-weight: 700;
 }
 .page-cart #pccart-cart-form .item .description ul div.item-list > ul {
 	display: inline-block;
@@ -3528,13 +3536,15 @@ vertical-align: bottom;
 	padding-left: 0 !important;
 }
 .page-cart .download {
-	background: url("images/download_16x16.png") no-repeat left;
-	padding-left: 20px;
+	background: url("images/imprimer.png") no-repeat left;
+	padding-left: 23px;
 	display: block;
 	float: right;
-	height: 20px;
+	line-height: 25px;
 	margin-bottom: 10px;
 	margin-top: -36px;
+	color: #666666;
+	font-size: 0;
 }
 .page-cart .total-container {
 	float: right;
@@ -5050,7 +5060,6 @@ a.googleconnect {
 	display: block;
 	margin: 0;
 	font-weight: 400;
-	text-transform: uppercase;
 	float: left;
 	padding-right: 20px;
 	width: 140px;
@@ -5082,9 +5091,9 @@ a.googleconnect {
 	margin-top: 0;
 }
 .page-samplepack #pcsamplepacks-request-form input#edit-postalcode {
-	width: 50px;
+	/*width: 50px;
 	padding-right: 9px;
-	border-radius: 4px 0 0 4px;
+	border-radius: 4px 0 0 4px;*/
 }
 .page-samplepack #pcsamplepacks-request-form input#edit-city {
 	width: 388px;
@@ -7216,9 +7225,7 @@ top: -1px;
 .page-templates .button-wrapper a.designtool.button/*,
 .page-cart .button-wrapper input.payment.button*/
 {position: absolute;}
-#pccart-cart-form .item .description h3 {
-width: 64% !important;
-}
+
 div div#edit-info.detail div.store div.description table.vacations { 
 border-collapse: inherit !important;
 }
@@ -9968,6 +9975,7 @@ body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintc
 body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect span.fieldset-legend {
     margin-left: 6px !important;
 }
+ 
 
 
 /*****************************Theme soundage************************************/
@@ -10282,25 +10290,25 @@ clear: both;
 }
 
 form[action="/sondage-satisfaction-client"] .form-actions input[type=submit] {
-height: 49px;
-min-width: 173px;
-display: inline-block;
-float: left;
-margin-right: 0;
--webkit-border-radius: 3px;
--moz-border-radius: 3px;
-border-radius: 3px;
-font-weight: bold;
-text-align: left; 
-text-align: center;
-position: relative;
-background-color: #77b800 ,url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/flyersoundage/puce-soundage.png) no-repeat;
-background: url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/flyersoundage/puce-soundage.png) no-repeat 22px center,-webkit-linear-gradient(top, #77b800 0%, #669c02 100%);
-background: -moz-linear-gradient(top, #77b800 0%, #669c02 100%);
-background: -o-linear-gradient(top, #77b800 0%, #669c02 100%);
-border-bottom: none;
-border-top: none;
-border-right: none;
+	height: 37px !important;
+	min-width: 144px;
+	display: inline-block;
+	float: left;
+	margin-right: 0;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	font-weight: bold;
+	text-align: left;
+	text-align: center;
+	position: relative;
+	background: url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/flyersoundage/puce-soundage.png) no-repeat 18px center,-webkit-linear-gradient(top, #77b800 0%, #669c02 100%) !important;
+	background: -moz-linear-gradient(top, #77b800 0%, #669c02 100%);
+	background: -o-linear-gradient(top, #77b800 0%, #669c02 100%);
+	border-bottom: none;
+	border-top: none;
+	border-right: none;
+	width: 144px !important;
 }
 
 .last-div-soundage label {
@@ -10324,6 +10332,47 @@ border: 0px !important;
 }
 
 
-/***********************/
+/* ---- SAMPLEPACK REQUEST ---- */
 
- 
+#edit-iscustomer .form-item-isCustomer input[type="radio"]{
+    position: relative;
+left: -174px;
+top: -3px;
+}
+#edit-iscustomer .form-item-isCustomer label{
+    
+    position: relative;
+right: -32px;
+top: 2px;
+text-align: left;
+}
+#edit-response .form-item-response input[type="radio"]{
+      left: 0;
+    position: relative;
+    top: -3px;
+}
+#edit-response .form-item-response label{
+  position: relative;
+    right: -32px;
+    top: -20px;
+    width: 100%;
+    text-align: left;
+}
+#pcsamplepacks-request-form #edit-response{float:left;}
+.page-samplepack #pcsamplepacks-request-form input[type="text"] {
+	width: 390px;
+}
+
+.page-samplepack #pcsamplepacks-request-form .form-item-city, 
+.page-samplepack #pcsamplepacks-request-form .form-item-postalCode {
+	float: left;
+	margin-top: 0;
+}
+
+form.webform-client-form .webform-component > input[type="text"]{
+	margin-left: 5px;
+	width: 295px;
+}
+
+
+/* ---- END - SAMPLEPACK REQUEST ---- */

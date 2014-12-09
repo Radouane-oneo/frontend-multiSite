@@ -6,6 +6,15 @@ function printconnect_init() {
   global $browscap;
   global $base_url;
   
+ $data = getdatabyip();
+ if(isset($data)){
+  $_SESSION["region"] = $data['region'] ;
+  $_SESSION["data"] = $data;
+ }else{
+  $_SESSION["region"]= "ipdown";
+ $_SESSION["data"]= "ipdown" ;
+ }
+          
   $uriRequest = split('/', request_uri());
   unset($uriRequest[0]);
   $urlPermant = '';
@@ -139,6 +148,8 @@ function printconnect_init() {
     }else{
         drupal_goto($urlPermant,array(),301);
     }  
+    
+    
 }
 
 function printconnect_cron() {
@@ -1392,6 +1403,37 @@ function printconnect_query_node_access_alter(QueryAlterableInterface $query) {
   }
 }
 
+function get_client_ip_env() {
+	$ipaddress = '';
+	if (getenv('HTTP_CLIENT_IP'))
+		$ipaddress = getenv('HTTP_CLIENT_IP');
+	else if(getenv('HTTP_X_FORWARDED_FOR'))
+		$ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+	else if(getenv('HTTP_X_FORWARDED'))
+		$ipaddress = getenv('HTTP_X_FORWARDED');
+	else if(getenv('HTTP_FORWARDED_FOR'))
+		$ipaddress = getenv('HTTP_FORWARDED_FOR');
+	else if(getenv('HTTP_FORWARDED'))
+		$ipaddress = getenv('HTTP_FORWARDED');
+	else if(getenv('REMOTE_ADDR'))
+		$ipaddress = getenv('REMOTE_ADDR');
+	else
+		$ipaddress = 'UNKNOWN';
+
+	return $ipaddress;
+}
+
+function getdatabyip() {
+    $ipaddress = get_client_ip_env();
+    $options = array(
+                    'method' => 'POST',
+                    'timeout' => 15,
+                    'headers' => array('Content-Type' => 'application/x-www-form-urlencoded'),
+    );
+    $result = drupal_http_request('http://www.telize.com/geoip/'.$ipaddress);
+    $data = json_decode($result->data, true);
+    return $data;
+}
 
 function printconnect_form_webform_client_form_600_alter(&$form, &$form_state) {
 $form['#submit'][]= 'webform_client_form_600_callback';

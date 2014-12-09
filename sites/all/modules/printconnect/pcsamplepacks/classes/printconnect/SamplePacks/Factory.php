@@ -22,7 +22,22 @@ namespace printconnect\SamplePacks {
         $object->language = \printconnect\Languages\Factory::Get($object->language);
       }
     }
-
+    
+  public static function GetAll(){
+            $SampleFlips = new \printconnect\SamplePacks\SampleFlips(array(), array());
+            return $SampleFlips;
+}
+        
+  public static function LoadSampleFlip($object){
+                Dal::LoadCollection($object, 'sampleflip', array(), function ($value) {
+                    $sampleflip = new \printconnect\SamplePacks\SampleFlip($value);
+                    $sampleflip->loaded = TRUE;
+                    return $sampleflip;
+                });
+                return $object;
+        }
+        
+    
     public static function Save(SamplePack $object) {
       $id = $object->Get('id');
       if ($id) {

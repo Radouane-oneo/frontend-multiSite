@@ -1434,3 +1434,248 @@ function getdatabyip() {
     $data = json_decode($result->data, true);
     return $data;
 }
+
+function printconnect_form_webform_client_form_600_alter(&$form, &$form_state) {
+$form['#submit'][]= 'webform_client_form_600_callback';
+}
+
+
+function webform_client_form_600_callback($form,$form_state){
+    $params = '<table valign="top" width="730" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+          <td height="15"></td>
+      </tr>
+      <tr>
+        <td align="center">
+            <font style="font-family:Helvetica,arial;font-size:13px;color:#808080;line-height:12px;">Pour ouvrir cet email dans un navigateur <a style="font-family:Helvetica,arial;font-size:12px;color:#4e4e4e;line-height:12px;text-decoration:underline;" target="_blank" href="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/newsletter/131114/index.html"> Cliquez-ici</a></font>
+          </td>
+      </tr>
+      <tr>
+          <td height="15"></td>
+      </tr>
+      <tr>
+          <td>
+            <table valign="top" width="730" border="0" align="center" cellpadding="0" cellspacing="0">
+              <tr>
+                  <td width="55"></td>
+                  <td>
+                    <table valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0">
+                       <tr>
+                          <td>
+                            <img style="display:block;border:0;" alt="top header" width="620" height="9" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/newsletter/131114/images/bg_top.jpg" />
+                          </td>
+                        </tr>
+                       <tr>
+                          <td>       
+                              <table bgcolor="#ffffff"  valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0">
+                                <tr>
+                                  <td>
+                                    <a href="http://www.flyer.fr/" target="_blank">
+                                      <img style="display:block;border:0;" alt="flyer.fr" width="145" height="82" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/newsletter/131114/images/logo.jpg" />
+                                    </a>
+                                  </td>
+                                  <td align="right" valign="middel">
+                                    <strong style="color:rgb(118,183,0);font-size:24px">Mail de confirmation</strong>
+        <br>
+        <span style="color:rgb(100,100,100);font-size:17px">Merci d'."'".'avoir participé à notre sondage</span>
+                                  </td>
+                                  <td width="30"></td>
+                                  <td width="1" bgcolor="#e1e1e1">
+                                  </td>
+                                </tr>
+                              </table>
+                          </td>
+                       </tr>
+                       <tr>
+                        <td>
+                            <table valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0">
+                            <tbody><tr>
+                            <td>
+                            <a style="text-decoration:none;" target="_blank" href="http://www.flyer.fr/frfr"><img width="139" height="49" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/newsletter/131114/images/home.jpg"></a>
+                            </td>
+                            <td>
+                            <a style="text-decoration:none;" target="_blank" href="http://www.flyer.fr/frfr/nos-produits"><img width="154" height="49" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/nosprod.jpg"></a>
+                            </td>
+                            <td>
+                            <a style="text-decoration:none;" target="_blank" href="http://www.flyer.fr/frfr/cr%C3%A9ations-en-ligne"><img width="146" height="49" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/nosmodel.jpg"></a>
+                            </td>
+                            <td>
+                            <a style="text-decoration:none;" target="_blank" href="http://www.flyer.fr/frfr/cr%C3%A9ations-en-ligne"><img width="181" height="49" style="display:block;border:0;" border="0" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/emailling/bonneaffaire.jpg"></a>
+                            </td> 
+                            </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                       </tr>
+                       <tr>
+                        <td>
+                            <table bgcolor="#ffffff" style="background-color:#ffffff;" valign="top" width="620" border="0" align="center" cellpadding="0" cellspacing="0">
+                              <tr>
+                                <td width="1" bgcolor="#e1e1e1" style="background-color:#e1e1e1;"></td>
+                                <td width="14"></td>
+                                  <td bgcolor="#f8f8f8" style="background-color:#f8f8f8;">
+                                      <table valign="top" width="590" border="0" align="center" cellpadding="0" cellspacing="0">
+                                       <tr>
+                                          <td bgcolor="#ffffff" style="background-color:#ffffff;" height="15"></td>
+                                        </tr>                                        
+                                        <tr>
+                                          <td>
+                                            <table valign="top" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#fff">
+                                              <tr>
+                                                <td  bgcolor="#fff" height="10"></td>
+                                              </tr>
+                                              <tr>
+                                                <td bgcolor="#fffffff" style="background:#ffffff;" width="15"></td>
+                                                <td>
+                                                   <table valign="top" border="0" align="center" cellpadding="0" cellspacing="0">
+                                                      <tr>
+                                                        <td bgcolor="#ffffff" style="background-color:#ffffff;">
+                                                           </td>  
+                                                         </tr>                                                 
+													 <tr>
+                                                        <td bgcolor="#ffffff" style="background-color:#ffffff;">
+                                                       <font style="font-family:Arial,Helvetica,sans-serif;font-size: 15px;color: #646464;">
+													     Bonjour,<br><br>
+                                                         Nous vous remercions d avoir pris le temps de répondre à notre sondage.<br>
+                                                         Nous accordons une grande importance à vos commentaires et suggestions pour améliorer la qualité de nos services.
+                                                        </font>
+                                                        </td> 
+                                                      </tr>
+                                                      <tr> 
+                                                        <td border="0" height="17px"></td> 
+                                                      </tr>
+                                                      <tr>
+                                                        <td bgcolor="#ffffff" style="background-color:#ffffff;">
+                                                          <font style="font-family:Arial,Helvetica,sans-serif;font-size: 15px;color: #646464;">
+                                                            Pour vous remercier, nous vous offrons <strong style="color:#646464;font-family:Arial,Helvetica,sans-serif;">une remise de 10% </strong> sur votre prochaine commande avec le code promo : <strong style="color:#71af00;font-size:15px;font-family:Arial,Helvetica,sans-serif;">SOND001.</strong>
+                                                          </font>
+                                                        </td> 
+                                                      </tr>
+
+                                                      <tr> 
+                                                        <td border="0" height="14px"></td> 
+                                                      </tr>
+                                                      <tr>
+                                                        <td bgcolor="#ffffff" style="background-color:#ffffff;" height="10"></td>
+                                                      </tr>
+                                                      <tr>       
+                                                        <td height="34px" border="0" align="center">
+                                                          <font style="font-family:Arial,Helvetica,sans-serif;font-size: 15px;color: #646464;font-weight: bold;">Qu'."'".'attendez-vous pour en profiter ?</font>
+                                                        </td>                                                      
+                                                      </tr>
+                                                      <tr> 
+                                                        <td border="0" height="14px"></td> 
+                                                      </tr>
+                                                      <tr>
+                                                      <td bgcolor="#ffffff" align="center" style="border-collapse:collapse">
+                                                        <a href="http://www.flyer.fr/march%C3%A9-de-no%C3%ABl" target="_blank">
+                                                         <a href="http://www.flyer.fr/nos-produits" target="_blank"><img alt="Nos produits" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/lpbonneaffaire/img-btn-profiter.png" width="136px" height="34px" style="display:block;"></a>
+                                                        </a>
+                                                      </td>
+                                                      </tr>
+                                                    </table>
+                                                </td>
+                                                <td bgcolor="#fffffff" style="background:#ffffff;" width="15"></td>
+                                              </tr>
+                                            </table>
+                                          </td>
+                                        </tr>
+                                      </table>
+                                  </td>
+                                <td width="14" bgcolor="#ffffff" style="background-color:#ffffff;"></td>
+                                <td width="1" bgcolor="#e1e1e1" style="background-color:#e1e1e1;"></td>
+                              </tr>
+                              <tr>
+                                <td width="1" height="15" bgcolor="#e1e1e1" style="background-color:#e1e1e1;"></td>
+                                <td width="14"></td>
+                                <td></td>
+                                <td width="14" bgcolor="#ffffff" style="background-color:#ffffff;"></td>
+                                <td width="1" bgcolor="#e1e1e1" style="background-color:#e1e1e1;"></td>
+                              </tr>
+                          </table>
+                        </td>
+                       </tr>
+                       <tr>
+                        <td>
+                          <a target="_blank" style="text-decoration:none;" href="http://www.flyer.fr/nos-avantages"><img width="620" height="121" style="display:block;border:0;" border="0" alt="nos avantages" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/newsletter/131114/images/nos_avatatages.jpg"></a>
+                        </td>
+                       </tr>
+                       <tr>
+                        <td height="10"></td>
+                       </tr>
+                       <tr>
+                        <td>
+                          <a href="mailto:info@flyer.fr" style="text-decoration:none;"><img style="display:block;border:0;" width="620" height="152" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/newsletter/131114/images/footer_nl_11.jpg" alt="flyer &agrave; votre service"/></a>
+                        </td>
+                       </tr>
+                       <tr>
+                        <td height="15"></td>
+                       </tr>
+                     </table>
+                  </td>
+                  <td width="55"></td>
+              </tr> 
+            </table>
+          </td>
+      </tr>
+      
+      <tr>
+        <td>
+          <table valign="top" width="730" border="0" align="center" cellpadding="0" cellspacing="0">
+            <tbody>
+              <tr>
+                <td width="306"></td>
+                <td width="20"><a target="_blank" href="https://www.facebook.com/Flyer.fr"><img style="display:block;border:0;" width="20" height="20" alt="facebook" src="http://pc-images.s3-eu-west-1.amazonaws.com/images.flyer.fr/emailling/l1.png"></a></td>
+                <td width="12"></td>
+                <td width="20"><a target="_blank" href="https://www.twitter.com/Flyer_fr"><img style="display:block;border:0;" width="20" height="20" alt="twitter" src="http://pc-images.s3-eu-west-1.amazonaws.com/images.flyer.fr/emailling/l2.png"></a></td>
+                <td width="12"></td>
+                <td width="20"><a target="_blank" href="https://plus.google.com/+FlyerFr"><img style="display:block;border:0;" width="20" height="20" alt="google plus" src="http://pc-images.s3-eu-west-1.amazonaws.com/images.flyer.fr/emailling/l3.png"></a></td>
+                <td width="12"></td>
+                <td width="20"><a target="_blank" href="http://www.youtube.com/channel/UCB98N-F-0O5VHavsLRI7_uQ"><img style="display:block;border:0;" alt="youtube" width="20" height="20" src="http://pc-images.s3-eu-west-1.amazonaws.com/images.flyer.fr/emailling/l4.png"></a></td>
+                <td width="308"></td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+          <td height="10"></td>
+      </tr>
+      <tr>
+          <td height="26" align="center" border="0" >
+            <font style="color:#999999;font-size:12px;">
+              Si vous ne souhaitez plus recevoir ces messages de la part de <a target="_blank" style="color:#999999;font-size:12px;text-decoration:none;"  href="http://www.flyer.fr/">FLYER.FR</a>, veuillez vous <a href="#" style="color:#666666;text-decoration:none;">d&eacute;sabonner</a>.
+            </font>
+          </td>
+      </tr>
+      <tr>
+          <td align="center" border="0" style="color:#434343;font-size:12px;">Â© 2014 <a target="_blank" style="color:#434343;font-size:12px;text-decoration:none;"  href="http://www.flyer.fr/">FLYER.FR</a> | Tous droits r&eacute;serv&eacute;s.</td>
+      </tr>
+      <tr>
+          <td align="center" border="0" height="15"></td>
+      </tr>
+  </table>
+';
+    $module = 'printconnect';
+    $key = 'sondage';
+    $to = $form['submitted']['email']['#value'];
+    $from = 'info@flyer.fr';
+    $language = language_default();
+    $send = TRUE;
+    $result = drupal_mail($module, $key, $to, $language, $params, $from, $send);
+    $sendMeail = FALSE;
+    if ($result['result'] == TRUE) {
+         $sendMeail = TRUE;
+    }
+
+}
+
+function printconnect_mail($key, &$message, $params) {
+ $message['headers']['Content-Type'] = 'text/html; charset=UTF-8; format=flowed';
+  switch ($key) {
+    case 'sondage':
+      $message['subject'] = t('Félicitiations ! Vous venez de bénéficier d’une remise de 10%');
+        $message['body'][] = $params; 
+      break;
+        }   
+  }

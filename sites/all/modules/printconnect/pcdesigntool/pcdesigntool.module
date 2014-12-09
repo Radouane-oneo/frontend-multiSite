@@ -440,7 +440,7 @@ function theme_designtoolproflink($vars) {
     $html = TRUE;
   } else {
     if (!$vars['content']) {
-      $content = t('Professional upload');
+      $content = t('Modifier');
       $html = FALSE;
     } else {
       $content = $vars['content'];

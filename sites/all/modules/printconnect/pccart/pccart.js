@@ -189,7 +189,7 @@
 
         $('#pccart-cart-form .item .designtool').fancybox({
           width: 1024,
-          height: 780,
+          height: '100%',
           padding: 5,
           margin: 0,
           scrolling: false,
@@ -198,10 +198,12 @@
           autoDimensions: false,
           modal: false,
           onStart: function() {
-          //jQuery("#fancybox-outer").append("<div id='dt_preloader'></div>");
+            jQuery("#fancybox-wrap").css("height","100%");
+             jQuery(".fancybox-bg").css("background-image","none");
           },
           onComplete: function(){
-          //  jQuery("#fancybox-outer").find("#dt_preloader").remove();
+            jQuery("#fancybox-wrap").css("height","100%");
+            jQuery(".fancybox-bg").css("background-image","none");
           }
         });
       }

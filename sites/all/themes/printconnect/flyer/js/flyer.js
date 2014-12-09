@@ -35,7 +35,10 @@ jQuery(document).ready(function(e) {
 	
 	Drupal.behaviors.textarea = {
   attach: function (context, settings) {
-      
+      $("#pcsamplepacks-request-form #edit-country").select2({
+          placeholder: "Maak je keuze",
+          allowClear: true
+        });
     $(".fancybox-media").click(function() {
     $.fancybox({
             'padding'       : 0,

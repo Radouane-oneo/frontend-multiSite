@@ -7,10 +7,14 @@
   max-width: 73%;
 }
 
+.page-cart form .item .image + .preview1 + .btns-box + .description,
+.page-cart form .item .image + .preview2 + .btns-box + .description,
 .page-cart form .item .image + .btns-box + .description{
   max-width: 50%;
   margin-bottom: 25px;
 }
+.page-cart form .item .image + .preview1 + .btns-box + .description h3,
+.page-cart form .item .image + .preview2 + .btns-box + .description h3,
 .page-cart form .item .image + .btns-box + .description h3{
   width: 100% !important;
 
@@ -32,10 +36,6 @@
 }
 #pccart-cart-form .item .image img{
   /*width:100%;*/
-}
-
-#pccart-cart-form .item .description h3{
-  width:75%;
 }
 
 #pccart-cart-form .item .price{
@@ -318,9 +318,6 @@ text-decoration: none;
     margin-bottom: 37px!important;
 }
 
-#pccart-cart-form .item .description h3 {
-width: 64% !important;
-}
 div div#edit-info.detail div.store div.description table.vacations{
      border-collapse: inherit !important;
 }
@@ -458,7 +455,9 @@ float: right;
   overflow: hidden;
   float: left;
   bottom: 10px;
-  margin-left: 5px;
+  margin-left: 215px;
+  clear: left;
+  margin-top: -30px;
 }
 
 #pccart-cart-form .preview input,

@@ -385,7 +385,7 @@ function pccart_cart_form2($form, &$form_state) {
                     '#prefix' => '<div class="preview">',
                     '#suffix' => '</div></div>',
                     '#type' => 'submit',
-                    '#value' => t('Delete'),
+                    '#value' => t('Delete+++'),
                     '#name' => 'delete_item_' . $item->id,
                     '#has_garbage_value' => FALSE,
                     '#attributes' => array('class' => array('delete_item')),
@@ -440,13 +440,13 @@ function pccart_cart_form2($form, &$form_state) {
                     $form['cart']['items'][$item->id]['product-container'] = array(
                     );
                     $form['cart']['items'][$item->id]['product-container']['product-items'] = array(
-                        '#markup' => '<h2 class="title-chose">' . t('Uploas items') . '</h2>',
+                        '#markup' => '<h2 class="title-chose">' . t('choisissez une optios de mise-en-page') . '</h2>',
                     );
                     
                   
                     $form['cart']['items'][$item->id]['product-container']['proflink'] = array(
-                        '#prefix' => '<div class="poll-form first"> <p>Vous avais déja un fichier ?</p>',
-                        '#suffix' => '<p class="txto">Importez votre<br>fichier en ligne</p></div> ',
+                        '#prefix' => '<div class="poll-form first"> <p>'.t('Vous avais déja un fichier ?').'</p>',
+                        '#suffix' => '<p class="txto">'.t('Importez votre').'<br>'.t('fichier en ligne').'</p></div> ',
                         '#content'=> array('#markup' => '<div class="visu img1"><div class="text">'.t('IMPORTEZ-LE').'</div></div>',),
                         '#theme' => 'designtoolproflink',
                         '#templateId' => $template->id,
@@ -461,8 +461,8 @@ function pccart_cart_form2($form, &$form_state) {
                     );
             
                         $form['cart']['items'][$item->id]['product-container']['upload']['link'] = array(
-                        '#prefix' => '<div class="poll-form "> <p>Vous n\'avais déja un fichier ?</p>',
-                        '#suffix' => '<p class="txto">Créez votre fichier facilement<br> grâce à notre outil en ligne </p></div> ',
+                        '#prefix' => '<div class="poll-form "> <p>'.t('Vous n\'avez pas de fichier ?').'</p>',
+                        '#suffix' => '<p class="txto">'.t('Créez votre fichier facilement').'<br>'.t('grâce à notre outil en ligne').'</p></div> ',
                         '#theme' => 'designtoollink',
                         '#content'=> array('#markup' => '<div class="visu img2"><div class="text">'.t('CREEZ-LE').'</div></div>',),
                         '#templateId' => $template->id,
@@ -484,8 +484,8 @@ function pccart_cart_form2($form, &$form_state) {
                     );
                         
                     $form['cart']['items'][$item->id]['product-container']['modele'] = array(
-                        '#prefix' => '<div class="poll-form"> <p>Personalise un modèle ?</p>',
-                        '#suffix' => '<p class="txto">Des milliers de modèles <br>gratuits disponibles</p></div> ',
+                        '#prefix' => '<div class="poll-form"> <p>'.t('Personalisez un modèle ?').'</p>',
+                        '#suffix' => '<p class="txto">'.t('Des milliers de modèles').'<br>'.t('gratuits disponibles').'</p></div>',
                         '#theme' => 'designtoolModele',
                          '#content'=> array('#markup' => '<div class="visu img3"><div class="text">'.t('CHOISISSZ-LE').'</div></div>',),
                         '#templateId' => $template->id,
@@ -523,7 +523,7 @@ function pccart_cart_form2($form, &$form_state) {
                     '#type' => 'submit',
                     '#src' => drupal_get_path('module', 'pccart') . '/images/delete.png',
                     '#name' => 'delete_item_' . $item->id,
-                    '#value' => t('Delete'),
+                    //'#value' => t('Delete'),
                     '#attributes' => array('class' => array('remove', 'noreplace')),
                     '#validate' => array('pccart_cart_form2_delete_item_validate'),
                     '#submit' => array('pccart_cart_form2_delete_item_submit'),

@@ -172,7 +172,7 @@ function pcoffers_form_pccustomers_dashboard_form_alter(&$form, &$form_state) {
 function pcoffers_form_pccart_cart_form2_alter(&$form, &$form_state) {
 
   $form['cart']['tooffer'] = array(
-      '#markup' => l(t('Download as offer'), 'cart/offer', array('attributes' => array('class' => array('download'), 'target' => '_blank'))),
+      '#markup' => l(t('Download as offer'), 'cart/offer', array('attributes' => array('class' => array('download'), 'target' => '_blank', 'title'=> t('imprimer un devis')))),
       '#weight' => -100,
   );
 }

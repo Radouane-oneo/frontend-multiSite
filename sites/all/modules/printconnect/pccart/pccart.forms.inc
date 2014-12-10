@@ -312,10 +312,6 @@ function pccart_cart_form2($form, &$form_state) {
                             '#callback' => 'cart/callback/',
                             '#versioning' => TRUE,
                             '#jobId' => $jobId,
-                            '#params' => array(
-                                'id' => $item->id,
-                                'cartid' => $cart->id,
-                            ),
                             '#savedDesignId' => $savedDesignId,
                             '#attributes' => array('class' => array('designtool', 'iframe', 'display-block')),
                         );
@@ -385,7 +381,7 @@ function pccart_cart_form2($form, &$form_state) {
                     '#prefix' => '<div class="preview">',
                     '#suffix' => '</div></div>',
                     '#type' => 'submit',
-                    '#value' => t('Delete+++'),
+                    '#value' => t('Delete'),
                     '#name' => 'delete_item_' . $item->id,
                     '#has_garbage_value' => FALSE,
                     '#attributes' => array('class' => array('delete_item')),

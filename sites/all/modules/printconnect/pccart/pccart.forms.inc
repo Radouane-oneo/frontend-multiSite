@@ -94,10 +94,10 @@ function pccart_cart_form2($form, &$form_state) {
         if (!empty($preflights)) {
             if ($preflights['data']['preflight'] == true) {
                 $preflight[$orderItem->id][] = '<span>"'.t('Preflight').'&nbsp;"</span><div class="fotolia-price">€&nbsp;'.$preflightPrice.'</div>';
-                $preflights = $preflights['data']['preflightInfo'];
-                Factory::SavePreflight($cart->id, $orderItem->id, $preflights);
+                $preflightsSave = $preflights['data']['preflightInfo'];
+                Factory::SavePreflight($cart->id, $orderItem->id, $preflightsSave);
             }
-            if (!empty($preflights['data']['preflightInfo'])) {
+            if (!empty($preflights['data']['preflightInfo']) || $preflights['data']['preflight'] == true) {
                  $jobsProupload[$orderItem->id] = true;
             }
         }
@@ -367,7 +367,7 @@ function pccart_cart_form2($form, &$form_state) {
                         'vs'=>1,
                         'cartid' => $cart->id,
                         'j' => $myfiles->designToolJobId,
-                        'currencyPreflight' => 'euro',
+                        'currencyPreflight' => '€',
                         'pricePreflight' => $preflightPrice,
                     ),
                     '#attributes' => array('class' => array('designtool', 'iframe', 'reupload')),
@@ -441,7 +441,7 @@ function pccart_cart_form2($form, &$form_state) {
                         '#params' => array(
                             'id' => $item->id,
                             'cartid' => $cart->id,
-                            'currencyPreflight' => 'euro',
+                            'currencyPreflight' => '€',
                             'pricePreflight' => $preflightPrice,
                         ),
                         '#attributes' => array('class' => array('designtool', 'iframe')),

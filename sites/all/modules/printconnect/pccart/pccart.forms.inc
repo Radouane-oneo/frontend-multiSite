@@ -364,6 +364,7 @@ function pccart_cart_form2($form, &$form_state) {
                     '#title' => $product->name . ' ' . $firstConfig->name,
                     '#params' => array(
                         'id' => $item->id,
+                        'vs'=>1,
                         'cartid' => $cart->id,
                         'j' => $myfiles->designToolJobId,
                         'currencyPreflight' => 'euro',

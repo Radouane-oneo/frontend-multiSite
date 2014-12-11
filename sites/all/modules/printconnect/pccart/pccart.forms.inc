@@ -369,7 +369,7 @@ function pccart_cart_form2($form, &$form_state) {
                         'id' => $item->id,
                         'cartid' => $cart->id,
                         'j' => $myfiles->designToolJobId,
-                        'currencyPreflight' => 'euro',
+                        'currencyPreflight' => '€',
                         'pricePreflight' => $preflightPrice,
                     ),
                     '#attributes' => array('class' => array('designtool', 'iframe', 'reupload')),

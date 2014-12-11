@@ -8,7 +8,6 @@ function pcdesigntool_theme() {
       'designtoollink' => array(
           'variables' => array(
               'cartItemId' => NULL,
-              'link'> NULL,
               'jobId' => NULL,
               'templateId' => NULL,
               'designtoolTemplateId' => NULL,
@@ -365,10 +364,10 @@ function theme_designtoollink($vars) {
       $html = $vars['html'];
     }
   }
-    if(!$vars['link']){
+    if(!$vars['params']['shop_apikey']){
     return $content;  
     }else{
-     return l($content, $url, array('query' => $query, 'html' => $html, 'attributes' => $attributes));   
+    return l($content, $url, array('query' => $query, 'html' => $html, 'attributes' => $attributes));   
     }
   
 }

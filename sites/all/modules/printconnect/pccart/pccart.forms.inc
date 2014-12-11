@@ -33,11 +33,7 @@ function getPreflight($jobId) {
     $url .= '/rest/getpreflightinfo?j='.$jobId;
     $response = file_get_contents($url);
     $response = json_decode($response, 1);
-    if(isset($response['data']['preflightInfo']) &&  !empty($response['data']['preflightInfo'])){
-        return $response['data']['preflightInfo'];
-    }else {
-        return array();
-    }
+    return $response;
     
 }
 
@@ -46,14 +42,7 @@ function quickupload($jobId) {
     $url .= '/rest/getpreflightinfo?j='.$jobId;
     $response = file_get_contents($url);
     $response = json_decode($response, 1);
-    if(isset($response['data']['preflightInfo']) &&  !empty($response['data']['preflightInfo'])){
-        return 'designtoolproflink';
-    }else {
-        return 'designtoollink';
-    }
-    
 }
-
 
 function pccart_cart_form2($form, &$form_state) {
     
@@ -87,6 +76,7 @@ function pccart_cart_form2($form, &$form_state) {
     $fotolia = array();
     $preflight = array();
     $preflightPrice = str_replace('.', ',', $preflightPrice);  
+    $jobsProupload = array();
     foreach ($cart->orderItems as $orderItem) {
         $fotoliaImages = getFotolia($orderItem->id);
         if (!empty($fotoliaImages)) {
@@ -99,23 +89,17 @@ function pccart_cart_form2($form, &$form_state) {
         }
 	
         $preflights = getPreflight($orderItem->id);
-	$savePreflight = true;
-	$jobsProupload[$orderItem->id] = false;
+	$savePreflight = false;
+        $jobsProupload[$orderItem->id] = false;
         if (!empty($preflights)) {
-	    $jobsProupload[$orderItem->id] = true;
-            foreach($preflights as $singlePreflight) {
-                $errors = $singlePreflight['errors'];
-                foreach ($errors as $key => $error) {
-                    if ($errors[$key] != 0){
-                       $savePreflight = false;
-                       break;
-                    }
-                }
-                if ($savePreflight)
-                    $preflight[$orderItem->id][] = '<span>"'.t('Preflight').'&nbsp;"</span><div class="fotolia-price">€&nbsp;'.$preflightPrice.'</div>';
-            }
-            if ($savePreflight)
+            if ($preflights['data']['preflight'] == true) {
+                $preflight[$orderItem->id][] = '<span>"'.t('Preflight').'&nbsp;"</span><div class="fotolia-price">€&nbsp;'.$preflightPrice.'</div>';
+                $preflights = $preflights['data']['preflightInfo'];
                 Factory::SavePreflight($cart->id, $orderItem->id, $preflights);
+            }
+            if (!empty($preflights['data']['preflightInfo'])) {
+                 $jobsProupload[$orderItem->id] = true;
+            }
         }
     }
     $cart = Factory::Current(FALSE);
@@ -252,7 +236,6 @@ function pccart_cart_form2($form, &$form_state) {
         
         
   foreach ($cart->productItems as $item) {
-
             if (isset($item->emailDesigner)) {
                 $emailDesigner = $item->emailDesigner;
             }
@@ -289,9 +272,6 @@ function pccart_cart_form2($form, &$form_state) {
                 '#attributes' => array('class' => array('item', 'clearfix')),
             );
 
-
-
-
             if (count($item->files)) {
                 foreach ($item->files as $file) {
                     $form['cart']['items'][$item->id]['file'] = array(
@@ -304,13 +284,12 @@ function pccart_cart_form2($form, &$form_state) {
 
                     $savedDesignId = NULL;
 
-                    if (isset($_SESSION['savedDesigns'][$item->id])) {
-                        $savedDesignId = $_SESSION['savedDesigns'][$item->id];
-                    }
-                    if ($jobsProupload[$item->id] == false) {
+                        if (isset($_SESSION['savedDesigns'][$item->id])) {
+                            $savedDesignId = $_SESSION['savedDesigns'][$item->id];
+                        }
                         $form['cart']['items'][$item->id]['file']['link'] = array(
                             '#weight' => 200,
-                            '#theme' => 'designtoollinkFile',
+                            '#theme' => 'designtoollink',
                             '#title' => $product->name . ' ' . $firstConfig->name,
                             '#content' => theme('pcfilesthumb', array('file' => $file->thumbnail, 'cache' => FALSE)),
                             '#html' => TRUE,
@@ -329,7 +308,6 @@ function pccart_cart_form2($form, &$form_state) {
                             '#savedDesignId' => $savedDesignId,
                             '#attributes' => array('class' => array('designtool', 'iframe', 'display-block')),
                         );
-                    }
 
                     $form['cart']['items'][$item->id]['description'] = array(
                     '#prefix' => '<div class="preview1">',
@@ -371,9 +349,13 @@ function pccart_cart_form2($form, &$form_state) {
                         '#suffix' => '</div>',
                         '#markup' => l(t('Prévisualiser'), pcdesigntool_preview_url($jobId), array('attributes' => array('target' => 'blank', 'class' => array('previewlink')))),
                     );
-                }
-               $themequickupload = quickupload($orderItem->id);
+                    
                 $myfiles = $item->files[0];
+                $themequickupload = 'designtoollink';
+                if ($jobsProupload[$item->id] == true) {
+                    $themequickupload = 'designtoolproflink';
+                }
+                
                 $form['cart']['items'][$item->id]['proflink'] = array(
                     '#prefix' => '<div class="preview">',
                     '#suffix' => '</div>',
@@ -400,10 +382,9 @@ function pccart_cart_form2($form, &$form_state) {
                     '#attributes' => array('class' => array('delete_item')),
                     '#submit' => array('pccart_cart_form2_delete_creat_submit'),
                 );
+             }
+            
             } else {
-
-
-
                 $form['cart']['items'][$item->id]['description'] = array(
                     '#prefix' => '<div class="preview2">',
                     '#suffix' => '</div>',
@@ -440,20 +421,16 @@ function pccart_cart_form2($form, &$form_state) {
 
                 $templates = Products\Templates\Factory::GetTemplates($item->configuration->productId, $items);
 
-                if (count($templates->items)) {
+                if (count($templates->items)){
                     $template = $templates->items[0];
-
                     $_SESSION['cart']['items'][$item->id]['template'] = $template->id;
-
-
                     $form['cart']['items'][$item->id]['product-container'] = array(
                     );
                     $form['cart']['items'][$item->id]['product-container']['product-items'] = array(
                         '#markup' => '<h2 class="title-chose">' . t('choisissez une optios de mise-en-page') . '</h2>',
                     );
-                    
                   
-                    $form['cart']['items'][$item->id]['product-container']['proflink'] = array(
+                        $form['cart']['items'][$item->id]['product-container']['proflink'] = array(
                         '#prefix' => '<div class="poll-form first"> <p>'.t('Vous avais déja un fichier ?').'</p>',
                         '#suffix' => '<p class="txto">'.t('Importez votre').'<br>'.t('fichier en ligne').'</p></div> ',
                         '#content'=> array('#markup' => '<div class="visu img1"><div class="text">'.t('IMPORTEZ-LE').'</div></div>',),
@@ -520,7 +497,7 @@ function pccart_cart_form2($form, &$form_state) {
                 }
             }
 
-            if (null === $offerId) {
+            if (null === $offerId){
                 $form['cart']['items'][$item->id]['description']['actions'] = array(
                     '#type' => 'container',
                     '#attributes' => array('class' => array('clearfix')),

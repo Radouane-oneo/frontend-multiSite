@@ -94,10 +94,10 @@ function pccart_cart_form2($form, &$form_state) {
         if (!empty($preflights)) {
             if ($preflights['data']['preflight'] == true) {
                 $preflight[$orderItem->id][] = '<span>"'.t('Preflight').'&nbsp;"</span><div class="fotolia-price">€&nbsp;'.$preflightPrice.'</div>';
-                $preflights = $preflights['data']['preflightInfo'];
-                Factory::SavePreflight($cart->id, $orderItem->id, $preflights);
+                $preflightsSave = $preflights['data']['preflightInfo'];
+                Factory::SavePreflight($cart->id, $orderItem->id, $preflightsSave);
             }
-            if (!empty($preflights['data']['preflightInfo'])) {
+            if (!empty($preflights['data']['preflightInfo']) || $preflights['data']['preflight'] == true) {
                  $jobsProupload[$orderItem->id] = true;
             }
         }

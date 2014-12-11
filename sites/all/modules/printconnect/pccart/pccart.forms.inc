@@ -14,7 +14,7 @@ use printconnect\Customers\Factory as CustomersFactory;
 use printconnect\Carts\Discounts;
 
 function getFotolia($jobId) {
-    //return array();    
+
     $url = variable_get('pc_designtoolurl');
     $url .= '/rest/get-fotolia-images/j/' . $jobId;
     $response = file_get_contents($url);
@@ -317,8 +317,6 @@ function pccart_cart_form2($form, &$form_state) {
                         );
                     }
 
-
-
                     $form['cart']['items'][$item->id]['description'] = array(
                     '#prefix' => '<div class="preview1">',
                     '#suffix' => '</div>',
@@ -514,13 +512,13 @@ function pccart_cart_form2($form, &$form_state) {
                 );
 
                 $form['cart']['items'][$item->id]['description']['actions']['remove'] = array(
-                    '#prefix' => '<div class="items_actions"><div class="items_remove">Suprimer du panier</div>',
+                    '#prefix' => '<div class="items_actions">',
                     '#suffix' => '</div>',
                     '#type' => 'submit',
                     '#src' => drupal_get_path('module', 'pccart') . '/images/delete.png',
                     '#name' => 'delete_item_' . $item->id,
-                    //'#value' => t('Delete'),
-                    '#attributes' => array('class' => array('remove', 'noreplace')),
+                    '#value' => t('Suprimer du panier'),
+                    '#attributes' => array('class' => array('removecart', 'noreplace')),
                     '#validate' => array('pccart_cart_form2_delete_item_validate'),
                     '#submit' => array('pccart_cart_form2_delete_item_submit'),
                     '#has_garbage_value' => FALSE,

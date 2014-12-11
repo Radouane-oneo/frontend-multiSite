@@ -440,7 +440,7 @@ function pccart_cart_form2($form, &$form_state) {
                         '#params' => array(
                             'id' => $item->id,
                             'cartid' => $cart->id,
-                            'currencyPreflight' => 'euro',
+                            'currencyPreflight' => '€',
                             'pricePreflight' => $preflightPrice,
                         ),
                         '#attributes' => array('class' => array('designtool', 'iframe')),

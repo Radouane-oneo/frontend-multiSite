@@ -45,18 +45,19 @@
   right:30px;
 }
 
-#pccart-cart-form .item .remove {
+#pccart-cart-form .item .removecart {
 position: absolute;
+font-size: 12px;
 border: none;
 height: 20px;
-margin: 0;
-padding: 0;
-text-indent: -9999em;
-width: 20px;
 cursor: pointer;
 background: url(images/bg_btns.png) no-repeat 0 0;
-right: 113px;
-top: 22px;
+color: #646464;
+top: 15px;
+right: 0;
+padding-left: 19px;
+padding-top: 0px;
+padding-bottom: 5px;
 }
 
 #pccart-cart-form .shipping td{
@@ -496,12 +497,6 @@ border-radius: 0;
     position: absolute;
     top: 34px;
     left: 482px;
-}
-
-#pccart-cart-form .items_remove{
-    margin-left: 61px;
-    margin-top: 19px;
-    
 }
 
 .page-cart .title-chose{

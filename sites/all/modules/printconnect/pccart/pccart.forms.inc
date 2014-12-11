@@ -41,6 +41,20 @@ function getPreflight($jobId) {
     
 }
 
+function quickupload($jobId) { 
+    $url = variable_get('pc_designtoolurl');
+    $url .= '/rest/getpreflightinfo?j='.$jobId;
+    $response = file_get_contents($url);
+    $response = json_decode($response, 1);
+    if(isset($response['data']['preflightInfo']) &&  !empty($response['data']['preflightInfo'])){
+        return 'designtoolproflink';
+    }else {
+        return 'designtoollink';
+    }
+    
+}
+
+
 function pccart_cart_form2($form, &$form_state) {
     
  global $language;
@@ -296,7 +310,7 @@ function pccart_cart_form2($form, &$form_state) {
                     if ($jobsProupload[$item->id] == false) {
                         $form['cart']['items'][$item->id]['file']['link'] = array(
                             '#weight' => 200,
-                            '#theme' => 'designtoollink',
+                            '#theme' => 'designtoollinkFile',
                             '#title' => $product->name . ' ' . $firstConfig->name,
                             '#content' => theme('pcfilesthumb', array('file' => $file->thumbnail, 'cache' => FALSE)),
                             '#html' => TRUE,
@@ -358,11 +372,12 @@ function pccart_cart_form2($form, &$form_state) {
                         '#markup' => l(t('Prévisualiser'), pcdesigntool_preview_url($jobId), array('attributes' => array('target' => 'blank', 'class' => array('previewlink')))),
                     );
                 }
+               $themequickupload = quickupload($orderItem->id);
                 $myfiles = $item->files[0];
                 $form['cart']['items'][$item->id]['proflink'] = array(
                     '#prefix' => '<div class="preview">',
                     '#suffix' => '</div>',
-                    '#theme' => 'designtoolproflink',
+                    '#theme' => $themequickupload,
                     '#templateId' => $template->id,
                     '#title' => $product->name . ' ' . $firstConfig->name,
                     '#params' => array(

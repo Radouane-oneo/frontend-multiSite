@@ -365,7 +365,12 @@ function theme_designtoollink($vars) {
     }
   }
     if(!$vars['params']['shop_apikey']){
-    return $content;  
+        if($vars['params']['pricePreflight']){
+            return l($content, $url, array('query' => $query, 'html' => $html, 'attributes' => $attributes));   
+        }else{
+          return $content;    
+        }
+    
     }else{
     return l($content, $url, array('query' => $query, 'html' => $html, 'attributes' => $attributes));   
     }

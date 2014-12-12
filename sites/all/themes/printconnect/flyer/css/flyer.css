@@ -8331,10 +8331,11 @@ ul.ui-autocomplete{
 	overflow: hidden;
 }
 .block-views .view-deals-promotion .boxing h3{
-	font-size: 14px;
+	font-size: 14px !important;
 	color: #646464;
 	font-weight: bold;
 	margin-bottom: 2px;
+	text-transform: none;
 }
 .block-views .view-deals-promotion .boxing .price-box{
 	display: none;

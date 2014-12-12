@@ -322,7 +322,11 @@ use printconnect\Customers;
     public static function deleteFotolias($order) {
         return Dal::Delete('fotolia', array('cart' => $order->id));
     }
-    
+   
+    public static function deletePreflights($order) {
+        return Dal::Delete('preflight', array('cart' => $order->id));
+    }
+ 
     public static function SavePreflight($cartId, $orderItemId, $preflight) {
         $object = new \printconnect\Object();
         $object->cartId = $cartId;

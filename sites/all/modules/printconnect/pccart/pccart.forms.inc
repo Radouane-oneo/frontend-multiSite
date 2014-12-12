@@ -31,6 +31,7 @@ function getPreflight($jobId) {
     //return array(); 
     $url = variable_get('pc_designtoolurl');
     $url .= '/rest/getpreflightinfo?j='.$jobId;
+    echo $url.'<br>';
     $response = file_get_contents($url);
     $response = json_decode($response, 1);
     return $response;
@@ -66,8 +67,11 @@ function pccart_cart_form2($form, &$form_state) {
     }
     $cart = Factory::Current(FALSE);
     // delete fotolias data on backend
-    if ($cart)
+    if ($cart) {
         Factory::deleteFotolias($cart);
+	Factory::deletePreflights($cart);
+    }
+
     $fotoliaPrice = 0;
     $preflightPrice = 0;
     if($cart->preflightPrice){

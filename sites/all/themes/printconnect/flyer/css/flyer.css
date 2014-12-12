@@ -8347,11 +8347,11 @@ ul.ui-autocomplete{
 	/*display: none;*/
 }
 .block-views .view-deals-promotion #prixdeal .newpricedeal{
-	font-size: 17px;
+	font-size: 15px;
 	color: #ff6600;
 	line-height: 18px;
 	font-weight: bold;
-	margin-right: 5px;
+	margin-right: 0;
 }
 
 .block-views .view-deals-promotion #prixdeal .pricedeal{

@@ -74,8 +74,13 @@ function pccart_cart_form2($form, &$form_state) {
     $preflight = array();
     $preflightPrice = str_replace('.', ',', $preflightPrice);  
     foreach ($cart->orderItems as $orderItem) {
-        $fotoliaImages = getFotolia($orderItem->id);
-        if (!empty($fotoliaImages)) {
+        $jobId = $orderItem->files[0]->designToolJobId;
+        if(count($orderItem->files) > 0) {
+            $fotoliaImages = getFotolia($jobId);
+        }else {
+            $fotoliaImages = array();
+        }        
+	if (!empty($fotoliaImages)) {
             foreach($fotoliaImages as $image) {
                 $pricefotolias = Factory::getFotoliaPrice($image['type']);
                 $fotoliaPrice = str_replace('.', ',', number_format($pricefotolias->price,2));

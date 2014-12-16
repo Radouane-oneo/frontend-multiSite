@@ -96,7 +96,7 @@ function pccart_cart_form2($form, &$form_state) {
         $jobsProupload[$orderItem->id] = false;
         if (!empty($preflights)) {
             if ($preflights['data']['preflight'] == true) {
-                $preflight[$orderItem->id][] = '<span>"'.t('Preflight').'&nbsp;"</span><div class="fotolia-price">&nbsp;'.$preflightPrice.'&nbsp€</div>';
+                $preflight[$orderItem->id][] = $preflightPrice;
                 $preflightsSave = $preflights['data']['preflightInfo'];
                 Factory::SavePreflight($cart->id, $orderItem->id, $preflightsSave);
             }
@@ -551,10 +551,16 @@ function pccart_cart_form2($form, &$form_state) {
         foreach ($cart->orderItems as $orderItem) {
             if (isset($preflight[$orderItem->id])) {
                 $form['cart']['preflights']['items'][$orderItem->id]['preflight'] = array(
-                    '#theme' => 'item_list',
+                    'description' => array(
                     '#prefix' => '<div class="preflight-items">',
                     '#suffix' => '</div>',
-                    '#items' => $preflight[$orderItem->id]
+                    '#markup' => t('Preflight'),
+                ),
+                    'price' => array(
+                    '#theme' => 'price',
+                    '#value' => $preflight[$orderItem->id][0],
+                    '#attributes' => array('class' => array('pricepreflight')),
+                ),
                 );
             }
         }

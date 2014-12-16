@@ -357,7 +357,7 @@ float: right;
     top: -11px;
 }
 
-.fotolia-items, .preflight-items{
+.fotolia-items{
     float: left;
     margin-left: -9px;
     padding-left: 9px;
@@ -514,4 +514,18 @@ border-radius: 0;
 
 .visu .text {
 padding-top: 86px;
+}
+
+.page-cart .pricepreflight{
+color: #ff6600;
+font-size: 20px;
+font-weight: 600;
+text-align: right;
+width: 120px;
+float: right;
+margin: 5px;
+}
+.page-cart .preflight-items{
+float: left;
+width: 50px; 
 }

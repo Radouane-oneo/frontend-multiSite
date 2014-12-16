@@ -108,7 +108,6 @@ class TwitterBlockSearch {
       }
     }
     return $return;
-    var_dump($return);
   }
 
   /**

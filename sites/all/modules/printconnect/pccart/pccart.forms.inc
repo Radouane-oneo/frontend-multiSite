@@ -31,7 +31,6 @@ function getPreflight($jobId) {
     //return array(); 
     $url = variable_get('pc_designtoolurl');
     $url .= '/rest/getpreflightinfo?j='.$jobId;
-
     $response = file_get_contents($url);
     $response = json_decode($response, 1);
     return $response;
@@ -568,12 +567,20 @@ function pccart_cart_form2($form, &$form_state) {
     }
     $orderItemsAdditional = $cart->orderItemsAdditional;
     if (count($orderItemsAdditional)) {
-        $form['cart']['additionalItems'] = array(
-            '#type' => 'container',
-            '#attributes' => array('class' => array('additionalItems')),
-        );
-
+	$addcontainer = true;
+	foreach ($orderItemsAdditional as $item) {
+          if ($item->description == 'Preflight') {
+	    $addcontainer = false;
+	  }
+	}
+	if ($addcontainer) {
+            $form['cart']['additionalItems'] = array(
+                '#type' => 'container',
+                '#attributes' => array('class' => array('additionalItems')),
+            );
+	}
         foreach ($orderItemsAdditional as $item) {
+	  if ($item->description != 'Preflight') {
             $form['cart']['additionalItems'][$item->id]['items'][$item->id] = array(
                 'description' => array(
                     '#prefix' => '<span>',
@@ -585,6 +592,7 @@ function pccart_cart_form2($form, &$form_state) {
                     '#value' => $item->price,
                 ),
             );
+          }
         }
     }
 /* Discount */ 

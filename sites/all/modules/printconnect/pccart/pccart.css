@@ -35,7 +35,7 @@
   text-align: center;
 }
 #pccart-cart-form .item .image img{
-  /*width:100%;*/
+ display: block;
 }
 
 #pccart-cart-form .item .price{

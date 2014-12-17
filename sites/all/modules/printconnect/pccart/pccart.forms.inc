@@ -368,6 +368,7 @@ function pccart_cart_form2($form, &$form_state) {
                     '#params' => array(
                         'id' => $item->id,
                         'vs'=>1,
+                        'shop_apikey' => variable_get('pc_apikey'),
                         'cartid' => $cart->id,
                         'j' => $myfiles->designToolJobId,
                         'currencyPreflight' => '€',

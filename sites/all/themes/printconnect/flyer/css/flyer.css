@@ -8332,7 +8332,8 @@ ul.ui-autocomplete{
 }
 .block-views .view-deals-promotion .boxing h3{
 	font-size: 14px;
-	color: #646464;
+	/*color: #646464;*/
+	color: #0000;
 	font-weight: bold;
 	margin-bottom: 2px;
 }

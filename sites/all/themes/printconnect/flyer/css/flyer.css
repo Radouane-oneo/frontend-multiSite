@@ -7644,10 +7644,15 @@ div.myoffers table.list thead tr th:nth-child(2){
 }
 .info-bloc li.faq{
 	background-position: -3px -86px;
-	margin-right: 60px;
+	margin-right: 29px;
 }
-.info-bloc li.num{
-	background-position: -3px -70px;
+.info-bloc li.num{ 
+	background-position: -2px 5px;
+	height: 25px;
+	padding-top: 5px;
+ }
+ .info-bloc li.num>h3 {
+  line-height: 21px;
 }
 .info-bloc li h3{
 	font-size: 14px;
@@ -8329,10 +8334,12 @@ ul.ui-autocomplete{
 	overflow: hidden;
 }
 .block-views .view-deals-promotion .boxing h3{
+ 
 	font-size: 14px;
 	color: #646464;
 	font-weight: bold;
 	margin-bottom: 2px;
+	text-transform: none;
 }
 .block-views .view-deals-promotion .boxing .price-box{
 	display: none;
@@ -8345,11 +8352,11 @@ ul.ui-autocomplete{
 	/*display: none;*/
 }
 .block-views .view-deals-promotion #prixdeal .newpricedeal{
-	font-size: 17px;
+	font-size: 15px;
 	color: #ff6600;
 	line-height: 18px;
 	font-weight: bold;
-	margin-right: 5px;
+	margin-right: 0;
 }
 
 .block-views .view-deals-promotion #prixdeal .pricedeal{
@@ -10252,7 +10259,7 @@ border: none;
 	height: 75px;
 	position: absolute;
 	top: -6px;
-	right: -6px;
+	right: -5px;
 }
 .promo-notif span{
 	font-size: 15px;
@@ -10265,7 +10272,12 @@ border: none;
 	margin: 23px 0 0 20px;
 }
 
-
+#block-views-deals-promotion-block .view-deals-promotion .promo-notif  span{
+	margin: 34px 0 0 8px !important;
+	width: 100px;
+	font-size: 10px !important;
+	text-transform: uppercase;
+}
 
 #block-views-deals-promotion-block .view-deals-promotion{
 position:relative !important;

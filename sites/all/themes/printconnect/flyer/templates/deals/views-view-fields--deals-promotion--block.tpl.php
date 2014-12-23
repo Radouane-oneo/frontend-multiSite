@@ -7,7 +7,7 @@
         <p id="prixdeal">
             à 
             <span class="newpricedeal"><?php print $fields['field_prix_deal']->content ?>€</span>
-             seulement ! 
+             HT seulement ! 
         </p>
     </div>
     

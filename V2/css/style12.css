@@ -1,0 +1,606 @@
+ 
+/*.container {
+min-width: 960px;
+}*/	
+ 
+/* fonts */
+@font-face {
+  font-family: 'DaxBlack';
+  src: url('fonts/dax-black-webfont.eot');
+  src: url('fonts/dax-black-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/dax-black-webfont.woff') format('woff'),
+    url('fonts/dax-black-webfont.ttf') format('truetype'),
+    url('fonts/dax-black-webfont.svg#') format('svg');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'DaxRegular';
+  src: url('fonts/dax-regular-webfont.eot');
+  src: url('fonts/dax-regular-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/dax-regular-webfont.woff') format('woff'),
+    url('fonts/dax-regular-webfont.ttf') format('truetype'),
+    url('fonts/dax-regular-webfont.svg#DaxRegular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'DaxBold';
+  src: url('fonts/dax-bold-webfont.eot');
+  src: url('fonts/dax-bold-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/dax-bold-webfont.woff') format('woff'),
+    url('fonts/dax-bold-webfont.ttf') format('truetype'),
+    url('fonts/dax-bold-webfont.svg#DaxBold') format('svg');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'DaxMedium';
+  src: url('fonts/dax-medium-webfont.eot');
+  src: url('fonts/dax-medium-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/dax-medium-webfont.woff') format('woff'),
+    url('fonts/dax-medium-webfont.ttf') format('truetype'),
+    url('fonts/dax-medium-webfont.svg#DaxMedium') format('svg');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'DaxItalic';
+  src: url('fonts/dax-italic-webfont.eot');
+  src: url('fonts/dax-italic-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/dax-italic-webfont.woff') format('woff'),
+    url('fonts/dax-italic-webfont.ttf') format('truetype'),
+    url('fonts/dax-italic-webfont.svg#DaxItalic') format('svg');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'DaxBoldItalic';
+  src: url('fonts/dax-bolditalic-webfont.eot');
+  src: url('fonts/dax-bolditalic-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/dax-bolditalic-webfont.woff') format('woff'),
+    url('fonts/dax-bolditalic-webfont.ttf') format('truetype'),
+    url('fonts/dax-bolditalic-webfont.svg#DaxBoldItalic') format('svg');
+  font-weight: normal;
+  font-style: normal;
+
+}
+/* END - fonts */
+
+
+
+#header-nav{
+	background-color: #fff !important;
+	border:none;
+	padding-top: 38px;
+	padding-bottom: 25px;
+}
+#topimgmenuright{
+	margin: 15px 0;
+}
+#header-nav #topMenuright{
+	float: right;
+}
+
+/*#header-nav #topMenuright #right-ctn li{
+float: left;
+display: inline-block;
+font-size: 12px;
+font-family: Arial, Helvetica, Garuda, sans-serif;
+color: #b7b7b7;
+font-weight: normal;
+padding-left: 37px;
+height: 22px;
+}
+#header-nav #topMenuright #right-ctn li:nth-child(1){
+	background: url("../img/img1.png") no-repeat left center;
+	width: 99px;  
+}
+#header-nav #topMenuright #right-ctn li:nth-child(2){
+	background: url("../img/img2.png") no-repeat left center;
+	width: 103px; 
+ 
+}
+#header-nav #topMenuright #right-ctn li:nth-child(3){
+	background: url("../img/img3.png") no-repeat left center; 
+	width: 182px;
+}*/
+
+/****Section 1 *****/
+
+#section1{
+	background-color: #364c5f;
+	border-top: 1px solid #465a6b;
+	border-bottom: 1px solid #4b5f6f; 
+}
+#section1 .section-col1{
+	padding-top:50px;
+	padding-bottom:27px;
+} 
+#section1 h2, #section1 h3,#section1 h4,#section1 p{
+	color: #fff;
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+}
+#section1 h2{
+	font-family: DaxBold;
+	font-size: 40px;
+	font-weight: bold;
+	line-height: 40px;
+}
+#section1 h3{
+	font-family: DaxRegular;
+	font-size: 30px;
+	font-weight: normal;
+	line-height: 40px;
+	margin-bottom: 25px;
+}
+#section1 p{
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	line-height: 18px;
+	font-weight: normal;
+}
+#section1 .p1{
+	margin-bottom: 11px;
+}
+#section1 h4{
+	font-family: Arial, sans-serif;
+	font-size: 18px;
+	line-height: 22px;
+	font-weight: normal;
+}
+#section1 .section-col2{
+	position: relative;
+}
+#section1 .section-col2 img{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+/***End Section 1***/
+ 
+/***Section 2 ***/
+#section2{
+	background-color: #fff; 
+}
+#section2 h2, #section2 h3,#section2 h4,#section1 p{
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+}
+#section2 .section-col1 .section-col1-1{
+	margin-bottom: 12px;
+	padding-left: 0px;
+}
+#section2 .section-col1 .section-col1-1 h2{
+	color: #4b5f6f;
+	font-size: 22px;
+	font-family: DaxRegular;
+	font-weight: normal;
+	line-height: 30px;
+	margin-bottom: 22px;
+}
+#section2 .section-col1 .section-col1-1 div ul li{
+	color: #656668;
+	font-family: DaxRegular;
+	font-weight: normal;
+	font-size: 16px;
+	list-style: outside url("../img/puce-img.png") disc;
+	line-height: 16px;
+	margin-bottom: 9px;
+}
+#section2 .section-col1 .section-col1-2 .wrap-form h3{
+	color: #656668;
+	font-size: 18px;
+	font-family: Arial, sans-serif;
+	font-weight: normal;
+	margin-bottom: 12px;
+}
+#section2 .section-col1 .section-col1-2 .wrap-form .section-col1-2-1 p{
+	color: #939598;
+	font-size: 12px;
+	font-family: Arial, sans-serif;
+}
+#section2 .section-col1{
+	padding-top:31px;
+	padding-bottom:37px;
+
+} 
+
+
+#section2 .section-col1 .section-col1-2{
+
+	padding: 13px 18px 15px 11px;
+	border: 1px solid #d3d3d3;
+	-moz-box-shadow: -1px 1px 2px 1px #E5E5E5;
+	-webkit-box-shadow: -1px 1px 2px 1px #E5E5E5;
+	-o-box-shadow: -1px 1px 2px 1px #E5E5E5;
+	box-shadow: -1px 1px 2px 1px #E5E5E5;
+	filter:progid:DXImageTransform.Microsoft.Shadow(color=#e5e5e5, Direction=180, Strength=3);
+}
+
+#section2 .section-col1 .section-col1-2 .wrap-form form button{
+	background-color: #ffda2a;
+	border: 0px;
+	color: #58595b; 
+}
+  #section2 .section-col1 .section-col1-2 .wrap-form  .form-inline .form-group input{
+ 	margin-bottom: 6px;
+  }
+  #section2 .section-col1 .section-col1-2 .wrap-form form button{ 
+	margin-bottom: 6px;
+}
+
+  #section2 .section-col1 .section-col1-2 .wrap-form  .form-inline .form-group{
+  	width: 45%;
+  }
+  #section2 .section-col1 .section-col1-2 .wrap-form  .form-inline .form-group input{
+ 	width: 100%;
+  }
+  #section2 .section-col1 .section-col1-2 .wrap-form form button{  
+	width: 50%;
+}
+
+
+/***End section2 ***/
+
+/***Section 3 ***/
+
+#section3{
+	background-color: #f5f5f5;
+	padding-top: 55px;
+	padding-bottom: 51px;
+}
+#section3 h2, #section3 h3,#section3 h4,#section3 p{
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+}
+#section3 .section-col1 .section-col1-1 h3{
+	font-size: 30px;
+	color:#364c5f;
+	font-family: DaxRegular;
+	font-weight: normal;
+	line-height: 40px;
+}
+#section3 .section-col1 .section-col1-1 p{
+	font-size: 18px;
+	color:#656668;
+	font-family: Arial, sans-serif;
+	font-weight: normal;
+	line-height: 23px;
+	margin-bottom: 13px;
+}
+#section3  .cell{
+	background-color: #069ad8;
+	min-height: 130px;
+	padding:19px 31px 17px 31px;
+	text-align: left;
+
+
+		min-height: 148px;
+}
+#section3  .cell .wrap-star img{ 
+	margin-bottom: 14px;
+	margin-left: 33%;
+}
+#section3  .cell .wrap-star h4{
+	font-size: 14px;
+	color:#fff;
+	font-family: Arial, sans-serif;
+	font-weight: bold;  
+}
+#section3  .cell .wrap-star p{
+	font-size: 12px;
+	color:#fff;
+	font-family: Arial, sans-serif;
+	font-weight: normal;
+}
+#section3 .section-row{
+	margin-bottom: 27px; 
+}
+
+#section3  .cell-first{
+	border-right: 1px solid #76c8ea;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+#section3 .cell-last{
+	border-left: 1px solid #76c8ea;
+	-webkit-border-top-right-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	-moz-border-radius-topright: 5px;
+	-moz-border-radius-bottomright: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+ 
+/***End section 3***/
+/***Section 4 ***/
+#section4{
+	background-color: #364c5f;
+	padding-top: 51px;
+	padding-bottom: 48px;
+	text-align: center;
+}
+#section4 h3,#section4 p{
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	color: #fff
+}
+#section4 h3{
+	font-size: 20px;
+	font-family: Arial, sans-serif;
+	font-weight: normal;
+}
+#section4 p{
+	font-size: 14px;
+	font-family: Arial, sans-serif;
+	font-weight: normal; 
+}
+#section4 p{
+	margin-bottom: 24px;
+}
+#section4 .section-col2 .wrap-form{
+	background-color: rgb(255, 255, 255);
+	border-radius: 5px;
+	padding: 13px 13px;
+}
+#section4 .section-col2 .wrap-form .form-inline{
+	margin-bottom: 0px;
+}
+#section4 .section-col2 .wrap-form form button{
+	background-color: #00658c;
+	border: 0px;
+	color: #FFF; 
+}
+
+#section4 .section-col2 .wrap-form form .form-group{
+	width:81%;
+}
+#section4 .section-col2 .wrap-form form .form-group input{
+	width: 100%;
+	border: 0px !important;
+	box-shadow: none;
+}
+#section4{
+	position: relative;
+}
+#section4:before{
+content: url(../img/corner.png);
+position: absolute;
+width: 18px;
+height: 15px;
+bottom: -14px;
+right: 5%;
+}
+
+/*** End section 4 ***/
+/*** Section 5 ***/
+#section5{
+	background-color:#00658c;
+	padding-bottom: 11px;
+	padding-top: 22px;
+} 
+#section5 h2{
+	padding: 0px;
+	margin-top: 0px;
+}
+
+#section5 .section-col1 .content h2 a{
+border-bottom: none;
+font-weight: normal;
+font-family: "DaxRegular";
+font-size: 20px;
+color: #fff;
+}
+#section5 .section-col2 .content{
+	position: relative;
+}
+#section5  .content ul {
+padding: 0;
+margin: 0;
+}
+
+#section5   .content ul li {
+margin: 0 0 0 8px !important;
+list-style: none outside url('http://d4e7wxbvl20c1.cloudfront.net/images.printconcept.com/site/newsite/footer/footer_bullet.png');
+ 
+}
+#section5   .content ul li a {
+font-weight: normal !important;
+color: #fff;
+}
+
+#section5 .section-col2 .content h2{
+border-bottom: none;
+font-weight: normal;
+font-family: "DaxRegular";
+font-size: 20px;
+color: #009bda; 
+}
+#section5 .section-col2 .content>a {
+color: #001b26;
+font-weight: 600;
+}
+#section5 .section-col3 .content h2 { 
+	color: #fff;
+	font-weight: 400 !important;
+	font-size: 15px; 
+}
+.footerSocialLinks ul li .facebook {
+	background: url('http://www.printconcept.be/sites/all/themes/printconcept/css/images/printconceptespritesimg.png') -3px -99px no-repeat;
+}
+.footerSocialLinks ul li .twitter {
+	background: url('http://www.printconcept.be/sites/all/themes/printconcept/css/images/printconceptespritesimg.png') -4px -189px no-repeat;
+}
+.footerSocialLinks ul li .linkedin {
+	background: url('http://www.printconcept.be/sites/all/themes/printconcept/css/images/printconceptespritesimg.png') -4px -157px no-repeat;
+}
+.footerSocialLinks ul li .googleplus {
+	background: url('http://www.printconcept.be/sites/all/themes/printconcept/css/images/printconceptespritesimg.png') -4px -127px no-repeat;
+}
+ 
+.item-list ul {
+	margin: 0;
+}
+.footerSocialLinks li {
+	float: left;
+	list-style: none !important;
+	margin: 0 0 0 10px !important;
+}
+.facebook, .twitter, .linkedin, .googleplus {
+	width: 24px;
+	height: 22px;
+	display: block;
+}
+#section5 .section-col3 .centent h2 a{ 
+	border-bottom: none;
+	font-weight: normal;
+	font-family: "DaxRegular";
+	font-size: 20px;
+	color: #fff !important; 
+}
+#section5 .impressiveBack {
+background: url(http://www.printconcept.be/sites/all/themes/printconcept/images/impressiveBackground.png) no-repeat left 27px;
+color: #ffffff;  
+width: 100%;
+font-size: 20px;
+font-family: 'DaxRegular', Arial, Helvetica, sans-serif;
+margin-top: 22px;
+padding-bottom: 7px;
+}
+#section5 .impressiveBack p{
+	margin: 0px !important;
+}
+#section5 .show-discktop{
+	display: block;
+}
+#section5 .show-tablet{
+	display: none;
+}
+/*** End section 5 ***/
+/*** Section 6 ***/
+#section6{
+	padding-top: 15px;
+	padding-bottom: 7px;
+	background-color: #004059;
+}
+#section6 ul.menu {
+	border: none;
+	list-style: none;
+	text-align: left;
+}
+
+#section6 ul > li {
+	float: left;
+	display: inline-block;
+	padding: 5px;
+	border-right: 1px solid #D2D2D2;
+	line-height: 12px;
+	margin: 5px 0 0 10px;
+	padding: 0 10px 0 0;
+}
+#section6 ul > li > a {
+	font-family: 'DaxRegular', Arial, Helvetica, sans-serif;
+	font-size: 11px !important;
+	color: #fff;
+}
+ 
+#section6 ul >  .last {
+border-right: 0;
+}
+/*** End section 6 ***/
+
+
+
+/*  css Tablet **/
+
+	#section5 .show-tablet h3 ,#section5 .show-tablet p,#section5 .show-tablet li a{
+		margin: 0;
+		color: #fff;
+	}
+	#section5 .show-tablet .col1{
+		padding-left: 51px;
+	}
+	#section5 .show-tablet .col1 h3,#section5 .show-tablet .col2 h3{
+		position: relative;
+		font-weight: bold;
+		font-family: Arial, Helvetica, sans-serif;  
+		font-size: 18px;
+	}
+	#section5 .show-tablet .col1 p{ 
+		font-size: 12px;
+		font-family: Arial, Helvetica, sans-serif;
+		font-weight: normal;
+		line-height: 18px;
+	}
+	#section5 .show-tablet .col1 h3:after {
+		width: 26px;
+		height: 27px;
+		position: absolute;
+		left: -34px;
+		top: -5px;
+		content: url(../img/icon-contact.png);
+	}
+	#section5 .show-tablet .col2 ul li a{
+		color: #fff;
+		font-size: 12px;
+		font-family: Arial, Helvetica, sans-serif;
+		font-weight: normal;
+	}
+
+	.numberphone{
+		display: none;
+		/*background-color: #EBEBEB;
+		-webkit-border-top-right-radius: 5px;
+		-webkit-border-bottom-right-radius: 5px;
+		-moz-border-radius-topright: 5px;
+		-moz-border-radius-bottomright: 5px;
+		border-top-right-radius: 5px;
+		border-bottom-right-radius: 5px;
+		padding: 2px 10px;
+		color: #939598;
+		width: 72%;
+		position: relative;*/
+		float: right;
+	}
+	.numberphone:after{
+		/*content: url(../img/icon-phone.png);
+		width: 25px;
+		height: 23px;
+		position: absolute;
+		top: 0px;
+		left: -28px;*/
+	}
+	.show-mobile{
+		display: none;
+	}
+	.show-tablet{
+		display: none;
+	}
+	.text-mobile{
+		display: none;
+	}
+
+	.form-group{
+		margin-bottom: 0px;
+	}

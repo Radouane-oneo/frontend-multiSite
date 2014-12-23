@@ -1740,6 +1740,7 @@ body.front #block-block-13:after {
 	right: -39px;
 	background-color: white !important;
 	border: 3px solid white;
+        display: none !important;
 }
 
 .subscribe-block .content .form-item, .subscribe-block .content .form-actions {
@@ -3079,11 +3080,13 @@ legend {
 	content: ':';
 }
 .page-cart #pccart-cart-form .item .image {
-	width: inherit;
+	width: 200px;
 	background: #fff;
 	border-radius: 3px 3px 3px 3px;
 	margin-bottom: 5px;
 	min-height: 85px;
+	margin-right: 10px;
+	border: 1px solid #ff6600;
 }
 .page-cart #pccart-cart-form .item .image div {
 	display: block;
@@ -3098,12 +3101,11 @@ legend {
 	position: relative;
 	bottom: 58px;
 }
-.page-cart #pccart-cart-form .item .designtool {
-}
+
 .page-cart #pccart-cart-form .item .designtool img {
-	margin: 10px;
-	max-width: 108px;
-	max-height: 108px;
+	margin: 5px;
+	max-width: 200px;
+	max-height: 230px;
 	border-radius: 3px 3px 3px 3px;
 }
 .page-cart #pccart-cart-form .item .proupload, 
@@ -3159,43 +3161,41 @@ legend {
 	bottom: 0;
 	width: 100%;
 }
-.page-cart #pccart-cart-form .item .description input.remove, 
-.page-cart #edit-cart-discounts input.remove {
-background: url(images/subMenuSpriteIconsModified.png) no-repeat -421px -49px;
-width: 24px;
-height: 24px;
-text-indent: -9999em;
-cursor: pointer;
-border: none;
-border-radius: 0;
-position: absolute;
-top: -6px;
-right: -3px;
-}
-.page-cart #pccart-cart-form .item .description input:hover.remove, 
-.page-cart #edit-cart-discounts input:hover.remove {
-background: url(images/subMenuSpriteIconsModified.png) no-repeat -456px -49px;
-}
+
 .page-cart #pccart-cart-form .item .description {
+	width: 280px;
+	margin-bottom: 30px;
+}
+
+.page-cart #pccart-cart-form .item .preview2 .description {
 	width: 480px;
 }
 .page-cart #pccart-cart-form .item .description h3 {
-	margin-bottom: 10px;
-	font-weight: 600;
+	margin-bottom: 0;
+	font-weight: 700;
 }
 .page-cart #pccart-cart-form .item .description .price {
-	color: #f60;
-	font-size: 24px;
-	top: 10px;
-	right: 40px;
-	line-height: normal\9; /* IE HACK */
+color: #f60;
+font-size: 40px;
+top: 10px;
+right: 10px;
+font-weight: bold;
+line-height: normal\9;
 }
-.page-cart #pccart-cart-form .item .description .currency, 
-.page-cart #pccart-cart-form .item .description .decimalpoint, 
+.page-cart #pccart-cart-form .item .description .decimalpoint,
 .page-cart #pccart-cart-form .item .description .decimals {
-	font-size: 14px;
-	line-height: 15px;
-	vertical-align: top;
+font-size: 30px;
+line-height: 30px;
+vertical-align: top;
+}
+
+.page-cart #pccart-cart-form .item .description .whole {
+margin-left: -8px;
+vertical-align: bottom;
+}
+.page-cart #pccart-cart-form .item .description .currency {
+font-size: 40px;
+vertical-align: bottom;
 }
 .page-cart #pccart-cart-form .item .description ul {
 	margin: 0;
@@ -3203,12 +3203,15 @@ background: url(images/subMenuSpriteIconsModified.png) no-repeat -456px -49px;
 }
 .page-cart #pccart-cart-form .item .description ul li {
 	list-style: none;
-	margin: 0 0 5px 0;
+	margin: 0 0 3px 0;
 	padding: 0;
+	font-size: 13px;
+	line-height: 15px;
 }
 .page-cart #pccart-cart-form .item .description ul li label {
 	float: left;
 	margin-right: 10px;
+	font-weight: 700;
 }
 .page-cart #pccart-cart-form .item .description ul div.item-list > ul {
 	display: inline-block;
@@ -3533,13 +3536,15 @@ background: url(images/subMenuSpriteIconsModified.png) no-repeat -456px -49px;
 	padding-left: 0 !important;
 }
 .page-cart .download {
-	background: url("images/download_16x16.png") no-repeat left;
-	padding-left: 20px;
+	background: url("images/imprimer.png") no-repeat left;
+	padding-left: 23px;
 	display: block;
 	float: right;
-	height: 20px;
+	line-height: 25px;
 	margin-bottom: 10px;
 	margin-top: -36px;
+	color: #666666;
+	font-size: 0;
 }
 .page-cart .total-container {
 	float: right;
@@ -7220,9 +7225,7 @@ top: -1px;
 .page-templates .button-wrapper a.designtool.button/*,
 .page-cart .button-wrapper input.payment.button*/
 {position: absolute;}
-#pccart-cart-form .item .description h3 {
-width: 64% !important;
-}
+
 div div#edit-info.detail div.store div.description table.vacations { 
 border-collapse: inherit !important;
 }
@@ -8385,8 +8388,6 @@ ul.ui-autocomplete{
 	font-size: 10px;
 	width: 44px;
 	margin-left: 6px;
-}
-
 }
 .count-down .jquery-countdown-timer-processed > span,
 #countlandingpage .jquery-countdown-timer-processed > span{

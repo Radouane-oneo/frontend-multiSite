@@ -364,9 +364,17 @@ function theme_designtoollink($vars) {
       $html = $vars['html'];
     }
   }
-
-
-  return l($content, $url, array('query' => $query, 'html' => $html, 'attributes' => $attributes));
+    if(!$vars['params']['shop_apikey']){
+        if($vars['params']['pricePreflight']){
+            return l($content, $url, array('query' => $query, 'html' => $html, 'attributes' => $attributes));   
+        }else{
+          return $content;    
+        }
+    
+    }else{
+    return l($content, $url, array('query' => $query, 'html' => $html, 'attributes' => $attributes));   
+    }
+  
 }
 
 function theme_designtoolproflink($vars) {
@@ -440,7 +448,7 @@ function theme_designtoolproflink($vars) {
     $html = TRUE;
   } else {
     if (!$vars['content']) {
-      $content = t('Professional upload');
+      $content = t('Modifier');
       $html = FALSE;
     } else {
       $content = $vars['content'];

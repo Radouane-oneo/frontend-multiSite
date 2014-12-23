@@ -14,7 +14,7 @@ use printconnect\Customers\Factory as CustomersFactory;
 use printconnect\Carts\Discounts;
 
 function getFotolia($jobId) {
-    //return array();    
+
     $url = variable_get('pc_designtoolurl');
     $url .= '/rest/get-fotolia-images/j/' . $jobId;
     $response = file_get_contents($url);
@@ -33,12 +33,15 @@ function getPreflight($jobId) {
     $url .= '/rest/getpreflightinfo?j='.$jobId;
     $response = file_get_contents($url);
     $response = json_decode($response, 1);
-    if(isset($response['data']['preflightInfo']) &&  !empty($response['data']['preflightInfo'])){
-        return $response['data']['preflightInfo'];
-    }else {
-        return array();
-    }
+    return $response;
     
+}
+
+function quickupload($jobId) { 
+    $url = variable_get('pc_designtoolurl');
+    $url .= '/rest/getpreflightinfo?j='.$jobId;
+    $response = file_get_contents($url);
+    $response = json_decode($response, 1);
 }
 
 function pccart_cart_form2($form, &$form_state) {
@@ -63,8 +66,11 @@ function pccart_cart_form2($form, &$form_state) {
     }
     $cart = Factory::Current(FALSE);
     // delete fotolias data on backend
-    if ($cart)
+    if ($cart) {
         Factory::deleteFotolias($cart);
+	Factory::deletePreflights($cart);
+    }
+
     $fotoliaPrice = 0;
     $preflightPrice = 0;
     if($cart->preflightPrice){
@@ -73,6 +79,7 @@ function pccart_cart_form2($form, &$form_state) {
     $fotolia = array();
     $preflight = array();
     $preflightPrice = str_replace('.', ',', $preflightPrice);  
+    $jobsProupload = array();
     foreach ($cart->orderItems as $orderItem) {
         $jobId = $orderItem->files[0]->designToolJobId;
         if(count($orderItem->files) > 0) {
@@ -90,23 +97,17 @@ function pccart_cart_form2($form, &$form_state) {
         }
 	
         $preflights = getPreflight($orderItem->id);
-	$savePreflight = true;
-	$jobsProupload[$orderItem->id] = false;
+	$savePreflight = false;
+        $jobsProupload[$orderItem->id] = false;
         if (!empty($preflights)) {
-	    $jobsProupload[$orderItem->id] = true;
-            foreach($preflights as $singlePreflight) {
-                $errors = $singlePreflight['errors'];
-                foreach ($errors as $key => $error) {
-                    if ($errors[$key] != 0){
-                       $savePreflight = false;
-                       break;
-                    }
-                }
-                if ($savePreflight)
-                    $preflight[$orderItem->id][] = '<span>"'.t('Preflight').'&nbsp;"</span><div class="fotolia-price">€&nbsp;'.$preflightPrice.'</div>';
+            if ($preflights['data']['preflight'] == true) {
+                $preflight[$orderItem->id][] = $preflightPrice;
+                $preflightsSave = $preflights['data']['preflightInfo'];
+                Factory::SavePreflight($cart->id, $orderItem->id, $preflightsSave);
             }
-            if ($savePreflight)
-                Factory::SavePreflight($cart->id, $orderItem->id, $preflights);
+            if (!empty($preflights['data']['preflightInfo']) || $preflights['data']['preflight'] == true) {
+                 $jobsProupload[$orderItem->id] = true;
+            }
         }
     }
     $cart = Factory::Current(FALSE);
@@ -240,8 +241,9 @@ function pccart_cart_form2($form, &$form_state) {
         
         $listProductId = null;
         $totalPrice = null;
-        foreach ($cart->productItems as $item) {
-            
+        
+        
+  foreach ($cart->productItems as $item) {
             if (isset($item->emailDesigner)) {
                 $emailDesigner = $item->emailDesigner;
             }
@@ -276,73 +278,8 @@ function pccart_cart_form2($form, &$form_state) {
             $form['cart']['items'][$item->id] = array(
                 '#type' => 'container',
                 '#attributes' => array('class' => array('item', 'clearfix')),
-                '#weight' => $weight,
             );
 
-            $weight--;
-
-            $form['cart']['items'][$item->id]['description'] = array(
-                '#type' => 'container',
-                '#attributes' => array('class' => array('description')),
-            );
-
-            $form['cart']['items'][$item->id]['description']['title'] = array(
-                '#prefix' => '<h3>',
-                '#suffix' => '</h3>',
-                '#markup' => $item->quantity . ' ' . t('pcs.') . ' ' . $product->name . ' ' . $firstConfig->name,
-                );
-
-            if($itemValue < $item->originPrice){
-                $promoPrice = '<del>&euro; '.$item->originPrice.'</del>';
-                $form['cart']['items'][$item->id]['description']['promoPrice'] = array(
-                '#prefix' => '<div class="origin-price">',
-                '#suffix' => '</div>',
-                '#markup' => $promoPrice,
-                );
-            }
-            $form['cart']['items'][$item->id]['description']['price'] = array(
-                '#theme' => 'price',
-                '#value' => $itemValue,
-            );
-
-            $form['cart']['items'][$item->id]['description']['list'] = array(
-                '#theme' => 'item_list',
-                '#items' => $list,
-            );
-            
-            $totalPrice += $item->originPrice;
-            $listProductId .= $item->configuration->productId.',';
-            
-
-//            $shop = \printconnect\Shop\Configuration\Factory::Current();
-//            \printconnect\Shop\Configuration\Factory::LoadConfiguration($shop);
-            
-            /* Code for  6% TVA */
-           /* if ($shop->id == 35) {
-
-                $form['cart']['items'][$item->id]['description']['tva'] = array(
-                  '#type' => 'container',
-                  '#attributes' => array('class' => array('tva', 'clearfix')),
-                  );
-
-                
-                $form['cart']['items'][$item->id]['description']['tva']['case'] = array(
-                  '#type' => 'checkbox',
-                  '#title' => t('TVA Exception 6%'), 
-                  '#attributes' => array('class' => array('tvaCase'), 'data-element' => $item->id),
-                );
-                
-                if ((float)$item->vat == 0.06) {
-                    $form['cart']['items'][$item->id]['description']['tva']['case']['#default_value'] = TRUE;
-                }
-                
-
-                $form['cart']['items'][$item->id]['description']['tva']['block'] = array(             
-                  '#markup' =>'<div class="block"></div>',
-                  '#attributes' => array('class' => array('tvablock', 'clearfix')),
-                );
-
-            }*/
             if (count($item->files)) {
                 foreach ($item->files as $file) {
                     $form['cart']['items'][$item->id]['file'] = array(
@@ -355,11 +292,11 @@ function pccart_cart_form2($form, &$form_state) {
 
                     $savedDesignId = NULL;
 
-                    if (isset($_SESSION['savedDesigns'][$item->id])) {
-                        $savedDesignId = $_SESSION['savedDesigns'][$item->id];
-                    }
-		    if ($jobsProupload[$item->id] == false) {
+                        if (isset($_SESSION['savedDesigns'][$item->id])) {
+                            $savedDesignId = $_SESSION['savedDesigns'][$item->id];
+                        }
                         $form['cart']['items'][$item->id]['file']['link'] = array(
+                            '#weight' => 200,
                             '#theme' => 'designtoollink',
                             '#title' => $product->name . ' ' . $firstConfig->name,
                             '#content' => theme('pcfilesthumb', array('file' => $file->thumbnail, 'cache' => FALSE)),
@@ -376,67 +313,156 @@ function pccart_cart_form2($form, &$form_state) {
                             '#callback' => 'cart/callback/',
                             '#versioning' => TRUE,
                             '#jobId' => $jobId,
-                            '#params' => array(
-                                'id' => $item->id,
-                                'cartid' => $cart->id,
-                            ),
                             '#savedDesignId' => $savedDesignId,
                             '#attributes' => array('class' => array('designtool', 'iframe', 'display-block')),
                         );
-		    } else {
-		        $form['cart']['items'][$item->id]['file']['link'] = array(
-                            '#content' => theme('pcfilesthumb', array('file' => $file->thumbnail, 'cache' => FALSE)),
-                            '#html' => TRUE,
-			    '#markup' => '<img style="width:100px;" class="previewOnly" src= "https://dt-printconcept-production.s3.amazonaws.com/'.$file->thumbnail.'">',
-                            '#attributes' => array('class' => array('designtool', 'iframe', 'display-block')),
-		        );
-		    }
-                    $form['cart']['items'][$item->id]['file']['preview'] = array(
-                        '#prefix' => '<div>',
+
+                    $form['cart']['items'][$item->id]['description'] = array(
+                    '#prefix' => '<div class="preview1">',
+                    '#suffix' => '</div>',
+                        '#type' => 'container',
+                        '#attributes' => array('class' => array('description')),
+                    );
+
+                    $form['cart']['items'][$item->id]['description']['title'] = array(
+                        '#prefix' => '<h3>',
+                        '#suffix' => '</h3>',
+                        '#markup' => $item->quantity . ' ' . t('pcs.') . ' ' . $product->name . ' ' . $firstConfig->name,
+                    );
+
+                    if ($itemValue < $item->originPrice) {
+                        $promoPrice = '<del>&euro; ' . $item->originPrice . '</del>';
+                        $form['cart']['items'][$item->id]['description']['promoPrice'] = array(
+                            '#prefix' => '<div class="origin-price">',
+                            '#suffix' => '</div>',
+                            '#markup' => $promoPrice,
+                        );
+                    }
+                    $form['cart']['items'][$item->id]['description']['price'] = array(
+                        '#theme' => 'price',
+                        '#value' => $itemValue,
+                    );
+
+                    $form['cart']['items'][$item->id]['description']['list'] = array(
+                        '#theme' => 'item_list',
+                        '#items' => $list,
+                    );
+
+                    $totalPrice += $item->originPrice;
+                    $listProductId .= $item->configuration->productId . ',';
+
+
+                    $form['cart']['items'][$item->id]['preview'] = array(
+                        '#prefix' => '<div class="btns-box"><div class="preview">',
                         '#suffix' => '</div>',
-                        '#markup' => l(t('Download preview'), pcdesigntool_preview_url($jobId), array('attributes' => array('target' => 'blank', 'class' => array('clearfix')))),
+                        '#markup' => l(t('Prévisualiser'), pcdesigntool_preview_url($jobId), array('attributes' => array('target' => 'blank', 'class' => array('previewlink')))),
+                    );
+                    
+                $myfiles = $item->files[0];
+                $themequickupload = 'designtoollink';
+                if ($jobsProupload[$item->id] == true) {
+                    $themequickupload = 'designtoolproflink';
+                }
+                
+                $form['cart']['items'][$item->id]['proflink'] = array(
+                    '#prefix' => '<div class="preview">',
+                    '#suffix' => '</div>',
+                    '#theme' => $themequickupload,
+                    '#templateId' => $template->id,
+                    '#title' => $product->name . ' ' . $firstConfig->name,
+                    '#params' => array(
+                        'id' => $item->id,
+                        'vs'=>1,
+                        'shop_apikey' => variable_get('pc_apikey'),
+                        'cartid' => $cart->id,
+                        'j' => $myfiles->designToolJobId,
+                        'currencyPreflight' => '€',
+                        'pricePreflight' => $preflightPrice,
+                    ),
+                    '#attributes' => array('class' => array('designtool', 'iframe', 'reupload')),
+                );
+
+                $form['cart']['items'][$item->id]['remove'] = array(
+                    '#prefix' => '<div class="preview">',
+                    '#suffix' => '</div></div>',
+                    '#type' => 'submit',
+                    '#value' => t('Delete'),
+                    '#name' => 'delete_item_' . $item->id,
+                    '#has_garbage_value' => FALSE,
+                    '#attributes' => array('class' => array('delete_item')),
+                    '#submit' => array('pccart_cart_form2_delete_creat_submit'),
+                );
+             }
+            
+            } else {
+                $form['cart']['items'][$item->id]['description'] = array(
+                    '#prefix' => '<div class="preview2">',
+                    '#suffix' => '</div>',
+                    '#type' => 'container',
+                    '#attributes' => array('class' => array('description')),
+                );
+
+                $form['cart']['items'][$item->id]['description']['title'] = array(
+                    '#prefix' => '<h3>',
+                    '#suffix' => '</h3>',
+                    '#markup' => $item->quantity . ' ' . t('pcs.') . ' ' . $product->name . ' ' . $firstConfig->name,
+                );
+
+                if ($itemValue < $item->originPrice) {
+                    $promoPrice = '<del>&euro; ' . $item->originPrice . '</del>';
+                    $form['cart']['items'][$item->id]['description']['promoPrice'] = array(
+                        '#prefix' => '<div class="origin-price">',
+                        '#suffix' => '</div>',
+                        '#markup' => $promoPrice,
                     );
                 }
-                 $myfiles = $item->files[0];
-                $form['cart']['items'][$item->id]['proflink'] = array(
-                            '#theme' => 'designtoolproflink',
-                            '#templateId' => $template->id,
-                            '#title' => $product->name . ' ' . $firstConfig->name,
-                            '#params' => array(
-                                'id' => $item->id,
-                                'cartid' => $cart->id,
-                                'j' => $myfiles->designToolJobId,
-                                'currencyPreflight' => 'euro',
-                                'pricePreflight' =>$preflightPrice,
-                            ),
-                            '#attributes' => array('class' => array('proupload', 'designtool', 'iframe', 'reupload')),
+                $form['cart']['items'][$item->id]['description']['price'] = array(
+                    '#theme' => 'price',
+                    '#value' => $itemValue,
                 );
-            } else {
+
+                $form['cart']['items'][$item->id]['description']['list'] = array(
+                    '#theme' => 'item_list',
+                    '#items' => $list,
+                );
+
+                $totalPrice += $item->originPrice;
+                $listProductId .= $item->configuration->productId . ',';
+
                 $templates = Products\Templates\Factory::GetTemplates($item->configuration->productId, $items);
 
-                if (count($templates->items)) {
+                if (count($templates->items)){
                     $template = $templates->items[0];
-
                     $_SESSION['cart']['items'][$item->id]['template'] = $template->id;
-
-                    $uploadBox = array();
-                    $uploadBox['container'] = array(
-                        '#type' => 'container',
-                        '#attributes' => array('class' => array('upload-box', 'box')),
+                    $form['cart']['items'][$item->id]['product-container'] = array(
                     );
-                    $uploadBox['container']['text'] = array(
-                        '#type' => 'container',
-                        '#attributes' => array('class' => array('text')),
+                    $form['cart']['items'][$item->id]['product-container']['product-items'] = array(
+                        '#markup' => '<h2 class="title-chose">' . t('choisissez une optios de mise-en-page') . '</h2>',
                     );
-                    $uploadBox['container']['text']['content'] = array(
-                        '#markup' => t('Upload'),
-                    );
-
-                    $form['cart']['items'][$item->id]['upload']['link'] = array(
-                        '#theme' => 'designtoollink',
+                  
+                        $form['cart']['items'][$item->id]['product-container']['proflink'] = array(
+                        '#prefix' => '<div class="poll-form first"> <p>'.t('Vous avais déja un fichier ?').'</p>',
+                        '#suffix' => '<p class="txto">'.t('Importez votre').'<br>'.t('fichier en ligne').'</p></div> ',
+                        '#content'=> array('#markup' => '<div class="visu img1"><div class="text">'.t('IMPORTEZ-LE').'</div></div>',),
+                        '#theme' => 'designtoolproflink',
                         '#templateId' => $template->id,
                         '#title' => $product->name . ' ' . $firstConfig->name,
-                        '#content' => drupal_render($uploadBox),
+                        '#params' => array(
+                            'id' => $item->id,
+                            'cartid' => $cart->id,
+                            'currencyPreflight' => '€',
+                            'pricePreflight' => $preflightPrice,
+                        ),
+                        '#attributes' => array('class' => array('designtool', 'iframe')),
+                    );
+            
+                        $form['cart']['items'][$item->id]['product-container']['upload']['link'] = array(
+                        '#prefix' => '<div class="poll-form "> <p>'.t('Vous n\'avez pas de fichier ?').'</p>',
+                        '#suffix' => '<p class="txto">'.t('Créez votre fichier facilement').'<br>'.t('grâce à notre outil en ligne').'</p></div> ',
+                        '#theme' => 'designtoollink',
+                        '#content'=> array('#markup' => '<div class="visu img2"><div class="text">'.t('CREEZ-LE').'</div></div>',),
+                        '#templateId' => $template->id,
+                        '#title' => $product->name . ' ' . $firstConfig->name,
                         '#html' => true,
                         '#oi' => array(
                             'priceGroupId' => $item->productPriceGroupId,
@@ -446,56 +472,59 @@ function pccart_cart_form2($form, &$form_state) {
                         '#params' => array(
                             'id' => $item->id,
                             'cartid' => $cart->id,
+                            'shop_apikey' => variable_get('pc_apikey'),
+                        ),
+                        '#callback' => 'cart/callback/',
+                        '#versioning' => TRUE,
+                        '#attributes' => array('class' => array('upload', 'designtool', 'iframe')),
+                    );
+                        
+                    $form['cart']['items'][$item->id]['product-container']['modele'] = array(
+                        '#prefix' => '<div class="poll-form"> <p>'.t('Personalisez un modèle ?').'</p>',
+                        '#suffix' => '<p class="txto">'.t('Des milliers de modèles').'<br>'.t('gratuits disponibles').'</p></div>',
+                        '#theme' => 'designtoolModele',
+                         '#content'=> array('#markup' => '<div class="visu img3"><div class="text">'.t('CHOISISSZ-LE').'</div></div>',),
+                        '#templateId' => $template->id,
+                        '#title' => $product->name . ' ' . $firstConfig->name,
+                        '#html' => true,
+                        '#oi' => array(
+                            'priceGroupId' => $item->productPriceGroupId,
+                            'quantity' => $item->quantity,
+                            'options' => $options,
+                        ),
+                        '#params' => array(
+                            'id' => $item->id,
+                            'cartid' => $cart->id,
+                            'shop_apikey' => variable_get('pc_apikey'),
+                            'insertModel' => '1',
                         ),
                         '#callback' => 'cart/callback/',
                         '#versioning' => TRUE,
                         '#attributes' => array('class' => array('upload', 'designtool', 'iframe')),
                     );
 
-                    $form['cart']['items'][$item->id]['proflink'] = array(
-                        '#theme' => 'designtoolproflink',
-                        '#templateId' => $template->id,
-                        '#title' => $product->name . ' ' . $firstConfig->name,
-                        '#params' => array(
-                            'id' => $item->id,
-                            'cartid' => $cart->id,
-                            'currencyPreflight' => 'euro',
-                            'pricePreflight' =>$preflightPrice,
-                        ),
-                        '#attributes' => array('class' => array('proupload', 'designtool', 'iframe')),
-                    );
-
                     $checkableItems[] = $item->id;
                 }
             }
-            if (null === $offerId) {
+
+            if (null === $offerId){
                 $form['cart']['items'][$item->id]['description']['actions'] = array(
                     '#type' => 'container',
                     '#attributes' => array('class' => array('clearfix')),
                 );
 
                 $form['cart']['items'][$item->id]['description']['actions']['remove'] = array(
+                    '#prefix' => '<div class="items_actions">',
+                    '#suffix' => '</div>',
                     '#type' => 'submit',
                     '#src' => drupal_get_path('module', 'pccart') . '/images/delete.png',
                     '#name' => 'delete_item_' . $item->id,
-                    '#value' => t('Delete'),
-                    '#attributes' => array('class' => array('remove', 'noreplace')),
+                    '#value' => t('Suprimer du panier'),
+                    '#attributes' => array('class' => array('removecart', 'noreplace')),
                     '#validate' => array('pccart_cart_form2_delete_item_validate'),
                     '#submit' => array('pccart_cart_form2_delete_item_submit'),
                     '#has_garbage_value' => FALSE,
                 );
-                $form['cart']['items'][$item->id]['description']['actions']['imageEdit']= array(
-                  '#type' =>'container'
-                );
-                $form['cart']['items'][$item->id]['description']['actions']['imageEdit']['editIcon'] = array(
-                    '#markup' => '<span class="editIcon"></span>'
-                );
-
-                $form['cart']['items'][$item->id]['description']['actions']['imageEdit']['edit'] = array(
-                    '#markup' => l(t('Edit this product'), 'products/' . $item->configuration->productId . '/' . implode(',', $items) . '/' . implode(',', $options) . '/' . $item->quantity . '/' . $item->id . '/', array('attributes' => array('class' => array('edit')))),
-                    '#weight' => 100,
-                );
-          
             }
         }
 	
@@ -528,22 +557,36 @@ function pccart_cart_form2($form, &$form_state) {
         foreach ($cart->orderItems as $orderItem) {
             if (isset($preflight[$orderItem->id])) {
                 $form['cart']['preflights']['items'][$orderItem->id]['preflight'] = array(
-                    '#theme' => 'item_list',
+                    'description' => array(
                     '#prefix' => '<div class="preflight-items">',
                     '#suffix' => '</div>',
-                    '#items' => $preflight[$orderItem->id]
+                    '#markup' => t('Preflight'),
+                ),
+                    'price' => array(
+                    '#theme' => 'price',
+                    '#value' => $preflight[$orderItem->id][0],
+                    '#attributes' => array('class' => array('pricepreflight')),
+                ),
                 );
             }
         }
     }
     $orderItemsAdditional = $cart->orderItemsAdditional;
     if (count($orderItemsAdditional)) {
-        $form['cart']['additionalItems'] = array(
-            '#type' => 'container',
-            '#attributes' => array('class' => array('additionalItems')),
-        );
-
+	$addcontainer = true;
+	foreach ($orderItemsAdditional as $item) {
+          if ($item->description == 'Preflight') {
+	    $addcontainer = false;
+	  }
+	}
+	if ($addcontainer) {
+            $form['cart']['additionalItems'] = array(
+                '#type' => 'container',
+                '#attributes' => array('class' => array('additionalItems')),
+            );
+	}
         foreach ($orderItemsAdditional as $item) {
+	  if ($item->description != 'Preflight') {
             $form['cart']['additionalItems'][$item->id]['items'][$item->id] = array(
                 'description' => array(
                     '#prefix' => '<span>',
@@ -555,6 +598,7 @@ function pccart_cart_form2($form, &$form_state) {
                     '#value' => $item->price,
                 ),
             );
+          }
         }
     }
 /* Discount */ 
@@ -1080,6 +1124,14 @@ function pccart_cart_form2_delete_item_submit($form, &$form_state) {
    }
     try {
         Factory::DeleteItem($id, $cart);
+    } catch (\printconnect\Rest\Exceptions\Exception $ex) {
+
+    }
+}
+function pccart_cart_form2_delete_creat_submit($form, &$form_state) {
+    $id = $form_state['triggering_element']['#parents'][2];
+    try {
+        Factory::DeleteItemFile($id);
     } catch (\printconnect\Rest\Exceptions\Exception $ex) {
 
     }

@@ -956,7 +956,7 @@ function pccart_cart_form2($form, &$form_state) {
         '#default_value' => $cart ? $cart->customer_reference : '',
         '#size' => 30,
         );
-
+        $cart = Factory::Current(FALSE);
         $form['cart']['priceblock'] = array(
             '#theme' => 'priceblock',
             '#id' => 'priceblock',

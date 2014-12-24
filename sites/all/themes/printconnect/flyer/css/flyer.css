@@ -3232,7 +3232,7 @@ vertical-align: bottom;
 	float: left;
 	display: block;
 	width: 640px;
-	margin: 0 -10px -10px -10px;
+	margin: 10px -10px -10px -10px;
 }
 .page-cart .form-item.form-type-radio.form-item-cart-shipping-type, 
 .page-cart .form-item.form-type-radio.form-item-cart-checks-options {

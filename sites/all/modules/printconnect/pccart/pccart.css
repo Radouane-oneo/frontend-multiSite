@@ -171,7 +171,16 @@ padding-bottom: 5px;
   margin: 0 0 5px;
   line-height: 14px;
 }
-
+.prodactHasTemplates .poll-form.first{
+  margin-left: 65px;
+}
+.prodactHasTemplates .poll-form{
+  
+}
+.prodactHasTemplates .poll-form:not(.first){
+  margin-left: 60px;
+  padding-left: 60px;
+}
 .poll-form .visu{
   height: 95px;
   background-position: center;

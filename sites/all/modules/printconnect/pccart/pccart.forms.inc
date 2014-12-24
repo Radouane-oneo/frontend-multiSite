@@ -26,6 +26,17 @@ function getFotolia($jobId) {
     }
     
 }
+function ProdactHasTemplates($templateId, $item) {
+    $apikey = variable_get('pc_apikey');
+    $url = variable_get('pc_url');
+    $url .= "design-template/templateId/$templateId/orderitemId/$item?apikey=$apikey&language=10";
+    $response = file_get_contents($url);
+    $response = json_decode($response, 1);
+   return $response;
+    
+}
+
+
 
 function getPreflight($jobId) {
     //return array(); 
@@ -431,12 +442,23 @@ function pccart_cart_form2($form, &$form_state) {
                 $listProductId .= $item->configuration->productId . ',';
 
                 $templates = Products\Templates\Factory::GetTemplates($item->configuration->productId, $items);
-
+           
+    
                 if (count($templates->items)){
                     $template = $templates->items[0];
                     $_SESSION['cart']['items'][$item->id]['template'] = $template->id;
-                    $form['cart']['items'][$item->id]['product-container'] = array(
-                    );
+                    
+                     $ProdactHasTemplates = ProdactHasTemplates($template->id, $item->id);
+                    if ($ProdactHasTemplates['count'] > 0) {
+                        $form['cart']['items'][$item->id]['product-container'] = array(
+                        );
+                    } else {
+                        $form['cart']['items'][$item->id]['product-container'] = array(
+                      '#prefix' => '<div class="prodactHasTemplates">',
+                      '#suffix' => '</div>',
+                        );
+                    }
+
                     $form['cart']['items'][$item->id]['product-container']['product-items'] = array(
                         '#markup' => '<h2 class="title-chose">' . t('choisissez une optios de mise-en-page') . '</h2>',
                     );
@@ -480,6 +502,9 @@ function pccart_cart_form2($form, &$form_state) {
                         '#attributes' => array('class' => array('upload', 'designtool', 'iframe')),
                     );
                         
+                   
+                        if($ProdactHasTemplates['count'] > 0){
+
                     $form['cart']['items'][$item->id]['product-container']['modele'] = array(
                         '#prefix' => '<div class="poll-form"> <p>'.t('Personalisez un modèle ?').'</p>',
                         '#suffix' => '<p class="txto">'.t('Des milliers de modèles').'<br>'.t('gratuits disponibles').'</p></div>',
@@ -503,7 +528,7 @@ function pccart_cart_form2($form, &$form_state) {
                         '#versioning' => TRUE,
                         '#attributes' => array('class' => array('upload', 'designtool', 'iframe')),
                     );
-
+                }
                     $checkableItems[] = $item->id;
                 }
             }
@@ -528,7 +553,7 @@ function pccart_cart_form2($form, &$form_state) {
                 );
             }
         }
-	
+       
 	if (!empty($fotolia)) {
         $form['cart']['fotolias'] = array(
             '#type' => 'fieldset',

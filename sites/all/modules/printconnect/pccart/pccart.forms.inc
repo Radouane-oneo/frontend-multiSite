@@ -278,10 +278,11 @@ function pccart_cart_form2($form, &$form_state) {
             $form['cart']['items'][$item->id] = array(
                 '#type' => 'container',
                 '#attributes' => array('class' => array('item', 'clearfix')),
+                '#weight' => $weight,
             );
 
-            if (count($item->files)) {
-                foreach ($item->files as $file) {
+            if (count($item->files)){
+                foreach ($item->files as $file){
                     $form['cart']['items'][$item->id]['file'] = array(
                         '#type' => 'container',
                         '#attributes' => array('class' => array('image')),
@@ -323,7 +324,7 @@ function pccart_cart_form2($form, &$form_state) {
                         '#type' => 'container',
                         '#attributes' => array('class' => array('description')),
                     );
-
+                    $weight--;
                     $form['cart']['items'][$item->id]['description']['title'] = array(
                         '#prefix' => '<h3>',
                         '#suffix' => '</h3>',

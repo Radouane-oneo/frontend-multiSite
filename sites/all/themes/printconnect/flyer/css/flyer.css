@@ -7297,10 +7297,12 @@ background-color:-webkit-linear-gradient(top, #77B800 0%, #669C02 100%) ;
 padding-left: 61px;
 }
 
-.fotolia-items ul li {
-    background: url("images/rsz_fotolia-icon.png") no-repeat scroll 0 2px / 28px auto transparent;
-}
+.fotolia-items span{
+background: url("images/rsz_fotolia-icon.png") no-repeat scroll 0 2px / 28px auto transparent;
+padding-left: 32px;
+padding-top: 3px;
 
+}
 .preflight-items ul li {
     background: none;
     margin-left: -6%;

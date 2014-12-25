@@ -101,10 +101,9 @@ function pccart_cart_form2($form, &$form_state) {
 	if (!empty($fotoliaImages)) {
             foreach($fotoliaImages as $image) {
                 $pricefotolias = Factory::getFotoliaPrice($image['type']);
-                $fotoliaPrice = str_replace('.', ',', number_format($pricefotolias->price,2));
+                $fotoliaPrice = str_replace('.', ',', number_format($pricefotolias->price));
                 $fotolia[$orderItem->id][] = '<span>'.t('Image').'&nbsp;"'.$image['id'].'"</span>';
                 $fotolia[$orderItem->id][] = $fotoliaPrice;
-                
             } 
             Factory::SaveFotolia($cart->id, $orderItem->id, $fotoliaImages);
         }
@@ -564,7 +563,8 @@ function pccart_cart_form2($form, &$form_state) {
             '#weight' => 70,
         );
         
-        $pricetag = str_replace(",", ".", $fotolia[$orderItem->id][1]);
+
+
         foreach ($cart->orderItems as $orderItem) {
             if (isset($fotolia[$orderItem->id])) {
                  $form['cart']['fotolias']['items'][$orderItem->id]['fotolia'] = array(
@@ -575,13 +575,14 @@ function pccart_cart_form2($form, &$form_state) {
                 ),
                     'price' => array(
                     '#theme' => 'price',
-                    '#value' => $pricetag,
+                    '#value' => intval($fotolia[$orderItem->id][1]),
                     '#attributes' => array('class' => array('pricepreflight')),
                 ),
                 );
                 
             }
         }
+
          $cart = Factory::Save($cart);
     }
         
@@ -860,7 +861,6 @@ function pccart_cart_form2($form, &$form_state) {
 
          $i = intval($cart->convertedTotalAmount);
 
-        
         if($_SESSION["region"] != "Nord-Pas-de-Calais"){unset($options[86]);}
         if($i<=65){unset($options[349]);}
       
@@ -869,8 +869,10 @@ function pccart_cart_form2($form, &$form_state) {
                 $resolt[] = $key;
           }
          $_SESSION['defaultindex'] =  $resolt[0];
-           $cart->shipping_type = $resolt[0];
-           $cart = Factory::Save($cart);
+         
+        $cart->shipping_type = $resolt[0];
+        $cart = Factory::Save($cart);
+      
          $form['cart']['shipping']['type'] = array(
             '#type' => 'tableselect',
             '#multiple' => FALSE,

@@ -476,6 +476,7 @@ function pccart_cart_form2($form, &$form_state) {
                             'cartid' => $cart->id,
                             'currencyPreflight' => '€',
                             'pricePreflight' => $preflightPrice,
+                            'hasModel' => ($ProdactHasTemplates) ? 1 : 0
                         ),
                         '#attributes' => array('class' => array('designtool', 'iframe')),
                     );
@@ -492,6 +493,7 @@ function pccart_cart_form2($form, &$form_state) {
                             'priceGroupId' => $item->productPriceGroupId,
                             'quantity' => $item->quantity,
                             'options' => $options,
+                            'hasModel' => ($ProdactHasTemplates) ? 1 : 0
                         ),
                         '#params' => array(
                             'id' => $item->id,
@@ -524,6 +526,7 @@ function pccart_cart_form2($form, &$form_state) {
                             'cartid' => $cart->id,
                             'shop_apikey' => variable_get('pc_apikey'),
                             'insertModel' => '1',
+                            'hasModel' => ($ProdactHasTemplates) ? 1 : 0
                         ),
                         '#callback' => 'cart/callback/',
                         '#versioning' => TRUE,

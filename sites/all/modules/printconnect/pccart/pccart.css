@@ -534,7 +534,8 @@ width: 120px;
 float: right;
 margin: 5px;
 }
-.page-cart .preflight-items{
+.page-cart .preflight-items ,
+.page-cart .fotolia-items{
 float: left;
 width: 50px; 
 }

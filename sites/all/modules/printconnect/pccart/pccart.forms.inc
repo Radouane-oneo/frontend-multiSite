@@ -862,7 +862,6 @@ function pccart_cart_form2($form, &$form_state) {
 
          $myval = intval($cart->convertedTotalAmount);
          $myval= $myval - 19 ;
-         print_r($myval);
         if($_SESSION["region"] != "Nord-Pas-de-Calais"){unset($options[86]);}
         if($myval<=50){unset($options[349]);}
       

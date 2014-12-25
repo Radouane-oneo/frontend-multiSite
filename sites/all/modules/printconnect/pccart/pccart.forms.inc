@@ -294,6 +294,11 @@ function pccart_cart_form2($form, &$form_state) {
                 '#weight' => $weight,
             );
 
+            $templates = Products\Templates\Factory::GetTemplates($item->configuration->productId, $items);
+            $template = $templates->items[0];
+            
+            $ProdactHasTemplates = ProdactHasTemplates($template->id, $item->id); 
+
             if (count($item->files)){
                 foreach ($item->files as $file){
                     $form['cart']['items'][$item->id]['file'] = array(
@@ -319,10 +324,12 @@ function pccart_cart_form2($form, &$form_state) {
                                 'priceGroupId' => $item->productPriceGroupId,
                                 'quantity' => $item->quantity,
                                 'options' => $options,
+                                'hasModel' => ($ProdactHasTemplates) ? 1 : 0
                             ),
                             '#params' => array(
                                 'id' => $item->id,
                                 'cartid' => $cart->id,
+                                'hasModel' => ($ProdactHasTemplates) ? 1 : 0
                             ),
                             '#callback' => 'cart/callback/',
                             '#versioning' => TRUE,
@@ -441,15 +448,12 @@ function pccart_cart_form2($form, &$form_state) {
                 );
 
                 $totalPrice += $item->originPrice;
-                $listProductId .= $item->configuration->productId . ',';
-
-                $templates = Products\Templates\Factory::GetTemplates($item->configuration->productId, $items);
-           
+                $listProductId .= $item->configuration->productId . ',';           
     
                 if (count($templates->items)){
-                    $template = $templates->items[0];
+                    
                     $_SESSION['cart']['items'][$item->id]['template'] = $template->id;
-                    $ProdactHasTemplates = ProdactHasTemplates($template->id, $item->id); 
+                    
                     if ($ProdactHasTemplates) {
                         $form['cart']['items'][$item->id]['product-container'] = array(
                         );
@@ -499,6 +503,7 @@ function pccart_cart_form2($form, &$form_state) {
                             'id' => $item->id,
                             'cartid' => $cart->id,
                             'shop_apikey' => variable_get('pc_apikey'),
+                            'hasModel' => ($ProdactHasTemplates) ? 1 : 0
                         ),
                         '#callback' => 'cart/callback/',
                         '#versioning' => TRUE,

@@ -26,10 +26,10 @@ function getFotolia($jobId) {
     }
     
 }
-function ProdactHasTemplates($item) {
+function ProdactHasTemplates($templateId, $item) {
     $apikey = variable_get('pc_apikey');
     $url = variable_get('pc_url');
-    $url .= "design-template/check/1/orderitemId/$item?apikey=$apikey&language=10";
+    $url .= "design-template/check/1/templateId/$templateId/orderitemId/$item?apikey=$apikey&language=10";
     $response = file_get_contents($url);
     $response = json_decode($response, 1);
     if(isset($response['count']) && $response['count'] > 0) {
@@ -451,7 +451,7 @@ function pccart_cart_form2($form, &$form_state) {
                 if (count($templates->items)){
                     $template = $templates->items[0];
                     $_SESSION['cart']['items'][$item->id]['template'] = $template->id;
-                    $ProdactHasTemplates = ProdactHasTemplates($item->id); 
+                    $ProdactHasTemplates = ProdactHasTemplates($template->id, $item->id); 
                     if ($ProdactHasTemplates) {
                         $form['cart']['items'][$item->id]['product-container'] = array(
                         );

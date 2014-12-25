@@ -26,14 +26,16 @@ function getFotolia($jobId) {
     }
     
 }
-function ProdactHasTemplates($templateId, $item) {
+function ProdactHasTemplates($item) {
     $apikey = variable_get('pc_apikey');
     $url = variable_get('pc_url');
-    $url .= "design-template/templateId/$templateId/orderitemId/$item?apikey=$apikey&language=10";
+    $url .= "design-template/check/1/orderitemId/$item?apikey=$apikey&language=10";
     $response = file_get_contents($url);
     $response = json_decode($response, 1);
-   return $response;
-    
+    if(isset($response['count']) && $response['count'] > 0) {
+	return true;
+    }
+    return false;
 }
 
 
@@ -449,9 +451,8 @@ function pccart_cart_form2($form, &$form_state) {
                 if (count($templates->items)){
                     $template = $templates->items[0];
                     $_SESSION['cart']['items'][$item->id]['template'] = $template->id;
-                    
-                     $ProdactHasTemplates = ProdactHasTemplates($template->id, $item->id);
-                    if ($ProdactHasTemplates['count'] > 0) {
+                    $ProdactHasTemplates = ProdactHasTemplates($item->id); 
+                    if ($ProdactHasTemplates) {
                         $form['cart']['items'][$item->id]['product-container'] = array(
                         );
                     } else {
@@ -505,7 +506,7 @@ function pccart_cart_form2($form, &$form_state) {
                     );
                         
                    
-                        if($ProdactHasTemplates['count'] > 0){
+                        if($ProdactHasTemplates){
 
                     $form['cart']['items'][$item->id]['product-container']['modele'] = array(
                         '#prefix' => '<div class="poll-form"> <p>'.t('Personalisez un modèle ?').'</p>',

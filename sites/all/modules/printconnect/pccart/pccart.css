@@ -360,10 +360,19 @@ float: right;
   width: 315px !important;
 }
 .origin-price {
-    float: right;
-    position: relative;
-    right: 30px;
-    top: -11px;
+  float: right;
+  position: absolute;
+  right: 12px;
+  top: 5px;
+  color: #f60;
+  font-size: 20px;
+}
+
+.page-cart #pccart-cart-form .item .description .origin-price + .price{
+  top: 25px;
+}
+#pccart-cart-form .item .origin-price + .price + .item-list + .form-wrapper .removecart{
+  top:30px;
 }
 
 .fotolia-items{
@@ -534,7 +543,8 @@ width: 120px;
 float: right;
 margin: 5px;
 }
-.page-cart .preflight-items{
+.page-cart .preflight-items ,
+.page-cart .fotolia-items{
 float: left;
 width: 50px; 
 }

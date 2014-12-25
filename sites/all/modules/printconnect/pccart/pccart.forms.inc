@@ -103,8 +103,9 @@ function pccart_cart_form2($form, &$form_state) {
 	if (!empty($fotoliaImages)) {
             foreach($fotoliaImages as $image) {
                 $pricefotolias = Factory::getFotoliaPrice($image['type']);
-                $fotoliaPrice = str_replace('.', ',', number_format($pricefotolias->price,2));
-                $fotolia[$orderItem->id][] = '<span>'.t('Image').'&nbsp;"'.$image['id'].'"</span><div class="fotolia-price">€&nbsp;'.$fotoliaPrice.'</div>';
+                $fotoliaPrice = str_replace('.', ',', number_format($pricefotolias->price));
+                $fotolia[$orderItem->id][] = '<span>'.t('Image').'&nbsp;"'.$image['id'].'"</span>';
+                $fotolia[$orderItem->id][] = $fotoliaPrice;
             } 
             Factory::SaveFotolia($cart->id, $orderItem->id, $fotoliaImages);
         }
@@ -193,42 +194,42 @@ function pccart_cart_form2($form, &$form_state) {
         );
     } else {
         
-       $form['popup_overlay'] = array(
-            '#prefix' => '<div id="popup_overlay" class="popin_overlay"><div id="lean_info"><div class="headpopin"><span class="closeme"></span>
-                          <span>Profitez de notre offre exclusive !</span></div>',
-             '#suffix' => '</div><div id="lean_overlay"></div></div>',
-        );
-         $form['popup_overlay']['cont'] = array(
-             '#prefix' => '<div class="containerbg">',
-             '#suffix' => '</div>',
-        );
-         
-        $form['popup_overlay']['cont']['info'] = array(
-            '#type' => 'item',
-            '#markup' => '<p><span class="icone"></span>
-                          <strong>Rajoutez</strong> <span class="priceing">10 €</span> à votre commande
-                            et recevez <span class="priceing">250 </span><strong>cartes de visite.</strong>
-                            La créa vous est offerte*</p>',
-        );
-        
-        $form['popup_overlay']['cont']['ok'] = array(
-            '#type' => 'submit',
-            '#submit' => array('pccart_cart_form2_popup_overlay_ok_submit'),
-            '#value' => t('ok'),
-            
-        );
-        $form['popup_overlay']['cont']['no'] = array(
-            '#type' => 'submit',
-            '#value' => t('no'),
-            '#submit' => array('pccart_cart_form2_submit'),
-            '#attributes' => array('class' => array('cancel')),
-        );
-       $form['popup_overlay']['cont']['test'] = array('#markup' => ' <ul>
-            <li class="coloriz">*Validité de l’offre</li>
-            <li>• Offre valable jusqu’au 31 décembre 2014.</li>
-            <li>* Carte de visite premium - papier 400 g maco mat</li>
-            <li>* Créa gratuite disponible dans la rubrique “Nos modèles”.</li>
-            </ul>', );
+//       $form['popup_overlay'] = array(
+//            '#prefix' => '<div id="popup_overlay" class="popin_overlay"><div id="lean_info"><div class="headpopin"><span class="closeme"></span>
+//                          <span>Profitez de notre offre exclusive !</span></div>',
+//             '#suffix' => '</div><div id="lean_overlay"></div></div>',
+//        );
+//         $form['popup_overlay']['cont'] = array(
+//             '#prefix' => '<div class="containerbg">',
+//             '#suffix' => '</div>',
+//        );
+//         
+//        $form['popup_overlay']['cont']['info'] = array(
+//            '#type' => 'item',
+//            '#markup' => '<p><span class="icone"></span>
+//                          <strong>Rajoutez</strong> <span class="priceing">10 €</span> à votre commande
+//                            et recevez <span class="priceing">250 </span><strong>cartes de visite.</strong>
+//                            La créa vous est offerte*</p>',
+//        );
+//        
+//        $form['popup_overlay']['cont']['ok'] = array(
+//            '#type' => 'submit',
+//            '#submit' => array('pccart_cart_form2_popup_overlay_ok_submit'),
+//            '#value' => t('ok'),
+//            
+//        );
+//        $form['popup_overlay']['cont']['no'] = array(
+//            '#type' => 'submit',
+//            '#value' => t('no'),
+//            '#submit' => array('pccart_cart_form2_submit'),
+//            '#attributes' => array('class' => array('cancel')),
+//        );
+//       $form['popup_overlay']['cont']['test'] = array('#markup' => ' <ul>
+//            <li class="coloriz">*Validité de l’offre</li>
+//            <li>• Offre valable jusqu’au 31 décembre 2014.</li>
+//            <li>* Carte de visite premium - papier 400 g maco mat</li>
+//            <li>* Créa gratuite disponible dans la rubrique “Nos modèles”.</li>
+//            </ul>', );
 
         $form['cart'] = array(
             '#type' => 'container',
@@ -570,16 +571,28 @@ function pccart_cart_form2($form, &$form_state) {
             '#title' => t('FOTOLIA'),
             '#weight' => 70,
         );
+        
+
+
         foreach ($cart->orderItems as $orderItem) {
             if (isset($fotolia[$orderItem->id])) {
-                $form['cart']['fotolias']['items'][$orderItem->id]['fotolia'] = array(
-                    '#theme' => 'item_list',
+                 $form['cart']['fotolias']['items'][$orderItem->id]['fotolia'] = array(
+                    'description' => array(
                     '#prefix' => '<div class="fotolia-items">',
                     '#suffix' => '</div>',
-                    '#items' => $fotolia[$orderItem->id]
+                    '#markup' => $fotolia[$orderItem->id][0],
+                ),
+                    'price' => array(
+                    '#theme' => 'price',
+                    '#value' => intval($fotolia[$orderItem->id][1]),
+                    '#attributes' => array('class' => array('pricepreflight')),
+                ),
                 );
+                
             }
         }
+
+         $cart = Factory::Save($cart);
     }
         
     if (!empty($preflight)) {
@@ -604,6 +617,7 @@ function pccart_cart_form2($form, &$form_state) {
                 ),
                 );
             }
+            $cart = Factory::Save($cart);
         }
     }
     $orderItemsAdditional = $cart->orderItemsAdditional;
@@ -852,36 +866,23 @@ function pccart_cart_form2($form, &$form_state) {
               $options[$type->id]['price'] = theme('price', array('value' => $type->price, 'free' => TRUE));
 
         }
-        $shop = printconnect\Shop\Configuration\Factory::Current();
-        $newoptions = array("134" => $options[134], "123" => $options[123], "204" => $options[204], "121" => $options[121], "122" => $options[122]);
-        $_SESSION['defaultindex'] = 134;
+         $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop != null ? $cart->orderItemShipping->shippingTypeResellerShop : 349;
+
+         $i = intval($cart->convertedTotalAmount);
+
+        if($_SESSION["region"] != "Nord-Pas-de-Calais"){unset($options[86]);}
+        if($i<=65){unset($options[349]);}
+      
         $resolt = array();
-        if (35 == $shop->id) {
-            $options = $newoptions;
-            $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop;
-        } elseif (23 == $shop->id) {
-            $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop != null ? $cart->orderItemShipping->shippingTypeResellerShop : 349;
-        } elseif (33 == $shop->id) {
-            $_SESSION['defaultindex'] = 168;
-        } elseif (34 == $shop->id) {
-            $_SESSION['defaultindex'] = 115;
-        } elseif (58 == $shop->id) {
-            $_SESSION['defaultindex'] = 159;
-        } else {
-            foreach ($options as $key => $value) {
-                $resolt[] = $key;
-            }
-            $_SESSION['defaultindex'] = $resolt[0];
-        }
-        $i = intval($cart->convertedTotalAmount);
-        if($i<=50){unset($options[349]);};
-        if($_SESSION["region"] != "Nord-Pas-de-Calais"){unset($options[86]);};
-        
          foreach ($options as $key => $value) {
                 $resolt[] = $key;
           }
-        $_SESSION['defaultindex']= $resolt[0];
-        $form['cart']['shipping']['type'] = array(
+         $_SESSION['defaultindex'] =  $resolt[0];
+         
+        $cart->shipping_type = $resolt[0];
+        $cart = Factory::Save($cart);
+      
+         $form['cart']['shipping']['type'] = array(
             '#type' => 'tableselect',
             '#multiple' => FALSE,
             '#options' => $options,
@@ -901,7 +902,7 @@ function pccart_cart_form2($form, &$form_state) {
             '#attributes' => array('class' => array('grid targetPrice')),
             '#weight' => -50,
         );
-
+   
         if ('flyer' == variable_get('pc_flow', '')) {
             $form['cart']['shipping']['type']['#header']['price'] = '';
         }
@@ -965,12 +966,14 @@ function pccart_cart_form2($form, &$form_state) {
         '#default_value' => $cart ? $cart->customer_reference : '',
         '#size' => 30,
         );
-        $cart = Factory::Current(FALSE);
+        
+        $carCurrent = Factory::Current(FALSE);
+    
         $form['cart']['priceblock'] = array(
             '#theme' => 'priceblock',
             '#id' => 'priceblock',
-            '#subtotal' => $cart->convertedSubTotalAmount,
-            '#vatAmount' => $cart->convertedVatAmount,
+            '#subtotal' => $carCurrent->convertedSubTotalAmount,
+            '#vatAmount' => $carCurrent->convertedVatAmount,
             '#weight' => 100,
         );
 
@@ -989,7 +992,7 @@ function pccart_cart_form2($form, &$form_state) {
             $form['actions']['price'] = array(
                 '#id' => 'price',
                 '#theme' => 'price',
-                '#value' => $cart->totalAmount,
+                '#value' => $carCurrent->totalAmount,
                 '#attributes' => array('id' => 'price'),
                 '#title' => t('Total incl. VAT'),
             );
@@ -1033,8 +1036,8 @@ function pccart_cart_form2($form, &$form_state) {
     }
 
     $form_state['storage']['cart'] = $cart;
-    $form_state['cache'] = TRUE;
-    $form['#cache'] = TRUE;
+    $form_state['cache'] = FALSE;
+    $form['#cache'] = FALSE;
     $form['#tree'] = TRUE;
     $form['#id'] = 'pccart-cart-form';
     
@@ -1351,6 +1354,7 @@ function pccart_cart_form_filecheck_callback($form, &$form_state) {
 }
 
 function updateTvaCart(\printconnect\Object $cart, $tva) {
+
     foreach($cart->orderItems as $orderItem){
         $orderItem->vat = $tva;
         $orderItem->priceIncVAT = $orderItem->price * (1 + $tva);

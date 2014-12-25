@@ -571,6 +571,7 @@ function pccart_cart_form2($form, &$form_state) {
                 );
             }
         }
+         $cart = Factory::Save($cart);
     }
         
     if (!empty($preflight)) {
@@ -595,6 +596,7 @@ function pccart_cart_form2($form, &$form_state) {
                 ),
                 );
             }
+            $cart = Factory::Save($cart);
         }
     }
     $orderItemsAdditional = $cart->orderItemsAdditional;
@@ -866,7 +868,7 @@ function pccart_cart_form2($form, &$form_state) {
         }
         $i = intval($cart->convertedTotalAmount);
         if($i<=50){unset($options[349]);};
-        if($_SESSION["region"] != "Nord-Pas-de-Calais"){unset($options[86]);};
+      //  if($_SESSION["region"] != "Nord-Pas-de-Calais"){unset($options[86]);};
         
          foreach ($options as $key => $value) {
                 $resolt[] = $key;
@@ -956,12 +958,14 @@ function pccart_cart_form2($form, &$form_state) {
         '#default_value' => $cart ? $cart->customer_reference : '',
         '#size' => 30,
         );
-        $cart = Factory::Current(FALSE);
+        
+        $carCurrent = Factory::Current(FALSE);
+    
         $form['cart']['priceblock'] = array(
             '#theme' => 'priceblock',
             '#id' => 'priceblock',
-            '#subtotal' => $cart->convertedSubTotalAmount,
-            '#vatAmount' => $cart->convertedVatAmount,
+            '#subtotal' => $carCurrent->convertedSubTotalAmount,
+            '#vatAmount' => $carCurrent->convertedVatAmount,
             '#weight' => 100,
         );
 
@@ -980,7 +984,7 @@ function pccart_cart_form2($form, &$form_state) {
             $form['actions']['price'] = array(
                 '#id' => 'price',
                 '#theme' => 'price',
-                '#value' => $cart->totalAmount,
+                '#value' => $carCurrent->totalAmount,
                 '#attributes' => array('id' => 'price'),
                 '#title' => t('Total incl. VAT'),
             );
@@ -1024,8 +1028,8 @@ function pccart_cart_form2($form, &$form_state) {
     }
 
     $form_state['storage']['cart'] = $cart;
-    $form_state['cache'] = TRUE;
-    $form['#cache'] = TRUE;
+    $form_state['cache'] = FALSE;
+    $form['#cache'] = FALSE;
     $form['#tree'] = TRUE;
     $form['#id'] = 'pccart-cart-form';
     
@@ -1342,6 +1346,7 @@ function pccart_cart_form_filecheck_callback($form, &$form_state) {
 }
 
 function updateTvaCart(\printconnect\Object $cart, $tva) {
+
     foreach($cart->orderItems as $orderItem){
         $orderItem->vat = $tva;
         $orderItem->priceIncVAT = $orderItem->price * (1 + $tva);

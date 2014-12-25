@@ -857,36 +857,21 @@ function pccart_cart_form2($form, &$form_state) {
               $options[$type->id]['price'] = theme('price', array('value' => $type->price, 'free' => TRUE));
 
         }
-        $shop = printconnect\Shop\Configuration\Factory::Current();
-        $newoptions = array("134" => $options[134], "123" => $options[123], "204" => $options[204], "121" => $options[121], "122" => $options[122]);
-        $_SESSION['defaultindex'] = 134;
+         $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop != null ? $cart->orderItemShipping->shippingTypeResellerShop : 349;
+
+         $i = intval($cart->convertedTotalAmount);
+
+        if($i<=50){unset($options[349]);}
+        if($_SESSION["region"] != "Nord-Pas-de-Calais"){unset($options[86]);}
+      
         $resolt = array();
-        if (35 == $shop->id) {
-            $options = $newoptions;
-            $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop;
-        } elseif (23 == $shop->id) {
-            $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop != null ? $cart->orderItemShipping->shippingTypeResellerShop : 349;
-        } elseif (33 == $shop->id) {
-            $_SESSION['defaultindex'] = 168;
-        } elseif (34 == $shop->id) {
-            $_SESSION['defaultindex'] = 115;
-        } elseif (58 == $shop->id) {
-            $_SESSION['defaultindex'] = 159;
-        } else {
-            foreach ($options as $key => $value) {
-                $resolt[] = $key;
-            }
-            $_SESSION['defaultindex'] = $resolt[0];
-        }
-        $i = intval($cart->convertedTotalAmount);
-        if($i<=50){unset($options[349]);};
-      if($_SESSION["region"] != "Nord-Pas-de-Calais"){unset($options[86]);};
-        
          foreach ($options as $key => $value) {
                 $resolt[] = $key;
           }
-        $_SESSION['defaultindex']= $resolt[0];
-        $form['cart']['shipping']['type'] = array(
+         $_SESSION['defaultindex'] =  $resolt[0];
+           $cart->shipping_type = $resolt[0];
+           $cart = Factory::Save($cart);
+         $form['cart']['shipping']['type'] = array(
             '#type' => 'tableselect',
             '#multiple' => FALSE,
             '#options' => $options,
@@ -906,7 +891,7 @@ function pccart_cart_form2($form, &$form_state) {
             '#attributes' => array('class' => array('grid targetPrice')),
             '#weight' => -50,
         );
-
+   
         if ('flyer' == variable_get('pc_flow', '')) {
             $form['cart']['shipping']['type']['#header']['price'] = '';
         }

@@ -193,42 +193,42 @@ function pccart_cart_form2($form, &$form_state) {
         );
     } else {
         
-       $form['popup_overlay'] = array(
-            '#prefix' => '<div id="popup_overlay" class="popin_overlay"><div id="lean_info"><div class="headpopin"><span class="closeme"></span>
-                          <span>Profitez de notre offre exclusive !</span></div>',
-             '#suffix' => '</div><div id="lean_overlay"></div></div>',
-        );
-         $form['popup_overlay']['cont'] = array(
-             '#prefix' => '<div class="containerbg">',
-             '#suffix' => '</div>',
-        );
-         
-        $form['popup_overlay']['cont']['info'] = array(
-            '#type' => 'item',
-            '#markup' => '<p><span class="icone"></span>
-                          <strong>Rajoutez</strong> <span class="priceing">10 €</span> à votre commande
-                            et recevez <span class="priceing">250 </span><strong>cartes de visite.</strong>
-                            La créa vous est offerte*</p>',
-        );
-        
-        $form['popup_overlay']['cont']['ok'] = array(
-            '#type' => 'submit',
-            '#submit' => array('pccart_cart_form2_popup_overlay_ok_submit'),
-            '#value' => t('ok'),
-            
-        );
-        $form['popup_overlay']['cont']['no'] = array(
-            '#type' => 'submit',
-            '#value' => t('no'),
-            '#submit' => array('pccart_cart_form2_submit'),
-            '#attributes' => array('class' => array('cancel')),
-        );
-       $form['popup_overlay']['cont']['test'] = array('#markup' => ' <ul>
-            <li class="coloriz">*Validité de l’offre</li>
-            <li>• Offre valable jusqu’au 31 décembre 2014.</li>
-            <li>* Carte de visite premium - papier 400 g maco mat</li>
-            <li>* Créa gratuite disponible dans la rubrique “Nos modèles”.</li>
-            </ul>', );
+//       $form['popup_overlay'] = array(
+//            '#prefix' => '<div id="popup_overlay" class="popin_overlay"><div id="lean_info"><div class="headpopin"><span class="closeme"></span>
+//                          <span>Profitez de notre offre exclusive !</span></div>',
+//             '#suffix' => '</div><div id="lean_overlay"></div></div>',
+//        );
+//         $form['popup_overlay']['cont'] = array(
+//             '#prefix' => '<div class="containerbg">',
+//             '#suffix' => '</div>',
+//        );
+//         
+//        $form['popup_overlay']['cont']['info'] = array(
+//            '#type' => 'item',
+//            '#markup' => '<p><span class="icone"></span>
+//                          <strong>Rajoutez</strong> <span class="priceing">10 €</span> à votre commande
+//                            et recevez <span class="priceing">250 </span><strong>cartes de visite.</strong>
+//                            La créa vous est offerte*</p>',
+//        );
+//        
+//        $form['popup_overlay']['cont']['ok'] = array(
+//            '#type' => 'submit',
+//            '#submit' => array('pccart_cart_form2_popup_overlay_ok_submit'),
+//            '#value' => t('ok'),
+//            
+//        );
+//        $form['popup_overlay']['cont']['no'] = array(
+//            '#type' => 'submit',
+//            '#value' => t('no'),
+//            '#submit' => array('pccart_cart_form2_submit'),
+//            '#attributes' => array('class' => array('cancel')),
+//        );
+//       $form['popup_overlay']['cont']['test'] = array('#markup' => ' <ul>
+//            <li class="coloriz">*Validité de l’offre</li>
+//            <li>• Offre valable jusqu’au 31 décembre 2014.</li>
+//            <li>* Carte de visite premium - papier 400 g maco mat</li>
+//            <li>* Créa gratuite disponible dans la rubrique “Nos modèles”.</li>
+//            </ul>', );
 
         $form['cart'] = array(
             '#type' => 'container',
@@ -879,7 +879,7 @@ function pccart_cart_form2($form, &$form_state) {
         }
         $i = intval($cart->convertedTotalAmount);
         if($i<=50){unset($options[349]);};
-      //  if($_SESSION["region"] != "Nord-Pas-de-Calais"){unset($options[86]);};
+      if($_SESSION["region"] != "Nord-Pas-de-Calais"){unset($options[86]);};
         
          foreach ($options as $key => $value) {
                 $resolt[] = $key;

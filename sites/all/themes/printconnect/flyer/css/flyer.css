@@ -3295,6 +3295,9 @@ vertical-align: bottom;
 }
 .page-cart #pccart-cart-form .shipping table .decimals, 
 .page-cart #pccart-cart-form .shipping table .decimalpoint {
+font-size: 14px;
+line-height: 15px;
+vertical-align: top;
 }
 .page-cart #pccart-cart-form .shipping table thead, 
 .page-cart #pccart-cart-form .shipping .footer {
@@ -3461,7 +3464,7 @@ vertical-align: bottom;
 .page-cart .priceblock > div.vat .value, 
 .page-offer .priceblock > div.subtotal .value, 
 .page-offer .priceblock > div.vat .value {
-	color: #555555;
+	color: #f60;
 	font-size: 20px;
 	line-height: normal\9; /* IE HACK */
 	font-weight: bold;

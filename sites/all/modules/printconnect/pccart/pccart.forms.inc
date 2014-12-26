@@ -1215,20 +1215,11 @@ function pccart_cart_form2_validate($form, &$form_state) {
     if (!$cart || !$cart->isFilled) {
         form_set_error('', t('No cart or empty'));
     }
-
-    switch (variable_get('pc_flow', 'flyer')) {
-        case 'printconcept':
-            break;
-        case 'whitelabel';
             foreach ($cart->productItems as $item) {
                 if (!count($item->files)) {
                     form_set_error('', t('Please upload a file for all your items'));
                 }
             }
-            break;
-        default:
-            break;
-    }
 }
 function pccart_cart_form2_popup_overlay_ok_submit($form, &$form_state) {
     $cart = Factory::Current(FALSE);

@@ -7179,6 +7179,24 @@ margin-bottom:10px;
     border-bottom: 1px rgb(252, 248, 248) solid;
     padding-top: 10px;
 }
+
+#edit-cart-discounts .fieldset-wrapper > .form-wrapper > #edit-cart-discounts-wdeal53-description > .price .currency {
+font-size: 14px; 
+}
+
+
+#edit-cart-discounts .fieldset-wrapper > .form-wrapper > #edit-cart-discounts-wdeal53-description > .price .whole{
+	font-size: 20px; 
+}
+#edit-cart-discounts .fieldset-wrapper > .form-wrapper > #edit-cart-discounts-wdeal53-description > .price .decimalpoint{
+	font-size: 14px; 
+}
+
+#edit-cart-discounts .fieldset-wrapper > .form-wrapper > #edit-cart-discounts-wdeal53-description > .price .decimals{
+	font-size: 14px; 
+}
+
+
 #edit-cart-discounts .fieldset-wrapper{
     padding : 0px!important;
 }

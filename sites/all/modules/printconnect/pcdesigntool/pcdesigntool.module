@@ -5,6 +5,27 @@ use printconnect\Customers;
 
 function pcdesigntool_theme() {
   return array(
+      'designtoollinkBtt' => array(
+          'variables' => array(
+              'cartItemId' => NULL,
+              'jobId' => NULL,
+              'templateId' => NULL,
+              'designtoolTemplateId' => NULL,
+              'oi' => array('priceGroupId' => NULL, 'quantity' => NULL, 'options' => array(), 'vat' => FALSE),
+              'savedDesignId' => NULL,
+              'versioning' => FALSE,
+              'title' => NULL,
+              'content' => FALSE,
+              'ribbons' => 'standard',
+              'callback' => 'designtool/callback',
+              'params' => array(),
+              'html' => FALSE,
+              'attributes' => array(),
+              'close' => TRUE,
+              'style' => '',
+              'custom' => array(),
+          ),
+      ),
       'designtoollink' => array(
           'variables' => array(
               'cartItemId' => NULL,
@@ -364,9 +385,17 @@ function theme_designtoollink($vars) {
       $html = $vars['html'];
     }
   }
-
-
-  return l($content, $url, array('query' => $query, 'html' => $html, 'attributes' => $attributes));
+    if(!$vars['params']['shop_apikey']){
+        if($vars['params']['pricePreflight']){
+            return l($content, $url, array('query' => $query, 'html' => $html, 'attributes' => $attributes));   
+        }else{
+          return $content;    
+        }
+    
+    }else{
+    return l($content, $url, array('query' => $query, 'html' => $html, 'attributes' => $attributes));   
+    }
+  
 }
 
 function theme_designtoolproflink($vars) {
@@ -440,7 +469,7 @@ function theme_designtoolproflink($vars) {
     $html = TRUE;
   } else {
     if (!$vars['content']) {
-      $content = t('Professional upload');
+      $content = t('Modifier');
       $html = FALSE;
     } else {
       $content = $vars['content'];
@@ -643,4 +672,137 @@ function _pcdesigntool_getcssfile() {
     }
   }
   return $result;
+}
+
+
+function theme_designtoollinkBtt($vars) {
+  global $language;
+  $query = array();
+  $customer = Customers\Factory::Current();
+  $shop = printconnect\Shop\Configuration\Factory::Current();
+  $impkey = variable_get('pc_designtoolimpkey', 'printconcept');
+
+  if (isset($language->code)) {
+    $langCode = $language->code;
+  } else {
+    $langCode = 'en_US';
+  }
+
+  $url = variable_get('pc_designtoolurl', 'http://designtool.stg.printconcept.com');
+  $url .= '/designtool/index/resize/1';
+
+  $ribbons = $vars['ribbons'];
+
+  if (isset($vars['jobId'])) {
+    $jobId = $vars['jobId'];
+    if (isset($_SESSION['pcdesigntool'][$jobId]['ribbons'])) {
+      $ribbons = $_SESSION['pcdesigntool'][$jobId]['ribbons'];
+    }
+
+    $url .= '/j/' . $jobId;
+  }
+
+  $pp = FALSE;
+  if (isset($vars['custom']) && !empty($vars['custom'])) {
+    if (is_array($vars['custom'])) {
+      foreach ($vars['custom'] as $key => $value) {
+        $pp[] = $key . ':' . $value;
+      }
+      $pp = implode('!', $pp);
+    } else {
+      $pp = $vars['custom'];
+    }
+  }
+  if ($pp) {
+    $url .= '/pp/' . $pp;
+  } else {
+    if (isset($vars['templateId'])) {
+      $url .= '/p/' . $vars['templateId'];
+    }
+    if (isset($vars['designtoolTemplateId'])) {
+      $url .= '/t/' . $vars['designtoolTemplateId'];
+    }
+  }
+  if (isset($vars['oi'])) {
+    if (isset($vars['oi']['priceGroupId'])) {
+      $url .= '/order_pg/' . $vars['oi']['priceGroupId'];
+      $query['priceGroupId'] = $vars['oi']['priceGroupId'];
+    }
+    if (isset($vars['oi']['quantity'])) {
+      $url .= '/order_q/' . $vars['oi']['quantity'];
+      $query['qty'] = $vars['oi']['quantity'];
+    }
+    if (isset($vars['oi']['options'])) {
+      if (is_array($vars['oi']['options'])) {
+        $url .= '/order_opts/' . implode(',', $vars['oi']['options']);
+        $query['options'] = implode(',', $vars['oi']['options']);
+      } else {
+        $url .= '/order_opts/' . $vars['oi']['options'];
+        $query['options'] = $vars['oi']['options'];
+      }
+    }
+    if (isset($vars['oi']['vat'])) {
+      //$url .= '/order_pg/' . $vars['oi']['vat'];
+      $query['vat'] = $vars['oi']['vat'];
+    }
+  }
+
+  if (isset($vars['savedDesignId'])) {
+    $url .= '/mypc_id/' . $vars['savedDesignId'];
+  }
+
+  $url .= '/l/' . $langCode;
+
+  if ($customer) {
+    $url .= '/k/' . $customer->id;
+    $hash = sha1($customer->id . 'agD04vQPx1?FSspl');
+    $url .= '/h/' . $hash;
+  }
+
+  $url .= '/shop/' . $shop->id;
+
+
+  if ($vars['versioning']) {
+    $url .= '/vs/1';
+  }
+
+  $ribbons = 'design';
+
+  $url .= '/rc/ribbons_' . $ribbons;
+
+  $url .= "/impkey/$impkey";
+
+
+  $query['dcb'] = urlencode(url($vars['callback'], array('absolute' => TRUE)));
+  if (isset($vars['cartItemId'])) {
+    $query['id'] = $vars['cartItemId'];
+  }
+  if (isset($vars['title'])) {
+    $query['title'] = $vars['title'];
+  }
+
+  $query['style'] = _pcdesigntool_getcssfile();
+
+  foreach ($vars['params'] as $key => $value) {
+    $query[$key] = $value;
+  }
+
+  $attributes = $vars['attributes'];
+  $attributes['class'][] = 'designtool';
+  $attributes['class'][] = 'iframe';
+
+  if (is_array($vars['content'])) {
+    $content = drupal_render($vars['content']);
+    $html = TRUE;
+  } else {
+    if (!$vars['content']) {
+      $content = t('Upload');
+    } else {
+      $content = $vars['content'];
+      $html = $vars['html'];
+    }
+  }
+
+
+  return l($content, $url, array('query' => $query, 'html' => $html, 'attributes' => $attributes));
 }

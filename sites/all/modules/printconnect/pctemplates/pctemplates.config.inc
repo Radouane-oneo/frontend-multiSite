@@ -136,7 +136,7 @@ function pctemplates_config_form($form, &$form_state, $productId, $templateId) {
   } else {
     $query = array();
   }
-
+die('yye');
   $form['back'] = array(
       '#type' => 'item',
       '#markup' => l(t('Back to overview'), _pctemplates_link(($productId)), array('query' => $query, 'attributes' => array('rel' => 'nofollow'))),
@@ -1072,7 +1072,7 @@ $product = Products\Factory::Get($productId);
   $form['actions']['design'] = array(
       '#prefix' => '<div class="button-wrapper">',
       '#suffix' => '</div>',
-      '#theme' => 'designtoollink',
+      '#theme' => 'designtoollinkBtt',
       '#designtoolTemplateId' => $template->designTemplates->designToolTemplateId,
       '#title' => $template->designTemplates->name,
       '#content' => t('Start design'),

@@ -27,7 +27,7 @@
       if ($.fancybox){
                 $('.designtool').fancybox({
                     width: 1024,
-                    height: 780,
+                    height: '100%',
                     padding: 5,
                     margin: 0,
                     scrolling: false,
@@ -36,10 +36,13 @@
                     autoDimensions: false,
                     modal: false,
                     onStart: function() {
-
+                        $("#fancybox-wrap").css("height","100%");
+                         $(".fancybox-bg").css("background-image","none");
                         jQuery("#fancybox-outer").append("<div id='dt_preloader' class='dt_preloader'></div>");
                     },
                     onComplete: function() {
+                         $("#fancybox-wrap").css("height","100%");
+                          $(".fancybox-bg").css("background-image","none");
                         $("#fancybox-overlay").addClass("designtool");
                         $("#fancybox-wrap").find("#fancybox-content").css({"margin": "auto"});
                         $("#fancybox-wrap").find("#fancybox-frame").css({"width": "1024px", "margin": "0px auto"});

@@ -104,8 +104,8 @@ function pccart_cart_form2($form, &$form_state) {
             foreach($fotoliaImages as $image) {
                 $pricefotolias = Factory::getFotoliaPrice($image['type']);
                 $fotoliaPrice = str_replace('.', ',', number_format($pricefotolias->price));
-                $fotolia[$orderItem->id][] = '<span>'.t('Image').'&nbsp;"'.$image['id'].'"</span>';
-                $fotolia[$orderItem->id][] = $fotoliaPrice;
+                $fotolia[$orderItem->id][$image['id']]['content'] = '<span>'.t('Image').'&nbsp;"'.$image['id'].'"</span>';
+                $fotolia[$orderItem->id][$image['id']]['price'] = $fotoliaPrice;
             } 
             Factory::SaveFotolia($cart->id, $orderItem->id, $fotoliaImages);
         }
@@ -576,16 +576,18 @@ function pccart_cart_form2($form, &$form_state) {
 
         foreach ($cart->orderItems as $orderItem) {
             if (isset($fotolia[$orderItem->id])) {
-                 $form['cart']['fotolias']['items'][$orderItem->id]['fotolia'] = array(
+		foreach($fotolia[$orderItem->id] as $key => $fotoliaImg)
+                 $form['cart']['fotolias']['items'][$key]['fotolia'] = array(
                     'description' => array(
-                    '#prefix' => '<div class="fotolia-items">',
+                    '#prefix' => '<div style="clear: both;"><div class="fotolia-items">',
                     '#suffix' => '</div>',
-                    '#markup' => $fotolia[$orderItem->id][0],
+                    '#markup' => $fotoliaImg['content'],
                 ),
                     'price' => array(
                     '#theme' => 'price',
-                    '#value' => intval($fotolia[$orderItem->id][1]),
+                    '#value' => intval($fotoliaImg['price']),
                     '#attributes' => array('class' => array('pricepreflight')),
+		    '#suffix' => '</div>',
                 ),
                 );
                 

@@ -3026,9 +3026,6 @@ a.ui-button.inactivebtn{
 	vertical-align: top;
 }
 .page-cart .shipping table .currency, .page-cart .shipping table .decimals {
-	font-size: 20px;
-	line-height: 15px;
-	vertical-align: inherit;
 }
 .page-cart .shipping table tr td:nth-child(2) .currency, 
 .page-cart .shipping table tr td:nth-child(2) .decimals {
@@ -3298,7 +3295,6 @@ vertical-align: bottom;
 }
 .page-cart #pccart-cart-form .shipping table .decimals, 
 .page-cart #pccart-cart-form .shipping table .decimalpoint {
-	font-size: 1em;
 }
 .page-cart #pccart-cart-form .shipping table thead, 
 .page-cart #pccart-cart-form .shipping .footer {

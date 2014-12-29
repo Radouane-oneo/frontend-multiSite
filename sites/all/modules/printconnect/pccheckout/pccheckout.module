@@ -307,21 +307,6 @@ function pccheckout_pccart_cart_form_submit($form, $form_state) {
   drupal_goto('checkout');
 }
 
-function pccheckout_form_pccart_cart_form2_alter(&$form, $form_state, $form_id) {
-    $cart = printconnect\Carts\Factory::Current();
-    if ($cart && $cart->isFilled) {
-            $form['actions']['checkout'] = array(
-                '#prefix' => '<div class="button-wrapper">',
-                '#suffix' => '</div>',
-                '#type' => 'submit',
-                '#value' => t('Secure payment'),
-                '#weight' => 100,
-                '#submit' => array('pccart_cart_form2_submit'),
-                '#attributes' => array('class' => array('action', 'large', 'payment', 'button')),
-            );
-
-    }
-}
 
 //function pccheckout_pccart_cart_form2_validate($form, $form_state) {
 //  $cart = Carts\Factory::Current(FALSE);
@@ -1194,7 +1179,6 @@ function pccheckout_checkout_form_validate(&$form, &$form_state) {
         case 'personal':
           break;
         case 'login':
-//var_dump($form_state['triggering_element']);
           if ($form_state['triggering_element'] == 'register') {
             $customer = Customers\Factory::GetByEmail($form_state['values']['login']['email']);
             if ($customer) {

@@ -818,13 +818,17 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         '#type' => 'submit',
     );
 
-    if ($cart->allFilesUploaded) {
-        $form['actions']['submit']['#value'] = t('Payment');
-        $form['actions']['submit']['#attributes'] = array('class' => array('payment'));
-    } else {
-        $form['actions']['submit']['#value'] = t('Upload your files');
-        $form['actions']['submit']['#attributes'] = array('class' => array('upload'));
-    }
+    
+    $form['actions']['submit']['#value'] = t('Payment');
+    $form['actions']['submit']['#attributes'] = array('class' => array('payment'));
+    
+//    if ($cart->allFilesUploaded) {
+//        $form['actions']['submit']['#value'] = t('Payment');
+//        $form['actions']['submit']['#attributes'] = array('class' => array('payment'));
+//    } else {
+//        $form['actions']['submit']['#value'] = t('Upload your files');
+//        $form['actions']['submit']['#attributes'] = array('class' => array('upload'));
+//    }
 
 
     $form['#cache'] = TRUE;
@@ -1182,11 +1186,13 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
 
     \printconnect\Carts\Factory::Save($cart);
     $cart = \printconnect\Carts\Factory::Current(FALSE);
-    if ($cart->allFilesUploaded) {
-        drupal_goto('checkout/payment');
-    } else {
-        drupal_goto('checkout/upload');
-    }
+    drupal_goto('checkout/payment');
+    
+//    if ($cart->allFilesUploaded) {
+//        drupal_goto('checkout/payment');
+//    } else {
+//        drupal_goto('checkout/upload');
+//    }
 }
 
 function getFotolia($jobId) {

@@ -1005,6 +1005,19 @@ function pccart_cart_form2($form, &$form_state) {
                 '#markup' => l(t('Continue shopping'), 'products', array('attributes' => array('class' => array('continue')))),
             );
         }
+        if ($cart && $cart->isFilled) {
+            $form['actions']['checkout'] = array(
+                '#prefix' => '<div class="button-wrapper">',
+                '#suffix' => '</div>',
+                '#type' => 'submit',
+                '#value' => t('Secure payment'),
+                '#weight' => 100,
+                '#validate' =>array('pccart_cart_form2_validate'),
+                '#submit' => array('pccart_cart_form2_submit'),
+                '#attributes' => array('class' => array('action', 'large', 'payment', 'button')),
+            );
+
+    }
 
         global $user;
         if ($user->uid) {
@@ -1099,6 +1112,14 @@ function pccart_cart_form2($form, &$form_state) {
             '#items' => $items,
         );
    /* END bloc TOP produits */
+         $validate = $form['actions']['checkout']['#validate'];
+          array_unshift($validate, 'pcdesigner_form_validate');
+          $form['actions']['checkout']['#validate'] = $validate;
+          
+          $submit = $form['actions']['checkout']['#submit'];
+          array_unshift($submit, 'pcdesigner_form_submit');
+          $form['actions']['checkout']['#submit'] = $submit;
+          
     return $form;
 }
 
@@ -1215,11 +1236,17 @@ function pccart_cart_form2_validate($form, &$form_state) {
     if (!$cart || !$cart->isFilled) {
         form_set_error('', t('No cart or empty'));
     }
+
+
             foreach ($cart->productItems as $item) {
+                if(!$form_state['values']['cart']['items'][$item->id]['designer']['check']){
                 if (!count($item->files)) {
                     form_set_error('', t('Please upload a file for all your items'));
+                } 
                 }
             }
+
+    
 }
 function pccart_cart_form2_popup_overlay_ok_submit($form, &$form_state) {
     $cart = Factory::Current(FALSE);

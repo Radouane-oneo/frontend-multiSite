@@ -59,24 +59,7 @@ function quickupload($jobId) {
 
 function pccart_cart_form2($form, &$form_state) {
     
- global $language;
-    $cart = Factory::Current(FALSE);
-    $endarray = $cart != null ? end($cart->orderItems): null;
-    $jobs = $cart != null ? $cart->orderItems : array();
-    if (null != $cart) {
-        for($i = count($cart->orderItems); $i > 0; $i--){
-            $job = $jobs[$i];
-            if ($job->price > 0) {
-               $endarray = $job;
-            }
-       }
-    }
-    if($cart && 1 == $cart->supplementProduct && 43 == $endarray->price && 0 < $endarray->price){
-        $endarray = printconnect\Carts\Factory::GetItem($cart, $endarray->id);
-        $endarray = printconnect\Carts\Factory::LoadItem($endarray);
-        $endarray->pPrice = 10;
-        printconnect\Carts\Factory::SaveItem($endarray);   
-    }
+    global $language;
     $cart = Factory::Current(FALSE);
     // delete fotolias data on backend
     if ($cart) {
@@ -298,8 +281,8 @@ function pccart_cart_form2($form, &$form_state) {
             $templates = Products\Templates\Factory::GetTemplates($item->configuration->productId, $items);
             $template = $templates->items[0];
             
-            $ProdactHasTemplates = ProdactHasTemplates($template->id, $item->id); 
-
+            $ProdactHasTemplates = ProdactHasTemplates($template->id, $item->id);   
+            
             if (count($item->files)){
                 foreach ($item->files as $file){
                     $form['cart']['items'][$item->id]['file'] = array(
@@ -369,7 +352,19 @@ function pccart_cart_form2($form, &$form_state) {
                         '#theme' => 'item_list',
                         '#items' => $list,
                     );
+                    
+                    // Reference job   
+                    $form['cart']['items'][$item->id]['description']['refJob'] = array(
+                        '#type' => 'textfield',
+                        '#title' => t('Give a reference to this product'),
+                        '#maxlength'=>25,
+                        '#size'=>20,
+                        '#default_value'=> $item ? $item->refJob : '',
+                        '#attributes' => array('class' => array('hint', 'form-text')),
+                        '#prefix'=>'<div class="refJob-code">',
+                        '#suffix'=> '</div>'
 
+                    ); 
                     $totalPrice += $item->originPrice;
                     $listProductId .= $item->configuration->productId . ',';
 
@@ -1273,6 +1268,7 @@ function pccart_cart_form2_submit($form, &$form_state) {
             $orderItemTrg = printconnect\Carts\Factory::GetItem($cart, $orderItem->id);
             printconnect\Carts\Factory::LoadItem($orderItemTrg);
             $orderItemTrg->vatCustom = $tgVat;
+            $orderItemTrg->refJob = $item['description']['refJob']; 
             printconnect\Carts\Factory::SaveItem($orderItemTrg);
         }
       }
@@ -1285,8 +1281,7 @@ function pccart_cart_form2_submit($form, &$form_state) {
         $cart->Remove('fileCheck');
     }
 
-    if ($cart->onlyPostal) {
-    } else {
+    if (!$cart->onlyPostal) {
         $shippingTypePrinter = null;
         $types = $form_state['storage']['shipping']['types'];
         foreach ($types as $type) {

@@ -969,7 +969,7 @@ function pccart_cart_form2($form, &$form_state) {
             $form['actions']['price'] = array(
                 '#id' => 'price',
                 '#theme' => 'price',
-                '#value' => $carCurrent->totalAmount,
+                '#value' => $cart->totalAmount,
                 '#attributes' => array('id' => 'price'),
                 '#title' => t('Total incl. VAT'),
             );

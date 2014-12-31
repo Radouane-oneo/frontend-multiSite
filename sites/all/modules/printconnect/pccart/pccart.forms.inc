@@ -80,7 +80,8 @@ function pccart_cart_form2($form, &$form_state) {
     $cart = Factory::Current(FALSE);
     // delete fotolias data on backend
     if ($cart) {
-        Factory::deleteFotolias($cart);
+        //echo "<pre>" . print_r($cart, 1) . "</pre>";die;
+        //Factory::deleteFotolias($cart);
 	Factory::deletePreflights($cart);
     }
 
@@ -93,25 +94,15 @@ function pccart_cart_form2($form, &$form_state) {
     $preflight = array();
     $preflightPrice = str_replace('.', ',', $preflightPrice);  
     $jobsProupload = array();
+    foreach ($cart->fotoliaItems as $fotoliaItem) {      
+        $fotoliaPrice = str_replace('.', ',', number_format($fotoliaItem->price));
+        $fotolia[$fotoliaItem->parentId][] = '<span>'.t('Image').'&nbsp;"'.$fotoliaItem->fotoliaId.'"</span>';
+        $fotolia[$fotoliaItem->parentId][] = $fotoliaPrice;
+    }
+
     foreach ($cart->orderItems as $orderItem) {
-        $jobId = $orderItem->files[0]->designToolJobId;
-        if(count($orderItem->files) > 0) {
-            $fotoliaImages = getFotolia($jobId);
-        }else {
-            $fotoliaImages = array();
-        }        
-	if (!empty($fotoliaImages)) {
-            foreach($fotoliaImages as $image) {
-                $pricefotolias = Factory::getFotoliaPrice($image['type']);
-                $fotoliaPrice = str_replace('.', ',', number_format($pricefotolias->price));
-                $fotolia[$orderItem->id][] = '<span>'.t('Image').'&nbsp;"'.$image['id'].'"</span>';
-                $fotolia[$orderItem->id][] = $fotoliaPrice;
-            } 
-            Factory::SaveFotolia($cart->id, $orderItem->id, $fotoliaImages);
-        }
-	
         $preflights = getPreflight($orderItem->id);
-	$savePreflight = false;
+        $savePreflight = false;
         $jobsProupload[$orderItem->id] = false;
         if (!empty($preflights)) {
             if ($preflights['data']['preflight'] == true) {
@@ -124,6 +115,8 @@ function pccart_cart_form2($form, &$form_state) {
             }
         }
     }
+
+
     $cart = Factory::Current(FALSE);
     $items = array();
     $emailDesigner = FALSE;

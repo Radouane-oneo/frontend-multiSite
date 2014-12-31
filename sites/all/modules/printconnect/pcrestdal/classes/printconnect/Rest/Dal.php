@@ -173,7 +173,9 @@ use printconnect\Dal\ForbiddenException;
       }
 
       $data = json_encode($properties);
-      
+      if($entity == 'cart-item'){
+        var_dump($data, $url);die;
+      }
       $start = microtime(true);
       $response = drupal_http_request($url, array('header' => $header, 'method' => 'PUT', 'data' => $data));
       $end = microtime(true);

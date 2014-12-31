@@ -71,18 +71,12 @@ function pccart_cart_form2($form, &$form_state) {
             }
        }
     }
+
     if($cart && 1 == $cart->supplementProduct && 43 == $endarray->price && 0 < $endarray->price){
         $endarray = printconnect\Carts\Factory::GetItem($cart, $endarray->id);
         $endarray = printconnect\Carts\Factory::LoadItem($endarray);
         $endarray->pPrice = 10;
         printconnect\Carts\Factory::SaveItem($endarray);   
-    }
-    $cart = Factory::Current(FALSE);
-    // delete fotolias data on backend
-    if ($cart) {
-        //echo "<pre>" . print_r($cart, 1) . "</pre>";die;
-        //Factory::deleteFotolias($cart);
-	Factory::deletePreflights($cart);
     }
 
     $fotoliaPrice = 0;
@@ -96,30 +90,18 @@ function pccart_cart_form2($form, &$form_state) {
     $jobsProupload = array();
     foreach ($cart->fotoliaItems as $fotoliaItem) {      
         $fotoliaPrice = str_replace('.', ',', number_format($fotoliaItem->price));
-        $fotolia[$fotoliaItem->parentId][] = '<span>'.t('Image').'&nbsp;"'.$fotoliaItem->fotoliaId.'"</span>';
-        $fotolia[$fotoliaItem->parentId][] = $fotoliaPrice;
+        $fotolia[$fotoliaItem->parentId][$fotoliaItem->fotoliaId]['content'] = '<span>'.t('Image').'&nbsp;"'.$fotoliaItem->fotoliaId.'"</span>';
+        $fotolia[$fotoliaItem->parentId][$fotoliaItem->fotoliaId]['price'] = $fotoliaPrice;
     }
 
-    foreach ($cart->orderItems as $orderItem) {
-        $preflights = getPreflight($orderItem->id);
-        $savePreflight = false;
-        $jobsProupload[$orderItem->id] = false;
-        if (!empty($preflights)) {
-            if ($preflights['data']['preflight'] == true) {
-                $preflight[$orderItem->id][] = $preflightPrice;
-                $preflightsSave = $preflights['data']['preflightInfo'];
-                Factory::SavePreflight($cart->id, $orderItem->id, $preflightsSave);
-            }
-            if (!empty($preflights['data']['preflightInfo']) || $preflights['data']['preflight'] == true) {
-                 $jobsProupload[$orderItem->id] = true;
-            }
-        }
+    foreach ($cart->preflightItems as $preflightItem) {
+        $preflight[$preflightItem->parentId][] = $preflightItem->price;
     }
 
 
-    $cart = Factory::Current(FALSE);
     $items = array();
     $emailDesigner = FALSE;
+    
     if (!$cart || !$cart->isFilled) {
  
         $form['empty'] = array(
@@ -290,7 +272,7 @@ function pccart_cart_form2($form, &$form_state) {
 
             $templates = Products\Templates\Factory::GetTemplates($item->configuration->productId, $items);
             $template = $templates->items[0];
-            
+
             $ProdactHasTemplates = ProdactHasTemplates($template->id, $item->id); 
 
             if (count($item->files)){
@@ -375,7 +357,7 @@ function pccart_cart_form2($form, &$form_state) {
                     
                 $myfiles = $item->files[0];
                 $themequickupload = 'designtoollink';
-                if ($jobsProupload[$item->id] == true) {
+                if ($myfiles->viaProUpload == 1) {
                     $themequickupload = 'designtoolproflink';
                 }
                 
@@ -556,7 +538,7 @@ function pccart_cart_form2($form, &$form_state) {
                 );
             }
         }
-       
+
 	if (!empty($fotolia)) {
         $form['cart']['fotolias'] = array(
             '#type' => 'fieldset',
@@ -567,27 +549,26 @@ function pccart_cart_form2($form, &$form_state) {
         
 
 
-        foreach ($cart->orderItems as $orderItem) {
-            if (isset($fotolia[$orderItem->id])) {
-                 $form['cart']['fotolias']['items'][$orderItem->id]['fotolia'] = array(
-                    'description' => array(
-                    '#prefix' => '<div class="fotolia-items">',
-                    '#suffix' => '</div>',
-                    '#markup' => $fotolia[$orderItem->id][0],
-                ),
-                    'price' => array(
-                    '#theme' => 'price',
-                    '#value' => intval($fotolia[$orderItem->id][1]),
-                    '#attributes' => array('class' => array('pricepreflight')),
-                ),
+        foreach ($fotolia as $parentId => $fotoliaItem) {
+            foreach($fotoliaItem as $fKey=>$fItem) {
+                $form['cart']['fotolias']['items'][$fKey]['fotolia'] = array(
+                        'description' => array(
+                        '#prefix' => '<div style="clear: both;"><div class="fotolia-items">',
+                        '#suffix' => '</div>',
+                        '#markup' => $fItem['content'],
+                    ),
+                        'price' => array(
+                        '#theme' => 'price',
+                        '#value' => intval($fItem['price']),
+                        '#attributes' => array('class' => array('pricepreflight')),
+    		            '#suffix' => '</div>',
+                    ),
                 );
-                
             }
         }
 
-         $cart = Factory::Save($cart);
     }
-        
+
     if (!empty($preflight)) {
         $form['cart']['preflights'] = array(
             '#type' => 'fieldset',
@@ -595,9 +576,8 @@ function pccart_cart_form2($form, &$form_state) {
             '#title' => t('PREFLIGHT'),
             '#weight' => 70,
         );
-        foreach ($cart->orderItems as $orderItem) {
-            if (isset($preflight[$orderItem->id])) {
-                $form['cart']['preflights']['items'][$orderItem->id]['preflight'] = array(
+        foreach ($preflight as $parentId => $preflightItem) {
+            $form['cart']['preflights']['items'][$parentId]['preflight'] = array(
                     'description' => array(
                     '#prefix' => '<div class="preflight-items">',
                     '#suffix' => '</div>',
@@ -605,12 +585,10 @@ function pccart_cart_form2($form, &$form_state) {
                 ),
                     'price' => array(
                     '#theme' => 'price',
-                    '#value' => $preflight[$orderItem->id][0],
+                    '#value' => $preflightItem[0],
                     '#attributes' => array('class' => array('pricepreflight')),
                 ),
-                );
-            }
-            $cart = Factory::Save($cart);
+            );
         }
     }
     $orderItemsAdditional = $cart->orderItemsAdditional;
@@ -644,6 +622,7 @@ function pccart_cart_form2($form, &$form_state) {
         }
     }
 /* Discount */ 
+
         $customer = printconnect\Customers\Factory::Current();
         
         if (count($cart->discountItems)) {
@@ -696,7 +675,7 @@ function pccart_cart_form2($form, &$form_state) {
 /* end discount */   
            
  /* vatException */  
-    
+
      $tvaBillingAccount = null;
      if ($customer) {
         $billingAccounts = printconnect\Customers\BillingAccounts\Factory::GetBillingAccounts($customer, false);
@@ -725,7 +704,7 @@ function pccart_cart_form2($form, &$form_state) {
      }
        
 /* end vatException */        
-        
+
         if ('flyer' == variable_get('pc_flow', '')) {
             $options = array(
                 '0' => array(
@@ -859,6 +838,7 @@ function pccart_cart_form2($form, &$form_state) {
               $options[$type->id]['price'] = theme('price', array('value' => $type->price, 'free' => TRUE));
 
         }
+
          $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop != null ? $cart->orderItemShipping->shippingTypeResellerShop : 349;
 
          $myval = intval($cart->convertedTotalAmount);
@@ -867,13 +847,17 @@ function pccart_cart_form2($form, &$form_state) {
         if($myval<=50){unset($options[349]);}
       
         $resolt = array();
-         foreach ($options as $key => $value) {
-                $resolt[] = $key;
-          }
-         $_SESSION['defaultindex'] =  $resolt[0];
+        foreach ($options as $key => $value) {
+            $resolt[] = $key;
+        }
+        if($cart->orderItemShipping->shippingTypeResellerShop){
+            $_SESSION['defaultindex'] =  $cart->orderItemShipping->shippingTypeResellerShop;
+        }else {
+            $_SESSION['defaultindex'] =  $resolt[0];
+        }
          
         $cart->shipping_type = $resolt[0];
-        $cart = Factory::Save($cart);
+        //$cart = Factory::Save($cart);
       
          $form['cart']['shipping']['type'] = array(
             '#type' => 'tableselect',
@@ -960,13 +944,13 @@ function pccart_cart_form2($form, &$form_state) {
         '#size' => 30,
         );
         
-        $carCurrent = Factory::Current(FALSE);
+        //$carCurrent = Factory::Current(FALSE);
     
         $form['cart']['priceblock'] = array(
             '#theme' => 'priceblock',
             '#id' => 'priceblock',
-            '#subtotal' => $carCurrent->convertedSubTotalAmount,
-            '#vatAmount' => $carCurrent->convertedVatAmount,
+            '#subtotal' => $cart->convertedSubTotalAmount,
+            '#vatAmount' => $cart->convertedVatAmount,
             '#weight' => 100,
         );
 
@@ -996,6 +980,19 @@ function pccart_cart_form2($form, &$form_state) {
                 '#markup' => l(t('Continue shopping'), 'products', array('attributes' => array('class' => array('continue')))),
             );
         }
+        if ($cart && $cart->isFilled) {
+            $form['actions']['checkout'] = array(
+                '#prefix' => '<div class="button-wrapper">',
+                '#suffix' => '</div>',
+                '#type' => 'submit',
+                '#value' => t('Secure payment'),
+                '#weight' => 100,
+                '#validate' =>array('pccart_cart_form2_validate'),
+                '#submit' => array('pccart_cart_form2_submit'),
+                '#attributes' => array('class' => array('action', 'large', 'payment', 'button')),
+            );
+
+    }
 
         global $user;
         if ($user->uid) {
@@ -1090,6 +1087,14 @@ function pccart_cart_form2($form, &$form_state) {
             '#items' => $items,
         );
    /* END bloc TOP produits */
+         $validate = $form['actions']['checkout']['#validate'];
+          array_unshift($validate, 'pcdesigner_form_validate');
+          $form['actions']['checkout']['#validate'] = $validate;
+          
+          $submit = $form['actions']['checkout']['#submit'];
+          array_unshift($submit, 'pcdesigner_form_submit');
+          $form['actions']['checkout']['#submit'] = $submit;
+
     return $form;
 }
 
@@ -1168,9 +1173,6 @@ function pccart_cart_form2_delete_creat_submit($form, &$form_state) {
     }
 }
 
-//function pccart_cart_form2_add_discount_validate($form, &$form_state) {
-//}
-
 function pccart_cart_form2_add_discount_submit($form, &$form_state) {
     $cart = Factory::Current();
     $customer = CustomersFactory::Current();
@@ -1207,19 +1209,16 @@ function pccart_cart_form2_validate($form, &$form_state) {
         form_set_error('', t('No cart or empty'));
     }
 
-    switch (variable_get('pc_flow', 'flyer')) {
-        case 'printconcept':
-            break;
-        case 'whitelabel';
+
             foreach ($cart->productItems as $item) {
+                if(!$form_state['values']['cart']['items'][$item->id]['designer']['check']){
                 if (!count($item->files)) {
                     form_set_error('', t('Please upload a file for all your items'));
+                } 
                 }
             }
-            break;
-        default:
-            break;
-    }
+
+    
 }
 function pccart_cart_form2_popup_overlay_ok_submit($form, &$form_state) {
     $cart = Factory::Current(FALSE);

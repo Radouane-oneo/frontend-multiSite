@@ -56,8 +56,8 @@ function pcdesigner_form_alter(&$form, $form_state, $form_id) {
 
   switch ($form_id) {
     case 'pccart_cart_form2':
-
-    case 'pccheckout_upload_form':
+     
+//    case 'pccheckout_upload_form':
       $cart = $form_state['storage']['cart'];
       $checkableItems = array();
       $emailDesigner = FALSE;
@@ -133,13 +133,13 @@ function pcdesigner_form_alter(&$form, $form_state, $form_id) {
             );
           }
 
-          $validate = $form['#validate'];
-          array_unshift($validate, 'pcdesigner_form_validate');
-          $form['#validate'] = $validate;
-
-          $submit = $form['#submit'];
-          array_unshift($submit, 'pcdesigner_form_submit');
-          $form['#submit'] = $submit;
+//          $validate = $form['#validate'];
+//          array_unshift($validate, 'pcdesigner_form_validate');
+//          $form['#validate'] = $validate;
+//
+//          $submit = $form['actions']['checkout']['#submit'];
+//          array_unshift($submit, 'pcdesigner_form_submit');
+//          $form['actions']['checkout']['#submit'] = $submit;
         }
       }
 
@@ -181,34 +181,11 @@ function pcdesigner_form_validate($form, &$form_state) {
   }
 }
 
-function pcdesigner_form_pccart_cart_form2_alter(&$form, $form_state, $form_id) {
-  
-}
+
 
 function pcdesigner_designer_email_callback($form, &$form_state) {
-//  $cart = $form_state['storage']['cart'];
-//  foreach (element_children($form_state['values']['cart']['items']) as $key) {
-//    $item = \printconnect\Carts\Factory::GetItem($cart, $key);
-//    $item->EnsureLoaded();
-//    if ($form_state['values']['cart']['items'][$key]['designer']['check']) {
-//      $item->emailDesigner = $form_state['values']['cart']['designer']['email'];
-//    } else {
-//      $item->Remove('emailDesigner');
-//    }
-//
-//    ///\printconnect\Carts\Factory::SaveItem($item);
-//    
-//    
-// 
-//  
-//  }
-  // do not save yet!
   $_SESSION['pcdesigner']['email'] = $form_state['values']['cart']['designer']['email'];
-
   return $form['cart']['designer'];
 }
 
-function pcdesigner_form_pccheckout_upload_form_alter(&$form, $form_state, $form_id) {
-  
-}
 

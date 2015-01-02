@@ -548,3 +548,17 @@ margin: 5px;
 float: left;
 width: 50px; 
 }
+
+
+.page-cart #pccart-cart-form .item .description .refJob-code label{
+	font-weight: bold;
+	color: #666666;
+	font-size: 13px;
+}
+.page-cart #pccart-cart-form .item .description .refJob-code > .form-item{
+ margin-top:5px;
+ margin-bottom:0px;
+}
+.page-cart #pccart-cart-form .item .description{
+	margin-bottom:	0px;
+}

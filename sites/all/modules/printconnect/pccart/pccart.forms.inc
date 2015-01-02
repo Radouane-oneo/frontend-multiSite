@@ -94,10 +94,9 @@ function pccart_cart_form2($form, &$form_state) {
         }
 	
         $preflights = getPreflight($orderItem->id);
-	$savePreflight = false;
         $jobsProupload[$orderItem->id] = false;
         if (!empty($preflights)) {
-            if ($preflights['data']['preflight'] == true) {
+            if ($preflights['data']['preflight'] == TRUE && count($orderItem->files) > 0) {
                 $preflight[$orderItem->id][] = $preflightPrice;
                 $preflightsSave = $preflights['data']['preflightInfo'];
                 Factory::SavePreflight($cart->id, $orderItem->id, $preflightsSave);
@@ -107,9 +106,11 @@ function pccart_cart_form2($form, &$form_state) {
             }
         }
     }
+
     $cart = Factory::Current(FALSE);
     $items = array();
     $emailDesigner = FALSE;
+    
     if (!$cart || !$cart->isFilled) {
  
         $form['empty'] = array(
@@ -1192,9 +1193,6 @@ function pccart_cart_form2_delete_creat_submit($form, &$form_state) {
 
     }
 }
-
-//function pccart_cart_form2_add_discount_validate($form, &$form_state) {
-//}
 
 function pccart_cart_form2_add_discount_submit($form, &$form_state) {
     $cart = Factory::Current();

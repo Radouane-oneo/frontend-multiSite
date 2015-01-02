@@ -362,7 +362,9 @@ function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALS
         '#items' => $rows,
             //'#markup' => theme('item_list', array('items' => $rows)),
     );
-
+    $form['order']['details']['item'][$item->id]['description']['refJob'] = array(
+          '#markup' => '<label class="labelOrder">' . t('Reference product') .' : '. $item->refJob.'</label>',
+    );
 
     if (isset($item->tracking)) {
       foreach ($item->tracking as $box) {

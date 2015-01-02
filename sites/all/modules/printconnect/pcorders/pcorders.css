@@ -82,3 +82,10 @@
     right: 0;
     top: 32px;
 }
+#pcorders-order-form #edit-order #edit-details .description .item-list ul {
+margin: 0;
+padding: 0;
+}
+#pcorders-order-form #edit-order #edit-details .description >.labelOrder{
+	margin-left: 21px;
+}

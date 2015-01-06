@@ -153,21 +153,17 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
             break;
     }
 
-    $bannerUrl = variable_get('pc_images') . '/productpage_banners/banner_' . $prefix . '_' . $productId . '.jpg';
-    $bannerUrl2 = variable_get('pc_images') . '/productpage_banners/banner_' . $prefix . '_' . $productId . '.png';
+    $banner = variable_get('pc_images') . '/productpage_banners/prod-banner.png';
 
-    if (getimagesize($bannerUrl) != FALSE || getimagesize($bannerUrl2) != FALSE) {
-        $bannerUrl = (getimagesize($bannerUrl)) ? $bannerUrl : $bannerUrl2;
-        $form['description']['banner'] = array(
-            '#type' => 'container',
-            '#attributes' => array('class' => array('banner')),
-        );
+    $form['description']['banner'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('banner')),
+    );
 
-        $form['description']['banner']['image'] = array(
-            '#theme' => 'image',
-            '#path' => $bannerUrl,
-        );
-    }
+    $form['description']['banner']['image'] = array(
+        '#theme' => 'image',
+        '#path' => $banner,
+    );
 
     $form['product']['select'] = array(
         '#type' => 'select',

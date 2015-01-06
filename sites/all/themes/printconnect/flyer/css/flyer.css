@@ -10452,15 +10452,14 @@ background-color: #71AD05;
 /*------- End Block Find Flyer stor ------*/
 /*------- Block Sold hiver ------*/
 #Soldehiver{
-background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/flyerstore/img-soldehiver.png") no-repeat scroll left top transparent;
-
+background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/flyerstore/060115/img-solde-hiver.png") no-repeat scroll left top transparent;
 float: left;
-margin-top: -35px;
+margin-top: -34px;
 margin-left: -10px;
 margin-bottom: -10px;
 padding: 0 10px 10px 10px;
 width: 163px;
-min-height: 290px;
+min-height: 296px;
 max-height: 286px;
 border-radius: 4px 4px 4px 4px; }
  

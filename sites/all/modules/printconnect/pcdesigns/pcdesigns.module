@@ -122,7 +122,7 @@ function pcdesigns_saveddesigns_form($form, $form_state) {
                 '#submit' => array('pcdesigns_saveddesigns_form_order_submit'),
             ),
             'order' => array(
-                '#markup' => theme('designtoollink', array(
+                '#markup' => theme('designtoollinkBtt', array(
                     'savedDesignId' => $design->id,
                     'jobId' => $design->jobId,
                     'title' => $product->name,

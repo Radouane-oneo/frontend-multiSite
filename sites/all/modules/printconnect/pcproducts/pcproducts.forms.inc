@@ -15,6 +15,18 @@ use printconnect\Shipping;
 
 
 function pcproducts_products_form($form, &$form_state) {
+    
+ $banner = variable_get('pc_images') . '/productpage_banners/prod-banner.png';
+    $form['banner'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('banner')),
+    );
+
+    $form['banner']['image'] = array(
+        '#theme' => 'image',
+        '#path' => $banner,
+ );
+    
  $shop = printconnect\Shop\Configuration\Factory::Current();
   $items = array();
   $products = _pcproducts_activeproducts();
@@ -37,6 +49,8 @@ function pcproducts_products_form($form, &$form_state) {
         }
       }
     }
+
+    
 
   foreach ($products as $product) {
     $build = array();

@@ -46,7 +46,8 @@ html, body, .ui-widget {
 }*/
 
 body {
-background: #f1f1f1;
+/*background: #f1f1f1;*/
+background: #fff;
 color: #646464;
 font-family: 'Open Sans',sans-serif;
 font-weight: 400;
@@ -214,8 +215,7 @@ table tr.even, table tr.odd {
 
 .bg_header_noel{
     /*background: url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/bg_flyer_noel.png) repeat center;*/
-    background: url('http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/home/img-bghiver.png') repeat-x 0px 0px;
-
+    background: url('http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/home/img-bghiver.jpg') repeat-x 0px 0px;
     position: absolute;
     height: 2000px;
     left: 0;
@@ -8457,12 +8457,9 @@ ul.ui-autocomplete{
 	display: block;width: 100%;
 }
 #slider_animate{
-	/* ex css slider animantion
 	height: 288px;
-	overflow: hidden;*/
-	/* new css slider animation*/
-	height: 300px;
 	overflow: visible;
+	margin-top: 1px;
 	margin-bottom: 10px;
 }
 

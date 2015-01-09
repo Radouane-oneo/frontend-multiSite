@@ -576,20 +576,23 @@ function pccart_cart_form2($form, &$form_state) {
             '#title' => t('PREFLIGHT'),
             '#weight' => 70,
         );
+        $preflightAmount = 0;
         foreach ($preflight as $parentId => $preflightItem) {
-            $form['cart']['preflights']['items'][$parentId]['preflight'] = array(
-                    'description' => array(
-                    '#prefix' => '<div class="preflight-items">',
-                    '#suffix' => '</div>',
-                    '#markup' => t('Preflight'),
-                ),
-                    'price' => array(
-                    '#theme' => 'price',
-                    '#value' => $preflightItem[0],
-                    '#attributes' => array('class' => array('pricepreflight')),
-                ),
-            );
+            $preflightAmount += (float) $preflightItem[0];
         }
+
+        $form['cart']['preflights']['items'][0]['preflight'] = array(
+                'description' => array(
+                '#prefix' => '<div class="preflight-items">',
+                '#suffix' => '</div>',
+                '#markup' => t('Preflight'),
+            ),
+                'price' => array(
+                '#theme' => 'price',
+                '#value' => $preflightAmount,
+                '#attributes' => array('class' => array('pricepreflight')),
+            ),
+        );
     }
     $orderItemsAdditional = $cart->orderItemsAdditional;
     if (count($orderItemsAdditional)) {

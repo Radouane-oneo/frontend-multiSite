@@ -119,6 +119,11 @@ use printconnect\Dal\ForbiddenException;
         } else {
             $url .= '&language=2';
         }
+
+            if(preg_match('/template/', $entity)) {
+                var_dump($url);die;
+            }
+
       return $url;
     }
 
@@ -131,7 +136,7 @@ use printconnect\Dal\ForbiddenException;
 	$json = utf8_encode($json);
 	$items = json_decode($json);
       } 
-     
+
       return $items;
     }
 

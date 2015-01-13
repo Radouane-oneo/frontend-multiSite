@@ -1093,7 +1093,7 @@ $product = Products\Factory::Get($productId);
   $form['actions']['design'] = array(
       '#prefix' => '<div class="button-wrapper">',
       '#suffix' => '</div>',
-      '#theme' => 'designtoollink',
+      '#theme' => 'designtoollinkBtt',
       '#designtoolTemplateId' => $template->designTemplates->designToolTemplateId,
       '#title' => $template->designTemplates->name,
       '#content' => t('Start design'),

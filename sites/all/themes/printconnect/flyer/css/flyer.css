@@ -2679,11 +2679,14 @@ a.ui-button.inactivebtn{
 	height: 32px;
 	top: -62px;;/*-55px;*/
 }
-.page-products #pcproducts-config-form table.grid tbody tr td .price.old {
+.page-products #pcproducts-config-form table.grid tbody tr td .price.old,
+.page-templates table.grid tbody tr td .price.old {
+	text-decoration: line-through;
 	color: #aaa;
 }
-.page-products #pcproducts-config-form table.grid tbody tr td .price.promo {
-	color: #77B800;
+.page-products #pcproducts-config-form table.grid tbody tr td .price.promo,
+.page-templates table.grid tbody tr td .price.promo {
+	color: #77b800 !important;
 }
 
 .page-products #pcproducts-config-form table.grid th:last-child {

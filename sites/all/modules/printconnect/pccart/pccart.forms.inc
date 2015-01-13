@@ -230,7 +230,7 @@ function pccart_cart_form2($form, &$form_state) {
         
         $listProductId = null;
         $totalPrice = null;
-        
+        $ProdactHasTemplates = false; 
         
   foreach ($cart->productItems as $item) {
             if (isset($item->emailDesigner)) {
@@ -274,7 +274,6 @@ function pccart_cart_form2($form, &$form_state) {
             $template = $templates->items[0];
 
             $ProdactHasTemplates = ProdactHasTemplates($template->id, $item->id); 
-
             if (count($item->files)){
                 foreach ($item->files as $file){
                     $form['cart']['items'][$item->id]['file'] = array(
@@ -392,7 +391,7 @@ function pccart_cart_form2($form, &$form_state) {
              }
             
             } else {
-                $form['cart']['items'][$item->id]['description'] = array(
+		$form['cart']['items'][$item->id]['description'] = array(
                     '#prefix' => '<div class="preview2">',
                     '#suffix' => '</div>',
                     '#type' => 'container',
@@ -429,7 +428,6 @@ function pccart_cart_form2($form, &$form_state) {
                 if (count($templates->items)){
                     
                     $_SESSION['cart']['items'][$item->id]['template'] = $template->id;
-                    
                     if ($ProdactHasTemplates) {
                         $form['cart']['items'][$item->id]['product-container'] = array(
                         );
@@ -486,7 +484,6 @@ function pccart_cart_form2($form, &$form_state) {
                         '#attributes' => array('class' => array('upload', 'designtool', 'iframe')),
                     );
                         
-                   
                         if($ProdactHasTemplates){
 
                     $form['cart']['items'][$item->id]['product-container']['modele'] = array(

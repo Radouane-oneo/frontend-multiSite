@@ -355,7 +355,7 @@ function pccart_cart_form2($form, &$form_state) {
                     );
                     
                     // Reference job   
-                   /* $form['cart']['items'][$item->id]['description']['refJob'] = array(
+                    $form['cart']['items'][$item->id]['description']['refJob'] = array(
                         '#type' => 'textfield',
                         '#title' => t('Give a reference to this product'),
                         '#maxlength'=>25,
@@ -365,7 +365,7 @@ function pccart_cart_form2($form, &$form_state) {
                         '#prefix'=>'<div class="refJob-code">',
                         '#suffix'=> '</div>'
 
-                    ); */
+                    ); 
                     $totalPrice += $item->originPrice;
                     $listProductId .= $item->configuration->productId . ',';
 
@@ -1265,7 +1265,7 @@ function pccart_cart_form2_submit($form, &$form_state) {
             $orderItemTrg = printconnect\Carts\Factory::GetItem($cart, $orderItem->id);
             printconnect\Carts\Factory::LoadItem($orderItemTrg);
             $orderItemTrg->vatCustom = $tgVat;
-            //$orderItemTrg->refJob = $item['description']['refJob']; 
+            $orderItemTrg->refJob = $item['description']['refJob']; 
             printconnect\Carts\Factory::SaveItem($orderItemTrg);
         }
       }

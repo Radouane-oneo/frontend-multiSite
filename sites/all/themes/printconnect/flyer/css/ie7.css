@@ -36,6 +36,12 @@ background:#77b800;
 #pccustomers-address-form .form-item-postalCode, 
 #pccustomers-newaddress-form .form-item-city, 
 #pccustomers-address-form .form-item-city {
-	float:left !important;
-	
+	float:left !important; 
+} 
+
+
+.block-pctemplates ul li,.view-best-sales ul li,#pcproducts-products-form ul li, #pcproducts-productoverview-form ul li, #pcproducts-productconfig-form .other li, #block-pcproducts-other li{
+   
+  margin: 0 8px 10px 0; 
+ 
 }

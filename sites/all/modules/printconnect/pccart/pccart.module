@@ -883,7 +883,7 @@ function _pccart_callback() {
         if (isset($_SESSION['files'][$itemId])) {
           unset($_SESSION['files'][$itemId]);
         }
-        Factory::Refresh($cart);
+        //Factory::Refresh($cart);
         drupal_goto($_SERVER['HTTP_REFERER']);
         return t('The item was deleted');
 //drupal_goto('cart');
@@ -902,7 +902,7 @@ function _pccart_callback() {
         $discountId = array_shift($args);
         $cart = Factory::Current();
         Discounts\Factory::Delete($cartId, $discountId);
-        Factory::Refresh($cart);
+        //Factory::Refresh($cart);
         drupal_goto($_SERVER['HTTP_REFERER']);
         return t('The discount was deleted');
       case 'edit':

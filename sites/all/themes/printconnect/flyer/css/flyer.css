@@ -46,7 +46,8 @@ html, body, .ui-widget {
 }*/
 
 body {
-background: #f1f1f1;
+/*background: #f1f1f1;*/
+background: #fff;
 color: #646464;
 font-family: 'Open Sans',sans-serif;
 font-weight: 400;
@@ -213,11 +214,12 @@ table tr.even, table tr.odd {
 }
 
 .bg_header_noel{
-    background: url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/bg_flyer_noel.png) repeat center;
+    /*background: url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/bg_flyer_noel.png) repeat center;*/
+    background: url('http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/home/img-bghiver.jpg') repeat-x 0px 0px;
     position: absolute;
-    height: 277px;
+    height: 2000px;
     left: 0;
-    top: 180px;
+    top: 0px;
     width: 100%;
     z-index: -1;
 }
@@ -8458,12 +8460,9 @@ ul.ui-autocomplete{
 	display: block;width: 100%;
 }
 #slider_animate{
-	/* ex css slider animantion
 	height: 288px;
-	overflow: hidden;*/
-	/* new css slider animation*/
-	height: 300px;
 	overflow: visible;
+	margin-top: 1px;
 	margin-bottom: 10px;
 }
 
@@ -10410,3 +10409,81 @@ form.webform-client-form .webform-component > input[type="text"]{
 
 
 /* ---- END - SAMPLEPACK REQUEST ---- */
+
+/*-------Block Find Flyer stor ------*/
+
+
+#findflyerstore{
+background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/flyerstore/img-findFlyerStor.png") no-repeat scroll left top transparent;
+float: left;
+margin-top: -35px;
+margin-left: -10px;
+margin-bottom: -10px;
+padding: 0 10px 10px 10px;
+width: 163px;
+min-height: 290px;
+max-height: 286px;
+border-radius: 4px 4px 4px 4px; }
+ 
+#findflyerstore .button{
+margin-top: 244px;
+width: 125px !important;
+height: 19px !important;
+color: #fff;
+display: block !important;
+font-family: 'Open Sans', sans-serif;
+font-weight: 400 !important;
+font-size: 14px !important;
+padding: 8px 5px 8px 15px !important;
+border-radius: 4px 4px 4px 4px !important;
+-webkit-box-shadow: inset 0 -2px #6ca800;
+box-shadow: inset 0 -2px #6ca800;
+text-align: left !important;
+background: url(http://preprd.flyer.fr/sites/all/themes/printconnect/flyer/css/images/sprite_icons.png) no-repeat 5px -459px #77b800;
+background: -moz-linear-gradient(top, #77b800 0%, #669c02 100%) !important;
+background: -o-linear-gradient(top, #77b800 0%, #669c02 100%) !important;
+text-align: center !important;
+margin-left: 0px !important;
+}
+#findflyerstore .button:hover{
+background-color: #71AD05;
+}
+
+/*------- End Block Find Flyer stor ------*/
+/*------- Block Sold hiver ------*/
+#Soldehiver{
+background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/flyerstore/060115/img-solde-hiver.png") no-repeat scroll left top transparent;
+float: left;
+margin-top: -34px;
+margin-left: -10px;
+margin-bottom: -10px;
+padding: 0 10px 10px 10px;
+width: 163px;
+min-height: 296px;
+max-height: 286px;
+border-radius: 4px 4px 4px 4px; }
+ 
+#Soldehiver .button{
+margin-top: 258px;
+width: 125px !important;
+height: 19px !important;
+color: #fff;
+display: block !important;
+font-family: 'Open Sans', sans-serif;
+font-weight: 400 !important;
+font-size: 14px !important;
+padding: 8px 5px 8px 15px !important;
+border-radius: 4px 4px 4px 4px !important;
+-webkit-box-shadow: inset 0 -2px #6ca800;
+box-shadow: inset 0 -2px #6ca800;
+text-align: left !important;
+background: url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/banners/flatSlide/icon.png) no-repeat 9px  center #77b800;
+background: -moz-linear-gradient(top, #77b800 0%, #669c02 100%) !important;
+background: -o-linear-gradient(top, #77b800 0%, #669c02 100%) !important;
+text-align: center !important;
+margin-left: 0px !important;
+}
+#Soldehiver .button:hover{
+background-color: #71AD05;
+}
+/*------- End Block Sold hiver ------*/

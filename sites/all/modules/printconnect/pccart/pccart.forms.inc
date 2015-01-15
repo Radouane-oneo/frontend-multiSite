@@ -272,8 +272,9 @@ function pccart_cart_form2($form, &$form_state) {
 
             $templates = Products\Templates\Factory::GetTemplates($item->configuration->productId, $items);
             $template = $templates->items[0];
-
+            
             $ProdactHasTemplates = ProdactHasTemplates($template->id, $item->id); 
+
             if (count($item->files)){
                 foreach ($item->files as $file){
                     $form['cart']['items'][$item->id]['file'] = array(
@@ -343,7 +344,19 @@ function pccart_cart_form2($form, &$form_state) {
                         '#theme' => 'item_list',
                         '#items' => $list,
                     );
+                    
+                    // Reference job   
+                    $form['cart']['items'][$item->id]['description']['refJob'] = array(
+                        '#type' => 'textfield',
+                        '#title' => t('Give a reference to this product'),
+                        '#maxlength'=>25,
+                        '#size'=>20,
+                        '#default_value'=> $item ? $item->refJob : '',
+                        '#attributes' => array('class' => array('hint', 'form-text')),
+                        '#prefix'=>'<div class="refJob-code">',
+                        '#suffix'=> '</div>'
 
+                    ); 
                     $totalPrice += $item->originPrice;
                     $listProductId .= $item->configuration->productId . ',';
 
@@ -843,7 +856,6 @@ function pccart_cart_form2($form, &$form_state) {
 
          $myval = intval($cart->convertedTotalAmount);
          $myval= $myval - 19 ;
-        if($_SESSION["region"] != "Nord-Pas-de-Calais"){unset($options[86]);}
         if($myval<=50){unset($options[349]);}
       
         $resolt = array();
@@ -1245,6 +1257,7 @@ function pccart_cart_form2_submit($form, &$form_state) {
             $orderItemTrg = printconnect\Carts\Factory::GetItem($cart, $orderItem->id);
             printconnect\Carts\Factory::LoadItem($orderItemTrg);
             $orderItemTrg->vatCustom = $tgVat;
+            $orderItemTrg->refJob = $item['description']['refJob']; 
             printconnect\Carts\Factory::SaveItem($orderItemTrg);
         }
       }
@@ -1257,8 +1270,7 @@ function pccart_cart_form2_submit($form, &$form_state) {
         $cart->Remove('fileCheck');
     }
 
-    if ($cart->onlyPostal) {
-    } else {
+    if (!$cart->onlyPostal) {
         $shippingTypePrinter = null;
         $types = $form_state['storage']['shipping']['types'];
         foreach ($types as $type) {

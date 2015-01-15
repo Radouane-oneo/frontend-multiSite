@@ -131,7 +131,7 @@
   
 })(jQuery);
 function pcflyerstores_callback(id){
-  var url =Drupal.settings.basePath + 'index.php?q=/js/stores/picker/cart/set/' + id;
+  var url =Drupal.settings.basePath + 'index.php?q=/js/stores/picker/cart/set1/' + id;
   jQuery('input[name="pcflyerstores[id]"]').val(id);
   jQuery.getJSON(url, function(data){
     jQuery('.store').html(data.info);

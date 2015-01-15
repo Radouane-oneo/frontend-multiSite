@@ -362,7 +362,7 @@ function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALS
         '#items' => $rows,
             //'#markup' => theme('item_list', array('items' => $rows)),
     );
-    if($form['order']['details']['item'][$item->id]['description']['refJob']){
+    if($item->refJob){
         $form['order']['details']['item'][$item->id]['description']['refJob'] = array(
               '#markup' => '<label class="labelOrder">' . t('Reference product') .' : '. $item->refJob.'</label>',
         );

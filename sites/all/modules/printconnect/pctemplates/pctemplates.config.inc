@@ -136,7 +136,7 @@ function pctemplates_config_form($form, &$form_state, $productId, $templateId) {
   } else {
     $query = array();
   }
-die('yye');
+
   $form['back'] = array(
       '#type' => 'item',
       '#markup' => l(t('Back to overview'), _pctemplates_link(($productId)), array('query' => $query, 'attributes' => array('rel' => 'nofollow'))),
@@ -534,15 +534,20 @@ function pctemplates_callback($type) {
   return;
 }
 
-function getItemParent($form_state,$templateItems = null,$productId = null) {
-    
+function getParentIdByProdut($productId, $templateParents){
+    $parentId = NULL;
+    foreach ($templateParents as $item) {
+      if($item->id == $productId){
+        $parentId = $item->primaryId;
+        break;
+      }
+    }
+
+    return $parentId;
+}
+
+function getItemParent($form_state) {
   if(!isset($form_state['values']['items']) || empty($form_state['values']['items'])) {
-     foreach ($templateItems as $key => $item) {
-         $parentId = $key;
-         if(reset($item)->id == $productId){
-             return $parentId ;
-         }
-     }
     return NULL;
   }
 
@@ -559,8 +564,8 @@ function getItemParent($form_state,$templateItems = null,$productId = null) {
 function getDefaultItemsByParent($parentId, $templateItems, $form_state = array()) {
   $items = array();
   $selectedItems = array();
-  if(isset($form_state['items']) && !empty($form_state['items'])) {
-      foreach($form_state['items'] as $sItem) {
+  if(isset($form_state['values']['items']) && !empty($form_state['values']['items'])) {
+      foreach($form_state['values']['items'] as $sItem) {
           if(!preg_match('/-/', $sItem['select'])){
               $selectedItems[] = $sItem['select'];
           }
@@ -615,7 +620,9 @@ function pctemplates_config_form2($form, &$form_state, $templateId, $productId =
     drupal_not_found();
     exit;
   }
-  $parentId = getItemParent($form_state,$template->templateItems,$productId);
+
+  $parentId = getItemParent($form_state);
+
   $title = html_entity_decode($template->designTemplates->name);
   drupal_set_title($title, PASS_THROUGH);
 
@@ -624,7 +631,6 @@ function pctemplates_config_form2($form, &$form_state, $templateId, $productId =
   
   if(!$productId) {
     $productId = $template->designTemplates->products[0]->id;
-    $hasProduct = FALSE;
   }
 
   $ajax = array(
@@ -639,21 +645,33 @@ function pctemplates_config_form2($form, &$form_state, $templateId, $productId =
   );
 
   $items = $template->defaultItems;
+  
+  if($parentId == NULL){
+    $parentId = getParentIdByProdut($productId, $template->templateParents);
+  }
+  
   if($parentId) {
     $items = getDefaultItemsByParent($parentId, $template->templateItems, $form_state);
+  }else {
+    $hasProduct = FALSE;
   }
+
   if (isset($form_state['values']['items'])) {
     foreach ($form_state['values']['items'] as $selectedItem) {
-      $items[] = $selectedItem['select'];
+        array_unshift($items, $selectedItem['select']);
+  //$items[] = $selectedItem['select'];
     }
   }
   if (isset($form_state['values']['quantity'])) {
     $qty = $form_state['values']['quantity'];
   }
+  $items = array_unique($items);
 
   $defaults = \printconnect\Products\Configurations\Factory::GetDefaults($productId, $items);
+  \printconnect\Products\Configurations\Factory::LoadDefaults($defaults);
 
   $priceGroupId = $defaults->priceGroupId;
+  $itemsTogetData = $defaults->toolboxItems;
   $diff = array_diff($defaults->toolboxItems, $items);
   if (count($diff)) {
     $items = $defaults->toolboxItems;
@@ -690,7 +708,7 @@ $product = Products\Factory::Get($productId);
     foreach ($dtTemplate->thumbnails as $thumbnail) {
 
         $page = $thumbnail->page;
-        if ($page%2 == 1) {
+        if ($page == 1) {
             $title = t('Outside');
         } else {
             $title = t('Inside');
@@ -894,12 +912,15 @@ $product = Products\Factory::Get($productId);
         );
       }
   }
+
   if($parentId && property_exists($template->templateItems, $parentId)){
       $section = $template->templateItems->$parentId;
   }else {
       $section = reset($template->templateItems);
   }
+  
   $section = reset($section);
+
   foreach($section->children as $dType => $dItems) {
       if(count($dItems) == 1){
           $text = $dItems[0]->itemName;

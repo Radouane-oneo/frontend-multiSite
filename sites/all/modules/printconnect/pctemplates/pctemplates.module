@@ -193,8 +193,10 @@ function pctemplates_block_view($delta = '') {
                 $block['content']['nosmodel']= array('#markup' => "<div class='nosmodel'><span>Personnalisez un modèle</span><a href='".base_path()."créations-en-ligne'>Tous nos modèles GRATUITS</a></div>");
                 $block['content']['startul']= array('#markup' => "<div id='SliderCreaHomePage'><ul>");
                 $i=0; 
+                $blockrow=0;
                 foreach($templatesItems as $valueItems ) {
-                $block['content']['contentitem1'.$i]= array('#markup' => "<li><div class='blocprd'>"); 
+                    $blockrow=$blockrow+1;
+                $block['content']['contentitem1'.$i]= array('#markup' => "<li class='block-pctemplates-row-". $blockrow ."'><div class='blocprd'>"); 
                 $block['content']['contentlink1'.$i] = array('#markup' =>'<a id="top10Template_'.$i.'" href="templates/' . $valueItems["id"] . '">'); 
                 $block['content']['thumb'.$i] = array('#markup' => theme('pcfilesthumb', array('file' => $valueItems["thumbnail"], 'alt' => array('#markup'=>$valueItems->name),'attributes' => array('width' => '194', 'height' => '194'),))); 
                 $block['content']['name'.$i] = array('#markup' => "<h2>". $valueItems["productsname"] ."</h2></a></div>",); 

@@ -1,11 +1,10 @@
 (function ($) {
-
   Drupal.behaviors.pccart = {
     detach: function (context) {
 
     },
     attach: function (context, settings) {
-      
+      $('.page-products .all-products .item-list li:nth-child(3n)').addClass('right-item');
       // $('#pccart-cart-form > div > .actions').once().clone().insertBefore($('#pccart-cart-form > div > fieldset'));
      
       /*

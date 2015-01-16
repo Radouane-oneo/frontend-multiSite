@@ -13,8 +13,8 @@
   box-sizing: border-box;         /* Opera/IE 8+ */
 }
  
-.view-best-sales ul li.views-row-3 , .view-best-sales ul  li.views-row-6,.block-pctemplates ul li.block-pctemplates-row-3{
-  margin-right: 0;
+.page-products .all-products .item-list .clearfix .right-item ,.view-best-sales ul li.views-row-3 , .view-best-sales ul  li.views-row-6,.block-pctemplates ul li.block-pctemplates-row-3{
+  margin-right: 0 !important;
 }
 .block-pctemplates ul li:nth-child(3n),
 .view-best-sales ul li:nth-child(3n),

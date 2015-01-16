@@ -10486,4 +10486,23 @@ margin-left: 0px !important;
 #Soldehiver .button:hover{
 background-color: #71AD05;
 }
+
 /*------- End Block Sold hiver ------*/
+a.cart.button{
+	display: block;
+	color: #fff;
+}
+
+#footer .search-footer.block a.button{
+	color: #fff;
+	display: inline;
+	text-align: center;
+	line-height: 34px;
+	text-decoration: none;
+	font-family: 'Open Sans',sans-serif;
+	font-weight: 400;
+	font-style: 14px;
+}
+#footer #block-menu-menu-footer ul.menu li{
+ list-style-image: none; 
+}

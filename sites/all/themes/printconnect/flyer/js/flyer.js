@@ -1,5 +1,6 @@
 jQuery(document).ready(function(e) {
     
+      
     if (jQuery('#homeSlider').length) {
         jQuery('#homeSlider ul').cycle({
             pager:'#pagerSliderHolder',

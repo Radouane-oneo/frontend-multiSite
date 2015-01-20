@@ -3540,15 +3540,13 @@ vertical-align: top;
 	padding-left: 0 !important;
 }
 .page-cart .download {
-	background: url("images/imprimer.png") no-repeat left;
-	padding-left: 23px;
-	display: block;
-	float: right;
-	line-height: 25px;
-	margin-bottom: 10px;
-	margin-top: -36px;
-	color: #666666;
-	font-size: 0;
+    background: url("images/imprimer.png") no-repeat scroll right center rgba(0, 0, 0, 0);
+    color: #666666;
+    float: right;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 25px;
+    padding-right: 32px;
 }
 .page-cart .total-container {
 	float: right;

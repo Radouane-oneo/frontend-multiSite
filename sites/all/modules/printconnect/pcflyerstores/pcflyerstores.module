@@ -549,16 +549,15 @@ function theme_pcflyerstores_landingpage_info($vars) {
         $html .= '<div>'; /* start div */
 
  if (!empty($store->slide)) {
-    
+
         $html .= '<div class="wrapper">
             <div class="jcarousel-wrapper">
                 <div data-jcarousel="true" data-wrap="circular" class="jcarousel">
-                    <ul>
-                <li><img src="'.$store->slide[0].'" alt="" /></li>
-                <li><img src="'.$store->slide[1].'" alt="" /></li>
-                <li><img src="'.$store->slide[2].'" alt="" /></li>
-                <li><img src="'.$store->slide[3].'" alt="" /></li>
-                    </ul>
+                    <ul>';
+            foreach ($store->slide as  $value){
+             $html .= '<li><img src="'.$value.'" alt="" /></li>';
+            }
+                $html .= ' </ul>
                 </div>
                 <a data-jcarousel-control="true" data-target="-=1" href="#" class="jcarousel-control-prev">&lsaquo;</a>
                 <a data-jcarousel-control="true" data-target="+=1" href="#" class="jcarousel-control-next">&rsaquo;</a>

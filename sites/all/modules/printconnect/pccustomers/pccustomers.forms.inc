@@ -247,9 +247,7 @@ function pccustomers_profile_form_validate($form, &$form_state) {
   if (!is_numeric($form_state['values']['phone'])) {
      form_set_error('phone',t('Please enter your Phone Number as Number value.'));
   }
-  if (is_numeric($form_state['values']['phone']) && strlen($form_state['values']['phone']) >= 10) {
-      form_set_error('phone',t('Please enter a valid phone number.'));
-  }
+
   if (!valid_email_address($form_state['values']['email'])) {
     form_set_error('email', t('Email is not valid'));
   }
@@ -589,9 +587,6 @@ function pccustomers_address_form_validate($form, &$form_state) {
  
   if (!is_numeric($form_state['values']['phone'])) {
      form_set_error('phone',t('Please enter your Phone Number as Number value.'));
-  }
-  if (is_numeric($form_state['values']['phone']) && strlen($form_state['values']['phone'])!= 10) {
-      form_set_error('phone',t('Please enter your Phone Number as 10 Number.'));
   }
   if(!empty($tva)){
  if (!is_numeric($tva)) {
@@ -1003,9 +998,7 @@ function pccustomers_newaddress_form_validate($form, &$form_state) {
   if (!is_numeric($form_state['values']['phone'])) {
      form_set_error('phone',t('Please enter your Phone Number as Number value.'));
   }
-  if (is_numeric($form_state['values']['phone']) && strlen($form_state['values']['phone'])!= 10) {
-      form_set_error('phone',t('Please enter your Phone Number as 10 Number.'));
-  }
+
     $tva = substr($form_state['values']['vatNumber'], 2, 2);
      if(!empty($tva)){
  if (!is_numeric($tva)) {

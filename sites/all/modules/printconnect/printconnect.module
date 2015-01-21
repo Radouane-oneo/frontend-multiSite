@@ -322,7 +322,7 @@ function theme_helplink($vars) {
 }
 
 function theme_generalconditionslink($vars) {
-  return l(t($vars['title']), variable_get('site_generalconditions', 'generalconditions'));
+  return l(t($vars['title']), variable_get('site_generalconditions', 'generalconditions'),array('attributes'=>array('target'=>'_blank')));
 }
 
 function theme_privacypolicylink($vars) {

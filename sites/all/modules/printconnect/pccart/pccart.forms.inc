@@ -869,14 +869,14 @@ function pccart_cart_form2($form, &$form_state) {
         }
          
         $cart->shipping_type = $resolt[0];
-        //$cart = Factory::Save($cart);
-      
+      //$cart = Factory::Save($cart);
+
          $form['cart']['shipping']['type'] = array(
             '#type' => 'tableselect',
             '#multiple' => FALSE,
             '#options' => $options,
             '#header' => array('label' => ''),
-            '#default_value' => $_SESSION['defaultindex'],
+            '#default_value' => end($resolt),
             '#sticky' => FALSE,
             '#ajax' => array(
                 'callback' => 'pccart_cart_form_shipping_type_callback',

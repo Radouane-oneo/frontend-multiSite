@@ -200,14 +200,6 @@ function pccheckout_personal_form_validate($form, &$form_state) {
     global $language;
     $customer = $form_state['storage']['customer'];
  
-//    if(!empty($form_state['values']['phone']) && !is_numeric($form_state['values']['phone'])){
-//        form_set_error('phone',t('Please enter your Phone Number as Number value.'));
-//        return false;
-//    }
-//    if(is_numeric($form_state['values']['phone']) && strlen($form_state['values']['phone'])< 10){
-//        form_set_error('phone',t('Please enter a valid phone number.'));
-//        return false;  
-//    } 
     if(!empty($form_state['values']['postalCode']) && !is_numeric($form_state['values']['postalCode'])){
         form_set_error('postalCode', t('Le champ Code postal doit être numérique.'));
         return false;

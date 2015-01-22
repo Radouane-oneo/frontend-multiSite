@@ -548,24 +548,33 @@ function theme_pcflyerstores_landingpage_info($vars) {
             );
         $html .= '<div>'; /* start div */
 
- if (!empty($store->slide)) {
+        if (!empty($store->slide) and !is_null($store->slide[0]) ) {
+           $li = "";
+           foreach($store->slide as $k => $img){
+              if(getimagesize($img)){
+                   $li .= '<li><img src="'.$img.'" alt="" /></li>'; 
+              }
+           } 
+           $t = count($store->slide);
+                   if($t = 1){
+                       $html .='<img src="'.$store->slide[0].'" >';
+                   }else{
+                       $html .= '<div class="wrapper">
+                               <div class="jcarousel-wrapper">
+                                   <div data-jcarousel="true" data-wrap="circular" class="jcarousel">
+                                       <ul>
+                               '.$li.'
+                                       </ul>
+                                   </div>
+                                   <a data-jcarousel-control="true" data-target="-=1" href="#" class="jcarousel-control-prev">&lsaquo;</a>
+                                   <a data-jcarousel-control="true" data-target="+=1" href="#" class="jcarousel-control-next">&rsaquo;</a>
+                               </div>
+                           </div>';
+                   }
 
-        $html .= '<div class="wrapper">
-            <div class="jcarousel-wrapper">
-                <div data-jcarousel="true" data-wrap="circular" class="jcarousel">
-                    <ul>';
-            foreach ($store->slide as  $value){
-             $html .= '<li><img src="'.$value.'" alt="" /></li>';
-            }
-                $html .= ' </ul>
-                </div>
-                <a data-jcarousel-control="true" data-target="-=1" href="#" class="jcarousel-control-prev">&lsaquo;</a>
-                <a data-jcarousel-control="true" data-target="+=1" href="#" class="jcarousel-control-next">&rsaquo;</a>
-            </div>
-        </div>';
-      } else {
-       $html .='<img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/flyerstore/benl_flyerstoreheader.gif" alt="" style=" height: 142px; ">';
-     }
+       } else {
+              $html .='<img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/flyerstore/benl_flyerstoreheader.gif" alt="" style=" height: 142px; ">';
+       }
 
 
         if (isset($store->photo)) {

@@ -155,7 +155,7 @@ function pccontact_general_form($form, &$form_state, $key = 'general') {
               <strong class="phones"> '.$phones[$language->prefix].'</strong>
             </div><div class="elm">
           <img src ="'.base_path().'sites/all/themes/printconnect/flyer/css/images/msg-contact.png">
-              <strong class="mails"> <a href="mailto:'.$emails[$language->prefix].'">'.$emails[$language->prefix].'</a></strong></div>
+              <strong class="mails"> '.$emails[$language->prefix].'</strong></div>
        </div>',
        '#suffix' => '</div>'
     

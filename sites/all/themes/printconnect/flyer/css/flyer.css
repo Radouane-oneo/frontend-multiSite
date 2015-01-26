@@ -2686,6 +2686,9 @@ a.ui-button.inactivebtn{
 	text-decoration: line-through;
 	color: #aaa;
 }
+.page-products #pcproducts-config-form table.grid tbody tr td .price.old{
+	padding-left: 10px
+}
 .page-products #pcproducts-config-form table.grid tbody tr td .price.promo,
 .page-templates table.grid tbody tr td .price.promo {
 	color: #77b800 !important;
@@ -10495,11 +10498,15 @@ a.cart.button{
 	color: #fff;
 	display: inline;
 	text-align: center;
-	line-height: 34px;
-	text-decoration: none;
 	font-family: 'Open Sans',sans-serif;
 	font-weight: 400;
-	font-style: 14px;
+	background-position: 28px -453px;
+	padding: 0;
+	height: 44px;
+	bottom: 0;
+}
+#footer .search-footer.block a.button .ui-button-text{
+	line-height: 46px;
 }
 #footer #block-menu-menu-footer ul.menu li{
  list-style-image: none; 

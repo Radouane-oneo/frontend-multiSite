@@ -9,6 +9,7 @@
 #contspan{
 font-size:12px;
 color:#646464;
+text-align: justify;
 }
 #contspan span{
 display:block;

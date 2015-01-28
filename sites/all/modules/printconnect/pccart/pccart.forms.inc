@@ -717,7 +717,7 @@ function pccart_cart_form2($form, &$form_state) {
      }
        
 /* end vatException */        
-
+/*
         if ('flyer' == variable_get('pc_flow', '')) {
             $options = array(
                 '0' => array(
@@ -761,7 +761,7 @@ function pccart_cart_form2($form, &$form_state) {
                 '#attributes' => array('class' => array('targetPrice'))
             );
         }
-
+*/
         $options = array();
         $types = Shipping\Types\Factory::GetAll();
 

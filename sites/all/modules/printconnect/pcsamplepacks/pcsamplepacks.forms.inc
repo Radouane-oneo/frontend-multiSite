@@ -31,7 +31,7 @@ function pcsamplepacks_request_form($form, $form_state) {
 
 
   $form['description']['image'] = array(
-      '#markup' => '<img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/flippage/bann_fr.png" style="width: 680px; margin-left: -10px;  margin-top: -24px;" alt="flyer" title="flyer" />', 
+      '#markup' => '<img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/samplepacks/frfr_bann.png" style="width: 680px; margin-left: -10px;  margin-top: -18px;" alt="flyer" title="flyer" />', 
   );
  $form['description']['contspan'] = array(
       '#type' => 'container',

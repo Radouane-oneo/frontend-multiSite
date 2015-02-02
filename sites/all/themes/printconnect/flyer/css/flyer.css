@@ -1574,10 +1574,20 @@ body.page-cobranding #block-pcsegments-products .content .tabs li.last {
 /* ---- END - FINAL PRODUCT LIST */
 /* ---- SAMPLEPACK REQUEST ----- */
 #block-pcsamplepacks-request {
+	padding: 0;
+	position: relative;
+	background: none;
 }
+#block-pcsamplepacks-request a.button{
+	position: absolute;
+	bottom: 11px;
+	left: 5px;
+	width: 105px;
+}
+
 #block-pcsamplepacks-request div.content {
-	padding-top: 128px;
-	background: url("images/samplepack.png") no-repeat;
+	height: 361px;
+	background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/theblocks/SampleFlip.png") no-repeat;
 }
 body.i18n-fr #block-pcsamplepacks-request div.content {
 	background-image: url("images/samplepack.png");
@@ -10512,4 +10522,4 @@ a.cart.button{
 #footer #block-menu-menu-footer ul.menu li{
  list-style-image: none; 
 }
-#block-pcsamplepacks-request h2 { font-size: 15px !important;}
+#block-pcsamplepacks-request.block h2, #block-pcsamplepacks-request.block p { display: none;}

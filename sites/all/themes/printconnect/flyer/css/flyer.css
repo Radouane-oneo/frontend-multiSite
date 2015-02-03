@@ -1581,14 +1581,14 @@ body.page-cobranding #block-pcsegments-products .content .tabs li.last {
 #block-pcsamplepacks-request a.button{
 	position: absolute;
 	bottom: 11px;
-	left: 5px;
-	width: 105px;
+	left: 9px;
+	width: 98px;
 }
 
-#block-pcsamplepacks-request div.content {
-	height: 361px;
-	background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/theblocks/SampleFlip.png") no-repeat;
+#block-pcsamplepacks-request div.content img{
+	display: block;
 }
+
 body.i18n-fr #block-pcsamplepacks-request div.content {
 	background-image: url("images/samplepack.png");
 }

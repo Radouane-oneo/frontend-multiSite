@@ -83,7 +83,7 @@ function pcsamplepacks_block_view($delta = '') {
   switch ($delta) {
     case 'request':
       //$block['subject'] = t('Free sample pack');
-      //$block['title'] = t('hjvwgncvSample box');
+      //$block['title'] = t('Sample box');
       //$block['content'] = drupal_get_form('pcsamplepacks_request_block_form');
 
       //$block['content']['#attributes'] = array('class' => array('clearfix'));

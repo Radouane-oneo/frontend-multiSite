@@ -39,12 +39,27 @@ function pccheckout_personal_form($form, &$form_state) {
     }
 
     foreach (\printconnect\Countries\Factory::GetAll() as $country) {
-        $countries[$country->id] = $country->tag;
+//        $countries[$country->id] = $country->tag;
+        $countries = array (
+       "21"=>"Belgique",
+       "37"=>"France",
+       "150"=>"Pays-Bas",
+       "199"=>"Espagne",
+       "124"=>"Luxembourg",
+     );
     }
     if ($cart->orderItemShipping->shippingTypeResellerShop == 351) {
-	$countries = array();
-        $country = \printconnect\Countries\Factory::Get(73);
-	$countries[$country->id] = $country->tag;
+//	$countries = array();
+//        $country = \printconnect\Countries\Factory::Get(73);
+//   
+//	$countries[$country->id] = $country->tag;
+        $countries = array (
+       "21"=>"Belgique",
+       "37"=>"France",
+       "150"=>"Pays-Bas",
+       "199"=>"Espagne",
+       "124"=>"Luxembourg",
+     );
     }
     if ($defaultBillingAddress) {
         $country = \printconnect\Countries\Factory::Get($defaultBillingAddress->country);

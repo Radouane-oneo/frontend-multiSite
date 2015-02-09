@@ -115,7 +115,7 @@
                         specs.clone().appendTo($('.content', this));
                         $('#pctemplates-selection-form').children('div').prepend(specs);
                     });
-                $('#block-pctemplates-selection').once('moveselectiontoblock', function () {
+                $('#block-system-main,#block-pctemplates-selection').once('moveselectiontoblock', function () {
                         var filters = $('#pctemplates-selection-form .filters');
                         var form = $('#pctemplates-selection-form');
                         $('#pctemplates-selection-form').children('div').prepend(filters);
@@ -172,25 +172,36 @@
                                 return false;
                             });
                     });
+
+                  $('#pctemplates-config-form2 .form-type-checkboxes').once().each(function() {
+                    var item = $(this);
+                    var options = $('.form-checkboxes', this);
+                    var checked = $('input:checked', options);
+                    var texts = [];
+                    checked.each(function() {
+                      var item = $(this).parent();
+                      texts.push($('label', item).html()) ;
+                    });
+
+                    if (texts.length == 0) {
+                      var defaultText = $('#default-options-text').html();
+                      texts.push(defaultText);
+                    }
+                    var text = $('<a href="#" class="text"/>');
+                    text.html(texts.join('<br />'));
+                    item.append(text);
                     
-        var segments = [];   
-        $('select#edit-segments').find('option').each(function() {
-                 segments.push($(this).text());
-    	});
-       
-       if($('#edit-inputsegments').length){
-	$("#edit-inputsegments").autocomplete({	
-            source: segments,
-            select: function( event, ui ) {                  
-                $("select#edit-segments option").filter(function() {
-                    return $(this).text() == ui.item.value; 
-                }).attr('selected', true);                  
-            },
-	});
-     }
-                        
-                        
+                    options.hide();
                     
+                    item.click(function() {
+                      options.slideToggle(function() {
+                        item.toggleClass('expanded');
+                      });
+                      return false;
+                    });
+
+                    $(options.parent()).after(options);
+                  });
             }
         }
     })(jQuery);

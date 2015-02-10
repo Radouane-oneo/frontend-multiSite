@@ -178,7 +178,11 @@
                     var options = $('.form-checkboxes', this);
                     var checked = $('input:checked', options);
                     var texts = [];
+                    var productId = $("#productIdValue").val();
                     checked.each(function() {
+                        if(productId == 5) {
+                           $(this).attr("disabled", true); 
+                        }
                       var item = $(this).parent();
                       texts.push($('label', item).html()) ;
                     });

@@ -989,6 +989,13 @@ $product = Products\Factory::Get($productId);
       $options = array();
     }
   }
+
+  if($productId == 5){
+    $options[] = 14;
+  }
+
+  $options = array_unique($options);
+  
   foreach ($options as $optionId) {
       $isExist = false;
       foreach ($availableOptionsIds as $singleOption) {
@@ -1106,6 +1113,13 @@ $product = Products\Factory::Get($productId);
       '#type' => 'textfield',
       '#ajax' => $ajax,
       '#description' => t('Enter your amount'),
+  );
+
+  $form['productId']=array(
+      '#type' => 'hidden',
+      '#id' => 'productId',
+      '#value'=> $productId,
+      '#attributes' => array('id'=>'productIdValue')
   );
 
   if ($qty == 'custom') {

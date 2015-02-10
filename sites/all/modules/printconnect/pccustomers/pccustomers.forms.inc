@@ -721,11 +721,18 @@ function pccustomers_newaddress_form($form, $form_state) {
       '#attributes' => array('class' => array('city')),
   );
 
-  $options = array();
-  $countries = \printconnect\Countries\Factory::GetAll();
-  foreach ($countries as $country) {
-    $options[$country->id] = $country->tag;
-  }
+//  $options = array();
+//  $countries = \printconnect\Countries\Factory::GetAll();
+//  foreach ($countries as $country) {
+//    $options[$country->id] = $country->tag;
+//  }
+    $options = array (
+       "21"=>"Belgique",
+       "37"=>"France",
+       "150"=>"Pays-Bas",
+       "199"=>"Espagne",
+       "124"=>"Luxembourg",
+     );
   natsort($options);
   $form['country'] = array(
       '#type' => 'select',

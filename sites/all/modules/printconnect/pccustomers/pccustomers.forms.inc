@@ -14,18 +14,25 @@ function pccustomers_dashboard_form($form, &$form_state) {
 }
 
 function pccustomers_addresses_form($form, $form_state) {
-  _pccustomers_ensureloggedin();
-  $customer = Factory::Current();
-  $addresses = Addresses\Factory::GetAddresses($customer, FALSE);
-
-  $form['addresses'] = array(
-      '#type' => 'container',
-      '#title' => t('Your addresses'),
-  );
-
-  $rows = array();
-
-  foreach ($addresses as $address) {
+    _pccustomers_ensureloggedin();
+    $customer = Factory::Current();
+    $addresses = Addresses\Factory::GetAddresses($customer, FALSE);
+    $form['addresses'] = array(
+        '#type' => 'container',
+        '#title' => t('Your addresses'),
+    );
+    
+    $rows = array();
+    // sort billing acount
+    $address_sort = array();
+    foreach ($addresses as $address) {
+        $address_sort[] = $address;
+    }
+    usort($address_sort, function ($a, $b) {
+            return strcmp(strtolower(t($a->name)), strtolower(t($b->name)));
+    });
+    // end sort
+  foreach ($address_sort as $address) {
 
     $form['addresses'][$address->id]['edit'] = array(
         '#markup' => l(t('edit'), 'myprintconnect/addresses/' . $address->id, array('attributes' => array('class' => 'edit'))),
@@ -85,7 +92,7 @@ function pccustomers_addresses_form($form, $form_state) {
     $Billingcustomer =  \printconnect\Customers\Factory::Current();
     $rowsBilling = array();
     $allbellingacounts = \printconnect\Customers\BillingAccounts\Factory::GetBillingAccounts($Billingcustomer, false);
-    
+
 foreach ( $allbellingacounts as $MyBillingaddress) {
  if (!is_null($MyBillingaddress->id)){
     $form['Billingaddresses'][$MyBillingaddress->id]['edit'] = array(

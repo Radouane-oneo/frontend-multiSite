@@ -510,6 +510,7 @@ function pctemplates_callback($type) {
         $jobId = $_GET['jobid'];
         $priceGroupId = $_GET['priceGroupId'];
         $qty = $_GET['qty'];
+        $options = explode(',', $_GET['options']);
         $vatPercentage = $_GET['vat'];
         module_invoke('pcdesigntool', 'save', $jobId, 'design');
         $cart = Carts\Factory::CurrentOrCreate();
@@ -517,7 +518,7 @@ function pctemplates_callback($type) {
           $cart = Carts\Factory::Create();
         }
         Carts\Factory::Save($cart);
-        $item = Carts\Factory::CreateItem($cart, $priceGroupId, $qty, NULL, NULL, NULL, $vatPercentage);
+        $item = Carts\Factory::CreateItem($cart, $priceGroupId, $qty, NULL, NULL, $options, $vatPercentage);
         $item->file = $file;
         $item->thumbnail = $thumbnail;
         $item->design_tool_job_id = $jobId;
@@ -960,6 +961,74 @@ $product = Products\Factory::Get($productId);
       
       $form['items'][$dItems[0]->groupId]['select']['#description'] = $txtDescription;
   }    
+
+  $allOptions = \printconnect\Products\Options\Factory::GetOptions($productId, $itemsTogetData);
+  $allOptions = $allOptions->toKeyedArray();
+  $availableOptions = array();
+  $availableOptionsIds = array();
+  foreach ($allOptions as $optionId => $option) {
+      $availableOptionsIds[]=$option->id;
+    if ($option->active) {
+      $price = \printconnect\Products\Options\Factory::GetPrice($option, $qty);
+      $availableOptions[$option->id] = $option->name . ' ( + ' . theme('price', array('value' => $price)) . ')';
+    }
+  }
+
+  $optionsPrice = 0;
+  $options = array();
+  if (isset($form_state['values']['options'])) {
+    foreach ($form_state['values']['options'] as $key => $value) {
+      if ($value) {
+        $options[] = $key;
+      }
+    }
+  } else {
+    if (!empty($options)) {
+      $options = explode(',', $options);
+    } else {
+      $options = array();
+    }
+  }
+
+  if($productId == 5){
+    $options[] = 14;
+  }
+
+  $options = array_unique($options);
+  
+  foreach ($options as $optionId) {
+      $isExist = false;
+      foreach ($availableOptionsIds as $singleOption) {
+          if ($singleOption ==  $optionId)
+              $isExist = true;
+      }
+      
+      if ($isExist) {
+            $option = $allOptions[$optionId];
+            $price = \printconnect\Products\Options\Factory::GetPrice($option, $qty);
+            $optionsPrice += $price;
+      }
+  }
+
+  if (count($availableOptions)) {
+    $form['options'] = array(
+        '#type' => 'checkboxes',
+        '#title' => t('Options'),
+        '#options' => $availableOptions,
+        '#default_value' => $options,
+        '#attributes' => array('class' => array('clearfix')),
+        '#ajax' => $ajax,
+    );
+    $form['options']['default'] = array(
+        '#type' => 'container',
+        '#id' => 'default-options-text',
+        '#attributes' => array('style' => array('display: none;')),
+    );
+    $form['options']['default']['text'] = array(
+        '#markup' => t('No options selected'),
+    );
+  }
+
   $price = '';
   $pricePerPiece = '';
   $subtotal = 0;
@@ -1046,6 +1115,13 @@ $product = Products\Factory::Get($productId);
       '#description' => t('Enter your amount'),
   );
 
+  $form['productId']=array(
+      '#type' => 'hidden',
+      '#id' => 'productId',
+      '#value'=> $productId,
+      '#attributes' => array('id'=>'productIdValue')
+  );
+
   if ($qty == 'custom') {
     $qty = $customQty;
   }
@@ -1055,7 +1131,7 @@ $product = Products\Factory::Get($productId);
   } else {
     $price = 0;
   }
-  $subtotal += $price;
+  $subtotal += $price + $optionsPrice;
   $total = $subtotal * (1 + $_SESSION['shop_vat']);
   $form['priceblock'] = array(
       '#id' => 'priceblock',
@@ -1073,7 +1149,7 @@ $product = Products\Factory::Get($productId);
       'oi' => array(
           'priceGroupId' => $priceGroupId,
           'quantity' => $qty,
-          'options' => array(),
+          'options' => $options,
       ),
       'versioning' => TRUE,
       'attributes' => array('class' => array('button', 'action')),
@@ -1102,7 +1178,7 @@ $product = Products\Factory::Get($productId);
       '#oi' => array(
           'priceGroupId' => $priceGroupId,
           'quantity' => $qty,
-          'options' => array(),
+          'options' => $options,
       ),
       '#versioning' => TRUE,
       '#attributes' => array('class' => array('button', 'action')),
@@ -1238,6 +1314,7 @@ $product = Products\Factory::Get($productId);
   $form_state['storage']['quantity'] = $qty;
   $form_state['storage']['productId'] = $productId;
   $form_state['storage']['items'] = $items;
+  $form_state['storage']['options'] = $options;
 
   return $form;
 }

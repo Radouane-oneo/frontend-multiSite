@@ -2090,19 +2090,19 @@ body.front #block-block-13:after {
 	border-radius: 0 0 4px 4px;
 	background: url("images/icon_question.png") no-repeat 20px;
 }
-.page-products .form-item-options {
+.page-products .form-item-options, .page-templates .form-item-options {
 	margin: 0;
 }
-.page-products .form-item-options > label {
+.page-products .form-item-options > label, .page-templates .form-item-options > label {
 	background-color: #f1f1f1;
 }
-.page-products .form-item.form-type-checkbox {
+.page-products .form-item.form-type-checkbox, .page-templates .form-item.form-type-checkbox {
 	float: left;
 	width: 50%;
 }
-.page-products .form-item-options > a {
+.page-products .form-item-options > a, .page-templates .form-item-options > a {
 	color: #646464; /* maincolor */
-	cursor: default;
+	cursor: pointer;
 	display: inline-block;
 	vertical-align: top;/*
     display: inline;
@@ -2112,7 +2112,7 @@ body.front #block-block-13:after {
     position: absolute;
     top: 365px;*/
 }
-.page-products .form-item-options > a:hover {
+.page-products .form-item-options > a:hover, .page-templates .form-item-options > a:hover {
 	text-decoration: none;
 }
 .deadlines table, .deadlines table tbody, 
@@ -2202,7 +2202,8 @@ body.front #block-block-13:after {
 	clear: left;
 	font-size: 12px; /* font-size: 14px; */
 }
-.page-products #block-system-main .form-type-select.expanded, /*.page-products .form-item-options.expanded > label*/ .page-products #block-system-main .form-type-checkboxes.expanded {
+.page-products #block-system-main .form-type-select.expanded, .page-products #block-system-main .form-type-checkboxes.expanded,
+.page-templates #block-system-main .form-type-checkboxes.expanded {
 	background-image: url("images/arrow_down5.png");
 }
 .page-products #block-system-main .form-type-item, 
@@ -2348,7 +2349,12 @@ body.front #block-block-13:after {
 	margin: 0;
 	color: #666666;
 }
-.page-products #block-system-main .form-type-select.expanded, /*.page-products .form-item-options.expanded > label*/ .page-products #block-system-main .form-type-checkboxes.expanded {
+.page-products #block-system-main .form-type-select.expanded,
+.page-products #block-system-main .form-type-checkboxes.expanded,
+.page-templates- #block-system-main .form-type-select.expanded, 
+.page-templates- #block-system-main .form-type-item.expanded, 
+.page-templates- #block-system-main .form-type-checkboxes.expanded 
+{
 	background-image: url("images/arrow_down5.png");
 }
 .page-products #block-system-main .form-type-item, 

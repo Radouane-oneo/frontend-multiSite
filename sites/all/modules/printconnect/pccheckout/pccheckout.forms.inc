@@ -1743,7 +1743,11 @@ function pccheckout_payment_form_callback($form, &$form_state) {
       }
      */
     updateTvaCart($cart, $_SESSION['shop_vat']);
+    try {
     $cart = \printconnect\Carts\Factory::Save($cart);
+    } catch(Exception $ex) {
+    
+    }
     $cart = \printconnect\Carts\Factory::Current(FALSE);
   if ($cart->subTotalAmount > 0) {
     $paymentMethods = \printconnect\PaymentMethods\Factory::GetAll();

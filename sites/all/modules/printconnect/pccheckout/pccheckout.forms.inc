@@ -384,7 +384,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
             $deliveryCountries[$country->id] = $country->tag;
         }
     }
-   
+
 
     $addresses = array();
 

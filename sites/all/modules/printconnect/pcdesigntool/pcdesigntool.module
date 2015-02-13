@@ -439,6 +439,12 @@ function theme_designtoolproflink($vars) {
 
 
   $url .= '/l/' . $langCode;
+  
+    if ($customer) {
+        $url .= '/k/' . $customer->id;
+        $hash = sha1($customer->id . 'agD04vQPx1?FSspl');
+        $url .= '/h/' . $hash;
+      }
 
   $url .= '/shop/' . $shop->id;
 

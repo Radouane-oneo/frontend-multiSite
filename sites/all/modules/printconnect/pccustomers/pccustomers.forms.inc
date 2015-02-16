@@ -92,8 +92,16 @@ function pccustomers_addresses_form($form, $form_state) {
     $Billingcustomer =  \printconnect\Customers\Factory::Current();
     $rowsBilling = array();
     $allbellingacounts = \printconnect\Customers\BillingAccounts\Factory::GetBillingAccounts($Billingcustomer, false);
-
-foreach ( $allbellingacounts as $MyBillingaddress) {
+    // sort billing adresses
+    $address_sort = array();
+    foreach ($allbellingacounts as $address) {
+        $address_sort[] = $address;
+    }
+    usort($address_sort, function ($a, $b) {
+            return strcmp(strtolower(t($a->name)), strtolower(t($b->name)));
+    });
+    // end sort
+foreach ( $address_sort as $MyBillingaddress) {
  if (!is_null($MyBillingaddress->id)){
     $form['Billingaddresses'][$MyBillingaddress->id]['edit'] = array(
         '#markup' => l(t('edit'), 'myprintconnect/editBillingaddresses/' . $MyBillingaddress->id, array('attributes' => array('class' => 'edit'))),

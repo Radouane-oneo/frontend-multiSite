@@ -42,7 +42,7 @@ function pccheckout_personal_form($form, &$form_state) {
 //        $countries[$country->id] = $country->tag;
         $countries = array (
        "21"=>t('Belgique'),
-       "37"=>t('France'),
+       "73"=>t('France'),
        "150"=>t('Pays-Bas'),
        "199"=>t('Espagne'),
        "124"=>t('Luxembourg'),
@@ -372,7 +372,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
 //            }
              $deliveryCountries = array (
        "21"=>t('Belgique'),
-       "37"=>t('France'),
+       "73"=>t('France'),
        "150"=>t('Pays-Bas'),
        "199"=>t('Espagne'),
        "124"=>t('Luxembourg'),

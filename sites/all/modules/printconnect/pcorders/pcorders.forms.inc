@@ -374,6 +374,13 @@ function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALS
         );
       }
     }
+    $form['order']['details']['item'][$item->id]['description']['recommander'] = array(
+        '#type' => 'submit',
+        '#value' => t('Recommander'),
+        '#name' => 'recommander_item',
+//        '#validate' => array('pcorders_order_form_recommander_validate'),
+        '#submit' => array('pcorders_order_form_reorder'),
+    );
     
     $idproducts .= $item->configuration->productId.','; // ids product for tracking
   }
@@ -526,7 +533,6 @@ function _pcorders_order_form_build_overview($order) {
 function pcorders_order_form_reorder($form, $form_state) {
   $order = $form_state['storage']['order'];
   $newCart = \printconnect\Orders\Factory::Reorder($order);
-
   $_SESSION['cartid'] = $newCart->id;
   drupal_goto('cart');
 }

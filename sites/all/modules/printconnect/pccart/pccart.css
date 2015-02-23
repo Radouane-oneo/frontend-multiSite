@@ -53,7 +53,7 @@ height: 20px;
 cursor: pointer;
 background: url(images/bg_btns.png) no-repeat 0 0;
 color: #646464;
-top: 15px;
+top: 30px;
 right: 0;
 padding-left: 19px;
 padding-top: 0px;
@@ -171,7 +171,16 @@ padding-bottom: 5px;
   margin: 0 0 5px;
   line-height: 14px;
 }
-
+.prodactHasTemplates .poll-form.first{
+  margin-left: 65px;
+}
+.prodactHasTemplates .poll-form{
+  
+}
+.prodactHasTemplates .poll-form:not(.first){
+  margin-left: 60px;
+  padding-left: 60px;
+}
 .poll-form .visu{
   height: 95px;
   background-position: center;
@@ -351,10 +360,19 @@ float: right;
   width: 315px !important;
 }
 .origin-price {
-    float: right;
-    position: relative;
-    right: 30px;
-    top: -11px;
+  float: right;
+  position: absolute;
+  right: 12px;
+  top: 5px;
+  color: #f60;
+  font-size: 20px;
+}
+
+.page-cart #pccart-cart-form .item .description .origin-price + .price{
+  top: 25px;
+}
+#pccart-cart-form .item .origin-price + .price + .item-list + .form-wrapper .removecart{
+  top:30px;
 }
 
 .fotolia-items{
@@ -525,7 +543,25 @@ width: 120px;
 float: right;
 margin: 5px;
 }
-.page-cart .preflight-items{
+
+.page-cart .fotolia-items{
 float: left;
 width: 50px; 
+}
+.page-cart .preflight-items {
+float: left;
+}
+
+
+.page-cart #pccart-cart-form .item .description .refJob-code label{
+	font-weight: bold;
+	color: #666666;
+	font-size: 13px;
+}
+.page-cart #pccart-cart-form .item .description .refJob-code > .form-item{
+ margin-top:5px;
+ margin-bottom:0px;
+}
+.page-cart #pccart-cart-form .item .description{
+	margin-bottom:	0px;
 }

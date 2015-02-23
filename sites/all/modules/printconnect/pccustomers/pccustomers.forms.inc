@@ -14,18 +14,25 @@ function pccustomers_dashboard_form($form, &$form_state) {
 }
 
 function pccustomers_addresses_form($form, $form_state) {
-  _pccustomers_ensureloggedin();
-  $customer = Factory::Current();
-  $addresses = Addresses\Factory::GetAddresses($customer, FALSE);
-
-  $form['addresses'] = array(
-      '#type' => 'container',
-      '#title' => t('Your addresses'),
-  );
-
-  $rows = array();
-
-  foreach ($addresses as $address) {
+    _pccustomers_ensureloggedin();
+    $customer = Factory::Current();
+    $addresses = Addresses\Factory::GetAddresses($customer, FALSE);
+    $form['addresses'] = array(
+        '#type' => 'container',
+        '#title' => t('Your addresses'),
+    );
+    
+    $rows = array();
+    // sort billing acount
+    $address_sort = array();
+    foreach ($addresses as $address) {
+        $address_sort[] = $address;
+    }
+    usort($address_sort, function ($a, $b) {
+            return strcmp(strtolower(t($a->name)), strtolower(t($b->name)));
+    });
+    // end sort
+  foreach ($address_sort as $address) {
 
     $form['addresses'][$address->id]['edit'] = array(
         '#markup' => l(t('edit'), 'myprintconnect/addresses/' . $address->id, array('attributes' => array('class' => 'edit'))),
@@ -85,7 +92,7 @@ function pccustomers_addresses_form($form, $form_state) {
     $Billingcustomer =  \printconnect\Customers\Factory::Current();
     $rowsBilling = array();
     $allbellingacounts = \printconnect\Customers\BillingAccounts\Factory::GetBillingAccounts($Billingcustomer, false);
-    
+
 foreach ( $allbellingacounts as $MyBillingaddress) {
  if (!is_null($MyBillingaddress->id)){
     $form['Billingaddresses'][$MyBillingaddress->id]['edit'] = array(
@@ -247,9 +254,7 @@ function pccustomers_profile_form_validate($form, &$form_state) {
   if (!is_numeric($form_state['values']['phone'])) {
      form_set_error('phone',t('Please enter your Phone Number as Number value.'));
   }
-  if (is_numeric($form_state['values']['phone']) && strlen($form_state['values']['phone']) >= 10) {
-      form_set_error('phone',t('Please enter a valid phone number.'));
-  }
+
   if (!valid_email_address($form_state['values']['email'])) {
     form_set_error('email', t('Email is not valid'));
   }
@@ -590,9 +595,6 @@ function pccustomers_address_form_validate($form, &$form_state) {
   if (!is_numeric($form_state['values']['phone'])) {
      form_set_error('phone',t('Please enter your Phone Number as Number value.'));
   }
-  if (is_numeric($form_state['values']['phone']) && strlen($form_state['values']['phone'])!= 10) {
-      form_set_error('phone',t('Please enter your Phone Number as 10 Number.'));
-  }
   if(!empty($tva)){
  if (!is_numeric($tva)) {
     form_set_error('vatNumber',t('Please enter your VAT Number as Number value.'));
@@ -726,11 +728,18 @@ function pccustomers_newaddress_form($form, $form_state) {
       '#attributes' => array('class' => array('city')),
   );
 
-  $options = array();
-  $countries = \printconnect\Countries\Factory::GetAll();
-  foreach ($countries as $country) {
-    $options[$country->id] = $country->tag;
-  }
+//  $options = array();
+//  $countries = \printconnect\Countries\Factory::GetAll();
+//  foreach ($countries as $country) {
+//    $options[$country->id] = $country->tag;
+//  }
+    $options = array (
+       "21"=>"Belgique",
+       "37"=>"France",
+       "150"=>"Pays-Bas",
+       "199"=>"Espagne",
+       "124"=>"Luxembourg",
+     );
   natsort($options);
   $form['country'] = array(
       '#type' => 'select',
@@ -1003,9 +1012,7 @@ function pccustomers_newaddress_form_validate($form, &$form_state) {
   if (!is_numeric($form_state['values']['phone'])) {
      form_set_error('phone',t('Please enter your Phone Number as Number value.'));
   }
-  if (is_numeric($form_state['values']['phone']) && strlen($form_state['values']['phone'])!= 10) {
-      form_set_error('phone',t('Please enter your Phone Number as 10 Number.'));
-  }
+
     $tva = substr($form_state['values']['vatNumber'], 2, 2);
      if(!empty($tva)){
  if (!is_numeric($tva)) {

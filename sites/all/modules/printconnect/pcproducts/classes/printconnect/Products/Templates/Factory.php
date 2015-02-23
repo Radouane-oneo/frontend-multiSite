@@ -5,7 +5,6 @@ namespace printconnect\Products\Templates {
   use \printconnect\Dal;
 
   class Factory {
-
     public static function GetTemplates($productId, $items) {
       $object = new Templates();
       try {
@@ -29,7 +28,6 @@ namespace printconnect\Products\Templates {
         //}
       }
     }
-
   }
 
 }

@@ -139,6 +139,8 @@ function printconnect_init() {
     }else{
         drupal_goto($urlPermant,array(),301);
     }  
+    
+    
 }
 
 function printconnect_cron() {
@@ -320,7 +322,7 @@ function theme_helplink($vars) {
 }
 
 function theme_generalconditionslink($vars) {
-  return l(t($vars['title']), variable_get('site_generalconditions', 'generalconditions'));
+  return l(t($vars['title']), variable_get('site_generalconditions', 'generalconditions'),array('attributes'=>array('target'=>'_blank')));
 }
 
 function theme_privacypolicylink($vars) {
@@ -1391,7 +1393,6 @@ function printconnect_query_node_access_alter(QueryAlterableInterface $query) {
     $query->condition($db_and);
   }
 }
-
 
 function printconnect_form_webform_client_form_600_alter(&$form, &$form_state) {
 $form['#submit'][]= 'webform_client_form_600_callback';

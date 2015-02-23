@@ -39,12 +39,27 @@ function pccheckout_personal_form($form, &$form_state) {
     }
 
     foreach (\printconnect\Countries\Factory::GetAll() as $country) {
-        $countries[$country->id] = $country->tag;
+//        $countries[$country->id] = $country->tag;
+        $countries = array (
+       "21"=>t('Belgique'),
+       "37"=>t('France'),
+       "150"=>t('Pays-Bas'),
+       "199"=>t('Espagne'),
+       "124"=>t('Luxembourg'),
+     );
     }
     if ($cart->orderItemShipping->shippingTypeResellerShop == 351) {
-	$countries = array();
-        $country = \printconnect\Countries\Factory::Get(73);
-	$countries[$country->id] = $country->tag;
+//	$countries = array();
+//        $country = \printconnect\Countries\Factory::Get(73);
+//   
+//	$countries[$country->id] = $country->tag;
+        $countries = array (
+       "21"=>t('Belgique'),
+       "37"=>t('France'),
+       "150"=>t('Pays-Bas'),
+       "199"=>t('Espagne'),
+       "124"=>t('Luxembourg'),
+     );
     }
     if ($defaultBillingAddress) {
         $country = \printconnect\Countries\Factory::Get($defaultBillingAddress->country);
@@ -200,14 +215,6 @@ function pccheckout_personal_form_validate($form, &$form_state) {
     global $language;
     $customer = $form_state['storage']['customer'];
  
-//    if(!empty($form_state['values']['phone']) && !is_numeric($form_state['values']['phone'])){
-//        form_set_error('phone',t('Please enter your Phone Number as Number value.'));
-//        return false;
-//    }
-//    if(is_numeric($form_state['values']['phone']) && strlen($form_state['values']['phone'])< 10){
-//        form_set_error('phone',t('Please enter a valid phone number.'));
-//        return false;  
-//    } 
     if(!empty($form_state['values']['postalCode']) && !is_numeric($form_state['values']['postalCode'])){
         form_set_error('postalCode', t('Le champ Code postal doit être numérique.'));
         return false;
@@ -359,10 +366,17 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         $countries[21] = t($belgique->tag);
     } else {
         foreach ($items as $country) {
-            $countries[$country->id] = $country->tag;
-            if ($country->active) {
-                $deliveryCountries[$country->id] = $country->tag;
-            }
+//            $countries[$country->id] = $country->tag;
+//            if ($country->active) {
+//                $deliveryCountries[$country->id] = $country->tag;
+//            }
+             $deliveryCountries = array (
+       "21"=>t('Belgique'),
+       "37"=>t('France'),
+       "150"=>t('Pays-Bas'),
+       "199"=>t('Espagne'),
+       "124"=>t('Luxembourg'),
+     );
         }
 	if ($cart->orderItemShipping->shippingTypeResellerShop == 351) {
             $deliveryCountries = array();
@@ -370,7 +384,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
             $deliveryCountries[$country->id] = $country->tag;
         }
     }
-   
+
 
     $addresses = array();
 
@@ -818,13 +832,17 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         '#type' => 'submit',
     );
 
-    if ($cart->allFilesUploaded) {
-        $form['actions']['submit']['#value'] = t('Payment');
-        $form['actions']['submit']['#attributes'] = array('class' => array('payment'));
-    } else {
-        $form['actions']['submit']['#value'] = t('Upload your files');
-        $form['actions']['submit']['#attributes'] = array('class' => array('upload'));
-    }
+    
+    $form['actions']['submit']['#value'] = t('Payment');
+    $form['actions']['submit']['#attributes'] = array('class' => array('payment'));
+    
+//    if ($cart->allFilesUploaded) {
+//        $form['actions']['submit']['#value'] = t('Payment');
+//        $form['actions']['submit']['#attributes'] = array('class' => array('payment'));
+//    } else {
+//        $form['actions']['submit']['#value'] = t('Upload your files');
+//        $form['actions']['submit']['#attributes'] = array('class' => array('upload'));
+//    }
 
 
     $form['#cache'] = TRUE;
@@ -1182,11 +1200,13 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
 
     \printconnect\Carts\Factory::Save($cart);
     $cart = \printconnect\Carts\Factory::Current(FALSE);
-    if ($cart->allFilesUploaded) {
-        drupal_goto('checkout/payment');
-    } else {
-        drupal_goto('checkout/upload');
-    }
+    drupal_goto('checkout/payment');
+    
+//    if ($cart->allFilesUploaded) {
+//        drupal_goto('checkout/payment');
+//    } else {
+//        drupal_goto('checkout/upload');
+//    }
 }
 
 function getFotolia($jobId) {

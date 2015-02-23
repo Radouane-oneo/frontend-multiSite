@@ -656,11 +656,17 @@ function pcproducts_cron() {
 }
 
 function pcproducts_calculator_form($form, &$form_state) {
-  $products = Factory::GetAll();
-  $items = array();
-  foreach ($products as $product) {
-    $items[$product->id] = $product->name;
-  }
+    $products = Factory::GetAll();
+    $items = array();
+
+    $products = $products->items;
+    usort($products, function (Product $a, Product $b) {
+            return strcmp(t($a->name), t($b->name));
+    });
+
+    foreach ($products as $product) {
+      $items[$product->id] = $product->name;
+    } 
 
   $form['about'] = array(
       '#type' => 'item',
@@ -700,6 +706,7 @@ function pcproducts_calculator_form($form, &$form_state) {
     $items = array();
     if ($productId) {
       $typeItems = Configurations\Factory::GetTypeItems($productId);
+
       foreach ($typeItems as $item) {
         $detail = $item->detail;
         $text = $item->name;

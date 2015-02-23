@@ -188,6 +188,8 @@ use printconnect\Dal\ForbiddenException;
 
     public function Create($properties, $entity, $params, $validateOnly = FALSE) {
       $url = $this->GetUrl($entity, $params, $validateOnly);
+      
+     
       $header = array('Content-Type' => 'application/json');
       $start = microtime(true);
       if ($properties) {
@@ -197,7 +199,6 @@ use printconnect\Dal\ForbiddenException;
         $data = array();
         $response = drupal_http_request($url, array('header' => $header, 'method' => 'POST'));
       }
-      
       $end = microtime(true);
       watchdog('pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'POST', '%url' => $url, '%timing' => ($end - $start), '%data' => $data, '%response' => print_r($response, TRUE)), WATCHDOG_DEBUG, ($end - $start) . ' on POST ' . $url);
       if ($response->code == 200) {

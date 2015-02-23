@@ -307,31 +307,6 @@ function pccheckout_pccart_cart_form_submit($form, $form_state) {
   drupal_goto('checkout');
 }
 
-function pccheckout_form_pccart_cart_form2_alter(&$form, $form_state, $form_id) {
-    $cart = printconnect\Carts\Factory::Current();
-    if ($cart && $cart->isFilled) {
-        if ($cart->supplementProduct == 1) {
-            $form['actions']['checkout'] = array(
-                '#prefix' => '<div class="button-wrapper">',
-                '#suffix' => '</div>',
-                '#type' => 'submit',
-                '#value' => t('Secure payment'),
-                '#weight' => 100,
-                '#attributes' => array('class' => array('action', 'large', 'payment', 'button')),
-            );
-
-            $submit = $form['#submit'];
-            $submit[] = 'pccheckout_pccart_cart_form2_submit';
-            $form['#submit'] = $submit;
-        } else {
-            $form['actions']['checkout'] = array(
-                '#prefix' => '<div class="button-wrapper">',
-                '#suffix' => '</div>',
-                '#markup' => '<input class="action large payment button form-submit ui-button ui-widget ui-state-default ui-corner-all popupOverlay" type="button" id="edit-actions-checkout" name="op" value="'.t('Secure payment').'" role="button">'
-            );
-        }
-    }
-}
 
 //function pccheckout_pccart_cart_form2_validate($form, $form_state) {
 //  $cart = Carts\Factory::Current(FALSE);
@@ -1204,7 +1179,6 @@ function pccheckout_checkout_form_validate(&$form, &$form_state) {
         case 'personal':
           break;
         case 'login':
-//var_dump($form_state['triggering_element']);
           if ($form_state['triggering_element'] == 'register') {
             $customer = Customers\Factory::GetByEmail($form_state['values']['login']['email']);
             if ($customer) {

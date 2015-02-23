@@ -29,9 +29,6 @@ function flyer_preprocess_page(&$variables) {
   unset($js['misc/tableheader.js']);
 }*/
 
-
-
-
 function flyer_form_pccheckout_invoiceanddelivery_form_alter(&$form, &$form_state) {
   $form['invoice']['address']['current']['postalCode']['#title'] = t('PC and city');
   $form['invoice']['address']['current']['city']['#title_display'] = 'invisible';

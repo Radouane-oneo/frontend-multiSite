@@ -105,7 +105,7 @@ function pcflyerstores_menu() {
         'type' => MENU_CALLBACK,
     );
    
-   $items['js/stores/picker/cart/set/%'] = array(
+   $items['js/stores/picker/cart/set1/%'] = array(
         'title' => 'Picker',
         'page callback' => 'pcflyerstores_picker_callback',
         'page arguments' => array(5),
@@ -548,25 +548,33 @@ function theme_pcflyerstores_landingpage_info($vars) {
             );
         $html .= '<div>'; /* start div */
 
- if (!empty($store->slide)) {
-    
-        $html .= '<div class="wrapper">
-            <div class="jcarousel-wrapper">
-                <div data-jcarousel="true" data-wrap="circular" class="jcarousel">
-                    <ul>
-                <li><img src="'.$store->slide[0].'" alt="" /></li>
-                <li><img src="'.$store->slide[1].'" alt="" /></li>
-                <li><img src="'.$store->slide[2].'" alt="" /></li>
-                <li><img src="'.$store->slide[3].'" alt="" /></li>
-                    </ul>
-                </div>
-                <a data-jcarousel-control="true" data-target="-=1" href="#" class="jcarousel-control-prev">&lsaquo;</a>
-                <a data-jcarousel-control="true" data-target="+=1" href="#" class="jcarousel-control-next">&rsaquo;</a>
-            </div>
-        </div>';
-      } else {
-       $html .='<img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/flyerstore/benl_flyerstoreheader.gif" alt="" style=" height: 142px; ">';
-     }
+        if (!empty($store->slide) and !is_null($store->slide[0]) ) {
+           $li = "";
+           foreach($store->slide as $k => $img){
+              if(getimagesize($img)){
+                   $li .= '<li><img src="'.$img.'" alt="" /></li>'; 
+              }
+           } 
+           $t = count($store->slide);
+                   if($t = 1){
+                       $html .='<img src="'.$store->slide[0].'" >';
+                   }else{
+                       $html .= '<div class="wrapper">
+                               <div class="jcarousel-wrapper">
+                                   <div data-jcarousel="true" data-wrap="circular" class="jcarousel">
+                                       <ul>
+                               '.$li.'
+                                       </ul>
+                                   </div>
+                                   <a data-jcarousel-control="true" data-target="-=1" href="#" class="jcarousel-control-prev">&lsaquo;</a>
+                                   <a data-jcarousel-control="true" data-target="+=1" href="#" class="jcarousel-control-next">&rsaquo;</a>
+                               </div>
+                           </div>';
+                   }
+
+       } else {
+              $html .='<img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/flyerstore/benl_flyerstoreheader.gif" alt="" style=" height: 142px; ">';
+       }
 
 
         if (isset($store->photo)) {

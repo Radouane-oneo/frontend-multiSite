@@ -1,9 +1,10 @@
 <?php
 
 function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALSE) {
-  _pccustomers_ensureloggedin();
-  $order = \printconnect\Orders\Factory::Get($orderId, false);
-  $customer = \printconnect\Customers\Factory::Get($order->customer);
+ _pccustomers_ensureloggedin();
+$order = \printconnect\Orders\Factory::Get($orderId, false);
+$customer = \printconnect\Customers\Factory::Get($order->customer);
+$cart = \printconnect\Carts\Factory::Current(FALSE);
   drupal_set_title(t('Details of your order @number : @status', array('@number' => $order->number, '@status' => $order->status)));
       $inline_script ="<!-- Facebook Conversion Code for Commande Flyer.fr -->
                         <script>(function() {
@@ -362,8 +363,11 @@ function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALS
         '#items' => $rows,
             //'#markup' => theme('item_list', array('items' => $rows)),
     );
-
-
+    if($item->refJob){
+        $form['order']['details']['item'][$item->id]['description']['refJob'] = array(
+              '#markup' => '<label class="labelOrder">' . t('Reference product') .' : '. $item->refJob.'</label>',
+        );
+    }
     if (isset($item->tracking)) {
       foreach ($item->tracking as $box) {
         $form['order']['details']['item'][$item->id]['description']['tracking'] = array(
@@ -371,7 +375,16 @@ function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALS
         );
       }
     }
-    
+    $form['order']['details']['item'][$item->id]['description']['recommander'] = array(
+        '#type' => 'submit',
+        '#value' => t('Recommander'),
+        '#name' => $item->id,
+        '#has_garbage_value' => FALSE,
+        '#attributes' => array('class' => array('recommander')),
+//        '#validate' => array('pcorders_order_form_recommander_validate'),
+        '#submit' => array('pcorders_order_form_reorder'),
+    );
+    $form_state['storage']['itemid'][$item->id] = $item->id;
     $idproducts .= $item->configuration->productId.','; // ids product for tracking
   }
 
@@ -405,6 +418,7 @@ function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALS
                 );
             }
         }
+    $form_state['storage']['cartId'] = $cart->id;
     $form_state['storage']['order'] = $order;
     $form_state['storage']['customer'] = $customer;
     $form_state['storage']['confirmation'] = $confirmation;
@@ -521,9 +535,11 @@ function _pcorders_order_form_build_overview($order) {
 }
 
 function pcorders_order_form_reorder($form, $form_state) {
-  $order = $form_state['storage']['order'];
-  $newCart = \printconnect\Orders\Factory::Reorder($order);
-
+    $cartId = $form_state['storage']['cartId'];
+    $jobid = $form_state['triggering_element']['#name'];
+//    $order = $form_state['storage']['order'];
+    
+  $newCart = \printconnect\Orders\Factory::Reorder($cartId, $jobid);
   $_SESSION['cartid'] = $newCart->id;
   drupal_goto('cart');
 }

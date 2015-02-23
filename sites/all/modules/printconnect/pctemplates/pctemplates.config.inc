@@ -510,6 +510,7 @@ function pctemplates_callback($type) {
         $jobId = $_GET['jobid'];
         $priceGroupId = $_GET['priceGroupId'];
         $qty = $_GET['qty'];
+        $options = explode(',', $_GET['options']);
         $vatPercentage = $_GET['vat'];
         module_invoke('pcdesigntool', 'save', $jobId, 'design');
         $cart = Carts\Factory::CurrentOrCreate();
@@ -517,7 +518,7 @@ function pctemplates_callback($type) {
           $cart = Carts\Factory::Create();
         }
         Carts\Factory::Save($cart);
-        $item = Carts\Factory::CreateItem($cart, $priceGroupId, $qty, NULL, NULL, NULL, $vatPercentage);
+        $item = Carts\Factory::CreateItem($cart, $priceGroupId, $qty, NULL, NULL, $options, $vatPercentage);
         $item->file = $file;
         $item->thumbnail = $thumbnail;
         $item->design_tool_job_id = $jobId;
@@ -534,15 +535,20 @@ function pctemplates_callback($type) {
   return;
 }
 
-function getItemParent($form_state,$templateItems = null,$productId = null) {
-    
+function getParentIdByProdut($productId, $templateParents){
+    $parentId = NULL;
+    foreach ($templateParents as $item) {
+      if($item->id == $productId){
+        $parentId = $item->primaryId;
+        break;
+      }
+    }
+
+    return $parentId;
+}
+
+function getItemParent($form_state) {
   if(!isset($form_state['values']['items']) || empty($form_state['values']['items'])) {
-     foreach ($templateItems as $key => $item) {
-         $parentId = $key;
-         if(reset($item)->id == $productId){
-             return $parentId ;
-         }
-     }
     return NULL;
   }
 
@@ -559,8 +565,8 @@ function getItemParent($form_state,$templateItems = null,$productId = null) {
 function getDefaultItemsByParent($parentId, $templateItems, $form_state = array()) {
   $items = array();
   $selectedItems = array();
-  if(isset($form_state['items']) && !empty($form_state['items'])) {
-      foreach($form_state['items'] as $sItem) {
+  if(isset($form_state['values']['items']) && !empty($form_state['values']['items'])) {
+      foreach($form_state['values']['items'] as $sItem) {
           if(!preg_match('/-/', $sItem['select'])){
               $selectedItems[] = $sItem['select'];
           }
@@ -615,7 +621,9 @@ function pctemplates_config_form2($form, &$form_state, $templateId, $productId =
     drupal_not_found();
     exit;
   }
-  $parentId = getItemParent($form_state,$template->templateItems,$productId);
+
+  $parentId = getItemParent($form_state);
+
   $title = html_entity_decode($template->designTemplates->name);
   drupal_set_title($title, PASS_THROUGH);
 
@@ -624,7 +632,6 @@ function pctemplates_config_form2($form, &$form_state, $templateId, $productId =
   
   if(!$productId) {
     $productId = $template->designTemplates->products[0]->id;
-    $hasProduct = FALSE;
   }
 
   $ajax = array(
@@ -639,21 +646,33 @@ function pctemplates_config_form2($form, &$form_state, $templateId, $productId =
   );
 
   $items = $template->defaultItems;
+  
+  if($parentId == NULL){
+    $parentId = getParentIdByProdut($productId, $template->templateParents);
+  }
+  
   if($parentId) {
     $items = getDefaultItemsByParent($parentId, $template->templateItems, $form_state);
+  }else {
+    $hasProduct = FALSE;
   }
+
   if (isset($form_state['values']['items'])) {
     foreach ($form_state['values']['items'] as $selectedItem) {
-      $items[] = $selectedItem['select'];
+        array_unshift($items, $selectedItem['select']);
+  //$items[] = $selectedItem['select'];
     }
   }
   if (isset($form_state['values']['quantity'])) {
     $qty = $form_state['values']['quantity'];
   }
+  $items = array_unique($items);
 
   $defaults = \printconnect\Products\Configurations\Factory::GetDefaults($productId, $items);
+  \printconnect\Products\Configurations\Factory::LoadDefaults($defaults);
 
   $priceGroupId = $defaults->priceGroupId;
+  $itemsTogetData = $defaults->toolboxItems;
   $diff = array_diff($defaults->toolboxItems, $items);
   if (count($diff)) {
     $items = $defaults->toolboxItems;
@@ -690,7 +709,7 @@ $product = Products\Factory::Get($productId);
     foreach ($dtTemplate->thumbnails as $thumbnail) {
 
         $page = $thumbnail->page;
-        if ($page%2 == 1) {
+        if ($page == 1) {
             $title = t('Outside');
         } else {
             $title = t('Inside');
@@ -894,12 +913,15 @@ $product = Products\Factory::Get($productId);
         );
       }
   }
+
   if($parentId && property_exists($template->templateItems, $parentId)){
       $section = $template->templateItems->$parentId;
   }else {
       $section = reset($template->templateItems);
   }
+  
   $section = reset($section);
+
   foreach($section->children as $dType => $dItems) {
       if(count($dItems) == 1){
           $text = $dItems[0]->itemName;
@@ -939,6 +961,74 @@ $product = Products\Factory::Get($productId);
       
       $form['items'][$dItems[0]->groupId]['select']['#description'] = $txtDescription;
   }    
+
+  $allOptions = \printconnect\Products\Options\Factory::GetOptions($productId, $itemsTogetData);
+  $allOptions = $allOptions->toKeyedArray();
+  $availableOptions = array();
+  $availableOptionsIds = array();
+  foreach ($allOptions as $optionId => $option) {
+      $availableOptionsIds[]=$option->id;
+    if ($option->active) {
+      $price = \printconnect\Products\Options\Factory::GetPrice($option, $qty);
+      $availableOptions[$option->id] = $option->name . ' ( + ' . theme('price', array('value' => $price)) . ')';
+    }
+  }
+
+  $optionsPrice = 0;
+  $options = array();
+  if (isset($form_state['values']['options'])) {
+    foreach ($form_state['values']['options'] as $key => $value) {
+      if ($value) {
+        $options[] = $key;
+      }
+    }
+  } else {
+    if (!empty($options)) {
+      $options = explode(',', $options);
+    } else {
+      $options = array();
+    }
+  }
+
+  if($productId == 5){
+    $options[] = 14;
+  }
+
+  $options = array_unique($options);
+  
+  foreach ($options as $optionId) {
+      $isExist = false;
+      foreach ($availableOptionsIds as $singleOption) {
+          if ($singleOption ==  $optionId)
+              $isExist = true;
+      }
+      
+      if ($isExist) {
+            $option = $allOptions[$optionId];
+            $price = \printconnect\Products\Options\Factory::GetPrice($option, $qty);
+            $optionsPrice += $price;
+      }
+  }
+
+  if (count($availableOptions)) {
+    $form['options'] = array(
+        '#type' => 'checkboxes',
+        '#title' => t('Options'),
+        '#options' => $availableOptions,
+        '#default_value' => $options,
+        '#attributes' => array('class' => array('clearfix')),
+        '#ajax' => $ajax,
+    );
+    $form['options']['default'] = array(
+        '#type' => 'container',
+        '#id' => 'default-options-text',
+        '#attributes' => array('style' => array('display: none;')),
+    );
+    $form['options']['default']['text'] = array(
+        '#markup' => t('No options selected'),
+    );
+  }
+
   $price = '';
   $pricePerPiece = '';
   $subtotal = 0;
@@ -1025,6 +1115,13 @@ $product = Products\Factory::Get($productId);
       '#description' => t('Enter your amount'),
   );
 
+  $form['productId']=array(
+      '#type' => 'hidden',
+      '#id' => 'productId',
+      '#value'=> $productId,
+      '#attributes' => array('id'=>'productIdValue')
+  );
+
   if ($qty == 'custom') {
     $qty = $customQty;
   }
@@ -1034,7 +1131,7 @@ $product = Products\Factory::Get($productId);
   } else {
     $price = 0;
   }
-  $subtotal += $price;
+  $subtotal += $price + $optionsPrice;
   $total = $subtotal * (1 + $_SESSION['shop_vat']);
   $form['priceblock'] = array(
       '#id' => 'priceblock',
@@ -1052,7 +1149,7 @@ $product = Products\Factory::Get($productId);
       'oi' => array(
           'priceGroupId' => $priceGroupId,
           'quantity' => $qty,
-          'options' => array(),
+          'options' => $options,
       ),
       'versioning' => TRUE,
       'attributes' => array('class' => array('button', 'action')),
@@ -1072,7 +1169,7 @@ $product = Products\Factory::Get($productId);
   $form['actions']['design'] = array(
       '#prefix' => '<div class="button-wrapper">',
       '#suffix' => '</div>',
-      '#theme' => 'designtoollink',
+      '#theme' => 'designtoollinkBtt',
       '#designtoolTemplateId' => $template->designTemplates->designToolTemplateId,
       '#title' => $template->designTemplates->name,
       '#content' => t('Start design'),
@@ -1081,7 +1178,7 @@ $product = Products\Factory::Get($productId);
       '#oi' => array(
           'priceGroupId' => $priceGroupId,
           'quantity' => $qty,
-          'options' => array(),
+          'options' => $options,
       ),
       '#versioning' => TRUE,
       '#attributes' => array('class' => array('button', 'action')),
@@ -1217,6 +1314,7 @@ $product = Products\Factory::Get($productId);
   $form_state['storage']['quantity'] = $qty;
   $form_state['storage']['productId'] = $productId;
   $form_state['storage']['items'] = $items;
+  $form_state['storage']['options'] = $options;
 
   return $form;
 }

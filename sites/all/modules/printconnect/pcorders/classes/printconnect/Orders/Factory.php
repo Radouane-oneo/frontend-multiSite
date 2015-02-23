@@ -134,10 +134,9 @@ use printconnect\Customers\Customer;
               });
     }
     
-    public static function Reorder(Order $order){
+    public static function Reorder($cartId, $jobid){
       $object = new Order();
-      $object->product = $order->id;
-       Dal::Save($object, 'reorder', array('id' => $order->id, 'idOrder' => Null));
+       Dal::Save($object, 'reorder', array('id' => $jobid, 'idCart' => $cartId));
        return $object;
     }
 

@@ -10,6 +10,7 @@ use printconnect\Products\Options;
 use printconnect\Products\Configurations;
 use \printconnect\Products\Toolbox;
 use \printconnect\Products\PriceGroups;
+use printconnect\Carts;
 
 function pcorders_access() {
   return TRUE;

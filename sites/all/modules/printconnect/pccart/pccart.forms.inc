@@ -851,7 +851,11 @@ function pccart_cart_form2($form, &$form_state) {
               $options[$type->id]['price'] = theme('price', array('value' => $type->price, 'free' => TRUE));
 
         }
-        $options[84]['label']= "<span>" . t('Livraison 48H') . "</span>";
+        $shop = printconnect\Shop\Configuration\Factory::Current();
+       if(58 != $shop->id){
+            $options[84]['label']= "<span>" . t('Livraison 48H') . "</span>"; 
+       }
+        
          $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop != null ? $cart->orderItemShipping->shippingTypeResellerShop : 349;
 
          $myval = intval($cart->convertedTotalAmount);

@@ -191,6 +191,7 @@
         </svg>
         <img id="imgFooter" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/logo_inversed_flyer_be_nl.png"/>
         <div id="footerText">(C) <?php echo date("Y");?> Flyer.eu - Privacy - Disclaimer </div>
+
       </div>
     </div>
 

@@ -7,7 +7,7 @@ function biblioImages($form, $form_state) {
         $url = variable_get('pc_designtoolurl').'/';
         $url .= 'library/index/impkey/printconcept/k/';
         $hash = sha1($customer->id . 'agD04vQPx1?FSspl');
-        $url.= $customer->id.'/h/'.$hash.'/theme/flyer';
+        $url.= $customer->id.'/h/'.$hash.'/lang/fr_FR/theme/flyer';
         $form['bibilio'] = array(
             '#type' => 'container',
             '#attributes' => array('class' => array('summary', 'clearfix')),

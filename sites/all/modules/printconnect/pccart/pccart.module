@@ -671,7 +671,6 @@ function pccart_addtocart_validate2($form, &$form_state) {
 }
 
 function pccart_addtocart_submit2($form, &$form_state) {
-    
   $options = array();
   $priceGroupId = $form_state['storage']['priceGroupId'];
   $options = $form_state['storage']['options'];
@@ -748,7 +747,6 @@ function pccart_editcartitem_submit($form, &$form_state) {
 }
 
 function pccart_editcartitem_submit2($form, &$form_state) {
-    
   $itemId = $form_state['storage']['cart']['itemId'];
   $priceGroupId = $form_state['storage']['priceGroupId'];
   $options = $form_state['storage']['options'];
@@ -795,7 +793,7 @@ function _pccart_add($productId, $qty, $options, $priceGroupId, $vat = FALSE) {
 
 //$cart->items->Add(Factory::CreateItem($cart, $defaults->priceGroupId, $qty, $description, $relatedProducts, $options));
 //$cart->items->Add(Factory::CreateItem($cart, $priceGroupId, $qty, $description, $relatedProducts, $options));
-
+  $cart->productId = $productId;
   Factory::CreateItem($cart, $priceGroupId, $qty, $description, $relatedProducts, $options, $vat);
   Factory::Refresh($cart);
 

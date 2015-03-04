@@ -346,26 +346,7 @@ function pccontact_stors_form_submit($form, &$form_state) {
     $send = TRUE;
     $result = drupal_mail('pccontact',
             'stores',
-            variable_get('pccontact_stores', 'bik8yg@gmail.com, laurent.bernard@flyer.be'),
-            language_default(),
-            $form_state['values'],
-            NULL,
-            $send);
-
-    $sendMeail = FALSE;
-    if ($result['result'] == TRUE) {
-        $sendMeail = TRUE;
-        drupal_set_message(t('Your message has been sent.'));
-    } else {
-        drupal_set_message(t('Your message has  not been sent'), 'error');
-    }
-}
-function pccontact_stors_form_mail_send_admin($form,$form_state){
-    global $language;
-    $send = TRUE;
-    $result = drupal_mail('pccontact', 
-            'stores',
-            variable_get('pccontact_email', 'bik8yg@gmail.com, laurent.bernard@flyer.be'),
+            variable_get('pccontact_stores', 'bik8yg@gmail.com, aaltje.vanderzee@flyer.be'),
             language_default(),
             $form_state['values'],
             NULL,

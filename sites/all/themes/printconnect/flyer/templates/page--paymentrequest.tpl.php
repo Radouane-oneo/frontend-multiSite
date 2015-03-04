@@ -190,7 +190,7 @@
             <polygon  points="0,0 680,0 680,115  0,130" fill="#FF6600" />
         </svg>
         <img id="imgFooter" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/logo_inversed_flyer_be_nl.png"/>
-        <div id="footerText">(C) <?php echo date("Y");?> Flyer.eu - Privacy - Disclaimer </div>
+        <div id="footerText">(C) <?php echo date("Y");?> Flyer.fr - Vie privée - Désistement </div>
       </div>
     </div>
 

@@ -851,8 +851,12 @@ function pccart_cart_form2($form, &$form_state) {
               $options[$type->id]['price'] = theme('price', array('value' => $type->price, 'free' => TRUE));
 
         }
-
-         $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop != null ? $cart->orderItemShipping->shippingTypeResellerShop : 349;
+        $shop = printconnect\Shop\Configuration\Factory::Current();
+       if(58 != $shop->id){
+            $options[84]['label']= "<span>" . t('Livraison 48H') . "</span>"; 
+       }
+        
+         $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop != null ? $cart->orderItemShipping->shippingTypeResellerShop : 86;
 
          $myval = intval($cart->convertedTotalAmount);
          $myval= $myval - 19 ;
@@ -865,10 +869,10 @@ function pccart_cart_form2($form, &$form_state) {
         if($cart->orderItemShipping->shippingTypeResellerShop){
             $_SESSION['defaultindex'] =  $cart->orderItemShipping->shippingTypeResellerShop;
         }else {
-            $_SESSION['defaultindex'] =  $resolt[0];
+            $_SESSION['defaultindex'] =  86;
         }
          
-        $cart->shipping_type = $resolt[0];
+        $cart->shipping_type = $_SESSION['defaultindex'];
       //$cart = Factory::Save($cart);
 
          $form['cart']['shipping']['type'] = array(
@@ -876,7 +880,7 @@ function pccart_cart_form2($form, &$form_state) {
             '#multiple' => FALSE,
             '#options' => $options,
             '#header' => array('label' => ''),
-            '#default_value' => end($resolt),
+            '#default_value' => $cart->shipping_type,
             '#sticky' => FALSE,
             '#ajax' => array(
                 'callback' => 'pccart_cart_form_shipping_type_callback',

@@ -41,11 +41,11 @@ function pccheckout_personal_form($form, &$form_state) {
     foreach (\printconnect\Countries\Factory::GetAll() as $country) {
 //        $countries[$country->id] = $country->tag;
         $countries = array (
-       "21"=>"Belgique",
-       "37"=>"France",
-       "150"=>"Pays-Bas",
-       "199"=>"Espagne",
-       "124"=>"Luxembourg",
+       "21"=>t('Belgique'),
+       "37"=>t('France'),
+       "150"=>t('Pays-Bas'),
+       "199"=>t('Espagne'),
+       "124"=>t('Luxembourg'),
      );
     }
     if ($cart->orderItemShipping->shippingTypeResellerShop == 351) {
@@ -54,11 +54,11 @@ function pccheckout_personal_form($form, &$form_state) {
 //   
 //	$countries[$country->id] = $country->tag;
         $countries = array (
-       "21"=>"Belgique",
-       "37"=>"France",
-       "150"=>"Pays-Bas",
-       "199"=>"Espagne",
-       "124"=>"Luxembourg",
+       "21"=>t('Belgique'),
+       "37"=>t('France'),
+       "150"=>t('Pays-Bas'),
+       "199"=>t('Espagne'),
+       "124"=>t('Luxembourg'),
      );
     }
     if ($defaultBillingAddress) {
@@ -366,10 +366,17 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         $countries[21] = t($belgique->tag);
     } else {
         foreach ($items as $country) {
-            $countries[$country->id] = $country->tag;
-            if ($country->active) {
-                $deliveryCountries[$country->id] = $country->tag;
-            }
+//            $countries[$country->id] = $country->tag;
+//            if ($country->active) {
+//                $deliveryCountries[$country->id] = $country->tag;
+//            }
+             $deliveryCountries = array (
+       "21"=>t('Belgique'),
+       "37"=>t('France'),
+       "150"=>t('Pays-Bas'),
+       "199"=>t('Espagne'),
+       "124"=>t('Luxembourg'),
+     );
         }
 	if ($cart->orderItemShipping->shippingTypeResellerShop == 351) {
             $deliveryCountries = array();
@@ -377,7 +384,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
             $deliveryCountries[$country->id] = $country->tag;
         }
     }
-   
+
 
     $addresses = array();
 
@@ -1192,7 +1199,11 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
     }
 
     \printconnect\Carts\Factory::Save($cart);
-    $cart = \printconnect\Carts\Factory::Current(FALSE);
+       
+  if(!isset($cart->billingAccount) or empty($cart->billingAccount)){
+        $billingAccount = $form_state['storage']['invoice']['address'];
+        AttacheBillingAccount($cart, $billingAccount->id , $form_state);
+  }
     drupal_goto('checkout/payment');
     
 //    if ($cart->allFilesUploaded) {
@@ -1505,6 +1516,10 @@ function pccheckout_payment_form($form, &$form_state) {
     $customer = \printconnect\Customers\Factory::Current();
     $cart = \printconnect\Carts\Factory::Current(FALSE);
     \printconnect\Carts\Factory::Save($cart);
+     if(!isset($cart->billingAccount) or empty($cart->billingAccount)){
+    drupal_goto('checkout/invoiceanddelivery');
+    drupal_set_message(t('Please check your order because no invoice address related with it'), 'error');
+    }
     $paymentMethods = \printconnect\PaymentMethods\Factory::GetAll();
     foreach ($paymentMethods as $paymentMethod) {
         $form_state['storage']['paymentmethods'][$paymentMethod->id] = $paymentMethod;
@@ -1912,4 +1927,10 @@ function updateTvaCart(\printconnect\Object $cart, $tva) {
     $cart->totalAmount = $cart->convertedTotalAmount;
     $cart->codAmount = $cart->totalAmount;
     $cart->convertedCodAmount = $cart->convertedTotalAmount;
+}
+
+function AttacheBillingAccount($cart,$billingAccount, &$form_state ) {
+$cart->billingAccount = $billingAccount;
+\printconnect\Carts\Factory::Save($cart);
+$form_state['storage']['cart'] = $cart;
 }

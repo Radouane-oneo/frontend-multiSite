@@ -212,11 +212,14 @@ table tr.even, table tr.odd {
     left: 0;
     width: 100%;
 }
+/* 
 body {
 	background: url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/stvalentin/bg_body_new.png) no-repeat center 178px #fef7fe;
 }
+ */
 .bg_header_noel{
-    background: none;
+    /*background: url('http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/home/img-bghiver.jpg') repeat-x 0px 0px;*/
+    background: #f1f1f1;
     position: absolute;
     height: 2000px;
     left: 0;

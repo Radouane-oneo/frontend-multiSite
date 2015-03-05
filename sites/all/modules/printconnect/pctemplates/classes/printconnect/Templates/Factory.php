@@ -7,10 +7,11 @@ namespace printconnect\Templates {
     class Factory {
         protected static $params = array();
 
-        public static function Get($id)
+        public static function Get($id, $productId = null)
         {
             return new Template(array(
                 'id' => $id,
+		'productId' => $productId,
             ));
         }
 
@@ -34,8 +35,9 @@ namespace printconnect\Templates {
         public static function LoadTemplate(Template $object)
         {
             $id = $object->Get('id');
+	    $productId = $object->Get('productId');
             if ($id) {
-                Dal::Load($object, 'design-template', array('designTemplateId' => $id), TRUE);
+                Dal::Load($object, 'design-template', array('designTemplateId' => $id, 'productId' => $productId), TRUE);
             };
         }
         

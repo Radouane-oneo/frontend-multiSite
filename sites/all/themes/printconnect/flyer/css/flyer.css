@@ -218,7 +218,8 @@ body {
 }
  */
 .bg_header_noel{
-    background: url('http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/home/img-bghiver.jpg') repeat-x 0px 0px;
+    /*background: url('http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/home/img-bghiver.jpg') repeat-x 0px 0px;*/
+    background: #f1f1f1;
     position: absolute;
     height: 2000px;
     left: 0;

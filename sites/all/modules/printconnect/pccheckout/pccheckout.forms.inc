@@ -42,7 +42,7 @@ function pccheckout_personal_form($form, &$form_state) {
 //        $countries[$country->id] = $country->tag;
         $countries = array (
        "21"=>t('Belgique'),
-       "37"=>t('France'),
+       "73"=>t('France'),
        "150"=>t('Pays-Bas'),
        "199"=>t('Espagne'),
        "124"=>t('Luxembourg'),
@@ -55,7 +55,7 @@ function pccheckout_personal_form($form, &$form_state) {
 //	$countries[$country->id] = $country->tag;
         $countries = array (
        "21"=>t('Belgique'),
-       "37"=>t('France'),
+       "73"=>t('France'),
        "150"=>t('Pays-Bas'),
        "199"=>t('Espagne'),
        "124"=>t('Luxembourg'),
@@ -366,13 +366,13 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         $countries[21] = t($belgique->tag);
     } else {
         foreach ($items as $country) {
-//            $countries[$country->id] = $country->tag;
-//            if ($country->active) {
-//                $deliveryCountries[$country->id] = $country->tag;
-//            }
+            $countries[$country->id] = $country->tag;
+            if ($country->active) {
+                $deliveryCountries[$country->id] = $country->tag;
+            }
              $deliveryCountries = array (
        "21"=>t('Belgique'),
-       "37"=>t('France'),
+       "73"=>t('France'),
        "150"=>t('Pays-Bas'),
        "199"=>t('Espagne'),
        "124"=>t('Luxembourg'),

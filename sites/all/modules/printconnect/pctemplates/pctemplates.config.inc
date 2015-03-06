@@ -17,7 +17,7 @@ function pctemplates_config_form($form, &$form_state, $productId, $templateId) {
     $languageCode = 'en_US';
   }
   try {
-    $template = Factory::Get($templateId);
+    $template = Factory::Get($templateId, $productId);
     $template->EnsureLoaded();
   } catch (\Exception $ex) {
     drupal_not_found();
@@ -151,7 +151,7 @@ function pctemplates_configblock_form($form, &$form_state, $productId, $template
   $qty = FALSE;
   $items = array();
   try {
-    $template = Factory::Get($templateId);
+    $template = Factory::Get($templateId, $productId);
     $template->EnsureLoaded();
   } catch (\Exception $ex) {
     return;
@@ -194,7 +194,6 @@ function pctemplates_configblock_form($form, &$form_state, $productId, $template
           'class' => array('configuration'),
       )
   );
-
   $tree = Configurations\Factory::GetTree($productId, $items);
   $toolboxItems = array();
   $ajax = array(
@@ -518,6 +517,9 @@ function pctemplates_callback($type) {
           $cart = Carts\Factory::Create();
         }
         Carts\Factory::Save($cart);
+	$cart->productId = isset($_SESSION['templateProductId'])
+	    ? $_SESSION['templateProductId']
+	    : null;
         $item = Carts\Factory::CreateItem($cart, $priceGroupId, $qty, NULL, NULL, $options, $vatPercentage);
         $item->file = $file;
         $item->thumbnail = $thumbnail;
@@ -608,8 +610,11 @@ function pctemplates_config_form2($form, &$form_state, $templateId, $productId =
     $languageCode = 'en_US';
   }
   try {
-    $template = Factory::Get($templateId);
-    
+    $template = Factory::Get($templateId, $productId);
+    if ($productId != null)
+    {
+	$_SESSION['templateProductId'] = $productId;
+    } 
     $template->EnsureLoaded();
     
     $dtTemplate = printconnect\DesignTool\Templates\Factory::Get($template->designTemplates->designToolTemplateId);

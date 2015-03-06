@@ -891,7 +891,13 @@ function printconnect_preprocess_page(&$vars) {
 function printconnect_getimage($type, $id) {
   global $theme_key;
   $image = FALSE;
-
+  if ($type == "products") {
+    $product = \printconnect\Products\Factory::Get($id);
+    \printconnect\Products\Factory::LoadProduct($product);
+    $id = ($product->isParent || $product->type == 'derivate')
+        ? $product->id
+        : $product->parent;
+  }
   $paths = cache_get('printconnect_getimage_paths');
 
   if (!$paths) {

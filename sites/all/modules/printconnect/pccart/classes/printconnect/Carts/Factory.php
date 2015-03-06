@@ -245,6 +245,7 @@ use printconnect\Customers;
     public static function CreateItem($cart, $priceGroup, $quantity, $description, $relatedProducts, $options, $vat = FALSE) {
       $object = new Item();
       $object->cart = $cart->id;
+      $object->productId = $cart->productId;
       $object->product_price_group = $priceGroup;
       $object->quantity = $quantity;
       $object->description = '';

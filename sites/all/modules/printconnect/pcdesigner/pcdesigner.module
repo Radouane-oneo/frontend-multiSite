@@ -149,6 +149,7 @@ function pcdesigner_form_alter(&$form, $form_state, $form_id) {
 
 function pcdesigner_form_submit($form, &$form_state) {
   $cart = $form_state['storage']['cart'];
+
   foreach (element_children($form_state['values']['cart']['items']) as $key) {
     $item = \printconnect\Carts\Factory::GetItem($cart, $key);
     $item->EnsureLoaded();
@@ -160,6 +161,7 @@ function pcdesigner_form_submit($form, &$form_state) {
 
     \printconnect\Carts\Factory::SaveItem($item);
   }
+
   unset($_SESSION['pcdesigner']['email']);
 }
 

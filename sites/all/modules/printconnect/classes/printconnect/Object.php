@@ -96,6 +96,8 @@ namespace printconnect {
       foreach ($this->_properties as $name => $property) {
         if (!is_object($property)) {
           $properties[$name] = $property;
+        }else if($name == 'fileCheck') {
+          $properties[$name] = $property;
         }
       }
       return $properties;

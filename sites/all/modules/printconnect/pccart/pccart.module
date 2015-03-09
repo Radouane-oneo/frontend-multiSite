@@ -81,7 +81,12 @@ function pccart_menu() {
       'access arguments' => array('access content'),
       'type' => MENU_CALLBACK,
   );
-
+   $items['cart/controlprof/%/delete'] = array(
+      'page callback' => '_pccart_callback',
+      'page arguments' => array('controle_delete', 2),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
   return $items;
 }
 
@@ -930,6 +935,19 @@ function _pccart_callback() {
         return drupal_get_form('pcproducts_product_form', $productId, $items, $options, $qty, $item);
 
         break;
+        case 'controle_delete':
+            
+        $itemId = array_shift($args);
+        $cart = Factory::Current();
+        
+        if($itemId){
+            $cartItem = printconnect\Carts\Factory::GetItem($cart, $itemId);
+            printconnect\Carts\Factory::LoadItem($cartItem);
+            $cartItem->fileCheck = array();
+            printconnect\Carts\Factory::SaveItem($cartItem);
+        }   
+        
+        drupal_set_message( t('The Control professional was deleted'), $type = 'status');
     }
   } catch (Exception $ex) {
     return Functions::HandleException($ex);

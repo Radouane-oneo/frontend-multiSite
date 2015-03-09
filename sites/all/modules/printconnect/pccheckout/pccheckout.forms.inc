@@ -366,10 +366,10 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         $countries[21] = t($belgique->tag);
     } else {
         foreach ($items as $country) {
-//            $countries[$country->id] = $country->tag;
-//            if ($country->active) {
-//                $deliveryCountries[$country->id] = $country->tag;
-//            }
+            $countries[$country->id] = $country->tag;
+            if ($country->active) {
+                $deliveryCountries[$country->id] = $country->tag;
+            }
              $deliveryCountries = array (
        "21"=>t('Belgique'),
        "73"=>t('France'),

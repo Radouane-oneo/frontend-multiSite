@@ -511,6 +511,9 @@ function pctemplates_callback($type) {
         $priceGroupId = $_GET['priceGroupId'];
         $qty = $_GET['qty'];
         $options = explode(',', $_GET['options']);
+        $controlpro = isset($_GET['controlpro']) ? $_GET['controlpro'] : 0;
+        $quickupload = isset($_GET['quickupload']) ? $_GET['quickupload'] : 0;
+        
         $vatPercentage = $_GET['vat'];
         module_invoke('pcdesigntool', 'save', $jobId, 'design');
         $cart = Carts\Factory::CurrentOrCreate();
@@ -522,7 +525,8 @@ function pctemplates_callback($type) {
         $item->file = $file;
         $item->thumbnail = $thumbnail;
         $item->design_tool_job_id = $jobId;
-
+        $item->controlpro = $controlpro;
+        $item->quickupload = $quickupload;
         if (isset($_GET['myPcId']) && $_GET['myPcId']) {
           $_SESSION['savedDesigns'][$item->id] = $_GET['myPcId'];
         }

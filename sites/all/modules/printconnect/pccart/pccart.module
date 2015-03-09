@@ -1686,6 +1686,8 @@ function pccart_callback() {
         $id = $_GET['id'];
         $jobId = $_GET['jobid'];
         $cartId = $_GET['cartid'];
+        $controlpro = isset($_GET['controlpro']) ? $_GET['controlpro'] : 0;
+        $quickupload = isset($_GET['quickupload']) ? $_GET['quickupload'] : 0;
 
         if (isset($_GET['myPcId']) && $_GET['myPcId']) {
           $_SESSION['savedDesigns'][$id] = $_GET['myPcId'];
@@ -1710,6 +1712,8 @@ function pccart_callback() {
         $item->thumbnail = $thumbnail;
         $item->design_tool_job_id = $jobId;
         $item->cart_item = $id;
+        $item->controlpro = $controlpro;
+        $item->quickupload = $quickupload;
         Factory::SaveItem($item);
 //\printconnect\Carts\Factory::RefreshItem($item);
         Factory::Refresh($cart);

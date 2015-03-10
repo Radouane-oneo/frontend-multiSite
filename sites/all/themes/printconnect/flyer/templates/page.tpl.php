@@ -20,7 +20,6 @@ if (/*@cc_on!@*/false) {
 
 <div id="canvas">
   <div class="bg_header"></div>
-  <div class="bg_header_noel"></div>
   <div class="container">
 
     <?php if ($page['top']): ?>

@@ -2764,12 +2764,12 @@ a.ui-button.inactivebtn{
 }
 
 .page-products #pcproducts-config-form table.grid  tbody tr td.last-child {
-	border-right-width: 2px;
+	border-right: 2px solid #e1e1e1 !important;
 }
+
 @-moz-document url-prefix() { 
-  
 	.page-products #pcproducts-config-form table.grid  tbody tr td.last-child {
-  		border-right-width: 1px;
+  		border-right: 1px solid #e1e1e1 !important;
   	}
 }
 

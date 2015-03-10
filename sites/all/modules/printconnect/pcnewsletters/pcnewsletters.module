@@ -81,7 +81,7 @@ function pcnewsletters_subscribe_form($form, $form_state) {
         '#attributes' => array('class' => array('text')),
         'content' => array(
             '#prefix' => '<p>',
-            '#markup' => t('Inscrivez vous et gagnez <span>5 €</span> sur votre prochaine commande'),
+            '#markup' => t('Inscrivez vous! Plus de texte concernant le newsletter'),
             '#suffix' => '</p>',
         ),
     );

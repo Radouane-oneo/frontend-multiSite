@@ -1350,7 +1350,7 @@ a.button.cart .ui-button-text {
 /* ---- SIDEBAR ----------------------------- */
 /* ---- PROFILE ---------------- */
 #block-pccustomers-profile {
-	top: -78px;
+	top: -75px;
 	margin-bottom: 3px;
 	background: url("images/subMenuSpriteIconsModified.png") no-repeat;
 	background-position:-436px -444px;
@@ -1399,6 +1399,7 @@ a.button.cart .ui-button-text {
         padding-bottom: 16px !important;
 }
 /* ---- END - PROFILE ---------- */
+
 /* ---- CALCULATOR ------------- */
 #block-pcproducts-calculator {
 	border-radius: 0 0 5px 10px;
@@ -2645,6 +2646,7 @@ a.ui-button.inactivebtn{
 	font-size: 13px;
 	color: #999999;
 	line-height: 16px;
+	margin-top: -2px;
 }
 .page-products #pcproducts-config-form tr.last-child .form-item input[type="text"]{
 	float: right;
@@ -2660,7 +2662,7 @@ a.ui-button.inactivebtn{
 	color: #999999;
 	position: absolute;
 	right: -215px;
-	top: -4px;
+	top: -1px;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */
@@ -2678,9 +2680,9 @@ a.ui-button.inactivebtn{
 	padding-left: 40px;
 	font-weight: bold;
 	position: relative;
-	right: -545px;
+	right: -547px;
 	height: 32px;
-	top: -62px;;/*-55px;*/
+	top: -59px;
 }
 .page-products #pcproducts-config-form table.grid tbody tr td .price.old,
 .page-templates table.grid tbody tr td .price.old {

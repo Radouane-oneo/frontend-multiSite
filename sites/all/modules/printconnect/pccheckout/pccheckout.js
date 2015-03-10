@@ -18,9 +18,8 @@
   });
 
   $(document).ready(function(){
-    $(".selectBilling").select2();
+    $(".selectBilling2").select2();
       if(typeof $("#isUserCompany")[0] != "undefined"){
-          
           if($("#companyInput").val() != ''){
               $("#isUserCompany")[0].checked = true;
               $(".form-item-company, .form-item-vatNumber, .form-item-invoice-address-current-company, .form-item-invoice-address-current-vatNumber").show();

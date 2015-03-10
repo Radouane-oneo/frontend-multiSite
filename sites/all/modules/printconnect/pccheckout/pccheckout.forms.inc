@@ -761,7 +761,6 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
             '#markup' => '<div id="messageadressefacturation">'.$mess["validate-msg"][0].'</div>',
         );
     }
-    //var_dump($defaultShippingAddress);die;
     $form['shipping']['detail']['current']['company'] = array(
         '#type' => 'textfield',
         '#title' => t('Company'),
@@ -1693,11 +1692,22 @@ function _pccheckout_payment_form_build_overview($cart) {
                 );
             }
         }
-
+        foreach ($cart->orderItems as $item) {
+            $configs = $item->configuration->config;
+            $primaryItem = $configs[0];
+            if ($item->fileCheck) {                 
+                $rows[] = array(
+                    'data' => array(
+                      t('Control professional').' '.$item->quantity . ' ' . t('pcs.') . ' ' . $item->configuration->name . ' - ' . $primaryItem->name,
+                        theme('price', array('value' => $item->fileCheck->price, 'free' => TRUE)),
+                    ),
+                );
+            }
+        }
         $type = \printconnect\Shipping\Types\Factory::Get($cart->orderItemShipping->shippingTypeResellerShop);
         $rows[] = array(
             'data' => array(
-                '<strong>' . $type->shippingType->tag . '</strong>',
+                '<strong>'. $type->shippingType->tag . '</strong>',
                 theme('price', array('value' => $cart->orderItemShipping->price, 'free' => TRUE)),
             ),
         );

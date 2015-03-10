@@ -371,12 +371,12 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
                 $deliveryCountries[$country->id] = $country->tag;
             }
              $deliveryCountries = array (
-       "21"=>t('Belgique'),
-       "73"=>t('France'),
-       "150"=>t('Pays-Bas'),
-       "199"=>t('Espagne'),
-       "124"=>t('Luxembourg'),
-     );
+                "21"=>t('Belgique'),
+                "73"=>t('France'),
+                "150"=>t('Pays-Bas'),
+                "199"=>t('Espagne'),
+                "124"=>t('Luxembourg'),
+              );
         }
 	if ($cart->orderItemShipping->shippingTypeResellerShop == 351) {
             $deliveryCountries = array();
@@ -602,7 +602,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
     $form['invoice']['address']['current']['select'] = array(
         '#type' => 'select',
         '#title' => t('Select from addressbook'),
-        '#attributes' => array('class' => array('selectBilling')),
+        '#attributes' => array('class' => array('selectBilling2')),
         '#options' => $addresses,
         '#default_value' => $defaultBillingAddress ? $defaultBillingAddress->id : 0,
         '#ajax' => array(
@@ -741,7 +741,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
     $form['shipping']['detail']['current']['select'] = array(
         '#type' => 'select',
         '#title' => t('Select from addressbook'),
-        '#attributes' => array('class' => array('selectBilling')),
+        '#attributes' => array('class' => array('selectBilling2')),
         '#options' => $AllShippingAddress,
         '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->id : 0,
         '#ajax' => array(

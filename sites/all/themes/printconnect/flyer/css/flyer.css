@@ -849,41 +849,56 @@ body.two-sidebars #content .whitebox{
 	padding: 15px 7px 0 20px;
 	position: relative;
 }
-#footer #block-block-6 h2 {
+/* #footer #block-block-6 h2 {
 	margin-left: 20px;
 	line-height: 28px;
-}
+} */
 #footer #block-block-6 p {
-	margin: 5px 0;
+	margin: 10px 0 15px;
+	font-size: 14px;
 }
+
+#footer #block-block-6 label{
+	display: none;
+}
+
+#footer #block-block-6 div.error{
+	margin-bottom: 0px!important;
+	margin-top: 5px!important;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
 #footer #block-block-6 input[type="text"] {
 	border: none;
 	background: #fff;
 	border-radius: 5px 5px 5px 5px;
 	padding: 10px;
-	margin-bottom: 10px;
-	width: 178px;
+	width: 170px;
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 400;
+	height: 35px;
 	color: #646464; /* maincolor */
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
 }
 #footer #block-block-6 input[type="submit"] {
 	border: none;
-	border-radius: none;
 	box-shadow: none;
-	background: transparent url("images/calc_btn.png") no-repeat 10px center;
+	background: none;
 	color: #fff;
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 400;
-	font-size: 14px; /* font-size: 16px; */
+	font-size: 14px;
 	position: absolute;
-	left: 15px;
-	bottom: 35px;
+	left: 10px;
+	bottom: 0px;
 	text-align: left;
-	padding-left: 35px;
-	width: 198px;
+	width: 190px;
 	display: block;
-	height: 50px;
+	height: 40px;
+	text-align: center;
 }
 #footer .block-pcpayments {
 	color: #646464; /* maincolor */
@@ -2764,12 +2779,12 @@ a.ui-button.inactivebtn{
 }
 
 .page-products #pcproducts-config-form table.grid  tbody tr td.last-child {
-	border-right-width: 2px;
+	border-right: 2px solid #e1e1e1 !important;
 }
+
 @-moz-document url-prefix() { 
-  
 	.page-products #pcproducts-config-form table.grid  tbody tr td.last-child {
-  		border-right-width: 1px;
+  		border-right: 1px solid #e1e1e1 !important;
   	}
 }
 

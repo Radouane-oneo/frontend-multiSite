@@ -483,3 +483,18 @@ a.btn-cmd:hover span.flesh{
     margin-bottom: 17px;
 }
 
+body #footer #block-pcproducts-list ul.menu{
+    float: left;
+    width:32.33%;
+    margin-right: 1%;
+}
+
+body #footer #block-pcproducts-list ul.menu:last-child{
+    margin-right:0;
+}
+
+body #footer #block-pcproducts-list ul.menu li{
+    float: none;
+    display: block;
+    width: 100%;
+}

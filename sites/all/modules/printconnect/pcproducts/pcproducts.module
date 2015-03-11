@@ -283,17 +283,24 @@ function pcproducts_block_view($delta = '') {
       }
       break;
     case 'list':
-      $products = _pcproducts_activeProducts();
-      $block['title'] = t('All products');
-      usort($products, function ($a, $b) {
-                return strcmp($a->name, $b->name);
-              });
-      foreach ($products as $product) {
-        $items[] = l($product->name, 'products/' . $product->id);
-      }
-
-      $block['content']['products']['list'] = array('#markup' => theme('item_list', array('items' => $items, 'attributes' => array('class' => array('menu')))));
-      return $block;
+        $products = _pcproducts_activeProducts();
+        $block['title'] = t('All products');
+        usort($products, function ($a, $b) {
+            return strcmp($a->name, $b->name);
+        });
+        
+        $i=0;
+        $data = null;
+        $total = count($products);
+        foreach ($products as $product) {                      
+            if( ($i % intval($total/3))  == 0 && $i <> 0 && $i <> $total-1 ) $data .= '</ul><ul class="menu">';  
+            $data .= '<li>'.l($product->name, 'products/' . $product->id).'</li>';
+            $i++;
+        }
+        $block['content']['products']['list'] = array('#markup' => '<div class="item-list"><ul class="menu">'.$data.'</ul></div>' );
+       // $block['content']['products']['list'] = array('#markup' => theme('item_list', array('items' => $items, 'attributes' => array('class' => array('menu')))));
+        return $block;
+        
       break;
     case 'top':
       $products = Factory::GetTop();

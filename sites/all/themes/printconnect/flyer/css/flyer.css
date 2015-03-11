@@ -2800,7 +2800,7 @@ a.ui-button.inactivebtn{
 #pcproducts-config-form .templates, #pcdesigner-upload-form .templates{
 	margin-top: 20px;
 }
-#pcproducts-config-form .templates .image img , #pcdesigner-upload-form .templates  .image img {
+#pcdesigner-upload-form .templates  .image img {
   max-height: 350px;
   width: 100%;
   height: auto;

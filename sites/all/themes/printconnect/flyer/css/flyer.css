@@ -46,8 +46,7 @@ html, body, .ui-widget {
 }*/
 
 body {
-/*background: #f1f1f1;*/
-background: #fff;
+background: #f1f1f1;
 color: #646464;
 font-family: 'Open Sans',sans-serif;
 font-weight: 400;
@@ -212,24 +211,7 @@ table tr.even, table tr.odd {
     left: 0;
     width: 100%;
 }
-/* 
-body {
-	background: url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/stvalentin/bg_body_new.png) no-repeat center 178px #fef7fe;
-}
- */
-.bg_header_noel{
-    background: url('http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/home/img-bghiver.jpg') repeat-x 0px 0px;
-    position: absolute;
-    height: 2000px;
-    left: 0;
-    top: 0px;
-    width: 100%;
-    z-index: -1;
-}
 
-#canvas #main{
-	/*padding-top: 3px;*/
-}
 .container {
 	margin: 0 auto;
 	padding: 0;
@@ -867,41 +849,56 @@ body.two-sidebars #content .whitebox{
 	padding: 15px 7px 0 20px;
 	position: relative;
 }
-#footer #block-block-6 h2 {
+/* #footer #block-block-6 h2 {
 	margin-left: 20px;
 	line-height: 28px;
-}
+} */
 #footer #block-block-6 p {
-	margin: 5px 0;
+	margin: 10px 0 15px;
+	font-size: 14px;
 }
+
+#footer #block-block-6 label{
+	display: none;
+}
+
+#footer #block-block-6 div.error{
+	margin-bottom: 0px!important;
+	margin-top: 5px!important;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
 #footer #block-block-6 input[type="text"] {
 	border: none;
 	background: #fff;
 	border-radius: 5px 5px 5px 5px;
 	padding: 10px;
-	margin-bottom: 10px;
-	width: 178px;
+	width: 170px;
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 400;
+	height: 35px;
 	color: #646464; /* maincolor */
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
 }
 #footer #block-block-6 input[type="submit"] {
 	border: none;
-	border-radius: none;
 	box-shadow: none;
-	background: transparent url("images/calc_btn.png") no-repeat 10px center;
+	background: none;
 	color: #fff;
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 400;
-	font-size: 14px; /* font-size: 16px; */
+	font-size: 14px;
 	position: absolute;
-	left: 15px;
-	bottom: 35px;
+	left: 10px;
+	bottom: 0px;
 	text-align: left;
-	padding-left: 35px;
-	width: 198px;
+	width: 190px;
 	display: block;
-	height: 50px;
+	height: 40px;
+	text-align: center;
 }
 #footer .block-pcpayments {
 	color: #646464; /* maincolor */
@@ -1368,7 +1365,7 @@ a.button.cart .ui-button-text {
 /* ---- SIDEBAR ----------------------------- */
 /* ---- PROFILE ---------------- */
 #block-pccustomers-profile {
-	top: -78px;
+	top: -75px;
 	margin-bottom: 3px;
 	background: url("images/subMenuSpriteIconsModified.png") no-repeat;
 	background-position:-436px -444px;
@@ -1417,6 +1414,7 @@ a.button.cart .ui-button-text {
         padding-bottom: 16px !important;
 }
 /* ---- END - PROFILE ---------- */
+
 /* ---- CALCULATOR ------------- */
 #block-pcproducts-calculator {
 	border-radius: 0 0 5px 10px;
@@ -2663,6 +2661,7 @@ a.ui-button.inactivebtn{
 	font-size: 13px;
 	color: #999999;
 	line-height: 16px;
+	margin-top: -2px;
 }
 .page-products #pcproducts-config-form tr.last-child .form-item input[type="text"]{
 	float: right;
@@ -2678,7 +2677,7 @@ a.ui-button.inactivebtn{
 	color: #999999;
 	position: absolute;
 	right: -215px;
-	top: -4px;
+	top: -1px;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */
@@ -2696,9 +2695,9 @@ a.ui-button.inactivebtn{
 	padding-left: 40px;
 	font-weight: bold;
 	position: relative;
-	right: -545px;
+	right: -547px;
 	height: 32px;
-	top: -62px;;/*-55px;*/
+	top: -59px;
 }
 .page-products #pcproducts-config-form table.grid tbody tr td .price.old,
 .page-templates table.grid tbody tr td .price.old {
@@ -2778,6 +2777,17 @@ a.ui-button.inactivebtn{
 	color: #f60;
 	font-weight: 600;
 }
+
+.page-products #pcproducts-config-form table.grid  tbody tr td.last-child {
+	border-right: 2px solid #e1e1e1 !important;
+}
+
+@-moz-document url-prefix() { 
+	.page-products #pcproducts-config-form table.grid  tbody tr td.last-child {
+  		border-right: 1px solid #e1e1e1 !important;
+  	}
+}
+
 .page-products #pcproducts-config-form table.grid input[type="text"] {
 	padding: 10px;
 	background: #fff;
@@ -7231,6 +7241,13 @@ font-size: 14px;
     margin-top: -50px;
 }
 
+.page-products #block-system-main .form-wrapper.actions span.price .decimalpoint{
+	vertical-align: super;
+}
+.page-products #block-system-main .form-wrapper.actions span.price .decimals{
+	vertical-align: text-top;
+}
+
 .contactIcon {
 display: inline-block;
 background: url(images/subMenuSpriteIconsModified.png) no-repeat;
@@ -7701,7 +7718,7 @@ div.myoffers table.list thead tr th:nth-child(2){
 .info-bloc li h3{
 	font-size: 14px;
 	color: #333333;
-	line-height: 16px;
+	line-height: 22px;
 	margin: 0 0 3px;
 	font-weight: bold;
 }

@@ -371,12 +371,12 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
                 $deliveryCountries[$country->id] = $country->tag;
             }
              $deliveryCountries = array (
-                "21"=>t('Belgique'),
-                "73"=>t('France'),
-                "150"=>t('Pays-Bas'),
-                "199"=>t('Espagne'),
-                "124"=>t('Luxembourg'),
-              );
+       "21"=>t('Belgique'),
+       "73"=>t('France'),
+       "150"=>t('Pays-Bas'),
+       "199"=>t('Espagne'),
+       "124"=>t('Luxembourg'),
+     );
         }
 	if ($cart->orderItemShipping->shippingTypeResellerShop == 351) {
             $deliveryCountries = array();
@@ -1783,7 +1783,11 @@ function pccheckout_payment_form_callback($form, &$form_state) {
       }
      */
     updateTvaCart($cart, $_SESSION['shop_vat']);
+    try {
     $cart = \printconnect\Carts\Factory::Save($cart);
+    } catch(Exception $ex) {
+    
+    }
     $cart = \printconnect\Carts\Factory::Current(FALSE);
   if ($cart->subTotalAmount > 0) {
     $paymentMethods = \printconnect\PaymentMethods\Factory::GetAll();

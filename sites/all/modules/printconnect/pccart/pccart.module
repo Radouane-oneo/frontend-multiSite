@@ -947,7 +947,7 @@ function _pccart_callback() {
             printconnect\Carts\Factory::SaveItem($cartItem);
         }   
         
-        drupal_set_message( t('The Control professional was deleted'), $type = 'status');
+       // drupal_set_message( t('The Control professional was deleted'), $type = 'status');
     }
   } catch (Exception $ex) {
     return Functions::HandleException($ex);

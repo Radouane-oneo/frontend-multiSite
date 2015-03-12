@@ -465,6 +465,7 @@ a.btn-cmd:hover span.flesh{
 #pcproducts-config-form .templates .image img{
   max-height:350px;
   width: auto;
+  max-width: 100%;
 }
 
 #pcproducts-config-form .templates .description{

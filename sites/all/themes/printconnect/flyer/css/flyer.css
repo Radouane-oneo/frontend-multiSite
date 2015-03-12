@@ -7952,7 +7952,7 @@ div.myoffers table.list thead tr th:nth-child(2){
 	box-sizing: border-box;         /* Opera/IE 8+ */
 }
 
-.page-products #block-system-main .description + .form-type-select{
+.page-products #block-system-main .description + div{
 	border-top-width: 1px;
 	-webkit-border-radius: 3px 3px 0 0;
 	-moz-border-radius: 3px 3px 0 0;

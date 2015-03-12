@@ -164,7 +164,7 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
         '#theme' => 'image',
         '#path' => $banner,
     );
-
+   /*
     $form['product']['select'] = array(
         '#type' => 'select',
         '#title' => t('Product'),
@@ -173,7 +173,7 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
         '#ajax' => $ajax,
         '#description' => t('Select a product'),
     );
-
+*/
     $oldValues = $form_state['values']["slectedvalue"];
     $selectedToolBoxItem = $form_state['values']["selectedToolBoxItem"];
     $currentItems = $newItems = $items;

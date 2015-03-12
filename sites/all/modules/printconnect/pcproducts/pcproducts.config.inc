@@ -217,7 +217,7 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
           '#type' => 'select',
           '#title' => $group->name,
           '#id' => 'group-' . $group->id,
-          '#ajax' => $ajax,
+          '#ajax' => $ajax
       );
 
       $defaultValue = false;

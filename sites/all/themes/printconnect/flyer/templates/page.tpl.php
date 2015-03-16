@@ -20,8 +20,14 @@ if (/*@cc_on!@*/false) {
 
 <div id="canvas">
   <div class="bg_header"></div>
+  <?php if ($page['MenuTop']): ?>
+      <div id="menuTop">
+          <div class="container">
+            <?php print render($page['MenuTop']); ?>
+          </div>
+      </div>
+    <?php  endif; ?>
   <div class="container">
-
     <?php if ($page['top']): ?>
       <div id="top">
         <?php print render($page['top']); ?>
@@ -56,12 +62,7 @@ if (/*@cc_on!@*/false) {
 
       <div class="clearfix"></div>       
     <?php endif; ?>
-      <?php if ($page['MenuTop']): ?>
-    <div id="menuTop" style="position: absolute; left: 135px; top: 117px; ">
-   <?php print render($page['MenuTop']); ?>
-   </div>
-    <?php  endif; ?>
-      
+
     <div id="main">
 
       <?php if ($page['sidebar_first']): ?>

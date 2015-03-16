@@ -228,10 +228,21 @@ function pcdesigntool_preview_url($jobId) {
 
   $impkey = variable_get('pc_designtoolimpkey', 'printconcept');
 
-  $url = url(variable_get('pc_designtoolurl', 'http://designtool.stg.printconcept.com') . "/job/preview/rg/1/id/$jobId/lang/$langCode/impkey/$impkey");
+  $baseurl = "/job/preview/rg/1/id/$jobId/lang/$langCode/impkey/$impkey";
+
+  $customer = Customers\Factory::Current();
+  
+  if ($customer) {
+      $baseurl .= '/k/' . $customer->id;
+      $hash = sha1($customer->id . 'agD04vQPx1?FSspl');
+      $baseurl .= '/h/' . $hash;
+  }
+
+  $url = url(variable_get('pc_designtoolurl', 'http://designtool.stg.printconcept.com') . $baseurl);
 
   return $url;
 }
+
 
 function pcdesigntool_url($template, $language, $id, $title, $jobId = false) {
   global $language;

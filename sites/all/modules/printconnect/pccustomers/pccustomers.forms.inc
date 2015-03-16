@@ -743,7 +743,7 @@ function pccustomers_newaddress_form($form, $form_state) {
 //  }
     $options = array (
        "21"=>"Belgique",
-       "37"=>"France",
+       "73"=>"France",
        "150"=>"Pays-Bas",
        "199"=>"Espagne",
        "124"=>"Luxembourg",

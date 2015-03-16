@@ -621,7 +621,7 @@ if (jQuery)(function($) {
 					a.attr('rel', self.val()).text(self.text());
 					li.append(a);
 					var real=a.attr('rel');
-					a.before('<span/> ');
+					//a.before('<span/> ');
                     var lastChar = real.substr(real.length - 3);
                     var yes = lastChar.indexOf("/");
                     if (yes == "-1"){

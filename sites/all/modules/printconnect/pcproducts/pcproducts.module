@@ -929,10 +929,10 @@ function pcproducts_pcmenumain() {
           'products' => array(
               '#type' => 'container',
               '#attributes' => array('class' => array('products', 'clearfix')),
+              'header' => array('#markup' => '<h2>' . t('Products A-Z') . '</h2>'),
               'second' => array(
                   '#type' => 'container',
                   '#attributes' => array('class' => array('sepcond','ctn-menu-dropdown','isotope')),
-                  'header' => array('#markup' => '<h2>' . t('Products A-Z') . '</h2>'),
               ),
           ),
       ),

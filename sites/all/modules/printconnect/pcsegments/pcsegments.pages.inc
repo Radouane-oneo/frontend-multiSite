@@ -35,7 +35,6 @@ function pcsegments_segments() {
 }
 
 function pcsegments_segment($id) {
-  drupal_add_js(array('pcsegments' => array('selected' => 1)), 'setting');
   $segment = \printconnect\Segments\Factory::Get($id);
   $build = array();
   try {
@@ -44,71 +43,56 @@ function pcsegments_segment($id) {
     drupal_not_found();
     exit;
   }
+  $banner = variable_get('pc_images') . '/productpage_banners/prod-banner.png';
+    $form['banner'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('banner')),
+    );
+
+    $form['banner']['image'] = array(
+        '#theme' => 'image',
+        '#path' => $banner,
+ );
+    
 $build['text'] = array(
     '#prefix' => '<p>',
     '#suffix' => '</p>',
     '#markup' => $segment->name->longDescription,
 );
 
-  $templates = array();
-
-  $i = 0;
-  if ($segment->templates && count($segment->templates)) {
-    foreach ($segment->templates as $template) {
-      if ($template->active) {
-
-        $item = array();
-        if (isset($template->thumbnail) && isset($template->thumbnail->file)) {
-          $item['image'] = array(
-              '#theme' => 'pcfilesthumb',
-              '#file' => $template->thumbnail->file,
-          );
-        }/*
-          $item['text'] = array(
-          '#markup' => $template->name,
-          ); */
-        $templates[] = array(
-            'data' => l(drupal_render($item), 'templates/' . $template->id, array('html' => TRUE)),
-        );
-        if (++$i >= 8) {
-          break;
-        }
-      }
-    }
-    $build['templates'] = array(
-        '#type' => 'fieldset',
-        '#title' => t('Start from template'),
-    );
-
-    $build['templates']['items'] = array(
-        '#theme' => 'item_list',
-        '#items' => $templates,
-        '#attributes' => array('class' => array('clearfix')),
-    );
-    $build['templates']['all'] = array(
-        '#markup' => l(t('All templates for this segment'), 'templates', array('query' => array('segments' => $segment->id))),
-    );
-  }
-
   if ($segment->products && count($segment->products)) {
     $products = array();
     $i = 0;
     foreach ($segment->products as $product) {
       $item = array(
-          'image' => array(
+            'image' => array(
               '#theme' => 'image',
               '#path' => printconnect_getimage('products', $product->id),
-          ),
-          'name' => array(
-              '#markup' => $product->name->name,
-          ),
+              '#attributes' => array('width' =>'194', 'height' => '187'),
+              '#prefix' => '<div class="blocprd"><a href="products/' . $product->id.'">',
+            ),
+          
+            'name' => array(
+                '#markup' => $product->name->name,
+                '#prefix' => '<h2>',
+                '#suffix' => '</h2></a></div>',
+            ),
+          
+            'price'=> array(
+            '#markup' => '<span class="txt">' . t('from_price') . '</span> ' . theme('price', array('value' => $product->sellPrice)),
+            ),
+          
+            'text' => array(
+             '#prefix' => '<a class="order btn-cmd" href="products/' . $product->id.'"><span class="flesh"></span>',
+            '#markup' => t('Order now'),
+            '#suffix' => '</a>',
+            ),
       );
+      
       $products[] = array(
           'data' => l(drupal_render($item), 'products/' . $product->id, array('html' => true)),
       );
-      if (++$i >= 8) {
-        break;
-      }
+   
     }
     $build['products'] = array(
         '#type' => 'fieldset',

@@ -339,9 +339,9 @@ foreach ($content[0] as $letter => $products) {
         'list' => array('#markup' => theme('item_list', array('items' => $products)) . '</div>'),
     );
   }
-if($key == 5){
-    break;  
-}
+//if($key == 5){
+//    break;  
+//}
       }
 
 return $segmentItems ;
@@ -359,7 +359,7 @@ function _pcsegmens_alpha_array($segmentproducts) {
     } else {
       $letter = $segmentName[0];
     }
-    $ordered[$letter][] = l($segment , 'segment/' . $key, array('attributes' => array('title' => $segment)));
+    $ordered[$letter][] = l($segment , 'products/' . $key, array('attributes' => array('title' => $segment)));
   }
 
   ksort($ordered);

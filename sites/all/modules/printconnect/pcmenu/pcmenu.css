@@ -66,6 +66,7 @@
   display: block;
 }
 
+#block-pcmenu-main > .content > ul > li a.active-trail,
 #block-pcmenu-main > .content > ul > li:hover > a{
   color: #ff6600;
 }

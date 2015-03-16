@@ -15,15 +15,15 @@
       isotopeFunction('.isotope'); 
 
       //on hover of menu
-      $('#block-pcmenu-main li.expandable').hover(function() {
+      $('#block-pcmenu-main li.expandable').mouseenter(function() {
         isotopeFunction($(this).find('.isotope'));
       });
-
-      // on filter click
-      $('.filter_list li').click(function(){
-        var filterValue = $(this).data('target');
-        if ($(this).parents('.dropdown').find(filterValue).length<=0)  filterValue = ''; //if element not existe
-        $(this).parents('.dropdown').find('.isotope').isotope({ filter: filterValue });
+      
+      $('#block-pcmenu-main li.expandable').mouseleave(function() {
+        $(this).find('.item-box').css({
+            'top': 0,
+            'left': 0
+        })
       });
        
     }

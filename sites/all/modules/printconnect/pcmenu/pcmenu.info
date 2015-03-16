@@ -1,0 +1,6 @@
+name = Menu
+description = Main menu
+package = printconnect
+core = 7.x
+
+

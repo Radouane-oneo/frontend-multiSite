@@ -303,3 +303,65 @@ function _pcsegments_getsegmentname($id) {
     
   }
 }
+
+function pcsegments_pcmenumain() {
+      $segments = \printconnect\Segments\Factory::GetAll();
+      $segmentItems = array();
+
+      foreach ($segments as $key => $segment){
+          $segmentProducts = array(); 
+        foreach ($segment->products as $product) {
+         $segmentProducts[$product->id] = $product->name->name;
+        }
+       $alphaArray = _pcsegmens_alpha_array($segmentProducts);
+       
+  
+       $segmentItems[$segment->name->name] = array(
+                    '#link' => 'segments/' . $segment->id,
+                    '#title' => t($segment->name->name),
+                    '#weight' => 30,
+                    '#dropdown' => array(
+                    'segments' => array(
+                    '#type' => 'container',
+                    '#attributes' => array('class' => array('products', 'clearfix')),
+                     'content' => array(
+                  '#type' => 'container',
+                  '#attributes' => array('class' => array('second','ctn-menu-dropdown','isotope')),
+                  'header' => array('#markup' => '<h2>' . t($segment->name->name) . '</h2>'),
+              ),
+          ),
+      ),
+  ); 
+       $content[0] = $alphaArray;
+foreach ($content[0] as $letter => $products) {
+     $segmentItems[$segment->name->name]['#dropdown']['segments']['content'][$letter] = array(
+        'header' => array('#markup' => '<div class="item-box box-'. $letter . '"><h2>' . $letter . '</h2>'),
+        'list' => array('#markup' => theme('item_list', array('items' => $products)) . '</div>'),
+    );
+  }
+if($key == 5){
+    break;  
+}
+      }
+
+return $segmentItems ;
+}
+    
+function _pcsegmens_alpha_array($segmentproducts) {
+  global $user;
+  $i = 0;
+  asort($segmentproducts);
+
+  foreach ($segmentproducts as $key => $segment) {
+    $segmentName = trim(strtoupper($segment));
+    if (0 == strlen($segmentName) || !ctype_alnum($segmentName[0])) {
+      $letter = '#';
+    } else {
+      $letter = $segmentName[0];
+    }
+    $ordered[$letter][] = l($segment , 'segment/' . $key, array('attributes' => array('title' => $segment)));
+  }
+
+  ksort($ordered);
+  return $ordered;
+}

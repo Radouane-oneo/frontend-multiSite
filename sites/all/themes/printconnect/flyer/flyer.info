@@ -48,6 +48,7 @@ scripts[] = js/select2.min.js
 regions[announcements] = Announcements
 regions[top] = Top
 regions[productmenu] = Product Menu
+regions[MenuTop] = MenuTop
 regions[cart] = Cart
 regions[header_right] = Header Right
 regions[highlightedFlyer] = highlightedFlyer

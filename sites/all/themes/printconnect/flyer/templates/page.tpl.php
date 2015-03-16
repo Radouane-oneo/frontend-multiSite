@@ -44,13 +44,11 @@ if (/*@cc_on!@*/false) {
         <?php endif; ?>
 
       </div>
-  <?php if ($main_menu): ?>
-  <div id="menuTop">
 
-        <?php print theme('links__system_main_menu', array('links' => $main_menu, 'attributes' => array('id' => 'main-menu'))); ?>
-        </div>
-      <?php endif; ?>
-    </div>
+</div>
+ <div class="menu">
+      <?php print theme('links__system_main_menu', array('links' => $main_menu, 'attributes' => array('id' => 'menu-main'))); ?>
+</div>
     <?php if ($page['cart']): ?>
       <div id="cart">
         <?php print render($page['cart']); ?>
@@ -58,7 +56,12 @@ if (/*@cc_on!@*/false) {
 
       <div class="clearfix"></div>       
     <?php endif; ?>
-
+      <?php if ($page['MenuTop']): ?>
+    <div id="menuTop" style="position: absolute; left: 135px; top: 117px; ">
+   <?php print render($page['MenuTop']); ?>
+   </div>
+    <?php  endif; ?>
+      
     <div id="main">
 
       <?php if ($page['sidebar_first']): ?>

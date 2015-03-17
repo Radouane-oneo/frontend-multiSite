@@ -2994,11 +2994,11 @@ a.ui-button.inactivebtn{
 /* ---- END - PRODUCT PAGE */
 
 /* ---- PAGE Segments ---- */
-.page-segments- #content ul li a {
+/* .page-segments- #content ul li a {
 	text-align: center;
 	display: block;
-}
-.page-segments .region-content fieldset .item-list ul {
+} */
+/* .page-segments .region-content fieldset .item-list ul {
 	margin: 0 auto;
 }
 .page-segments .region-content fieldset .item-list ul li {
@@ -3009,7 +3009,7 @@ a.ui-button.inactivebtn{
 }
 .page-segments .region-content fieldset .item-list ul li img {
 	display: block;
-}
+} */
 /* ---- CART PAGE -------- */
 #block-printconnect-progress {
 	background: #fff;

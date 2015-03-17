@@ -79,7 +79,7 @@ $build['text'] = array(
             ),
           
             'price'=> array(
-            '#markup' => '<span class="txt">' . t('from_price') . '</span> ' . theme('price', array('value' => $product->sellPrice)),
+            '#markup' => '<div class="from"><span class="txt">' . t('from_price') . '</span> ' . theme('price', array('value' => $product->sellPrice)) . '</div>',
             ),
           
             'text' => array(
@@ -90,7 +90,7 @@ $build['text'] = array(
       );
       
       $products[] = array(
-          'data' => l(drupal_render($item), 'products/' . $product->id, array('html' => true)),
+          'data' => drupal_render($item),
       );
    
     }

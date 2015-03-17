@@ -101,6 +101,7 @@
 
 #block-pcmenu-main .item-box{
   float: left;
+  visibility: hidden;
   width: 20%;
   vertical-align: top;
   padding-right: 1%;

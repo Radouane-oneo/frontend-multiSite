@@ -32,6 +32,18 @@ namespace printconnect\Segments {
       };
     }
 
+ public static function LoadSegmentTemplate($id) {
+   $object = new Segments(array(), array(), FALSE, $language);
+   $params = array("segmentId" => $id );
+      Dal::LoadCollection($object, 'design-template', $params, function ($value) {
+                $object = new Segment($value);
+                $object->loaded = TRUE;
+                return $object;
+              }, $cache, $dal);
+      $object->loaded = true;
+
+      return $object;
+    }
   }
 
 }

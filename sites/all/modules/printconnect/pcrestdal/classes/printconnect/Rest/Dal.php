@@ -31,6 +31,7 @@ use printconnect\Dal\ForbiddenException;
 
     public function Get($entity, $params, $language = FALSE) {
       $url = $this->GetUrl($entity, $params, FALSE, $language);
+  
       $json = $this->fromCache($url);
 //      $json = $this->Call($url);
       return json_decode($json);
@@ -124,7 +125,6 @@ use printconnect\Dal\ForbiddenException;
 
     public function GetList($entity, $params, $language = FALSE) {
       $url = $this->GetUrl($entity, $params, FALSE, $language);
-
 //      $json = $this->fromCache($url);
  $json = $this->Call($url);
       $items = json_decode($json);

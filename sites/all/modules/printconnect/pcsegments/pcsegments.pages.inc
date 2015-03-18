@@ -35,6 +35,7 @@ function pcsegments_segments() {
 }
 
 function pcsegments_segment($id) {
+   
   $segment = \printconnect\Segments\Factory::Get($id);
   $build = array();
   try {
@@ -113,8 +114,11 @@ $build['text'] = array(
           );
 
   $i = 0;
-  if ($segment->templates && count($segment->templates)) {
-                foreach ($segment->templates as $template) {
+
+  $segmentTemplate = \printconnect\Segments\Factory::LoadSegmentTemplate($id);
+
+  if ($segmentTemplate && count($segmentTemplate)) {
+                foreach ($segmentTemplate as $template) {
                   if ($template->active) {
                     $item = array();
                     if (isset($template->thumbnail) && isset($template->thumbnail->file)) {
@@ -130,7 +134,6 @@ $build['text'] = array(
                     }
                   }
                 }
-               
                 $build['content']['nosmodel']= array('#markup' => "<div class='block-pctemplates'><div class='nosmodel'><span>Personnalisez un modèle</span><a href='".base_path()."créations-en-ligne'>Tous nos modèles GRATUITS</a></div>");
                 $build['content']['startul']= array('#markup' => "<div id='SliderCreaHomePage'><ul>");
                 $i=0; 

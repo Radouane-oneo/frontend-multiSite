@@ -33,7 +33,7 @@ use printconnect\Dal\ForbiddenException;
       $url = $this->GetUrl($entity, $params, FALSE, $language);
       $json = $this->fromCache($url);
 //      $json = $this->Call($url);
-      return json_decode($json);
+      return json_decode(utf8_encode($json));
     }
 
     public function Search($value, $entity, $language, $log = FALSE) {

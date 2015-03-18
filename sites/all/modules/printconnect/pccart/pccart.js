@@ -236,8 +236,20 @@
       $('#pccart-cart-form input[name="message"]').once().each(function(){
         alert($(this).val());
       });
-
+     // remove control 
+    $('#pccart-cart-form .removecontrol').once().click(function(){
+        if (confirm("Voulez-vous supprimer le controle  professionnel ?")) {              
+            $.post('cart/controlprof/'+$(this).attr('rel')+'/delete',{},function(){             
+            }).done(function() {
+                 location.reload();
+            });
+            return false;             
+        }else{             
+            return false;        
+        } 
+      });
     }
+     
   }
 })(jQuery);
 

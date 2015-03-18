@@ -444,7 +444,20 @@ function _pcorders_order_form_build_overview($order) {
 
   if ($order) {
     $rows = array();
-
+    
+    foreach ($order->orderItems as $item) {
+        $configs = $item->configuration->config;
+        $primaryItem = $configs[0];
+        if ($item->fileCheck) {                 
+            $rows[] = array(
+                'data' => array(
+                  t('Control professional').' '.$item->quantity . ' ' . t('pcs.') . ' ' . $item->configuration->name . ' - ' . $primaryItem->name,
+                    '',theme('price', array('value' => $item->fileCheck->price, 'free' => TRUE)),
+                ),
+            );
+        }
+    }
+    
     if ($order->orderItemsAdditional) {
       foreach ($order->orderItemsAdditional as $item) {
         $rows[] = array(

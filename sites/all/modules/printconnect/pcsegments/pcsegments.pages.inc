@@ -101,11 +101,11 @@ $build['text'] = array(
     $build['products']['items'] = array(
         '#theme' => 'item_list',
         '#items' => $products,
-        '#attributes' => array('class' => array('clearfix')),
+        '#attributes' => array('class' => array('clearfix', 'list-segment')),
     );
-    $build['products']['all'] = array(
+    /*$build['products']['all'] = array(
         '#markup' => l(t('All products'), 'products'),
-    );
+    );*/
   }
   
   $build['content'] = array(

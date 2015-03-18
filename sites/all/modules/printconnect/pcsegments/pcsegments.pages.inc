@@ -59,7 +59,6 @@ $build['text'] = array(
     '#suffix' => '</p>',
     '#markup' => $segment->name->longDescription,
 );
-
   if ($segment->products && count($segment->products)) {
     $products = array();
     $i = 0;
@@ -69,7 +68,7 @@ $build['text'] = array(
               '#theme' => 'image',
               '#path' => printconnect_getimage('products', $product->id),
               '#attributes' => array('width' =>'194', 'height' => '187'),
-              '#prefix' => '<div class="blocprd"><a href="products/' . $product->id.'">',
+              '#prefix' => '<div class="blocprd"><a href="'.$GLOBALS['base_url'].'/products/' . $product->id.'">',
             ),
           
             'name' => array(
@@ -83,7 +82,7 @@ $build['text'] = array(
             ),
           
             'text' => array(
-             '#prefix' => '<a class="order btn-cmd" href="products/' . $product->id.'"><span class="flesh"></span>',
+             '#prefix' => '<a class="order btn-cmd" href="'.$GLOBALS['base_url'].'/products/' . $product->id.'"><span class="flesh"></span>',
             '#markup' => t('Order now'),
             '#suffix' => '</a>',
             ),
@@ -114,7 +113,6 @@ $build['text'] = array(
           );
 
   $i = 0;
-
   if ($segment->templates && count($segment->templates)) {
                 foreach ($segment->templates as $template) {
                   if ($template->active) {
@@ -140,11 +138,11 @@ $build['text'] = array(
                 foreach($templatesItems as $valueItems ) {
                     $blockrow=$blockrow+1;
                 $build['content']['contentitem1'.$i]= array('#markup' => "<li class='block-pctemplates-row-". $blockrow ."'><div class='blocprd'>"); 
-                $build['content']['contentlink1'.$i] = array('#markup' =>'<a id="top10Template_'.$i.'" href="templates/' . $valueItems["id"] . '">'); 
+                $build['content']['contentlink1'.$i] = array('#markup' =>'<a id="top10Template_'.$i.'" href="'.$GLOBALS['base_url'].'/templates/' . $valueItems["id"] . '">'); 
                 $build['content']['thumb'.$i] = array('#markup' => theme('pcfilesthumb', array('file' => $valueItems["thumbnail"], 'alt' => array('#markup'=>$valueItems->name),'attributes' => array('width' => '194', 'height' => '194'),))); 
                 $build['content']['name'.$i] = array('#markup' => "<h2>". $valueItems["productsname"] ."</h2></a></div>",); 
                 $build['content']['productName'.$i] = array('#markup' =>'<div class="from"><span class="txt">'.$valueItems["name"].'</span></div>');
-                $build['content']['link'.$i] = array('#markup' =>'<a class="btn-cmd" href="templates/'.$valueItems["id"].'"><span class="flesh"></span>Utiliser ce modèle</a>');
+                $build['content']['link'.$i] = array('#markup' =>'<a class="btn-cmd" href="'.$GLOBALS['base_url'].'/templates/'.$valueItems["id"].'"><span class="flesh"></span>Utiliser ce modèle</a>');
                 $build['content']['contentitem2'.$i]= array('#markup' => "</li>"); $i++; } 
                 $build['content']['endul']= array('#markup' => "</ul></div></div>");
   }

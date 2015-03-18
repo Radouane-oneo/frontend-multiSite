@@ -17,10 +17,10 @@
       };
 
       //on page load 
-      isotopeFunction('.isotope'); 
+      //isotopeFunction('.isotope'); 
 
       //on hover of menu
-      $('#block-pcmenu-main li.expandable').mouseenter(function() {
+      /*$('#block-pcmenu-main li.expandable').mouseenter(function() {
         isotopeFunction($(this).find('.isotope'));
         var that = this;
         setTimeout(function(){
@@ -35,7 +35,7 @@
         $(this).find('.item-box').css({
             'visibility': 'hidden'
         });
-      });
+      });*/
        
     }
   }

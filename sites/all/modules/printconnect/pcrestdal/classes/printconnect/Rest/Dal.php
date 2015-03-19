@@ -32,9 +32,17 @@ use printconnect\Dal\ForbiddenException;
     public function Get($entity, $params, $language = FALSE) {
       $url = $this->GetUrl($entity, $params, FALSE, $language);
   
-      $json = $this->fromCache($url);
-//      $json = $this->Call($url);
-      return json_decode(utf8_encode($json));
+            if(variable_get('pc_env', 'production') == 'production') {
+                $json = $this->fromCache($url);
+            }else {
+                $json = $this->Call($url);
+                if(preg_match('/store/', $entity)) {
+                    $input = iconv('UTF-8', 'UTF-8//IGNORE', utf8_encode($json));
+                    $json = json_decode($input);
+                    return $json;
+                }
+            }
+	return json_decode($json);
     }
 
     public function Search($value, $entity, $language, $log = FALSE) {

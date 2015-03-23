@@ -1086,6 +1086,11 @@ function pccart_cart_form2($form, &$form_state) {
 
         $form['isFilled'] = array('#value' => $cart->isFilled);
         $form['trackingVenteCart'] = array('#markup' => '<script type="text/javascript" src="http://img.metaffiliation.com/u/15/p44459.js?zone=panier&montant='.$totalPrice.'&listeids='.$listProductId.'"></script>',);
+       
+         $form['link'] = array(
+                '#type' => 'item',
+                '#markup' => '<div class="rteright"><a href="nos-produits">Continuer vos achats</a></div>',
+            );
         
         }
 

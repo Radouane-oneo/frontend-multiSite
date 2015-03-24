@@ -183,7 +183,6 @@ padding-bottom: 5px;
 }
 .prodactHasTemplates .poll-form:not(.first){
   margin-left: 60px;
-  padding-left: 60px;
 }
 .poll-form .visu{
   height: 95px;

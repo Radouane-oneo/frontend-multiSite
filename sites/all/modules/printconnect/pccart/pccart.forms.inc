@@ -489,11 +489,13 @@ function pccart_cart_form2($form, &$form_state) {
                     $_SESSION['cart']['items'][$item->id]['template'] = $template->id;
                     if ($ProdactHasTemplates) {
                         $form['cart']['items'][$item->id]['product-container'] = array(
+                      '#prefix' => '<div class="prodactTemplates">',
+                      '#suffix' => '</div>',
                         );
                     } else {
                         $form['cart']['items'][$item->id]['product-container'] = array(
-                      '#prefix' => '<div class="prodactHasTemplates">',
-                      '#suffix' => '</div>',
+                      '#prefix' => '<div class="prodactTemplates"><div class="prodactHasTemplates">',
+                      '#suffix' => '</div></div>',
                         );
                     }
 
@@ -586,7 +588,6 @@ function pccart_cart_form2($form, &$form_state) {
                     '#type' => 'submit',
                     '#src' => drupal_get_path('module', 'pccart') . '/images/delete.png',
                     '#name' => 'delete_item_' . $item->id,
-//                    '#value' => t('Suprimer du panier'),
                     '#attributes' => array('class' => array('removecart', 'noreplace')),
                     '#validate' => array('pccart_cart_form2_delete_item_validate'),
                     '#submit' => array('pccart_cart_form2_delete_item_submit'),

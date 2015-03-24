@@ -4,3 +4,7 @@
 .page-upload-design .title{
   width:50%;
 }
+.inputdesigner label{
+      width: 239px;
+  float: left;
+}

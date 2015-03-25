@@ -175,9 +175,12 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
     );
 
     $oldValues = $form_state['values']["slectedvalue"];
+     $oldItems = explode("-",$oldValues);
     $selectedToolBoxItem = $form_state['values']["selectedToolBoxItem"];
     $currentItems = $newItems = $items;
-
+    if (!empty($oldItems)) {
+        $items = $oldItems;
+    }
     $defaults = \printconnect\Products\Configurations\Factory::GetDefaults($productId, $items);
     $priceGroupId = $defaults->priceGroupId;
     $diff = array_diff($defaults->toolboxItems, $items);
@@ -245,6 +248,7 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
     } else {
       $text = '';
       $fistElement = current($group->data);
+      $oldValueSelected[] = $fistElement->id;
       if($fistElement->id != $productId){
         $newItems[$group->id] = $fistElement->id;
       }
@@ -274,7 +278,7 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
 
   $newItems = array_unique($newItems);
 
-    $defaults = \printconnect\Products\Configurations\Factory::GetDefaults($productId, $tokeep);
+    //$defaults = \printconnect\Products\Configurations\Factory::GetDefaults($productId, $tokeep);
     $priceGroupId = $defaults->priceGroupId;
     $allOptions = \printconnect\Products\Options\Factory::GetOptions($productId, $newItems);
     $allOptions = $allOptions->toKeyedArray();

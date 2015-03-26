@@ -269,7 +269,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         }
         $form['order']['details']['item'][$item->id]['image']['download'] = array(
             '#theme' => 'pcfilesdownloadlink',
-            '#file' => $file->file,
+            '#file' => pcdesigntool_preview_url($file->designToolJobId),
             '#title' => t('Download preview'),
         );
         /*

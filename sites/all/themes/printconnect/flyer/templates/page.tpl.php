@@ -20,8 +20,14 @@ if (/*@cc_on!@*/false) {
 
 <div id="canvas">
   <div class="bg_header"></div>
+  <?php if ($page['MenuTop']): ?>
+      <div id="menuTop">
+          <div class="container">
+            <?php print render($page['MenuTop']); ?>
+          </div>
+      </div>
+    <?php  endif; ?>
   <div class="container">
-
     <?php if ($page['top']): ?>
       <div id="top">
         <?php print render($page['top']); ?>
@@ -44,13 +50,11 @@ if (/*@cc_on!@*/false) {
         <?php endif; ?>
 
       </div>
-  <?php if ($main_menu): ?>
-  <div id="menuTop">
 
-        <?php print theme('links__system_main_menu', array('links' => $main_menu, 'attributes' => array('id' => 'main-menu'))); ?>
-        </div>
-      <?php endif; ?>
-    </div>
+</div>
+ <div class="menu">
+      <?php print theme('links__system_main_menu', array('links' => $main_menu, 'attributes' => array('id' => 'menu-main'))); ?>
+</div>
     <?php if ($page['cart']): ?>
       <div id="cart">
         <?php print render($page['cart']); ?>

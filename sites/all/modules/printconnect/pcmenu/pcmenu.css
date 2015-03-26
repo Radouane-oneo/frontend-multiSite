@@ -1,0 +1,139 @@
+/* ### By Mouhsni Mohamed ### */
+
+#menuTop{
+  position: absolute;
+  top: 126px;
+  width: 100%;
+  z-index: 5;
+}
+
+#menuTop .container{
+  position: static;
+}
+
+#block-pcmenu-main{
+  display:block;
+  clear:both;
+}
+
+#block-pcmenu-main > .content > ul{
+  overflow: hidden;
+  margin: 0 0 0 175px;
+  padding: 0;
+}
+
+#block-pcmenu-main > .content > ul > li{
+  float:left;
+  padding-left:14px;
+  list-style:none;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  background: url(images/puce.png) no-repeat 5px center;
+}
+
+#block-pcmenu-main > .content > ul > li:first-child{
+  padding-left:0;
+  background: none;
+}
+
+#block-pcmenu-main > .content > ul > li > a{
+  font-size: 12px;
+  color: #ffffff;
+  text-transform: uppercase;
+  line-height: 15px;
+  text-decoration: none;
+  display: block;
+  font-weight: 700;
+}
+
+#block-pcmenu-main > .content > ul > li > .dropdown{
+    z-index: 10;
+    position: absolute;
+    display: none;
+    background-color: #FF6600;
+    top: 51px;
+    width: 100%;
+    left: 0;
+}
+#block-pcmenu-main .dropdown .content{
+  margin: 0 auto;
+  padding: 0;
+  width: 1032px;
+  padding-top: 17px;
+}
+
+#block-pcmenu-main > .content > ul > li:hover > .dropdown{
+  display: block;
+}
+
+#block-pcmenu-main > .content > ul > li a.active-trail,
+#block-pcmenu-main > .content > ul > li:hover > a{
+  color: #ff6600;
+}
+
+#block-pcmenu-main .dropdown h2{
+  color: #fff;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 700;
+  line-height: 14px;
+  margin: 0 0 22px;
+}
+#block-pcmenu-main .dropdown .isotope h2{
+  margin: 0 0 10px;
+}
+
+#block-pcmenu-main .dropdown a{
+  color: #fff;
+  font-size: 13px;
+  line-height: 14px;
+}
+
+#block-pcmenu-main .dropdown a:hover{
+  text-decoration: underline;
+}
+
+#block-pcmenu-main .dropdown li{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#block-pcmenu-main .item-box{
+  /*float: left;
+   visibility: hidden; 
+  width: 20%;
+  padding-right: 1%;
+  padding-bottom: 12px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;*/
+  padding-bottom: 12px;
+  vertical-align: top;
+}
+#block-pcmenu-main .item-box ul{
+  margin: 0;
+}
+
+/* clear fix */
+.isotope {
+  -webkit-columns: 5;
+  -moz-columns: 5;
+  columns: 5;
+  -webkit-column-gap: 2em;
+  -moz-column-gap: 2em;
+  column-gap: 2em;
+}
+
+
+.isotope .item-box{
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.isotope:after {
+  content: '';
+  display: block;
+  clear: both;
+}

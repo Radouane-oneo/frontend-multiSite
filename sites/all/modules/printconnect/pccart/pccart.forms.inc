@@ -489,11 +489,13 @@ function pccart_cart_form2($form, &$form_state) {
                     $_SESSION['cart']['items'][$item->id]['template'] = $template->id;
                     if ($ProdactHasTemplates) {
                         $form['cart']['items'][$item->id]['product-container'] = array(
+                      '#prefix' => '<div class="prodactTemplates">',
+                      '#suffix' => '</div>',
                         );
                     } else {
                         $form['cart']['items'][$item->id]['product-container'] = array(
-                      '#prefix' => '<div class="prodactHasTemplates">',
-                      '#suffix' => '</div>',
+                      '#prefix' => '<div class="prodactTemplates"><div class="prodactHasTemplates">',
+                      '#suffix' => '</div></div>',
                         );
                     }
 
@@ -502,9 +504,9 @@ function pccart_cart_form2($form, &$form_state) {
                     );
                   
                         $form['cart']['items'][$item->id]['product-container']['proflink'] = array(
-                        '#prefix' => '<div class="poll-form first"> <p>'.t('Vous avais déja un fichier ?').'</p>',
-                        '#suffix' => '<p class="txto">'.t('Importez votre').'<br>'.t('fichier en ligne').'</p></div> ',
-                        '#content'=> array('#markup' => '<div class="visu img1"><div class="text">'.t('IMPORTEZ-LE').'</div></div>',),
+                        '#prefix' => '<div class="poll-form first">',
+                        '#suffix' => '<p class="txto">'.t('télécharger vos fichiers').'</p></div> ',
+                        '#content'=> array('#markup' => '<div class="text">'.t("j'ai déjà mon lay-out").'</div>',),
                         '#theme' => 'designtoolproflink',
                         '#templateId' => $template->id,
                         '#title' => $product->name . ' ' . $firstConfig->name,
@@ -519,10 +521,10 @@ function pccart_cart_form2($form, &$form_state) {
                     );
             
                         $form['cart']['items'][$item->id]['product-container']['upload']['link'] = array(
-                        '#prefix' => '<div class="poll-form "> <p>'.t('Vous n\'avez pas de fichier ?').'</p>',
-                        '#suffix' => '<p class="txto">'.t('Créez votre fichier facilement').'<br>'.t('grâce à notre outil en ligne').'</p></div> ',
+                        '#prefix' => '<div class="poll-form ">',
+                        '#suffix' => '<p class="txto">'.t('utilisez le designtool').'</p></div> ',
                         '#theme' => 'designtoollink',
-                        '#content'=> array('#markup' => '<div class="visu img2"><div class="text">'.t('CREEZ-LE').'</div></div>',),
+                        '#content'=> array('#markup' => '<div class="text">'.t('je crée en ligne').'</div>',),
                         '#templateId' => $template->id,
                         '#title' => $product->name . ' ' . $firstConfig->name,
                         '#html' => true,
@@ -546,10 +548,10 @@ function pccart_cart_form2($form, &$form_state) {
                         if($ProdactHasTemplates){
 
                     $form['cart']['items'][$item->id]['product-container']['modele'] = array(
-                        '#prefix' => '<div class="poll-form"> <p>'.t('Personalisez un modèle ?').'</p>',
-                        '#suffix' => '<p class="txto">'.t('Des milliers de modèles').'<br>'.t('gratuits disponibles').'</p></div>',
+                        '#prefix' => '<div class="poll-form">',
+                        '#suffix' => '<p class="txto">'.t('choisissez parmis 6000 créas').'</p></div>',
                         '#theme' => 'designtoolModele',
-                         '#content'=> array('#markup' => '<div class="visu img3"><div class="text">'.t('CHOISISSZ-LE').'</div></div>',),
+                         '#content'=> array('#markup' => '<div class="text">'.t("j'utilise un modèle").'</div>',),
                         '#templateId' => $template->id,
                         '#title' => $product->name . ' ' . $firstConfig->name,
                         '#html' => true,
@@ -586,7 +588,6 @@ function pccart_cart_form2($form, &$form_state) {
                     '#type' => 'submit',
                     '#src' => drupal_get_path('module', 'pccart') . '/images/delete.png',
                     '#name' => 'delete_item_' . $item->id,
-                    '#value' => t('Suprimer du panier'),
                     '#attributes' => array('class' => array('removecart', 'noreplace')),
                     '#validate' => array('pccart_cart_form2_delete_item_validate'),
                     '#submit' => array('pccart_cart_form2_delete_item_submit'),
@@ -1086,6 +1087,11 @@ function pccart_cart_form2($form, &$form_state) {
 
         $form['isFilled'] = array('#value' => $cart->isFilled);
         $form['trackingVenteCart'] = array('#markup' => '<script type="text/javascript" src="http://img.metaffiliation.com/u/15/p44459.js?zone=panier&montant='.$totalPrice.'&listeids='.$listProductId.'"></script>',);
+       
+         $form['link'] = array(
+                '#type' => 'item',
+                '#markup' => '<div class="rteright"><a href="nos-produits">Continuer vos achats</a></div>',
+            );
         
         }
 
@@ -1095,8 +1101,9 @@ function pccart_cart_form2($form, &$form_state) {
     $form['#tree'] = TRUE;
     $form['#id'] = 'pccart-cart-form';
     
+   
      /* Start bloc TOP produits */
-    
+       
         $form['products'] = array(
             '#type' => 'fieldset',
             '#title' => t('Top products'),

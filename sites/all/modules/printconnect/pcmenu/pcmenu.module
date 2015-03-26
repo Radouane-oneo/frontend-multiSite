@@ -1,0 +1,112 @@
+<?php
+
+use printconnect\Drupal\Functions;
+use printconnect\Cache;
+
+function pcmenu_block_info() {
+  $blocks['main'] = array(
+      'info' => t('PC main menu'),
+  );
+  return $blocks;
+}
+
+function pcmenu_block_view($delta = '') {
+  drupal_add_css(drupal_get_path('module', 'pcmenu') . '/pcmenu.css');
+  drupal_add_js(drupal_get_path('module', 'pcmenu') . '/pcmenu.js');
+  $block = array();
+  try {
+    switch ($delta) {
+      case 'main':
+        $block['content'] = _pcmenu_main();
+        return $block;
+        break;
+    }
+    return $block;
+  } catch (\Exception $ex) {
+    Functions::HandleException($ex);
+  }
+}
+
+function pcmenu_pcmenumain() {
+//  $items['home'] = array(
+//      '#link' => '<front>',
+//      '#title' => t('Home'),
+//      '#weight' => 20,
+//  );
+//  return $items;
+}
+
+
+
+function pcmenu_in_active_trail($path) {
+  $active_paths = &drupal_static(__FUNCTION__);
+
+  // Gather active paths.
+  if (!isset($active_paths)) {
+    $active_paths = array();
+    $trail = menu_get_active_trail();
+    foreach ($trail as $item) {
+      if (!empty($item['href'])) {
+        $active_paths[] = $item['href'];
+      }
+    }
+  }
+  if ($path == '<front>' && count($active_paths) > 1) {
+    return FALSE;
+  }
+  if ($path == '<front>') {
+    return FALSE;
+  }
+
+  return in_array($path, $active_paths);
+}
+
+function _pcmenu_main() {
+  global $language;
+    $items = module_invoke_all('pcmenumain');
+    drupal_alter('pcmenumain', $items);
+    uasort($items, 'element_sort');
+    $result = '<ul>';
+    foreach ($items as $item) {
+      if (isset($item['#dropdown'])) {
+        $dropdown = '<div class="dropdown"><div class="arrow"></div><div class="content">';
+        $dropdown .= drupal_render($item['#dropdown']) . '</div></div>';
+        $item['#attributes']['class'][] = 'expandable';
+      } else {
+        $dropdown = '';
+      }
+
+      if (isset($item['#link']) && pcmenu_in_active_trail($item['#link'])) {
+        $item['#attributes']['class'][] = 'active-trail';
+      }
+
+      if (isset($item['#attributes'])) {
+        $result .= '<li ' . drupal_attributes($item['#attributes']) . '>';
+      } else {
+        $result .= '<li>';
+      }
+      
+      if (isset($item['#title'])) {
+        $title = $item['#title'];
+
+        if (isset($item['#description'])) {
+          $description = $item['#description'];
+        } else {
+          $description = $title;
+        }
+        $result .= l($title, $item['#link'], array('attributes' => array('title' => $description), 'html' => TRUE));
+      }
+     
+      $result .= drupal_render($item);
+
+      $result .= $dropdown;
+   
+      $result .= '</li>';
+    }
+    $result .= '</ul>';
+    $result .= '<div class="clearfix"></div>';
+ 
+  return $result;
+}
+
+

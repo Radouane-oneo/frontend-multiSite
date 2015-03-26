@@ -896,3 +896,54 @@ function pcproducts_filter($code) {
   }
   return $code;
 }
+
+function pcproducts_pcmenumain() {
+  global $user;
+  $products = Factory::GetAll();
+  $products->EnsureLoaded();
+  $alphaArray = _pcproducts_alpha_array();
+  $products = _pcproducts_activeproducts();
+  $products = Factory::GetTop();
+  $i = 0;
+  $top = variable_get('pcproducts_top', 3);
+  
+  foreach ($products as $product) {
+    $i++;
+    $class = array();
+    if ($i < $top) {
+      $class[] = 'top';
+    }
+    if ($i <= 5) {
+      $top10[] = l($product->name, 'products/' . $product->id, array('html' => TRUE, 'attributes' => array('title' => $product->name, 'class' => $class)));
+    } else {
+      break;
+    }
+  }
+    
+  $menuItems['product'] = array(
+      '#title' => t('Products'),
+      '#link' => 'products',
+      '#description' => t('Our product catalog'),
+      '#weight' => 10,
+      '#dropdown' => array(
+          'products' => array(
+              '#type' => 'container',
+              '#attributes' => array('class' => array('products', 'clearfix')),
+              'header' => array('#markup' => '<h2>' . t('Products A-Z') . '</h2>'),
+              'second' => array(
+                  '#type' => 'container',
+                  '#attributes' => array('class' => array('sepcond','ctn-menu-dropdown','isotope')),
+              ),
+          ),
+      ),
+  );
+  
+    $content[0] = $alphaArray;
+    foreach ($content[0] as $letter => $products) {
+    $menuItems['product']['#dropdown']['products']['second'][$letter] = array(
+        'header' => array('#markup' => '<div class="item-box box-'. $letter . '"><h2>' . $letter . '</h2>'),
+        'list' => array('#markup' => theme('item_list', array('items' => $products)) . '</div>'),
+        );
+    }
+  return $menuItems;
+}

@@ -4,10 +4,10 @@ package = printconnect
 core = 7.x
 
 stylesheets[all][] = pcsegments.css
-stylesheets[all][] = jquery.qtip.css
+#stylesheets[all][] = jquery.qtip.css
 
 
-scripts[] = jquery.qtip.min.js
-scripts[] = pcsegments.js
+#scripts[] = jquery.qtip.min.js
+#scripts[] = pcsegments.js
 
 dependencies[] = pcproducts

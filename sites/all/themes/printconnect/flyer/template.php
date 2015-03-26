@@ -255,8 +255,9 @@ unset($javascript['sites/all/modules/printconnect/pccheckout/pccheckout.js']);
 unset($javascript['sites/all/modules/printconnect/pccustomers/pccustomers.js']);
 unset($javascript['sites/all/modules/printconnect/pcdesigner/pcdesigner.js']);
 unset($javascript['sites/all/modules/printconnect/pcflyerstores/pcflyerstores_map.js']);
-unset($javascript['sites/all/modules/printconnect/pcflyerstores/lib/isotope.pkgd.min.js']);
-unset($javascript['sites/all/modules/printconnect/pcflyerstores/lib/jquery.jcarousel.js']);	  unset($javascript['sites/all/modules/printconnect/pccart/pccart.js']);
+//unset($javascript['sites/all/modules/printconnect/pcflyerstores/lib/isotope.pkgd.min.js']);
+//unset($javascript['sites/all/modules/printconnect/pcflyerstores/lib/jquery.jcarousel.js']);	
+unset($javascript['sites/all/modules/printconnect/pccart/pccart.js']);
 unset($javascript['sites/all/modules/printconnect/pcsegments/pcsegments.js']);
 
 unset($javascript['sites/all/modules/printconnect/pctemplates/pctemplates.js']);

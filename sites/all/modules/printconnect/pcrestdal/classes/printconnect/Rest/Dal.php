@@ -105,7 +105,8 @@ use printconnect\Dal\ForbiddenException;
       if ($entity == 'design-template' || $entity == 'design-template-filter') {
                 $url = $this->url . $entity . "/?";
                 if(array_key_exists("designTemplateId", $params)) {
-                    $url = $this->url . $entity . "/get/?";
+                  // supprimer par moi loubna, merci de revenir vers moi pour plus de detail
+                  // $url = $this->url . $entity . "/get/?";
                 }
                 if ($params && count($params) > 0) {
                     $queryParams = array();

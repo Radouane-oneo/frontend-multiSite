@@ -61,9 +61,9 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
     if (isset($form_state['values']['product']['select'])) {
         $productId = $form_state['values']['product']['select'];
     }
-    if (isset($form_state['values']['items'])) {
+    if (isset($_POST['items'])) {
         $items = array();
-        foreach ($form_state['values']['items'] as $selectedItem) {
+        foreach ($_POST['items'] as $selectedItem) {
             $items[] = $selectedItem['select'];
         }
     } else {
@@ -260,11 +260,11 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
           continue;
         }
       }
-
+      $theItem ='<select style="display:none;" name="items['.$group->id.'][select]"><option value="'.$item->id.'">'.$item->id.'</option></select>';
       $form['items'][$group->id]['select'] = array(
           '#type' => 'item',
           '#title' => $group->name,
-          '#markup' => '<div class="text">' . $text . '</div>',
+          '#markup' => '<div class="text">' . $text . $theItem.'</div>',
       );
 
     }

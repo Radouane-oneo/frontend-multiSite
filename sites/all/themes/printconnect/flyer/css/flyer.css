@@ -720,7 +720,11 @@ div#cart{
 body.one-sidebar #content {
 	width: 855px
 }
-
+.one-sidebar #block-pcmenu-main > .content > ul {
+  margin: 0 0 0 5px;
+  overflow: hidden;
+  padding: 0;
+}
 body.two-sidebars #content {
 	width: 680px;
 	margin-bottom: 10px;
@@ -3212,7 +3216,7 @@ legend {
 color: #f60;
 font-size: 40px;
 top: 10px;
-right: 10px;
+  right: 29px;
 font-weight: bold;
 line-height: normal\9;
 }

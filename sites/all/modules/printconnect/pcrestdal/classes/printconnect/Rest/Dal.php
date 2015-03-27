@@ -31,9 +31,18 @@ use printconnect\Dal\ForbiddenException;
 
     public function Get($entity, $params, $language = FALSE) {
       $url = $this->GetUrl($entity, $params, FALSE, $language);
-      $json = $this->fromCache($url);
-//      $json = $this->Call($url);
-      return json_decode($json);
+  
+            if(variable_get('pc_env', 'production') == 'production') {
+                $json = $this->fromCache($url);
+            }else {
+                $json = $this->Call($url);
+                if(preg_match('/store/', $entity)) {
+                    $input = iconv('UTF-8', 'UTF-8//IGNORE', utf8_encode($json));
+                    $json = json_decode($input);
+                    return $json;
+                }
+            }
+	return json_decode($json);
     }
 
     public function Search($value, $entity, $language, $log = FALSE) {
@@ -96,13 +105,14 @@ use printconnect\Dal\ForbiddenException;
       if ($entity == 'design-template' || $entity == 'design-template-filter') {
                 $url = $this->url . $entity . "/?";
                 if(array_key_exists("designTemplateId", $params)) {
-                    $url = $this->url . $entity . "/get/?";
+                   $url = $this->url . $entity . "/get/?";
                 }
                 if ($params && count($params) > 0) {
                     $queryParams = array();
                     foreach ($params as $key => $value) {
                         if ($key == "productId" || $key == "segmentId") {
-                             $key = str_ireplace("Id", "", $key);
+                            // supprimer par moi loubna, merci de revenir vers moi pour plus de detail
+                            // $key = str_ireplace("Id", "", $key);
                         }
                         $queryParams[] = "$key=$value";
                     }
@@ -124,7 +134,6 @@ use printconnect\Dal\ForbiddenException;
 
     public function GetList($entity, $params, $language = FALSE) {
       $url = $this->GetUrl($entity, $params, FALSE, $language);
-
 //      $json = $this->fromCache($url);
  $json = $this->Call($url);
       $items = json_decode($json);

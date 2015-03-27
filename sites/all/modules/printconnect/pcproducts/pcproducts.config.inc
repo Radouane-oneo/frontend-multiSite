@@ -61,10 +61,10 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
     if (isset($form_state['values']['product']['select'])) {
         $productId = $form_state['values']['product']['select'];
     }
-    if (isset($form_state['values']['items'])) {
+    if (isset($_POST['items'])) {
         $items = array();
-        foreach ($form_state['values']['items'] as $selectedItem) {
-            $items[] = $selectedItem['select'];
+        foreach ($_POST['items'] as $selectedItem) {
+                $items[] = $selectedItem['select'];
         }
     } else {
         $items = explode(',', $items);
@@ -175,12 +175,13 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
     );
 */
     $oldValues = $form_state['values']["slectedvalue"];
+     $oldItems = explode("-",$oldValues);
     $selectedToolBoxItem = $form_state['values']["selectedToolBoxItem"];
     $currentItems = $newItems = $items;
-
     $defaults = \printconnect\Products\Configurations\Factory::GetDefaults($productId, $items);
     $priceGroupId = $defaults->priceGroupId;
     $diff = array_diff($defaults->toolboxItems, $items);
+    $itemsDfaults = $defaults->toolboxItems;
     if (count($diff) == 1) {
         foreach ($diff as $k => $v) {
             $newItems[] = $diff[$k];
@@ -199,7 +200,7 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
     }
     $oldValueSelected = array();
     $tokeep = $newItems;
-    $tree = \printconnect\Products\Configurations\Factory::GetTree($productId, $newItems);
+    $tree = \printconnect\Products\Configurations\Factory::GetTree($productId, $itemsDfaults);
 
 
     $idsGroups = $form_state['storage']['idsGroups'];
@@ -209,11 +210,13 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
     //}
 
  $idsGroups = array();
+ $groupCounter = 0;
  foreach ($groups as $key=>$group) {
-    $idsGroups[$key] = $group->id;
+    $groupCounter++;
+    $idsGroups[$key] = $groupCounter;
 
     if (count((array) $group->data) > 1) {
-      $form['items'][$group->id]['select'] = array(
+      $form['items'][$groupCounter]['select'] = array(
           '#type' => 'select',
           '#title' => $group->name,
           '#id' => 'group-' . $group->id,
@@ -238,13 +241,14 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
           $text .= ' |' . $detail . '|';
         }
 
-        $form['items'][$group->id]['select']['#options'][$item->id] = $text;
+        $form['items'][$groupCounter]['select']['#options'][$item->id] = $text;
       }
-      $form['items'][$group->id]['select']['#default_value'] = $defaultValue;
+      $form['items'][$groupCounter]['select']['#default_value'] = $defaultValue;
       $oldValueSelected[] = $defaultValue;
     } else {
       $text = '';
       $fistElement = current($group->data);
+      $oldValueSelected[] = $fistElement->id;
       if($fistElement->id != $productId){
         $newItems[$group->id] = $fistElement->id;
       }
@@ -260,23 +264,23 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
           continue;
         }
       }
-
-      $form['items'][$group->id]['select'] = array(
+      $theItem ='<select style="display:none;" name="items['.$groupCounter.'][select]"><option value="'.$item->id.'">'.$item->id.'</option></select>';
+      $form['items'][$groupCounter]['select'] = array(
           '#type' => 'item',
           '#title' => $group->name,
-          '#markup' => '<div class="text">' . $text . '</div>',
+          '#markup' => '<div class="text">' . $text . $theItem.'</div>',
       );
 
     }
 
-    $form['items'][$group->id]['select']['#description'] = t('description on toolbox ' . $group->id);
+    $form['items'][$groupCounter]['select']['#description'] = t('description on toolbox ' . $group->id);
   }
 
   $newItems = array_unique($newItems);
 
-    $defaults = \printconnect\Products\Configurations\Factory::GetDefaults($productId, $tokeep);
+    //$defaults = \printconnect\Products\Configurations\Factory::GetDefaults($productId, $tokeep);
     $priceGroupId = $defaults->priceGroupId;
-    $allOptions = \printconnect\Products\Options\Factory::GetOptions($productId, $newItems);
+    $allOptions = \printconnect\Products\Options\Factory::GetOptions($productId, $itemsDfaults);
     $allOptions = $allOptions->toKeyedArray();
     $availableOptions = array();
     $availableOptionsIds = array();
@@ -482,7 +486,7 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
 
     $shipsIn = FALSE;
     $deliveryDate = FALSE;
-    $shipping = \printconnect\Products\Shipping\Factory::Get($productId, $items, $options, $qty);
+    $shipping = \printconnect\Products\Shipping\Factory::Get($productId, $itemsDfaults, $options, $qty);
     if (count($shipping->items)) {
         $firstDeadline = $shipping->items[0];
         $deadlineDate = $firstDeadline->deadlineDate;
@@ -564,7 +568,7 @@ function pcproducts_config_form($form, &$form_state, $productId = 1, $items = ''
     );
 
     if (count($newItems)) {
-        $templates = \printconnect\Products\Templates\Factory::GetTemplates($productId, $tokeep);
+        $templates = \printconnect\Products\Templates\Factory::GetTemplates($productId, $itemsDfaults);
         $templates->EnsureLoaded();
         if (count($templates->items)) {
             $template = $templates->items[0];

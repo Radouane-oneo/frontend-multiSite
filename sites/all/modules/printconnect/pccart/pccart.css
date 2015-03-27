@@ -150,17 +150,21 @@ padding-bottom: 5px;
 #block-pccart-shipping .delivery{
   background:url(../printconnect/images/shipping/pt_icon_3.png) top center no-repeat;
 }
-
+.poll-form a{
+      color: #FFF !important;
+      font-size: 14px !important;
+}
 .poll-form {
+      padding-top: 15px;
+  padding-bottom: 15px;
   text-align: center;
   float: left;
   margin-left: 12px;
   padding-left: 15px;
   width: 195px;
-  background: url(images/bg_items.png) repeat-y 0 0;
+  background-color: #FF6600;
 }
 .poll-form.first{
-  background: none;
   padding-left: 0;
   margin-left: 0;
 }
@@ -179,14 +183,13 @@ padding-bottom: 5px;
 }
 .prodactHasTemplates .poll-form:not(.first){
   margin-left: 60px;
-  padding-left: 60px;
 }
 .poll-form .visu{
   height: 95px;
   background-position: center;
   background-repeat: no-repeat;
 }
-.poll-form .img1{
+/*.poll-form .img1{
   background-image: url(images/importez.png);
 }
 .poll-form .img2{
@@ -194,7 +197,7 @@ padding-bottom: 5px;
 }
 .poll-form .img3{
   background-image: url(images/choisisser.png);
-}
+}*/
 .poll-form a{
   font-weight: bold;
   color: #ff6600;
@@ -202,9 +205,9 @@ padding-bottom: 5px;
 }
 .poll-form .txto{
   font-weight: normal;
-  color: #444444;
-  font-size: 11px;
-  margin-top: 10px;
+  color: #FFF;
+  font-size: 13px !important;
+
 }
 .img2 .text {
 margin-right: 23px;
@@ -513,8 +516,8 @@ border-radius: 0;
 #pccart-cart-form .items_actions {
     width: 174px;
     position: absolute;
-    top: 34px;
-    left: 482px;
+    top: -18px;
+     left: 490px
 }
 
 .page-cart .title-chose{
@@ -564,4 +567,50 @@ float: left;
 }
 .page-cart #pccart-cart-form .item .description{
 	margin-bottom:	0px;
+}
+.page-cart #pccart-cart-form .control-block{
+    clear: both;
+    overflow: hidden;
+    padding-top: 20px;
+}
+.page-cart #pccart-cart-form .control-block .text{
+    float: left;
+    width: 575px;
+}
+.page-cart #pccart-cart-form .control-block .text h3{
+    float: left;
+    margin: 0;
+    max-width: 520px;
+    text-transform: none;
+    
+}
+.page-cart #pccart-cart-form .control-block .text .price{
+    float: right;
+    font-size: 14px;
+    position: static;
+    right: 0;
+   
+    margin-top:3px;
+}
+
+.page-cart #pccart-cart-form .control-block .text .price span{
+     color: #ff6600 !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+}
+body.page-cart #pccart-cart-form .control-block .removecontrol{
+    background: url("images/bg_btns.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    clear: none;
+    float: right;
+    margin: 4px 0 0;
+    width: 18px;
+    border: medium none;
+    color: #646464;
+    cursor: pointer;
+    font-size: 12px;
+    height: 20px;
+    padding-bottom: 5px;
+    padding-left: 4px;
+    padding-top: 0;
+  
 }

@@ -116,7 +116,6 @@ $build['text'] = array(
   $i = 0;
 
   $segmentTemplate = \printconnect\Segments\Factory::LoadSegmentTemplate($id);
-var_dump($segmentTemplate);die;
   if ($segmentTemplate && $segmentTemplate[0]) {
                 foreach ($segmentTemplate as $template) {
                   if ($template->active) {

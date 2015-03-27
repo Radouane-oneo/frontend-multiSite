@@ -6,6 +6,7 @@ use printconnect\Cache;
 function pcmenu_block_info() {
   $blocks['main'] = array(
       'info' => t('PC main menu'),
+      'cache' => DRUPAL_NO_CACHE,
   );
   return $blocks;
 }

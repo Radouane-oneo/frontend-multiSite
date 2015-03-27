@@ -111,8 +111,7 @@ use printconnect\Dal\ForbiddenException;
                     $queryParams = array();
                     foreach ($params as $key => $value) {
                         if ($key == "productId" || $key == "segmentId") {
-                            // supprimer par moi loubna, merci de revenir vers moi pour plus de detail
-                            // $key = str_ireplace("Id", "", $key);
+                            $key = str_ireplace("Id", "", $key);
                         }
                         $queryParams[] = "$key=$value";
                     }

@@ -411,7 +411,7 @@ function pccart_cart_form2($form, &$form_state) {
                     $form['cart']['items'][$item->id]['control']['text'] = array(                 
                         '#prefix' => '<div class="text">',
                         '#suffix' => '</div>',
-                        '#markup'=>'<h3>'.t('Control professional').' '.$item->quantity . ' ' . t('pcs.') . ' ' . $product->name . ' ' . $firstConfig->name.'</h3><span class="price"><span class="value"><span class="currency">€</span>&nbsp;<span class="whole">4</span><span class="decimalpoint">,</span><span class="decimals">99</span></span></span>',
+                        '#markup'=>'<h3>'.t('Control professional').' '.$item->quantity . ' ' . t('pcs.') . ' ' . $product->name . ' ' . $firstConfig->name.'</h3><span class="price"><span class="value">&nbsp;<span class="whole">4</span><span class="decimalpoint">,</span><span class="decimals">99</span><span class="currency">€</span></span></span>',
                     );
                     /*
                     $form['cart']['items'][$item->id]['control']['control_prof'] = array(

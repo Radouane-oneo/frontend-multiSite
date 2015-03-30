@@ -41,6 +41,7 @@
 <?php endif; ?>
 
 <div id="canvas">
+  <div class="bg_header"></div>
   <div class="container">
 
     <?php if ($page['top']): ?>
@@ -83,17 +84,11 @@
         <?php // print theme('links__system_main_menu', array('links' => $main_menu, 'attributes' => array('id' => 'main-menu'))); ?>
         </div>
       <?php endif; ?>
-
-
-
-
-
     </div>
     <?php if ($page['cart']): ?>
       <div id="cart" style="height: 80px">
         <?php //  print render($page['cart']); ?>
       </div>
-
       <div class="clearfix"></div>       
     <?php endif; ?>
 
@@ -131,11 +126,14 @@
 
         <div class="clearfix"></div>
 
-        <div class="whitebox clearfix">
+        <div class="whitebox clearfix demande-paiement">
 
-          <?php if ($title): ?>
-            <h1><?php print render($title_prefix); ?><?php print $title ?><?php print render($title_suffix); ?></h1>
-          <?php endif; ?>
+          <!-- ?php if ($title): ?> -->
+            <h1>
+              <?php echo t('Paiement de plus ou paiement par virement'); ?>
+              <!-- ?php print render($title_prefix); ?><?php //print $title ?><?php //print render($title_suffix); ?> -->
+            </h1>
+          <!-- ?php endif; ?> -->
 
           <?php if ($tabs): ?>
             <?php print render($tabs); ?>
@@ -191,7 +189,7 @@
         </svg>
 
         <img id="imgFooter" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/logo_inversed_flyer_be_nl.png"/>
-        <div id="footerText">(C) <?php echo date("Y");?> Flyer.fr - Vie privée - Désistement </div>
+        <div id="footerText">(C) <?php echo date("Y");?>  <a href="/">Flyer.fr</a> - Vie privée - Désistement </div>
       </div>
     </div>
 

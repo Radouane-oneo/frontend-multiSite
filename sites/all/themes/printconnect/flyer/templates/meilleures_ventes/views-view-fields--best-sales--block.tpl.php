@@ -16,10 +16,11 @@ list($prix1, $prix2) = split('[,.]', $fields['field_prix']->content);
     <span class="price">
         <span class="value">
 
-            <span class="currency">€</span>&nbsp;
+            
             <span class="whole"><?php print $prix1; ?></span>
             <span class="decimalpoint">,</span>
-            <span class="decimals"><?php print $prix2; ?></span>
+            <span class="decimals"><?php print $prix2; ?></span>&nbsp;
+            <span class="currency">€</span>
 
         </span>
 

@@ -4399,6 +4399,8 @@ a.googleconnect {
 	margin: -11px auto 0 -11px;
 	padding: 0;
 }
+
+.page-paymentrequest table.grid,
 #pccheckout-payment-form table.grid {
 	width: 660px;
 	border: 1px solid #e1e1e1;
@@ -4426,7 +4428,8 @@ a.googleconnect {
 	display: none;
 }
 .page-paymentrequest-key table.grid tr, 
-.page-checkout-payment table.grid tr {
+.page-checkout-payment table.grid tr,
+.page-paymentrequest table.grid tr {
 	color: #646464;
 	float: left;
 	border-bottom: none;

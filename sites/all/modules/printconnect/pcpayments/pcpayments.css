@@ -57,9 +57,8 @@
 #wrapperPayement_Price .fieldset-wrapper tr.last-child{
      border-radius: 0px 5px 5px 0px;
 }
-#wrapperPayement_Price .fieldset-wrapper tr{
-    border: 1px solid #ffffff;
-}
+
+
 #pcpayments-request-form .order td.last-child {
     width: 100px;
     border-left: 1px solid #F1F1F1;
@@ -95,4 +94,32 @@ padding-right:  10px;
 }
 #pcpayments-request-form .order table tr.last-child td.last-child span {
     color: #646464;
+}
+
+.page-paymentrequest .methodePayement #edit-aboutmethode{
+  background: none;
+}
+
+.page-paymentrequest table.grid.methodePayement{
+  margin: 0;
+}
+
+.page-paymentrequest #pcpayments-request-form .methodePayement tr{
+  margin-top: 0;
+}
+
+.page-paymentrequest #wrapperPayement_Price .payment .fieldset-wrapper{
+  padding: 0;
+  background:none; 
+}
+
+.page-paymentrequest-key table.grid.rows-6.methodePayement tr{
+  width: 88px !important;
+}
+.page-paymentrequest-key table.grid.rows-6.methodePayement tr.last-child{
+  width: 91px !important;
+}
+
+.page-paymentrequest #edit-aboutmethode{
+  background: none;
 }

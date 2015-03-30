@@ -29,7 +29,7 @@ function pcpayments_request_form($form, &$form_state, $key) {
   $first = FALSE;
 
   foreach ($paymentMethods as $value) {
-    if ($value->paymentMethod->internalName != 'cod' && $value->paymentMethod->internalName != 'invoice' && $value->paymentMethod->internalName != 'cheque') {
+    if ($value->paymentMethod->internalName != 'cod' && $value->paymentMethod->internalName != 'invoice') {
       if (!$first) {
         $first = $value;
       }
@@ -107,7 +107,7 @@ function pcpayments_request_form($form, &$form_state, $key) {
       //'#default_value' => $defaultOption,
       '#ajax' => $ajax,
       '#required' => TRUE,
-      '#attributes' => array('class' => array('grid', 'clearfix','methodePayement')),
+      '#attributes' => array('class' => array('grid', 'clearfix','methodePayement','rows-6')),
       '#default_value' => $default,
   );
     $form['wrapperPayement_Price']['payment']["aboutMethode"] = array(

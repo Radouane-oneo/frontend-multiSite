@@ -1276,6 +1276,8 @@ input.ui-button.upload.ui-state-active,
 input.ui-button.upload:active {
 	/*background-image: url("images/button_upload_active.png");*/
 }
+
+.demande-paiement .form-actions input[type="submit"],
 input.pay-now, 
 input.ui-button.pay-now, input.payment, 
 input.ui-button.payment {
@@ -2524,6 +2526,7 @@ body.front #block-block-13:after {
 	width: inherit !important;
 	float: none !important;
 }
+.page-paymentrequest .demande-paiement .form-wrapper.actions,
 #pccheckout-payment-form .form-wrapper.actions,
 .page-checkout-upload #edit-actions,
 #pccheckout-invoiceanddelivery-form .form-actions,
@@ -2555,6 +2558,7 @@ a.ui-button.inactivebtn{
 	cursor: default;
 }
 
+.page-paymentrequest .demande-paiement .form-actions span.price,
 #pccheckout-payment-form .form-actions span.price,
 .page-cart #block-system-main .form-wrapper.actions span.price,
 .page-products #block-system-main .form-wrapper.actions span.price {
@@ -2566,6 +2570,7 @@ a.ui-button.inactivebtn{
 	font-weight: bold;
 	font-family: arial;
 }
+.page-paymentrequest .demande-paiement .form-actions span.price .currency,
 #pccheckout-payment-form .form-actions span.price .currency,
 .page-cart #block-system-main .form-wrapper.actions span.price .currency,
 .page-products #block-system-main .form-wrapper.actions span.price .currency {
@@ -2573,13 +2578,14 @@ a.ui-button.inactivebtn{
 	margin-right: -10px;
 	vertical-align: inherit;
 }
-#pccheckout-payment-form .form-actions span.price .decimals ,#pccheckout-payment-form .form-actions span.price .decimalpoint,
+.page-paymentrequest .demande-paiement .form-actions span.price .decimals ,#pccheckout-payment-form .form-actions span.price .decimals ,#pccheckout-payment-form .form-actions span.price .decimalpoint,
 .page-cart #block-system-main .form-wrapper.actions span.price .decimalpoint, .page-cart #block-system-main .form-wrapper.actions span.price .decimals,
 .page-products #block-system-main .form-wrapper.actions span.price .decimalpoint, .page-products #block-system-main .form-wrapper.actions span.price .decimals {
 	font-size: 25px;
 	vertical-align: middle;
 	line-height: 30px;
 }
+.page-paymentrequest .demande-paiement .form-actions input[type="submit"],
 #pccheckout-payment-form .form-actions input,
 .page-cart #block-system-main .form-wrapper.actions input,
 .page-products #block-system-main .form-wrapper.actions input {
@@ -10590,4 +10596,8 @@ a.cart.button{
 
 .container > div.menu li a{
 	color: #979797;
+}
+
+.page-paymentrequest .demande-paiement h1{
+	font-size: 12px;
 }

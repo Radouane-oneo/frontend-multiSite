@@ -94,7 +94,7 @@ function pcpayments_request_form($form, &$form_state, $key) {
   );
   $form['wrapperPayement_Price']['payment'] = array(
       '#type' => 'fieldset',
-      '#title' => t('Select payment method'),
+      '#title' => t('Concernant le paiement en ligne'),
       '#attributes' => array('class' => array('payment')),
   );
 

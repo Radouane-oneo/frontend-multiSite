@@ -720,6 +720,7 @@ div#cart{
 body.one-sidebar #content {
 	width: 855px
 }
+.sidebar-second #block-pcmenu-main > .content > ul,
 .no-sidebars #block-pcmenu-main > .content > ul,
 .one-sidebar #block-pcmenu-main > .content > ul {
   margin: 0 0 0 5px;

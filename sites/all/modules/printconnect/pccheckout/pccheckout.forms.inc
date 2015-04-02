@@ -216,11 +216,11 @@ function pccheckout_personal_form_validate($form, &$form_state) {
     $customer = $form_state['storage']['customer'];
  
     if(!empty($form_state['values']['postalCode']) && !is_numeric($form_state['values']['postalCode'])){
-        form_set_error('postalCode', t('Le champ Code postal doit Ãªtre numÃ©rique.'));
+        form_set_error('postalCode', t('Le champ Code postal doit être numérique.'));
         return false;
     }
     if(is_numeric($form_state['values']['postalCode']) && strlen($form_state['values']['postalCode'])<4){
-        form_set_error('postalCode', t('Le champ Code postal doit Ãªtre supÃ©rieur Ã  3 chiffres.'));
+        form_set_error('postalCode', t('Le champ Code postal doit être supérieur à  3 chiffres.'));
         return false;
     } 
     if(strlen($form_state['values']['city'])<2){
@@ -236,7 +236,7 @@ function pccheckout_personal_form_validate($form, &$form_state) {
    if($form_state['values']['isCompany']){
     if (!empty($form_state['values']['company'])) {
         if (strlen($form_state['values']['vatNumber']) == 2 && is_string($form_state['values']['vatNumber'])) {
-            form_set_error('Vat number', t('Le champ NÂ° de TVA est requis.'));
+            form_set_error('Vat number', t('Le champ N° de TVA est requis.'));
         }
     }
     if(empty($form_state['values']['company'])){
@@ -534,12 +534,12 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         );  
 }
  if ($cart->orderItemShipping->shippingTypeResellerShop != 204) {
-       // if (!isset($cart->pickuppoint)) {
+        if (!isset($cart->pickuppoint)) {
             $form['summary']['shipping']['change'] = array(
                 '#markup' => '<a id="toggle-shipping-form" href="#shipping-address" class="toggle">' . t('Change shipping address') . '</a>',
                 '#weight' => 200,
             );
-       // }
+        }
     }
       /* invoice address */
     $form['invoice']['address'] = array(
@@ -909,16 +909,16 @@ function pccheckout_invoiceanddelivery_form_invoice_validate($form, &$form_state
        
     }
    if(!empty($form_state['values']['invoice']['address']['current']['postalCode']) && !is_numeric($form_state['values']['invoice']['address']['current']['postalCode'])){
-        form_set_error('postalCode', t('Le champ Code postal doit Ãªtre numÃ©rique.'));
+        form_set_error('postalCode', t('Le champ Code postal doit être numérique.'));
     }
     if(is_numeric($form_state['values']['invoice']['address']['current']['postalCode']) && strlen($form_state['values']['invoice']['address']['current']['postalCode'])<4){
-        form_set_error('postalCode', t('Le champ Code postal doit Ãªtre supÃ©rieur Ã  3 chiffres.'));
+        form_set_error('postalCode', t('Le champ Code postal doit être supérieur à  3 chiffres.'));
         return false;
     } 
   if($form_state['values']['invoice']['address']['current']['isCompany']){
     if (!empty($form_state['values']['invoice']['address']['current']['company'])) {
         if (strlen($form_state['values']['invoice']['address']['current']['vatNumber']) == 2 && is_string($form_state['values']['invoice']['address']['current']['vatNumber'])) {
-            form_set_error('Vat number', t('Le champ NÂ° de TVA est requis.'));
+            form_set_error('Vat number', t('Le champ N° de TVA est requis.'));
         }
     }
     if(empty($form_state['values']['invoice']['address']['current']['company'])){

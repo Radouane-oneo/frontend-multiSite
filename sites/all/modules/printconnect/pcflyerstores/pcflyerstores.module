@@ -191,16 +191,26 @@ function theme_pcflyerstores_store_info($vars) {
             $html .= '<div id="map-canvas" style="height:48%">
                     </div>';
         }
-        $html .= '<div class="description stordescription"><div class="storcomande">';
-        if (isset($store->name)) {
-            $storeName =  html_entity_decode(t($store->name),ENT_COMPAT,"iso-8859-1");
-            $html .= '<h2>' .  $storeName. '</h2>';
+        $html .= '<div class="description stordescription"><h1>'.t('line1bloc3').'</h1>';
+              $html .= '<div id="Mapimg">';
+        if (isset($store->country) && isset($store->city) && isset($store->address)) {
+            $googleMapsAddressString = urlencode($store->country) . ',' . urlencode($store->city) . ',' . urlencode($store->address);
+            $link = 'http://maps.google.com/maps?q=' . $googleMapsAddressString;
+            $icon = file_create_url(drupal_get_path('module', 'pcflyerstores') . '/store.png') . '?' . variable_get('css_js_query_string', '');
+            $map = theme('image', array('path' => 'https://maps.googleapis.com/maps/api/staticmap?size=640x160&sensor=false&markers=icon:' . $icon . '|' . $googleMapsAddressString, 'attributes' => array('class' => array('map'))));
+            $html .= l($map, $link, array('html' => true, 'attributes' => array('target' => '_blank', 'class' => 'mapContainer')));
         }
+        $html .= '</div>';
+        
+       
 
 	$html .='<div id="storethumb"></div>';
         
-        $html .= '<div id="detail">';
-   
+        $html .= '<div class="storcomande"><div id="detail">';
+         if (isset($store->name)) {
+            $storeName =  html_entity_decode(t($store->name),ENT_COMPAT,"iso-8859-1");
+            $html .= '<h2>' .  $storeName. '</h2>';
+        }
         if (isset($store->address) && isset($store->postalCode) && isset($store->city)) {
             $html .= '<div class="address">' . t($store->address) . ' - ' . $store->postalCode . ' ' . $store->city . '</div>';
         }
@@ -233,7 +243,7 @@ function theme_pcflyerstores_store_info($vars) {
                 $html .= theme(
                     'table', array(
                     'rows' => $rows,
-                    'caption' => t('Opening hours'),
+                    'caption' => '<h1>'.t('Opening hours').'</h1>',
                     'attributes' => array(
                         'class' => array(
                             'openinghours'
@@ -242,16 +252,6 @@ function theme_pcflyerstores_store_info($vars) {
                         )
                 );
             }
-        }
-        $html .= '</div>';
-        
-        $html .= '<div id="Mapimg">';
-        if (isset($store->country) && isset($store->city) && isset($store->address)) {
-            $googleMapsAddressString = urlencode($store->country) . ',' . urlencode($store->city) . ',' . urlencode($store->address);
-            $link = 'http://maps.google.com/maps?q=' . $googleMapsAddressString;
-            $icon = file_create_url(drupal_get_path('module', 'pcflyerstores') . '/store.png') . '?' . variable_get('css_js_query_string', '');
-            $map = theme('image', array('path' => 'https://maps.googleapis.com/maps/api/staticmap?size=640x160&sensor=false&markers=icon:' . $icon . '|' . $googleMapsAddressString, 'attributes' => array('class' => array('map'))));
-            $html .= l($map, $link, array('html' => true, 'attributes' => array('target' => '_blank', 'class' => 'mapContainer')));
         }
         $html .= '</div>';
         
@@ -803,11 +803,11 @@ function pcflyerstores_form_pccheckout_invoiceanddelivery_form_alter(&$form, &$f
             $store = FALSE;
         }
 
-        $form['summary']['shipping']['selected'] = array(
+        $form['shipping']['detail']['selected'] = array(
             '#theme' => 'pcflyerstores_store_info',
             '#store' => $store,
             '#attributes' => array('class' => array('store', 'clearfix')),
-            '#weight' => 100,
+           
         );
         if ($form_state['storage']['shippingType'] == 'shippingTypeStore') {
 
@@ -820,6 +820,12 @@ function pcflyerstores_form_pccheckout_invoiceanddelivery_form_alter(&$form, &$f
 
         unset($form['shipping']['detail']['current']);
 
+        $form['shipping']['detail']['title'] = array(
+                        '#prefix' => '<div class="quivacollecter"><h1>',
+                        '#suffix' => '</h1></div>',
+                        '#markup' => t('quivacollecterlacommande'),
+                    );
+        
         $form['shipping']['detail']['contact'] = array(
             '#type' => 'textfield',
             '#title' => t('Who will pick up your print work?'),

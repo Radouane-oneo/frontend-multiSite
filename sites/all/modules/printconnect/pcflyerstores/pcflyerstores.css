@@ -65,7 +65,7 @@ body.page-stores-picker {
 }
 
 .store .description .address {
-    max-width:150px;
+    /*max-width:150px;*/
 }
 
 .store .info{

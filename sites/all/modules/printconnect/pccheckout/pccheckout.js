@@ -6,16 +6,16 @@
             $("input[name='invoice[address][current][vatNumber][number]']").val(''); 
     });
 
-  $("#isUserCompany").live('click', function(){
-      if(this.checked){
-          $(".form-item-company, .form-item-vatNumber, .form-item-invoice-address-current-company, .form-item-invoice-address-current-vatNumber").show();
-      }else {
-          $(".form-item-company, .form-item-vatNumber, .form-item-invoice-address-current-company, .form-item-invoice-address-current-vatNumber").hide();
-          
-          $("#companyInput").val("");
-          $("#vatNumber").val("");
-      }
-  });
+//  $("#isUserCompany").live('click', function(){
+//      if(this.checked){
+//          $(".form-item-company, .form-item-vatNumber, .form-item-invoice-address-current-company, .form-item-invoice-address-current-vatNumber").show();
+//      }else {
+//          $(".form-item-company, .form-item-vatNumber, .form-item-invoice-address-current-company, .form-item-invoice-address-current-vatNumber").hide();
+//          
+//          $("#companyInput").val("");
+//          $("#vatNumber").val("");
+//      }
+//  });
 
   $(document).ready(function(){
     $(".selectBilling2").select2();

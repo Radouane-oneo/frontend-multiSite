@@ -3941,10 +3941,10 @@ a.googleconnect {
 }
 .page-checkout #pccheckout-invoiceanddelivery-form .shipping {
 	border-left: 1px solid #e1e1e1;
-        margin-left: -2px;
+        margin-left: 0;
         margin-top: 16px;
         min-height: 182px;
-        padding: 6px 9px 10px 10px;
+        padding: 7px 9px 10px 32px;
         position: relative;
         width: 401px;
 }
@@ -4096,7 +4096,7 @@ a.googleconnect {
 
 .page-checkout #shipping-address .form-item, 
 .page-checkout #invoice-address .form-item {
-	margin: 10px 0;
+	 margin: 6px 0;
 }
 .page-checkout #shipping-address label, 
 .page-checkout #invoice-address label {
@@ -4105,7 +4105,7 @@ a.googleconnect {
     font-weight: 400;
     height: 34px;
     line-height: 34px;
-    margin: 5px 10px 5px 0;
+    margin: 0 10px 6px 0;
     overflow: hidden;
     text-transform: uppercase;
     width: 481px;

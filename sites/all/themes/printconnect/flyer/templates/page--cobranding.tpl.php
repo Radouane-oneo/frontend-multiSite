@@ -5,6 +5,14 @@
 <?php endif; ?>
 
 <div id="canvas">
+<div class="bg_header"></div>
+    <?php if ($page['MenuTop']): ?>
+        <div id="menuTop">
+            <div class="container">
+                <?php print render($page['MenuTop']); ?>
+            </div>
+        </div>
+    <?php  endif; ?>
     <div class="container">
         <?php if ($page['top']): ?>
             <div id="top">
@@ -26,11 +34,7 @@
                     <?php print render($page['header_right']); ?>
                 <?php endif; ?>
             </div>
-            <?php if ($main_menu): ?>
-                <div id="menuTop">
-                    <?php print theme('links__system_main_menu', array('links' => $main_menu, 'attributes' => array('id' => 'main-menu'))); ?>
-                </div>
-            <?php endif; ?>
+            
         </div>
         <?php if ($page['cart']): ?>
             <div id="cart">

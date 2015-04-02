@@ -739,9 +739,9 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         '#type' => 'fieldset',
     //    '#collapsible' => TRUE,
   //    '#collapsed' => TRUE,
-     //   '#title' => '<div class="invoiceaddress">'.t('Shipping address').'</div>',
+    '#title' => '<div class="invoiceaddress">'.t('Shipping address').'</div>',
         '#attributes' => array('id' => 'shipping-address', 'class' => array('tohiding')),
-        //'#title' => t('Shipping address'),
+       //'#title' => t('Shipping address'),
     );
 
     $form['shipping']['detail']['current'] = array(

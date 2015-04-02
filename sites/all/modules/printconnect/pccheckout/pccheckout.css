@@ -78,6 +78,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 
 .page-checkout-invoiceanddelivery #shipping-address .form-item-shipping-detail-contact{
     float: left!important;
+    margin-top: 0;
 }
 
 .neutralDescritpion, #neutralRadio {
@@ -285,6 +286,9 @@ margin-left: 0px !important;
   display: block;
   margin: 19px 0 10px;
   padding-top: 14px;
+}
+.quivacollecter h1{
+    font-size: 14px!important;
 }
 .page-checkout #Mapimg{
   float: left!important;

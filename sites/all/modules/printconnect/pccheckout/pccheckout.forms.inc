@@ -220,7 +220,7 @@ function pccheckout_personal_form_validate($form, &$form_state) {
         return false;
     }
     if(is_numeric($form_state['values']['postalCode']) && strlen($form_state['values']['postalCode'])<4){
-        form_set_error('postalCode', t('Le champ Code postal doit être supérieur à  3 chiffres.'));
+        form_set_error('postalCode', t('Le champ Code postal doit être supérieur à 3 chiffres.'));
         return false;
     } 
     if(strlen($form_state['values']['city'])<2){
@@ -534,13 +534,14 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         );  
 }
  if ($cart->orderItemShipping->shippingTypeResellerShop != 204) {
-        if (!isset($cart->pickuppoint)) {
+       // if (!isset($cart->pickuppoint)) {
             $form['summary']['shipping']['change'] = array(
                 '#markup' => '<a id="toggle-shipping-form" href="#shipping-address" class="toggle">' . t('Change shipping address') . '</a>',
                 '#weight' => 200,
             );
-        }
+       // }
     }
+    
       /* invoice address */
     $form['invoice']['address'] = array(
         '#type' => 'fieldset',
@@ -738,7 +739,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         '#type' => 'fieldset',
     //    '#collapsible' => TRUE,
   //    '#collapsed' => TRUE,
-        '#title' => '<div class="invoiceaddress">'.t('Shipping address').'</div>',
+     //   '#title' => '<div class="invoiceaddress">'.t('Shipping address').'</div>',
         '#attributes' => array('id' => 'shipping-address', 'class' => array('tohiding')),
         //'#title' => t('Shipping address'),
     );

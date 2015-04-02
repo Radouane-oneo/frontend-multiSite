@@ -99,7 +99,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
     position: relative;
     top: -14px;
     z-index: 99;
-    margin-left: 287px;
+    margin-left: 270px;
 }
 
 .form-item-isCompany label {
@@ -249,7 +249,7 @@ margin-left: 0px !important;
 #pccheckout-invoiceanddelivery-form .headerforminvoice{
 }
 .page-checkout-invoiceanddelivery .region-contenttop, .page-checkout-payment  .region-contenttop{
-    margin-top: 63px;
+    margin-top: 9px;
 }
 #pccheckout-invoiceanddelivery-form .invoiceaddress {
   display: block;
@@ -278,6 +278,7 @@ margin-left: 0px !important;
 }
 .stordescription h1 {
   margin-top: 19px;
+  margin-bottom: 21px !important;
 }
 .quivacollecter{
   border-top: 1px solid #e3e3e3;

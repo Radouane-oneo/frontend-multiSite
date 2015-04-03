@@ -264,6 +264,7 @@ margin-left: 0px !important;
 #pccheckout-invoiceanddelivery-form .headerforminvoice{
     margin-left: 0;
     border-bottom: 1px solid #e3e3e3;
+    padding-bottom: 7px;
 }
 #pccheckout-invoiceanddelivery-form .blocright{
   display: block;
@@ -302,4 +303,13 @@ margin-left: 0px !important;
   border-top: 1px solid #e3e3e3;
   display: block;
   padding-top: 12px;
+}
+#pccheckout-invoiceanddelivery-form .form-item-shipping-detail-current-name{
+    padding-top: 7px;
+}
+#pccheckout-invoiceanddelivery-form .form-item-shipping-detail-current-country{
+    padding-bottom: 7px;
+}
+#pccheckout-invoiceanddelivery-form .form-item-invoice-address-current-name{
+    padding-top: 7px;
 }

@@ -36,6 +36,9 @@
             </div>
             
         </div>
+         <div class="menu">
+              <?php print theme('links__system_main_menu', array('links' => $main_menu, 'attributes' => array('id' => 'menu-main'))); ?>
+        </div>
         <?php if ($page['cart']): ?>
             <div id="cart">
                 <?php print render($page['cart']); ?>

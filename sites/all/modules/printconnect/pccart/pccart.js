@@ -4,28 +4,8 @@
 
     },
     attach: function (context, settings) {
-      $('.page-products .all-products .item-list li:nth-child(3n)').addClass('right-item');
-      // $('#pccart-cart-form > div > .actions').once().clone().insertBefore($('#pccart-cart-form > div > fieldset'));
-     
-      /*
-      $('#pccart-cart-form .shipping input[type="radio"]').once().change(function(){
-        submitCartForm($(this));
-      });
-     */
-      /*
-      $('#pccart-cart-form .remove').once().click(function(){
-        $(this).parents('.item').fadeOut();
-        submitCartForm($(this));
-        return false;
-      });
-      */
-      /*
-      $('#pccart-cart-form .add-discount').once().click(function(){
-        submitCartForm($(this));
-        return false;
-      });
-*/
-
+   $('.page-products .all-products .item-list li:nth-child(3n)').addClass('right-item');
+      
    var count = 0;
    var visited = 0;
    var visitedControl = 0;
@@ -248,6 +228,41 @@
             return false;        
         } 
       });
+
+        $("#pccart-cart-form input.targetPrice").mousedown(function () {
+           if ($(this).is(":not(:checked)")){
+                if($(this).val() ==  84){
+               var shpping = '<input type="hidden" name="shpping" value="14.99">';
+              $("#pccart-cart-form #hiddenPrices").append(shpping);
+                }else{
+                    $("input[name='shpping']").remove();
+                }
+                PriceCallback();
+           }
+         });
+
+
+           /* ------------Remove items------------*/ 
+
+        $("#pccart-cart-form .removecart").once().click(function () {
+            itemid = $(this).siblings('.itemID').text();
+            $(this).parents('.item').fadeOut("slow");
+            var url = "cart/" + itemid + "/delete";
+            var nameitemid = "cart[items][hidden][" + itemid + "]";
+            var form = jQuery('#pccart-cart-form');
+            $.ajax({
+                type: "POST",
+                url: url,
+                success: function (data) {
+                    form.html(jQuery('#pccart-cart-form', data).html());
+                    Drupal.attachBehaviors(form);
+                }
+            });
+            $("input[name='"+nameitemid+"']").remove();
+             PriceCallback();
+        });
+
+            /* ------------------------------*/ 
     }
      
   }
@@ -349,3 +364,40 @@ function designtoolCallback(){
   //refreshCartForm();
   window.location.href = window.location.href;
 }
+
+
+function PriceCallback(){
+    var map = [];
+    var totalprice = 0;
+    jQuery("#pccart-cart-form #hiddenPrices input").each(function() {
+        map.push(parseFloat(jQuery(this).val()));
+    });
+    map.forEach(function(Price) {
+        totalprice += Price;
+    });
+    var whole = (totalprice.toFixed(2) +"").split(".")[0];
+    var decPart = (totalprice.toFixed(2) +"").split(".")[1];
+    jQuery("#pccart-cart-form .subtotal .value").html(
+    "<span class='whole'>"+ whole +"</span><span class='decimalpoint'>,</span><span class='decimals'>"+decPart+"</span><span class='currency'> €</span>");
+       
+    var vat = 0.21 ;
+    vatprice = totalprice * vat ;
+    
+    var wholevat = (vatprice.toFixed(2) +"").split(".")[0];
+    var decPartvat = (vatprice.toFixed(2) +"").split(".")[1];
+    jQuery("#pccart-cart-form .vat .value").html(
+    "<span class='whole'>"+ wholevat +"</span><span class='decimalpoint'>,</span><span class='decimals'>"+decPartvat+"</span><span class='currency'> €</span>");
+   
+
+    total = vatprice + totalprice;
+    
+    var wholevat = (total.toFixed(2) +"").split(".")[0];
+    var decPartvat = (total.toFixed(2) +"").split(".")[1];
+    jQuery("#pccart-cart-form #price .value").html(
+    "<span class='whole'>"+ wholevat +"</span><span class='decimalpoint'>,</span><span class='decimals'>"+decPartvat+"</span><span class='currency'> €</span>");
+   
+
+}
+
+
+

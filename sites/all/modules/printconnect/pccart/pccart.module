@@ -45,12 +45,6 @@ function pccart_menu() {
       'file' => 'pccart.forms.inc',
   );
   
-  $items['cartblock/%/discount/%/delete'] = array(
-      'page callback' => '_pccart_callback',
-      'page arguments' => array('discount_delete', 1, 3),
-      'access arguments' => array('access content'),
-      'type' => MENU_CALLBACK,
-  );
 
   $items['cart/files/%/%/delete'] = array(
       'page callback' => '_pccart_callback',
@@ -73,7 +67,6 @@ function pccart_menu() {
       'page arguments' => array(),
       'access arguments' => array('access content'),
       'type' => MENU_CALLBACK,
-          //'file' => 'pctemplates.config.inc',
   );
   $items['cart/add/%'] = array(
       'page callback' => '_pccart_add_json',
@@ -88,46 +81,6 @@ function pccart_menu() {
       'type' => MENU_CALLBACK,
   );
   return $items;
-}
-
-/*
-  function pccart_pcmenu() {
-  $cart = Factory::Current();
-  $text = t('Cart');
-
-  if ($cart && $cart->items->count) {
-  $text .= ' (' . $cart->items->count . ')';
-  } else {
-  $text .= ' (0)';
-  }
-
-  $items['myprintconnect']['cart'] = array(
-  '#title' => $text,
-  '#description' => t('Manage your cart'),
-  '#link' => 'cart',
-  '#weight' => 80,
-  );
-  return $items;
-  }
- */
-
-function pccart_theme() {
-    
-  return array(
-//      'pccart_cart_block' => array(
-//          'render element' => 'cart',
-//          'template' => 'pccart-cart-block',
-//      ),
-//      'pccart_cart_form' => array(
-//          'render element' => 'form',
-//          'template' => 'pccart-cart-form',
-//      ),
-//      'pccart_save_form' => array(
-//          'render element' => 'form',
-//          'template' => 'pccart-save-form',
-//      ),
-  );
-  
 }
 
 function pccart_progress() {
@@ -170,7 +123,6 @@ function pccart_block_info() {
 function pccart_block_view($delta = '') {
     
   printconnect_ensureinitialized();
-  // try {
   switch ($delta) {
     case 'save':
       $cart = Factory::Current();
@@ -191,7 +143,6 @@ function pccart_block_view($delta = '') {
         $block['cart'] = $cart;
         
         foreach ($cart->productItems as $item) {
-//foreach ($items as $item) {
           $list = array();
           $itemValue = $item->price;
           $configs = $item->configuration->config;
@@ -226,13 +177,11 @@ function pccart_block_view($delta = '') {
                   '#theme' => 'pcfilesthumb',
                   '#file' => $file->thumbnail,
                   '#cache' => FALSE,
-                      //'#markup' => theme('pcfilesthumb', array('file' => str_replace('file/', '', $file->thumbnail), 'cache' => FALSE)),
               );
             } else {
               $content['items'][$item->id]['image']['content'] = array(
                   '#theme' => 'image',
                   '#path' => $item->product->image,
-                      //'#markup' => theme('image', array('path' => $item->product->image)),
               );
             }
           }
@@ -255,38 +204,11 @@ function pccart_block_view($delta = '') {
               '#theme' => 'item_list',
               '#items' => $list,
           );
-          /*
-            $content['cart']['items'][$item->id]['description']['tooltip'] = array
-            '#type' => 'container',
-            '#attributes' => array('class' => array('tooltip')),
-            );
-
-            $content['cart']['items'][$item->id]['description']['tooltip']['content'] = array(
-            '#type' => 'container',
-            '#attributes' => array('class' => array('content')),
-            );
-
-            $content['cart']['items'][$item->id]['description']['tooltip']['content']['list'] = array(
-            '#markup' => theme('item_list', array('items' => $list)),
-            );
-
-            $content['cart']['items'][$item->id]['description']['text'] = array(
-            '#markup' => theme('table', array('rows' => $text)),
-            );
-
-            $content['cart'][$item->id]['description']['more'] = array(
-            '#markup' => t('More details'),
-            );
-           */
+          
         }
 
         $orderItemsAdditional = $cart->orderItemsAdditional;
         if (count($orderItemsAdditional)) {
-//          $content['additionalItems'] = array(
-//              '#type' => 'container',
-//              '#attributes' => array('class' => array('additionalItems')),
-//          );
-
           foreach ($orderItemsAdditional as $item) {
             $content['additionalItems'][$item->id] = array(
                 'description' => array(
@@ -305,13 +227,6 @@ function pccart_block_view($delta = '') {
         }
 
         if ($cart->discountItems) {
-
-//          $content['discounts'] = array(
-//              '#type' => 'container',
-//              '#attributes' => array('class' => array('discounts')),
-//              '#weight' => 50,
-//          );
-
           foreach ($cart->discountItems as $discount) {
             $content['discounts'][$discount->id] = array(
                 '#type' => 'container',
@@ -322,12 +237,10 @@ function pccart_block_view($delta = '') {
             $content['discounts'][$discount->id]['price'] = array(
                 '#theme' => 'price',
                 '#value' => $discount->price,
-                    //'#markup' => theme('price', array('value' => $discount->price)),
             );
 
             $content['discounts'][$discount->id]['description'] = array(
-            //                '#prefix' => '<h3>',
-            //                '#suffix' => '</h3>',
+
                 '#markup' => $discount->productName,
             );
           }
@@ -361,23 +274,11 @@ function pccart_block_view($delta = '') {
               '#attributes' => array('class' => array('clearfix')),
           );
 
-          /*
-            $content['shipping']['header']['delivery']['text'] = array(
-            '#markup' => t('Expected delivery') . ': ',
-            );
-
-            $content['shipping']['header']['delivery']['date'] = array(
-            '#prefix' => '<span class="date">',
-            '#suffix' => '</span>',
-            '#markup' => format_date(strtotime($cart->expectedDeliveryDate), 'short'),
-            );
-           */
         }
         $content['shipping']['price'] = array(
             '#theme' => 'price',
             '#value' => $cart->orderItemShipping->price,
             '#free' => TRUE,
-                //'#markup' => theme('price', array('value' => $cart->orderItemShipping->price, 'free' => TRUE)),
         );
 
         $type = \printconnect\Shipping\Types\Factory::Get($cart->orderItemShipping->shippingTypeResellerShop);
@@ -387,16 +288,6 @@ function pccart_block_view($delta = '') {
         );
 
         if (count($cart->orderItemsPayment)) {
-
-//          $content['payment'] = array(
-//              '#type' => 'container',
-//              '#attributes' => array('class' => array('payment-methods')),
-//              '#weight' => 70,
-//          );
-//
-//          $content['payment']['header'] = array(
-//              '#markup' => t('My order will be paid with:'),
-//          );
 
           foreach ($cart->orderItemsPayment as $payment) {
             $content['payment'][$payment->id] = array(
@@ -443,13 +334,6 @@ function pccart_block_view($delta = '') {
       if ($cart && $cart->isFilled) {
         $block['cart'] = $cart;
         $block['title'] = t('Delivery');
-
-
-//        $content['cart'] = array(
-//            '#type' => 'fieldset',
-//            '#title' => t('Delivery or pickup'),
-//            '#attributes' => array('class' => array('clearfix')),
-//        );
         $content['shipping'] = array(
             '#type' => 'container',
             '#attributes' => array('class' => array('shipping')),
@@ -489,113 +373,12 @@ function pccart_block_view($delta = '') {
 
       return $block;
       break;
-    case 'add':
-//        $args = arg();
-//        if ($args[0] == 'products' && isset($args[3])) {
-//          array_shift($args);
-//          $url = 'cart/add/' . implode('/', $args);
-//          $block['content'] = l(t('Add to cart'), $url, array('attributes' => array('class' => array('action', 'display-block', 'cart', 'large'))));
-//        } else {
-//          $block['content'] = '  ';
-//        }
-//        return $block;
-//        break;
   }
   return FALSE;
-  
-//  } catch (\Exception $ex) {
-//    Functions::HandleException($ex);
-//  }
 }
 
-function pccart_preprocess_block(&$variables) {
-  //var_dump($variables);
-//  $block  = $variables['block'];
-//  if ($block && $block->module == 'pccart'){
-//    $variables['classes_array'][] = $block->module . '-' . $block->delta;
-//  }
-}
 
-function pccart_form_pcproducts_product_form_alter(&$form, &$form_state, $form_id) {
-    
-  global $pccart_editItemId;
 
-  if (isset($form_state['storage']['qty']) && isset($form_state['storage']['priceGroupId'])) {
-    if ($pccart_editItemId) {
-      $form['addToCart'] = array(
-          '#type' => 'submit',
-          '#value' => t('Update'),
-          '#weight' => 100,
-          '#validate' => array('pccart_addtocart_validate'),
-          '#submit' => array('pccart_editcartitem_submit'),
-          '#attributes' => array('class' => array('action', 'cart', 'display-block', 'button')),
-      );
-      $form_state['storage']['cart']['itemId'] = $pccart_editItemId;
-    } else {
-      $form['addToCart'] = array(
-          '#type' => 'submit',
-          '#value' => t('Add to cart'),
-          '#weight' => 100,
-          '#validate' => array('pccart_addtocart_validate'),
-          '#submit' => array('pccart_addtocart_submit'),
-          '#attributes' => array('class' => array('action', 'cart', 'display-block', 'button')),
-      );
-    }
-  }
-  return true;
-  
-}
-
-function pccart_form_pcproducts_productconfig_form_alter(&$form, &$form_state, $form_id) {
-    
-  global $pccart_editItemId;
-
-  if (isset($form_state['storage']['qty']) && isset($form_state['storage']['priceGroupId'])) {
-    //if ($pccart_editItemId) {
-    if ($form_state['storage']['edit']) {
-
-//      $form['step2']['footer']['priceblock']['addToCart'] = array(
-//          '#type' => 'submit',
-//          '#value' => t('Update'),
-//          '#weight' => 100,
-//          '#submit' => array('pccart_editcartitem_submit'),
-//          '#attributes' => array('class' => array('action', 'cart', 'large', 'display-block')),
-//      );
-      $form['actions']['addToCart'] = array(
-          '#prefix' => '<div class="button-wrapper">',
-          '#suffix' => '</div>',
-          '#type' => 'submit',
-          '#value' => t('Update'),
-          '#weight' => 100,
-          '#validate' => array('pccart_addtocart_validate2'),
-          '#submit' => array('pccart_editcartitem_submit'),
-          '#attributes' => array('class' => array('action', 'cart', 'display-block', 'button')),
-      );
-      $form_state['storage']['cart']['itemId'] = $pccart_editItemId;
-      $form_state['storage']['cart']['itemId'] = $form_state['storage']['edit'];
-    } else {
-//      $form['step2']['footer']['priceblock']['addToCart'] = array(
-//          '#type' => 'submit',
-//          '#value' => t('Add to cart'),
-//          '#weight' => 100,
-//          '#submit' => array('pccart_addtocart_submit2'),
-//          '#attributes' => array('class' => array('action', 'cart', 'large', 'display-block')),
-//      );
-      $form['actions']['addToCart'] = array(
-          '#prefix' => '<div class="button-wrapper">',
-          '#suffix' => '</div>',
-          '#type' => 'submit',
-          '#value' => t('Add to cart'),
-          '#weight' => 100,
-          '#validate' => array('pccart_addtocart_validate2'),
-          '#submit' => array('pccart_addtocart_submit2'),
-          '#attributes' => array('class' => array('action', 'cart', 'display-block', 'button')),
-      );
-    }
-  }
-  return true;
-  
-}
 
 function pccart_form_pcproducts_config_form_alter(&$form, &$form_state, $form_id) {
     
@@ -629,7 +412,6 @@ function pccart_form_pcproducts_config_form_alter(&$form, &$form_state, $form_id
 }
 
 function pccart_addtocart_validate($form, &$form_state) {
-    
   if (!$form_state['storage']['quantity'] && !$form_state['values']['quantity']) {
     form_set_error(NULL, t('Please select a quantity'));
   }
@@ -796,8 +578,6 @@ function _pccart_add($productId, $qty, $options, $priceGroupId, $vat = FALSE) {
   $relatedProducts = array();
   $description = '';
 
-//$cart->items->Add(Factory::CreateItem($cart, $defaults->priceGroupId, $qty, $description, $relatedProducts, $options));
-//$cart->items->Add(Factory::CreateItem($cart, $priceGroupId, $qty, $description, $relatedProducts, $options));
   $cart->productId = $productId;
   Factory::CreateItem($cart, $priceGroupId, $qty, $description, $relatedProducts, $options, $vat);
   Factory::Refresh($cart);
@@ -883,13 +663,9 @@ function _pccart_callback() {
         $itemId = array_shift($args);
         $cart = Factory::Current();
         Factory::DeleteItem($itemId, $cart);
-        if (isset($_SESSION['files'][$itemId])) {
+        if (isset($_SESSION['files'][$itemId])){
           unset($_SESSION['files'][$itemId]);
         }
-        //Factory::Refresh($cart);
-        drupal_goto($_SERVER['HTTP_REFERER']);
-        return t('The item was deleted');
-//drupal_goto('cart');
         break;
       case 'file_delete':
         $itemId = array_shift($args);
@@ -905,7 +681,6 @@ function _pccart_callback() {
         $discountId = array_shift($args);
         $cart = Factory::Current();
         Discounts\Factory::Delete($cartId, $discountId);
-        //Factory::Refresh($cart);
         drupal_goto($_SERVER['HTTP_REFERER']);
         return t('The discount was deleted');
       case 'edit':
@@ -916,7 +691,6 @@ function _pccart_callback() {
           exit;
         }
         $item = Factory::GetItemFromCart($cart, $itemId);
-//$item->EnsureLoaded();
         $productId = $item->configuration->productId;
         $items = array();
         foreach ($item->configuration->config as $config) {
@@ -944,19 +718,14 @@ function _pccart_callback() {
             $cartItem->fileCheck = array();
             printconnect\Carts\Factory::SaveItem($cartItem);
         }   
-        
-       // drupal_set_message( t('The Control professional was deleted'), $type = 'status');
     }
   } catch (Exception $ex) {
     return Functions::HandleException($ex);
   }
-  
 }
 
 function pccart_cart_form($form, &$form_state) {
-    
   global $language;
-
   $cart = Factory::Current(FALSE);
   $items = array();
   if ($cart) {
@@ -982,18 +751,8 @@ function pccart_cart_form($form, &$form_state) {
     foreach ($cart->productItems as $item) {
       $itemValue = $item->price;
       $list = array();
-
-//      $configs = Configurations\Factory::GetByPriceGroup($item->productPriceGroupId);
-//      $configs->EnsureLoaded();
-//      $configs->Sort();
-//      $configs = $configs->items;
-
       $configs = $item->configuration->config;
       $items = array();
-
-//      foreach ($configs as $config) {
-//        $items[] = $config->toolboxItem->id;
-//      }
 
       foreach ($configs as $config) {
         $items[] = $config->toolboxItemId;
@@ -1002,8 +761,6 @@ function pccart_cart_form($form, &$form_state) {
       $firstConfig = array_shift($configs);
 
       foreach ($configs as $config) {
-//$toolboxGroup = Toolbox\Factory::GetGroup($config->toolboxGroup);
-//$list[] = '<label>' . t($toolboxGroup->name) . ':</label>  ' . t($config->toolboxItem->name);
         $list[] = '<label>' . $config->groupName . ':</label>  ' . $config->name;
       }
 
@@ -1012,7 +769,6 @@ function pccart_cart_form($form, &$form_state) {
         $list[] = $option->optionName;
       }
 
-//      $product = Products\Factory::Get($priceGroup->product);
       $product = Products\Factory::Get($item->configuration->productId);
 
 
@@ -1021,10 +777,6 @@ function pccart_cart_form($form, &$form_state) {
           '#title' => t('Item'),
           '#markup' => $item->id,
       );
-
-//      $form['items'][$item->id]['product_image'] = array(
-//          '#value' => Functions::GetImage('products', $product->id),
-//      );
 
       $form['items'][$item->id]['price'] = array(
           '#value' => $item->price,
@@ -1047,7 +799,6 @@ function pccart_cart_form($form, &$form_state) {
           '#validate' => array('pccart_cart_form_delete_item_validate'),
           '#submit' => array('pccart_cart_form_delete_item_submit'),
           '#has_garbage_value' => FALSE,
-//'#value' => 'cart/' . $item->id . '/delete',
       );
 
       $form['items'][$item->id]['edit'] = array(
@@ -1058,9 +809,6 @@ function pccart_cart_form($form, &$form_state) {
           '#value' => $list,
       );
 
-      //$thumbnailUrl = Functions::GetImage('products', $product->id);
-//      $thumbnailUrl = printconnect_getimage('products', $product->id);
-
       foreach ($item->files as $file) {
 
         $jobId = $file->designToolJobId;
@@ -1070,23 +818,12 @@ function pccart_cart_form($form, &$form_state) {
           $form['items'][$item->id]['file']['thumbnail'] = array(
               '#value' => $thumbnail->url,
           );
-          /* foreach ($thumbnail->attachments as $attachmentKey => $attachment) {
-            $thumbnailUrl = $attachment->url;
-
-            $form['items'][$item->id]['file']['thumbnail'] = array(
-            '#value' => $attachment->url,
-            );
-            } */
         }
 
         $form['items'][$item->id]['file']['preview'] = array(
             '#value' => pcdesigntool_preview_url($jobId),
         );
-
-//   $file = printconnect\Files\Factory::Get($file->file);
-
         $options = array();
-
         foreach ($item->options as $option) {
           $options[] = $option->option;
         }
@@ -1099,9 +836,7 @@ function pccart_cart_form($form, &$form_state) {
 
         $form['items'][$item->id]['file']['link'] = array(
             '#markup' => theme('designtoollink', array(
-//'templateId' => $template->id,
                 'title' => $product->name . ' ' . $firstConfig->name,
-//'content' => theme('image', array('path' => $thumbnailUrl)),
                 'content' => theme('pcfilesthumb', array('file' => $file->thumbnail)),
                 'html' => TRUE,
                 'oi' => array(
@@ -1125,59 +860,15 @@ function pccart_cart_form($form, &$form_state) {
             )),
         );
 
-        /* foreach ($file->attachments as $attachmentKey => $attachment) {
-          $form['items'][$item->id]['file']['name'] = array(
-          '#value' => $attachmentKey,
-          );
-          $form['items'][$item->id]['file']['link'] = array(
-          '#value' => pcdesigntool_url(false, $language, $item->id, $product->name . ' ' . $firstConfig->name, $jobId),
-          );
-
-          $form['items'][$item->id]['file']['link'] = array(
-          '#markup' => theme('designtoollink', array(
-          //'templateId' => $template->id,
-          'title' => $product->name . ' ' . $firstConfig->name,
-          'content' => theme('image', array('path' => $thumbnailUrl)),
-          'html' => TRUE,
-          'jobId' => $jobId,
-          'params' => array(
-          'id' => $item->id,
-          ),
-          'attributes' => array('class' => array('designtool', 'iframe', 'display-block')),
-          )),
-          );
-
-
-
-          $form['items'][$item->id]['file']['size'] = array(
-          '#value' => $attachment->length,
-          );
-          $form['items'][$item->id]['file']['content_type'] = array(
-          '#value' => str_replace('/', '-', $attachment->contenttype),
-          );
-          } */
       }
 
       $form['items'][$item->id]['price'] = array(
           '#value' => $itemValue,
       );
-//
-//      if (module_exists('pcuploader')) {
-//        $form['items'][$item->id]['upload'] = array(
-//            '#markup' => l(t('Upload'), pcuploader_url($item->id), array('attributes' => array('class' => array('button', 'upload')))),
-//        );
-//      }
-//$templates = Products\Templates\Factory::GetTemplates($priceGroup->product, $items);
       $templates = Products\Templates\Factory::GetTemplates($item->configuration->productId, $items);
 
       if (count($templates->items)) {
         $template = $templates->items[0];
-//        if (function_exists('pcdesigntool_url')) {
-//          $form['items'][$item->id]['upload'] = array(
-//              '#markup' => l(t('Upload'), pcdesigntool_url($template->id, $language, $item->id, $product->name . ' ' . $firstConfig->name), array('attributes' => array('class' => array('button', 'upload', 'designtool', 'iframe', 'display-block')))),
-//          );
-//        }
-
         $_SESSION['cart']['items'][$item->id]['template'] = $template->id;
         $options = array();
 
@@ -1190,7 +881,6 @@ function pccart_cart_form($form, &$form_state) {
                 'templateId' => $template->id,
                 'title' => $product->name . ' ' . $firstConfig->name,
                 'content' => t('Upload'),
-//  'jobId' => $jobId,
                 'oi' => array(
                     'priceGroupId' => $item->productPriceGroupId,
                     'quantity' => $item->quantity,
@@ -1238,7 +928,6 @@ function pccart_cart_form($form, &$form_state) {
     if ($cart->onlyPostal) {
       foreach ($types as $type) {
         if ($type->shippingType->deliveryType == 'deliveryTypePostal') {
-//$enabledTypes[] = $type;
           $form_state['storage']['shipping']['type'] = $type->id;
 
           if ($cart->orderItemShipping->shippingTypeResellerShop != $type->id) {
@@ -1318,20 +1007,14 @@ function pccart_cart_form($form, &$form_state) {
 
     $form['pup']['id'] = array(
         '#type' => 'hidden',
-//'#name' => 'pickuppointid',
         '#attributes' => array('class' => array('id')),
         '#default_value' => $pickuppoint ? $pickuppoint->id : '',
-//'#default_value' => '000947',
-//  '#default_value' => $element['#default_id'],
     );
 
     $form['pup']['countryCode'] = array(
         '#type' => 'hidden',
-//'#name' => 'pickuppointcountrycode',
         '#attributes' => array('class' => array('country-code')),
         '#default_value' => $pickuppoint ? $pickuppoint->country : '',
-//'#default_value' => 'BE',
-// '#default_value' => $element['#default_countrycode'],
     );
 
     $payments = $cart->orderItemsPayment;
@@ -1345,7 +1028,6 @@ function pccart_cart_form($form, &$form_state) {
     $form['discount']['code'] = array(
         '#type' => 'textfield',
         '#title' => t('Promocode'),
-//'#description' => t('Enter promocode'),
         '#size' => 20,
         '#attributes' => array('class' => array('hint')),
     );
@@ -1362,11 +1044,9 @@ function pccart_cart_form($form, &$form_state) {
 
   $i = 0;
 
-//$products = Products\Factory::GetAll();
   $products = _pcproducts_activeproducts();
 
   foreach ($products as $product) {
-    //$product->image = Functions::GetImage('products', $product->id);
     $product->image = printconnect_getimage('products', $product->id);
     $product->link = 'products/' . $product->id;
     $form['other']['#value'][] = $product;
@@ -1495,15 +1175,6 @@ function pccart_cart_form_validate($form, &$form_state) {
     }
     Factory::Save($cart);
   }
-  /*
-    if ($form_state['triggering_element']['#name'] == 'add_discount' && $form_state['values']['discount']['code']) {
-    $cart = Factory::Current();
-    $discount = Discounts\Factory::Create($cart->id, $form_state['values']['discount']['code']);
-
-    Discounts\Factory::Save($discount);
-    $cart = Factory::Refresh($cart);
-    }
-   */
   if (!isset($form_state['input']['op']) && ($form_state['input']['op'] !== 'ajax')) {
     $form_state['rebuild'] = TRUE;
   }
@@ -1558,14 +1229,6 @@ function pccart_save_form($form, &$form_state) {
           break;
         }
       }
-      /*
-        $form['image'] = array(
-        '#theme' => 'image',
-        '#path' => printconnect_getimage('products', $product->id)
-        //'#value' => printconnect_getimage('products', $product->id),
-        );
-       */
-
 
       $form['description'] = array(
           '#type' => 'container',
@@ -1582,10 +1245,6 @@ function pccart_save_form($form, &$form_state) {
           '#markup' => $item->quantity . ' ' . $item->configuration->name,
       );
 
-//      $form['description']['list'] = array(
-//          '#theme' => 'item_list',
-//          '#items' => $list,
-//      );
 
       if ($upgrade) {
 
@@ -1691,7 +1350,6 @@ function pccart_callback() {
           $_SESSION['savedDesigns'][$id] = $_GET['myPcId'];
         }
 
-//module_invoke('pcdesigntool', 'save', $jobId, 'design');
         $cart = Factory::Current();
         $customer = CustomersFactory::Current();
 
@@ -1713,7 +1371,6 @@ function pccart_callback() {
         $item->controlpro = $controlpro;
         $item->quickupload = $quickupload;
         Factory::SaveItem($item);
-//\printconnect\Carts\Factory::RefreshItem($item);
         Factory::Refresh($cart);
         print '<script type="text/javascript">top.location = "' . url('cart') . '";</script>';
         break;

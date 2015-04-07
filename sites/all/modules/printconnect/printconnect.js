@@ -13,26 +13,19 @@ window.alert = function(arg) {
     },
     attach: function (context, settings) {
       
-      $(document).ajaxStart(function() {
-        $('body',this).css('cursor','progress');
-        $(':submit').attr('disabled', 'disabled');
-        $('.loading').slideDown();
-        
-      });
+//      $(document).ajaxStart(function() {
+//        $('body',this).css('cursor','progress');
+//        $(':submit').attr('disabled', 'disabled');
+//        $('.loading').slideDown();
+//        
+//      });
       
-      $(document).ajaxStop(function() {
-        $('body', this).css('cursor','default');
-        $(':submit').removeAttr('disabled');
-        $('.loading').slideUp();
-      });
+//      $(document).ajaxStop(function() {
+//        $('body', this).css('cursor','default');
+//        $(':submit').removeAttr('disabled');
+//        $('.loading').slideUp();
+//      });
       
-      //      $('form table tr td input[type=radio]').each(function(){
-      //        var radio = $(this);
-      //        $(this).parents('tr').click(function(){
-      //          radio.attr('checked', true);
-      //          radio.trigger('change');
-      //        })
-      //      });
       $('.contactus').click(function(){
           
       });

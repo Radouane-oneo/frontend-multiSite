@@ -197,7 +197,7 @@ function theme_pcflyerstores_store_info($vars) {
             $googleMapsAddressString = urlencode($store->country) . ',' . urlencode($store->city) . ',' . urlencode($store->address);
             $link = 'http://maps.google.com/maps?q=' . $googleMapsAddressString;
             $icon = file_create_url(drupal_get_path('module', 'pcflyerstores') . '/store.png') . '?' . variable_get('css_js_query_string', '');
-            $map = theme('image', array('path' => 'https://maps.googleapis.com/maps/api/staticmap?size=640x160&sensor=false&markers=icon:' . $icon . '|' . $googleMapsAddressString, 'attributes' => array('class' => array('map'))));
+            $map = theme('image', array('path' => 'https://maps.googleapis.com/maps/api/staticmap?size=400x275&sensor=false&markers=icon:' . $icon . '|' . $googleMapsAddressString, 'attributes' => array('class' => array('map'))));
             $html .= l($map, $link, array('html' => true, 'attributes' => array('target' => '_blank', 'class' => 'mapContainer')));
         }
         $html .= '</div>';

@@ -30,7 +30,14 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
   margin:0;
   border:none;
 }
+.payment-methods-table tr td.first-child{
+    border-bottom: none;
+      width: 49px;
+}
 
+.payment-methods-table tr.last-child td{
+    border-bottom: none;
+}
 #pccheckout-invoiceanddelivery-form fieldset legend{
   display:none;
 }
@@ -45,9 +52,9 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 }
 .page-checkout-payment table th, .page-checkout-payment table td{
   /*white-space:nowrap;*/
-  padding-right:1em;
-  padding-left:1em;
-  height: 34px;
+   width: 240px;
+  height: 25px;
+  border-bottom: 1px solid #e1e1e1;
 }
 .lineSeparator {
     margin: 0;
@@ -62,7 +69,6 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 }
 .page-checkout-invoiceanddelivery #shipping-address a{
   width: 180px;
-	margin-left: 5px;
 }
 
 .page-checkout-invoiceanddelivery #shipping-address .select2-container .select2-choice{
@@ -72,6 +78,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 
 .page-checkout-invoiceanddelivery #shipping-address .form-item-shipping-detail-contact{
     float: left!important;
+    margin-top: 0;
 }
 
 .neutralDescritpion, #neutralRadio {
@@ -93,6 +100,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
     position: relative;
     top: -14px;
     z-index: 99;
+    margin-left: 270px;
 }
 
 .form-item-isCompany label {
@@ -238,4 +246,68 @@ margin-left: 0px !important;
   border-bottom: 1px solid #5a8a02;
   border-top: 1px solid #5a8a02;
   border-right: 1px solid #5a8a02;
+}
+#pccheckout-invoiceanddelivery-form .headerforminvoice{
+}
+.page-checkout-invoiceanddelivery .region-contenttop, .page-checkout-payment  .region-contenttop{
+    margin-top: 9px;
+}
+#pccheckout-invoiceanddelivery-form .invoiceaddress {
+  display: block;
+  margin: 19px 0 30px 0;
+}
+#pccheckout-invoiceanddelivery-form .blocright span{
+  display: block;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+#pccheckout-invoiceanddelivery-form .headerforminvoice{
+    margin-left: 0;
+    border-bottom: 1px solid #e3e3e3;
+    padding-bottom: 7px;
+}
+#pccheckout-invoiceanddelivery-form .blocright{
+  display: block;
+  float: left;
+  width: 490px;
+}
+#pccheckout-invoiceanddelivery-form .form-item-invoice-address-current-country{
+     border-bottom: 1px solid #e3e3e3;
+    padding-bottom: 18px;
+}
+
+.stordescription h1 {
+  margin-top: 19px;
+  margin-bottom: 21px !important;
+}
+.quivacollecter{
+  border-top: 1px solid #e3e3e3;
+  display: block;
+  margin: 19px 0 10px;
+  padding-top: 14px;
+}
+.quivacollecter h1{
+    font-size: 14px!important;
+}
+.page-checkout #Mapimg{
+  float: left!important;
+  width: 45%!important;
+}
+.page-checkout .storcomande{
+  float: right!important;
+  width: 45%!important;
+}
+#pccheckout-invoiceanddelivery-form .form-item-shipping-detail-current-company{
+  border-top: 1px solid #e3e3e3;
+  display: block;
+  padding-top: 12px;
+}
+#pccheckout-invoiceanddelivery-form .form-item-shipping-detail-current-name{
+    padding-top: 7px;
+}
+#pccheckout-invoiceanddelivery-form .form-item-shipping-detail-current-country{
+    padding-bottom: 7px;
+}
+#pccheckout-invoiceanddelivery-form .form-item-invoice-address-current-name{
+    padding-top: 7px;
 }

@@ -3055,6 +3055,9 @@ a.ui-button.inactivebtn{
 	background: url("images/step123.png") -8px -160px no-repeat;
 	height: 95px;
 }
+.page-checkout-invoiceanddelivery #block-printconnect-progress .item-list, .page-checkout-payment  #block-printconnect-progress .item-list{
+     margin-left: 174px;
+}
 .page-cart .whitebox {
 	/*padding-bottom: 48px;*/
 }
@@ -3920,7 +3923,6 @@ a.googleconnect {
 	color: #666666;
 	font-weight: 700;
 	position: relative;
-	top: -10px;
 	margin: 0;
 }
 #pccheckout-invoiceanddelivery-form fieldset.collapsible > legend {
@@ -3930,23 +3932,25 @@ a.googleconnect {
 	border-radius: 4px 4px 4px 4px;
 }
 .page-checkout #pccheckout-invoiceanddelivery-form .invoice{
-	padding: 0 10px 10px 25px;
-	position: relative;
-	width: 290px;
 	float: left;
-	min-height: 182px;
+        margin-top: 15px;
+        min-height: 182px;
+        padding: 6px 10px 10px 25px;
+        position: relative;
+        width: 477px;
 }
 .page-checkout #pccheckout-invoiceanddelivery-form .shipping {
 	border-left: 1px solid #e1e1e1;
-	margin-left: -2px;
-	padding: 10px 9px 10px 10px;
-	position: relative;
-	width: 305px;
-	min-height: 182px;
+        margin-left: 0;
+        margin-top: 16px;
+        min-height: 182px;
+        padding: 7px 9px 10px 32px;
+        position: relative;
+        width: 401px;
 }
 .page-checkout #pccheckout-invoiceanddelivery-form .invoice > .fieldset-wrapper,
 .page-checkout #pccheckout-invoiceanddelivery-form .shipping > .fieldset-wrapper{
-	padding: 0 0 0 5px;
+	padding: 0;
 }
 .page-checkout-invoiceanddelivery .invoice h3, 
 .page-checkout-invoiceanddelivery .shipping h3 {
@@ -3958,7 +3962,7 @@ a.googleconnect {
 }
 .page-checkout-invoiceanddelivery #invoice-address input[type="submit"], 
 .page-checkout-invoiceanddelivery #shipping-address input[type="submit"] {
-	margin-left: 200px;
+	margin-left: 493px;
 	margin-bottom: 30px;
 }
 .page-pcbpost-picker .whitebox {
@@ -4052,7 +4056,9 @@ a.googleconnect {
 }
 .page-checkout #shipping-address, 
 .page-checkout #invoice-address {
-	width: 640px;
+	/*width: 640px;*/
+          padding: 0 20px;
+    width: 960px;
 }
 .page-checkout #shipping-address.form-wrapper, 
 .page-checkout #invoice-address.form-wrapper {
@@ -4090,21 +4096,19 @@ a.googleconnect {
 
 .page-checkout #shipping-address .form-item, 
 .page-checkout #invoice-address .form-item {
-	margin: 10px 0;
+	 margin: 6px 0;
 }
 .page-checkout #shipping-address label, 
 .page-checkout #invoice-address label {
-	display: block;
-	margin: 5px 0;
-	font-weight: 400;
-	text-transform: uppercase;
-	float: left;
-	width: 188px;
-	margin-right: 10px;
-	text-align: right;
-	line-height: 34px;
-	height: 34px;
-	overflow: hidden;
+	   display: block;
+    float: left;
+    font-weight: 400;
+    height: 34px;
+    line-height: 34px;
+    margin: 0 10px 6px 0;
+    overflow: hidden;
+    text-transform: uppercase;
+    width: 481px;
 }
 .page-checkout #shipping-address select, 
 .page-checkout #shipping-address input[type=text], 
@@ -4377,10 +4381,10 @@ a.googleconnect {
 	margin-top: 1px;
 }
 .page-checkout-payment .payment-methods-table .price {
-	text-align: center;
-	color: #f60;
-	font-weight: bold;
+	font-weight: normal;
 	font-size: 10px;
+        font-size: 11px;
+        text-align: center;
 }
 .credit + .payment-methods-table {
 	border-radius: 0 0 4px 4px;
@@ -4394,7 +4398,7 @@ a.googleconnect {
 }
 .page-checkout-payment table.grid {
 	width: 662px;
-	border: 1px solid #e1e1e1;
+	border: medium none !important;
 	border-collapse: separate;
 	border-radius: 3px;
 	border-spacing: 0;
@@ -4404,7 +4408,7 @@ a.googleconnect {
 
 .page-paymentrequest table.grid,
 #pccheckout-payment-form table.grid {
-	width: 660px;
+	width: 526px;
 	border: 1px solid #e1e1e1;
 	border-collapse: separate;
 	border-radius: 3px;
@@ -4414,6 +4418,20 @@ a.googleconnect {
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
 	border-radius: 0;
+        
+}
+#pccheckout-payment-form table.grid {
+    height: 223px;
+}
+#pccheckout-payment-form .payment-methods-table{
+    float:left;
+       border-right: medium none !important;
+}
+.imgpayment{
+   float: left;
+margin-left: 16px;
+margin-top: -49px;
+width: 400px;
 }
 .page-paymentrequest-key table.grid.clearfix:after, 
 .page-checkout-payment table.grid.clearfix:after {
@@ -4432,18 +4450,14 @@ a.googleconnect {
 .page-paymentrequest-key table.grid tr, 
 .page-checkout-payment table.grid tr,
 .page-paymentrequest table.grid tr {
-	color: #646464;
-	float: left;
-	border-bottom: none;
-	border-right: 1px solid #e1e1e1;
-	width: 70px;
-	height: 138px;
-	padding: 10px;
-	text-align: center;
-	cursor: pointer;
+	border-bottom: medium none;
+        border-right: 1px solid #e1e1e1;
+        color: #646464;
+        cursor: pointer;
+        text-align: center;
 }
  .page-checkout-payment table.grid tr:first-child{
-	width: 109px !important;
+	
  }
 
 .page-paymentrequest-key table.grid tr:nth-child(7n), 
@@ -4470,7 +4484,7 @@ a.googleconnect {
 }
 .page-paymentrequest-key table.grid tr td, 
 .page-checkout-payment table.grid tr td {
-	display: block;
+	
 }
 .page-paymentrequest-key table.grid tr td span.price, 
 .page-checkout-payment table.grid tr td span.price {
@@ -4559,9 +4573,6 @@ a.googleconnect {
 	font-size: 16px;
 	font-weight: 400;
 }
-.page-checkout-payment .overview {
-	margin-top: 10px;
-}
 .page-checkout-payment .overview .fieldset-wrapper {
 	margin: 0;
 	padding: 0;
@@ -4605,7 +4616,7 @@ a.googleconnect {
 .page-checkout-payment .overview table tr.item td:first-child {
 	background-position: 10px center;
 	background-repeat: no-repeat;
-        background-image: url("images/calc_dot.png");
+        /*background-image: url("images/calc_dot.png");*/
 }
 .page-checkout-payment .overview table tr td:first-child {
 	padding-left: 10px;
@@ -4616,16 +4627,17 @@ a.googleconnect {
 }
 .page-checkout-payment .overview table tr:last-child {
 	background: #f1f1f1;
+          border: 1px solid #e1e1e1 !important;
 }
 .page-checkout-payment .overview table tr th:last-child {
 	text-align: right;
 }
 .page-checkout-payment .overview table tr td .price {
 	text-align: right;
-	float: right;
+/*	float: right;
 	color: #f60;
 	font-weight: 700;
-	font-size: 14px;
+	font-size: 14px;*/
 }
 .page-checkout-payment .overview table tr td .price .value {
 	display: inline-block;
@@ -4636,7 +4648,9 @@ a.googleconnect {
 	text-align: left;*/
 }
 .page-checkout-payment .overview table tr:last-child td .price {
-	color: #646464; /* maincolor */
+	color: #f60;
+        font-size: 15px;
+        font-weight: 700;
 }
 .page-checkout-payment #edit-actions, .page-checkout-payment .agree-and-pay {
 	position: relative;
@@ -4677,7 +4691,6 @@ a.googleconnect {
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	padding-bottom: 10px;
-	padding-top: 30px;
 }
 .page-checkout-invoiceanddelivery .shipping {
 	float: left;
@@ -7557,7 +7570,7 @@ a.storeUp:hover , a.storeDown:hover {
 
 .page-checkout #pccheckout-invoiceanddelivery-form  
 div.store div.description table.openinghours {
-width: 100%;
+width: 181px;
 }
 .page-checkout #pccheckout-invoiceanddelivery-form 
 div.store div.description table.vacations {
@@ -7565,7 +7578,6 @@ div.store div.description table.vacations {
 }
 .page-checkout #pccheckout-invoiceanddelivery-form  
 div.store div.description table.openinghours caption{
-	padding-bottom: 8px;
 	padding-top: 10px;
 	font-size: 13px;
 	color: #333333;
@@ -7577,6 +7589,7 @@ div.store div.description table.openinghours caption{
 	font-size: 13px;
 	color: #646464;
 	font-weight: 600;
+         width: 120px;
 }
 
 
@@ -8128,21 +8141,53 @@ form#pccheckout-payment-form fieldset legend{
 	padding: 18px 0;
 }
 form#pccheckout-payment-form fieldset#edit-payment-method legend{
-	background-color: #f1f1f1;
-	border-color: #e1e1e1;
-	border-style: solid;
+	
 	border-width: 1px 1px 0 1px;
-	width: 628px;
 	margin: 0;
 	-webkit-border-radius: 3px 3px 0 0;
 	-moz-border-radius: 3px 3px 0 0;
 	border-radius: 3px 3px 0 0;
-	padding: 18px 15px;
+	background-color: #f1f1f1;
+        margin: 0;
+        padding: 18px 15px;
+        width: 969px;
+        
+        
+    border-left: 1px solid #e1e1e1;
+    border-radius: 3px 3px 0 0;
+    border-right: 1px solid #e1e1e1;
+    border-top: 1px solid #e1e1e1;
+}
+#edit-payment-method fieldset{
+    /*border: 1px solid #e1e1e1;*/    
+}
+form#pccheckout-payment-form fieldset{
+    -webkit-border-radius: 0 0 3px 3px;
+	-moz-border-radius: 0 0 3px 3px;
+    border-radius: 0 0 3px 3px;
+}
+form#pccheckout-payment-form  #edit-payment-method{
+      background-color: #f1f1f1;
 }
 
+form#pccheckout-payment-form table tr{
+    height:34px!important;
+}
+form#pccheckout-payment-form .payment-methods-table tr {
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+  text-align: left !important;
+   display: table-header-group;
+   text-transform: uppercase;
+}
+form#pccheckout-payment-form table{
+  padding-bottom: 13px;
+}
 form#pccheckout-payment-form fieldset#edit-payment-method .fieldset-wrapper{
 	padding-bottom: 0;
 	margin-bottom: 0;
+         border-left: 1px solid #e1e1e1;
+         border-right: 1px solid #e1e1e1;
+         border-bottom: 1px solid #e1e1e1;
 }
 form#pccheckout-payment-form .overview table.sticky-enabled th{
 	background-color: #ff6600;
@@ -8165,7 +8210,7 @@ form#pccheckout-payment-form .overview table.sticky-enabled tr{
 	border: 0;
 }
 form#pccheckout-payment-form .overview table.sticky-enabled td{
-	background-color: #eeeeee;
+	
 	padding: 3px 20px;
 	font-size: 13px;
 	color: #666666;
@@ -8174,6 +8219,13 @@ form#pccheckout-payment-form .overview table.sticky-enabled td{
 	border-width: 1px 1px 0 0;
 	border-color: #e1e1e1;
 	height: 30px;
+}
+form#pccheckout-payment-form .overview table.sticky-enabled td.last-child{
+    text-align: right;    
+}
+form#pccheckout-payment-form .form-actions span.price {
+
+  padding-left: 24px!important;
 }
 form#pccheckout-payment-form .overview table.sticky-enabled td:first-child{
 	border-width: 1px 1px 0 1px;
@@ -10202,7 +10254,7 @@ border: none;
 		box-shadow: inset 0px 0px 0px 0.9px #b0b0b0;
 		background: #ffffff;
 		background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJod…EiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-		background: -moz-linear-gradient(top, #ffffff 0%, #e2dfdf 100%);
+                background: -moz-linear-gradient(top, #ffffff 0%, #e2dfdf 100%);
 		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2dfdf));
 		background: -webkit-linear-gradient(top, #ffffff 0%,#e2dfdf 100%);
 		background: -o-linear-gradient(top, #ffffff 0%,#e2dfdf 100%);

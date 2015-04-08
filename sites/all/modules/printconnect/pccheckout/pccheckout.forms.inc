@@ -388,7 +388,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
 
     $addresses = array();
 
-    $addresses[0] = t('New');
+   // $addresses[0] = t('New');
     $billingAccounts = printconnect\Customers\BillingAccounts\Factory::GetBillingAccounts($customer, false);
     $mybillingAccounts = printconnect\Customers\BillingAccounts\Factory::LoadBillingAccounts($billingAccounts);
     
@@ -432,7 +432,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
 
 
     $AllShippingAddress = array();
- $AllShippingAddress [0] = t('New');
+// $AllShippingAddress [0] = t('New');
 
         foreach (printconnect\Customers\Addresses\Factory::GetAddresses($customer, FALSE) as $address) {
            
@@ -479,23 +479,25 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
               }
            }
            else{
+               
                 if (!is_null($address->id)) {
                         $option = array();
+                   
                         if ($address->company) {
-                            $option[] = $address->number;
-                        }
-                        if ($address->name) {
+                            $option[] = $address->company;
+                        }elseif ($address->name) {
                             $option[] = $address->name;
                         }
+                        $option[] = $address->street.' , '.$address->postalCode.' '.$address->city;
                         $idadresse = $address->id;
-                        $AllShippingAddress[$idadresse.'-B'] = implode(' | ', $option);//.' '.t('(Adresse de facturation)');
+
+                        $AllShippingAddress[$idadresse.'-B'] = implode(' - ', $option);//.' '.t('(Adresse de facturation)');
+                        
                     }
            }
-          asort($AllShippingAddress);
-          
          //array_unshift($AllShippingAddress,t('New'));
         }
-
+    asort($AllShippingAddress);
     $form['summary'] = array(
         '#type' => 'container',
         '#attributes' => array('class' => array('summary', 'clearfix')),
@@ -619,17 +621,18 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
     
     $form['invoice']['address']['current']['name'] = array(
         '#type' => 'textfield',
-        
+        '#required' => TRUE,
         '#title' => t('Name'),
         '#size' => 30,
         '#default_value' => $defaultBillingAddress ? $defaultBillingAddress->name : ($customer ? $customer->name : ''),
     );
+
     $form['invoice']['address']['current']['street'] = array(
         '#type' => 'textfield',
         '#title' => t('Street'),
         '#default_value' => $defaultBillingAddress ? $defaultBillingAddress->street : '',
         '#size' => 30,
-         //'#required' => TRUE,
+         '#required' => TRUE,
     );
     $form['invoice']['address']['current']['postalCode'] = array(
         '#type' => 'textfield',
@@ -637,7 +640,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         '#title' => t('Postal code and City'),
         '#element_validate' => array('invoice_country_validate'),
         '#size' => 6,
-      //  '#required' => TRUE,
+       '#required' => TRUE,
         '#attributes' => array(
             'placeholder' => '1000',
         )
@@ -691,6 +694,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         '#title' => t('Company'),
         '#default_value' => $defaultBillingAddress ? $defaultBillingAddress->company : '',
         '#size' => 30,
+      //   '#required' => TRUE,
         '#attributes' => array(
             'id' => 'companyInput'
         )
@@ -700,6 +704,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         '#prefix' => '<div id="vatNumber">',
         '#suffix' => '</div>',
         '#id' => 'vatNumber',
+       // '#required' => TRUE,
         '#type' => 'vatfield',
         '#title' => t('Vat number'),
         '#attributes' => array('class' => array('vat'), 'id' => 'vatNumber'),
@@ -780,11 +785,13 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         '#type' => 'textfield',
         '#title' => t('votre nom livraison'),
         '#size' => 30,
+        '#required' => TRUE,
         '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->name : ($customer ? $customer->name : ''),
     );
     $form['shipping']['detail']['current']['street'] = array(
         '#type' => 'textfield',
         '#title' => t('Street'),
+        '#required' => TRUE,
         '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->street : '',
         '#size' => 30,
     );
@@ -793,10 +800,12 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         '#title' => t('Postal code and City'),
         '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->postalCode : '',
         '#size' => 6,
+        '#required' => TRUE,
         '#element_validate' => array('shipping_country_validate'),
     );
     $form['shipping']['detail']['current']['city'] = array(
         '#type' => 'textfield',
+        '#required' => TRUE,
         '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->city : '',
         '#size' => 30,
     );
@@ -805,12 +814,14 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
     $form['shipping']['detail']['current']['country'] = array(
         '#type' => 'select',
         '#title' => t('Country'),
+        '#required' => TRUE,
         '#options' => $deliveryCountries,
         '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->country : $defaultCountry->id,
     );
      $form['shipping']['detail']['current']['company'] = array(
         '#type' => 'textfield',
         '#title' => t('livraison entreprise'),
+        '#required' => TRUE,
         '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->company : '',
         '#size' => 30,
     );

@@ -275,9 +275,7 @@ margin-left: 0px !important;
      border-bottom: 1px solid #e3e3e3;
     padding-bottom: 18px;
 }
-.form-item-invoice-address-current-company, .form-item-invoice-address-current-vatNumber{
-    display: block!important;
-}
+
 .stordescription h1 {
   margin-top: 19px;
   margin-bottom: 21px !important;

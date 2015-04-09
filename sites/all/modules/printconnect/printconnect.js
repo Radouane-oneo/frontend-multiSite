@@ -13,18 +13,18 @@ window.alert = function(arg) {
     },
     attach: function (context, settings) {
       
-//      $(document).ajaxStart(function() {
-//        $('body',this).css('cursor','progress');
-//        $(':submit').attr('disabled', 'disabled');
-//        $('.loading').slideDown();
-//        
-//      });
+      $(document).ajaxStart(function() {
+       $('body',this).css('cursor','progress');
+       $(':submit').attr('disabled', 'disabled');
+        $('.loading').slideDown();
+        
+      });
       
-//      $(document).ajaxStop(function() {
-//        $('body', this).css('cursor','default');
-//        $(':submit').removeAttr('disabled');
-//        $('.loading').slideUp();
-//      });
+      $(document).ajaxStop(function() {
+        $('body', this).css('cursor','default');
+        $(':submit').removeAttr('disabled');
+        $('.loading').slideUp();
+      });
       
       $('.contactus').click(function(){
           

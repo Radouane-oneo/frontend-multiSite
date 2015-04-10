@@ -191,7 +191,7 @@ function theme_pcflyerstores_store_info($vars) {
             $html .= '<div id="map-canvas" style="height:48%">
                     </div>';
         }
-        $html .= '<div class="description stordescription"><h1>'.t('line1bloc3').'</h1>';
+      //  $html .= '<div class="description stordescription"><h1>'.t('line1bloc3').'</h1>';
               $html .= '<div id="Mapimg">';
         if (isset($store->country) && isset($store->city) && isset($store->address)) {
             $googleMapsAddressString = urlencode($store->country) . ',' . urlencode($store->city) . ',' . urlencode($store->address);
@@ -802,21 +802,21 @@ function pcflyerstores_form_pccheckout_invoiceanddelivery_form_alter(&$form, &$f
         } else {
             $store = FALSE;
         }
+          if ($form_state['storage']['shippingType'] == 'shippingTypeStore') {
 
+            $form['shipping']['detail']['flyerstore'] = array(
+                '#theme' => 'pcflyerstores_picker_link',
+                '#callback' => 'pcflyerstores_callback',
+                '#attributes' => array('class' => array('button','linkflyerstore')),
+            );
+        }
         $form['shipping']['detail']['selected'] = array(
             '#theme' => 'pcflyerstores_store_info',
             '#store' => $store,
             '#attributes' => array('class' => array('store', 'clearfix')),
            
         );
-        if ($form_state['storage']['shippingType'] == 'shippingTypeStore') {
-
-            $form['shipping']['detail']['change'] = array(
-                '#theme' => 'pcflyerstores_picker_link',
-                '#callback' => 'pcflyerstores_callback',
-                '#attributes' => array('class' => array('button')),
-            );
-        }
+      
 
         unset($form['shipping']['detail']['current']);
 

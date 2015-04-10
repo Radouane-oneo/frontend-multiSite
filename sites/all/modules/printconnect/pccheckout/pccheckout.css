@@ -311,3 +311,13 @@ margin-left: 0px !important;
 #pccheckout-invoiceanddelivery-form .form-item-invoice-address-current-name{
     padding-top: 7px;
 }
+#pccheckout-invoiceanddelivery-form .linkflyerstore  {
+  margin-left: 725px;
+}
+.page-checkout #pccheckout-invoiceanddelivery-form #allresault  table.vacations {
+  display: none;
+}
+#pccheckout-invoiceanddelivery-form .textpayment{
+  margin-top: 176px;
+  position: absolute;
+}

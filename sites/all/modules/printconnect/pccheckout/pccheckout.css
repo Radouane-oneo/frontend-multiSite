@@ -61,16 +61,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
     padding: 8px;
     background: #f1f1f1;
 }
-/********* A supprimer***************/
-body.page-checkout-invoiceanddelivery  #content{
-    width: 1020px !important;
-   float: left;
-}
-
-.region-sidebar-first,#sidebar-second{
-  display: none;
-}
-/**********************************/
+ 
 .payment-methods-table tr td.first-child{
     border-bottom: none;
     width: 49px;
@@ -91,6 +82,10 @@ body.page-checkout-invoiceanddelivery  #content{
   position: relative;
   margin: 0;
   text-transform: uppercase;
+}
+#pccheckout-invoiceanddelivery-form #Mapimg .map{
+  widows: 409px !important;
+  height: 264px !important;
 }
 .page-checkout #invoice-address {
   clear:both;
@@ -392,6 +387,7 @@ body.page-checkout-invoiceanddelivery  #content{
 .page-checkout .storcomande{
   float: right!important;
   width: 49%!important;
+  margin-top: -5px;
 }
 #pccheckout-invoiceanddelivery-form .form-item-shipping-detail-current-company{
   border-top: 1px solid #e3e3e3;

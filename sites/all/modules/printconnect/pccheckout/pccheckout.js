@@ -100,20 +100,20 @@
     $(".headpopin .closeme").live('click', function(){
     $('#popup_overlay.popin_overlay').css('display', 'none');
     });
-       jQuery('#pccheckout-invoiceanddelivery-form fieldset.tohiding legend').hide();
-       jQuery('#pccheckout-invoiceanddelivery-form fieldset.tohiding div').hide();
+       jQuery('#pccheckout-invoiceanddelivery-form fieldset.tohiding').hide();
+       //jQuery('#pccheckout-invoiceanddelivery-form fieldset.tohiding div').hide();
        var hash = location.hash;
        if(hash!=""){
-        jQuery("#pccheckout-invoiceanddelivery-form fieldset.tohiding" + hash + " legend").show();
-        jQuery("#pccheckout-invoiceanddelivery-form fieldset.tohiding" + hash + " div").show();
+        jQuery("#pccheckout-invoiceanddelivery-form fieldset.tohiding" + hash ).show();
+        //jQuery("#pccheckout-invoiceanddelivery-form fieldset.tohiding" + hash + " div").show();
        }
       $('#pccheckout-invoiceanddelivery-form .summary .toggle').once().click(function(){
         var url = jQuery(this).attr('href');
        var target = url.substring(url.indexOf('#'));
-       jQuery('form fieldset.tohiding legend').hide();
-       jQuery('form fieldset.tohiding div').hide();
-       jQuery(target + " legend").show();
-       jQuery(target + " div").show();
+       jQuery('form fieldset.tohiding').hide();
+       //jQuery('form fieldset.tohiding div').hide();
+       jQuery(target).show();
+       //jQuery(target + " div").show();
        jQuery(".select2-display-none").hide();
       });
 

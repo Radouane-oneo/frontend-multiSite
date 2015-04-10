@@ -740,14 +740,20 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
 
     /* Shipping address */
 
-    $form['shipping']['detail'] = array(
-        '#type' => 'fieldset',
-    //    '#collapsible' => TRUE,
-  //    '#collapsed' => TRUE,
-    '#title' => '<div class="invoiceaddress">'.t('Shipping address').'</div>',
-        '#attributes' => array('id' => 'shipping-address', 'class' => array('tohiding','styleform')),
-       //'#title' => t('Shipping address'),
-    );
+    if ($form_state['storage']['shippingType'] == 'shippingTypeStore') {
+        $form['shipping']['detail'] = array(
+            '#type' => 'fieldset',
+            '#title' => t('line1bloc3'),
+            '#attributes' => array('id' => 'shipping-address', 'class' => array('tohiding','styleform')),
+        );
+    }else{
+        $form['shipping']['detail'] = array(
+            '#type' => 'fieldset',
+            '#markup' => '<div class="invoiceaddress">'.t('Shipping address').'</div>',
+            '#attributes' => array('id' => 'shipping-address', 'class' => array('tohiding','styleform')),
+        );
+    }
+
 
     $form['shipping']['detail']['current'] = array(
         '#type' => 'fieldset',
@@ -1581,7 +1587,7 @@ function pccheckout_payment_form($form, &$form_state) {
         '#default_value' => $cart->payment_method,
     );
    $form['payment']['method']['img'] = array(
-        '#markup' => '<div class="imgpayment"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/paymentmethods/payment.jpg"></div>',
+        '#markup' => '<div class="imgpayment"><div class="textpayment">'.t('text for methode paiement').'</div><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/paymentmethods/payment.jpg"></div>',
         
     );
     $form['payment']['method']['text'] = array(

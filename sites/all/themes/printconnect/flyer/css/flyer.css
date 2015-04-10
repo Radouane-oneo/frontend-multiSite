@@ -4428,10 +4428,11 @@ a.googleconnect {
        border-right: medium none !important;
 }
 .imgpayment{
-   float: left;
-margin-left: 16px;
-margin-top: -49px;
-width: 400px;
+    float: left;
+    margin-left: 16px;
+    margin-top: -49px;
+    width: 400px;
+    position: relative;
 }
 .page-paymentrequest-key table.grid.clearfix:after, 
 .page-checkout-payment table.grid.clearfix:after {

@@ -340,15 +340,13 @@ html[dir="rtl"] .select2-results {
 .select2-results .select2-result-label {
     padding: 6px 7px 6px;
     margin: 0;
-    cursor: pointer;
-
-    min-height: 1em;
-
+    cursor: pointer; 
+    min-height: 1em; 
     -webkit-touch-callout: none;
-      -webkit-user-select: none;
-         -moz-user-select: none;
-          -ms-user-select: none;
-              user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .select2-results-dept-1 .select2-result-label { padding-left: 20px }

@@ -84,8 +84,8 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
   text-transform: uppercase;
 }
 #pccheckout-invoiceanddelivery-form #Mapimg .map{
-  widows: 409px !important;
-  height: 264px !important;
+ /* widows: 409px !important;
+  height: 264px !important;*/
 }
 .page-checkout #invoice-address {
   clear:both;

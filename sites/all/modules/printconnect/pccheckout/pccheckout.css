@@ -82,6 +82,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
   position: relative;
   margin: 0;
   text-transform: uppercase;
+  margin-bottom: 41px;
 }
 #pccheckout-invoiceanddelivery-form #Mapimg .map{
  /* widows: 409px !important;
@@ -100,6 +101,25 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
    width: 240px;
   height: 25px;
   border-bottom: 1px solid #e1e1e1;
+}
+#shipping-address .storcomande #detail{
+  margin-bottom: 27px;
+}
+#shipping-address .storcomande #detail h2{
+  margin-bottom: 18px;
+}
+#shipping-address .fieldset-wrapper .pcflyerstores-picker-link{
+  display: inline-block;
+  margin-left: 0;
+  float: right;
+  top: -20px;
+  position: absolute;
+  right: 0;
+}
+#shipping-address .openinghours caption h1{
+  margin-bottom: 0 !important;
+  font-size: 14px;
+  font-weight: 700;
 }
 .lineSeparator {
     margin: 0;
@@ -121,9 +141,8 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
   margin-left: 0;
 }
 
-.page-checkout-invoiceanddelivery #shipping-address .form-item-shipping-detail-contact{
-    float: left!important;
-    margin-top: 0;
+.page-checkout-invoiceanddelivery #shipping-address .form-item-shipping-detail-contact{ 
+    margin-top: 0 !important;
 }
 
 .neutralDescritpion, #neutralRadio {
@@ -356,6 +375,10 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 #shipping-address .description  .storcomande #detail{
   margin-bottom: 28px;
 }
+#shipping-address .storcomande #detail h2{
+    font-size: 14px !important;
+    font-weight: 700 !important;
+}
 #shipping-address .description .storcomande .openinghours caption h1{
     margin-bottom: 4px !important;
 }
@@ -374,8 +397,10 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 .quivacollecter{
   border-top: 1px solid #e3e3e3;
   display: block;
-  margin: 19px 0 10px;
-  padding-top: 14px;
+  /*margin: 19px 0 10px;*/
+  margin-top: 0px;
+  margin-bottom: 22px;
+  padding-top: 15px;
 }
 .quivacollecter h1{
     font-size: 14px!important;
@@ -383,9 +408,10 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 .page-checkout #Mapimg{
   float: left!important;
   width: 45%!important;
+  margin-right: 79px;
 }
 .page-checkout .storcomande{
-  float: right!important;
+  float: left!important;
   width: 49%!important;
   margin-top: -5px;
 }

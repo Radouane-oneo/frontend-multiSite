@@ -3962,8 +3962,8 @@ a.googleconnect {
 }
 .page-checkout-invoiceanddelivery #invoice-address input[type="submit"], 
 .page-checkout-invoiceanddelivery #shipping-address input[type="submit"] {
-	margin-left: 493px;
-	margin-bottom: 30px;
+	margin-left: 493px; 
+	margin-top: 20px;
 }
 .page-pcbpost-picker .whitebox {
 	margin: 10px;

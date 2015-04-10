@@ -518,11 +518,20 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         '#markup' => '<a id="toggle-invoice-form" href="#invoice-address" class="toggle">' . t('Change invoice address') . '</a>',
         '#weight' => 200,
     );
-    $form['summary']['shipping'] = array(
-        '#type' => 'fieldset',
-        '#title' => t('Shipping address'),
-        '#attributes' => array('class' => array('shipping')),
-    );
+    if ($form_state['storage']['shippingType'] == 'shippingTypeStore') {
+        $form['summary']['shipping'] = array(
+            '#type' => 'fieldset',
+            '#title' => t('Shipping address flyer store'),
+            '#attributes' => array('class' => array('shipping')),
+        );
+    }else{
+        $form['summary']['shipping'] = array(
+            '#type' => 'fieldset',
+            '#title' => t('Shipping address'),
+            '#attributes' => array('class' => array('shipping')),
+        );
+    }
+  
     
     if($shippinginfo->id == 204){
         $form['summary']['shipping']['selected'] = array(
@@ -534,14 +543,20 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
             '#theme' => 'address',
             '#address' => $defaultShippingAddress,
         );  
-}
- if ($cart->orderItemShipping->shippingTypeResellerShop != 204) {
+    }
+    if ($form_state['storage']['shippingType'] == 'shippingTypeStore') {
+ //if ($cart->orderItemShipping->shippingTypeResellerShop != 204) {
        // if (!isset($cart->pickuppoint)) {
             $form['summary']['shipping']['change'] = array(
-                '#markup' => '<a id="toggle-shipping-form" href="#shipping-address" class="toggle">' . t('Change shipping address') . '</a>',
+                '#markup' => '<a id="toggle-shipping-form" href="#shipping-address" class="toggle">' . t('Change shipping address flyer store') . '</a>',
                 '#weight' => 200,
             );
        // }
+    }else{
+         $form['summary']['shipping']['change'] = array(
+                '#markup' => '<a id="toggle-shipping-form" href="#shipping-address" class="toggle">' . t('Change shipping address') . '</a>',
+                '#weight' => 200,
+            );
     }
     
       /* invoice address */
@@ -760,7 +775,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         '#attributes' => array('id' => 'shipping'),
     );
     $form['shipping']['detail']['current']['textleft'] = array(
-         '#prefix' => '<div class="headerforminvoice">',  
+         '#prefix' => '<div class="headerforminvoice"><div class="invoiceaddress">'.t('Shipping address').'</div>',  
          '#markup' => '<div class="blocright"><span>'.t('Select from addressbook').'</span>'.t('line2shipping').'</div>',
         );
     $form['shipping']['detail']['current']['select'] = array(

@@ -74,7 +74,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 
 #pccheckout-invoiceanddelivery-form fieldset .legend {
   display: block;
-  font-size: 16px;
+  font-size: 14px;
   color: #666666;
   font-weight: 700;
   position: relative;
@@ -121,7 +121,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 }
 #shipping-address .openinghours caption h1{
   margin-bottom: 0 !important;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
 }
 .lineSeparator {
@@ -318,8 +318,11 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
     margin-top: 9px;
 }
 #pccheckout-invoiceanddelivery-form .invoiceaddress {
-  display: block;
-  margin: 0;
+   display: block;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 33px;
+    text-transform: uppercase;
 }
 #pccheckout-invoiceanddelivery-form .blocright span{
   display: block;
@@ -379,7 +382,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
   margin-bottom: 28px;
 }
 #shipping-address .storcomande #detail h2{
-    font-size: 14px !important;
+    font-size: 12px !important;
     font-weight: 700 !important;
 }
 #shipping-address .description .storcomande .openinghours caption h1{

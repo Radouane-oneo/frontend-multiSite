@@ -47,9 +47,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 .page-checkout #shipping-address .form-item, .page-checkout #invoice-address .form-item{
     margin: 9px 0 0 !important;
 }
-#pccheckout-invoiceanddelivery-form .styleform .forminvoiceheader{
-    margin-top: 50px;
-}
+ 
 #pccheckout-invoiceanddelivery-form .form-required {
     color: #fe6700 !important;
 }
@@ -81,8 +79,13 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
   font-weight: 700;
   position: relative;
   margin: 0;
-  text-transform: uppercase;
+  text-transform: uppercase; 
+}
+#pccheckout-invoiceanddelivery-form fieldset .legend1{
   margin-bottom: 41px;
+}
+#pccheckout-invoiceanddelivery-form fieldset .legend2{
+  margin-bottom: 37px;
 }
 #pccheckout-invoiceanddelivery-form #Mapimg .map{
  /* widows: 409px !important;
@@ -405,14 +408,15 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 .quivacollecter h1{
     font-size: 14px!important;
 }
+
 .page-checkout #Mapimg{
   float: left!important;
   width: 45%!important;
   margin-right: 79px;
 }
 .page-checkout .storcomande{
-  float: left!important;
-  width: 49%!important;
+  float: right !important;
+  width: 46%!important;
   margin-top: -5px;
 }
 #pccheckout-invoiceanddelivery-form .form-item-shipping-detail-current-company{
@@ -435,7 +439,13 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 .page-checkout #pccheckout-invoiceanddelivery-form #allresault  table.vacations {
   display: none;
 }
-#pccheckout-invoiceanddelivery-form .textpayment{
-  margin-top: 176px;
+#pccheckout-payment-form .textpayment{
+  bottom: 54px;
   position: absolute;
+  width: 100%;
+  text-align: center;
+}
+
+.page-checkout-payment .whitebox h1{
+  font-size: 14px !important;
 }

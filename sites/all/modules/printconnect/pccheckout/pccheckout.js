@@ -32,9 +32,9 @@
       /***********Script pour remplacer fieldset par div***********/
             
             var fieldsetContent = $("#invoice-address > legend").html();
-            $("#invoice-address > legend").replaceWith("<div class='legend'>" + fieldsetContent + "</div>");
+            $("#invoice-address > legend").replaceWith("<div class='legend legend2'>" + fieldsetContent + "</div>");
             var fieldsetContent = $("#shipping-address > legend").html();
-            $("#shipping-address > legend").replaceWith("<div class='legend'>" + fieldsetContent + "</div>");
+            $("#shipping-address > legend").replaceWith("<div class='legend legend1'>" + fieldsetContent + "</div>");
       
 
   });

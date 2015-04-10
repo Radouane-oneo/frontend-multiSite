@@ -131,7 +131,7 @@ html[dir="rtl"] .select2-container .select2-choice > .select2-chosen {
 
 .select2-drop {
     width: 100%;
-    margin-top: -1px;
+    margin-top: -5px;
     position: absolute;
     z-index: 9999;
     top: 100%;
@@ -309,8 +309,8 @@ html[dir="rtl"] .select2-dropdown-open .select2-choice .select2-arrow b {
 /* results */
 .select2-results {
     max-height: 200px;
-    padding: 0 0 0 4px;
-    margin: 4px 4px 4px 0;
+    padding: 0 10px 0 10px;
+    margin: 4px 0px 4px 0;
     position: relative;
     overflow-x: hidden;
     overflow-y: auto;
@@ -338,7 +338,7 @@ html[dir="rtl"] .select2-results {
 }
 
 .select2-results .select2-result-label {
-    padding: 3px 7px 4px;
+    padding: 6px 7px 6px;
     margin: 0;
     cursor: pointer;
 
@@ -360,7 +360,7 @@ html[dir="rtl"] .select2-results {
 .select2-results-dept-7 .select2-result-label { padding-left: 120px }
 
 .select2-results .select2-highlighted {
-    background: #5897fb;
+    background: #ff6600;
     color: #fff;
 }
 

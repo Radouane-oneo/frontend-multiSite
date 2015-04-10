@@ -28,6 +28,15 @@
               $(".form-item-company, .form-item-vatNumber, .form-item-invoice-address-current-company, .form-item-invoice-address-current-vatNumber").hide();
           }
       }
+
+      /***********Script pour remplacer fieldset par div***********/
+            
+            var fieldsetContent = $("#invoice-address > legend").html();
+            $("#invoice-address > legend").replaceWith("<div class='legend'>" + fieldsetContent + "</div>");
+            var fieldsetContent = $("#shipping-address > legend").html();
+            $("#shipping-address > legend").replaceWith("<div class='legend'>" + fieldsetContent + "</div>");
+      
+
   });
   
   $.fn.checkoutOverlay = function(overlay) {

@@ -548,7 +548,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
     $form['invoice']['address'] = array(
         '#type' => 'fieldset',
         '#title' => '<div class="invoiceaddress">'.t('Invoice address').'</div>',
-        '#attributes' => array('id' => 'invoice-address', 'class' => array('tohiding')),
+        '#attributes' => array('id' => 'invoice-address', 'class' => array('tohiding','styleform')),
     );
      $form['invoice']['address']['current'] = array(        
         '#attributes' => array('id' => 'invoice'),
@@ -597,7 +597,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
  
     
      $form['invoice']['address']['current']['textleft'] = array(
-         '#prefix' => '<div class="headerforminvoice">',  
+         '#prefix' => '<div class="headerforminvoice forminvoiceheader">',  
          '#markup' => '<div class="blocright"><span>'.t('Select from addressbook').'</span>'.t('line2invoice').'</div>',
         );
     $form['invoice']['address']['current']['select'] = array(
@@ -657,7 +657,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
     );
   
     
-       $form['invoice']['address']['current']['country'] = array(
+    $form['invoice']['address']['current']['country'] = array(
         '#type' => 'select',
         '#required' => TRUE,
         '#title' => t('Country'),
@@ -674,7 +674,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
             ),
         ),
     );
- $form['invoice']['address']['current']['isCompany'] = array(
+    $form['invoice']['address']['current']['isCompany'] = array(
         '#type' => 'checkbox',
         '#title_display' => 'before',
         '#title' => t('Are you a company ?'),
@@ -745,7 +745,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
     //    '#collapsible' => TRUE,
   //    '#collapsed' => TRUE,
     '#title' => '<div class="invoiceaddress">'.t('Shipping address').'</div>',
-        '#attributes' => array('id' => 'shipping-address', 'class' => array('tohiding')),
+        '#attributes' => array('id' => 'shipping-address', 'class' => array('tohiding','styleform')),
        //'#title' => t('Shipping address'),
     );
 

@@ -14,6 +14,7 @@
 /**
  * Root directory of Drupal installation.
  */
+
 define('DRUPAL_ROOT', getcwd());
 
 require_once DRUPAL_ROOT . '/includes/bootstrap.inc';

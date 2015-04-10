@@ -3962,8 +3962,8 @@ a.googleconnect {
 }
 .page-checkout-invoiceanddelivery #invoice-address input[type="submit"], 
 .page-checkout-invoiceanddelivery #shipping-address input[type="submit"] {
-	margin-left: 493px;
-	margin-bottom: 30px;
+	margin-left: 493px; 
+	margin-top: 20px;
 }
 .page-pcbpost-picker .whitebox {
 	margin: 10px;
@@ -4383,8 +4383,10 @@ a.googleconnect {
 .page-checkout-payment .payment-methods-table .price {
 	font-weight: normal;
 	font-size: 10px;
-        font-size: 11px;
-        text-align: center;
+	font-size: 11px;
+	text-align: left;
+	display: inline-block;
+	width: 46px;
 }
 .credit + .payment-methods-table {
 	border-radius: 0 0 4px 4px;
@@ -4428,10 +4430,11 @@ a.googleconnect {
        border-right: medium none !important;
 }
 .imgpayment{
-   float: left;
-margin-left: 16px;
-margin-top: -49px;
-width: 400px;
+    float: left;
+    margin-left: 16px;
+    margin-top: -49px;
+    width: 442px;
+    position: relative;
 }
 .page-paymentrequest-key table.grid.clearfix:after, 
 .page-checkout-payment table.grid.clearfix:after {
@@ -7204,6 +7207,7 @@ margin-bottom:10px;
 .payment-methods-table tr td.last-child{
 	margin-top:9px;	
 	font-weight: bold;
+	text-align: center;
 }
 
 .fr-FR a{
@@ -8134,7 +8138,7 @@ div.myoffers table.list thead tr th:nth-child(2){
 }
 
 form#pccheckout-payment-form fieldset legend{
-	font-size: 14px;
+	font-size: 12px;
 	color: #666666;
 	font-weight: 700;
 	display: block;

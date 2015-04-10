@@ -518,11 +518,20 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         '#markup' => '<a id="toggle-invoice-form" href="#invoice-address" class="toggle">' . t('Change invoice address') . '</a>',
         '#weight' => 200,
     );
-    $form['summary']['shipping'] = array(
-        '#type' => 'fieldset',
-        '#title' => t('Shipping address'),
-        '#attributes' => array('class' => array('shipping')),
-    );
+    if ($form_state['storage']['shippingType'] == 'shippingTypeStore') {
+        $form['summary']['shipping'] = array(
+            '#type' => 'fieldset',
+            '#title' => t('Shipping address flyer store'),
+            '#attributes' => array('class' => array('shipping')),
+        );
+    }else{
+        $form['summary']['shipping'] = array(
+            '#type' => 'fieldset',
+            '#title' => t('Shipping address'),
+            '#attributes' => array('class' => array('shipping')),
+        );
+    }
+  
     
     if($shippinginfo->id == 204){
         $form['summary']['shipping']['selected'] = array(
@@ -534,21 +543,27 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
             '#theme' => 'address',
             '#address' => $defaultShippingAddress,
         );  
-}
- if ($cart->orderItemShipping->shippingTypeResellerShop != 204) {
+    }
+    if ($form_state['storage']['shippingType'] == 'shippingTypeStore') {
+ //if ($cart->orderItemShipping->shippingTypeResellerShop != 204) {
        // if (!isset($cart->pickuppoint)) {
             $form['summary']['shipping']['change'] = array(
-                '#markup' => '<a id="toggle-shipping-form" href="#shipping-address" class="toggle">' . t('Change shipping address') . '</a>',
+                '#markup' => '<a id="toggle-shipping-form" href="#shipping-address" class="toggle">' . t('Change shipping address flyer store') . '</a>',
                 '#weight' => 200,
             );
        // }
+    }else{
+         $form['summary']['shipping']['change'] = array(
+                '#markup' => '<a id="toggle-shipping-form" href="#shipping-address" class="toggle">' . t('Change shipping address') . '</a>',
+                '#weight' => 200,
+            );
     }
     
       /* invoice address */
     $form['invoice']['address'] = array(
         '#type' => 'fieldset',
         '#title' => '<div class="invoiceaddress">'.t('Invoice address').'</div>',
-        '#attributes' => array('id' => 'invoice-address', 'class' => array('tohiding')),
+        '#attributes' => array('id' => 'invoice-address', 'class' => array('tohiding','styleform')),
     );
      $form['invoice']['address']['current'] = array(        
         '#attributes' => array('id' => 'invoice'),
@@ -597,7 +612,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
  
     
      $form['invoice']['address']['current']['textleft'] = array(
-         '#prefix' => '<div class="headerforminvoice">',  
+         '#prefix' => '<div class="headerforminvoice forminvoiceheader">',  
          '#markup' => '<div class="blocright"><span>'.t('Select from addressbook').'</span>'.t('line2invoice').'</div>',
         );
     $form['invoice']['address']['current']['select'] = array(
@@ -657,7 +672,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
     );
   
     
-       $form['invoice']['address']['current']['country'] = array(
+    $form['invoice']['address']['current']['country'] = array(
         '#type' => 'select',
         '#required' => TRUE,
         '#title' => t('Country'),
@@ -674,7 +689,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
             ),
         ),
     );
- $form['invoice']['address']['current']['isCompany'] = array(
+    $form['invoice']['address']['current']['isCompany'] = array(
         '#type' => 'checkbox',
         '#title_display' => 'before',
         '#title' => t('Are you a company ?'),
@@ -740,21 +755,27 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
 
     /* Shipping address */
 
-    $form['shipping']['detail'] = array(
-        '#type' => 'fieldset',
-    //    '#collapsible' => TRUE,
-  //    '#collapsed' => TRUE,
-    '#title' => '<div class="invoiceaddress">'.t('Shipping address').'</div>',
-        '#attributes' => array('id' => 'shipping-address', 'class' => array('tohiding')),
-       //'#title' => t('Shipping address'),
-    );
+    if ($form_state['storage']['shippingType'] == 'shippingTypeStore') {
+        $form['shipping']['detail'] = array(
+            '#type' => 'fieldset',
+            '#title' => t('line1bloc3'),
+            '#attributes' => array('id' => 'shipping-address', 'class' => array('tohiding','styleform')),
+        );
+    }else{
+        $form['shipping']['detail'] = array(
+            '#type' => 'fieldset',
+            '#markup' => '<div class="invoiceaddress">'.t('Shipping address').'</div>',
+            '#attributes' => array('id' => 'shipping-address', 'class' => array('tohiding','styleform')),
+        );
+    }
+
 
     $form['shipping']['detail']['current'] = array(
         '#type' => 'fieldset',
         '#attributes' => array('id' => 'shipping'),
     );
     $form['shipping']['detail']['current']['textleft'] = array(
-         '#prefix' => '<div class="headerforminvoice">',  
+         '#prefix' => '<div class="headerforminvoice"><div class="invoiceaddress">'.t('Shipping address').'</div>',  
          '#markup' => '<div class="blocright"><span>'.t('Select from addressbook').'</span>'.t('line2shipping').'</div>',
         );
     $form['shipping']['detail']['current']['select'] = array(
@@ -1581,7 +1602,7 @@ function pccheckout_payment_form($form, &$form_state) {
         '#default_value' => $cart->payment_method,
     );
    $form['payment']['method']['img'] = array(
-        '#markup' => '<div class="imgpayment"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/paymentmethods/payment.jpg"></div>',
+        '#markup' => '<div class="imgpayment"><div class="textpayment">'.t('text for methode paiement').'</div><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/paymentmethods/payment.jpg"></div>',
         
     );
     $form['payment']['method']['text'] = array(

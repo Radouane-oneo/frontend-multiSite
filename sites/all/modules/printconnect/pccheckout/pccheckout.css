@@ -318,8 +318,11 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
     margin-top: 9px;
 }
 #pccheckout-invoiceanddelivery-form .invoiceaddress {
-  display: block;
-  margin: 0;
+   display: block;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 33px;
+    text-transform: uppercase;
 }
 #pccheckout-invoiceanddelivery-form .blocright span{
   display: block;

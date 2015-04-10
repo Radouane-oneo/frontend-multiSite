@@ -415,10 +415,10 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 .page-checkout #Mapimg{
   float: left!important;
   width: 45%!important;
-  margin-right: 79px;
+  margin-right: 65px;
 }
 .page-checkout .storcomande{
-  float: right !important;
+  float: left !important;
   width: 46%!important;
   margin-top: -5px;
 }
@@ -452,3 +452,4 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 .page-checkout-payment .whitebox h1{
   font-size: 14px !important;
 }
+

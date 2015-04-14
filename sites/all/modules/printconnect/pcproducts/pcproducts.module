@@ -99,10 +99,8 @@ function pcproducts_menu() {
               'title callback' => '_pcproducts_getproductname',
               'title arguments' => array(1),
               'description' => t('Product'),
-              'page callback' => 'drupal_get_form',
-              'page arguments' => array('pcproducts_config_form', 1),
-              'access arguments' => array('access content'),
-              'file' => 'pcproducts.config.inc',
+              'page callback' => 'pcproducts_js_form',
+              'access arguments' => array('access content')
           );
           $items["products/$product->id/%"] = array(
               'title' => 'Products',
@@ -569,6 +567,11 @@ function pcproducts_js_callback() {
   }
 
   exit;
+}
+
+function pcproducts_js_form() {
+    //return "";
+    return '<script data-main="/configSelector/js/main" src="/configSelector/js/libs/requirejs/require.js"></script><div id="myForm"></div>';
 }
 
 function _pcproducts_activeproducts($all = FALSE) {

@@ -1,0 +1,11 @@
+<span class="price <%= (typeof classToAdd != 'undefined')?classToAdd:'' %>">
+    <% if(typeof label != 'undefined'){ %>
+    <label><%= label %></label>
+    <% } %>
+    <span class="value">
+        <span class="whole"><%= price.split(".")[0] %></span>
+        <span class="decimalpoint">,</span>
+        <span class="decimals"><%= price.split(".")[1] %></span>&nbsp;
+        <span class="currency">€</span>
+    </span>
+</span>

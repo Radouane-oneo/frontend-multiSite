@@ -1,54 +1,20 @@
+
 (function ($) {
   Drupal.behaviors.pccart = {
     detach: function (context) {
     },
     attach: function (context, settings) {
-        
-//      console.log(Drupal.settings.pccart.testvar);
-//        console.log(Drupal.settings.pccart.ley);
-        
-
-// function updatCartItemVat(cartItem, status) {
-// $.post('cart/updatItemVat/id/'+cartItem+'/status/'+status,{},function(){
-//});
-// }
-//      
-//      
-//   $('#pccart-cart-form .discount input[type="text"]').bind("keydown", function(event) {
-//     var keycode = (event.keyCode ? event.keyCode : (event.which ? event.which : event.charCode));
-//     if (keycode === 13) {
-//       event.preventDefault();
-//        event.stopPropagation();
-//       $('#pccart-cart-form .discount input[type="submit"]').click();
-//        return false;
-//      } else  {
-//            return true;
-//    }
-// });
-//      
-//// remove control 
-//   $('#pccart-cart-form .removecontrol').once().click(function(){
-//       if (confirm("Voulez-vous supprimer le controle  professionnel ?")) {              
-//            $.post('cart/controlprof/'+$(this).attr('rel')+'/delete',{},function(){             
-//            }).done(function() {
-//                location.reload();
-//           });
-//           return false;             
-//       }else{             
-//           return false;        
-//       } 
-//     });
-//     
-
+ 
     $("#pccart-cart-form input.targetPrice").mousedown(function () {
            if ($(this).is(":not(:checked)")){
-                if($(this).val() ==  84){
+               if($(this).val() ==  84){
                var shpping = '<input type="hidden" name="shpping" value="14.99">';
-              $("#pccart-cart-form #hiddenPrices").append(shpping);
+               $("#pccart-cart-form #hiddenPrices").append(shpping);
                 }else{
                     $("input[name='shpping']").remove();
                 }
                 PriceCallback();
+                $.post('cart/'+$(this).val()+'/submit');
            }
    });
 
@@ -73,9 +39,10 @@
              PriceCallback();
         });
             /* ------------------------------*/ 
-    }
-     
-  }
+    
+    
+    
+    }}
 })(jQuery);
 
 function PriceCallback(){
@@ -112,4 +79,39 @@ function PriceCallback(){
 }
 
 
+jQuery(document).ready(function(){
+    jQuery("#edit-cart-discount-add").click(function (event) {
+     event.preventDefault();
+      var disocuntname = jQuery("#pccart-cart-form #edit-cart-discount-code").val();
+        jQuery.ajax({
+            type: "POST",
+            url :'cart/discount',
+            data : {
+                code :disocuntname
+            },
+            dataType : 'json',
+            success: function (data) {
+                if (!isNaN(data.discountAmount)){
+                    var disocunt = '<input type="hidden" name="disocunt" value="-' + data.discountAmount+  '">';
+                    jQuery("#pccart-cart-form #hiddenPrices").append(disocunt);
+                    PriceCallback();
+                    if (jQuery(".lodediscounts")[0]) {
+                        jQuery("#pccart-cart-form .lodediscounts #edit-cart-discounts .fieldset-wrapper").append("<div class='form-wrapper'><div class='prefix form-wrapper'>Promo</div><div class='description form-wrapper'><span class='styleprice price'><span class='value'><span class='whole'>"+data.discountAmount+"</span><span class='decimalpoint'>,</span><span class='decimals'>00</span>&nbsp;<span class='currency'>€</span></span></span><div class='form-wrapper'>Vous utilisez:" + disocuntname + "</div></div></div>");
+                    }else{
+                        if (jQuery("#fieldsetjsDiscount")[0]) {
+                            jQuery("#pccart-cart-form .jsDiscount #fieldsetjsDiscount #edit-cart-discounts .fieldset-wrapper").append("<div  class='form-wrapper'><div class='prefix form-wrapper'>Promo</div><div class='description form-wrapper'><span class='styleprice price'><span class='value'><span class='whole'>"+data.discountAmount+"</span><span class='decimalpoint'>,</span><span class='decimals'>00</span>&nbsp;<span class='currency'>€</span></span></span><div class='form-wrapper'>Vous utilisez:" + disocuntname + "</div></div></div>");
+                        } else {
+                            jQuery("#pccart-cart-form .jsDiscount").append("<div id='fieldsetjsDiscount'><fieldset class='discounts item form-wrappersss' id='edit-cart-discounts'><legend><span class='fieldset-legend'>Réductions</span></legend><div class='fieldset-wrapper'><div  class='form-wrapper'><div class='prefix form-wrapper'>Promo</div><div class='description form-wrapper'><span class='styleprice price'><span class='value'><span class='whole'>"+data.discountAmount+"</span><span class='decimalpoint'>,</span><span class='decimals'>00</span>&nbsp;<span class='currency'>€</span></span></span><div class='form-wrapper'>Vous utilisez:" + disocuntname + "</div></div></div></div></fieldset></div>");
 
+                        }
+                    }
+                }
+                      
+                      
+                  }
+        });
+
+     
+    });
+
+});

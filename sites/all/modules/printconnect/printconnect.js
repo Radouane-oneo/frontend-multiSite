@@ -13,22 +13,22 @@ window.alert = function(arg) {
     },
     attach: function (context, settings) {
       
-      $(document).ajaxStart(function() {
-       $('body',this).css('cursor','progress');
-       $(':submit').attr('disabled', 'disabled');
-        $('.loading').slideDown();
-        
-      });
-      
-      $(document).ajaxStop(function() {
-        $('body', this).css('cursor','default');
-        $(':submit').removeAttr('disabled');
-        $('.loading').slideUp();
-      });
-      
-      $('.contactus').click(function(){
-          
-      });
+//      $(document).ajaxStart(function() {
+//       $('body',this).css('cursor','progress');
+//       $(':submit').attr('disabled', 'disabled');
+//        $('.loading').slideDown();
+//        
+//      });
+//      
+//      $(document).ajaxStop(function() {
+//        $('body', this).css('cursor','default');
+//        $(':submit').removeAttr('disabled');
+//        $('.loading').slideUp();
+//      });
+//      
+//      $('.contactus').click(function(){
+//          
+//      });
       if ($.fancybox){
           var targetElement = null;
         $('.fancybox').each(function(){

@@ -53,7 +53,14 @@ $items['cart/%/submit'] = array(
       'page arguments' => array('edit', 2),
       'access arguments' => array('access content'),
   );
-
+  
+  $items["cart/discount"] = array(
+      'title' => 'Cart callback',
+      'page callback' => '_pccart_callback',
+      'page arguments' =>array('discount'),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
 
   $items['cart/callback'] = array(
       'title' => 'Cart callback',
@@ -585,24 +592,10 @@ function _pccart_callback() {
     $page = array_shift($args);
     switch ($page) {
       case 'cart_submit':
-//        $cart = Factory::Current();
-//        $types = array_shift($args);
-//       
-//        if($types == 86 &&
-//        isset($form_state['values']['pcflyerstores']['id']) &&
-//        !empty($form_state['values']['pcflyerstores']['id'])){
-//            $poi = \printconnect\Stores\Factory::Get($form_state['values']['pcflyerstores']['id']);
-//            $poi->EnsureLoaded();
-//            $cart->pickuppoint = $poi->cartObject;
-//        }else{
-//            $cart->pickuppoint = FALSE;
-//        }
-//    $cart->shipping_type = $form_state['values']['cart']['shipping']['type'];
-//    $referenceValue = $form_state['values']['cart']['reference']['input'];
-//    $cart->customer_reference = $referenceValue;
-//    \printconnect\Carts\Factory::Save($cart);
-//    drupal_goto('checkout');
-          
+    $cart = Factory::Current();
+    $types = array_shift($args);
+    $cart->shipping_type = $types;
+    \printconnect\Carts\Factory::Save($cart);
       case 'cartblock':
         $cart = Factory::Current();
         $action = array_shift($args);
@@ -623,13 +616,7 @@ function _pccart_callback() {
             case 'paymentMethod':
               $cart->payment_method = array_shift($args);
               break;
-            case 'discount' :
-              $cart = Factory::Current();
-              $discount = Discounts\Factory::Create($cart->id, array_shift($args));
-              Discounts\Factory::Save($discount);
-              $cart = Factory::Refresh($cart);
           }
-
           Factory::Save($cart);
         }
 
@@ -656,7 +643,18 @@ function _pccart_callback() {
         _pccart_add($productId, $items, $qty, $options);
         return 'added';
         break;
-
+       case 'discount':
+$code = $_POST['code'];
+$cart = Factory::Current();
+$data = array("order"=>$cart->id,"code"=> $code);
+$jsondata = json_encode($data);
+$apikey = variable_get('pc_apikey');
+$url = variable_get('pc_url');
+$url .= "order-discount-code/?apikey=$apikey&language=10";
+$header = array('Content-Type' => 'application/x-www-form-urlencoded');
+$response = drupal_http_request($url, array('header' => $header, 'method' => 'POST', 'data' => $jsondata));
+echo $response->data;die;
+      break;
       case 'item_delete':
         $itemId = array_shift($args);
         $cart = Factory::Current();
@@ -664,7 +662,7 @@ function _pccart_callback() {
         if (isset($_SESSION['files'][$itemId])){
           unset($_SESSION['files'][$itemId]);
         }
-        break;
+       break;
       case 'file_delete':
         $itemId = array_shift($args);
         $fileId = array_shift($args);

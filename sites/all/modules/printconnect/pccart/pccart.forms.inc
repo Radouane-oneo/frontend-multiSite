@@ -215,9 +215,13 @@ global $language;
 
             $list = array();
             
-            $items = getArrayConfig($configs, 'toolboxItemId');
-            $optionsDt = getArrayConfig($item->options, 'option');
-
+         foreach ($configs as $config) {
+                $items[] = $config->toolboxItemId;
+            }
+            $optionsDt = array();
+            foreach ($item->options as $option) {
+                $optionsDt[] = $option->option;
+            }
             $firstConfig = array_shift($configs);
 
             foreach($configs as $config) {
@@ -591,17 +595,25 @@ global $language;
             }
         }
         /* Discount */
-
+    $form['cart']['js'] = array(
+         '#weight' => 50,
+        '#prefix' => '<div class ="jsDiscount">',
+        '#suffix' => '</div>',
+    );
     if (count($cart->discountItems)) {
         $form['cart']['discounts'] = array(
             '#type' => 'fieldset',
             '#attributes' => array('class' => array('discounts', 'item')),
             '#weight' => 50,
             '#title' => t('Discounts'),
+            '#prefix' => '<div class ="lodediscounts">',
+        '#suffix' => '</div>',
         );
         unset($_SESSION['discountId']);
         foreach($cart->discountItems as $item){
-
+            $form['cart']['items']['hidden'][$item->discountId] = array(
+                '#type' => 'hidden', '#value' => $item->price,
+            );
             $form['cart']['discounts'][$item->discountId] = array(
                 '#type' => 'container',
             );
@@ -663,13 +675,16 @@ global $language;
         );
 
         $form['cart']['discount']['add'] = array(
-            '#type' => 'submit',
+            '#type' => 'button',
             '#name' => 'add_discount',
             '#value' => t('Apply'),
-            '#submit' => array('pccart_cart_form2_add_discount_submit'),
             '#attributes' => array('class' => array('large', 'add-discount', 'ok', 'button')),
         );
-
+        $form['cart']['new'] = array(
+        '#type' => 'hidden',
+        '#prefix' => '<div id="discount_submit_div">',
+        '#suffix' => '</div>',
+          );
         $form['cart']['shipping'] = array(
             '#type' => 'fieldset',
             '#title' => t('Shipment'),
@@ -684,21 +699,19 @@ global $language;
             $enabledTypes[] = $type;
         }
     }
-   
     foreach ($enabledTypes as $type) {
         $label = $type->shippingType->tag;
         if ($type->price > 0) {
             $label .= '(' . t('!value exc. VAT', array('!value' => theme('price', array('value' => $type->price, 'free' => TRUE)))) . ' / ' . t('!value inc. VAT', array('!value' => theme('price', array('value' => $type->price * (1 + $_SESSION['shop_vat']), 'free' => TRUE)))) . ') *';
         }
-
-        $options[$type->id] = array(
-            'label' => '<span>' . $label . '</span>',
+             $options[$type->id] = array(
+            'label' => '<span >' . $label . '</span>',
             'delivery' => $type->estimatedDeliveryTime,
-        );
+          );
+       
 
         $options[$type->id]['price'] = theme('price', array('value' => $type->price, 'free' => TRUE));
     }
-        
     $shop = printconnect\Shop\Configuration\Factory::Current();
             
     if (58 != $shop->id) {
@@ -910,18 +923,7 @@ function pccart_cart_form2_delete_creat_submit($form, &$form_state) {
     }
 }
 
-function pccart_cart_form2_add_discount_submit($form, &$form_state){
-    $cart = Factory::Current();
-    try {
-        $discount = Discounts\Factory::Create($cart->id, $form_state['values']['cart']['discount']['code']);
-        Discounts\Factory::Save($discount);
-        drupal_set_message(t('Your discount code has been converted checkout your order.'));
-        Factory::Refresh($cart);
-    } catch (\printconnect\Rest\Exceptions\Exception $ex) {
-        drupal_set_message(t($ex->errors[0]), 'error');
-        $form_state['storage']['message'] = t($ex->errors[0]);
-    }
-}
+
 
 
 function pccart_cart_form2_delete_discount_submit($form, &$form_state) {
@@ -932,43 +934,19 @@ function pccart_cart_form2_delete_discount_submit($form, &$form_state) {
 
 function pccart_cart_form2_validate($form, &$form_state){
 
-    $cart = $form_state['storage']['cart'];
-    if (!$cart || !$cart->isFilled) {
-        form_set_error('', t('No cart or empty'));
-    }
-   
-    foreach ($cart->productItems as $item) {
-    if(!$form_state['values']['cart']['items'][$item->id]['designer']['check'] && !count($item->files)) {
-            form_set_error('', t('Please upload a file for all your items'));
-    }
-    }
-   
+//    $cart = $form_state['storage']['cart'];
+//    if (!$cart || !$cart->isFilled) {
+//        form_set_error('', t('No cart or empty'));
+//    }
+//   
+//    foreach ($cart->productItems as $item) {
+//    if(!$form_state['values']['cart']['items'][$item->id]['designer']['check'] && !count($item->files)) {
+//            form_set_error('', t('Please upload a file for all your items'));
+//    }
+//    }
+//   
 }
 
 function pccart_cart_form2_submit($form, &$form_state){
-    $cart = $form_state['storage']['cart'];
-    if (!$cart->onlyPostal){
-        $types = $form_state['storage']['shipping']['types'];
-        foreach ($types as $type) {
-            if ($type->id == $form_state['values']['cart']['shipping']['type']){
-                $shippingType = $type->shippingType->type;
-            }
-        }
-        if($shippingType == "shippingTypeStore" &&
-        isset($form_state['values']['pcflyerstores']['id']) &&
-        !empty($form_state['values']['pcflyerstores']['id'])){
-            $poi = \printconnect\Stores\Factory::Get($form_state['values']['pcflyerstores']['id']);
-            $poi->EnsureLoaded();
-            $cart->pickuppoint = $poi->cartObject;
-        }else{
-            $cart->pickuppoint = FALSE;
-        }
-    }
-    
-
-    $cart->shipping_type = $form_state['values']['cart']['shipping']['type'];
-    $referenceValue = $form_state['values']['cart']['reference']['input'];
-    $cart->customer_reference = $referenceValue;
-    \printconnect\Carts\Factory::Save($cart);
-    drupal_goto('checkout');
+     drupal_goto('checkout'); 
 }

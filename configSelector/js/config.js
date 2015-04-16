@@ -2,17 +2,21 @@ define([
     'backbone',
     'text!../flyerBe-fr-1.json'
 ], function (Backbone, toolBoxGroups) {
-
+    var configJSON = $.parseJSON(toolBoxGroups);
     return {
         themeFile : "productConfig-flyer.html",
         containerId : "#myForm",
-        toolBoxGroups : $.parseJSON(toolBoxGroups),
-        TVA : 0.21,
+        toolBoxGroups : configJSON["data"],
+        TVA : configJSON["vat"],
+        defaultItems : [],
+        defaultOptions : [],
+        defaultQuantity : null,
+        imagesUrl : configJSON["imagesUrl"],
         labels : {
-            "productName" : "productName",
-            "productId" : 1,
+            "productName" : configJSON["name"],
+            "productId" : configJSON["id"],
             "langId" : 10,
-            "productDescription" : "productDescription",
+            "productDescription" : configJSON["shortDescription"] + configJSON["longDescription"] + configJSON["baselineDescription"],
             "options" : "Options",
             "noOptions" : "noOptions",
             "quantity" : "quantity",

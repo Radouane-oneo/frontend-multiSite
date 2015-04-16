@@ -9,23 +9,37 @@ define([
                 "toolBoxGroup" : this.config.toolBoxGroups["defaultGroup"],
                 "priceGroupId" : this.config.toolBoxGroups["defaultGroup"]["priceGroupId"],
                 "options" : [],
-                "quantity" : this.getDefaultQuantity(),
-                "price" : this.getDefaultPrice()
+                "quantity" : this.getDefaultQuantity(null),
+                "price" : this.getDefaultPrice(null)
             }
         },
         initialize: function() {
-
+            if(this.config.defaultQuantity)
+                this.set("quantity", this.config.defaultQuantity);
+            if(this.config.defaultOptions)
+                this.set("options", this.config.defaultOptions);
+            if(this.config.defaultItems) {
+                this.setToolBoxGroup(this.config.defaultItems);
+                if(!this.config.defaultQuantity) {
+                    this.set({
+                        "quantity" : this.getDefaultQuantity(this.get("toolBoxGroup")),
+                        "price" : this.getDefaultPrice(this.get("toolBoxGroup"))
+                    });
+                }
+            }
         },
-        getDefaultQuantity: function(){
-            var defaultPricing = _.findWhere(this.config.toolBoxGroups["defaultGroup"]["pricing"], {defaultPricing: true});
+        getDefaultQuantity: function(toolBoxGroup){
+            toolBoxGroup = (toolBoxGroup) ? toolBoxGroup : this.config.toolBoxGroups["defaultGroup"];
+            var defaultPricing = _.findWhere(toolBoxGroup["pricing"], {defaultPricing: true});
             if(!defaultPricing)
-                defaultPricing = _.toArray(this.config.toolBoxGroups["defaultGroup"]["pricing"])[0];
+                defaultPricing = _.toArray(toolBoxGroup["pricing"])[0];
             return defaultPricing.quantity;
         },
-        getDefaultPrice: function(){
-            var defaultPricing = _.findWhere(this.config.toolBoxGroups["defaultGroup"]["pricing"], {defaultPricing: true});
+        getDefaultPrice: function(toolBoxGroup){
+            toolBoxGroup = (toolBoxGroup) ? toolBoxGroup : this.config.toolBoxGroups["defaultGroup"];
+            var defaultPricing = _.findWhere(toolBoxGroup["pricing"], {defaultPricing: true});
             if(!defaultPricing)
-                defaultPricing = _.toArray(this.config.toolBoxGroups["defaultGroup"]["pricing"])[0];
+                defaultPricing = _.toArray(toolBoxGroup["pricing"])[0];
             return ((defaultPricing["promoPrice"]) ? defaultPricing["promoPrice"] : defaultPricing["sellPrice"]);
         },
         priceOption: function(option){
@@ -46,6 +60,79 @@ define([
                 totalPrice += parseFloat(me.priceOption(option));
             });
             return totalPrice.toFixed(2);
+        },
+        setToolBoxGroup: function(items){
+            var me = this;
+            var toolBoxGroup = undefined;
+            while(typeof toolBoxGroup == "undefined"){
+                toolBoxGroup = _.find(this.config.toolBoxGroups, function(t){ return me.containsArray(t['toolboxItems'], items); });
+                items.pop();
+            }
+            var pricing = toolBoxGroup["pricing"][this.get("quantity")];
+            var price = null;
+            if(pricing) {
+                price = (pricing["promoPrice"]) ? pricing["promoPrice"] : pricing["sellPrice"];
+            } else {
+                price = this.calculatePrice(this.get("quantity"));
+            }
+
+            var allOptions = [];
+            _.each(toolBoxGroup["options"],function(option){
+                allOptions.push(option.id);
+            });
+
+            var validOptions = _.intersection(allOptions, this.get("options"));
+
+            this.set({
+                "toolBoxGroup" : toolBoxGroup,
+                "priceGroupId" : toolBoxGroup["priceGroupId"],
+                "options" : validOptions,
+                "price" : price
+            })
+        },
+        containsArray: function(arrParent, arrChild){
+            for(var i in arrChild) {
+                if($.inArray(arrChild[i], arrParent)==-1)
+                    return false;
+            }
+            return true;
+        },
+        calculatePrice: function(quantity) {
+            var betweenPrice, betweenBlock, previousQuantity, previousPrice, nextQuantityPrice, price, diff, multiplyUnit;
+
+            for(var i in this.get("toolBoxGroup")["pricing"]){
+                price = this.get("toolBoxGroup")["pricing"][i];
+                if (price["quantity"] < quantity) {
+                    betweenPrice = price["betweenSellPrice"];
+                    betweenBlock = price["betweenBlock"];
+                    previousQuantity = price["quantity"];
+                    previousPrice = price["sellPrice"];
+                    continue;
+                }
+                nextQuantityPrice = price["sellPrice"];
+                break;
+            }
+
+            if (betweenPrice && betweenBlock) {
+                // Get between price per block
+                diff = quantity - previousQuantity;
+                if (diff % betweenBlock) {
+                    // Given quantity is not dividable by betweenBlock
+                    multiplyUnit = ((diff - (diff % betweenBlock)) / betweenBlock) + 1;
+                } else {
+                    // Add previous price to between price
+                    multiplyUnit = diff / betweenBlock;
+                }
+
+                return previousPrice + (betweenPrice * multiplyUnit);
+            }
+            // No between price, get price of next quantity
+            if (nextQuantityPrice) {
+                return nextQuantityPrice;
+            }
+
+            return previousPrice;
+
         }
     });
 

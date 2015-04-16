@@ -65,7 +65,7 @@ body.page-stores-picker {
 }
 
 .store .description .address {
-    max-width:150px;
+    /*max-width:150px;*/
 }
 
 .store .info{
@@ -291,7 +291,7 @@ body.page-stores-picker{
 
 .store .description > div {
     width: 100%;
-    float: left;
+    /*float: left;*/
 }
 
 .store .description h2 {
@@ -768,7 +768,6 @@ body.page-stores-picker{
     background-position:-80px -20px;
 }
 .mapContainer img {
-    height:125px;
 }
 
 

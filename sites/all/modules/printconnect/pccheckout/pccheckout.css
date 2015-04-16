@@ -16,25 +16,81 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
     margin: 6px 0 0 21px;
 }
 #pccheckout-invoiceanddelivery-form .summary .invoice{
-  float:right;
-  width:50%;
-  padding:0;
-  margin:0;
-  border:none;
+    float:right;
+    width:50%;
+    padding: 6px 10px 10px 10px !important;
+    margin:0;
+    border:none;
 }
 
 #pccheckout-invoiceanddelivery-form .summary .shipping{
-  float:left;
-  width:50%;
-  padding:0;
-  margin:0;
-  border:none;
+    float:left;
+    width:50%;
+    padding: 7px 9px 10px 24px !important;
+    margin:0;
+    border:none;
+}
+#pccheckout-invoiceanddelivery-form .styleform{
+    background: #f1f1f1;
+    border-color: #e1e1e1;
+    border-style: solid;
+    border-width: 1px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    padding: 20px 18px !important;
+}
+#pccheckout-invoiceanddelivery-form input[type="text"]{
+    font-size: 12px;
+    border-color: #e1e1e1 !important;
+}
+.page-checkout #shipping-address .form-item, .page-checkout #invoice-address .form-item{
+    margin: 9px 0 0 !important;
+}
+ 
+#pccheckout-invoiceanddelivery-form .form-required {
+    color: #fe6700 !important;
+}
+.page-checkout #pccheckout-invoiceanddelivery-form{
+   background:transparent !important;
+}
+.page-checkout-invoiceanddelivery #pccheckout-invoiceanddelivery-form > div > .summary{
+    margin-bottom: 10px;
+    padding: 8px;
+    background: #f1f1f1;
+}
+ 
+.payment-methods-table tr td.first-child{
+    border-bottom: none;
+    width: 49px;
 }
 
+.payment-methods-table tr.last-child td{
+    border-bottom: none;
+}
 #pccheckout-invoiceanddelivery-form fieldset legend{
   display:none;
 }
 
+#pccheckout-invoiceanddelivery-form fieldset .legend {
+  display: block;
+  font-size: 14px;
+  color: #666666;
+  font-weight: 700;
+  position: relative;
+  margin: 0;
+  text-transform: uppercase; 
+}
+#pccheckout-invoiceanddelivery-form fieldset .legend1{
+  margin-bottom: 41px;
+}
+#pccheckout-invoiceanddelivery-form fieldset .legend2{
+  margin-bottom: 37px;
+}
+#pccheckout-invoiceanddelivery-form #Mapimg .map{
+ /* widows: 409px !important;
+  height: 264px !important;*/
+}
 .page-checkout #invoice-address {
   clear:both;
 }
@@ -45,9 +101,28 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 }
 .page-checkout-payment table th, .page-checkout-payment table td{
   /*white-space:nowrap;*/
-  padding-right:1em;
-  padding-left:1em;
-  height: 34px;
+   width: 240px;
+  height: 25px;
+  border-bottom: 1px solid #e1e1e1;
+}
+#shipping-address .storcomande #detail{
+  margin-bottom: 27px;
+}
+#shipping-address .storcomande #detail h2{
+  margin-bottom: 18px;
+}
+#shipping-address .fieldset-wrapper .pcflyerstores-picker-link{
+  display: inline-block;
+  margin-left: 0;
+  float: right;
+  top: -20px;
+  position: absolute;
+  right: 0;
+}
+#shipping-address .openinghours caption h1{
+  margin-bottom: 0 !important;
+  font-size: 12px;
+  font-weight: 700;
 }
 .lineSeparator {
     margin: 0;
@@ -62,7 +137,6 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 }
 .page-checkout-invoiceanddelivery #shipping-address a{
   width: 180px;
-	margin-left: 5px;
 }
 
 .page-checkout-invoiceanddelivery #shipping-address .select2-container .select2-choice{
@@ -70,8 +144,8 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
   margin-left: 0;
 }
 
-.page-checkout-invoiceanddelivery #shipping-address .form-item-shipping-detail-contact{
-    float: left!important;
+.page-checkout-invoiceanddelivery #shipping-address .form-item-shipping-detail-contact{ 
+    margin-top: 0 !important;
 }
 
 .neutralDescritpion, #neutralRadio {
@@ -93,6 +167,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
     position: relative;
     top: -14px;
     z-index: 99;
+    margin-left: 270px;
 }
 
 .form-item-isCompany label {
@@ -115,8 +190,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 
 .form-item-company{
     display: none;
-}
-
+} 
 
 .payment-origin-price {
     float: right;
@@ -128,34 +202,34 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 
 #light .form-submit{
     float: right;
-margin-left: 0px !important;
+    margin-left: 0px !important;
 }
 
 .black_overlay{
-     display: none;
-        position: absolute;
-        top: 0%;
-        left: 0%;
-        width: 100%;
-        height: 100%;
-        background-color: black;
-        z-index:1001;
-        -moz-opacity: 0.8;
-        opacity:.80;
-        filter: alpha(opacity=80);
-    }
-    .black_overlay2{
-        display: block;
-        position: absolute;
-        top: 0%;
-        left: 0%;
-        width: 100%;
-        height: 100%;
-        background-color: black;
-        z-index:1001;
-        -moz-opacity: 0.8;
-        opacity:.80;
-        filter: alpha(opacity=80);
+    display: none;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index:1001;
+    -moz-opacity: 0.8;
+    opacity:.80;
+    filter: alpha(opacity=80);
+}
+.black_overlay2{
+    display: block;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index:1001;
+    -moz-opacity: 0.8;
+    opacity:.80;
+    filter: alpha(opacity=80);
     }
     .white_content {
         position: absolute;
@@ -224,7 +298,7 @@ margin-left: 0px !important;
 
 #pccheckout-invoiceanddelivery-form #edit-shipping-neutral-text + .form-item-shipping-neutral-check label{
   font-size: 14px;
-  color: #a8a7a7;
+  color: #fff !important;
 }
 
 #pccheckout-upload-form .form-actions input.ui-button.payment{
@@ -238,4 +312,143 @@ margin-left: 0px !important;
   border-bottom: 1px solid #5a8a02;
   border-top: 1px solid #5a8a02;
   border-right: 1px solid #5a8a02;
+}
+ 
+.page-checkout-invoiceanddelivery .region-contenttop, .page-checkout-payment  .region-contenttop{
+    margin-top: 9px;
+}
+#pccheckout-invoiceanddelivery-form .invoiceaddress {
+   display: block;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 33px;
+    text-transform: uppercase;
+}
+#pccheckout-invoiceanddelivery-form .blocright span{
+  display: block;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+#pccheckout-invoiceanddelivery-form .headerforminvoice{
+    margin-left: 0;
+    border-bottom: 1px solid #e3e3e3;
+    padding-bottom: 12px;
+}
+#pccheckout-invoiceanddelivery-form .blocright{
+  display: block;
+  float: left;
+  width: 490px;
+}
+#pccheckout-invoiceanddelivery-form .form-item-invoice-address-current-country{
+     border-bottom: 1px solid #e3e3e3;
+    padding-bottom: 19px;
+}
+#pccheckout-invoiceanddelivery-form #edit-invoice-address-actions,#pccheckout-invoiceanddelivery-form #edit-shipping-detail-current-actions{
+  margin-top: 20px;
+}
+.page-checkout #invoice-address input.country,.form-item-invoice-address-current-postalCode input[type="text"]{
+  width: 72px !important;
+}
+
+.page-checkout #invoice-address input.number,.page-checkout #invoice-address .form-item-invoice-address-current-city input[type="text"]{
+  width: 326px !important;
+}
+.store .description h2,.store div.phone,.store div.fax,.store div.email{
+    background: none !important;
+    padding-left: 0px !important;  
+    padding-top: 0px !important;  
+}
+.store .description h2{
+    font-size: 16px !important; 
+    text-transform: uppercase !important;
+    font-weight: 700 !important;
+    margin-bottom: 17px;
+}
+.store div.email a{
+    color: #646464;
+    font-family: 'Open Sans',sans-serif;
+    font-weight: 400;
+    text-transform: none;
+}
+ .page-checkout #pccheckout-invoiceanddelivery-form 
+ div.store div.description table.openinghours caption{
+  padding-top: 0 !important;
+ }
+.stordescription > h1 {
+  margin-top: 19px;
+  margin-bottom: 43px !important;
+}
+#shipping-address .description  .storcomande #detail{
+  margin-bottom: 28px;
+}
+#shipping-address .storcomande #detail h2{
+    font-size: 12px !important;
+    font-weight: 700 !important;
+}
+#shipping-address .description .storcomande .openinghours caption h1{
+    margin-bottom: 4px !important;
+}
+.page-checkout #pccheckout-invoiceanddelivery-form div.store div.description table.openinghours{
+  width: auto !important;
+ }
+.page-checkout #pccheckout-invoiceanddelivery-form table.openinghours td:first-child{
+  width: 27% !important;
+}
+.page-checkout #pccheckout-invoiceanddelivery-form table.openinghours td:last-child{
+  width: 250px !important;
+}
+.storcomande table.openinghours tr td:last-child{
+  text-align: left !important;
+}
+.quivacollecter{
+  border-top: 1px solid #e3e3e3;
+  display: block;
+  /*margin: 19px 0 10px;*/
+  margin-top: 0px;
+  margin-bottom: 22px;
+  padding-top: 15px;
+}
+.quivacollecter h1{
+    font-size: 14px!important;
+}
+
+.page-checkout #Mapimg{
+  float: left!important;
+  width: 45%!important;
+  margin-right: 79px;
+}
+.page-checkout .storcomande{
+  float: right !important;
+  width: 46%!important;
+  margin-top: -5px;
+}
+#pccheckout-invoiceanddelivery-form .form-item-shipping-detail-current-company{
+  border-top: 1px solid #e3e3e3;
+  display: block;
+  padding-top: 12px;
+}
+#pccheckout-invoiceanddelivery-form .form-item-shipping-detail-current-name{
+    padding-top: 7px;
+}
+#pccheckout-invoiceanddelivery-form .form-item-shipping-detail-current-country{
+    padding-bottom: 7px;
+}
+#pccheckout-invoiceanddelivery-form .form-item-invoice-address-current-name{
+    padding-top: 6px;
+}
+#pccheckout-invoiceanddelivery-form .linkflyerstore  {
+  margin-left: 725px;
+}
+.page-checkout #pccheckout-invoiceanddelivery-form #allresault  table.vacations {
+  display: none;
+}
+#pccheckout-payment-form .textpayment{
+  bottom: 54px;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+}
+
+.page-checkout-payment .whitebox h1{
+  font-size: 14px !important;
 }

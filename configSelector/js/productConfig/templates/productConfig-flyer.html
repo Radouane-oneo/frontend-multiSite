@@ -15,10 +15,10 @@
 
         <!-- toolBoxItems -->
         <% _.each(model.toolBoxGroup.tree,function(toolBoxItem, i){ %>
-        <div class="form-item form-type-select">
+        <div class="form-item <%= (toolBoxItem.data.length==1)?'form-type-item':'form-type-select' %>">
             <label><%= toolBoxItem.name %></label>
-
-            <a class="text" href="#"><%= _.find(toolBoxItem.data, function(item){ return $.inArray(item.id, model.toolBoxGroup.toolboxItems)!=-1 }).name %></a>
+            <% var selected = _.find(toolBoxItem.data, function(item){ return $.inArray(item.id, model.toolBoxGroup.toolboxItems)!=-1 }); %>
+            <div class="text selected-item" href="#" data-id="<%= selected.id %>"><%= selected.name %></div>
         </div>
         <div class="dropdown clearfix form-wrapper" style="display: none;">
             <div class="description form-wrapper">
@@ -28,7 +28,7 @@
                 <ul>
                     <% _.each(toolBoxItem.data,function(item){ %>
                     <li>
-                        <a id="<%= item.id %>" href=""><img width="154" height="154" alt="" src="https://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/items/<%= item.id %>.png">
+                        <a id="<%= item.id %>" href=""><img width="154" height="154" alt="" src="<%= config.imagesUrl %>items/<%= item.id %>.png">
 
                         <div class="text"><%= item.name %></div>
                         <div class="detail"><%= item.detail %></div>
@@ -45,7 +45,7 @@
         <div class="form-item form-type-checkboxes form-item-options">
             <label for="edit-options"><%= config.labels["options"] %></label>
 
-            <a class="text" href="#">
+            <div class="text" href="#">
                 <% if(model.options.length==0){ %>
                 <%= config.labels["noOptions"] %>
                 <% } else {
@@ -53,7 +53,7 @@
                 _.each(options, function(option){ %>
                 <%= option.name %> ( + <%= priceTpl({price:priceOption(option)}) %> ) <br>
                 <% }); } %>
-            </a></div>
+            </div></div>
 
         <div class="form-checkboxes clearfix" id="edit-options" style="display: none;">
             <% _.each(model.toolBoxGroup.options, function(option, i){
@@ -71,7 +71,7 @@
         <!-- End Options-->
 
         <!-- pricesTable -->
-        <table class="grid clearfix sticky-enabled">
+        <table id="prices-table" class="grid clearfix sticky-enabled">
             <thead>
             <tr>
                 <th class="first-child"></th>

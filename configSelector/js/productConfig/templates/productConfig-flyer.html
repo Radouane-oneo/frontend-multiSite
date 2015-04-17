@@ -15,7 +15,7 @@
 
         <!-- toolBoxItems -->
         <% _.each(model.toolBoxGroup.tree,function(toolBoxItem, i){ %>
-        <div class="form-item <%= (toolBoxItem.data.length==1)?'form-type-item':'form-type-select' %>">
+        <div class="form-item <%= (_.toArray(toolBoxItem.data).length==1)?'form-type-item':'form-type-select' %>">
             <label><%= toolBoxItem.name %></label>
             <% var selected = _.find(toolBoxItem.data, function(item){ return $.inArray(item.id, model.toolBoxGroup.toolboxItems)!=-1 }); %>
             <div class="text selected-item" href="#" data-id="<%= selected.id %>"><%= selected.name %></div>

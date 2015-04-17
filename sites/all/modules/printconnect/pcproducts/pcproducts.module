@@ -79,7 +79,7 @@ function pcproducts_menu() {
  //  var_dump(arg); //die;
   if (function_exists('printconnect_ensureinitialized')) {
     printconnect_ensureinitialized();
-    $products = Factory::GetAll();
+    //$products = Factory::GetAll();
     $flow = variable_get('pc_flow', 'whitelabel');  
     
     $items['products'] = array(
@@ -93,49 +93,62 @@ function pcproducts_menu() {
         'options' => array('attributes' => array('class' => array('products'))),
     );
       
-        foreach ($products as $product) {
-          $items["products/$product->id"] = array(
-              'title' => 'Configuration',
-              'title callback' => '_pcproducts_getproductname',
-              'title arguments' => array(1),
-              'description' => t('Product'),
-              'page callback' => 'pcproducts_js_form',
-              'access arguments' => array('access content')
-          );
-          $items["products/$product->id/%"] = array(
-              'title' => 'Products',
-              'description' => t('Product'),
-              'page callback' => 'drupal_get_form',
-              'page arguments' => array('pcproducts_config_form', 1, 2),
-              'access arguments' => array('access content'),
-              'file' => 'pcproducts.config.inc',
-          );
-          $items["products/$product->id/%/%"] = array(
+        //foreach ($products as $product) {
+/*          $items["products/$product->id/%/%"] = array(
               'title' => 'Products',
               'description' => t('Product'),
               'page callback' => 'drupal_get_form',
               'page arguments' => array('pcproducts_config_form', 1, 2, 3),
               'access arguments' => array('access content'),
               'file' => 'pcproducts.config.inc',
+          );*/
+          $items["products/%"] = array(
+              'title' => 'Configuration',
+              'title callback' => '_pcproducts_getproductname',
+              'title arguments' => array(1),
+              'description' => t('Product'),
+              'page callback' => 'pcproducts_js_form',
+              'page arguments' => array(1),
+              'access arguments' => array('access content')
+          );
+          $items["products/%/%"] = array(
+              'title' => 'Configuration',
+              'title callback' => '_pcproducts_getproductname',
+              'title arguments' => array(1),
+              'description' => t('Product'),
+              'page callback' => 'pcproducts_js_form',
+              'page arguments' => array(1, 2),
+              'access arguments' => array('access content')
+          );
+          $items["products/%/%/%"] = array(
+              'title' => 'Configuration',
+              'title callback' => '_pcproducts_getproductname',
+              'title arguments' => array(1),
+              'description' => t('Product'),
+              'page callback' => 'pcproducts_js_form',
+              'page arguments' => array(1, 2, 3),
+              'access arguments' => array('access content')
           );
 
-          $items["products/$product->id/%/%/%"] = array(
-              'title' => 'Products',
+          $items["products/%/%/%/%"] = array(
+              'title' => 'Configuration',
+              'title callback' => '_pcproducts_getproductname',
+              'title arguments' => array(1),
               'description' => t('Product'),
-              'page callback' => 'drupal_get_form',
-              'page arguments' => array('pcproducts_config_form', 1, 2, 3, 4),
-              'access arguments' => array('access content'),
-              'file' => 'pcproducts.config.inc',
+              'page callback' => 'pcproducts_js_form',
+              'page arguments' => array(1, 2, 3, 4),
+              'access arguments' => array('access content')
           );
-          $items["products/$product->id/%/%/%/"] = array(
-              'title' => 'Products',
+          $items["products/%/%/%/%/"] = array(
+              'title' => 'Configuration',
+              'title callback' => '_pcproducts_getproductname',
+              'title arguments' => array(1),
               'description' => t('Product'),
-              'page callback' => 'drupal_get_form',
-              'page arguments' => array('pcproducts_config_form', 1, 2, 3, 4, 5),
-              'access arguments' => array('access content'),
-              'file' => 'pcproducts.config.inc',
+              'page callback' => 'pcproducts_js_form',
+              'page arguments' => array(1, 2, 3, 4, 5),
+              'access arguments' => array('access content')
           );
-        }
+        //}
 
 
      $items["js/products"] = array(
@@ -569,9 +582,74 @@ function pcproducts_js_callback() {
   exit;
 }
 
-function pcproducts_js_form() {
-    //return "";
-    return '<script data-main="/configSelector/js/main" src="/configSelector/js/libs/requirejs/require.js"></script><div id="myForm"></div>';
+function getFromServer($filename) {
+    $apikey = variable_get('pc_apikey', '');
+    $url = "http://admin.preprd.printconcept.com/rest/json/filename/{$filename}?apikey={$apikey}";
+
+    return file_get_contents($url);
+}
+
+function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = FALSE, $edit = FALSE) {
+    global $language;
+
+    if (!is_numeric($productId)) {
+        drupal_not_found();
+        exit;
+    }
+
+    //drupal_set_breadcrumb(array(l(t('Home'), '<front>'), l(t('Products'), 'products')));
+
+    $siteName = variable_get('pc_site_name', '');
+    $jsonPath = variable_get('pc_json_path', '');
+
+    $filename = $siteName . '-' . strtolower($language->native) . '-' . $productId;
+    $filePath = $jsonPath . $filename . '.json';
+
+    if(!file_exists($filePath)) {
+        $jsonFile = getFromServer($filename);
+    }else {
+        $jsonFile = file_get_contents($filePath);
+    }
+
+    $productData = json_decode($jsonFile, 1);
+
+    $labels = getLabels($productData, $edit);
+
+    $script = "<script type='text/javascript'>
+        var GlobalLabels = ". json_encode($labels) .";
+        var JsonFileGroups = ". html_entity_decode($jsonFile) .";
+    </script>";
+    $script .= '<script data-main="/configSelector/js/main" src="/configSelector/js/libs/requirejs/require.js"></script>';
+    $script .= '<div id="myForm"></div>';
+
+    return $script;
+}
+
+function getLabels($productData, $edit = false) {
+    $labels = array(
+        "productName" => $productData["name"],
+        "productId" => $productData["id"],
+        "langId" => 10,
+        "productDescription" => html_entity_decode($productData["shortDescription"] . $productData["longDescription"] . $productData["baselineDescription"]),
+        "options" => t('Options'),
+        "noOptions" => t('No options selected'),
+        "quantity" => t('Quantity'),
+        "priceNoTVA" => t('Price VAT excl.'),
+        "priceWithTVA" => t('Price VAT incl.'),
+        "enterQuantity" => t('Enter your amount'),
+        "calculate" => t('Calculer'),
+        "totalNoTVA" => t('Total excl. VAT'),
+        "addToCart" => $edit ? t('Update') : t('Add to cart'),
+        "technicalDetails" => t('Design documents'),
+        "technicalDescription" => t('Finalizing your design? Take into account these requirements:'),
+        "size" => t('Size'),
+        "bleed" => t('Bleed'),
+        "color" => t('Color'),
+        "resolution" => t('Resolution'),
+        "downloadText" => t('Download all design document')
+    );
+
+    return $labels;
 }
 
 function _pcproducts_activeproducts($all = FALSE) {

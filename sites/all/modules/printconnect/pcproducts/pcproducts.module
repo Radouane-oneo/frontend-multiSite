@@ -615,7 +615,7 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
     }else {
         $jsonFile = file_get_contents($filePath);
     }
-    //echo $jsonFile;die;
+
     $productData = json_decode($jsonFile, 1);
 
     $labels = getLabels($productData, $edit);

@@ -842,7 +842,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
      $form['shipping']['detail']['current']['company'] = array(
         '#type' => 'textfield',
         '#title' => t('livraison entreprise'),
-        '#required' => TRUE,
+        '#required' => FALSE,
         '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->company : '',
         '#size' => 30,
     );

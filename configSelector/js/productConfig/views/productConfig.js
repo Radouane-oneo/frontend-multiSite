@@ -31,6 +31,7 @@ define([
                 "priceTpl" : _.template(priceTemplate)
             }));
             $(this.config.containerId).html(this.$el);
+            console.log(this.model.toJSON());
         },
         toggleExpand: function(e){
             $(e.currentTarget).toggleClass("expanded");

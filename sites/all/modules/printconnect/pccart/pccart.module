@@ -572,15 +572,13 @@ function _pccart_add($productId, $qty, $options, $priceGroupId, $vat = FALSE) {
       Factory::Save($cart);
     }
   }
-  $cart->EnsureLoaded();
   $relatedProducts = array();
   $description = '';
   $cart->productId = $productId;
-  Factory::CreateItem($cart, $priceGroupId, $qty, $description, $relatedProducts, $options, $vat);
+  $item = Factory::CreateItem($cart, $priceGroupId, $qty, $description, $relatedProducts, $options, $vat);
+  $cart->orderItems[] = $item;
   Factory::Refresh($cart);
-
   drupal_goto('cart');
-  
 }
 
 function _pccart_callback() {
@@ -914,11 +912,11 @@ function _pccart_add_json($json) {
     $cart = Factory::Create();
   }
 
-  $cart->EnsureLoaded();
   $object = json_decode($json);
 
   foreach ($object->items as $item) {
     $item = Factory::CreateItem($cart, $item->productPriceGroupId, $item->quantity, '', array(), $item->options, $item->vat);
+    $cart->orderItems[] = $items;
   }
 
   if (isset($object->codes)) {

@@ -903,13 +903,13 @@ global $language;
     
     /* Control order have Designer */
     
-//    $validate = $form['actions']['checkout']['#validate'];
-//    array_unshift($validate, 'pcdesigner_form_validate');
-//    $form['actions']['checkout']['#validate'] = $validate;
-//
-//    $submit = $form['actions']['checkout']['#submit'];
-//    array_unshift($submit, 'pcdesigner_form_submit');
-//    $form['actions']['checkout']['#submit'] = $submit;
+    $validate = $form['actions']['checkout']['#validate'];
+    array_unshift($validate, 'pcdesigner_form_validate');
+    $form['actions']['checkout']['#validate'] = $validate;
+
+    $submit = $form['actions']['checkout']['#submit'];
+    array_unshift($submit, 'pcdesigner_form_submit');
+    $form['actions']['checkout']['#submit'] = $submit;
 
     return $form;
 }
@@ -934,17 +934,17 @@ function pccart_cart_form2_delete_discount_submit($form, &$form_state) {
 
 function pccart_cart_form2_validate($form, &$form_state){
 
-//    $cart = $form_state['storage']['cart'];
-//    if (!$cart || !$cart->isFilled) {
-//        form_set_error('', t('No cart or empty'));
-//    }
-//   
-//    foreach ($cart->productItems as $item) {
-//    if(!$form_state['values']['cart']['items'][$item->id]['designer']['check'] && !count($item->files)) {
-//            form_set_error('', t('Please upload a file for all your items'));
-//    }
-//    }
-//   
+    $cart = $form_state['storage']['cart'];
+    if (!$cart || !$cart->isFilled) {
+        form_set_error('', t('No cart or empty'));
+    }
+   
+    foreach ($cart->productItems as $item) {
+    if(!$form_state['values']['cart']['items'][$item->id]['designer']['check'] && !count($item->files)) {
+            form_set_error('', t('Please upload a file for all your items'));
+    }
+    }
+   
 }
 
 function pccart_cart_form2_submit($form, &$form_state){

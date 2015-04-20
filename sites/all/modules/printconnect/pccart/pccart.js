@@ -106,9 +106,7 @@ jQuery(document).ready(function(){
                         }
                     }
                 }
-                      
-                      
-                  }
+            }
         });
 
      

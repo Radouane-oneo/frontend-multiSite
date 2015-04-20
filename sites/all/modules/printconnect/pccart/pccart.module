@@ -592,10 +592,16 @@ function _pccart_callback() {
     $page = array_shift($args);
     switch ($page) {
       case 'cart_submit':
-    $cart = Factory::Current();
-    $types = array_shift($args);
-    $cart->shipping_type = $types;
-    \printconnect\Carts\Factory::Save($cart);
+        $cart = Factory::Current();
+        $types = array_shift($args);
+        $data = array("cart"=>$cart->id,"shipping_type"=> $types);
+       $jsondata  = json_encode($data);
+        $apikey = variable_get('pc_apikey');
+        $url = variable_get('pc_url');
+        $url .= "shipping-type/?apikey=$apikey&language=10";
+        $header = array('Content-Type' => 'application/x-www-form-urlencoded');
+        $response = drupal_http_request($url, array('header' => $header, 'method' => 'POST', 'data' => $jsondata));
+        
       case 'cartblock':
         $cart = Factory::Current();
         $action = array_shift($args);
@@ -644,16 +650,16 @@ function _pccart_callback() {
         return 'added';
         break;
        case 'discount':
-$code = $_POST['code'];
-$cart = Factory::Current();
-$data = array("order"=>$cart->id,"code"=> $code);
-$jsondata = json_encode($data);
-$apikey = variable_get('pc_apikey');
-$url = variable_get('pc_url');
-$url .= "order-discount-code/?apikey=$apikey&language=10";
-$header = array('Content-Type' => 'application/x-www-form-urlencoded');
-$response = drupal_http_request($url, array('header' => $header, 'method' => 'POST', 'data' => $jsondata));
-echo $response->data;die;
+        $code = $_POST['code'];
+        $cart = Factory::Current();
+        $data = array("order"=>$cart->id,"code"=> $code);
+        $jsondata = json_encode($data);
+        $apikey = variable_get('pc_apikey');
+        $url = variable_get('pc_url');
+        $url .= "order-discount-code/?apikey=$apikey&language=10";
+        $header = array('Content-Type' => 'application/x-www-form-urlencoded');
+        $response = drupal_http_request($url, array('header' => $header, 'method' => 'POST', 'data' => $jsondata));
+        echo $response->data;die;
       break;
       case 'item_delete':
         $itemId = array_shift($args);

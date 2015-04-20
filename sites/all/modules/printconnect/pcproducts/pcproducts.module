@@ -79,7 +79,7 @@ function pcproducts_menu() {
  //  var_dump(arg); //die;
   if (function_exists('printconnect_ensureinitialized')) {
     printconnect_ensureinitialized();
-    $products = Factory::GetAll();
+    //$products = Factory::GetAll();
     $flow = variable_get('pc_flow', 'whitelabel');  
     
     $items['products'] = array(
@@ -93,49 +93,63 @@ function pcproducts_menu() {
         'options' => array('attributes' => array('class' => array('products'))),
     );
       
-        foreach ($products as $product) {
-          $items["products/$product->id"] = array(
+        //foreach ($products as $product) {
+          $items["getshippingdate"] = array(
+              'title' => 'Configuration',
+              'title callback' => '_pcproducts_getproductname',
+              'title arguments' => array(1),
+              'description' => t('Product'),
+              'page callback' => 'callback_shippingdate_ajax',
+              //'page arguments' => array(1),
+              'access arguments' => array('access content')
+          );          
+          $items["products/%"] = array(
               'title' => 'Configuration',
               'title callback' => '_pcproducts_getproductname',
               'title arguments' => array(1),
               'description' => t('Product'),
               'page callback' => 'pcproducts_js_form',
+              'page arguments' => array(1),
               'access arguments' => array('access content')
           );
-          $items["products/$product->id/%"] = array(
-              'title' => 'Products',
+          $items["products/%/%"] = array(
+              'title' => 'Configuration',
+              'title callback' => '_pcproducts_getproductname',
+              'title arguments' => array(1),
               'description' => t('Product'),
-              'page callback' => 'drupal_get_form',
-              'page arguments' => array('pcproducts_config_form', 1, 2),
-              'access arguments' => array('access content'),
-              'file' => 'pcproducts.config.inc',
+              'page callback' => 'pcproducts_js_form',
+              'page arguments' => array(1, 2),
+              'access arguments' => array('access content')
           );
-          $items["products/$product->id/%/%"] = array(
-              'title' => 'Products',
+          $items["products/%/%/%"] = array(
+              'title' => 'Configuration',
+              'title callback' => '_pcproducts_getproductname',
+              'title arguments' => array(1),
               'description' => t('Product'),
-              'page callback' => 'drupal_get_form',
-              'page arguments' => array('pcproducts_config_form', 1, 2, 3),
-              'access arguments' => array('access content'),
-              'file' => 'pcproducts.config.inc',
+              'page callback' => 'pcproducts_js_form',
+              'page arguments' => array(1, 2, 3),
+              'access arguments' => array('access content')
           );
 
-          $items["products/$product->id/%/%/%"] = array(
-              'title' => 'Products',
+          $items["products/%/%/%/%"] = array(
+              'title' => 'Configuration',
+              'title callback' => '_pcproducts_getproductname',
+              'title arguments' => array(1),
               'description' => t('Product'),
-              'page callback' => 'drupal_get_form',
-              'page arguments' => array('pcproducts_config_form', 1, 2, 3, 4),
-              'access arguments' => array('access content'),
-              'file' => 'pcproducts.config.inc',
+              'page callback' => 'pcproducts_js_form',
+              'page arguments' => array(1, 2, 3, 4),
+              'access arguments' => array('access content')
           );
-          $items["products/$product->id/%/%/%/"] = array(
-              'title' => 'Products',
+          $items["products/%/%/%/%/"] = array(
+              'title' => 'Configuration',
+              'title callback' => '_pcproducts_getproductname',
+              'title arguments' => array(1),
               'description' => t('Product'),
-              'page callback' => 'drupal_get_form',
-              'page arguments' => array('pcproducts_config_form', 1, 2, 3, 4, 5),
-              'access arguments' => array('access content'),
-              'file' => 'pcproducts.config.inc',
+              'page callback' => 'pcproducts_js_form',
+              'page arguments' => array(1, 2, 3, 4, 5),
+              'access arguments' => array('access content')
           );
-        }
+        //}
 
 
      $items["js/products"] = array(
@@ -569,9 +583,176 @@ function pcproducts_js_callback() {
   exit;
 }
 
-function pcproducts_js_form() {
-    //return "";
-    return '<script data-main="/configSelector/js/main" src="/configSelector/js/libs/requirejs/require.js"></script><div id="myForm"></div>';
+function getFromServer($filename) {
+    $apikey = variable_get('pc_apikey', '');
+    $url = "http://admin.preprd.printconcept.com/rest/json/filename/{$filename}?apikey={$apikey}";
+
+    return file_get_contents($url);
+}
+
+function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = FALSE, $edit = FALSE) {
+    global $language;
+
+    if (!is_numeric($productId)) {
+        drupal_not_found();
+        exit;
+    }
+
+    //drupal_set_breadcrumb(array(l(t('Home'), '<front>'), l(t('Products'), 'products')));
+
+    $siteName = variable_get('pc_site_name', '');
+    $jsonPath = variable_get('pc_json_path', '');
+
+    $filename = $siteName . '-' . strtolower($language->native) . '-' . $productId;
+    $filePath = $jsonPath . $filename . '.json';
+
+    if(!file_exists($filePath)) {
+        $jsonFile = getFromServer($filename);
+        if(!$jsonFile) {
+          require_once dirname(__FILE__) . '/pcproducts.config.inc';
+          return drupal_render(drupal_get_form('pcproducts_config_form', $productId));
+        }
+    }else {
+        $jsonFile = file_get_contents($filePath);
+    }
+
+    $productData = json_decode($jsonFile, 1);
+
+    $labels = getLabels($productData, $edit);
+
+    $script = "<script type='text/javascript'>
+        var GlobalLabels = ". json_encode($labels) .";
+        var JsonFileGroups = ". $jsonFile .";
+    </script>";
+    $script .= '<script data-main="/configSelector/js/main" src="/configSelector/js/libs/requirejs/require.js"></script>';
+    $script .= '<div id="myForm"></div>';
+
+    return $script;
+}
+
+function getLabels($productData, $edit = false) {
+    $labels = array(
+        "productName" => $productData["name"],
+        "productId" => $productData["id"],
+        "langId" => 10,
+        "productDescription" => html_entity_decode($productData["shortDescription"] . $productData["longDescription"] . $productData["baselineDescription"]),
+        "options" => t('Options'),
+        "noOptions" => t('No options selected'),
+        "quantity" => t('Quantity'),
+        "priceNoTVA" => t('Price VAT excl.'),
+        "priceWithTVA" => t('Price VAT incl.'),
+        "enterQuantity" => t('Enter your amount'),
+        "calculate" => t('Calculer'),
+        "totalNoTVA" => t('Total excl. VAT'),
+        "addToCart" => $edit ? t('Update') : t('Add to cart'),
+        "technicalDetails" => t('Design documents'),
+        "technicalDescription" => t('Finalizing your design? Take into account these requirements:'),
+        "size" => t('Size'),
+        "bleed" => t('Bleed'),
+        "color" => t('Color'),
+        "resolution" => t('Resolution'),
+        "downloadText" => t('Download all design document')
+    );
+
+    return $labels;
+}
+
+function callback_shippingdate_ajax() {
+    $output = drupal_render(drupal_get_form('build_shipping_type_form'));
+
+    echo $output;die;
+}
+
+function build_shipping_type_form($form, &$form_state) {
+    $productId = 1;
+    $items = array(1, 18, 10);
+    $options = array();
+    $qty = 10;
+
+    $shipsIn = FALSE;
+    $deliveryDate = FALSE;
+    $shipping = \printconnect\Products\Shipping\Factory::Get($productId, $items, $options, $qty);
+    if (count($shipping->items)) {
+        $firstDeadline = $shipping->items[0];
+        $deadlineDate = $firstDeadline->deadlineDate;
+        if (isset($deadlineDate)) {
+            $deadlineDate = strtotime($deadlineDate);
+        }
+        $shippingDate = $firstDeadline->shippingDate;
+        if (isset($shippingDate)) {
+            $datetime1 = new DateTime('now');
+            $datetime2 = new DateTime($shippingDate);
+            $shippingDate = strtotime($shippingDate);
+        }
+        $deliveryDate = $firstDeadline->deliveryDate;
+        if (isset($deliveryDate)) {
+            $deliveryDate = strtotime($deliveryDate);
+        }
+
+        if (isset($deadlineDate) && isset($shippingDate)) {
+            $dt1 = new DateTime(date('Y-m-d', $deadlineDate));
+            $dt2 = new DateTime(date('Y-m-d', $shippingDate));
+            $shipsIn = $dt1->diff($dt2);
+            $shipsIn = $shipsIn->days;
+        }
+
+        if ($deliveryDate) {
+            $form['shipping'] = array(
+                '#type' => 'fieldset',
+                '#attributes' => array('class' => array('shipping')),
+                '#title' => t('Expected delivery'),
+            );
+            $form['shipping']['deadline'] = array(
+                '#type' => 'container',
+                '#attributes' => array('class' => array('deadline')),
+            );
+            $form['shipping']['deadline']['date'] = array(
+                '#type' => 'item',
+                '#title' => t('Supply before @time', array('@time' => format_date($deadlineDate, 'custom', 'H:i'))),
+                '#markup' => '<span class="day">' . format_date($deadlineDate, 'weekday') . '</span><span class="date">' . format_date($deadlineDate, 'custom', 'd/m') . '</span>',
+            );
+            $form['shipping']['delivery'] = array(
+                '#type' => 'container',
+                '#attributes' => array('class' => array('delivery')),
+            );
+
+            $form['shipping']['delivery']['date'] = array(
+                '#type' => 'item',
+                '#title' => t('Expected delivery'),
+                '#markup' => '<span class="day">' . format_date($deliveryDate, 'weekday') . '</span><span class="date">' . format_date($deliveryDate, 'custom', 'd/m') . '</span>',
+            );
+        }
+    }
+
+    $rows = array();
+    foreach ($shipping->items as $deadline) {
+        $rows[] = array(
+            array(
+                'class' => array('supply'),
+                'data' => \printconnect\Drupal\Functions::FormatDate(strtotime($deadline->deadlineDate), 'weekdayhour'),
+            ),
+            array(
+                'class' => array('delivery'),
+                'data' => format_date(strtotime($deadline->deliveryDate), 'weekday'),
+            ),
+        );
+    }
+    $form['shipping']['deadlines']['tooltip']['content'] = array(
+        '#type' => 'fieldset',
+        '#collapsible' => true,
+        '#collapsed' => true,
+        '#title' => '<a class="fieldset-title" href="#"><span class="fieldset-legend-prefix element-invisible">Masquer</span> '.t('Supply times').'</a>',
+        '#attributes' => array('class' => array('deadlines')),
+        '#id' => 'deadlinestooltip',
+        'table' => array(
+            '#theme' => 'table',
+            '#rows' => $rows,
+            '#header' => array(t('Supply before'), t('Expected delivery')),
+        ),
+        'notice' => array('#markup' => t('Depending on your delivery address...')),
+    );
+
+    return $form;
 }
 
 function _pcproducts_activeproducts($all = FALSE) {

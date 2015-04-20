@@ -15,7 +15,9 @@ define([
             "change #prices-table input.form-radio" : "changeQuantity",
             "click #prices-table tbody tr:not(.custom)" : "selectInput",
             "click #edit-calculer" : "calculatePrice",
-            "keypress #edit-custom" : "checkQuantity"
+            "keypress #edit-custom" : "checkQuantity",
+            "click #deadlinestooltip legend" : "toggleCollapse",
+            "click #deadlinestooltip legend a" : "preventDefault"
         },
         initialize: function() {
             this.config = require("config");
@@ -29,18 +31,43 @@ define([
                 "config" : this.config,
                 "priceOption" : this.model.priceOption,
                 "totalPrice" : this.model.totalPrice,
-                "priceTpl" : _.template(priceTemplate)
+                "priceTpl" : _.template(priceTemplate),
+                "shippingHTML" : this.$("#bloc-shipping").html()
             }));
             $(this.config.containerId).html(this.$el);
+
+            this.$("#bloc-shipping").load("/getshippingdate #edit-shipping", {
+                "productId" : this.config.labels['productId'],
+                "items" : this.model.get("toolBoxGroup")["toolboxItems"],
+                "options" : this.model.get("options"),
+                "quantity" : this.model.get("quantity")
+            });
         },
         toggleExpand: function(e){
             $(e.currentTarget).toggleClass("expanded");
             $(e.currentTarget).next().slideToggle();
         },
+        toggleCollapse: function(e){
+            var fieldSet = $(e.currentTarget).parents("#deadlinestooltip");
+            if(fieldSet.hasClass("collapsed")) {
+                fieldSet.removeClass("collapsed");
+                $(e.currentTarget).next().hide();
+                $(e.currentTarget).next().slideToggle();
+            } else {
+                $(e.currentTarget).next().slideToggle().promise().done(function(){
+                    fieldSet.addClass("collapsed");
+                });
+            }
+        },
+        preventDefault: function(e){
+            e.preventDefault();
+        },
         changeToolBoxGroup: function(e){
-            var selectEl = $(e.currentTarget).parents(".dropdown").prev();
+            var dropDown = $(e.currentTarget).parents(".dropdown");
+            var selectEl = dropDown.prev();
             var oldSelectedValue = selectEl.find("div.selected-item").attr("data-id");
             var selectedItems = [];
+            var me = this;
             selectEl.click();
 
             this.$("div.selected-item").each(function(){
@@ -48,20 +75,26 @@ define([
                 selectedItems.push(parseInt(selectedItem));
             });
 
-            this.model.setToolBoxGroup(selectedItems);
+            dropDown.promise().done(function(){
+                me.model.setToolBoxGroup(selectedItems);
+            });
 
             e.preventDefault();
         },
         changeOptions: function(e){
-            var selectEl = $(e.target).parents(".form-checkboxes").prev();
+            var dropDown = $(e.target).parents(".form-checkboxes");
+            var selectEl = dropDown.prev();
             var options = [];
+            var me = this;
             selectEl.click();
 
             $("#edit-options").find("input.form-checkbox:checked").each(function(){
                 options.push(parseInt($(this).val()));
             });
 
-            this.model.set("options", options);
+            dropDown.promise().done(function(){
+                me.model.set("options", options);
+            });
         },
         changeQuantity: function(e){
             var quantity = parseInt($(e.target).val());

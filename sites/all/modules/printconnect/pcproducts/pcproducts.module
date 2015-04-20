@@ -592,6 +592,8 @@ function getFromServer($filename) {
 
 function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = FALSE, $edit = FALSE) {
     global $language;
+    
+    ini_set('memory_limit', '2048M');
 
     if (!is_numeric($productId)) {
         drupal_not_found();
@@ -616,13 +618,14 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
         $jsonFile = file_get_contents($filePath);
     }
 
-    $productData = json_decode($jsonFile, 1);
+    $labels = getLabels($edit);
 
-    $labels = getLabels($productData, $edit);
+    $isAdmin = ($user->uid) ? '1' : '0';
 
     $script = "<script type='text/javascript'>
         var GlobalLabels = ". json_encode($labels) .";
         var JsonFileGroups = ". $jsonFile .";
+        var GlobalIsAdmin = ". $isAdmin .";
     </script>";
     $script .= '<script data-main="/configSelector/js/main" src="/configSelector/js/libs/requirejs/require.js"></script>';
     $script .= '<div id="myForm"></div>';
@@ -630,12 +633,9 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
     return $script;
 }
 
-function getLabels($productData, $edit = false) {
+function getLabels($edit = false) {
     $labels = array(
-        "productName" => $productData["name"],
-        "productId" => $productData["id"],
         "langId" => 10,
-        "productDescription" => html_entity_decode($productData["shortDescription"] . $productData["longDescription"] . $productData["baselineDescription"]),
         "options" => t('Options'),
         "noOptions" => t('No options selected'),
         "quantity" => t('Quantity'),
@@ -651,8 +651,13 @@ function getLabels($productData, $edit = false) {
         "bleed" => t('Bleed'),
         "color" => t('Color'),
         "resolution" => t('Resolution'),
+        "directLink" => t('Direct link'),
         "downloadText" => t('Download all design document')
     );
+
+    for($i=0; $i <= 114; $i++) {
+        $labels['toolBoxDescription_'.$i] = t('description on toolbox ' . $i);
+    }
 
     return $labels;
 }
@@ -664,10 +669,10 @@ function callback_shippingdate_ajax() {
 }
 
 function build_shipping_type_form($form, &$form_state) {
-    $productId = 1;
-    $items = array(1, 18, 10);
-    $options = array();
-    $qty = 10;
+    $productId = (isset($_POST['productId']) ? $_POST['productId'] : 1);
+    $items = (isset($_POST['items']) ? $_POST['items'] : array(1, 18, 10));
+    $options = (isset($_POST['options']) ? $_POST['options'] : array());
+    $qty = (isset($_POST['quantity']) ? $_POST['quantity'] : 10);
 
     $shipsIn = FALSE;
     $deliveryDate = FALSE;

@@ -204,5 +204,9 @@
             %>
         </div>
         <% } %>
+        <input type="hidden" name="productId" value="<%= config.labels['productId'] %>" />
+        <input type="hidden" name="priceGroupId" value="<%= model.priceGroupId %>" />
+        <input type="hidden" name="quantity" value="<%= model.quantity %>" />
+        <input type="hidden" name="options" value="<%= model.options.join(",") %>" />
     </div>
 </form>

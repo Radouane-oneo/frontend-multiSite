@@ -1,5 +1,5 @@
 <?php
-
+use printconnect\Carts\Factory;
 function pcdesigner_menu() {
   $items['upload-design/%'] = array(
       'title' => 'Upload design',
@@ -26,9 +26,8 @@ function pcdesigner_menu() {
   return $items;
 }
 
-function _pcdesigner_email_callback($email) {
- $_SESSION['pcdesigner']['email'] = $email;
-  return drupal_json_output(valid_email_address($form_state['values']['cart']['designer']['email']));
+function _pcdesigner_email_callback($email){
+ echo  json_encode(valid_email_address($email));die;
 }
 
 function _pcdesigner_designtool_callback() {
@@ -36,7 +35,6 @@ function _pcdesigner_designtool_callback() {
   $thumbnail = $_GET['thumbid'];
   $id = $_GET['id'];
   $jobId = $_GET['jobid'];
-
 
   $upload = \printconnect\Designer\Upload\Factory::Get($id);
 
@@ -62,17 +60,12 @@ function pcdesigner_form_alter(&$form, $form_state, $form_id) {
       $emailDesigner = FALSE;
       if ($cart && count($cart->productItems)) {
         foreach ($cart->productItems as $item) {
-          if (!count($item->files)) {
-            if (isset($_SESSION['pcdesigner']['email'])) {
-              $emailDesigner = $_SESSION['pcdesigner']['email'];
-            } elseif (isset($item->emailDesigner)) {
-              $emailDesigner = $item->emailDesigner;
-            }
-
+          if (!count($item->files)){
+             $emailDesigner = $item->emailDesigner;
             $form['cart']['items'][$item->id]['designer']['check'] = array(
                 '#type' => 'checkbox',
                 '#title' => t('I will not upload a design. My designer will do it for me.'),
-                '#default_value' => isset($item->emailDesigner),
+                '#default_value' => $item->emailDesigner,
             );
 
             $checkableItems[] = $item->id;
@@ -87,11 +80,8 @@ function pcdesigner_form_alter(&$form, $form_state, $form_id) {
                 '#type' => 'textfield',
                 '#title' => t('Email address designer'),
                 '#attributes' => array('class' => array('inputdesigneremail')),
-                 '#size'=> 50,
+                '#size'=> 50,
                 '#required' => FALSE,
-                '#states' => array(
-                    'required' => $visible,
-                ),
                 '#default_value' => $emailDesigner,
             );
             $form['cart']['items'][$item->id]['designer']['inputdesigner']['warning'] = array(
@@ -114,27 +104,27 @@ function pcdesigner_form_alter(&$form, $form_state, $form_id) {
   }
 }
 
-function pcdesigner_form_submit($form, &$form_state) {
-  $cart = $form_state['storage']['cart'];
-
-  foreach (element_children($form_state['values']['cart']['items']) as $key) {
+function pcdesigner_form_submit($form, &$form_state){
+  $cart = Factory::Current();
+    unset($form_state['values']['cart']['items']['hidden']);
+    foreach (element_children($form_state['values']['cart']['items']) as $key) {
     $item = \printconnect\Carts\Factory::GetItem($cart, $key);
     $item->EnsureLoaded();
+
     if (isset($form_state['values']['cart']['items'][$key]['designer']) && $form_state['values']['cart']['items'][$key]['designer']['check']) {
-      $item->emailDesigner = $form_state['values']['cart']['designer']['email'];
+        $item->emailDesigner = $form_state['values']['cart']['items'][$key]['designer']['inputdesigner']['email'];
     } else {
-      $item->Remove('emailDesigner');
+        $item->Remove('emailDesigner');
     }
-
-    \printconnect\Carts\Factory::SaveItem($item);
+   \printconnect\Carts\Factory::SaveItem($item);
   }
-
-  unset($_SESSION['pcdesigner']['email']);
 }
 
-function pcdesigner_form_validate($form, &$form_state) {
+function pcdesigner_form_validate($form, &$form_state){
   $cart = $form_state['storage']['cart'];
   $checkEmailIsValid = false;
+  unset($form_state['values']['cart']['items']['hidden']);
+ $formeValues = $form_state['values']['cart']['items'];
   foreach ($cart->productItems as $item) {
     if (array_key_exists($item->id, $form_state['values']['cart']['items'])
             && isset($form_state['values']['cart']['items'][$item->id]['designer']['inputdesigner']['email']) 
@@ -143,17 +133,12 @@ function pcdesigner_form_validate($form, &$form_state) {
       $checkEmailIsValid = true;
     }
   }
-
-  if ($checkEmailIsValid && !valid_email_address($_SESSION['pcdesigner']['email'])) {
+  if (!$checkEmailIsValid) {
     form_set_error('cart][designer][email', t('Email is not valid'));
   }
+ 
 }
 
 
-
-function pcdesigner_designer_email_callback($form, &$form_state) {
-  $_SESSION['pcdesigner']['email'] = $form_state['values']['cart']['designer']['email'];
-  return $form['cart']['designer'];
-}
 
 

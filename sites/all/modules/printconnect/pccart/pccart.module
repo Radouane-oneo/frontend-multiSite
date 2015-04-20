@@ -594,7 +594,7 @@ function add_cartitem_submit() {
   }
   $productId = $_POST['productId'];
   $qty = $_POST['quantity']; 
-  $options = $_POST['options'];
+  $options = explode(',', $_POST['options']);
   $priceGroupId = $_POST['priceGroupId'];
   $vat = false;
 

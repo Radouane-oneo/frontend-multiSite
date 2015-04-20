@@ -4,7 +4,7 @@
         <div id="edit-description" class="description clearfix form-wrapper">
 
             <div id="edit-description-image" class="image form-wrapper">
-                <img width="178" height="172" alt="" src="/sites/all/modules/printconnect/pcproducts/images/products/<%= config.labels['productId'] %>.png">
+                <img width="178" height="172" alt="" src="<%= config.imagesUrl %>products/<%= config.labels['productId'] %>.png">
                 <h3><%= config.labels["productName"] %></h3>
             </div>
             <div id="edit-description-text" class="text form-wrapper">
@@ -251,5 +251,14 @@
         </fieldset>
         <!-- End templateDetail -->
 
+        <% if(config.isAdmin) { %>
+        <div class="form-item form-type-item">
+            <label><%= config.labels["directLink"] %> :</label>
+            <%
+                var directLink = "http://" + document.location.host + "/products/" + config.labels['productId'] + "/" + encodeURIComponent(model.toolBoxGroup["toolboxItems"].join(",")) + "/" + encodeURIComponent(model.options.join(",")) + "/" + model.quantity;
+                print(directLink);
+            %>
+        </div>
+        <% } %>
     </div>
 </form>

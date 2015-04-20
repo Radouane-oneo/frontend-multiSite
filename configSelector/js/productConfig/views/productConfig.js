@@ -14,7 +14,8 @@ define([
             "change #edit-options input.form-checkbox" : "changeOptions",
             "change #prices-table input.form-radio" : "changeQuantity",
             "click #prices-table tbody tr:not(.custom)" : "selectInput",
-            "click #edit-calculer" : "calculatePrice"
+            "click #edit-calculer" : "calculatePrice",
+            "keypress #edit-custom" : "checkQuantity"
         },
         initialize: function() {
             this.config = require("config");
@@ -77,6 +78,7 @@ define([
         },
         calculatePrice: function(){
             var quantity = parseInt(this.$("#edit-custom").val());
+            if(isNaN(quantity)) return false;
             var pricing = this.model.get("toolBoxGroup")["pricing"][quantity];
             var price = null;
             if(pricing){
@@ -89,6 +91,10 @@ define([
                 "quantity" : quantity
             });
             return false;
+        },
+        checkQuantity: function(e){
+            if(e.which != 8 && isNaN(String.fromCharCode(e.which)))
+                e.preventDefault();
         }
     });
 

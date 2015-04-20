@@ -12,6 +12,7 @@ define([
         defaultOptions : [],
         defaultQuantity : null,
         imagesUrl : configJSON["imagesUrl"],
+        isAdmin : 1,
         labels : {
             "productName" : configJSON["name"],
             "productId" : configJSON["id"],
@@ -32,7 +33,8 @@ define([
             "bleed" : "bleed",
             "color" : "color",
             "resolution" : "resolution",
-            "downloadText" : "downloadText"
+            "downloadText" : "downloadText",
+            "directLink" : "directLink"
         }
     };
 

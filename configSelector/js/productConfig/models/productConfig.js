@@ -45,11 +45,10 @@ define([
         priceOption: function(option){
             var result = option["startSell"];
             var step = option["unit"];
-            var i = 0;
-            do {
-                result += option["unitSell"];
-                i += step;
-            } while (i < this.model.quantity);
+            var coefficient = parseInt(this.model.quantity / step);
+            var modulo = this.model.quantity % step;
+            coefficient = (modulo==0) ? coefficient : (coefficient +1);
+            result = result + (coefficient * option["unitSell"]);
             return result.toFixed(2);
         },
         totalPrice: function(){

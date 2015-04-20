@@ -138,7 +138,6 @@ use printconnect\Dal\ForbiddenException;
       $items = json_decode($json);
       if ($entity == 'pickuppoint/service/store') {
 	$json = utf8_encode($json);
-	$items = json_decode($json);
       } 
      
       return $items;
@@ -197,7 +196,6 @@ use printconnect\Dal\ForbiddenException;
 
     public function Create($properties, $entity, $params, $validateOnly = FALSE) {
       $url = $this->GetUrl($entity, $params, $validateOnly);
-      
      
       $header = array('Content-Type' => 'application/json');
       $start = microtime(true);
@@ -216,7 +214,9 @@ use printconnect\Dal\ForbiddenException;
       } else {
         throw new Exception('POST ' . $url, $data, $this->ReadErrorInformation($response));
       }
-     
+//     if($entity == "order-discount-code"){
+//        $_SESSION['data']=$data;
+//      }
     }
 
     public function Delete($entity, $params) {

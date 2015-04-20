@@ -52,7 +52,7 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
   }
 
   $options = array();
-  /*  foreach ($upload->options as $option) {
+  /*  foreach ($upload->options as $option){
     $options[] = $option->option;
     }
    */

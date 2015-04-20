@@ -4,7 +4,7 @@
         <div id="edit-description" class="description clearfix form-wrapper">
 
             <div id="edit-description-image" class="image form-wrapper">
-                <img width="178" height="172" alt="" src="/sites/all/modules/printconnect/pcproducts/images/products/<%= config.labels['productId'] %>.png">
+                <img width="178" height="172" alt="" src="<%= config.imagesUrl %>products/<%= config.labels['productId'] %>.png">
                 <h3><%= config.labels["productName"] %></h3>
             </div>
             <div id="edit-description-text" class="text form-wrapper">
@@ -148,63 +148,7 @@
         <!-- End addToCart -->
 
         <!-- shippingDetail -->
-        <fieldset id="edit-shipping" class="shipping form-wrappersss">
-            <legend><span class="fieldset-legend">Livraison estimée</span></legend>
-            <div class="fieldset-wrapper">
-                <div id="edit-shipping-deadline" class="deadline form-wrapper">
-                    <div class="form-item form-type-item" id="edit-shipping-deadline-date">
-                        <label for="edit-shipping-deadline-date">Télécharger avant 10:00 </label>
-                        <span class="day">Lundi</span><span class="date">13/04</span>
-                    </div>
-                </div>
-                <div id="edit-shipping-delivery" class="delivery form-wrapper">
-                    <div class="form-item form-type-item" id="edit-shipping-delivery-date">
-                        <label for="edit-shipping-delivery-date">Livraison estimée </label>
-                        <span class="day">Vendredi</span><span class="date">17/04</span>
-                    </div>
-                </div>
-                <fieldset id="deadlinestooltip"
-                          class="deadlines collapsible collapsed form-wrappersss collapse-processed">
-                    <legend><span class="fieldset-legend"><a href="#" class="fieldset-title"><span
-                            class="fieldset-legend-prefix element-invisible">Show</span> Quand vais-je
-                        recevoir mes impressions ?</a><span class="summary"></span></span></legend>
-                    <div class="fieldset-wrapper">
-                        <table class="sticky-enabled">
-                            <thead>
-                            <tr>
-                                <th class="first-child">Fichier(s) téléchargé(s) avant</th>
-                                <th class="last-child">Livraison estimée</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr class="odd first-child">
-                                <td class="supply first-child">Lundi 10:00h</td>
-                                <td class="delivery last-child">Vendredi</td>
-                            </tr>
-                            <tr class="even">
-                                <td class="supply first-child">Mardi 10:00h</td>
-                                <td class="delivery last-child">Lundi</td>
-                            </tr>
-                            <tr class="odd">
-                                <td class="supply first-child">Mercredi 10:00h</td>
-                                <td class="delivery last-child">Mardi</td>
-                            </tr>
-                            <tr class="even">
-                                <td class="supply first-child">Jeudi 10:00h</td>
-                                <td class="delivery last-child">Mercredi</td>
-                            </tr>
-                            <tr class="odd last-child">
-                                <td class="supply first-child">Vendredi 10:00h</td>
-                                <td class="delivery last-child">Jeudi</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        Selon l'adresse de livraison, votre commande peut etre en transit pour 1 à 2 jours.
-                        Suivez votre colis par le tracking dans les emails de confirmation.
-                    </div>
-                </fieldset>
-            </div>
-        </fieldset>
+        <div id="bloc-shipping"><%= shippingHTML %></div>
         <!-- End shippingDetail -->
 
         <!-- templateDetail -->
@@ -251,5 +195,14 @@
         </fieldset>
         <!-- End templateDetail -->
 
+        <% if(config.isAdmin) { %>
+        <div class="form-item form-type-item">
+            <label><%= config.labels["directLink"] %> :</label>
+            <%
+                var directLink = "http://" + document.location.host + "/products/" + config.labels['productId'] + "/" + encodeURIComponent(model.toolBoxGroup["toolboxItems"].join(",")) + "/" + encodeURIComponent(model.options.join(",")) + "/" + model.quantity;
+                print(directLink);
+            %>
+        </div>
+        <% } %>
     </div>
 </form>

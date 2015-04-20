@@ -657,7 +657,7 @@ function getLabels($edit = false) {
 function callback_shippingdate_ajax() {
     $output = drupal_render(drupal_get_form('build_shipping_type_form'));
 
-    echo utf8_decode($output);die;
+    echo $output;die;
 }
 
 function build_shipping_type_form($form, &$form_state) {

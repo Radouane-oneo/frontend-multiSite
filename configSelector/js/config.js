@@ -15,6 +15,7 @@ define([
         defaultQuantity : null,
         imagesUrl : configJSON["imagesUrl"],
         labels : GlobalLabels
+
     };
 
 });

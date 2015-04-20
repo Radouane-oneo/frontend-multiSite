@@ -620,9 +620,12 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
 
     $labels = getLabels($edit);
 
+    $isAdmin = ($user->uid) ? '1' : '0';
+
     $script = "<script type='text/javascript'>
         var GlobalLabels = ". json_encode($labels) .";
         var JsonFileGroups = ". $jsonFile .";
+        var GlobalIsAdmin = ". $isAdmin .";
     </script>";
     $script .= '<script data-main="/configSelector/js/main" src="/configSelector/js/libs/requirejs/require.js"></script>';
     $script .= '<div id="myForm"></div>';
@@ -648,8 +651,13 @@ function getLabels($edit = false) {
         "bleed" => t('Bleed'),
         "color" => t('Color'),
         "resolution" => t('Resolution'),
+        "directLink" => t('Direct link'),
         "downloadText" => t('Download all design document')
     );
+
+    for($i=0; $i <= 114; $i++) {
+        $labels['toolBoxDescription_'.$i] = t('description on toolbox ' . $i);
+    }
 
     return $labels;
 }

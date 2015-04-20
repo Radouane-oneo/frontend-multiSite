@@ -1,5 +1,5 @@
 <form accept-charset="UTF-8" id="pcproducts-config-form" method="post"
-      action="/frontend-flyer-fr/nos-produits/flyers-tracts">
+      action="/cart/additem/submit">
     <div>
         <div id="edit-description" class="description clearfix form-wrapper">
 
@@ -8,7 +8,7 @@
                 <h3><%= config.labels["productName"] %></h3>
             </div>
             <div id="edit-description-text" class="text form-wrapper">
-                <%= config.labels["productDescription"] %>
+                <%= $('<div/>').html(config.labels["productDescription"]).text() %>
             </div>
 
         </div>

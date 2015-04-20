@@ -24,6 +24,13 @@ $items['cart/%/submit'] = array(
       'type' => MENU_CALLBACK,
   );
 
+  $items['cart/additem/submit'] = array(
+      'page callback' => 'add_cartitem_submit',
+      'page arguments' => array('cart_submit', 1),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+
   $items['cart'] = array(
       'title' => 'Cart',
       'page callback' => 'drupal_get_form',
@@ -561,6 +568,37 @@ function pccart_editcartitem_submit2($form, &$form_state) {
 }
 
 function _pccart_add($productId, $qty, $options, $priceGroupId, $vat = FALSE) {
+
+  $customer = CustomersFactory::Current();
+  $cart = Factory::CurrentOrCreate();
+
+  if (!$cart) {
+    $cart = Factory::Create();
+    if ($customer) {
+      $cart->customerId = $customer->id;
+      Factory::Save($cart);
+    }
+  }
+  $cart->EnsureLoaded();
+  $relatedProducts = array();
+  $description = '';
+  $cart->productId = $productId;
+  Factory::CreateItem($cart, $priceGroupId, $qty, $description, $relatedProducts, $options, $vat);
+  Factory::Refresh($cart);
+
+  drupal_goto('cart');
+  
+}
+
+function add_cartitem_submit() {
+  if(!isset($_POST)) {
+    drupal_not_found();
+  }
+  $productId = $_POST['productId'];
+  $qty = $_POST['quantity']; 
+  $options = $_POST['options'];
+  $priceGroupId = $_POST['priceGroupId'];
+  $vat = false;
 
   $customer = CustomersFactory::Current();
   $cart = Factory::CurrentOrCreate();

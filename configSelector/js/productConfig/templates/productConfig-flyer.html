@@ -1,0 +1,255 @@
+<form accept-charset="UTF-8" id="pcproducts-config-form" method="post"
+      action="/frontend-flyer-fr/nos-produits/flyers-tracts">
+    <div>
+        <div id="edit-description" class="description clearfix form-wrapper">
+
+            <div id="edit-description-image" class="image form-wrapper">
+                <img width="178" height="172" alt="" src="/sites/all/modules/printconnect/pcproducts/images/products/<%= config.labels['productId'] %>.png">
+                <h3><%= config.labels["productName"] %></h3>
+            </div>
+            <div id="edit-description-text" class="text form-wrapper">
+                <%= config.labels["productDescription"] %>
+            </div>
+
+        </div>
+
+        <!-- toolBoxItems -->
+        <% _.each(model.toolBoxGroup.tree,function(toolBoxItem, i){ %>
+        <div class="form-item <%= (_.toArray(toolBoxItem.data).length==1)?'form-type-item':'form-type-select' %>">
+            <label><%= toolBoxItem.name %></label>
+            <% var selected = _.find(toolBoxItem.data, function(item){ return $.inArray(item.id, model.toolBoxGroup.toolboxItems)!=-1 }); %>
+            <div class="text selected-item" href="#" data-id="<%= selected.id %>"><%= selected.name %></div>
+        </div>
+        <div class="dropdown clearfix form-wrapper" style="display: none;">
+            <div class="description form-wrapper">
+                <%= config.labels["toolBoxDescription_" + toolBoxItem.id] %>
+            </div>
+            <div class="item-list">
+                <ul>
+                    <% _.each(toolBoxItem.data,function(item){ %>
+                    <li>
+                        <a id="<%= item.id %>" href=""><img width="154" height="154" alt="" src="<%= config.imagesUrl %>items/<%= item.id %>.png">
+
+                        <div class="text"><%= item.name %></div>
+                        <div class="detail"><%= item.detail %></div>
+                        </a>
+                    </li>
+                    <% }); %>
+                </ul>
+            </div>
+        </div>
+        <% }); %>
+        <!-- End toolBoxItems -->
+
+        <!-- Options -->
+        <div class="form-item form-type-checkboxes form-item-options">
+            <label for="edit-options"><%= config.labels["options"] %></label>
+
+            <div class="text" href="#">
+                <% if(model.options.length==0){ %>
+                <%= config.labels["noOptions"] %>
+                <% } else {
+                var options = _.filter(model.toolBoxGroup.options, function(option){ return $.inArray(option.id, model.options)!=-1 });
+                _.each(options, function(option){ %>
+                <%= option.name %> ( + <%= priceTpl({price:priceOption(option)}) %> ) <br>
+                <% }); } %>
+            </div></div>
+
+        <div class="form-checkboxes clearfix" id="edit-options" style="display: none;">
+            <% _.each(model.toolBoxGroup.options, function(option, i){
+            var checked = ($.inArray(option.id, model.options)!=-1)?"checked='checked'":"";
+            %>
+            <div class="form-item form-type-checkbox">
+                <input type="checkbox" value="<%= option.id %>" name="options[<%= option.id %>]" id="edit-options-<%= option.id %>"
+                       class="clearfix form-checkbox" <%= checked %>> <label for="edit-options-<%= option.id %>"
+                                                                             class="option"><%= option.name %> ( +
+                <%= priceTpl({price:priceOption(option)}) %>) </label>
+
+            </div>
+            <% }); %>
+        </div>
+        <!-- End Options-->
+
+        <!-- pricesTable -->
+        <table id="prices-table" class="grid clearfix sticky-enabled">
+            <thead>
+            <tr>
+                <th class="first-child"></th>
+                <th><%= config.labels["quantity"] %></th>
+                <th></th>
+                <th><%= config.labels["priceNoTVA"] %></th>
+                <th class="last-child"><%= config.labels["priceWithTVA"] %></th>
+            </tr>
+            </thead>
+            <tbody>
+            <%
+            var i = 0;
+            _.each(model.toolBoxGroup.pricing, function(price){
+            i = i+ 1;
+            var checked = (price['quantity']==model.quantity)?"checked='checked'":"";
+            %>
+            <tr class="<%= (i%2==0)?'even':'odd' %>">
+                <td class="first-child">
+                    <div class="form-item form-type-radio form-item-quantity">
+                        <input type="radio" value="<%= price['quantity'] %>" name="quantity"
+                               id="edit-quantity-<%= price['quantity'] %>" class="grid clearfix form-radio" <%= checked %>>
+                    </div>
+                </td>
+                <td><%= price['quantity'] %> ex.</td>
+                <td><%
+                    if(price['promoPrice']) {
+                        print(priceTpl({price:price['sellPrice'].toFixed(2),classToAdd:'old'}));
+                    }
+                %></td>
+                <td><%
+                    var validPrice = (price['promoPrice'])?price['promoPrice']:price['sellPrice'];
+                    var className = (price['promoPrice'])?'promo':undefined;
+                    print(priceTpl({price:validPrice.toFixed(2),classToAdd:className}));
+                %></td>
+                <td class="last-child"><%
+                    var priceWithTVA = validPrice * ( 1 + config.TVA );
+                    print(priceTpl({price:priceWithTVA.toFixed(2)}));
+                %></td>
+            </tr>
+            <% }); %>
+            <tr class="custom even last-child">
+                <td class="first-child">
+                    <div class="form-item form-type-radio form-item-quantity">
+                        <input type="radio" value="custom" name="quantity" id="edit-quantity-custom"
+                               class="grid clearfix form-radio">
+                    </div>
+                </td>
+                <td>
+                    <div class="form-item form-type-textfield form-item-custom">
+                        <label for="edit-custom"><%= config.labels["enterQuantity"] %></label>
+                        <input type="text" class="form-text" maxlength="128"
+                               size="60" value="" name="custom" id="edit-custom">
+                    </div>
+                </td>
+                <td></td>
+                <td></td>
+                <td class="last-child"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <input type="submit" value="<%= config.labels['calculate'] %>" name="op" id="edit-calculer"
+               class="ajax-calculate form-submit ui-button ui-widget ui-state-default ui-corner-all"
+               role="button">
+        <!-- End pricesTable -->
+
+        <!-- addToCart -->
+        <div id="edit-actions" class="actions form-actions form-wrapper">
+                <%= priceTpl({price:totalPrice(),label:config.labels["totalNoTVA"]}) %>
+                <input
+                type="submit" value="<%= config.labels['addToCart'] %>" name="op" id="edit-actions-addtocart"
+                class="action cart large display-block form-submit ui-button ui-widget ui-state-default ui-corner-all"
+                role="button"></div>
+        <!-- End addToCart -->
+
+        <!-- shippingDetail -->
+        <fieldset id="edit-shipping" class="shipping form-wrappersss">
+            <legend><span class="fieldset-legend">Livraison estimée</span></legend>
+            <div class="fieldset-wrapper">
+                <div id="edit-shipping-deadline" class="deadline form-wrapper">
+                    <div class="form-item form-type-item" id="edit-shipping-deadline-date">
+                        <label for="edit-shipping-deadline-date">Télécharger avant 10:00 </label>
+                        <span class="day">Lundi</span><span class="date">13/04</span>
+                    </div>
+                </div>
+                <div id="edit-shipping-delivery" class="delivery form-wrapper">
+                    <div class="form-item form-type-item" id="edit-shipping-delivery-date">
+                        <label for="edit-shipping-delivery-date">Livraison estimée </label>
+                        <span class="day">Vendredi</span><span class="date">17/04</span>
+                    </div>
+                </div>
+                <fieldset id="deadlinestooltip"
+                          class="deadlines collapsible collapsed form-wrappersss collapse-processed">
+                    <legend><span class="fieldset-legend"><a href="#" class="fieldset-title"><span
+                            class="fieldset-legend-prefix element-invisible">Show</span> Quand vais-je
+                        recevoir mes impressions ?</a><span class="summary"></span></span></legend>
+                    <div class="fieldset-wrapper">
+                        <table class="sticky-enabled">
+                            <thead>
+                            <tr>
+                                <th class="first-child">Fichier(s) téléchargé(s) avant</th>
+                                <th class="last-child">Livraison estimée</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="odd first-child">
+                                <td class="supply first-child">Lundi 10:00h</td>
+                                <td class="delivery last-child">Vendredi</td>
+                            </tr>
+                            <tr class="even">
+                                <td class="supply first-child">Mardi 10:00h</td>
+                                <td class="delivery last-child">Lundi</td>
+                            </tr>
+                            <tr class="odd">
+                                <td class="supply first-child">Mercredi 10:00h</td>
+                                <td class="delivery last-child">Mardi</td>
+                            </tr>
+                            <tr class="even">
+                                <td class="supply first-child">Jeudi 10:00h</td>
+                                <td class="delivery last-child">Mercredi</td>
+                            </tr>
+                            <tr class="odd last-child">
+                                <td class="supply first-child">Vendredi 10:00h</td>
+                                <td class="delivery last-child">Jeudi</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        Selon l'adresse de livraison, votre commande peut etre en transit pour 1 à 2 jours.
+                        Suivez votre colis par le tracking dans les emails de confirmation.
+                    </div>
+                </fieldset>
+            </div>
+        </fieldset>
+        <!-- End shippingDetail -->
+
+        <!-- templateDetail -->
+        <fieldset id="templates" class="templates form-wrappersss">
+            <legend><span class="fieldset-legend"><%= config.labels['technicalDetails'] %></span></legend>
+            <div class="fieldset-wrapper">
+                <div id="edit-templates-text" class="text form-wrapper">
+                    <%= config.labels['technicalDescription'] %>
+                </div>
+                <div id="edit-templates-image" class="image form-wrapper"><a target="_blank"
+                                                                             href="/file/template_<%= model.toolBoxGroup.template.id %>__<%= config.labels['langId'] %>.zip"><img
+                        alt=""
+                        src="/file/<%= model.toolBoxGroup.template.thumbnail %>"></a>
+                </div>
+                <div id="edit-templates-desciption" class="description form-wrapper">
+                    <div id="edit-templates-desciption-name" class="name form-wrapper">
+                        <%= config.labels['size'] %> : <%= model.toolBoxGroup.template.size %>
+                    </div>
+                    <div class="form-item form-type-item" id="edit-templates-desciption-size">
+                        <label for="edit-templates-desciption-size"><%= config.labels['size'] %> : </label>
+                        <%= model.toolBoxGroup.template.size %>
+                    </div>
+                    <div class="form-item form-type-item" id="edit-templates-desciption-bleed">
+                        <label for="edit-templates-desciption-bleed"><%= config.labels['bleed'] %> : </label>
+                        <%= model.toolBoxGroup.template.bleed %>
+                    </div>
+                    <div class="form-item form-type-item" id="edit-templates-desciption-color">
+                        <label for="edit-templates-desciption-color"><%= config.labels['color'] %> : </label>
+                        <%= model.toolBoxGroup.template.colorMode %>
+                    </div>
+                    <div class="form-item form-type-item" id="edit-templates-desciption-resolution">
+                        <label for="edit-templates-desciption-resolution"><%= config.labels['resolution'] %> : </label>
+                        <%= model.toolBoxGroup.template.resolution %>
+                    </div>
+                </div>
+                <div id="edit-templates-linktodownload" class="link form-wrapper">
+                    <div class="form-item form-type-item" id="edit-templates-linktodownload-link">
+                        <a target="_blank" href="/file/template_<%= model.toolBoxGroup.template.id %>__<%= config.labels['langId'] %>.zip">
+                            <%= config.labels['downloadText'] %>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <!-- End templateDetail -->
+
+    </div>
+</form>

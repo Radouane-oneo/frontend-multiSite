@@ -6,15 +6,12 @@ namespace printconnect\Carts {
 use printconnect\Customers;
 
   class Factory {
-
+    
     public static function Get($id, $cache = TRUE) {
       return new Cart(array('id' => $id), $cache);
     }
 
     public static function Refresh(Cart $object) {
-      //if ($object->HasProperty('items')) {
-      //  Dal::ClearCache($object->items);
-      // }
       Dal::ClearCache($object);
       return self::Get($object->id);
     }
@@ -56,25 +53,12 @@ use printconnect\Customers;
     }
 
     public static function LoadItem(Item $object) {
-      if (isset($_SESSION['cartObject']) && !empty($_SESSION['cartObject'])) {
-	$cart = $_SESSION['cartObject'];
-	$items = $cart->orderItems;
-	foreach($items as $item) {
-	    if ($object->HasProperty('id') && $item->id == $object->id) {
-		return $item;
-	    }
-	}
-      }
       Dal::Load($object, 'cart-item', array('id' => $object->id, 'cart' => $object->cart), FALSE);
       return $object;
     }
 
     public static function LoadCart(Cart $object) {
-      if(isset($_SESSION['cartObject']) && !empty($_SESSION['cartObject'])) {
-	$_SESSION['cartObject']->payment_method = (isset($_SESSION['payment_method'])) ? $_SESSION['payment_method'] : null;
-	$_SESSION['cartObject']->customer_reference = $object->customerReference;
-	return $_SESSION['cartObject'];
-      }elseif ($object->HasProperty('id')) {
+      if ($object->HasProperty('id')) {
         $id = $object->Get('id');
         if ($id) {
           Dal::Load($object, 'cart', array('id' => $id), $object->cache);
@@ -92,6 +76,9 @@ use printconnect\Customers;
     }
 
     public static function Logout($cart) {
+      if(isset($_SESSION['cartObject']) && !empty($_SESSION['cartObject'])) {
+	 $cart = $_SESSION['cartObject'];
+	}
       unset($_SESSION['cartid']);
       unset($_SESSION['cartObject']);
       return TRUE;
@@ -118,13 +105,7 @@ use printconnect\Customers;
 
     public static function Current($cache = TRUE) {
       static $current = FALSE;
-
       $current = &drupal_static(__FUNCTION__);
-
-      if (isset($_SESSION['cartObject']) && !empty($_SESSION['cartObject'])) {
-          return $_SESSION['cartObject'];
-      }
-
       if ($current && $cache) {
         return $current;
       }
@@ -215,7 +196,6 @@ use printconnect\Customers;
         }
         $object->customer_reference = $ref;
         $object = Dal::Save($object, 'cart', array('id' => $object->id));
-	$_SESSION['cartObject'] = $object;
 	return $object;
       } catch (\printconnect\Dal\NotFoundException $ex) {
         self::Clear();
@@ -231,7 +211,6 @@ use printconnect\Customers;
     }
 
     public static function Create() {
-
       $cart = new Cart(Dal::Create(New Cart, 'cart', array()));
       $cart->loaded = TRUE;
 
@@ -239,21 +218,19 @@ use printconnect\Customers;
 
       if ($cart->id) {
         $_SESSION['cartid'] = $cart->id;
-	$_SESSION['cartObject'] = $cart;
       }
       return $cart;
     }
 
     public static function Delete() {
-      unset($_SESSION['cartObject']);
       unset($_SESSION['cartid']);
       unset($_SESSION['shipping_address']);
       unset($_SESSION['payment_method']);
       unset($_SESSION['billing_address']);
     }
-
+   
     public static function CreateItem($cart, $priceGroup, $quantity, $description, $relatedProducts, $options, $vat = FALSE) {
-      $object = new Item();
+	$object = new Item();
       $object->cart = $cart->id;
       $object->productId = $cart->productId;
       $object->product_price_group = $priceGroup;
@@ -269,12 +246,23 @@ use printconnect\Customers;
       try {
         $object = Dal::Create($object, 'cart-item', array());
         $object->loaded = TRUE;
+	$tmp = $cart->orderItems;
+	$tmp[]= $object;
+	$cart->orderItems = $tmp;
+        $cart->subTotalAmount = $object->cartSubTotalAmount;
+        $cart->vatAmount = $object->cartVatAmount;
+        $cart->totalAmount = $object->cartTotalAmount;
+        Dal::updateElement($cart, 'cart', 
+	    array(
+	        'id' => $cart->id
+	    ), 
+	    array(
+                'orderItems' => $cart->orderItems
+            )
+	);
       } catch (\Exception $ex) {
         
       }
-	if(isset($_SESSION['cartObject']) && !empty($_SESSION['cartObject'])) {
-	    $_SESSION['cartObject']->orderItems[] = $object;
-	}
       return $object;
     }
 
@@ -293,27 +281,26 @@ use printconnect\Customers;
       }
       $object->options = $options;
       $item = Dal::Save($object, 'cart-item', array('id' => $object->id, 'cart' => $object->cart));
-      if(isset($_SESSION['cartObject']) && !empty($_SESSION['cartObject'])) {
-	for ($i = 0; $i < count($_SESSION['cartObject']->orderItems); $i++) {
-	    if ($_SESSION['cartObject']->orderItems[$i]->id == $item->id) {
-	        $_SESSION['cartObject']->orderItems[$i]->id = $item;
-		break;
-	    }
-	}
-      }
       return $item;
     }
 
     public static function DeleteItem($id, Cart $cart) {
-      if(isset($_SESSION['cartObject']) && !empty($_SESSION['cartObject'])) {
-        for($i = 0; $i < count($_SESSION['cartObject']->orderItems); $i++) {
-            if ($_SESSION['cartObject'][$i]->id == $item->id) {
-                unset($_SESSION['cartObject']->orderItems[$i]);
-                break;
-            }
-        }
-	$_SESSION['cartObject']->orderItems = array_values($_SESSION['cartObject']->orderItems);
+      $cartItems = $cart->orderItems;
+      foreach($cartItems as $key => $job) {
+          if ($job->id == $id) {
+              unset($cartItems[$key]);
+              break;
+          }
       }
+
+      $cart->orderItems = array_values($cartItems);
+      Dal::updateElement($cart, 'cart', 
+        array('id' => $cart->id), 
+        array(
+            'orderItems' => $cart->orderItems
+        )
+      );
+       
       return Dal::Delete('cart-item', array('id' => $id, 'cart' => $cart->id));
     }
     public static function DeleteItemFile($id) {

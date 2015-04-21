@@ -17,6 +17,44 @@ namespace printconnect {
 
     protected static $_cache = array();
     public static $totalCountTemplates ;
+
+    public static function updateElement(Object $object, $entity, $params, $fieldToUpdate)
+    {
+        if (!$object->contentlanguage) {
+            global $language;
+        } else {
+            $language = $object->contentlanguage;
+        }
+        $tempObject = new Object();;
+        $dal = Dal::GetDal();
+        $hash = $dal->GetHash($entity, $params, $language);
+        if (array_key_exists($hash, self::$_cache)) {
+            $data = self::$_cache[$hash];
+        }
+
+        if (!$data) {
+            $data = Cache::Get($hash);
+        }
+        if ($data) {
+	    $data = unserialize($data);
+            $tempObject->LoadProperties($data);
+        }
+	
+        if ($tempObject && !empty($fieldToUpdate)) {
+            foreach ($fieldToUpdate as $key => $field) {
+                if($tempObject->HasProperty($key)) {
+                    $tempObject->$key = $field;
+                }
+            }
+	    $data = $tempObject->GetProperties();
+	    
+	    if ($data && $tempObject->HasProperty('id')) {
+                Cache::Set($hash, serialize($data));
+                self::$_cache[$hash] = serialize($data);
+	    }
+        }
+    }
+
     public static function Load(Object $object, $entity, $params, $cache = TRUE, $dal = FALSE) {
       if (!$object->contentlanguage) {
         global $language;
@@ -29,7 +67,7 @@ namespace printconnect {
       }
       $hash = $dal->GetHash($entity, $params, $language);
       $data = false;
-      if ($cache) {
+      if (true) {
         if (array_key_exists($hash, self::$_cache)) {
           $data = self::$_cache[$hash];
         }
@@ -54,9 +92,6 @@ namespace printconnect {
     }
 
     public static function LoadCollection(Collection &$object, $entity, $params, $callback, $cache = TRUE, $dal = FALSE) {
-      if ($entity == 'billing-acount' || $entity == 'vat-exception') {
-          $cache = FALSE;
-      }
       if (!$object->contentlanguage) {
         global $language;
       } else {

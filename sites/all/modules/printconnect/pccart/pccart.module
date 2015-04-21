@@ -597,7 +597,6 @@ function add_cartitem_submit() {
   $options = explode(',', $_POST['options']);
   $priceGroupId = $_POST['priceGroupId'];
   $vat = false;
-
   $customer = CustomersFactory::Current();
   $cart = Factory::CurrentOrCreate();
 
@@ -608,7 +607,6 @@ function add_cartitem_submit() {
       Factory::Save($cart);
     }
   }
-  $cart->EnsureLoaded();
   $relatedProducts = array();
   $description = '';
   $cart->productId = $productId;

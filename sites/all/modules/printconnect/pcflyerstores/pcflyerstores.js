@@ -8,7 +8,7 @@
         
                 
 		var storesNumber = $('#edit-results .fieldset-wrapper').find('.item-list li').length;
-		if(storesNumber >= 5) {
+		if(storesNumber >= 8) {
 			$('a.storeUp , a.storeDown').show();	
 			$('#edit-results .fieldset-wrapper').find('.item-list').jCarouselLite({
 				btnNext: ".storeDown",

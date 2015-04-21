@@ -1447,3 +1447,7 @@ box-shadow: 0 0 2px #999;
 #pcflyerstores-search-form span.Slink {
 margin-right: 15px;
 }
+
+#pcflyerstores-search-form #edit-results ul li{
+    list-style: none ;
+}

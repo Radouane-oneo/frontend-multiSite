@@ -76,11 +76,7 @@ use printconnect\Customers;
     }
 
     public static function Logout($cart) {
-      if(isset($_SESSION['cartObject']) && !empty($_SESSION['cartObject'])) {
-	 $cart = $_SESSION['cartObject'];
-	}
       unset($_SESSION['cartid']);
-      unset($_SESSION['cartObject']);
       return TRUE;
       unset($_SESSION['shipping_address']);
       $cart->Remove('shipping_address');
@@ -148,7 +144,6 @@ use printconnect\Customers;
     }
 
     public static function Clear() {
-      unset($_SESSION['cartObject']);
       unset($_SESSION['pup']);
       unset($_SESSION['shipping_address']);
       unset($_SESSION['billing_address']);

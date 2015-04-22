@@ -635,7 +635,13 @@ function _pccart_callback() {
         $url .= "shipping-type/?apikey=$apikey&language=10";
         $header = array('Content-Type' => 'application/x-www-form-urlencoded');
         $response = drupal_http_request($url, array('header' => $header, 'method' => 'POST', 'data' => $jsondata));
-        
+        $response = json_decode($response->data);
+        if (isset($response->id) && $response->id != null) {
+	    Factory::saveInCache($cart, array(
+		'orderItemShipping' => $response
+	    ));
+	    $cart = Factory::Current();
+         }
       case 'cartblock':
         $cart = Factory::Current();
         $action = array_shift($args);

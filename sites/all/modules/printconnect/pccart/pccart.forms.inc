@@ -199,9 +199,14 @@ global $language;
         );
 
         foreach ($cart->productItems as $item) {
-
+	    $productOptionsPrice = 0;
+	    if (count($item->options) > 0) {
+	        foreach($item->options as $option) {
+		    $productOptionsPrice += $option->convertedPrice;
+		}
+	    }
             $form['cart']['items']['hidden'][$item->id] = array(
-                '#type' => 'hidden', '#value' => $item->originPrice
+                '#type' => 'hidden', '#value' => ($item->originPrice+$productOptionsPrice)
             );
 
 

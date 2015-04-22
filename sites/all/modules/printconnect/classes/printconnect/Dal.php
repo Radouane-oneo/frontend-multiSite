@@ -41,13 +41,11 @@ namespace printconnect {
         }
 	
         if ($tempObject && !empty($fieldToUpdate)) {
-            foreach ($fieldToUpdate as $key => $field) {
-                if($tempObject->HasProperty($key)) {
-                    $tempObject->$key = $field;
-                }
-            }
 	    $data = $tempObject->GetProperties();
-	    
+            foreach ($fieldToUpdate as $key => $field) {
+                $tempObject->$key = $field;
+	        $data[$key] = $field; 
+            }
 	    if ($data && $tempObject->HasProperty('id')) {
                 Cache::Set($hash, serialize($data));
                 self::$_cache[$hash] = serialize($data);

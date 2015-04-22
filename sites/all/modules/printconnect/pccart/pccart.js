@@ -4,20 +4,18 @@
     detach: function (context) {
     },
     attach: function (context, settings) {
- 
-    $("#pccart-cart-form input.targetPrice").mousedown(function () {
-           if ($(this).is(":not(:checked)")){
-               if($(this).val() ==  84){
+   $('table.targetPrice tr').mousedown(function () {
+           if ($(this).find('input.targetPrice').is(":not(:checked)")){
+               if($(this).find('input.targetPrice').val() ==  84){
                var shpping = '<input type="hidden" name="shpping" value="14.99">';
                $("#pccart-cart-form #hiddenPrices").append(shpping);
                 }else{
                     $("input[name='shpping']").remove();
                 }
                 PriceCallback();
-                $.post('cart/'+$(this).val()+'/submit');
+                $.post('cart/'+$(this).find('input.targetPrice').val()+'/submit');
            }
    });
-
 
     /* ------------Remove items------------*/ 
 

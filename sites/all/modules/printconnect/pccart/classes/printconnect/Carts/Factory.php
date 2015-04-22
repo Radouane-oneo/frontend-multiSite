@@ -258,12 +258,18 @@ use printconnect\Customers;
         $cart->subTotalAmount = $object->cartSubTotalAmount;
         $cart->vatAmount = $object->cartVatAmount;
         $cart->totalAmount = $object->cartTotalAmount;
+	
+
+	$cartAmounts = $object->cartAmount;
         Dal::updateElement($cart, 'cart', 
 	    array(
 	        'id' => $cart->id
 	    ), 
 	    array(
-                'orderItems' => $cart->orderItems
+                'orderItems' => $cart->orderItems,
+		'subTotalAmount' => $cartAmounts->subTotalAmount,
+                'vatAmount' => $cartAmounts->vatAmount,
+                'totalAmount' => $cartAmounts->totalAmount,
             )
 	);
       } catch (\Exception $ex) {

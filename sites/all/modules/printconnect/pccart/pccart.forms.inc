@@ -205,8 +205,9 @@ global $language;
 		    $productOptionsPrice += $option->convertedPrice;
 		}
 	    }
+	    $itemPrice = $item->price != null ? $item->price : $item->originPrice;
             $form['cart']['items']['hidden'][$item->id] = array(
-                '#type' => 'hidden', '#value' => ($item->originPrice+$productOptionsPrice)
+                '#type' => 'hidden', '#value' => ($itemPrice+$productOptionsPrice)
             );
 
 

@@ -637,10 +637,13 @@ function _pccart_callback() {
         $response = drupal_http_request($url, array('header' => $header, 'method' => 'POST', 'data' => $jsondata));
         $response = json_decode($response->data);
         if (isset($response->id) && $response->id != null) {
+	    $cartAmounts = $response->cartAmount;
 	    Factory::saveInCache($cart, array(
-		'orderItemShipping' => $response
+		'orderItemShipping' => $response,
+		'subTotalAmount' => $cartAmounts->subTotalAmount,
+		'vatAmount' => $cartAmounts->vatAmount,
+		'totalAmount' => $cartAmounts->totalAmount,
 	    ));
-	    $cart = Factory::Current();
          }
       case 'cartblock':
         $cart = Factory::Current();
@@ -704,8 +707,12 @@ function _pccart_callback() {
         if (isset($response->orderItemDiscount) && $response->orderItemDiscount != null) {
             $orderItems[] = $response->orderItemDiscount;
             $cart->orderItems = $orderItems;
+	    $cartAmounts = $response->cartAmount;
             Factory::saveInCache($cart, array(
-                'orderItems' => $orderItems
+                'orderItems' => $orderItems,
+		'subTotalAmount' => $cartAmounts->subTotalAmount,
+                'vatAmount' => $cartAmounts->vatAmount,
+                'totalAmount' => $cartAmounts->totalAmount,
             ));
 	}
         echo $jsonResponse->data;die;

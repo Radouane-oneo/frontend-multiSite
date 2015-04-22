@@ -6,7 +6,18 @@ namespace printconnect\Carts {
 use printconnect\Customers;
 
   class Factory {
-    
+  
+    public static function saveInCache($object, $data) 
+    {
+        if (!empty($data)) {
+            Dal::updateElement($object,
+                'cart', 
+                array('id' => $object->id), 
+                $data
+            );
+        }
+    }
+  
     public static function Get($id, $cache = TRUE) {
       return new Cart(array('id' => $id), $cache);
     }

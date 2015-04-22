@@ -686,14 +686,23 @@ function _pccart_callback() {
        case 'discount':
         $code = $_POST['code'];
         $cart = Factory::Current();
+	$orderItems = $cart->orderItems;
         $data = array("order"=>$cart->id,"code"=> $code);
         $jsondata = json_encode($data);
         $apikey = variable_get('pc_apikey');
         $url = variable_get('pc_url');
         $url .= "order-discount-code/?apikey=$apikey&language=10";
         $header = array('Content-Type' => 'application/x-www-form-urlencoded');
-        $response = drupal_http_request($url, array('header' => $header, 'method' => 'POST', 'data' => $jsondata));
-        echo $response->data;die;
+        $jsonResponse = drupal_http_request($url, array('header' => $header, 'method' => 'POST', 'data' => $jsondata));
+        $response = json_decode($jsonResponse->data);
+        if (isset($response->orderItemDiscount) && $response->orderItemDiscount != null) {
+            $orderItems[] = $response->orderItemDiscount;
+            $cart->orderItems = $orderItems;
+            Factory::saveInCache($cart, array(
+                'orderItems' => $orderItems
+            ));
+	}
+        echo $jsonResponse->data;die;
       break;
       case 'item_delete':
         $itemId = array_shift($args);

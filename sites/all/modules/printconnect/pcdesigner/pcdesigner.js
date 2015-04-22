@@ -11,7 +11,6 @@
       var wopper = '#pccart-cart-form #' + id  ;
         $.getJSON(href, function(data){          
          if(!data){
-             
          $(wopper).css({ "border":"1px solid red"});
          }
         });

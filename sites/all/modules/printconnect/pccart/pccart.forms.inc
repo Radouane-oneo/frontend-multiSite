@@ -390,18 +390,18 @@ function pccart_cart_form2($form, &$form_state) {
                     ),
                     '#attributes' => array('class' => array('designtool', 'iframe', 'reupload')),
                 );
-
                 $form['cart']['items'][$item->id]['remove'] = array(
                     '#prefix' => '<div class="preview">',
                     '#suffix' => '</div></div>',
+                       '#value' => t('Delete'),
                     '#type' => 'submit',
-                    '#value' => t('Delete'),
+                    '#src' => drupal_get_path('module', 'pccart') . '/images/delete.png',
                     '#name' => 'delete_item_' . $item->id,
-                    '#has_garbage_value' => FALSE,
-                    '#attributes' => array('class' => array('delete_item')),
+                    '#attributes' => array('class' => array('delete_item','delete-layout')),
+                    '#validate' => array('pccart_cart_form2_delete_creat_validate'),
                     '#submit' => array('pccart_cart_form2_delete_creat_submit'),
+                    '#has_garbage_value' => FALSE,
                 );
-                
                     // Controle professionnelle files
                 if( $item->fileCheck ){
                     $form['cart']['items'][$item->id]['control'] = array(
@@ -1051,7 +1051,7 @@ function pccart_cart_form2($form, &$form_state) {
                 '#type' => 'submit',
                 '#value' => t('Secure payment'),
                 '#weight' => 100,
-                '#validate' =>array('pccart_cart_form2_validate'),
+             //   '#validate' =>array('pccart_cart_form2_validate'),
                 '#submit' => array('pccart_cart_form2_submit'),
                 '#attributes' => array('class' => array('action', 'large', 'payment', 'button')),
             );
@@ -1234,6 +1234,10 @@ function pccart_cart_form2_delete_item_submit($form, &$form_state) {
     } catch (\printconnect\Rest\Exceptions\Exception $ex) {
 
     }
+}
+
+function pccart_cart_form2_delete_creat_validate($form, &$form_state) {
+
 }
 function pccart_cart_form2_delete_creat_submit($form, &$form_state) {
     $id = $form_state['triggering_element']['#parents'][2];

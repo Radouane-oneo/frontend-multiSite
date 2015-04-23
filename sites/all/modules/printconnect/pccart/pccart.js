@@ -19,7 +19,8 @@
 
     /* ------------Remove items------------*/ 
 
-        $("#pccart-cart-form .removecart").once().click(function () {
+        $("#pccart-cart-form .removecart").live('click',function () {
+	    var targetItem = $(this);
             itemid = $(this).siblings('.itemID').text();
             $(this).parents('.item').fadeOut("slow");
             var url = "cart/" + itemid + "/delete";
@@ -29,12 +30,19 @@
                 type: "POST",
                 url: url,
                 success: function (data) {
-                    form.html(jQuery('#pccart-cart-form', data).html());
-                    Drupal.attachBehaviors(form);
+                    //form.html(jQuery('#pccart-cart-form', data).html());
+                    //Drupal.attachBehaviors(form);
+		    targetItem.parents('job').remove();
                 }
             });
             $("input[name='"+nameitemid+"']").remove();
-             PriceCallback();
+	    $('.item-' + itemid).remove();
+	    if ($('.fotolia-items-'+itemid).length < $('.fotolia-items').length) {
+		$('.fotolia-items-'+itemid).parent().remove();
+	    } else if ($('.fotolia-items-'+itemid).length == $('.fotolia-items').length) {
+		$('.fotolia-items-'+itemid).parents('fieldset').remove();
+	    }
+            PriceCallback();
         });
             /* ------------------------------*/ 
     

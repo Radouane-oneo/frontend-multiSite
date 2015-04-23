@@ -198,8 +198,9 @@ global $language;
             '#suffix' => '</div>',
         );
 	foreach($cart->fotoliaItems as $fotoliaItem) {
-	    $form['cart']['items']['hidden']['fotolia'][$fotoliaItem->id] = array(
-                '#type' => 'hidden', '#value' => $fotoliaItem->price
+	    $form['cart']['items']['hidden']['fotolia'][$fotoliaItem->parentId][$fotoliaItem->id] = array(
+                '#type' => 'hidden', '#value' => $fotoliaItem->price,
+		'#attributes' => array('class' => array('item-'.$fotoliaItem->parentId))
             );
 	}
         foreach ($cart->productItems as $item) {
@@ -215,8 +216,9 @@ global $language;
             );
 
 	    if ($item->fileCheck != null) {
-		$form['cart']['items']['hidden']['filcheck'] = array(
-                    '#type' => 'hidden', '#value' => $item->fileCheck->price
+		$form['cart']['items']['hidden']['filcheck'][$item->id] = array(
+                    '#type' => 'hidden', '#value' => $item->fileCheck->price,
+		    '#attributes' => array('class' => array('item-'.$item->id, 'clearfix'))
                 );
 	    }
             if (isset($item->emailDesigner)) {
@@ -253,7 +255,7 @@ global $language;
 
             $form['cart']['items'][$item->id] = array(
                 '#type' => 'container',
-                '#attributes' => array('class' => array('item', 'clearfix')),
+                '#attributes' => array('class' => array('item job', 'clearfix')),
                 '#weight' => $weight,
             );
 
@@ -563,7 +565,7 @@ global $language;
                 foreach ($fotoliaItem as $fKey => $fItem) {
                     $form['cart']['fotolias']['items'][$fKey]['fotolia'] = array(
                         'description' => array(
-                            '#prefix' => '<div style="clear: both;"><div class="fotolia-items">',
+                            '#prefix' => '<div style="clear: both;"><div class="fotolia-items fotolia-items-'.$parentId.'">',
                             '#suffix' => '</div>',
                             '#markup' => $fItem['content'],
                         ),
@@ -773,14 +775,14 @@ global $language;
             '#size' => 30,
         );
 
-
+	$cart = Factory::Current();
         $form['cart']['priceblock'] = array(
             '#theme' => 'priceblock',
             '#id' => 'priceblock',
             '#prefix' => '<div id="priceblock-wrapper">',
             '#suffix' => '</div>',
-            '#subtotal' => $cart->convertedSubTotalAmount,
-            '#vatAmount' => $cart->convertedVatAmount,
+            '#subtotal' => $cart->subTotalAmount,
+            '#vatAmount' => $cart->vatAmount,
             '#weight' => 100,
         );
 

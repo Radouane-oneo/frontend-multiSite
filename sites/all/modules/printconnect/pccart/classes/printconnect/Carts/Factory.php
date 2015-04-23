@@ -39,10 +39,10 @@ use printconnect\Customers;
       if ($items->cart && $items->cart->id) {
         $id = $items->cart->id;
         Dal::LoadCollection($items, 'cart-item', array('cart' => $id), function ($value) {
-                  $item = new Item(get_object_vars($value));
-                  $item->loaded = true;
-                  return $item;
-                });
+          $item = new Item(get_object_vars($value));
+          $item->loaded = true;
+          return $item;
+        });
         $items->Sort();
       }
     }
@@ -273,7 +273,6 @@ use printconnect\Customers;
             )
 	);
       } catch (\Exception $ex) {
-        
       }
       return $object;
     }
@@ -293,6 +292,29 @@ use printconnect\Customers;
       }
       $object->options = $options;
       $item = Dal::Save($object, 'cart-item', array('id' => $object->id, 'cart' => $object->cart));
+      $cart = self::Current();
+      $orderItems =  $cart->orderItems;
+      for($i=0; $i< count($orderItems); $i++) {
+          if ($orderItems[$i]->id == $item->id) {
+              $orderItems[$i] = $item;
+              break;
+          }
+      }
+      $cartAmounts = $item->cartAmount;
+      Dal::updateElement($cart, 'cart',
+            array(
+                'id' => $cart->id
+            ),
+            array(
+                'orderItems' => $orderItems,
+                'subTotalAmount' => $cartAmounts->subTotalAmount,
+                'vatAmount' => $cartAmounts->vatAmount,
+                'totalAmount' => $cartAmounts->totalAmount,
+	        'fotoliaItems' => ($item->fotoliaItems != null) ?
+		    $item->fotoliaItems : null
+            )
+        );
+	
       return $item;
     }
 

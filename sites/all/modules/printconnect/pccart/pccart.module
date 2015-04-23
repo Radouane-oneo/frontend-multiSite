@@ -935,7 +935,6 @@ function pccart_callback() {
 
         $cart = Factory::Current();
         $customer = CustomersFactory::Current();
-
         if (!$cart) {
           $cart = Factory::Create();
           if ($customer) {
@@ -943,7 +942,6 @@ function pccart_callback() {
             Carts\Factory::Save($cart);
           }
         }
-
         $cart = Factory::Get($cartId);
         $item = Factory::GetItem($cart, $id);
         $item->EnsureLoaded();

@@ -197,7 +197,11 @@ global $language;
             '#prefix' => '<div id="hiddenPrices">',
             '#suffix' => '</div>',
         );
-
+	foreach($cart->fotoliaItems as $fotoliaItem) {
+	    $form['cart']['items']['hidden']['fotolia'][$fotoliaItem->id] = array(
+                '#type' => 'hidden', '#value' => $fotoliaItem->price
+            );
+	}
         foreach ($cart->productItems as $item) {
 	    $productOptionsPrice = 0;
 	    if (count($item->options) > 0) {
@@ -210,7 +214,11 @@ global $language;
                 '#type' => 'hidden', '#value' => ($itemPrice+$productOptionsPrice)
             );
 
-
+	    if ($item->fileCheck != null) {
+		$form['cart']['items']['hidden']['filcheck'] = array(
+                    '#type' => 'hidden', '#value' => $item->fileCheck->price
+                );
+	    }
             if (isset($item->emailDesigner)) {
                 $emailDesigner = $item->emailDesigner;
             }

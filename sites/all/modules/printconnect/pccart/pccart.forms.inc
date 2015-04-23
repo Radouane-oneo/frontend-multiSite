@@ -393,9 +393,8 @@ function pccart_cart_form2($form, &$form_state) {
                 $form['cart']['items'][$item->id]['remove'] = array(
                     '#prefix' => '<div class="preview">',
                     '#suffix' => '</div></div>',
-                       '#value' => t('Delete'),
+                    '#value' => t('Delete'),
                     '#type' => 'submit',
-                    '#src' => drupal_get_path('module', 'pccart') . '/images/delete.png',
                     '#name' => 'delete_item_' . $item->id,
                     '#attributes' => array('class' => array('delete_item','delete-layout')),
                     '#validate' => array('pccart_cart_form2_delete_creat_validate'),
@@ -1051,7 +1050,7 @@ function pccart_cart_form2($form, &$form_state) {
                 '#type' => 'submit',
                 '#value' => t('Secure payment'),
                 '#weight' => 100,
-             //   '#validate' =>array('pccart_cart_form2_validate'),
+                '#validate' =>array('pccart_cart_form2_validate'),
                 '#submit' => array('pccart_cart_form2_submit'),
                 '#attributes' => array('class' => array('action', 'large', 'payment', 'button')),
             );

@@ -81,8 +81,8 @@
       
       if ($.fancybox){
         $('.pcflyerstores-picker-link').fancybox({
-          width: 980,
-          height: 650,
+          width: 993,
+          height: 780,
           padding: 0,
           margin: 0,
           scrolling: false,

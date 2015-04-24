@@ -778,6 +778,10 @@ body.page-stores-picker{
     display: inline-block;
 }
 
+#pcflyerstores-picker-form #edit-search.txt_search_postal >.form-item{
+    float: left;
+}
+
 #account {
     color: #78B800;
     font-size: 52px;
@@ -804,9 +808,16 @@ body.page-stores-picker{
     background: #f1f1f1;
     border-radius: 4px 4px 4px 4px;
     width: 934px;
-    height: 79px;
+    height: auto;
 }
-
+#pcflyerstores-picker-form #edit-search:after{
+    content: '';
+    height: 1px;
+    width: 100%;
+    display: block;
+    clear: both;
+}
+ 
 
 #pcflyerstores-picker-form .form-submit, #pccart-cart-form #edit-search .form-submit {
     width: 231px;
@@ -828,6 +839,17 @@ body.page-stores-picker{
     float: right;
     position: relative;
     top: 15px;
+}
+#pcflyerstores-picker-form #btnsearch{
+    width: 231px;
+    display: block;
+    text-align: center;
+    bottom: 0;
+    float: right;
+    position: relative;
+    top: 0;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 #pccart-cart-form #edit-search .form-submit{
     width: 231px;
@@ -858,15 +880,7 @@ body.page-stores-picker{
     height: 372px !important;
     overflow: auto;
 }
-#pcflyerstores-picker-form #edit-search{
-    padding-left: 9px;
-    padding-right: 9px;
-    margin-bottom: 13px;
-    background: #f1f1f1;
-    border-radius: 4px 4px 4px 4px;
-    width: 933px;
-    height: 72px
-}
+
 #pcflyerstores-picker-form label{
     display: inline-block;
 }

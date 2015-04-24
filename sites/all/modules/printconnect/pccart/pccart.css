@@ -611,6 +611,14 @@ body.page-cart #pccart-cart-form .control-block .removecontrol{
     height: 20px;
     padding-bottom: 5px;
     padding-left: 4px;
-    padding-top: 0;
-  
+    padding-top: 0; 
+}
+
+
+.cart .cartItemsContainer  .prodactTemplates:after{
+  content: '';
+  width: 100%;
+  height: 1px;
+  display: block;
+  clear: both;
 }

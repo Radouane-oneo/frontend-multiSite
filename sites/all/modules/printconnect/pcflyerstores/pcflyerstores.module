@@ -364,9 +364,9 @@ function theme_pcflyerstores_picker_link($vars) {
     } else {
         $title = $vars['title'];
     }
-
+    $style = isset($vars['display']) ? $vars['display'] : '';
     $build = array(
-        'link' => array('#markup' => l($title, $url, $vars)),
+        'link' => array('#markup' => '<span class="storeLink" style="margin-left:100px;display : '.$style.'">'.l($title, $url, $vars).'</span>'),
     );
 
     return drupal_render($build);
@@ -729,7 +729,9 @@ function pcflyerstores_form_pccart_cart_form2_alter(&$form, &$form_state) {
                     $store = FALSE;
                 }
                 $form['cart']['shipping']['type']['#options'][$typeId]['label'] .= '<br/>' . theme('pcflyerstores_store_info', array('store' => $store, 'attributes' => array('class' => array('store', 'clearfix'))));
-            }
+            } else {
+		$form['cart']['shipping']['type']['#options'][$typeId]['label'] .= theme('pcflyerstores_picker_link', array('callback' => 'pcflyerstores_callback', 'display' => 'none'));
+	    }
         }
     }
 

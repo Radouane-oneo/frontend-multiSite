@@ -390,18 +390,17 @@ function pccart_cart_form2($form, &$form_state) {
                     ),
                     '#attributes' => array('class' => array('designtool', 'iframe', 'reupload')),
                 );
-
                 $form['cart']['items'][$item->id]['remove'] = array(
                     '#prefix' => '<div class="preview">',
                     '#suffix' => '</div></div>',
-                    '#type' => 'submit',
                     '#value' => t('Delete'),
+                    '#type' => 'submit',
                     '#name' => 'delete_item_' . $item->id,
-                    '#has_garbage_value' => FALSE,
-                    '#attributes' => array('class' => array('delete_item')),
+                    '#attributes' => array('class' => array('delete_item','delete-layout')),
+                    '#validate' => array('pccart_cart_form2_delete_creat_validate'),
                     '#submit' => array('pccart_cart_form2_delete_creat_submit'),
+                    '#has_garbage_value' => FALSE,
                 );
-                
                     // Controle professionnelle files
                 if( $item->fileCheck ){
                     $form['cart']['items'][$item->id]['control'] = array(
@@ -1234,6 +1233,10 @@ function pccart_cart_form2_delete_item_submit($form, &$form_state) {
     } catch (\printconnect\Rest\Exceptions\Exception $ex) {
 
     }
+}
+
+function pccart_cart_form2_delete_creat_validate($form, &$form_state) {
+
 }
 function pccart_cart_form2_delete_creat_submit($form, &$form_state) {
     $id = $form_state['triggering_element']['#parents'][2];

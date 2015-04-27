@@ -592,8 +592,16 @@ function getFromServer($filename) {
 
 function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = FALSE, $edit = FALSE) {
     global $language;
+    global $user;
+    ini_set('memory_limit', '5000M');
+    ini_set('max_execution_time', '50000');
     
-    ini_set('memory_limit', '2048M');
+    $items = explode(',', $items);
+    $options = (array) $options;
+    $gItems = array();
+    foreach ($items as $value) {
+        $gItems[] = (int) $value;
+    }
 
     if (!is_numeric($productId)) {
         drupal_not_found();
@@ -626,7 +634,12 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
         var GlobalLabels = ". json_encode($labels) .";
         var JsonFileGroups = ". $jsonFile .";
         var GlobalIsAdmin = ". $isAdmin .";
+        var GlobalDefaultItems = ".json_encode($gItems).";
+        var GlobalDefaultOptions = ".json_encode($options).";
+        var GlobalDefaultQuantity = ".(!$qty ? 'null' : $qty).";
+        var GlobalJobId = ".(!$edit ? 'null' : $edit->id).";
     </script>";
+
     $script .= '<script data-main="/configSelector/js/main" src="/configSelector/js/libs/requirejs/require.js"></script>';
     $script .= '<div id="myForm"></div>';
 

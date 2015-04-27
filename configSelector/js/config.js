@@ -1,7 +1,6 @@
 define([
     'backbone',
 ], function (Backbone) {
-    //var configJSON = JsonFileGroups;
     GlobalLabels['productId'] = JsonFileGroups.id;
     GlobalLabels['productName'] = JsonFileGroups.name;
     GlobalLabels['productDescription'] = unescape(JsonFileGroups.shortDescription + JsonFileGroups.longDescription + JsonFileGroups.baselineDescription);
@@ -10,12 +9,12 @@ define([
         containerId : "#myForm",
         toolBoxGroups : JsonFileGroups["data"],
         TVA : JsonFileGroups["vat"],
-        defaultItems : [],
-        defaultOptions : [],
-        defaultQuantity : null,
+        defaultItems : GlobalDefaultItems,
+        defaultOptions : GlobalDefaultOptions,
+        defaultQuantity : GlobalDefaultQuantity,
         imagesUrl : JsonFileGroups["imagesUrl"],
         labels : GlobalLabels,
-        isAdmin : GlobalIsAdmin
+        isAdmin : 1
     };
 
 });

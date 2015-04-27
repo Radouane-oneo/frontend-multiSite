@@ -371,6 +371,10 @@ float: right;
   font-size: 20px;
 }
 
+.preview2 .origin-price{
+  right: 35px;
+}
+
 .page-cart #pccart-cart-form .item .description .origin-price + .price{
   top: 25px;
 }

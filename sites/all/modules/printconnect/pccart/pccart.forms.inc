@@ -463,7 +463,7 @@ function pccart_cart_form2($form, &$form_state) {
                 );
 
                 if ($itemValue < $item->originPrice) {
-                    $promoPrice = '<del>&euro; ' . $item->originPrice . '</del>';
+                    $promoPrice = '<del>' .$item->originPrice . ' &euro;</del>';
                     $form['cart']['items'][$item->id]['description']['promoPrice'] = array(
                         '#prefix' => '<div class="origin-price">',
                         '#suffix' => '</div>',

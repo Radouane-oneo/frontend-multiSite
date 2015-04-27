@@ -640,7 +640,7 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
         var JsonFileGroups = ". $jsonFile .";
         var GlobalIsAdmin = ". $isAdmin .";
         var GlobalDefaultItems = ".json_encode($gItems).";
-        var GlobalDefaultOptions = ".json_encode($options).";
+        var GlobalDefaultOptions = ".json_encode($gOtions).";
         var GlobalDefaultQuantity = ".(!$qty ? 'null' : $qty).";
         var GlobalJobId = ".(!$edit ? 'null' : $edit->id).";
     </script>";

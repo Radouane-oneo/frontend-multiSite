@@ -596,7 +596,7 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
     ini_set('memory_limit', '5000M');
     ini_set('max_execution_time', '50000');
     
-    $items = explode(',', $items);
+    $items = ($items == '') ? array() : explode(',', $items);
     $options = ($options == '') ? array() : explode(',', $options);
 
     $gItems = array();

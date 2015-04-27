@@ -597,10 +597,15 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
     ini_set('max_execution_time', '50000');
     
     $items = explode(',', $items);
-    $options = (array) $options;
+    $options = explode(',', $options);
     $gItems = array();
     foreach ($items as $value) {
         $gItems[] = (int) $value;
+    }
+
+    $gOtions = array();
+    foreach ($options as $value) {
+        $gOtions[] = (int) $value;
     }
 
     if (!is_numeric($productId)) {

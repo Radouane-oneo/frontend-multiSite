@@ -17,7 +17,6 @@ use \printconnect\Products;
 
 function pccheckout_personal_form($form, &$form_state) {
   $customer = Customers\Factory::Current();
-
   $form['personal'] = array(
       '#type' => 'fieldset',
       '#title' => t('Your details'),

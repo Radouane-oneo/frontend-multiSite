@@ -59,7 +59,8 @@ function pccart_cart_form2($form, &$form_state) {
 drupal_add_js(array('pccart' => array('testvar' => "sqdfqsdfsdqfdqs",'ley' => "yeysy",)), array('type' => 'setting'));
     
 global $language;
-    $cart = Factory::Current(FALSE);
+    $cart = Factory::Current();
+    $form_state['storage']['cart'] = $cart;
     $endarray = $cart != null ? end($cart->orderItems) : null;
     $jobs = $cart != null ? $cart->orderItems : array();
     if (null != $cart) {
@@ -160,7 +161,6 @@ global $language;
                 break;
             }
         }
-
         $form['products']['list'] = array(
             '#theme' => 'item_list',
             '#items' => $items,
@@ -262,7 +262,6 @@ global $language;
             $templates = Products\Templates\Factory::GetTemplates($item->configuration->productId, $items);
             $template = $templates->items[0];
             $ProdactHasTemplates = ProdactHasTemplates($template->id, $item->id);
-
             if (count($item->files)) {
                 foreach ($item->files as $file) {
                     $form['cart']['items'][$item->id]['file'] = array(
@@ -536,7 +535,6 @@ global $language;
                     $checkableItems[] = $item->id;
                 }
             }
-
             if (null == $offerId) {
                 $form['cart']['items'][$item->id]['description']['actions'] = array(
                     '#type' => 'container',
@@ -550,7 +548,6 @@ global $language;
                 );
             }
         }
-
         if (!empty($fotolia)) {
             $form['cart']['fotolias'] = array(
                 '#type' => 'fieldset',
@@ -579,7 +576,6 @@ global $language;
                 }
             }
         }
-
         $orderItemsAdditional = $cart->orderItemsAdditional;
         if (count($orderItemsAdditional)) {
             $addcontainer = true;
@@ -615,8 +611,9 @@ global $language;
          '#weight' => 50,
         '#prefix' => '<div class ="jsDiscount">',
         '#suffix' => '</div>',
-    );
-    if (count($cart->discountItems)) {
+	    );
+	$data = serialize($cart);
+    if (count($cart->discountItems) > 0) {
         $form['cart']['discounts'] = array(
             '#type' => 'fieldset',
             '#attributes' => array('class' => array('discounts', 'item')),
@@ -775,7 +772,6 @@ global $language;
             '#size' => 30,
         );
 
-	$cart = Factory::Current();
         $form['cart']['priceblock'] = array(
             '#theme' => 'priceblock',
             '#id' => 'priceblock',
@@ -950,8 +946,8 @@ function pccart_cart_form2_delete_discount_submit($form, &$form_state) {
 
 function pccart_cart_form2_validate($form, &$form_state){
 
-    $cart = $form_state['storage']['cart'];
-    if (!$cart || !$cart->isFilled) {
+    $cart = Factory::Current();
+    if (!$cart) {
         form_set_error('', t('No cart or empty'));
     }
    
@@ -960,7 +956,7 @@ function pccart_cart_form2_validate($form, &$form_state){
             form_set_error('', t('Please upload a file for all your items'));
     }
     }
-   
+    $form_state['storage']['cart'] =  $cart; 
 }
 
 function pccart_cart_form2_submit($form, &$form_state){

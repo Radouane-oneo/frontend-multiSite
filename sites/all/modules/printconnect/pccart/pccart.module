@@ -129,7 +129,6 @@ function pccart_block_info() {
 }
 
 function pccart_block_view($delta = '') {
-    
   printconnect_ensureinitialized();
   switch ($delta) {
     case 'save':
@@ -233,7 +232,6 @@ function pccart_block_view($delta = '') {
             );
           }
         }
-
         if ($cart->discountItems) {
           foreach ($cart->discountItems as $discount) {
             $content['discounts'][$discount->id] = array(
@@ -373,7 +371,7 @@ function pccart_block_view($delta = '') {
       $content = t('Cart');
 
       if ($cart) {
-        $content .= ' (' . $cart->count . ')';
+        $content .= ' (' . count($cart->orderItems) . ')';
       } else {
         $content .= ' (0)';
       }
@@ -694,6 +692,7 @@ function _pccart_callback() {
         break;
        case 'discount':
         $code = $_POST['code'];
+	if ($code != null) {
         $cart = Factory::Current();
 	$orderItems = $cart->orderItems;
         $data = array("order"=>$cart->id,"code"=> $code);
@@ -715,7 +714,8 @@ function _pccart_callback() {
                 'totalAmount' => $cartAmounts->totalAmount,
             ));
 	}
-        echo $jsonResponse->data;die;
+            echo $jsonResponse->data;die;
+	}
       break;
       case 'item_delete':
         $itemId = array_shift($args);

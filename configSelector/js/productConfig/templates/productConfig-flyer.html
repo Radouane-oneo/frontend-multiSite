@@ -42,7 +42,7 @@
         <!-- End toolBoxItems -->
 
         <!-- Options -->
-        <div class="form-item form-type-checkboxes form-item-options">
+        <div class="form-item form-type-checkboxes form-item-options <%= (expandedOptions)?'expanded':'' %>">
             <label for="edit-options"><%= config.labels["options"] %></label>
 
             <div class="text" href="#">
@@ -55,7 +55,7 @@
                 <% }); } %>
             </div></div>
 
-        <div class="form-checkboxes clearfix" id="edit-options" style="display: none;">
+        <div class="form-checkboxes clearfix" id="edit-options" style="<%= (expandedOptions)?'':'display:none;' %>">
             <% _.each(model.toolBoxGroup.options, function(option, i){
             var checked = ($.inArray(option.id, model.options)!=-1)?"checked='checked'":"";
             %>

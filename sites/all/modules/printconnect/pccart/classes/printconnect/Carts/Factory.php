@@ -338,6 +338,21 @@ use printconnect\Customers;
       return Dal::Delete('cart-item', array('id' => $id, 'cart' => $cart->id));
     }
     public static function DeleteItemFile($id) {
+      $cart = self::Current();
+      $orderItemsFiles = $cart->files;
+      foreach($orderItemsFiles as $key => $file) {
+	if ($file->orderItemId == $id) {
+	    unset($orderItemsFiles[$key]);
+	    break;
+	}	
+      }
+       $cart->files = array_values($cart->files);
+      Dal::updateElement($cart, 'cart',
+        array('id' => $cart->id),
+        array(
+            'files' => $orderItemsFiles
+        )
+      );
       return Dal::Delete('order-item-file', array('orderItemId' => $id));
     }
 

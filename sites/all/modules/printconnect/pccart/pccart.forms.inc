@@ -385,8 +385,7 @@ global $language;
                         '#value' => t('Delete'),
                         '#name' => 'delete_item_' . $item->id,
                         '#has_garbage_value' => FALSE,
-                        '#attributes' => array('class' => array('delete_item')),
-                        '#submit' => array('pccart_cart_form2_delete_creat_submit'),
+                        '#attributes' => array('class' => array('delete_item', 'deletedesign'), 'itemFileId' => $item->id),
                     );
 
                     // Controle professionnelle files

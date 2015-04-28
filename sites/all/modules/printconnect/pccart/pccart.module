@@ -88,6 +88,12 @@ $items['cart/%/submit'] = array(
       'access arguments' => array('access content'),
       'type' => MENU_CALLBACK,
   );
+  $items['deletedesign/%'] = array(
+      'page callback' => '_pccart_callback',
+      'page arguments' => array('design_delete', 1),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
   return $items;
 }
 
@@ -725,6 +731,14 @@ function _pccart_callback() {
           unset($_SESSION['files'][$itemId]);
         }
        break;
+      case 'design_delete':
+	$itemId = array_shift($args);
+	try {
+            Factory::DeleteItemFile($itemId);
+    	} catch (\printconnect\Rest\Exceptions\Exception $ex) {
+
+    	}
+      break;
       case 'file_delete':
         $itemId = array_shift($args);
         $fileId = array_shift($args);

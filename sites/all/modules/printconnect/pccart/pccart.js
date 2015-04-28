@@ -4,7 +4,17 @@
     detach: function (context) {
     },
     attach: function (context, settings) {
+
+   $('.designdelete').click(function(e){
+	$.post(Drupal.settings.basePath+'/designdelete/'+$(this).attr('itemFileId').val());
+
+   });
    $('table.targetPrice tr').mousedown(function () {
+	  console.log('store is '+$(this).find('.storeLink').length);
+	   $('.storeLink').hide();
+	   if ($(this).find('.storeLink').length > 0) {
+	       $(this).find('.storeLink').show();
+	   }
            if ($(this).find('input.targetPrice').is(":not(:checked)")){
                if($(this).find('input.targetPrice').val() ==  84){
                var shpping = '<input type="hidden" name="shpping" value="14.99">';

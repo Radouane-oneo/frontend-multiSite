@@ -28,6 +28,13 @@
 	PriceCallback();
         return false;
    });
+   
+    $('table.targetPrice tr').each(function(){
+	if ($(this).find('input.targetPrice').is(":checked") && $(this).find('.storeLink').length > 0){
+		$(this).find('.storeLink').show();
+	}
+	
+   });
    $('table.targetPrice tr').mousedown(function () {
 	   $('.storeLink').hide();
 	   if ($(this).find('.storeLink').length > 0) {

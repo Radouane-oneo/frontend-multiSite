@@ -647,11 +647,11 @@ function _pccart_callback() {
 	$ref = $_POST['ref'];
 	$cart = Factory::Current();
 	$cart->customer_reference = $ref;
-	printconnect\Carts\Factory::Save($cart);
 	Factory::saveInCache($cart, array(
-            'customer_reference' => $cart->customer_reference,
+            'customer_reference' => $ref,
+	    'customerReference' => $ref,
         )); 
-			
+	printconnect\Carts\Factory::Save($cart);		
       break;
       case 'edit_jobref':
 	$orderItem = array_shift($args);

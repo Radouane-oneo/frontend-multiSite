@@ -4,13 +4,22 @@
     detach: function (context) {
     },
     attach: function (context, settings) {
+   $('.removecontrol').click(function(){
+	$.post('cart/controlprof/'+$(this).attr('rel')+'/delete');
+	$(this).parent().fadeOut("slow");
+	$(this).parent().remove();
+	$('.itemfile-'+$(this).attr('rel')).remove();
+	PriceCallback();
+		
+	return false;
+   });
 
-   $('.designdelete').click(function(e){
+   $('.deletedesign').click(function(e){
 	$.post(Drupal.settings.basePath+'/designdelete/'+$(this).attr('itemFileId').val());
-
+	PriceCallback();
+        return false;
    });
    $('table.targetPrice tr').mousedown(function () {
-	  console.log('store is '+$(this).find('.storeLink').length);
 	   $('.storeLink').hide();
 	   if ($(this).find('.storeLink').length > 0) {
 	       $(this).find('.storeLink').show();

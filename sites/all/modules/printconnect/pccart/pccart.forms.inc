@@ -218,7 +218,7 @@ global $language;
 	    if ($item->fileCheck != null) {
 		$form['cart']['items']['hidden']['filcheck'][$item->id] = array(
                     '#type' => 'hidden', '#value' => $item->fileCheck->price,
-		    '#attributes' => array('class' => array('item-'.$item->id, 'clearfix'))
+		    '#attributes' => array('class' => array('item-'.$item->id, 'clearfix', 'itemfile-'.$item->id))
                 );
 	    }
             if (isset($item->emailDesigner)) {

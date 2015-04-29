@@ -739,6 +739,16 @@ function _pccart_callback() {
 
     	}
       break;
+	case 'controle_delete' :
+            $itemId = array_shift($args);
+            $cart = Factory::Current();
+            if ($itemId) {
+                $cartItem = printconnect\Carts\Factory::GetItem($cart, $itemId);
+                printconnect\Carts\Factory::LoadItem($cartItem);
+                $cartItem->fileCheck = array();
+                printconnect\Carts\Factory::SaveItem($cartItem);
+            }
+	break;
       case 'file_delete':
         $itemId = array_shift($args);
         $fileId = array_shift($args);

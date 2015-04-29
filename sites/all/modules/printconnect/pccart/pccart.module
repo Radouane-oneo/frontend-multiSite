@@ -385,9 +385,15 @@ function pccart_block_view($delta = '') {
     case 'indicator':
       $cart = Factory::Current();
       $baseContent = $content = t('Cart');
-      $number = count($cart->orderItems);
+      $number = 0;
+      foreach($cart->orderItems as $job) {
+	if ($job->discountId == null) {
+	    $number++;
+	}
+      }
+	
       if ($cart) {
-        $content .= ' (' . count($cart->orderItems) . ')';
+        $content .= ' (' . $number . ')';
       } else {
         $content .= ' (0)';
       }

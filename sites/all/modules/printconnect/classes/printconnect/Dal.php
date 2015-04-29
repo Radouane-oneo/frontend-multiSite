@@ -101,7 +101,7 @@ namespace printconnect {
 
       $hash = $dal->GetHash($entity, $params, $language);
       $items = false;
-      if ($cache) {
+      if (true) {
         if (array_key_exists($hash, self::$_cache)) {
            $items = self::$_cache[$hash];
         }

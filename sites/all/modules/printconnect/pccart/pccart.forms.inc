@@ -339,7 +339,7 @@ global $language;
                         '#maxlength' => 25,
                         '#size' => 20,
                         '#default_value' => $item ? $item->refJob : '',
-                        '#attributes' => array('class' => array('hint', 'form-text')),
+                        '#attributes' => array('class' => array('hint', 'form-text', 'refjobTxt'), 'orderItem' => $item->id),
                         '#prefix' => '<div class="refJob-code">',
                         '#suffix' => '</div>'
                     );
@@ -736,7 +736,6 @@ global $language;
         unset($options[349]);
     }
   
-
         $cart->shipping_type = $_SESSION['defaultindex'];
 
         $form['cart']['shipping']['type'] = array(
@@ -769,6 +768,7 @@ global $language;
             '#type' => 'textfield',
             '#default_value' => $cart ? $cart->customer_reference : '',
             '#size' => 30,
+	    '#attributes' => array('class' => array('refCustomer'), 'cart' => $cart->id),
         );
 
         $form['cart']['priceblock'] = array(

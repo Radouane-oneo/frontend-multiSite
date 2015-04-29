@@ -30,7 +30,12 @@ $items['cart/%/submit'] = array(
       'access arguments' => array('access content'),
       'type' => MENU_CALLBACK,
   );
-
+  $items['cart/customer/ref/%'] = array(
+      'page callback' => '_pccart_callback',
+      'page arguments' => array('cart_customer_ref', 3),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
   $items['cart'] = array(
       'title' => 'Cart',
       'page callback' => 'drupal_get_form',
@@ -53,7 +58,12 @@ $items['cart/%/submit'] = array(
       'access arguments' => array('access content'),
       'type' => MENU_CALLBACK,
   );
-
+  $items["cart/job/ref/%"] = array(
+      'title' => 'edit',
+      'page callback' => '_pccart_callback',
+      'page arguments' => array('edit_jobref', 3),
+      'access arguments' => array('access content'),
+  );
   $items["cart/edit/%"] = array(
       'title' => 'edit',
       'page callback' => '_pccart_callback',
@@ -374,14 +384,17 @@ function pccart_block_view($delta = '') {
 
     case 'indicator':
       $cart = Factory::Current();
-      $content = t('Cart');
-
+      $baseContent = $content = t('Cart');
+      $number = count($cart->orderItems);
       if ($cart) {
         $content .= ' (' . count($cart->orderItems) . ')';
       } else {
         $content .= ' (0)';
       }
-      $block['content'] = l($content, 'cart', array('attributes' => array('class' => array('button', 'cart'))));
+      $block['content'] = l($content, 'cart', array('attributes' => array(
+	    'class' => array('button', 'cart', 'cartCounter'),
+	    'TranslatedText' => $baseContent,
+	    'number' => $number)));
 
       return $block;
       break;
@@ -629,6 +642,28 @@ function _pccart_callback() {
     $args = func_get_args();
     $page = array_shift($args);
     switch ($page) {
+      case 'cart_customer_ref':
+	$cartId = array_shift($args);
+	$ref = $_POST['ref'];
+	$cart = Factory::Current();
+	$cart->customer_reference = $ref;
+	printconnect\Carts\Factory::Save($cart);
+	Factory::saveInCache($cart, array(
+            'customer_reference' => $cart->customer_reference,
+        )); 
+			
+      break;
+      case 'edit_jobref':
+	$orderItem = array_shift($args);
+	$ref = $_POST['ref'];
+	if ($orderItem) {
+	   $cart = Factory::Current();
+           $cartItem = printconnect\Carts\Factory::GetItem($cart, $orderItem);
+	   $cartItem->refJob = $ref;
+	   printconnect\Carts\Factory::SaveItem($cartItem); 
+	} else {
+	}		   
+      break;
       case 'cart_submit':
         $cart = Factory::Current();
         $types = array_shift($args);

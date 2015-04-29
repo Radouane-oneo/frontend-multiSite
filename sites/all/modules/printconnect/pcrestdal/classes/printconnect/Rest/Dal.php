@@ -181,7 +181,6 @@ use printconnect\Dal\ForbiddenException;
       }
 
       $data = json_encode($properties);
-      
       $start = microtime(true);
       $response = drupal_http_request($url, array('header' => $header, 'method' => 'PUT', 'data' => $data));
       $end = microtime(true);

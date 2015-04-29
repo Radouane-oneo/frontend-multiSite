@@ -4,6 +4,15 @@
     detach: function (context) {
     },
     attach: function (context, settings) {
+
+   $('.refCustomer').blur(function() {
+	$.post('cart/customer/ref/'+$(this).attr('cart'),{'ref' : $(this).val()});       
+   });
+
+   $('.refjobTxt').blur(function(){
+       $.post('cart/job/ref/'+$(this).attr('orderItem'),{'ref' : $(this).val()});
+   }); 
+   
    $('.removecontrol').click(function(){
 	$.post('cart/controlprof/'+$(this).attr('rel')+'/delete');
 	$(this).parent().fadeOut("slow");
@@ -61,6 +70,9 @@
 	    } else if ($('.fotolia-items-'+itemid).length == $('.fotolia-items').length) {
 		$('.fotolia-items-'+itemid).parents('fieldset').remove();
 	    }
+	    var baseText = $('.cartCounter').attr('translatedtext');
+	    var number = $('.cartCounter').attr('number') - 1;
+	    $('.cartCounter span').html(baseText+ ' ('+number+')');
             PriceCallback();
         });
             /* ------------------------------*/ 

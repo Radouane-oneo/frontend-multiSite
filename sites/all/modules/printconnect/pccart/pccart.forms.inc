@@ -914,9 +914,9 @@ global $language;
     
     /* Control order have Designer */
     
-    $validate = $form['actions']['checkout']['#validate'];
-    array_unshift($validate, 'pcdesigner_form_validate');
-    $form['actions']['checkout']['#validate'] = $validate;
+//    $validate = $form['actions']['checkout']['#validate'];
+//    array_unshift($validate, 'pcdesigner_form_validate');
+//    $form['actions']['checkout']['#validate'] = $validate;
 
     $submit = $form['actions']['checkout']['#submit'];
     array_unshift($submit, 'pcdesigner_form_submit');

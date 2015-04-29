@@ -289,7 +289,7 @@ function pccheckout_personal_form_submit($form, &$form_state) {
 
 function pccheckout_invoiceanddelivery_form($form, &$form_state) {
     _pccustomers_ensureloggedin();
-    $cart = \printconnect\Carts\Factory::Current();
+    $cart = \printconnect\Carts\Factory::Current(TRUE);
     $defaultShippingAddress = FALSE;
     $defaultBillingAddress = FALSE;
     

@@ -149,9 +149,7 @@ function pccheckout_access() {
 }
 
 function pccheckout_menu() {
-  switch (variable_get('pc_flow', '')) {
 
-    case 'flyer':
       $items['checkout'] = array(
           'title' => 'Checkout',
           'page callback' => 'pccheckout_redirect',
@@ -199,63 +197,27 @@ function pccheckout_menu() {
           'access arguments' => array('access content'),
           'file' => 'pccheckout.forms.inc',
       );
+      $items["invoceform/%"] = array(
+      'page callback' => '_pccheckout_callback',
+      'page arguments' =>array('invoceform', 1),
+      'access arguments' => array('access content'),
+  );
 
-      break;
-
-    default:
-
-      $items['checkout'] = array(
-          'title' => 'Checkout',
-          'page callback' => '_pccheckout_callback',
-          'page arguments' => array('main'),
-          'access arguments' => array('access content'),
-      );
-
-      $items['checkout/personal'] = array(
-          'title' => 'Personal',
-          'page callback' => 'drupal_get_form',
-          'page arguments' => array('pccheckout_personal_form'),
-          'access arguments' => array('access content'),
-          'file' => 'pccheckout.form.inc',
-      );
-
-      $items['checkout/shipping'] = array(
-          'title' => 'Shipping',
-          'page callback' => 'drupal_get_form',
-          'page arguments' => array('pccheckout_shipping_form'),
-          'access callback' => 'pccheckout_access',
-          'access arguments' => array('access content'),
-          'file' => 'pccheckout.form.inc',
-      );
-
-      $items['checkout/shipping/pickup'] = array(
-          'title' => 'Pickup',
-          'page callback' => '_pccheckout_set_callback',
-          'page arguments' => array('pickup'),
-          'access arguments' => array('access content'),
-          'type' => MENU_CALLBACK,
-      );
-
-      $items['checkout/shipping/delivery'] = array(
-          'title' => 'Delivery',
-          'page callback' => '_pccheckout_set_callback',
-          'page arguments' => array('delivery'),
-          'access arguments' => array('access content'),
-          'type' => MENU_CALLBACK,
-      );
-
-      $items['checkout/payment'] = array(
-          'title' => 'Payment',
-          'page callback' => 'drupal_get_form',
-          'page arguments' => array('pccheckout_payment_form2'),
-          'access arguments' => array('access content'),
-          'file' => 'pccheckout.form.inc',
-      );
-
-      break;
-  }
+    $items["shipping/%"] = array(
+      'page callback' => '_pccheckout_callback',
+      'page arguments' =>array('shipping', 1),
+      'access arguments' => array('access content'),
+  );
+    $items["billingAccountVat/%"] = array(
+      'page callback' => '_pccheckout_callback',
+      'page arguments' =>array("billingAccountVat", 1 ),
+      'access arguments' => array('access content'),
+  );
   return $items;
 }
+
+
+
 
 function pccheckout_form_pccart_cart_form_alter(&$form, $form_state, $form_id) {
 
@@ -307,25 +269,6 @@ function pccheckout_pccart_cart_form_submit($form, $form_state) {
   drupal_goto('checkout');
 }
 
-
-//function pccheckout_pccart_cart_form2_validate($form, $form_state) {
-//  $cart = Carts\Factory::Current(FALSE);
-// //ne pas supprimer c pour tva6%
-////    foreach($cart->orderItems as $orderItem){
-////       if ($form_state['values']['cart']['items'][$orderItem]['description']['tva']['case'] == 1){
-////          $orderItem->vat = 0.06;
-////          $orderItem->priceIncVAT = $orderItem->price * (1 + 0.06);
-////       }  
-////    }
-////   
-////  \printconnect\Carts\Factory::Save($cart);
-////  \printconnect\Carts\Factory::Refresh($cart);
-//}
-//
-//function pccheckout_pccart_cart_form2_submit($form, $form_state) {
-//  drupal_goto('checkout');
-//}
-
 function _pccheckout_set_callback($value) {
     $cart = Carts\Factory::Current();
     $types = \printconnect\Shipping\Types\Factory::GetAll();
@@ -353,46 +296,54 @@ function _pccheckout_set_callback($value) {
 }
 
 function _pccheckout_callback() {
+  
   _pccustomers_ensureloggedin();
   $args = func_get_args();
   $page = array_shift($args);
-  $arg = array_shift($args);
-  $customer = Customers\Factory::Current();
-
+  $id = end($args);
   switch ($page) {
-    case 'main' :
-      if (!$customer) {
-        drupal_goto('checkout/login');
-      } else {
-        drupal_goto('checkout/personal');
-      }
-
-      break;
-    case 'shipping':
-      if ($arg == 'delivery') {
-        $cart->shipping_address = $address->id;
-        $cart->Remove('pickuppoint');
-        Carts\Factory::Save($cart);
-        drupal_goto('checkout/shipping');
-      }
-      if ($arg == 'pickup') {
-        $types = \printconnect\Shipping\Types\Factory::GetAll();
-        foreach ($types as $type) {
-          if (!$type->isPickup) {
-            $cart->shipping_type = $type->id;
-          }
+   case 'invoceform':
+        $apikey = variable_get('pc_apikey');
+        $url = variable_get('pc_url');
+        $url .= "billing-account/id/".$id."?apikey=$apikey&language=10";
+        $header = array('Content-Type' => 'application/x-www-form-urlencoded');
+        $response = drupal_http_request($url, array('header' => $header, 'method' => 'GET'));
+        echo $response->data;die;
+  break;
+case 'shipping':
+        $apikey = variable_get('pc_apikey');
+        $url = variable_get('pc_url');
+        $url .= "customer-address/id/".$id."?apikey=$apikey&language=10";
+        $header = array('Content-Type' => 'application/x-www-form-urlencoded');
+        $response = drupal_http_request($url, array('header' => $header, 'method' => 'GET'));
+        echo $response->data;die;
+break;
+case 'billingAccountVat':
+    $val = end($args);
+    try {
+     $billingAccount = \printconnect\Customers\BillingAccounts\Factory::Get($val);
+         \printconnect\Customers\BillingAccounts\Factory::LoadBillingAccountVat($billingAccount);
+        if($billingAccount->number){
+        $data = array(
+        'status'=> 'exicte',
+        'name'=> $billingAccount->name,
+        'company'=> $billingAccount->company,
+        'street' => $billingAccount->street,
+        'postalCode' => $billingAccount->postalCode,
+        'city' => $billingAccount->city,
+         );
+            drupal_json_output($data);
         }
-// $cart->pickuppoint = FALSE;
-        Carts\Factory::Save($cart);
+    } catch (Exception $exc) {
+            drupal_json_output("NewVat");
+    }
 
-        drupal_goto('checkout/shipping');
-        exit;
-      }
-      break;
+exit();
+break;
   }
 
-
-  return drupal_get_form('pccheckout_checkout_form', $page);
+//
+//  return drupal_get_form('pccheckout_checkout_form', $page);
 }
 
 function pccheckout_forgotpassword_form($form, $form_state) {

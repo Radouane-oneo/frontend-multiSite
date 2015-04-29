@@ -16,14 +16,12 @@ window.alert = function(arg) {
 //      $(document).ajaxStart(function() {
 //       $('body',this).css('cursor','progress');
 //       $(':submit').attr('disabled', 'disabled');
-//        $('.loading').slideDown();
 //        
 //      });
 //      
 //      $(document).ajaxStop(function() {
 //        $('body', this).css('cursor','default');
 //        $(':submit').removeAttr('disabled');
-//        $('.loading').slideUp();
 //      });
 //      
 //      $('.contactus').click(function(){

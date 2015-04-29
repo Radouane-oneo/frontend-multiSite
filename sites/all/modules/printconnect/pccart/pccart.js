@@ -4,24 +4,42 @@
     detach: function (context) {
     },
     attach: function (context, settings) {
- 
-    $("#pccart-cart-form input.targetPrice").mousedown(function () {
-           if ($(this).is(":not(:checked)")){
-               if($(this).val() ==  84){
+   $('.removecontrol').click(function(){
+	$.post('cart/controlprof/'+$(this).attr('rel')+'/delete');
+	$(this).parent().fadeOut("slow");
+	$(this).parent().remove();
+	$('.itemfile-'+$(this).attr('rel')).remove();
+	PriceCallback();
+		
+	return false;
+   });
+
+   $('.deletedesign').click(function(e){
+	$.post(Drupal.settings.basePath+'/designdelete/'+$(this).attr('itemFileId').val());
+	PriceCallback();
+        return false;
+   });
+   $('table.targetPrice tr').mousedown(function () {
+	   $('.storeLink').hide();
+	   if ($(this).find('.storeLink').length > 0) {
+	       $(this).find('.storeLink').show();
+	   }
+           if ($(this).find('input.targetPrice').is(":not(:checked)")){
+               if($(this).find('input.targetPrice').val() ==  84){
                var shpping = '<input type="hidden" name="shpping" value="14.99">';
                $("#pccart-cart-form #hiddenPrices").append(shpping);
                 }else{
                     $("input[name='shpping']").remove();
                 }
                 PriceCallback();
-                $.post('cart/'+$(this).val()+'/submit');
+                $.post('cart/'+$(this).find('input.targetPrice').val()+'/submit');
            }
    });
 
-
     /* ------------Remove items------------*/ 
 
-        $("#pccart-cart-form .removecart").once().click(function () {
+        $("#pccart-cart-form .removecart").live('click',function () {
+	    var targetItem = $(this);
             itemid = $(this).siblings('.itemID').text();
             $(this).parents('.item').fadeOut("slow");
             var url = "cart/" + itemid + "/delete";
@@ -31,12 +49,19 @@
                 type: "POST",
                 url: url,
                 success: function (data) {
-                    form.html(jQuery('#pccart-cart-form', data).html());
-                    Drupal.attachBehaviors(form);
+                    //form.html(jQuery('#pccart-cart-form', data).html());
+                    //Drupal.attachBehaviors(form);
+		    targetItem.parents('job').remove();
                 }
             });
             $("input[name='"+nameitemid+"']").remove();
-             PriceCallback();
+	    $('.item-' + itemid).remove();
+	    if ($('.fotolia-items-'+itemid).length < $('.fotolia-items').length) {
+		$('.fotolia-items-'+itemid).parent().remove();
+	    } else if ($('.fotolia-items-'+itemid).length == $('.fotolia-items').length) {
+		$('.fotolia-items-'+itemid).parents('fieldset').remove();
+	    }
+            PriceCallback();
         });
             /* ------------------------------*/ 
     

@@ -6,7 +6,18 @@ namespace printconnect\Carts {
 use printconnect\Customers;
 
   class Factory {
-    
+  
+    public static function saveInCache($object, $data) 
+    {
+        if (!empty($data)) {
+            Dal::updateElement($object,
+                'cart', 
+                array('id' => $object->id), 
+                $data
+            );
+        }
+    }
+  
     public static function Get($id, $cache = TRUE) {
       return new Cart(array('id' => $id), $cache);
     }
@@ -28,10 +39,10 @@ use printconnect\Customers;
       if ($items->cart && $items->cart->id) {
         $id = $items->cart->id;
         Dal::LoadCollection($items, 'cart-item', array('cart' => $id), function ($value) {
-                  $item = new Item(get_object_vars($value));
-                  $item->loaded = true;
-                  return $item;
-                });
+          $item = new Item(get_object_vars($value));
+          $item->loaded = true;
+          return $item;
+        });
         $items->Sort();
       }
     }
@@ -247,16 +258,21 @@ use printconnect\Customers;
         $cart->subTotalAmount = $object->cartSubTotalAmount;
         $cart->vatAmount = $object->cartVatAmount;
         $cart->totalAmount = $object->cartTotalAmount;
+	
+
+	$cartAmounts = $object->cartAmount;
         Dal::updateElement($cart, 'cart', 
 	    array(
 	        'id' => $cart->id
 	    ), 
 	    array(
-                'orderItems' => $cart->orderItems
+                'orderItems' => $cart->orderItems,
+		'subTotalAmount' => $cartAmounts->subTotalAmount,
+                'vatAmount' => $cartAmounts->vatAmount,
+                'totalAmount' => $cartAmounts->totalAmount,
             )
 	);
       } catch (\Exception $ex) {
-        
       }
       return $object;
     }
@@ -276,6 +292,29 @@ use printconnect\Customers;
       }
       $object->options = $options;
       $item = Dal::Save($object, 'cart-item', array('id' => $object->id, 'cart' => $object->cart));
+      $cart = self::Current();
+      $orderItems =  $cart->orderItems;
+      for($i=0; $i< count($orderItems); $i++) {
+          if ($orderItems[$i]->id == $item->id) {
+              $orderItems[$i] = $item;
+              break;
+          }
+      }
+      $cartAmounts = $item->cartAmount;
+      Dal::updateElement($cart, 'cart',
+            array(
+                'id' => $cart->id
+            ),
+            array(
+                'orderItems' => $orderItems,
+                'subTotalAmount' => $cartAmounts->subTotalAmount,
+                'vatAmount' => $cartAmounts->vatAmount,
+                'totalAmount' => $cartAmounts->totalAmount,
+	        'fotoliaItems' => ($item->fotoliaItems != null) ?
+		    $item->fotoliaItems : null
+            )
+        );
+	
       return $item;
     }
 
@@ -299,6 +338,21 @@ use printconnect\Customers;
       return Dal::Delete('cart-item', array('id' => $id, 'cart' => $cart->id));
     }
     public static function DeleteItemFile($id) {
+      $cart = self::Current();
+      $orderItemsFiles = $cart->files;
+      foreach($orderItemsFiles as $key => $file) {
+	if ($file->orderItemId == $id) {
+	    unset($orderItemsFiles[$key]);
+	    break;
+	}	
+      }
+       $cart->files = array_values($cart->files);
+      Dal::updateElement($cart, 'cart',
+        array('id' => $cart->id),
+        array(
+            'files' => $orderItemsFiles
+        )
+      );
       return Dal::Delete('order-item-file', array('orderItemId' => $id));
     }
 

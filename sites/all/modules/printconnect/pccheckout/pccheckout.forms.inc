@@ -23,7 +23,7 @@ function pccheckout_personal_form($form, &$form_state) {
     $defaultShippingAddress = FALSE;
     $defaultBillingAddress = FALSE;
     $countries = array();
-    $cart = \printconnect\Carts\Factory::Current(FALSE);
+    $cart = \printconnect\Carts\Factory::Current();
     $customer = \printconnect\Customers\Factory::Current();
 
     $shopConfig = \printconnect\Shop\Configuration\Factory::Current();
@@ -264,7 +264,6 @@ function pccheckout_personal_form_validate($form, &$form_state) {
 }
 
 function pccheckout_personal_form_submit($form, &$form_state) {
-
     $billingAccount = $form_state['storage']['address'];
     $customerbillingAccount = $form_state['storage']['customer'];
     \printconnect\Customers\BillingAccounts\Factory::Save($billingAccount);
@@ -284,14 +283,13 @@ function pccheckout_personal_form_submit($form, &$form_state) {
     \printconnect\Customers\Addresses\Factory::Save($billingAccount);
     \printconnect\Customers\Factory::Save($customerbillingAccount);
     \printconnect\Customers\BillingAccounts\Factory::ClearBillingAccountsCache($customerbillingAccount);
-
     drupal_goto('checkout/invoiceanddelivery');
 }
 
 
 function pccheckout_invoiceanddelivery_form($form, &$form_state) {
     _pccustomers_ensureloggedin();
-    $cart = \printconnect\Carts\Factory::Current(FALSE);
+    $cart = \printconnect\Carts\Factory::Current();
     $defaultShippingAddress = FALSE;
     $defaultBillingAddress = FALSE;
     

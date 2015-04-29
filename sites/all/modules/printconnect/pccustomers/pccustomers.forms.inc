@@ -1461,6 +1461,10 @@ function pccustomers_login_form_submit($form, &$form_state) {
   $customer = $form_state['storage']['customer'];
   Factory::Save($customer);
   Factory::LoginByObject($customer);
+  $cart = printconnect\Carts\Factory::Current();
+  printconnect\Carts\Factory::saveInCache($cart, array(
+      'customer' => $customer->id,
+  ));
   pccustomers_login_form_send_mail($form, $form_state);
   if (isset($_GET['return'])) {
     drupal_goto($_GET['return']);

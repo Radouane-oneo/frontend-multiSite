@@ -53,11 +53,13 @@ define([
         },
         totalPrice: function(){
             var me = this;
+
             var totalPrice = this.model.price;
             var options = _.filter(this.model.toolBoxGroup.options, function(option){ return $.inArray(option.id, me.model.options)!=-1 });
             _.each(options,function(option){
                 totalPrice += parseFloat(me.priceOption(option));
             });
+
             return totalPrice.toFixed(2);
         },
         setToolBoxGroup: function(items){
@@ -67,6 +69,9 @@ define([
                 toolBoxGroup = _.find(this.config.toolBoxGroups, function(t){ return me.containsArray(t['toolboxItems'], items); });
                 items.pop();
             }
+
+            this.set({"toolBoxGroup" : toolBoxGroup},{silent : true});
+
             var pricing = toolBoxGroup["pricing"][this.get("quantity")];
             var price = null;
             if(pricing) {
@@ -83,7 +88,6 @@ define([
             var validOptions = _.intersection(allOptions, this.get("options"));
 
             this.set({
-                "toolBoxGroup" : toolBoxGroup,
                 "priceGroupId" : toolBoxGroup["priceGroupId"],
                 "options" : validOptions,
                 "price" : price

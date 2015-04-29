@@ -32,7 +32,8 @@ define([
                 "priceOption" : this.model.priceOption,
                 "totalPrice" : this.model.totalPrice,
                 "priceTpl" : _.template(priceTemplate),
-                "shippingHTML" : this.$("#bloc-shipping").html()
+                "shippingHTML" : this.$("#bloc-shipping").html(),
+                "expandedOptions" : this.$("#edit-options").is(":visible")
             }));
             $(this.config.containerId).html(this.$el);
 
@@ -77,24 +78,20 @@ define([
 
             dropDown.promise().done(function(){
                 me.model.setToolBoxGroup(selectedItems);
+                $(window).scrollTop(me.$(".form-type-select").offset().top);
             });
 
             e.preventDefault();
         },
-        changeOptions: function(e){
-            var dropDown = $(e.target).parents(".form-checkboxes");
-            var selectEl = dropDown.prev();
+        changeOptions: function(){
             var options = [];
             var me = this;
-            selectEl.click();
 
             $("#edit-options").find("input.form-checkbox:checked").each(function(){
                 options.push(parseInt($(this).val()));
             });
 
-            dropDown.promise().done(function(){
-                me.model.set("options", options);
-            });
+            me.model.set("options", options);
         },
         changeQuantity: function(e){
             var quantity = parseInt($(e.target).val());

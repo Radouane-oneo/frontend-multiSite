@@ -88,6 +88,12 @@ $items['cart/%/submit'] = array(
       'access arguments' => array('access content'),
       'type' => MENU_CALLBACK,
   );
+  $items['deletedesign/%'] = array(
+      'page callback' => '_pccart_callback',
+      'page arguments' => array('design_delete', 1),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
   return $items;
 }
 
@@ -129,7 +135,6 @@ function pccart_block_info() {
 }
 
 function pccart_block_view($delta = '') {
-    
   printconnect_ensureinitialized();
   switch ($delta) {
     case 'save':
@@ -233,7 +238,6 @@ function pccart_block_view($delta = '') {
             );
           }
         }
-
         if ($cart->discountItems) {
           foreach ($cart->discountItems as $discount) {
             $content['discounts'][$discount->id] = array(
@@ -373,7 +377,7 @@ function pccart_block_view($delta = '') {
       $content = t('Cart');
 
       if ($cart) {
-        $content .= ' (' . $cart->count . ')';
+        $content .= ' (' . count($cart->orderItems) . ')';
       } else {
         $content .= ' (0)';
       }
@@ -635,7 +639,16 @@ function _pccart_callback() {
         $url .= "shipping-type/?apikey=$apikey&language=10";
         $header = array('Content-Type' => 'application/x-www-form-urlencoded');
         $response = drupal_http_request($url, array('header' => $header, 'method' => 'POST', 'data' => $jsondata));
-        
+        $response = json_decode($response->data);
+        if (isset($response->id) && $response->id != null) {
+	    $cartAmounts = $response->cartAmount;
+	    Factory::saveInCache($cart, array(
+		'orderItemShipping' => $response,
+		'subTotalAmount' => $cartAmounts->subTotalAmount,
+		'vatAmount' => $cartAmounts->vatAmount,
+		'totalAmount' => $cartAmounts->totalAmount,
+	    ));
+         }
       case 'cartblock':
         $cart = Factory::Current();
         $action = array_shift($args);
@@ -685,15 +698,30 @@ function _pccart_callback() {
         break;
        case 'discount':
         $code = $_POST['code'];
+	if ($code != null) {
         $cart = Factory::Current();
+	$orderItems = $cart->orderItems;
         $data = array("order"=>$cart->id,"code"=> $code);
         $jsondata = json_encode($data);
         $apikey = variable_get('pc_apikey');
         $url = variable_get('pc_url');
         $url .= "order-discount-code/?apikey=$apikey&language=10";
         $header = array('Content-Type' => 'application/x-www-form-urlencoded');
-        $response = drupal_http_request($url, array('header' => $header, 'method' => 'POST', 'data' => $jsondata));
-        echo $response->data;die;
+        $jsonResponse = drupal_http_request($url, array('header' => $header, 'method' => 'POST', 'data' => $jsondata));
+        $response = json_decode($jsonResponse->data);
+        if (isset($response->orderItemDiscount) && $response->orderItemDiscount != null) {
+            $orderItems[] = $response->orderItemDiscount;
+            $cart->orderItems = $orderItems;
+	    $cartAmounts = $response->cartAmount;
+            Factory::saveInCache($cart, array(
+                'orderItems' => $orderItems,
+		'subTotalAmount' => $cartAmounts->subTotalAmount,
+                'vatAmount' => $cartAmounts->vatAmount,
+                'totalAmount' => $cartAmounts->totalAmount,
+            ));
+	}
+            echo $jsonResponse->data;die;
+	}
       break;
       case 'item_delete':
         $itemId = array_shift($args);
@@ -703,6 +731,24 @@ function _pccart_callback() {
           unset($_SESSION['files'][$itemId]);
         }
        break;
+      case 'design_delete':
+	$itemId = array_shift($args);
+	try {
+            Factory::DeleteItemFile($itemId);
+    	} catch (\printconnect\Rest\Exceptions\Exception $ex) {
+
+    	}
+      break;
+	case 'controle_delete' :
+            $itemId = array_shift($args);
+            $cart = Factory::Current();
+            if ($itemId) {
+                $cartItem = printconnect\Carts\Factory::GetItem($cart, $itemId);
+                printconnect\Carts\Factory::LoadItem($cartItem);
+                $cartItem->fileCheck = array();
+                printconnect\Carts\Factory::SaveItem($cartItem);
+            }
+	break;
       case 'file_delete':
         $itemId = array_shift($args);
         $fileId = array_shift($args);
@@ -913,7 +959,6 @@ function pccart_callback() {
 
         $cart = Factory::Current();
         $customer = CustomersFactory::Current();
-
         if (!$cart) {
           $cart = Factory::Create();
           if ($customer) {
@@ -921,7 +966,6 @@ function pccart_callback() {
             Carts\Factory::Save($cart);
           }
         }
-
         $cart = Factory::Get($cartId);
         $item = Factory::GetItem($cart, $id);
         $item->EnsureLoaded();

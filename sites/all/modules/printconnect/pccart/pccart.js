@@ -80,6 +80,9 @@
 	    var baseText = $('.cartCounter').attr('translatedtext');
 	    var number = $('.cartCounter').attr('number') - 1;
 	    $('.cartCounter span').html(baseText+ ' ('+number+')');
+	    if (number <= 0) {
+		window.location.replace('/products/');
+	    }
             PriceCallback();
         });
             /* ------------------------------*/ 

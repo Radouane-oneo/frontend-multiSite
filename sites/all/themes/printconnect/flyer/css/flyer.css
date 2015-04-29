@@ -4056,9 +4056,16 @@ a.googleconnect {
 }
 .page-checkout #shipping-address, 
 .page-checkout #invoice-address {
-	/*width: 640px;*/
-          padding: 0 20px;
-    width: 960px;
+padding: 20px 20px;
+width: 952px;
+border-color: #e1e1e1;
+border-style: solid;
+border-width: 1px;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+padding-bottom: 10px;
+background: #f1f1f1;
 }
 .page-checkout #shipping-address.form-wrapper, 
 .page-checkout #invoice-address.form-wrapper {

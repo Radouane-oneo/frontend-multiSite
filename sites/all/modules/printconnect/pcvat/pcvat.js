@@ -1,14 +1,9 @@
 (function ($) {
 
-  var pcvatRequest;
-
+  var validate;
   $.fn.vatfieldValidate = function(change){
 
     if ($(this).length){
-      if (pcvatRequest){
-        //pcvatRequest.abort();
-      }
-
       var control = $(this);
       var number = $('.number', control);
       var country = $('.country', control); 
@@ -17,18 +12,23 @@
       number.removeClass('validated');
 
       if (number.val() !='' && country.val() != '') {
-        //pcvatRequest = $.getJSON('http://isvat.appspot.com/' + country.val() + '/' + number.val() + '/?callback=?', function(data){
-        pcvatRequest = $.getJSON(Drupal.settings.basePath + 'index.php?q=/js/pcvat/' + country.val() + '/' + number.val(), function(data){
-          if (data == false){
+       $.getJSON(Drupal.settings.basePath + 'index.php?q=/js/pcvat/' + country.val() + '/' + number.val(), function(data){
+          if (data.status == "Inactive"){
             number.addClass('error');
-          }
-          else{
-            number.addClass('validated');
-          }
-          if (change){
-            control.trigger('changed');
+            number.val( Drupal.t("Not valide"));
+          }else{
+              validate = "validated";
           }
         });
+        
+        if(validate == "validated"){
+          $.getJSON(Drupal.settings.basePath + 'index.php?q=/billingAccountVat/' + country.val() + number.val(), function(dataset){
+           if(dataset.status == "exicte"){
+             $('#fademe').removeClass('black_overlay');
+             $('#fademe').addClass('black_overlay2');
+         }
+        });
+       } 
       }
     }
   }
@@ -37,17 +37,12 @@
     detach: function (context) {
     },
     attach: function (context, settings) {
-
       $('.form-type-vatfield').once('vat-validation').each(function(){
         var control = $(this);
         $(control).vatfieldValidate(false);
-
         $('.number, .country', this).once('vat-validation-change').change(function (){
-          //control.trigger('change');
           $(control).vatfieldValidate(true);
         });
-
-         //$('.number', this).trigger('change');
       });
     }
   }

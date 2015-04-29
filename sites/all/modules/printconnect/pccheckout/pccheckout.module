@@ -197,10 +197,20 @@ function pccheckout_menu() {
           'access arguments' => array('access content'),
           'file' => 'pccheckout.forms.inc',
       );
-
       $items["invoceform/%"] = array(
       'page callback' => '_pccheckout_callback',
       'page arguments' =>array('invoceform', 1),
+      'access arguments' => array('access content'),
+  );
+
+    $items["shipping/%"] = array(
+      'page callback' => '_pccheckout_callback',
+      'page arguments' =>array('shipping', 1),
+      'access arguments' => array('access content'),
+  );
+    $items["billingAccountVat/%"] = array(
+      'page callback' => '_pccheckout_callback',
+      'page arguments' =>array("billingAccountVat", 1 ),
       'access arguments' => array('access content'),
   );
   return $items;
@@ -300,6 +310,36 @@ function _pccheckout_callback() {
         $response = drupal_http_request($url, array('header' => $header, 'method' => 'GET'));
         echo $response->data;die;
   break;
+case 'shipping':
+        $apikey = variable_get('pc_apikey');
+        $url = variable_get('pc_url');
+        $url .= "customer-address/id/".$id."?apikey=$apikey&language=10";
+        $header = array('Content-Type' => 'application/x-www-form-urlencoded');
+        $response = drupal_http_request($url, array('header' => $header, 'method' => 'GET'));
+        echo $response->data;die;
+break;
+case 'billingAccountVat':
+    $val = end($args);
+    try {
+     $billingAccount = \printconnect\Customers\BillingAccounts\Factory::Get($val);
+         \printconnect\Customers\BillingAccounts\Factory::LoadBillingAccountVat($billingAccount);
+        if($billingAccount->number){
+        $data = array(
+        'status'=> 'exicte',
+        'name'=> $billingAccount->name,
+        'company'=> $billingAccount->company,
+        'street' => $billingAccount->street,
+        'postalCode' => $billingAccount->postalCode,
+        'city' => $billingAccount->city,
+         );
+            drupal_json_output($data);
+        }
+    } catch (Exception $exc) {
+            drupal_json_output("NewVat");
+    }
+
+exit();
+break;
   }
 
 //

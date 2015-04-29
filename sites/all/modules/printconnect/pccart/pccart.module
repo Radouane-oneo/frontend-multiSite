@@ -688,7 +688,10 @@ function _pccart_callback() {
 		'subTotalAmount' => $cartAmounts->subTotalAmount,
 		'vatAmount' => $cartAmounts->vatAmount,
 		'totalAmount' => $cartAmounts->totalAmount,
+	        'pickuppoint' => null,
 	    ));
+	    $_SESSION['shipping']['object'] = $response;
+	    unset($_SESSION['cart']['shipping']['pup']);
          }
       case 'cartblock':
         $cart = Factory::Current();

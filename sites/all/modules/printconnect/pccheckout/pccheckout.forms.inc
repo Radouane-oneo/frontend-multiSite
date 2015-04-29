@@ -289,10 +289,15 @@ function pccheckout_personal_form_submit($form, &$form_state) {
 
 function pccheckout_invoiceanddelivery_form($form, &$form_state) {
     _pccustomers_ensureloggedin();
-    $cart = \printconnect\Carts\Factory::Current(TRUE);
+    $cart = \printconnect\Carts\Factory::Current();
+    if (isset($_SESSION['shipping']['object']) && !isset($cart->orderItemShipping)) {
+	\printconnect\Carts\Factory::saveInCache($cart, array(
+            'orderItemShipping' => $_SESSION['shipping']['object'],
+        ));
+	$cart->orderItemShipping = $_SESSION['shipping']['object'];
+    }
     $defaultShippingAddress = FALSE;
     $defaultBillingAddress = FALSE;
-    
     $customer = \printconnect\Customers\Factory::Current();
     $shippingTypes = \printconnect\Shipping\Types\Factory::GetAll();
     $shippingType = FALSE;

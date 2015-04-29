@@ -33,6 +33,9 @@
 	if ($(this).find('input.targetPrice').is(":checked") && $(this).find('.storeLink').length > 0){
 		$(this).find('.storeLink').show();
 	}
+	if ($(this).find('input.targetPrice').is(":checked")) {
+	    $.post('cart/'+$(this).find('input.targetPrice').val()+'/submit');
+	}
 	
    });
    $('table.targetPrice tr').mousedown(function () {

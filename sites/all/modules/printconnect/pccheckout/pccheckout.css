@@ -444,7 +444,6 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 }
 #pccheckout-payment-form .textpayment{
   bottom: 54px;
-  position: absolute;
   width: 100%;
   text-align: center;
 }

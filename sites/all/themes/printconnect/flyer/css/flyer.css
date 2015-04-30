@@ -10668,3 +10668,6 @@ a.cart.button{
 .page-paymentrequest .demande-paiement h1{
 	font-size: 12px;
 }
+.hideContainer {
+    display : none;
+}

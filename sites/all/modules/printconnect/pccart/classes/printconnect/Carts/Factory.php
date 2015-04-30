@@ -341,18 +341,27 @@ use printconnect\Customers;
     }
     public static function DeleteItemFile($id) {
       $cart = self::Current();
-      $orderItemsFiles = $cart->files;
-      foreach($orderItemsFiles as $key => $file) {
-	if ($file->orderItemId == $id) {
-	    unset($orderItemsFiles[$key]);
-	    break;
-	}	
+      $cartItems = $cart->orderItems;
+      foreach($cartItems as $key => $job) {
+          if ($job->id == $id) {
+              $cartItems[$key]->files = array();
+	      $cartItems[$key]->fileCheck = null;
+              break;
+          }
       }
-       $cart->files = array_values($cart->files);
+      $fotolias = $cart->fotoliaItems;
+      foreach($fotolias as $key => $fotolia) {
+	if ($fotolia->parentId = $id) {
+	    unset($fotolias[$key]);
+	}
+      }
+      $cart->fotoliaItems = $fotolias;
+      $cart->orderItems = array_values($cartItems);
       Dal::updateElement($cart, 'cart',
         array('id' => $cart->id),
         array(
-            'files' => $orderItemsFiles
+            'orderItems' => $cart->orderItems,
+	    'fotoliaItems' => $fotolias
         )
       );
       return Dal::Delete('order-item-file', array('orderItemId' => $id));

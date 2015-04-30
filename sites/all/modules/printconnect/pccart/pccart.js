@@ -24,9 +24,22 @@
    });
 
    $('.deletedesign').click(function(e){
-	$.post(Drupal.settings.basePath+'/designdelete/'+$(this).attr('itemFileId').val());
+	$('.item-hide-'+$(this).attr('itemFileId')).fadeIn("slow");
+	$(this).parents('.job').fadeOut("slow"); 		
+	$.post('cart/deletedesign/'+$(this).attr('itemFileId'),{},function(){
+	   $(this).parents('.job').remove(); 
+	});
+	if ($('.fotolia-items-'+$(this).attr('itemFileId')).length < $('.fotolia-items').length) {
+            $('.fotolia-items-'+$(this).attr('itemFileId')).parent().remove();
+        } else if ($('.fotolia-items-'+$(this).attr('itemFileId')).length == $('.fotolia-items').length) {
+            $('.fotolia-items-'+$(this).attr('itemFileId')).parents('fieldset').remove();
+        }
+	$('.item-'+$(this).attr('itemFileId')).remove();
+	PriceCallback();	
+	return false;
+	/*$.post(Drupal.settings.basePath+'/designdelete/'+$(this).attr('itemFileId').val());
 	PriceCallback();
-        return false;
+        return false;*/
    });
    
     $('table.targetPrice tr').each(function(){

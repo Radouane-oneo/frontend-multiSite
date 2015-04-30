@@ -337,6 +337,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         
     $AllShippingAddress = array();
     $AllShippingAddress [0] = t('New');
+    $adresses = printconnect\Customers\Addresses\Factory::GetAddresses($customer, FALSE);
      foreach (printconnect\Customers\Addresses\Factory::GetAddresses($customer, FALSE) as $address) {
             if ($address->company != '') {
                $AllShippingAddress[$address->id] = $address->company;
@@ -813,9 +814,12 @@ function pccheckout_invoiceanddelivery_form_shipping_submit($form, &$form_state)
         $address = $form_state['storage']['shipping']['address'];
         \printconnect\Customers\Addresses\Factory::Save($address);
 
-        $cart = $form_state['storage']['cart'];
+	$cart = \printconnect\Carts\Factory::Current();
         $cart->shipping_address = $address->id;
         \printconnect\Carts\Factory::Save($cart);
+        \printconnect\Carts\Factory::saveInCache($cart, array(
+            'shipping_address' => $cart->shipping_address,
+        ));
     }
 }
 

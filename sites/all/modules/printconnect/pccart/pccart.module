@@ -52,9 +52,9 @@ $items['cart/%/submit'] = array(
   );
 
 
-  $items['cart/files/%/%/delete'] = array(
+  $items['cart/files/%/delete'] = array(
       'page callback' => '_pccart_callback',
-      'page arguments' => array('file_delete', 2, 3),
+      'page arguments' => array('file_delete', 2),
       'access arguments' => array('access content'),
       'type' => MENU_CALLBACK,
   );
@@ -98,9 +98,9 @@ $items['cart/%/submit'] = array(
       'access arguments' => array('access content'),
       'type' => MENU_CALLBACK,
   );
-  $items['deletedesign/%'] = array(
+  $items['cart/deletedesign/%'] = array(
       'page callback' => '_pccart_callback',
-      'page arguments' => array('design_delete', 1),
+      'page arguments' => array('design_delete', 2),
       'access arguments' => array('access content'),
       'type' => MENU_CALLBACK,
   );
@@ -780,7 +780,6 @@ function _pccart_callback() {
 	try {
             Factory::DeleteItemFile($itemId);
     	} catch (\printconnect\Rest\Exceptions\Exception $ex) {
-
     	}
       break;
 	case 'controle_delete' :
@@ -795,11 +794,12 @@ function _pccart_callback() {
 	break;
       case 'file_delete':
         $itemId = array_shift($args);
-        $fileId = array_shift($args);
-        if (isset($_SESSION['files'][$itemId][$fileId])) {
-          unset($_SESSION['files'][$itemId][$fileId]);
+        if (isset($_SESSION['files'][$itemId])) {
+          unset($_SESSION['files'][$itemId]);
         }
-        drupal_goto($_SERVER['HTTP_REFERER']);
+	if ($itemId) {
+	    printconnect\Carts\Factory::DeleteItemFile($itemId);
+	}	
         return t('The file was deleted');
         break;
       case 'discount_delete':

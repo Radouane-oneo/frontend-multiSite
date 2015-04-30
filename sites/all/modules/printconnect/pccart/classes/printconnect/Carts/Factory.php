@@ -161,7 +161,7 @@ use printconnect\Customers;
       unset($_SESSION['cartid']);
       unset($_SESSION['payment_method']);
     }
-
+    
     public static function Save($object) {
     $customer = Customers\Factory::Current();
     $ref = $object->customer_reference;
@@ -210,6 +210,13 @@ use printconnect\Customers;
       //}
     }
 
+    public static function SaveCustomData($cart) {
+	try {
+	  Dal::Save($cart, 'supplement-parameter');
+	} catch(Exception $ex) {
+	    
+	}
+    }
     public static function Validate(Cart $object) {
       //if (!empty($object->id)) {
       Dal::Save($object, 'cart', array('cart' => $object->id), TRUE);

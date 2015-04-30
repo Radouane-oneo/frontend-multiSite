@@ -657,7 +657,7 @@ function _pccart_callback() {
             'customer_reference' => $ref,
 	    'customerReference' => $ref,
         )); 
-	printconnect\Carts\Factory::Save($cart);		
+	printconnect\Carts\Factory::SaveCustomData($cart);		
       break;
       case 'edit_jobref':
 	$orderItem = array_shift($args);
@@ -666,9 +666,8 @@ function _pccart_callback() {
 	   $cart = Factory::Current();
            $cartItem = printconnect\Carts\Factory::GetItem($cart, $orderItem);
 	   $cartItem->refJob = $ref;
-	   printconnect\Carts\Factory::SaveItem($cartItem); 
-	} else {
-	}		   
+	   printconnect\Carts\Factory::SaveCustomData($cartItem); 
+	} 		   
       break;
       case 'cart_submit':
         $cart = Factory::Current();

@@ -4410,7 +4410,7 @@ a.googleconnect {
 
 .page-paymentrequest table.grid,
 #pccheckout-payment-form table.grid {
-	width: 526px;
+	width: 497px;
 	border: 1px solid #e1e1e1;
 	border-collapse: separate;
 	border-radius: 3px;
@@ -4430,11 +4430,16 @@ a.googleconnect {
        border-right: medium none !important;
 }
 .imgpayment{
+    background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/paymentmethods/payment.jpg") no-repeat scroll center top #fff;
     float: left;
+    height: 112px;
     margin-left: 16px;
-    margin-top: -49px;
-    width: 442px;
+    margin-top: -41px;
+    padding-top: 167px;
     position: relative;
+    text-align: center;
+    width: 476px;
+    margin-bottom: 10px;
 }
 .page-paymentrequest-key table.grid.clearfix:after, 
 .page-checkout-payment table.grid.clearfix:after {
@@ -8143,7 +8148,7 @@ form#pccheckout-payment-form fieldset legend{
 	display: block;
 	padding: 18px 0;
 }
-form#pccheckout-payment-form fieldset#edit-payment-method legend{
+form#pccheckout-payment-form fieldset.paymentmethodefond legend{
 	
 	border-width: 1px 1px 0 1px;
 	margin: 0;
@@ -8169,7 +8174,7 @@ form#pccheckout-payment-form fieldset{
 	-moz-border-radius: 0 0 3px 3px;
     border-radius: 0 0 3px 3px;
 }
-form#pccheckout-payment-form  #edit-payment-method{
+form#pccheckout-payment-form  .paymentmethodefond{
       background-color: #f1f1f1;
 }
 
@@ -8185,7 +8190,7 @@ form#pccheckout-payment-form .payment-methods-table tr {
 form#pccheckout-payment-form table{
   padding-bottom: 13px;
 }
-form#pccheckout-payment-form fieldset#edit-payment-method .fieldset-wrapper{
+form#pccheckout-payment-form fieldset.paymentmethodefond .fieldset-wrapper{
 	padding-bottom: 0;
 	margin-bottom: 0;
          border-left: 1px solid #e1e1e1;

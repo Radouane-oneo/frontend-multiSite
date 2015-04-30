@@ -213,6 +213,11 @@ function pccheckout_menu() {
       'page arguments' =>array("billingAccountVat", 1 ),
       'access arguments' => array('access content'),
   );
+    $items["Methods/%"] = array(
+      'page callback' => '_pccheckout_callback',
+      'page arguments' =>array("paymentMethods", 1 ),
+      'access arguments' => array('access content'),
+  );
   return $items;
 }
 
@@ -302,6 +307,18 @@ function _pccheckout_callback() {
   $page = array_shift($args);
   $id = end($args);
   switch ($page) {
+ case 'paymentMethods':
+        $cart = Carts\Factory::Current();
+        $idpaymentMethods = array_shift($args);
+        $data = array("cart"=>$cart->id,"paymentMethodId"=> $idpaymentMethods);
+        $jsondata  = json_encode($data);
+        $apikey = variable_get('pc_apikey');
+        $url = variable_get('pc_url');
+        $url .= "payment-method/?apikey=$apikey&language=10";
+        $header = array('Content-Type' => 'application/x-www-form-urlencoded');
+        $response = drupal_http_request($url, array('header' => $header, 'method' => 'POST', 'data' => $jsondata));
+        $response = json_decode($response->data);
+break;
    case 'invoceform':
         $apikey = variable_get('pc_apikey');
         $url = variable_get('pc_url');
@@ -340,6 +357,7 @@ case 'billingAccountVat':
 
 exit();
 break;
+
   }
 
 //

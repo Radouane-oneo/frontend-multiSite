@@ -289,10 +289,15 @@ function pccheckout_personal_form_submit($form, &$form_state) {
 
 function pccheckout_invoiceanddelivery_form($form, &$form_state) {
     _pccustomers_ensureloggedin();
-    $cart = \printconnect\Carts\Factory::Current(TRUE);
+    $cart = \printconnect\Carts\Factory::Current();
+    if (isset($_SESSION['shipping']['object']) && !isset($cart->orderItemShipping)) {
+	\printconnect\Carts\Factory::saveInCache($cart, array(
+            'orderItemShipping' => $_SESSION['shipping']['object'],
+        ));
+	$cart->orderItemShipping = $_SESSION['shipping']['object'];
+    }
     $defaultShippingAddress = FALSE;
     $defaultBillingAddress = FALSE;
-    
     $customer = \printconnect\Customers\Factory::Current();
     $shippingTypes = \printconnect\Shipping\Types\Factory::GetAll();
     $shippingType = FALSE;
@@ -332,6 +337,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         
     $AllShippingAddress = array();
     $AllShippingAddress [0] = t('New');
+    $adresses = printconnect\Customers\Addresses\Factory::GetAddresses($customer, FALSE);
      foreach (printconnect\Customers\Addresses\Factory::GetAddresses($customer, FALSE) as $address) {
             if ($address->company != '') {
                $AllShippingAddress[$address->id] = $address->company;
@@ -808,9 +814,12 @@ function pccheckout_invoiceanddelivery_form_shipping_submit($form, &$form_state)
         $address = $form_state['storage']['shipping']['address'];
         \printconnect\Customers\Addresses\Factory::Save($address);
 
-        $cart = $form_state['storage']['cart'];
+	$cart = \printconnect\Carts\Factory::Current();
         $cart->shipping_address = $address->id;
         \printconnect\Carts\Factory::Save($cart);
+        \printconnect\Carts\Factory::saveInCache($cart, array(
+            'shipping_address' => $cart->shipping_address,
+        ));
     }
 }
 

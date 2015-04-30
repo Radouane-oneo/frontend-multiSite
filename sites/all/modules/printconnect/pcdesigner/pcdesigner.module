@@ -62,7 +62,7 @@ function pcdesigner_form_alter(&$form, $form_state, $form_id) {
         foreach ($cart->productItems as $item) {
           if (!count($item->files)){
              $emailDesigner = $item->emailDesigner;
-            $form['cart']['items'][$item->id]['designer']['check'] = array(
+            $form['cart']['items'][$item->id]['ready']['designer']['check'] = array(
                 '#type' => 'checkbox',
                 '#title' => t('I will not upload a design. My designer will do it for me.'),
                 '#default_value' => $item->emailDesigner,
@@ -72,11 +72,11 @@ function pcdesigner_form_alter(&$form, $form_state, $form_id) {
           }
 
 
-            $form['cart']['items'][$item->id]['designer']['inputdesigner'] = array(
+            $form['cart']['items'][$item->id]['ready']['designer']['inputdesigner'] = array(
                 '#type' => 'container',
                 '#attributes' => array('class' => array('clearfix','inputdesigner')),
             );
-            $form['cart']['items'][$item->id]['designer']['inputdesigner']['email'] = array(
+            $form['cart']['items'][$item->id]['ready']['designer']['inputdesigner']['email'] = array(
                 '#type' => 'textfield',
                 '#title' => t('Email address designer'),
                 '#attributes' => array('class' => array('inputdesigneremail')),
@@ -84,7 +84,7 @@ function pcdesigner_form_alter(&$form, $form_state, $form_id) {
                 '#required' => FALSE,
                 '#default_value' => $emailDesigner,
             );
-            $form['cart']['items'][$item->id]['designer']['inputdesigner']['warning'] = array(
+            $form['cart']['items'][$item->id]['ready']['designer']['inputdesigner']['warning'] = array(
                 '#type' => 'item',
                 '#id' => 'edit-cart-designer-warning',
                 '#markup' => t('Attention! If you don`t upload your files now, we cannot guarantee the estimated delivery date. You will be informed when your designer uploads the file.'),

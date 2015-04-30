@@ -161,7 +161,7 @@ use printconnect\Customers;
       unset($_SESSION['cartid']);
       unset($_SESSION['payment_method']);
     }
-
+    
     public static function Save($object) {
     $customer = Customers\Factory::Current();
     $ref = $object->customer_reference;
@@ -210,6 +210,13 @@ use printconnect\Customers;
       //}
     }
 
+    public static function SaveCustomData($cart) {
+	try {
+	  Dal::Save($cart, 'supplement-parameter');
+	} catch(Exception $ex) {
+	    
+	}
+    }
     public static function Validate(Cart $object) {
       //if (!empty($object->id)) {
       Dal::Save($object, 'cart', array('cart' => $object->id), TRUE);
@@ -322,13 +329,18 @@ use printconnect\Customers;
 
     public static function DeleteItem($id, Cart $cart) {
       $cartItems = $cart->orderItems;
+      $counter = 0; 
       foreach($cartItems as $key => $job) {
+	  if($job->discountId == null) {
+		$counter++;
+	   }
           if ($job->id == $id) {
               unset($cartItems[$key]);
-              break;
           }
       }
-
+      if ($counter <= 1) {
+	self::Clear();
+      }
       $cart->orderItems = array_values($cartItems);
       Dal::updateElement($cart, 'cart', 
         array('id' => $cart->id), 
@@ -341,18 +353,27 @@ use printconnect\Customers;
     }
     public static function DeleteItemFile($id) {
       $cart = self::Current();
-      $orderItemsFiles = $cart->files;
-      foreach($orderItemsFiles as $key => $file) {
-	if ($file->orderItemId == $id) {
-	    unset($orderItemsFiles[$key]);
-	    break;
-	}	
+      $cartItems = $cart->orderItems;
+      foreach($cartItems as $key => $job) {
+          if ($job->id == $id) {
+              $cartItems[$key]->files = array();
+	      $cartItems[$key]->fileCheck = null;
+              break;
+          }
       }
-       $cart->files = array_values($cart->files);
+      $fotolias = $cart->fotoliaItems;
+      foreach($fotolias as $key => $fotolia) {
+	if ($fotolia->parentId = $id) {
+	    unset($fotolias[$key]);
+	}
+      }
+      $cart->fotoliaItems = $fotolias;
+      $cart->orderItems = array_values($cartItems);
       Dal::updateElement($cart, 'cart',
         array('id' => $cart->id),
         array(
-            'files' => $orderItemsFiles
+            'orderItems' => $cart->orderItems,
+	    'fotoliaItems' => $fotolias
         )
       );
       return Dal::Delete('order-item-file', array('orderItemId' => $id));

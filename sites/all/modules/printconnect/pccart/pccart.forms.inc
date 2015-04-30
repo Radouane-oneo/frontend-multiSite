@@ -253,18 +253,18 @@ global $language;
 
             $product = Products\Factory::Get($item->configuration->productId);
 
-            $form['cart']['items'][$item->id] = array(
-                '#type' => 'container',
-                '#attributes' => array('class' => array('item job', 'clearfix')),
-                '#weight' => $weight,
-            );
-
             $templates = Products\Templates\Factory::GetTemplates($item->configuration->productId, $items);
             $template = $templates->items[0];
             $ProdactHasTemplates = ProdactHasTemplates($template->id, $item->id);
+	    $fileExist = false;
             if (count($item->files)) {
+		$form['cart']['items'][$item->id]['files'] = array(
+                    '#type' => 'container',
+                    '#attributes' => array('class' => array('item job', 'clearfix')),
+                    '#weight' => $weight,
+                );
                 foreach ($item->files as $file) {
-                    $form['cart']['items'][$item->id]['file'] = array(
+                    $form['cart']['items'][$item->id]['files']['file'] = array(
                         '#type' => 'container',
                         '#attributes' => array('class' => array('image')),
                     );
@@ -277,7 +277,7 @@ global $language;
                     if (isset($_SESSION['savedDesigns'][$item->id])) {
                         $savedDesignId = $_SESSION['savedDesigns'][$item->id];
                     }
-                    $form['cart']['items'][$item->id]['file']['link'] = array(
+                    $form['cart']['items'][$item->id]['files']['file']['link'] = array(
                         '#weight' => 200,
                         '#theme' => 'designtoollink',
                         '#title' => $product->name . ' ' . $firstConfig->name,
@@ -301,14 +301,14 @@ global $language;
                         '#attributes' => array('class' => array('designtool', 'iframe', 'display-block')),
                     );
 
-                    $form['cart']['items'][$item->id]['description'] = array(
+                    $form['cart']['items'][$item->id]['files']['description'] = array(
                         '#prefix' => '<div class="preview1">',
                         '#suffix' => '</div>',
                         '#type' => 'container',
                         '#attributes' => array('class' => array('description')),
                     );
                     $weight--;
-                    $form['cart']['items'][$item->id]['description']['title'] = array(
+                    $form['cart']['items'][$item->id]['files']['description']['title'] = array(
                         '#prefix' => '<h3>',
                         '#suffix' => '</h3>',
                         '#markup' => $item->quantity . ' ' . t('pcs.') . ' ' . $product->name . ' ' . $firstConfig->name,
@@ -316,24 +316,24 @@ global $language;
 
                     if ($itemValue < $item->originPrice) {
                         $promoPrice = '<del>&euro; ' . $item->originPrice . '</del>';
-                        $form['cart']['items'][$item->id]['description']['promoPrice'] = array(
+                        $form['cart']['items'][$item->id]['files']['description']['promoPrice'] = array(
                             '#prefix' => '<div class="origin-price">',
                             '#suffix' => '</div>',
                             '#markup' => $promoPrice,
                         );
                     }
-                    $form['cart']['items'][$item->id]['description']['price'] = array(
+                    $form['cart']['items'][$item->id]['files']['description']['price'] = array(
                         '#theme' => 'price',
                         '#value' => $itemValue,
                     );
 
-                    $form['cart']['items'][$item->id]['description']['list'] = array(
+                    $form['cart']['items'][$item->id]['files']['description']['list'] = array(
                         '#theme' => 'item_list',
                         '#items' => $list,
                     );
 
                     // Reference job   
-                    $form['cart']['items'][$item->id]['description']['refJob'] = array(
+                    $form['cart']['items'][$item->id]['files']['description']['refJob'] = array(
                         '#type' => 'textfield',
                         '#title' => t('Give a reference to this product'),
                         '#maxlength' => 25,
@@ -348,7 +348,7 @@ global $language;
                     
                     // End Reference job
 
-                    $form['cart']['items'][$item->id]['preview'] = array(
+                    $form['cart']['items'][$item->id]['files']['preview'] = array(
                         '#prefix' => '<div class="btns-box"><div class="preview">',
                         '#suffix' => '</div>',
                         '#markup' => l(t('Prévisualiser'), pcdesigntool_preview_url($jobId), array('attributes' => array('target' => 'blank', 'class' => array('previewlink')))),
@@ -360,7 +360,7 @@ global $language;
                         $themequickupload = 'designtoolproflink';
                     }
 
-                    $form['cart']['items'][$item->id]['proflink'] = array(
+                    $form['cart']['items'][$item->id]['files']['proflink'] = array(
                         '#prefix' => '<div class="preview">',
                         '#suffix' => '</div>',
                         '#theme' => $themequickupload,
@@ -378,7 +378,7 @@ global $language;
                         '#attributes' => array('class' => array('designtool', 'iframe', 'reupload')),
                     );
 
-                    $form['cart']['items'][$item->id]['remove'] = array(
+                    $form['cart']['items'][$item->id]['files']['remove'] = array(
                         '#prefix' => '<div class="preview">',
                         '#suffix' => '</div></div>',
                         '#type' => 'submit',
@@ -390,18 +390,18 @@ global $language;
 
                     // Controle professionnelle files
                     if ($item->fileCheck) {
-                        $form['cart']['items'][$item->id]['control'] = array(
+                        $form['cart']['items'][$item->id]['files']['control'] = array(
                             '#type' => 'container',
                             '#attributes' => array('class' => array('control-block')),
                         );
-                        $form['cart']['items'][$item->id]['control']['text'] = array(
+                        $form['cart']['items'][$item->id]['files']['control']['text'] = array(
                             '#prefix' => '<div class="text">',
                             '#suffix' => '</div>',
                             '#markup' => '<h3>' . t('Control professional') . ' ' . $item->quantity . ' ' . t('pcs.') . ' ' . $product->name . ' ' . $firstConfig->name . '</h3><span class="price"><span class="value">&nbsp;<span class="whole">4</span><span class="decimalpoint">,</span><span class="decimals">99</span><span class="currency">€</span></span></span>',
                         );
 
 
-                        $form['cart']['items'][$item->id]['control']['control_prof'] = array(
+                        $form['cart']['items'][$item->id]['files']['control']['control_prof'] = array(
                             '#type' => 'link',
                             '#title' => '',
                             '#attributes' => array('class' => array('removecontrol', 'noreplace'), 'rel' => $item->id),
@@ -409,15 +409,22 @@ global $language;
                         );
                     }
                 }
-            } else {
-                $form['cart']['items'][$item->id]['description'] = array(
+		$fileExist = true;
+            }
+		$classToAdd = ($fileExist) ? 'hideContainer' : '';
+	        $form['cart']['items'][$item->id]['ready'] = array(
+                    '#type' => 'container',
+                    '#attributes' => array('class' => array('item-hide-'.$item->id.' item job '.$classToAdd, 'clearfix')),
+                    '#weight' => $weight,
+                );
+                $form['cart']['items'][$item->id]['ready']['description'] = array(
                     '#prefix' => '<div class="preview2">',
                     '#suffix' => '</div>',
                     '#type' => 'container',
                     '#attributes' => array('class' => array('description')),
                 );
 
-                $form['cart']['items'][$item->id]['description']['title'] = array(
+                $form['cart']['items'][$item->id]['ready']['description']['title'] = array(
                     '#prefix' => '<h3>',
                     '#suffix' => '</h3>',
                     '#markup' => $item->quantity . ' ' . t('pcs.') . ' ' . $product->name . ' ' . $firstConfig->name,
@@ -425,18 +432,18 @@ global $language;
 
                 if ($itemValue < $item->originPrice) {
                     $promoPrice = '<del>&euro; ' . $item->originPrice . '</del>';
-                    $form['cart']['items'][$item->id]['description']['promoPrice'] = array(
+                    $form['cart']['items'][$item->id]['ready']['description']['promoPrice'] = array(
                         '#prefix' => '<div class="origin-price">',
                         '#suffix' => '</div>',
                         '#markup' => $promoPrice,
                     );
                 }
-                $form['cart']['items'][$item->id]['description']['price'] = array(
+                $form['cart']['items'][$item->id]['ready']['description']['price'] = array(
                     '#theme' => 'price',
                     '#value' => $itemValue,
                 );
 
-                $form['cart']['items'][$item->id]['description']['list'] = array(
+                $form['cart']['items'][$item->id]['ready']['description']['list'] = array(
                     '#theme' => 'item_list',
                     '#items' => $list,
                 );
@@ -445,24 +452,24 @@ global $language;
                 $listProductId .= $item->configuration->productId . ',';
 
                 if (count($templates->items)) {
-                    $_SESSION['cart']['items'][$item->id]['template'] = $template->id;
+                    $_SESSION['cart']['items'][$item->id]['ready']['template'] = $template->id;
                     if ($ProdactHasTemplates) {
-                        $form['cart']['items'][$item->id]['product-container'] = array(
+                        $form['cart']['items'][$item->id]['ready']['product-container'] = array(
                             '#prefix' => '<div class="prodactTemplates">',
                             '#suffix' => '</div>',
                         );
                     } else {
-                        $form['cart']['items'][$item->id]['product-container'] = array(
+                        $form['cart']['items'][$item->id]['ready']['product-container'] = array(
                             '#prefix' => '<div class="prodactTemplates"><div class="prodactHasTemplates">',
                             '#suffix' => '</div></div>',
                         );
                     }
 
-                    $form['cart']['items'][$item->id]['product-container']['product-items'] = array(
+                    $form['cart']['items'][$item->id]['ready']['product-container']['product-items'] = array(
                         '#markup' => '<h2 class="title-chose">' . t('choisissez une optios de mise-en-page') . '</h2>',
                     );
 
-                    $form['cart']['items'][$item->id]['product-container']['proflink'] = array(
+                    $form['cart']['items'][$item->id]['ready']['product-container']['proflink'] = array(
                         '#prefix' => '<div class="poll-form first">',
                         '#suffix' => '<p class="txto">' . t('télécharger vos fichiers') . '</p></div> ',
                         '#content' => array('#markup' => '<div class="text">' . t("j'ai déjà mon lay-out") . '</div>',),
@@ -479,7 +486,7 @@ global $language;
                         '#attributes' => array('class' => array('designtool', 'iframe')),
                     );
 
-                    $form['cart']['items'][$item->id]['product-container']['upload']['link'] = array(
+                    $form['cart']['items'][$item->id]['ready']['product-container']['upload']['link'] = array(
                         '#prefix' => '<div class="poll-form ">',
                         '#suffix' => '<p class="txto">' . t('utilisez le designtool') . '</p></div> ',
                         '#theme' => 'designtoollink',
@@ -506,7 +513,7 @@ global $language;
 
                     if ($ProdactHasTemplates) {
 
-                        $form['cart']['items'][$item->id]['product-container']['modele'] = array(
+                        $form['cart']['items'][$item->id]['ready']['product-container']['modele'] = array(
                             '#prefix' => '<div class="poll-form">',
                             '#suffix' => '<p class="txto">' . t('choisissez parmis 6000 créas') . '</p></div>',
                             '#theme' => 'designtoolModele',
@@ -532,15 +539,25 @@ global $language;
                         );
                     }
                     $checkableItems[] = $item->id;
-                }
             }
             if (null == $offerId) {
-                $form['cart']['items'][$item->id]['description']['actions'] = array(
+                $form['cart']['items'][$item->id]['files']['description']['actions'] = array(
                     '#type' => 'container',
                     '#attributes' => array('class' => array('clearfix')),
                 );
 
-                $form['cart']['items'][$item->id]['description']['actions']['remove'] = array(
+                $form['cart']['items'][$item->id]['files']['description']['actions']['remove'] = array(
+                    '#markup' => '<span class="removecart"></span>',
+                    '#prefix' => '<div class="items_actions"><div class="itemID" style=" display: none">' . $item->id . '</div>',
+                    '#suffix' => '</div>',
+                );
+
+		$form['cart']['items'][$item->id]['ready']['description']['actions'] = array(
+                    '#type' => 'container',
+                    '#attributes' => array('class' => array('clearfix')),
+                );
+
+                $form['cart']['items'][$item->id]['ready']['description']['actions']['remove'] = array(
                     '#markup' => '<span class="removecart"></span>',
                     '#prefix' => '<div class="items_actions"><div class="itemID" style=" display: none">' . $item->id . '</div>',
                     '#suffix' => '</div>',

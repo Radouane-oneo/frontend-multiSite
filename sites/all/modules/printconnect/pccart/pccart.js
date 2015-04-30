@@ -24,14 +24,30 @@
    });
 
    $('.deletedesign').click(function(e){
-	$.post(Drupal.settings.basePath+'/designdelete/'+$(this).attr('itemFileId').val());
+	$('.item-hide-'+$(this).attr('itemFileId')).fadeIn("slow");
+	$(this).parents('.job').fadeOut("slow"); 		
+	$.post('cart/deletedesign/'+$(this).attr('itemFileId'),{},function(){
+	   $(this).parents('.job').remove(); 
+	});
+	if ($('.fotolia-items-'+$(this).attr('itemFileId')).length < $('.fotolia-items').length) {
+            $('.fotolia-items-'+$(this).attr('itemFileId')).parent().remove();
+        } else if ($('.fotolia-items-'+$(this).attr('itemFileId')).length == $('.fotolia-items').length) {
+            $('.fotolia-items-'+$(this).attr('itemFileId')).parents('fieldset').remove();
+        }
+	$('.item-'+$(this).attr('itemFileId')).remove();
+	PriceCallback();	
+	return false;
+	/*$.post(Drupal.settings.basePath+'/designdelete/'+$(this).attr('itemFileId').val());
 	PriceCallback();
-        return false;
+        return false;*/
    });
    
     $('table.targetPrice tr').each(function(){
 	if ($(this).find('input.targetPrice').is(":checked") && $(this).find('.storeLink').length > 0){
 		$(this).find('.storeLink').show();
+	}
+	if ($(this).find('input.targetPrice').is(":checked")) {
+	    $.post('cart/'+$(this).find('input.targetPrice').val()+'/submit');
 	}
 	
    });
@@ -82,6 +98,7 @@
 	    $('.cartCounter').attr('number', number);
 	    $('.cartCounter span').html(baseText+ ' ('+number+')');
 	    if (number <= 0) {
+		$('.jsDiscount').remove();
 		window.location.replace('/products/');
 	    }
             PriceCallback();

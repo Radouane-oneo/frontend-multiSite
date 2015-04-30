@@ -98,6 +98,7 @@
 	    $('.cartCounter').attr('number', number);
 	    $('.cartCounter span').html(baseText+ ' ('+number+')');
 	    if (number <= 0) {
+		$('.jsDiscount').remove();
 		window.location.replace('/products/');
 	    }
             PriceCallback();

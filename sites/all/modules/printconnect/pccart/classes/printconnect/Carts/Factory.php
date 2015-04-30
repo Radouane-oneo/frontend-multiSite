@@ -329,13 +329,18 @@ use printconnect\Customers;
 
     public static function DeleteItem($id, Cart $cart) {
       $cartItems = $cart->orderItems;
+      $counter = 0; 
       foreach($cartItems as $key => $job) {
+	  if($job->discountId == null) {
+		$counter++;
+	   }
           if ($job->id == $id) {
               unset($cartItems[$key]);
-              break;
           }
       }
-
+      if ($counter <= 1) {
+	self::Clear();
+      }
       $cart->orderItems = array_values($cartItems);
       Dal::updateElement($cart, 'cart', 
         array('id' => $cart->id), 

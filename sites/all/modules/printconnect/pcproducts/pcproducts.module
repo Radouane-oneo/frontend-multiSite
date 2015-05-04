@@ -102,7 +102,18 @@ function pcproducts_menu() {
               'page callback' => 'callback_shippingdate_ajax',
               //'page arguments' => array(1),
               'access arguments' => array('access content')
-          );          
+          );
+
+          $items["products/getjson/%"] = array(
+              'title' => 'Configuration',
+              'title callback' => '_pcproducts_getproductname',
+              'title arguments' => array(1),
+              'description' => t('Product'),
+              'page callback' => 'callback_getjson_ajax',
+              'page arguments' => array(1,2),
+              'access arguments' => array('access content')
+          );
+          
           $items["products/%"] = array(
               'title' => 'Configuration',
               'title callback' => '_pcproducts_getproductname',
@@ -590,6 +601,22 @@ function getFromServer($filename) {
     return file_get_contents($url);
 }
 
+function callback_getjson_ajax($action, $productId) {
+    global $language;
+
+    $siteName = variable_get('pc_site_name', '');
+    $jsonPath = variable_get('pc_json_path', '');
+    $filename = $siteName . '-' . strtolower($language->native) . '-' . $productId;
+    $filePath = $jsonPath . $filename . '.json';
+    if(!file_exists($filePath)) {
+        $jsonFile = getFromServer($filename);
+    }else {
+        $jsonFile = file_get_contents($filePath);
+    }	
+
+    echo $jsonFile;exit(0);
+}
+
 function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = FALSE, $edit = FALSE) {
     global $language;
     global $user;
@@ -616,29 +643,13 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
 
     //drupal_set_breadcrumb(array(l(t('Home'), '<front>'), l(t('Products'), 'products')));
 
-    $siteName = variable_get('pc_site_name', '');
-    $jsonPath = variable_get('pc_json_path', '');
-
-    $filename = $siteName . '-' . strtolower($language->native) . '-' . $productId;
-    $filePath = $jsonPath . $filename . '.json';
-
-    if(!file_exists($filePath)) {
-        $jsonFile = getFromServer($filename);
-        if(!$jsonFile) {
-          require_once dirname(__FILE__) . '/pcproducts.config.inc';
-          return drupal_render(drupal_get_form('pcproducts_config_form', $productId));
-        }
-    }else {
-        $jsonFile = file_get_contents($filePath);
-    }
-
     $labels = getLabels($edit);
 
     $isAdmin = ($user->uid) ? '1' : '0';
 
     $script = "<script type='text/javascript'>
-        var GlobalLabels = ". json_encode($labels) .";
-        var JsonFileGroups = ". $jsonFile .";
+        var GlobalProductId = ". $productId .";
+	var GlobalLabels = ". json_encode($labels) .";
         var GlobalIsAdmin = ". $isAdmin .";
         var GlobalDefaultItems = ".json_encode($gItems).";
         var GlobalDefaultOptions = ".json_encode($gOtions).";

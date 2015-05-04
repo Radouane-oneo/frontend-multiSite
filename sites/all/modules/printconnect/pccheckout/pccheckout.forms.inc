@@ -824,21 +824,6 @@ function pccheckout_invoiceanddelivery_form_shipping_submit($form, &$form_state)
 }
 
 
-function pccheckout_invoiceanddelivery_form_validate($form, &$form_state) {
-
-    pccheckout_invoiceanddelivery_form_invoice_validate($form, $form_state);
-
-    switch ($form_state['storage']['shippingType']) {
-        case 'shippingTypeStore':
-        case 'shippingTypePrinter':
-        case 'shippingTypeBpostPickupPoint':
-        case 'shippingTypeStoreInAntwerpen':
-        break;
-        default:
-
-            pccheckout_invoiceanddelivery_form_shipping_validate($form, $form_state);
-    }
-}
 
 function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
     $billingaccoutcustomer = \printconnect\Customers\Factory::Current();
@@ -857,9 +842,9 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
         if ($form_state['values']['shipping']['neutral']['check'] == 1) {
             $isNeutralActive = 1;
         }
+        
         $cart->neutralShipping = $isNeutralActive;
         if ($billingAccount->discountPercentage != null && count($cart->discountItems) == 0) {
-
             $discount = \printconnect\Carts\Discounts\Factory::Create($cart->id, $billingAccount->discountCode);
             \printconnect\Carts\Discounts\Factory::Save($discount);
         }
@@ -869,11 +854,13 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
             }
         }
     }
+    
+    
     $contactName = $form_state['values']['shipping']['detail']['contact'];
     $email = $form_state['values']['shipping']['detail']['email'];
     $phone = $form_state['values']['shipping']['detail']['phone'];
 
-    switch ($form_state['storage']['shippingType']) {
+    switch ($form_state['storage']['shippingType']){
        case 'shippingTypeStore':
        case 'shippingTypePrinter':
        case 'shippingTypeStoreInAntwerpen':
@@ -913,7 +900,6 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
             }
             break;
         default:
-
             if (isset($form_state['storage']['shipping']['address'])) {
                 $address = $form_state['storage']['shipping']['address'];
                 \printconnect\Customers\Addresses\Factory::Save($address);
@@ -921,6 +907,7 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
                 $cart = $form_state['storage']['cart'];
 
                 $cart->shipping_address = $address->id;
+
                 $cart->pickuppoint = FALSE;
             }
     }
@@ -933,11 +920,6 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
   }
     drupal_goto('checkout/payment');
     
-//    if ($cart->allFilesUploaded) {
-//        drupal_goto('checkout/payment');
-//    } else {
-//        drupal_goto('checkout/upload');
-//    }
 }
 
 
@@ -1243,6 +1225,11 @@ function pccheckout_upload_form_submit($form, &$form_state) {
     drupal_goto('checkout/payment');
 }
 
+
+function CalculateCostamount($amount,$rate,$cost) {
+      return (($amount * ($rate)) + $cost);
+    }
+
 function pccheckout_payment_form($form, &$form_state) {
     _pccustomers_ensureloggedin();
     $customer = \printconnect\Customers\Factory::Current();
@@ -1253,11 +1240,21 @@ function pccheckout_payment_form($form, &$form_state) {
     drupal_set_message(t('Please check your order because no invoice address related with it'), 'error');
     }
     $paymentMethods = \printconnect\PaymentMethods\Factory::GetAll();
-    foreach ($paymentMethods as $paymentMethod) {
+    
+        $form['payment']['hidden'] = array(
+            '#prefix' => '<div id="hiddenPricesPayment">',
+            '#suffix' => '</div>',
+        );
+    
+        $subTotalWithoutPayment = $cart->subTotalAmountWithoutPayment;
+        foreach ($paymentMethods as $paymentMethod) {
         $form_state['storage']['paymentmethods'][$paymentMethod->id] = $paymentMethod;
-    }
+        $cost = CalculateCostamount($subTotalWithoutPayment,$paymentMethod->rate,$paymentMethod->cost);
+        $form['payment']['hidden'][$paymentMethod->id] = array(
+            '#markup'=>'<input type="hidden" class="paymentMethod_'.$paymentMethod->id.'" PaymentName="'.$paymentMethod->paymentMethod->tag.'" value="'.round($cost, 2).'" descriptionTag="'.$paymentMethod->paymentMethod->descriptionTag.'">',
+         );
+        }
 
-    $methods = array();
 
     $form['payment']['method'] = array(
         '#type' => 'fieldset',
@@ -1271,16 +1268,16 @@ function pccheckout_payment_form($form, &$form_state) {
         '#multiple' => FALSE,
         '#options' => $methods,
         '#header' => array('image' => '', 'name' => '', 'cost' => ''),
-        '#ajax' => array(
-            'callback' => 'pccheckout_payment_form_callback',
-            'wrapper' => 'pccheckout-payment-form',
-            'method' => 'replace',
-            'effect' => 'fade',
-            'progress' => array(
-                'message' => NULL,
-                'type' => NULL,
-            ),
-        ),
+//        '#ajax' => array(
+//            'callback' => 'pccheckout_payment_form_callback',
+//            'wrapper' => 'pccheckout-payment-form',
+//            'method' => 'replace',
+//            'effect' => 'fade',
+//            'progress' => array(
+//                'message' => NULL,
+//                'type' => NULL,
+//            ),
+//        ),
         '#required' => FALSE,
         '#attributes' => array('class' => array('grid', 'clearfix', 'rows-' . count($methods), 'payment-methods-table')),
         '#default_value' => $cart->payment_method,
@@ -1295,7 +1292,7 @@ function pccheckout_payment_form($form, &$form_state) {
     );
 
   if ($cart->totalAmount <= 0 || (isset($form_state['values']['payment']['credit']) &&
-          $form_state['values']['payment']['credit']['use'] == 'yes')) {
+     $form_state['values']['payment']['credit']['use'] == 'yes')) {
         hide($form['payment']['method']);
     }
 
@@ -1315,23 +1312,13 @@ function pccheckout_payment_form($form, &$form_state) {
         '#weight' => 200,
     );
 
-    if($_SESSION['shop_vat'] != 0){
-        $form['actions']['price'] = array(
-            '#id' => 'price',
-            '#title' => t('Total incl. VAT'),
-            '#theme' => 'price',
-            '#value' => $cart->totalAmount,
-            '#attributes' => array('id' => 'price'),
-        );
-    } else{
-        $form['actions']['price'] = array(
+    $form['actions']['price'] = array(
         '#id' => 'price',
         '#title' => t('Total excl. Vat'),
         '#theme' => 'price',
         '#value' => $cart->totalAmount,
         '#attributes' => array('id' => 'price'),
     );
-    }
 
     $form['actions']['submit'] = array(
         '#type' => 'submit',
@@ -1356,6 +1343,9 @@ function pccheckout_payment_form($form, &$form_state) {
 }
 
 function _pccheckout_payment_form_build_overview($cart) {
+    
+    $elementRow =array(); 
+    
     $discounts = FALSE;
     if ($cart && $cart->isFilled) {
         $rows = array();
@@ -1369,7 +1359,7 @@ function _pccheckout_payment_form_build_overview($cart) {
                     $itemValue += $option->price;
                 }
             }
-
+        $elementRow[]= $itemValue;
             if($itemValue < $item->originPrice) {
                 $rows[] = array(
                     'data' => array(
@@ -1378,6 +1368,7 @@ function _pccheckout_payment_form_build_overview($cart) {
                     ),
                     'class' => array('item'),
                 );
+         
             }else {
                 $rows[] = array(
                         'data' => array(
@@ -1399,6 +1390,7 @@ function _pccheckout_payment_form_build_overview($cart) {
                     ),
                     'class' => array('orderItemsAdditional'),
                 );
+                $elementRow[]= $cartItem->price;
             }
         }
 
@@ -1412,6 +1404,7 @@ function _pccheckout_payment_form_build_overview($cart) {
                     'class' => array('orderItemsAdditional'),
                 );
             }
+                  $elementRow[]= $item->price;
         }
 
         if ($cart->discountItems) {
@@ -1424,6 +1417,7 @@ function _pccheckout_payment_form_build_overview($cart) {
                     'class' => array('discount'),
                 );
             }
+            $elementRow[]= $discount->price;
         }
         foreach ($cart->orderItems as $item) {
             $configs = $item->configuration->config;
@@ -1436,19 +1430,25 @@ function _pccheckout_payment_form_build_overview($cart) {
                     ),
                 );
             }
+               $elementRow[]= $item->fileCheck->price;
         }
+        
         $type = \printconnect\Shipping\Types\Factory::Get($cart->orderItemShipping->shippingTypeResellerShop);
         $rows[] = array(
             'data' => array(
                 '<strong>'. $type->shippingType->tag . '</strong>',
                 theme('price', array('value' => $cart->orderItemShipping->price, 'free' => TRUE)),
             ),
+           
         );
+       
+        $elementRow[] =  $cart->orderItemShipping->price;
+      
         if (count($cart->orderItemsPayment)) {
             foreach ($cart->orderItemsPayment as $payment) {
                 $rows[] = array(
                     'data' => array(
-                        '<strong>' . $payment->description . '</strong>',
+                        '<span id="orderItemsPayment"><strong>' . $payment->description . '</strong><span>',
                         theme('price', array('value' => $payment->price, 'free' => TRUE)),
                     ),
                 );
@@ -1463,6 +1463,9 @@ function _pccheckout_payment_form_build_overview($cart) {
                     theme('price', array('value' => $cart->orderItemFileCheck->convertedPrice, 'free' => TRUE)),
                 ),
             );
+            
+                    
+        $elementRow[] =  $cart->orderItemFileCheck->convertedPrice;
         }
         if ($_SESSION['shop_vat'] != 0) {
             $rows[] = array(
@@ -1472,7 +1475,9 @@ function _pccheckout_payment_form_build_overview($cart) {
                 ),
                 'class' => array('total-excl-vat'),
             );
+        
         }
+
 
         $build = array(
             '#type' => 'fieldset',
@@ -1480,6 +1485,17 @@ function _pccheckout_payment_form_build_overview($cart) {
             '#title' => t('Order overview'),
         );
 
+        
+         $build['CalculePrice'] = array(
+            '#prefix' => '<div id="CalculePrice">',
+            '#suffix' => '</div>',
+        );
+        foreach ($elementRow as $key => $value) {
+          $build['CalculePrice']['hidden'][$key] = array(
+            '#markup'=>'<input type="hidden"  value="'.round($value, 2).'">',
+         );  
+       }
+         
         $build['table'] = array(
             '#theme' => 'table',
             '#header' => array(
@@ -1502,26 +1518,10 @@ function pccheckout_payment_form_callback($form, &$form_state) {
     } else {
         $cart->payment_method = 0;
     }
-    /*
-      $account = \printconnect\Customers\Credit\Factory::Get($customer, FALSE);
+   
 
-      $defaultAmount = min($cart->subTotalAmount, $account->credits);
-
-
-      if ($account && $account->credits > 0 && $form_state['values']['credit']['use'] == 'yes') {
-      $cart->storeCredit = $defaultAmount;
-      $cart->payment_method = 0;
-      } else {
-      $cart->storeCredit = 0;
-      }
-     */
-    updateTvaCart($cart, $_SESSION['shop_vat']);
-    try {
-    $cart = \printconnect\Carts\Factory::Save($cart);
-    } catch(Exception $ex) {
-    
-    }
-    $cart = \printconnect\Carts\Factory::Current(FALSE);
+  
+ $cart = \printconnect\Carts\Factory::Current(FALSE);
   if ($cart->subTotalAmount > 0) {
     $paymentMethods = \printconnect\PaymentMethods\Factory::GetAll();
     $subTotalWithoutPayment = $cart->totalAmountWithoutPayment;
@@ -1531,7 +1531,7 @@ function pccheckout_payment_form_callback($form, &$form_state) {
     }
     $form['method']['#required'] = TRUE;
     show($form['payment']['method']);
-  } else {
+  } else{
     $form['method']['#required'] = FALSE;
     hide($form['payment']['method']);
   }

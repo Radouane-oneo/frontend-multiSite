@@ -409,8 +409,6 @@ function pccart_block_view($delta = '') {
 }
 
 
-
-
 function pccart_form_pcproducts_config_form_alter(&$form, &$form_state, $form_id) {
     
   global $pccart_editItemId;
@@ -1114,7 +1112,6 @@ function pccart_loggedin($customerId) {
 }
 
 function pccart_loggedout() {
-    
   try {
     $cart = Factory::Current();
     if ($cart) {
@@ -1124,6 +1121,5 @@ function pccart_loggedout() {
     }
   } catch (\Exception $ex) {
   }
-  
 }
 

@@ -824,21 +824,6 @@ function pccheckout_invoiceanddelivery_form_shipping_submit($form, &$form_state)
 }
 
 
-//function pccheckout_invoiceanddelivery_form_validate($form, &$form_state) {
-//
-//    pccheckout_invoiceanddelivery_form_invoice_validate($form, $form_state);
-//
-//    switch ($form_state['storage']['shippingType']) {
-//        case 'shippingTypeStore':
-//        case 'shippingTypePrinter':
-//        case 'shippingTypeBpostPickupPoint':
-//        case 'shippingTypeStoreInAntwerpen':
-//        break;
-//        default:
-//
-//            pccheckout_invoiceanddelivery_form_shipping_validate($form, $form_state);
-//    }
-//}
 
 function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
     $billingaccoutcustomer = \printconnect\Customers\Factory::Current();
@@ -857,6 +842,7 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
         if ($form_state['values']['shipping']['neutral']['check'] == 1) {
             $isNeutralActive = 1;
         }
+        
         $cart->neutralShipping = $isNeutralActive;
         if ($billingAccount->discountPercentage != null && count($cart->discountItems) == 0) {
             $discount = \printconnect\Carts\Discounts\Factory::Create($cart->id, $billingAccount->discountCode);
@@ -934,11 +920,6 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
   }
     drupal_goto('checkout/payment');
     
-//    if ($cart->allFilesUploaded) {
-//        drupal_goto('checkout/payment');
-//    } else {
-//        drupal_goto('checkout/upload');
-//    }
 }
 
 
@@ -1363,7 +1344,6 @@ function pccheckout_payment_form($form, &$form_state) {
 
 function _pccheckout_payment_form_build_overview($cart) {
     
- 
     $elementRow =array(); 
     
     $discounts = FALSE;

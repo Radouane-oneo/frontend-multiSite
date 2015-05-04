@@ -419,7 +419,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 }
 .page-checkout .storcomande{
   float: left !important;
-  width: 46%!important;
+   width: 255%!important;
   margin-top: -5px;
 }
 #pccheckout-invoiceanddelivery-form .form-item-shipping-detail-current-company{

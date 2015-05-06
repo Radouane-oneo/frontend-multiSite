@@ -289,7 +289,7 @@ function pccheckout_personal_form_submit($form, &$form_state) {
 
 function pccheckout_invoiceanddelivery_form($form, &$form_state) {
     _pccustomers_ensureloggedin();
-    $cart = \printconnect\Carts\Factory::Current(TRUE);
+    $cart = \printconnect\Carts\Factory::Current();
     if (isset($_SESSION['shipping']['object']) && !isset($cart->orderItemShipping)) {
 	\printconnect\Carts\Factory::saveInCache($cart, array(
             'orderItemShipping' => $_SESSION['shipping']['object'],
@@ -304,9 +304,9 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
     
     $form_state['storage']['shippingType'] = FALSE;
     foreach ($shippingTypes as $type) {
-//        if (!isset($cart->orderItemShipping)) {
-//            drupal_goto('cart');
-//        }
+        if (!isset($cart->orderItemShipping)) {
+            drupal_goto('cart');
+        }
         if ($cart->orderItemShipping->shippingTypeResellerShop == $type->id) {
             $form_state['storage']['shippingType'] = $type->shippingType->type;
             $shippinginfo = $type;
@@ -814,7 +814,7 @@ function pccheckout_invoiceanddelivery_form_shipping_submit($form, &$form_state)
         $address = $form_state['storage']['shipping']['address'];
         \printconnect\Customers\Addresses\Factory::Save($address);
 
-	$cart = \printconnect\Carts\Factory::Current(TRUE);
+	$cart = \printconnect\Carts\Factory::Current();
         $cart->shipping_address = $address->id;
         \printconnect\Carts\Factory::Save($cart);
         \printconnect\Carts\Factory::saveInCache($cart, array(
@@ -1246,12 +1246,13 @@ function CalculateCostamount($amount,$rate,$cost) {
 function pccheckout_payment_form($form, &$form_state) {
     _pccustomers_ensureloggedin();
     $customer = \printconnect\Customers\Factory::Current();
-    $cart = \printconnect\Carts\Factory::Current(FALSE);
-    \printconnect\Carts\Factory::Save($cart);
-     if(!isset($cart->billingAccount) or empty($cart->billingAccount)){
+    $cart = \printconnect\Carts\Factory::Current();
+ 
+    if(!isset($cart->billingAccount) or empty($cart->billingAccount)){
     drupal_goto('checkout/invoiceanddelivery');
     drupal_set_message(t('Please check your order because no invoice address related with it'), 'error');
     }
+    
     $paymentMethods = \printconnect\PaymentMethods\Factory::GetAll();
     
         $form['payment']['hidden'] = array(

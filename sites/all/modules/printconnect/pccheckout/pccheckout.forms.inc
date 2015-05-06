@@ -477,10 +477,16 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
     }
   
     
-    if($shippinginfo->id == 204){
+    if($form_state['storage']['shippingType'] == 'shippingTypeStore') {
+        
         $form['summary']['shipping']['selected'] = array(
-            '#theme' => 'addressshippingTypes',
-            '#addressshippingTypes' => $shippinginfo,
+            '#markup' => '<div id="detail">'
+            . '<h6></h6>'
+            . '<div class="address"></div>'
+            . '<div class="phone"></div>'
+            . '<div class="fax"></div>'
+            . '<div class="email"></div>'
+            . '</div>',
         );
     }else{
       $form['summary']['shipping']['selected'] = array(

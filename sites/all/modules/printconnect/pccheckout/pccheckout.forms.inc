@@ -824,11 +824,29 @@ function pccheckout_invoiceanddelivery_form_shipping_submit($form, &$form_state)
 }
 
 
+function pccheckout_invoiceanddelivery_form_validate($form, &$form_state) {
+
+    pccheckout_invoiceanddelivery_form_invoice_validate($form, $form_state);
+
+    switch ($form_state['storage']['shippingType']) {
+        case 'shippingTypeStore':
+        case 'shippingTypePrinter':
+        case 'shippingTypeBpostPickupPoint':
+        case 'shippingTypeStoreInAntwerpen':
+        break;
+        default:
+
+            pccheckout_invoiceanddelivery_form_shipping_validate($form, $form_state);
+    }
+}
+
 
 function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
     $billingaccoutcustomer = \printconnect\Customers\Factory::Current();
     $cart = $form_state['storage']['cart'];
     $billingAccount = $form_state['storage']['$billingAccount'];
+    
+    
     if (isset($form_state['storage']['invoice']['address'])) {
         $address = $form_state['storage']['invoice']['address'];
         if (is_null($billingaccoutcustomer->billingAccount->id)) {
@@ -848,13 +866,8 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
             $discount = \printconnect\Carts\Discounts\Factory::Create($cart->id, $billingAccount->discountCode);
             \printconnect\Carts\Discounts\Factory::Save($discount);
         }
-        if ($_SESSION['oldba'] != $billingAccount->id) {
-            if (isset($_SESSION['discount_' . $_SESSION['oldba'] . '_' . $cart->id])) {
-                \printconnect\Carts\Discounts\Factory::Delete($cart->id, $_SESSION['discount_' . $_SESSION['oldba'] . '_' . $cart->id]);
-            }
-        }
+
     }
-    
     
     $contactName = $form_state['values']['shipping']['detail']['contact'];
     $email = $form_state['values']['shipping']['detail']['email'];
@@ -913,7 +926,7 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
     }
 
     \printconnect\Carts\Factory::Save($cart);
-       
+
   if(!isset($cart->billingAccount) or empty($cart->billingAccount)){
         $billingAccount = $form_state['storage']['invoice']['address'];
         AttacheBillingAccount($cart, $billingAccount->id , $form_state);
@@ -1233,12 +1246,13 @@ function CalculateCostamount($amount,$rate,$cost) {
 function pccheckout_payment_form($form, &$form_state) {
     _pccustomers_ensureloggedin();
     $customer = \printconnect\Customers\Factory::Current();
-    $cart = \printconnect\Carts\Factory::Current(FALSE);
-    \printconnect\Carts\Factory::Save($cart);
-     if(!isset($cart->billingAccount) or empty($cart->billingAccount)){
+    $cart = \printconnect\Carts\Factory::Current();
+ 
+    if(!isset($cart->billingAccount) or empty($cart->billingAccount)){
     drupal_goto('checkout/invoiceanddelivery');
     drupal_set_message(t('Please check your order because no invoice address related with it'), 'error');
     }
+    
     $paymentMethods = \printconnect\PaymentMethods\Factory::GetAll();
     
         $form['payment']['hidden'] = array(

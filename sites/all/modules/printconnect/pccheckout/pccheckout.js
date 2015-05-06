@@ -1,11 +1,12 @@
 (function ($) {
 
+
     $(".button_null_address_vat").live("click",function(){
           $('#light').hide();
              $('#fademe').hide();
             $("input[name='invoice[address][current][vatNumber][number]']").val(''); 
     });
-
+    
   $("#isUserCompany").live('click', function(){
       if(this.checked){
           $(".form-item-company, .form-item-vatNumber, .form-item-invoice-address-current-company, .form-item-invoice-address-current-vatNumber").show();
@@ -18,8 +19,10 @@
   });
 
   $(document).ready(function(){
-    $(".selectBilling2").select2();
-      if(typeof $("#isUserCompany")[0] != "undefined"){
+   jQuery(".selectBilling2").select2();
+   jQuery(".selectStyle").select2();
+   
+        if(typeof $("#isUserCompany")[0] != "undefined"){
           if($("#companyInput").val() != ''){
               $("#isUserCompany")[0].checked = true;
               $(".form-item-company, .form-item-vatNumber, .form-item-invoice-address-current-company, .form-item-invoice-address-current-vatNumber").show();
@@ -27,7 +30,16 @@
               $("#isUserCompany")[0].checked = false;
               $(".form-item-company, .form-item-vatNumber, .form-item-invoice-address-current-company, .form-item-invoice-address-current-vatNumber").hide();
           }
-      }
+       }
+
+      /***********Script pour remplacer fieldset par div***********/
+            
+            var fieldsetContent = $("#invoice-address > legend").html();
+            $("#invoice-address > legend").replaceWith("<div class='legend legend2'>" + fieldsetContent + "</div>");
+            var fieldsetContent = $("#shipping-address > legend").html();
+            $("#shipping-address > legend").replaceWith("<div class='legend legend1'>" + fieldsetContent + "</div>");
+      
+
   });
   
   $.fn.checkoutOverlay = function(overlay) {
@@ -60,6 +72,22 @@
 
     },
     attach: function(context, settings) {
+       // si je les laisse il tourne sans arret
+       // $(".selectBilling2").select2();
+       // $(".selectStyle").select2();
+//       $("#invoice-address input[type='submit']").unbind('click');
+//       $("#invoice-address input[type='submit']").next().remove();
+//       var disabled = ($("input[name='invoice[address][current][vatNumber][number]']").val()!="");
+//       if(disabled) {
+//           $("#invoice-address input:not(input[type='submit']),#invoice-address select:not(.selectBilling2)").attr("disabled","disabled");
+//           $("#invoice-address input[type='submit']").click(function(){
+//               $(this).next().remove();
+//              var message = $("input[name='invoice[address][actions][message]']").val();
+//               $(this).after("<span class='messageinvoice'>"+message+"</span>");
+//               
+//              return false;
+//           })
+//        }
     if($("#pccheckout-payment-form table ")){
           var width = (662/$("#pccheckout-payment-form  table.payment-methods-table tbody tr").length)-21.2;
          // var width = 122.4;
@@ -91,20 +119,20 @@
     $(".headpopin .closeme").live('click', function(){
     $('#popup_overlay.popin_overlay').css('display', 'none');
     });
-       jQuery('#pccheckout-invoiceanddelivery-form fieldset.tohiding legend').hide();
-       jQuery('#pccheckout-invoiceanddelivery-form fieldset.tohiding div').hide();
+       jQuery('#pccheckout-invoiceanddelivery-form fieldset.tohiding').hide();
+       //jQuery('#pccheckout-invoiceanddelivery-form fieldset.tohiding div').hide();
        var hash = location.hash;
        if(hash!=""){
-        jQuery("#pccheckout-invoiceanddelivery-form fieldset.tohiding" + hash + " legend").show();
-        jQuery("#pccheckout-invoiceanddelivery-form fieldset.tohiding" + hash + " div").show();
+        jQuery("#pccheckout-invoiceanddelivery-form fieldset.tohiding" + hash ).show();
+        //jQuery("#pccheckout-invoiceanddelivery-form fieldset.tohiding" + hash + " div").show();
        }
       $('#pccheckout-invoiceanddelivery-form .summary .toggle').once().click(function(){
         var url = jQuery(this).attr('href');
        var target = url.substring(url.indexOf('#'));
-       jQuery('form fieldset.tohiding legend').hide();
-       jQuery('form fieldset.tohiding div').hide();
-       jQuery(target + " legend").show();
-       jQuery(target + " div").show();
+       jQuery('form fieldset.tohiding').hide();
+       //jQuery('form fieldset.tohiding div').hide();
+       jQuery(target).show();
+       //jQuery(target + " div").show();
        jQuery(".select2-display-none").hide();
       });
 
@@ -459,12 +487,12 @@ function pccheckout_submit_form(form,triggeringElement) {
     type: 'POST',
     url: url,
     data: data,
-    success: function(data){
+    success: function(data){ 
       form.html(jQuery('#' + form.attr('id'), data).html());
       jQuery('#block-pccart-cart').html(jQuery('#block-pccart-cart', data).html());
       Drupal.attachBehaviors(form);
     },
-    complete: function (){
+    complete: function (){ 
       form.css('cursor', 'default');
     }
   });

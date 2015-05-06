@@ -126,9 +126,14 @@ Drupal.behaviors.pccheckout = {
                     if (pricePaiement == 0) {
                         wholevat = decPartvat = 0;
                     }
-                    var contentTr = '<tr class="even"><td class="first-child"><span id="orderItemsPayment"><strong>' + name + '</strong><span></td><td class="last-child"><span class="price"><span class="value"><span class="whole">' + wholevat + '</span><span class="decimalpoint">,</span><span class="decimals">' + decPartvat + '</span>&nbsp;<span class="currency">€</span></span></span></td></tr>';
-                    $('#orderItemsPayment').parents("tr").replaceWith(contentTr);
-
+                   var contentTr = '<tr class="even"><td class="first-child"><span id="orderItemsPayment"><strong>' + name + '</strong><span></td><td class="last-child"><span class="price"><span class="value"><span class="whole">' + wholevat + '</span><span class="decimalpoint">,</span><span class="decimals">' + decPartvat + '</span>&nbsp;<span class="currency">€</span></span></span></td></tr>';
+                   if ($("#orderItemsPayment")[0]){
+                       console.log('1');
+                  $('#orderItemsPayment').parents("tr").replaceWith(contentTr);
+                    } else {
+                  $('.page-checkout-payment #edit-overview').find('.total-excl-vat').before(contentTr);
+                    }
+                    
                     var map = [];
                     var totalprice = 0;
                     $("#pccheckout-payment-form #CalculePrice input").each(function () {
@@ -154,7 +159,6 @@ Drupal.behaviors.pccheckout = {
                     var vatprice = myprice * vat;
                     var total = myprice + vatprice;
                     total = total.toFixed(2) + "";
-                    console.log(total);
                     var wholevat = total.split(".")[0];
                     var decPartvat = total.split(".")[1];
                     var End = '<span id="price" class="price"><label>Total HTVA</label><span class="value"><span class="whole">' + wholevat + '</span><span class="decimalpoint">,</span><span class="decimals">' + decPartvat + '</span>&nbsp;<span class="currency">€</span></span></span>';

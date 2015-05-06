@@ -425,6 +425,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
             if (!$defaultShippingAddress && $address->defaultShipping) {
               $defaultShippingAddress = $address;
               $form_state['storage']['defaultShippingAddress'] = $defaultShippingAddress ? $defaultShippingAddress : FALSE;
+             
             }
         }
        foreach ($mybillingAccounts as $address) {          
@@ -1031,16 +1032,6 @@ function pccheckout_invoiceanddelivery_form_shipping_validate($form, &$form_stat
     $address->firstName = $customer->firstName;
     $address->lastName = $customer->lastName;
     $address->phone = $customer->phone;
-//    if ($addressId == 0) {
-//        $address = \printconnect\Customers\Addresses\Factory::Create();
-//        $address->firstName = $customer->firstName;
-//        $address->lastName = $customer->lastName;
-//        $address->phone = $customer->phone;
-//    } else {
-//        $address = \printconnect\Customers\Addresses\Factory::Get($addressId);
-//        $address->EnsureLoaded();
-//    }
-
     \printconnect\Drupal\Forms::LoadObject($form_state['values']['shipping']['detail']['current'], $address);
     $address->customer = $customer->id;
     try {
@@ -1111,7 +1102,7 @@ function pccheckout_invoiceanddelivery_form_validate($form, &$form_state) {
         break;
         default:
 
-         //   pccheckout_invoiceanddelivery_form_shipping_validate($form, $form_state);
+            pccheckout_invoiceanddelivery_form_shipping_validate($form, $form_state);
     }
 }
 
@@ -1199,7 +1190,8 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
                 $cart->pickuppoint = FALSE;
             }
     }
-
+  
+    
     \printconnect\Carts\Factory::Save($cart);
        
   if(!isset($cart->billingAccount) or empty($cart->billingAccount)){
@@ -1207,12 +1199,6 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
         AttacheBillingAccount($cart, $billingAccount->id , $form_state);
   }
     drupal_goto('checkout/payment');
-    
-//    if ($cart->allFilesUploaded) {
-//        drupal_goto('checkout/payment');
-//    } else {
-//        drupal_goto('checkout/upload');
-//    }
 }
 
 function getFotolia($jobId) {
@@ -1517,7 +1503,9 @@ function pccheckout_payment_form($form, &$form_state) {
     _pccustomers_ensureloggedin();
     $customer = \printconnect\Customers\Factory::Current();
     $cart = \printconnect\Carts\Factory::Current(FALSE);
+    
     \printconnect\Carts\Factory::Save($cart);
+     
      if(!isset($cart->billingAccount) or empty($cart->billingAccount)){
     drupal_goto('checkout/invoiceanddelivery');
     drupal_set_message(t('Please check your order because no invoice address related with it'), 'error');

@@ -743,6 +743,7 @@ function pccheckout_shipping_form_submit(&$form, &$form_state) {
 function pccheckout_payment_form2($form, &$form_state) {
   $customer = Customers\Factory::Current();
   $cart = _pccheckout_cart();
+ 
   $form['payment'] = array(
       '#id' => 'payment',
       '#type' => 'fieldset',

@@ -42,6 +42,7 @@
         <!-- End toolBoxItems -->
 
         <!-- Options -->
+        <% if(model.toolBoxGroup.options.length!=0){ %>
         <div class="form-item form-type-checkboxes form-item-options <%= (expandedOptions)?'expanded':'' %>">
             <label for="edit-options"><%= config.labels["options"] %></label>
 
@@ -68,6 +69,7 @@
             </div>
             <% }); %>
         </div>
+        <% } %>
         <!-- End Options-->
 
         <!-- pricesTable -->

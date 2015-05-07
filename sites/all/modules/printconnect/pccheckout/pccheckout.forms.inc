@@ -1469,8 +1469,8 @@ function _pccheckout_payment_form_build_overview($cart) {
             }
                $elementRow[]= $item->fileCheck->price;
         }
-        
         $type = \printconnect\Shipping\Types\Factory::Get($cart->orderItemShipping->shippingTypeResellerShop);
+	\printconnect\Shipping\Types\Factory::LoadType($type);
         $rows[] = array(
             'data' => array(
                 '<strong>'. $type->shippingType->tag . '</strong>',

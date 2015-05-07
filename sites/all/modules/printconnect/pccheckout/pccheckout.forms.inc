@@ -880,11 +880,18 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
             if($form_state['storage']['shippingType'] == 'shippingTypeStoreInAntwerpen'){
                 $form_state['values']['pcflyerstores']['id'] = 111;
 		$cart->shipping_type = '8-D';
+		printconnect\Carts\Factory::saveInCache($cart, array(
+            	    'shipping_type' => $cart->shipping_type,
+                )); 
             }
 
             if($form_state['storage']['shippingType'] == 'shippingTypeStore' && isset($form_state['values']['pcflyerstores']['id']) && $form_state['values']['pcflyerstores']['id'] == 22) {
                 $cart->shipping_type = '11-D';
                 $cart->pickuppoint = TRUE;
+		printconnect\Carts\Factory::saveInCache($cart, array(
+                    'shipping_type' => $cart->shipping_type,
+		    'pickuppoint' => TRUE,
+                ));
             }
 
             if (isset($form_state['values']['pcflyerstores']['id']) && !empty($form_state['values']['pcflyerstores']['id'])) {
@@ -894,8 +901,14 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
                 $cart->pickuppoint->contactName = ($contactName) ? $contactName : $form_state['storage']['defaultShippingAddress']->name;
                 $cart->pickuppoint->email = ($email) ? $email : $form_state['storage']['defaultShippingAddress']->email;
                 $cart->pickuppoint->phone = ($phone) ? $phone :$form_state['storage']['defaultShippingAddress']->phone;
+		printconnect\Carts\Factory::saveInCache($cart, array(
+                    'pickuppoint' => $cart->pickuppoint,
+                ));
             } else {
                 $cart->pickuppoint = FALSE;
+		printconnect\Carts\Factory::saveInCache($cart, array(
+                    'pickuppoint' => FALSE,
+                ));
             }
             
             break;
@@ -908,8 +921,14 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
                 $cart->pickuppoint->contactName = $contactName;
                 $cart->pickuppoint->email = $email;
                 $cart->pickuppoint->phone = $phone;
+		printconnect\Carts\Factory::saveInCache($cart, array(
+                    'pickuppoint' => $cart->pickuppoint,
+                ));
             } else {
                 $cart->pickuppoint = FALSE;
+		printconnect\Carts\Factory::saveInCache($cart, array(
+                    'pickuppoint' => FALSE,
+                ));
             }
             break;
         default:
@@ -917,11 +936,15 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
                 $address = $form_state['storage']['shipping']['address'];
                 \printconnect\Customers\Addresses\Factory::Save($address);
 
-                $cart = $form_state['storage']['cart'];
+                $cart = printconnect\Carts\Factory::Current();
 
                 $cart->shipping_address = $address->id;
 
                 $cart->pickuppoint = FALSE;
+		printconnect\Carts\Factory::saveInCache($cart, array(
+                    'pickuppoint' => FALSE,
+		    'shipping_address' => $cart->shipping_address,
+                ));
             }
     }
 
@@ -1691,7 +1714,14 @@ function updateTvaCart(\printconnect\Object $cart, $tva) {
 }
 
 function AttacheBillingAccount($cart,$billingAccount, &$form_state ) {
-$cart->billingAccount = $billingAccount;
-\printconnect\Carts\Factory::Save($cart);
-$form_state['storage']['cart'] = $cart;
+    $cart->billingAccount = $billingAccount;
+    Factory::saveInCache($cart, array(
+        'billingAccount' => $cart->billingAccount,
+    ));
+    $billingAccount = new \printconnect\Object();
+    $billingAccount->id = $cart->billingAccount;
+    $billingAccount->cart = $cart->id;
+    printconnect\Customers\BillingAccounts\Factory::Save($billingAccount);
+    $form_state['storage']['cart'] = $cart;
+    
 }

@@ -602,6 +602,7 @@ function getFromServer($filename) {
 }
 
 function callback_getjson_ajax($action, $productId) {
+    header('Cache-Control: public, max-age=' . 3600);
     global $language;
 
     $siteName = variable_get('pc_site_name', '');
@@ -618,6 +619,7 @@ function callback_getjson_ajax($action, $productId) {
 }
 
 function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = FALSE, $edit = FALSE) {
+    header('Cache-Control: public, max-age=' . 3600);
     global $language;
     global $user;
     //ini_set('memory_limit', '5000M');

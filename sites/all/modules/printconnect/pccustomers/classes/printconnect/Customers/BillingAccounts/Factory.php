@@ -82,6 +82,10 @@ class Factory {
       Dal::Save($object, 'billing-account', array());
     }
     $_SESSION['billingAccountId'] = $object->id;
+    $cart = \printconnect\Carts\Factory::Current();
+    \printconnect\Carts\Factory::saveInCache($cart, array(
+        'billingAccount' => $object->id,
+    ));
   }
 
   public static function Validate(BillingAccount $object) {

@@ -75,6 +75,8 @@ class Factory {
   public static function Save(\printconnect\Object $object) {
 
     $id = $object->Get('id');
+    $cart = \printconnect\Carts\Factory::Current();
+    $object->cart = $cart->id;
     if ($id) {
       Dal::Save($object, 'billing-account', array($id));
      
@@ -82,9 +84,9 @@ class Factory {
       Dal::Save($object, 'billing-account', array());
     }
     $_SESSION['billingAccountId'] = $object->id;
-    $cart = \printconnect\Carts\Factory::Current();
     \printconnect\Carts\Factory::saveInCache($cart, array(
         'billingAccount' => $object->id,
+	'shipping_address' => ($object->shippingAddressId) ? $object->shippingAddressId : null
     ));
   }
 

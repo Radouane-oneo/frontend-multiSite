@@ -843,7 +843,7 @@ function pccheckout_invoiceanddelivery_form_validate($form, &$form_state) {
 
 function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
     $billingaccoutcustomer = \printconnect\Customers\Factory::Current();
-    $cart = $form_state['storage']['cart'];
+    $cart = \printconnect\Carts\Factory::Current();
     $billingAccount = $form_state['storage']['$billingAccount'];
     
     
@@ -872,7 +872,6 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
     $contactName = $form_state['values']['shipping']['detail']['contact'];
     $email = $form_state['values']['shipping']['detail']['email'];
     $phone = $form_state['values']['shipping']['detail']['phone'];
-
     switch ($form_state['storage']['shippingType']){
        case 'shippingTypeStore':
        case 'shippingTypePrinter':
@@ -947,7 +946,6 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
                 ));
             }
     }
-
     \printconnect\Carts\Factory::Save($cart);
 
   if(!isset($cart->billingAccount) or empty($cart->billingAccount)){
@@ -1269,7 +1267,7 @@ function CalculateCostamount($amount,$rate,$cost) {
 function pccheckout_payment_form($form, &$form_state) {
     _pccustomers_ensureloggedin();
     $customer = \printconnect\Customers\Factory::Current();
-    $cart = \printconnect\Carts\Factory::Current();
+    $cart = \printconnect\Carts\Factory::Current(FALSE);
  
     if(!isset($cart->billingAccount) or empty($cart->billingAccount)){
     drupal_goto('checkout/invoiceanddelivery');

@@ -1,6 +1,6 @@
 <?php
 
-function pcflyerstores_init(){   
+function pcflyerstores_init(){
 global $language;
 $shopConfig = \printconnect\Shop\Configuration\Factory::Current();
 $defaultCountry = \printconnect\Countries\Factory::Get($shopConfig->defaultCountry);
@@ -55,7 +55,7 @@ function pcflyerstores_menu() {
         'access arguments' => array('access content'),
         'file' => 'pcflyerstores.forms.inc',
     );
-    
+
     $items['js/stores/picker/%'] = array(
         'title' => 'Picker',
         'page callback' => 'pcflyerstores_picker_js_callback',
@@ -87,7 +87,7 @@ function pcflyerstores_menu() {
         'access arguments' => array('access content'),
         'file' => 'pcflyerstores.forms.inc',
     );
-    
+
     $items['flyerstores/%'] = array(
         'page callback' => 'drupal_get_form',
         'page arguments' => array('pcflyerstores_landingpage_form', 1),
@@ -95,7 +95,7 @@ function pcflyerstores_menu() {
         'file' => 'pcflyerstores.forms.inc',
         'type' => MENU_CALLBACK,
     );
-    
+
        $items['mystores'] = array(
         'title' => t('flayerstors search'),
         'page callback' => 'drupal_get_form',
@@ -104,7 +104,7 @@ function pcflyerstores_menu() {
         'file' => 'pcflyerstores.forms.inc',
         'type' => MENU_CALLBACK,
     );
-   
+
    $items['js/stores/picker/cart/set1/%'] = array(
         'title' => 'Picker',
         'page callback' => 'pcflyerstores_picker_callback',
@@ -125,7 +125,7 @@ function pcflyerstores_theme() {
                 'selectable' => FALSE,
             ),
         ),
- 
+
         'pcflyerstores_store_summary' => array(
             'variables' => array(
                 'store' => FALSE,
@@ -162,7 +162,7 @@ function pcflyerstores_theme() {
                 'attributes' => array(),
             ),
         ),
-        
+
          'pcflyerstores_search_info' => array(
             'variables' => array(
                 'store' => FALSE,
@@ -170,7 +170,7 @@ function pcflyerstores_theme() {
                 'attributes' => array(),
             ),
         ),
-        
+
     );
 }
 
@@ -191,16 +191,26 @@ function theme_pcflyerstores_store_info($vars) {
             $html .= '<div id="map-canvas" style="height:48%">
                     </div>';
         }
-        $html .= '<div class="description stordescription"><div class="storcomande">';
-        if (isset($store->name)) {
+      //  $html .= '<div class="description stordescription"><h1>'.t('line1bloc3').'</h1>';
+              $html .= '<div id="Mapimg">';
+        if (isset($store->country) && isset($store->city) && isset($store->address)) {
+            $googleMapsAddressString = urlencode($store->country) . ',' . urlencode($store->city) . ',' . urlencode($store->address);
+            $link = 'http://maps.google.com/maps?q=' . $googleMapsAddressString;
+            $icon = file_create_url(drupal_get_path('module', 'pcflyerstores') . '/store.png') . '?' . variable_get('css_js_query_string', '');
+            $map = theme('image', array('path' => 'https://maps.googleapis.com/maps/api/staticmap?size=400x275&sensor=false&markers=icon:' . $icon . '|' . $googleMapsAddressString, 'attributes' => array('class' => array('map'))));
+            $html .= l($map, $link, array('html' => true, 'attributes' => array('target' => '_blank', 'class' => 'mapContainer')));
+        }
+        $html .= '</div>';
+
+
+
+	$html .='<div id="storethumb"></div>';
+
+        $html .= '<div class="storcomande"><div id="detail">';
+         if (isset($store->name)) {
             $storeName =  html_entity_decode(t($store->name),ENT_COMPAT,"iso-8859-1");
             $html .= '<h2>' .  $storeName. '</h2>';
         }
-
-	$html .='<div id="storethumb"></div>';
-        
-        $html .= '<div id="detail">';
-   
         if (isset($store->address) && isset($store->postalCode) && isset($store->city)) {
             $html .= '<div class="address">' . t($store->address) . ' - ' . $store->postalCode . ' ' . $store->city . '</div>';
         }
@@ -233,7 +243,7 @@ function theme_pcflyerstores_store_info($vars) {
                 $html .= theme(
                     'table', array(
                     'rows' => $rows,
-                    'caption' => t('Opening hours'),
+                    'caption' => '<h1>'.t('Opening hours').'</h1>',
                     'attributes' => array(
                         'class' => array(
                             'openinghours'
@@ -244,29 +254,19 @@ function theme_pcflyerstores_store_info($vars) {
             }
         }
         $html .= '</div>';
-        
-        $html .= '<div id="Mapimg">';
-        if (isset($store->country) && isset($store->city) && isset($store->address)) {
-            $googleMapsAddressString = urlencode($store->country) . ',' . urlencode($store->city) . ',' . urlencode($store->address);
-            $link = 'http://maps.google.com/maps?q=' . $googleMapsAddressString;
-            $icon = file_create_url(drupal_get_path('module', 'pcflyerstores') . '/store.png') . '?' . variable_get('css_js_query_string', '');
-            $map = theme('image', array('path' => 'https://maps.googleapis.com/maps/api/staticmap?size=640x160&sensor=false&markers=icon:' . $icon . '|' . $googleMapsAddressString, 'attributes' => array('class' => array('map'))));
-            $html .= l($map, $link, array('html' => true, 'attributes' => array('target' => '_blank', 'class' => 'mapContainer')));
-        }
-        $html .= '</div>';
-        
+
         if (isset($store->country) && isset($store->city) && isset($store->address)) {
             $googleMapsAddressString = urlencode($store->country) . ',' . urlencode($store->city) . ',' . urlencode($store->address);
             $link = 'https://maps.google.com/maps?q=' . $googleMapsAddressString;
             $html .= l(NULL, $link, array('html' => true, 'attributes' => array('target' => '_blank', 'class' => 'mapContainer')));
         }
-        
+
 
         $html .= '</div>';
 
-     
+
         $vacations = array();
-        
+
         if (isset($store->vacations)) {
             foreach ($store->vacations as $vacation) {
                 if ($vacation) {
@@ -333,12 +333,12 @@ function theme_pcflyerstores_store_detail($vars) {
     $resolt[] = array('#markup' =>'<div class="treediv"><ul>', );
     asort($store);
 
-   
+
     foreach ($store as $key =>$value) {
-       
+
         $url = 'flyerstores/' . $key;
         $html = '<li><a href="'.$url.'"><span class="name zoneaccordion" postalCode ="'.$value['postalCode'].'">' . $value['city'] . '</span></a></li>';
-        $build = array('#markup' =>$html ); 
+        $build = array('#markup' =>$html );
         $resolt[] = $build;
     }
     $resolt[] = array('#markup' =>'</ul></div>', );
@@ -434,7 +434,7 @@ function pcflyerstores_picker_js_storeinfo_callback($id) {
         '#theme' => 'pcflyerstores_store_info',
         '#store' => $store,
     );
-   
+
 
     drupal_json_output(array(
         'id' => $id,
@@ -460,7 +460,7 @@ function pcflyerstores_picker_js_callback($countryCode, $region) {
         );
 
         $items[] = array(
-            'data' => drupal_render($item), 
+            'data' => drupal_render($item),
             'id' => $store->id,
         );
     }
@@ -506,7 +506,7 @@ function _pcflyerstores_formitems() {
 	    $thepo++;
         }
     }
-     
+
     $cart = printconnect\Carts\Factory::Current();
     $info = array(
         '#type' => 'container',
@@ -552,11 +552,11 @@ function theme_pcflyerstores_landingpage_info($vars) {
            $li = "";
            foreach($store->slide as $k => $img){
               if(getimagesize($img)){
-                   $li .= '<li><img src="'.$img.'" alt="" /></li>'; 
+                   $li .= '<li><img src="'.$img.'" alt="" /></li>';
               }
-           } 
+           }
            $t = count($store->slide);
-                   if($t = 1){
+                   if($t == 1){
                        $html .='<img src="'.$store->slide[0].'" >';
                    }else{
                        $html .= '<div class="wrapper">
@@ -589,14 +589,14 @@ function theme_pcflyerstores_landingpage_info($vars) {
             $html .= '<div id="infoStor"><h2>' . t('who we are') .'</h2>'.t(' short Description not valable   ') . '</div>';
         }
         $html .= '<hr style="height: 2px; color: #F0F0F0; background-color: #F0F0F0; width: 100%; border: none;">  ';
-        
+
          if (!empty($store->longDescription)) {
             $html .= '<div id="infoStor"><h2>' . t('our services') .'</h2>' . $store->longDescription . '</div>';
         } else {
             $html .= '<div id="infoStor"><h2>' . t('our services') .'</h2>'. t(' long Description  not valable') . '</div>';
         }
         $html .= '<hr style="height: 2px; color: #F0F0F0; background-color: #F0F0F0; width: 100%; border: none;">  ';
-       
+
         if (isset($store->contactName)) {
             $html .= '<div class="contact">' . htmlentities($store->contactName) . '</div>';
         }
@@ -604,8 +604,8 @@ function theme_pcflyerstores_landingpage_info($vars) {
         if (isset($store->name)) {
             $html .= '<h2>' . t('contact us') . '</h2>';
         }
-       
-        
+
+
         $html .= '<div id="DetailStor">'; /* start div DetailStor */
         if (isset($store->address) && isset($store->postalCode) && isset($store->city)) {
             $html .= '<div class="address">' . t($store->address) . ' - ' . $store->postalCode . ' ' . $store->city . '</div>';
@@ -620,7 +620,7 @@ function theme_pcflyerstores_landingpage_info($vars) {
             $html .= '<div class="email"><a href="mailto:'.$store->email.'">' . htmlentities($store->email) . '</a></div>';
         }
         $html .= '</div>'; /* End div DetailStor */
-        
+
         $rows = array(); /* start div openingHours */
         if (isset($store->openingHours)) {
             foreach ($store->openingHours as $day => $hours) {
@@ -643,7 +643,7 @@ function theme_pcflyerstores_landingpage_info($vars) {
                 );
             }
         } /* End div openingHours */
-        
+
         /* start div map-canvas */
      $html .= '<div id="Mapimg" position="'.$store->latitude.'_'.$store->longitude.'">';
         /*if (isset($store->country) && isset($store->city) && isset($store->address)) {
@@ -654,28 +654,28 @@ function theme_pcflyerstores_landingpage_info($vars) {
             $html .= l($map, $link, array('html' => true, 'attributes' => array('target' => '_blank', 'class' => 'mapContainer')));
         }*/
         $html .= '</div>';
-         
+
         /* end div map-canvas */
-        
+
         $html .= '</div>'; /* End div */
     }
 
     $html .= '</div>'; /* End div attributes */
- 
+
     return $html;
 }
 
 
 /*function fo alter modules
-* using : 
-* pcflyerstores_picker_link 
+* using :
+* pcflyerstores_picker_link
 * pcflyerstores_store_info
 */
 
 function pcflyerstores_form_pccart_cart_form2_alter(&$form, &$form_state) {
- 
+
     $typeId = FALSE;
-    
+
     $form['pcflyerstores']['id'] = array(
         '#type' => 'hidden',
         '#default_value' => FALSE,
@@ -687,27 +687,27 @@ function pcflyerstores_form_pccart_cart_form2_alter(&$form, &$form_state) {
     if ($cart) {
         if (isset($form_state['values']['cart']['shipping']['type'])) {
             $currentType = $form_state['values']['cart']['shipping']['type'];
-            
+
         } else {
             $currentType = $cart->orderItemShipping->shippingTypeResellerShop;
         }
 
         if (isset($form_state['storage']['shipping']['types']) || $_SESSION['defaultindex'] == 134 ){
-     
+
             $types = $form_state['storage']['shipping']['types'];
             foreach ($types as $type) {
-             
+
                 if ($type->shippingType->type == 'shippingTypeStore') {
                     $typeId = $type->id;
                 }
             }
-            
+
             if($_SESSION['defaultindex'] == 134  && $selectedOption == 134  ){
                 $currentType =  $_SESSION['defaultindex'];
             }
             if ($currentType == $typeId && isset($form['cart']['shipping']['type']['#options'][$typeId])) {
-                
-                
+
+
                 $store = $cart->pickuppoint;
                 if ($store) {
                     $id = $store->id;
@@ -802,23 +802,29 @@ function pcflyerstores_form_pccheckout_invoiceanddelivery_form_alter(&$form, &$f
         } else {
             $store = FALSE;
         }
+          if ($form_state['storage']['shippingType'] == 'shippingTypeStore') {
 
-        $form['summary']['shipping']['selected'] = array(
+            $form['shipping']['detail']['flyerstore'] = array(
+                '#theme' => 'pcflyerstores_picker_link',
+                '#callback' => 'pcflyerstores_callback',
+                '#attributes' => array('class' => array('button','linkflyerstore')),
+            );
+        }
+        $form['shipping']['detail']['selected'] = array(
             '#theme' => 'pcflyerstores_store_info',
             '#store' => $store,
             '#attributes' => array('class' => array('store', 'clearfix')),
-            '#weight' => 100,
-        );
-        if ($form_state['storage']['shippingType'] == 'shippingTypeStore') {
 
-            $form['shipping']['detail']['change'] = array(
-                '#theme' => 'pcflyerstores_picker_link',
-                '#callback' => 'pcflyerstores_callback',
-                '#attributes' => array('class' => array('button')),
-            );
-        }
+        );
+
 
         unset($form['shipping']['detail']['current']);
+
+        $form['shipping']['detail']['title'] = array(
+                        '#prefix' => '<div class="quivacollecter"><h1>',
+                        '#suffix' => '</h1></div>',
+                        '#markup' => t('quivacollecterlacommande'),
+                    );
 
         $form['shipping']['detail']['contact'] = array(
             '#type' => 'textfield',

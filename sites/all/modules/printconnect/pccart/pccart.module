@@ -1675,7 +1675,7 @@ function pccart_callback() {
   switch ($doClose) {
     case 2:
     case 1:
-      print '<script type="text/javascript">top.location = top.location;</script>';
+      print '<script type="text/javascript">document.domain="flyer.fr";top.location = top.location;</script>';
       break;
     default:
       if (!isset($_GET['versionsaved'])) {
@@ -1715,7 +1715,7 @@ function pccart_callback() {
         Factory::SaveItem($item);
 //\printconnect\Carts\Factory::RefreshItem($item);
         Factory::Refresh($cart);
-        print '<script type="text/javascript">top.location = "' . url('cart') . '";</script>';
+        print '<script type="text/javascript">document.domain="flyer.fr";top.location = "' . url('cart') . '";</script>';
         break;
       }
   }

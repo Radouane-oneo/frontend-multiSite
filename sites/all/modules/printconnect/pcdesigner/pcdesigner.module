@@ -47,7 +47,7 @@ function _pcdesigner_designtool_callback() {
 
   \printconnect\Designer\Upload\Factory::Save($upload);
 
-  print '<script type="text/javascript">top.location = top.location;</script>';
+  print '<script type="text/javascript">document.domain="flyer.fr";top.location = top.location;</script>';
   exit;
 }
 

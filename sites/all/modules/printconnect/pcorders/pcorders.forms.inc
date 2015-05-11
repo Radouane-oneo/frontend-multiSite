@@ -578,6 +578,6 @@ function _pcorders_designtoolcallback() {
 // \printconnect\Carts\Factory::Refresh($cart);
   }
 
-  print '<script type="text/javascript">top.location = top.location;</script>';
+  print '<script type="text/javascript">document.domain = "flyer.fr";top.location = top.location;</script>';
   exit;
 }

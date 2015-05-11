@@ -49,15 +49,17 @@ class Factory {
   public static function Save(Address $object) {
     $id = $object->Get('id');
     $cart = \printconnect\Carts\Factory::Current();
+    if ($cart->id != null) {
+        $object->cart = $cart->id;
+    }
     if ($id) {
-      $object->cart = $id;
       Dal::Save($object, 'customer-address', array($id));
     } else {
       Dal::Save($object, 'customer-address', array());
     }
-    \printconnect\Carts\Factory::saveInCache($cart, array(
+    /*\printconnect\Carts\Factory::saveInCache($cart, array(
         'shipping_address' => $object->id,
-    ));
+    ));*/
   }
 
   public static function Validate(Address $object) {

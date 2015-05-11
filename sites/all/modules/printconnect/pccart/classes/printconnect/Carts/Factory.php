@@ -210,13 +210,15 @@ use printconnect\Customers;
       //}
     }
 
-    public static function SaveCustomData($cart) {
+    public static function SaveCustomData($cart) 
+    {
 	try {
-	  Dal::Save($cart, 'supplement-parameter');
+	    Dal::Save($cart, 'supplement-parameter');
 	} catch(Exception $ex) {
 	    
 	}
     }
+
     public static function Validate(Cart $object) {
       //if (!empty($object->id)) {
       Dal::Save($object, 'cart', array('cart' => $object->id), TRUE);

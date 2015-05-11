@@ -664,6 +664,17 @@ function _pccart_callback() {
 	   $cart = Factory::Current();
            $cartItem = printconnect\Carts\Factory::GetItem($cart, $orderItem);
 	   $cartItem->refJob = $ref;
+	   foreach($cart->orderItems as $key => $orderItem) {
+	       if ($orderItem->id = $cartItem->id) {
+	           $cart->orderItems[$key] = $cartItem;
+		   break;
+	       }
+	   }
+	   
+	   Factory::saveInCache($cart, array(
+            'order_items' => $cart->orderItems,
+           ));
+	   
 	   printconnect\Carts\Factory::SaveCustomData($cartItem); 
 	} 		   
       break;

@@ -836,7 +836,7 @@ function pccheckout_invoiceanddelivery_form_validate($form, &$form_state) {
         break;
         default:
 
-            pccheckout_invoiceanddelivery_form_shipping_validate($form, $form_state);
+        pccheckout_invoiceanddelivery_form_shipping_validate($form, $form_state);
     }
 }
 
@@ -933,21 +933,13 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
         default:
             if (isset($form_state['storage']['shipping']['address'])) {
                 $address = $form_state['storage']['shipping']['address'];
+		$cart = \printconnect\Carts\Factory::Current();
+		$cart->pickuppoint = FALSE;
                 \printconnect\Customers\Addresses\Factory::Save($address);
-
-                $cart = printconnect\Carts\Factory::Current();
-
                 $cart->shipping_address = $address->id;
-
-                $cart->pickuppoint = FALSE;
-		printconnect\Carts\Factory::saveInCache($cart, array(
-                    'pickuppoint' => FALSE,
-		    'shipping_address' => $cart->shipping_address,
-                ));
             }
     }
-    \printconnect\Carts\Factory::Save($cart);
-
+    //\printconnect\Carts\Factory::Save($cart);
   if(!isset($cart->billingAccount) or empty($cart->billingAccount)){
         $billingAccount = $form_state['storage']['invoice']['address'];
         AttacheBillingAccount($cart, $billingAccount->id , $form_state);

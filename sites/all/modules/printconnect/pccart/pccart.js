@@ -25,7 +25,7 @@
         return false;
       });
 */
-
+   document.domain = 'flyer.fr';
    var count = 0;
    var visited = 0;
    var visitedControl = 0;

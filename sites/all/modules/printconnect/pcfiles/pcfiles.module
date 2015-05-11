@@ -12,9 +12,9 @@ function pcfiles_menu() {
     'type' => MENU_LOCAL_TASK,
     );
    */
-  $items['file/%'] = array('title' => 'Files', 'page callback' => '_pcfiles_file', 'page arguments' => array(1), 'access arguments' => array('access content'), 'type' => MENU_CALLBACK,);
+  $items['pc_file/%'] = array('title' => 'Files', 'page callback' => '_pcfiles_file', 'page arguments' => array(1), 'access arguments' => array('access content'), 'type' => MENU_CALLBACK,);
 
-  $items['file/%/%'] = array('title' => 'Files', 'page callback' => '_pcfiles_file', 'page arguments' => array(1, 2), 'access arguments' => array('access content'), 'type' => MENU_CALLBACK,);
+  $items['pc_file/%/%'] = array('title' => 'Files', 'page callback' => '_pcfiles_file', 'page arguments' => array(1, 2), 'access arguments' => array('access content'), 'type' => MENU_CALLBACK,);
 
   $items['pcfiles'] = array('title' => 'Files', 'page callback' => 'drupal_get_form', 'page arguments' => array('pcfiles_files_form'), 'access arguments' => array('access content'), 'type' => MENU_LOCAL_TASK,);
 
@@ -26,7 +26,7 @@ function pcfiles_theme() {
       'variables' => array(
           'file' => NULL,
           'content' => FALSE,
-          'title' => 'Download', 
+          'title' => 'Download',
           'attributes' => array(),),),
       'pcfilesthumb' => array(
           'variables' => array(
@@ -69,7 +69,7 @@ function theme_pcfilesdownloadlink($vars) {
       $url .= '?' . md5(uniqid(rand(), true));
     }
   } else {
-    $url = 'file/' . $vars['file'];
+    $url = 'pc_file/' . $vars['file'];
   }
   if(preg_match("/^template/",$vars['file'])) {
       $url.=".zip";
@@ -87,7 +87,7 @@ function theme_pcfilesthumb($vars) {
       $url .= '?' . md5(uniqid(rand(), true));
     }
   } else {
-    $url = 'file/' . $vars['file'];
+    $url = 'pc_file/' . $vars['file'];
     if ($vars['cache']) {
       $url .= '/' . variable_get('css_js_query_string', '0');
     } else {
@@ -143,7 +143,7 @@ function _pcfiles_file($fileId, $cache = FALSE) {
       header('Cache-Control:private');
       header('Cache-control: max-age=' . (60 * 60 * 24 * 365));
       header('Expires: ' . gmdate(DATE_RFC1123, time() + 60 * 60 * 24 * 365));
-      header('Last-Modified: ' . gmdate(DATE_RFC1123, time())); 
+      header('Last-Modified: ' . gmdate(DATE_RFC1123, time()));
     } else {
       // IE Fix
       header('Cache-Control:');
@@ -183,7 +183,7 @@ function pcfiles_files_form($form, &$form_state) {
 
   $i = 0;
   foreach ($data->rows as $file) {
-    
+
     $response = drupal_http_request($baseUrl . $file->value->_id . '?rev=' . $file->value->_rev, array('method' => 'DELETE'));
 
     if ($i++ > 1000)

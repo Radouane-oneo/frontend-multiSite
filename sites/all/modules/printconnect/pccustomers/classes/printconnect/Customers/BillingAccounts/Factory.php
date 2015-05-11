@@ -78,6 +78,8 @@ class Factory {
     $cart = \printconnect\Carts\Factory::Current();
     $object->cart = $cart->id;
     if ($id) {
+      $customer = \printconnect\Customers\Factory::Current();
+      $object->customer = $customer->id;
       Dal::Save($object, 'billing-account', array($id));
      
     } else {

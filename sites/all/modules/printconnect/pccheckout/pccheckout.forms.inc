@@ -723,7 +723,7 @@ function pccheckout_invoiceanddelivery_form_invoice_validate($form, &$form_state
       }
   }
   
-    $cart = $form_state['storage']['cart'];
+    $cart = \printconnect\Carts\Factory::Current();
     $customer = $form_state['storage']['customer'];
     $billingAccountId = $form_state['values']['invoice']['address']['current']['select'];
 
@@ -845,7 +845,7 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
     $billingaccoutcustomer = \printconnect\Customers\Factory::Current();
     $cart = \printconnect\Carts\Factory::Current();
     $billingAccount = $form_state['storage']['$billingAccount'];
-    
+        
     
     if (isset($form_state['storage']['invoice']['address'])) {
         $address = $form_state['storage']['invoice']['address'];
@@ -855,20 +855,23 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
             $billingAccountId = $billingaccoutcustomer->billingAccount->id;
         }
         $cart->billingAccount = $billingAccountId;
-
         $isNeutralActive = 0;
         if ($form_state['values']['shipping']['neutral']['check'] == 1) {
             $isNeutralActive = 1;
         }
-        
+         
         $cart->neutralShipping = $isNeutralActive;
         if ($billingAccount->discountPercentage != null && count($cart->discountItems) == 0) {
             $discount = \printconnect\Carts\Discounts\Factory::Create($cart->id, $billingAccount->discountCode);
             \printconnect\Carts\Discounts\Factory::Save($discount);
         }
+	
+	$billingAccount = \printconnect\Customers\BillingAccounts\Factory::Get($billingAccountId);
+        $billingAccount->EnsureLoaded();
+	$billingAccount->cart = $cart->id;
+        \printconnect\Customers\BillingAccounts\Factory::Save($billingAccount);
 
     }
-    
     $contactName = $form_state['values']['shipping']['detail']['contact'];
     $email = $form_state['values']['shipping']['detail']['email'];
     $phone = $form_state['values']['shipping']['detail']['phone'];

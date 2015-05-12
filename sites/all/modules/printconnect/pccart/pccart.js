@@ -155,6 +155,7 @@ jQuery(document).ready(function(){
                 code :disocuntname
             },
             dataType : 'json',
+
             success: function (data) {
                 if (!isNaN(data.discountAmount)){
                     var disocunt = '<input type="hidden" name="disocunt" value="-' + data.discountAmount+  '">';

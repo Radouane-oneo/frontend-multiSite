@@ -49,7 +49,7 @@ define([
             var modulo = this.model.quantity % step;
             coefficient = (modulo==0) ? coefficient : (coefficient +1);
             result = result + (coefficient * option["unitSell"]);
-            return result.toFixed(2);
+            return Math.round(result*100)/100;
         },
         totalPrice: function(){
             var me = this;
@@ -60,7 +60,7 @@ define([
                 totalPrice += parseFloat(me.priceOption(option));
             });
 
-            return totalPrice.toFixed(2);
+            return Math.round(totalPrice*100)/100;
         },
         setToolBoxGroup: function(items){
             var me = this;

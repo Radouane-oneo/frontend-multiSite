@@ -2,8 +2,8 @@
 
     /* popup button annuler */
     $(".button_null_address_vat").live("click", function () {
-        $('#light').hide();
-        $('#fademe').hide();
+             $('#fademe').removeClass('black_overlay2');
+             $('#fademe').addClass('black_overlay');
         $("input[name='invoice[address][current][vatNumber][number]']").val('');
     });
 
@@ -18,8 +18,8 @@
             $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-postalcode').val(dataset.postalCode);
             $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-city').val(dataset.city);
             $('#pccheckout-invoiceanddelivery-form #companyInput').val(dataset.company);
-            $('#invoice-address input[type=text]').attr('readonly', true);
-            $('#edit-invoice-address-current-country').attr('disabled', true);
+//            $('#invoice-address input[type=text]').attr('readonly', true);
+//            $('#edit-invoice-address-current-country').attr('disabled', true);
         });
     });
 

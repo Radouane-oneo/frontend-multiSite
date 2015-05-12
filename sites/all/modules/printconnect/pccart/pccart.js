@@ -170,6 +170,8 @@ jQuery(document).ready(function(){
 
                         }
                     }
+                }else{
+                    jQuery('#edit-cart-discount').before('<p style=" color: #F00; font-weight: 600; font-size: 13px; "> Désolé, ce code promotionnel a déjà été utilisé ou non validé</p>');
                 }
             }
         });

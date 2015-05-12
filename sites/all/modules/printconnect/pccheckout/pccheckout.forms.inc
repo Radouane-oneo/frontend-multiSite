@@ -415,7 +415,6 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
             '#address' => $defaultShippingAddress,
         );  
 }
-   
  if ($cart->orderItemShipping->shippingTypeResellerShop != 204) {
         if (!isset($cart->pickuppoint)) {
             $form['summary']['shipping']['change'] = array(

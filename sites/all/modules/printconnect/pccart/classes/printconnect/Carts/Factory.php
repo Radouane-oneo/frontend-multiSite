@@ -162,6 +162,42 @@ use printconnect\Customers;
       unset($_SESSION['payment_method']);
     }
     
+    public static function SaveStore($object)
+    {
+        if ($object->pickuppoint) {
+            $_SESSION['cart']['shipping']['pup'] = serialize($object->pickuppoint);
+            unset($_SESSION['shipping_address']);
+            $object->Remove('shipping_address');
+            if (is_object($object->pickuppoint)) {
+                $object->pickuppoint = $object->pickuppoint->GetProperties();
+            }
+	    Dal::updateElement($object, 'cart',
+                array(
+                    'id' => $object->id
+                ),
+                array(
+		    'pickuppoint' => $object->pickuppoint,
+		    'shipping_address' => null,
+                )
+            );  
+      // $object->Remove('pickuppoint');
+      } else {
+	  Dal::updateElement($object, 'cart',
+                array(
+                    'id' => $object->id
+                ),
+                array(
+                    'pickuppoint' => null,
+                )
+          );
+          $object->Remove('pickuppoint');
+          $_SESSION['shipping_address'] = $object->shipping_address;
+          unset($_SESSION['cart']['shipping']['pup']);
+      }
+	$object = Dal::Save($object, 'pickuppointdetail', array('id' => $object->id));
+        return $object;	
+    }
+ 
     public static function Save($object) {
     $customer = Customers\Factory::Current();
     $ref = $object->customer_reference;

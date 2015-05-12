@@ -83,7 +83,7 @@ function seo_checker_perform_checks($node, $form) {
       continue;
     }
 
-    /* threshold == 0 implies that this rule is desabled. */
+    /* threshold == 0 implies that this rule is disabled. */
     if (($threshold = seo_checker_get_rule_threshold($rule, $rid)) == array(0, 100)) {
       continue;
     }

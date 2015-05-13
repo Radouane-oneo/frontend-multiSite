@@ -3,9 +3,9 @@ name = Block tab
 description = Transfer all blocks in a region into tabs.
 core = 7.x
 
-; Information added by drupal.org packaging script on 2011-09-12
-version = "7.x-1.0"
+; Information added by  packaging script on 2013-11-08
+version = "7.x-1.1"
 core = "7.x"
 project = "block_tab"
-datestamp = "1315863400"
+datestamp = "1383920323"
 

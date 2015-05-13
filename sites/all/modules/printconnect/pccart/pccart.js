@@ -155,6 +155,7 @@ jQuery(document).ready(function(){
                 code :disocuntname
             },
             dataType : 'json',
+
             success: function (data) {
                 if (!isNaN(data.discountAmount)){
                     var disocunt = '<input type="hidden" name="disocunt" value="-' + data.discountAmount+  '">';
@@ -170,6 +171,8 @@ jQuery(document).ready(function(){
 
                         }
                     }
+                }else{
+                    jQuery('#edit-cart-discount').before('<p style=" color: #F00; font-weight: 600; font-size: 13px; "> Désolé, ce code promotionnel a déjà été utilisé ou non validé</p>');
                 }
             }
         });

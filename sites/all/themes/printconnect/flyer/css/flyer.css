@@ -2668,15 +2668,54 @@ a.ui-button.inactivebtn{
 	display: none;
 	visibility: hidden;
 }
+.page-products #pcproducts-config-form tr.last-child .form-item-calcul-qte{
+	text-indent: 0;
+	padding: 10px 0;
+	position: relative;
+}
+.page-products #pcproducts-config-form tr.last-child .form-item-calcul-qte:after{
+	clear: both;
+	width: 100%;
+	height: 1px;
+	content: '';
+	display: block;
+}
+.page-products #pcproducts-config-form tr.child-item-calcul-qte:hover{
+	 background: transparent !important;
+	 cursor: default !important;
+}
 .page-products #pcproducts-config-form tr.last-child .form-item label{
-	float: left;
+	/*float: left;margin-top: -2px;*/
+	text-indent: 0;
 	font-size: 13px;
 	color: #999999;
 	line-height: 16px;
-	margin-top: -2px;
+	display: inline-block; 
+	vertical-align: middle;
+}
+.page-products #pcproducts-config-form tr.last-child .form-item-calcul-qte .wrap-input-calcul{
+	position: absolute;
+	right: -12px;
+	top: 4px;
+}
+.page-products #pcproducts-config-form tr.last-child .form-item-calcul-qte input[type="text"]{
+	margin: 0 3px 0 0px !important;
+	vertical-align: middle;
+}
+.page-products #pcproducts-config-form tr.last-child .form-item-calcul-qte .btn-calcul{
+	vertical-align: middle;
+	display: inline-block;
+	background: url(/sites/all/themes/printconnect/flyer/css/images/flesh-button-seul.png) no-repeat 17px center #77b800;
+  	padding-left: 40px;
+  	font-weight: bold;
+
 }
 .page-products #pcproducts-config-form tr.last-child .form-item input[type="text"]{
-	float: right;
+	/*float: right;
+	position: absolute;
+	right: -215px;
+	top: -1px;
+	*/
 	padding: 8px 10px;
 	height: 32px;
 	line-height: 15px;
@@ -2687,9 +2726,7 @@ a.ui-button.inactivebtn{
 	width: 215px;
 	font-size: 13px;
 	color: #999999;
-	position: absolute;
-	right: -215px;
-	top: -1px;
+	
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */
@@ -2736,7 +2773,7 @@ a.ui-button.inactivebtn{
 }
 .page-products #pcproducts-config-form table.grid tbody tr:hover/*,
 .page-products #pcproducts-config-form table.grid tr.checked*/ {
-	background-color: #f1f1f1 !important;
+	background-color: #f1f1f1;
 }
 .page-products #pcproducts-config-form table.grid tr td{
 	padding-top: 5px;
@@ -2791,7 +2828,7 @@ a.ui-button.inactivebtn{
 }
 
 .page-products #pcproducts-config-form table.grid  tbody tr td.last-child {
-	border-right: 2px solid #e1e1e1 !important;
+	border-right: 1px solid #e1e1e1 !important;
 }
 
 @-moz-document url-prefix() { 
@@ -4166,10 +4203,27 @@ background: #f1f1f1;
 .page-checkout-personal .actions {
 	margin-top: 0 !important;
 }
-/*.page-checkout.page-checkout-personal #edit-actions{
-  margin-bottom: -40px;	
-}*/
+ #pcproducts-config-form #edit-actions.edit-actions-product{
+  margin-top: -15px;	
+} 
 
+.detailtechnique-wrapper{
+	border-style: solid;
+  	border-color: #e1e1e1;
+  	border-width: 1px; 
+  	-webkit-border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
+	-moz-border-radius-topleft: 3px;
+	-moz-border-radius-topright: 3px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	-webkit-border-bottom-right-radius: 0;
+	-webkit-border-bottom-left-radius: 0;
+	-moz-border-radius-bottomright: 0;
+	-moz-border-radius-bottomleft: 0;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
 
 .page-checkout-upload #pccheckout-upload-form .form-type-textfield label {
 	float: left;
@@ -10670,4 +10724,16 @@ a.cart.button{
 }
 .hideContainer {
     display : none;
+}
+
+.wrap-tableqte{
+	border-radius: 5px;
+	overflow: hidden;
+	margin-top: 18px;
+}
+
+.wrap-tableqte .grid{
+	border-radius: 0 !important;
+	overflow: visible !important;
+	margin-top: 0 !important;
 }

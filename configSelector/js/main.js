@@ -15,7 +15,7 @@ require.config({
         }
     },
     waitSeconds: 0,
-    //urlArgs: "t=" +  (new Date()).getTime()
+    urlArgs: "t=" +  (new Date()).getTime()
 });
 
 require(['backbone', 'productConfig/views/productConfig'], function(Backbone, productConfig){

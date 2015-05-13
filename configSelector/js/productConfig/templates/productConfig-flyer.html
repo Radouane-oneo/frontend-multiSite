@@ -100,17 +100,17 @@
                 <td><%= price['quantity'] %> ex.</td>
                 <td><%
                     if(price['promoPrice']) {
-                        print(priceTpl({price:price['sellPrice'].toFixed(2),classToAdd:'old'}));
+                        print(priceTpl({price:Math.round(price['sellPrice']*100)/100,classToAdd:'old'}));
                     }
                 %></td>
                 <td><%
                     var validPrice = (price['promoPrice'])?price['promoPrice']:price['sellPrice'];
                     var className = (price['promoPrice'])?'promo':undefined;
-                    print(priceTpl({price:validPrice.toFixed(2),classToAdd:className}));
+                    print(priceTpl({price:Math.round(validPrice*100)/100,classToAdd:className}));
                 %></td>
                 <td class="last-child"><%
                     var priceWithTVA = validPrice * ( 1 + config.TVA );
-                    print(priceTpl({price:priceWithTVA.toFixed(2)}));
+                    print(priceTpl({price:Math.round(priceWithTVA*100)/100}));
                 %></td>
             </tr>
             <% }); %>

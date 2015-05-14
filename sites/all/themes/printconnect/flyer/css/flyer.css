@@ -4436,13 +4436,7 @@ background: #f1f1f1;
     float:left;
        border-right: medium none !important;
 }
-.imgpayment{
-    float: left;
-    margin-left: 16px;
-    margin-top: -49px;
-    width: 442px;
-    position: relative;
-}
+
 .page-paymentrequest-key table.grid.clearfix:after, 
 .page-checkout-payment table.grid.clearfix:after {
 	content: '' !important;

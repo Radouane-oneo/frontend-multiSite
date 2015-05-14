@@ -47,7 +47,7 @@ function _pcdesigner_designtool_callback() {
 
   \printconnect\Designer\Upload\Factory::Save($upload);
 
-  print '<script type="text/javascript">document.domain="flyer.fr";top.location = top.location;</script>';
+  print '<script type="text/javascript">try{document.domain="flyer.fr";}catch(e){console.log(e);}top.location = top.location;</script>';
   exit;
 }
 
@@ -55,7 +55,7 @@ function pcdesigner_form_alter(&$form, $form_state, $form_id) {
 
   switch ($form_id) {
     case 'pccart_cart_form2':
-     
+
 //    case 'pccheckout_upload_form':
       $cart = $form_state['storage']['cart'];
       $checkableItems = array();
@@ -137,7 +137,7 @@ function pcdesigner_form_validate($form, &$form_state) {
   $checkEmailIsValid = false;
   foreach ($cart->productItems as $item) {
     if (array_key_exists($item->id, $form_state['values']['cart']['items'])
-            && isset($form_state['values']['cart']['items'][$item->id]['designer']['inputdesigner']['email']) 
+            && isset($form_state['values']['cart']['items'][$item->id]['designer']['inputdesigner']['email'])
             && $form_state['values']['cart']['items'][$item->id]['designer']['check']
     ) {
       $checkEmailIsValid = true;

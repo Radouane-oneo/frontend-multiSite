@@ -45,9 +45,7 @@
     $(document).ready(function () {
 
         if (typeof $("#isUserCompany")[0] != "undefined") {
-
             if ($("#companyInput").val() != '') {
-
                 $("#isUserCompany")[0].checked = true;
                 $(".form-item-company, .form-item-vatNumber, .form-item-invoice-address-current-company, .form-item-invoice-address-current-vatNumber").show();
             } else {
@@ -70,11 +68,16 @@
         $('#invoice-address input[type=text]').attr('readonly', true);
         $('#edit-invoice-address-current-country').attr('readonly', true);
 
-        if ($('.selectBilling2').val() == 0) {
-            $('#isUserCompany').attr('disabled', false);
+        if ($(".selectBilling2")[0]) {
+            if ($('.selectBilling2').val() == 0) {
+                $('#isUserCompany').attr('disabled', false);
+            } else {
+                $('#isUserCompany').attr('disabled', true);
+            }
         } else {
-            $('#isUserCompany').attr('disabled', true);
+            $('#isUserCompany').attr('disabled', false);
         }
+        
 
         if ($(".isa_info")[0]) {
             $(".isa_info").remove();

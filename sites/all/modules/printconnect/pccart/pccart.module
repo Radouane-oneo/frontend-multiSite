@@ -993,6 +993,7 @@ function pccart_callback() {
   switch ($doClose) {
     case 2:
     case 1:
+      print update_domain();
       print '<script type="text/javascript">top.location = top.location;</script>';
       break;
     default:
@@ -1029,6 +1030,7 @@ function pccart_callback() {
         $item->quickupload = $quickupload;
         Factory::SaveItem($item);
         Factory::Refresh($cart);
+        print update_domain();
         print '<script type="text/javascript">top.location = "' . url('cart') . '";</script>';
         break;
       }

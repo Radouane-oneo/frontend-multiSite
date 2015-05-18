@@ -5,6 +5,8 @@
     },
     attach: function (context, settings) {
 
+      updateDomain();
+
    $('.refCustomer').blur(function() {
 	$.post('cart/customer/ref/'+$(this).attr('cart'),{'ref' : $(this).val()});       
    });
@@ -70,39 +72,41 @@
 
     /* ------------Remove items------------*/ 
 
-        $("#pccart-cart-form .removecart").live('click',function () {
-	    var targetItem = $(this);
-            itemid = $(this).siblings('.itemID').text();
-            $(this).parents('.item').fadeOut("slow");
-            var url = "cart/" + itemid + "/delete";
-            var nameitemid = "cart[items][hidden][" + itemid + "]";
-            var form = jQuery('#pccart-cart-form');
-            $.ajax({
-                type: "POST",
-                url: url,
-                success: function (data) {
-                    //form.html(jQuery('#pccart-cart-form', data).html());
-                    //Drupal.attachBehaviors(form);
-		    targetItem.parents('job').remove();
+      $("#pccart-cart-form .removecart").live('click',function () {
+        var targetItem = $(this);
+        itemid = $(this).siblings('.itemID').text();
+        $(this).parents('.item').fadeOut("slow");
+        var url = "cart/" + itemid + "/delete";
+        var nameitemid = "cart[items][hidden][" + itemid + "]";
+        var form = jQuery('#pccart-cart-form');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            success: function (data) {
+                targetItem.parents('job').remove();
+                if (number <= 0) {
+                  $('.jsDiscount').remove();
+                  window.location.replace('/products/');
                 }
-            });
-            $("input[name='"+nameitemid+"']").remove();
-	    $('.item-' + itemid).remove();
-	    if ($('.fotolia-items-'+itemid).length < $('.fotolia-items').length) {
-		$('.fotolia-items-'+itemid).parent().remove();
-	    } else if ($('.fotolia-items-'+itemid).length == $('.fotolia-items').length) {
-		$('.fotolia-items-'+itemid).parents('fieldset').remove();
-	    }
-	    var baseText = $('.cartCounter').attr('translatedtext');
-	    var number = $('.cartCounter').attr('number') - 1;
-	    $('.cartCounter').attr('number', number);
-	    $('.cartCounter span').html(baseText+ ' ('+number+')');
-	    if (number <= 0) {
-		$('.jsDiscount').remove();
-		window.location.replace('/products/');
-	    }
-            PriceCallback();
+            }
         });
+
+        $("input[name='"+nameitemid+"']").remove();
+        $('.item-' + itemid).remove();
+
+        if ($('.fotolia-items-'+itemid).length < $('.fotolia-items').length) {
+    	    $('.fotolia-items-'+itemid).parent().remove();
+        } else if ($('.fotolia-items-'+itemid).length == $('.fotolia-items').length) {
+    	    $('.fotolia-items-'+itemid).parents('fieldset').remove();
+        }
+
+        var baseText = $('.cartCounter').attr('translatedtext');
+        var number = $('.cartCounter').attr('number') - 1;
+        $('.cartCounter').attr('number', number);
+        $('.cartCounter span').html(baseText+ ' ('+number+')');        
+        PriceCallback();
+      });
             /* ------------------------------*/ 
     
     

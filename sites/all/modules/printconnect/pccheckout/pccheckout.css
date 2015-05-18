@@ -488,3 +488,15 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
     background-color: #BDE5F8;
     border-radius: 12px;
 }
+.imgpayment {
+  background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/paymentmethods/payment.jpg") no-repeat scroll center top #fff;
+  float: left;
+  margin-left: 16px;
+  position: relative;
+  text-align: center;
+  width: 441px;
+  margin-top: 0px;
+  padding-top: 196px;
+  margin-bottom: 20px;
+  height: 123px;
+}

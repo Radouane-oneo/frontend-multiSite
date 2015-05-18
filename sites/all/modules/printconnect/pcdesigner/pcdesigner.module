@@ -44,7 +44,7 @@ function _pcdesigner_designtool_callback() {
   $upload->design_tool_job_id = $jobId;
 
   \printconnect\Designer\Upload\Factory::Save($upload);
-
+  print update_domain();
   print '<script type="text/javascript">top.location = top.location;</script>';
   exit;
 }

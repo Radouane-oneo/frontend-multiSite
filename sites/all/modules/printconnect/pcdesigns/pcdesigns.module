@@ -207,6 +207,7 @@ function pcdesigns_callback() {
     case 2:
 
     case 1:
+      print update_domain();
       print '<script type="text/javascript">top.location = top.location;</script>';
       break;
     default:
@@ -249,7 +250,7 @@ function pcdesigns_callback() {
 
 
 
-
+        print update_domain();
         print '<script type="text/javascript">top.location = "' . url('cart') . '";</script>';
         break;
       } else {
@@ -262,6 +263,7 @@ function pcdesigns_callback() {
 
   exit;
   if (isset($_GET['doClose']) && $_GET['doClose'] > 0) {
+    print update_domain();
     print '<script type="text/javascript">top.location = top.location;</script>';
     exit;
   }

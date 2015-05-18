@@ -28,12 +28,12 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
                         '#markup' => $inline_script,
                         '#weight' => 5
                     );
- 
+
     drupal_add_html_head($element_fcb, 'script_tag_fcb');
-  
+
 
   // drupal_set_title(t('Order confirmation - @number - ', array('@number' => $order->number)));
-  
+
   $form['status'] = array(
       '#markup' => t('Your order is now in status %status', array('%status' => $order->status)),
   );
@@ -245,7 +245,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
   $totalPrice = 0;
   $idproducts = null;
   foreach ($order->productItems as $item) {
-  
+
     $form['order']['details']['item'][$item->id] = array(
         '#type' => 'container',
         '#attributes' => array('class' => array('item', 'clearfix'))
@@ -307,15 +307,15 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         '#attributes' => array('class' => array('description')),
     );
 
-    
+
     $price = $item->convertedPrice;
-    
+
     foreach ($item->options as $option) {
       $price +=  $option->convertedPrice;
     }
-    
+
     $price *= (1-$item->discount);
-    
+
     $form['order']['details']['item'][$item->id]['description']['price'] = array('#markup' => theme('price', array('value' => $price)));
 
     if($price < $item->originPrice){
@@ -331,7 +331,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         '#markup' => $item->quantity . ' ' . $item->configuration->name,
         '#suffix' => '</h3>',
     );
-    
+
     $totalPrice += $price; // total product price for tracking vente
 
     $rows = array();
@@ -444,11 +444,11 @@ function _pcorders_order_form_build_overview($order) {
 
   if ($order) {
     $rows = array();
-    
+
     foreach ($order->orderItems as $item) {
         $configs = $item->configuration->config;
         $primaryItem = $configs[0];
-        if ($item->fileCheck) {                 
+        if ($item->fileCheck) {
             $rows[] = array(
                 'data' => array(
                   t('Control professional').' '.$item->quantity . ' ' . t('pcs.') . ' ' . $item->configuration->name . ' - ' . $primaryItem->name,
@@ -457,7 +457,7 @@ function _pcorders_order_form_build_overview($order) {
             );
         }
     }
-    
+
     if ($order->orderItemsAdditional) {
       foreach ($order->orderItemsAdditional as $item) {
         $rows[] = array(
@@ -551,7 +551,7 @@ function pcorders_order_form_reorder($form, $form_state) {
     $cartId = $form_state['storage']['cartId'];
     $jobid = $form_state['triggering_element']['#name'];
 //    $order = $form_state['storage']['order'];
-    
+
   $newCart = \printconnect\Orders\Factory::Reorder($cartId, $jobid);
   $_SESSION['cartid'] = $newCart->id;
   drupal_goto('cart');
@@ -578,6 +578,6 @@ function _pcorders_designtoolcallback() {
 // \printconnect\Carts\Factory::Refresh($cart);
   }
 
-  print '<script type="text/javascript">document.domain = "flyer.fr";top.location = top.location;</script>';
+  print '<script type="text/javascript">try{document.domain="flyer.fr";}catch(e){console.log(e);}top.location = top.location;</script>';
   exit;
 }

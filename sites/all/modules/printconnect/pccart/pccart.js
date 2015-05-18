@@ -6,7 +6,7 @@
     attach: function (context, settings) {
       $('.page-products .all-products .item-list li:nth-child(3n)').addClass('right-item');
       // $('#pccart-cart-form > div > .actions').once().clone().insertBefore($('#pccart-cart-form > div > fieldset'));
-     
+
       /*
       $('#pccart-cart-form .shipping input[type="radio"]').once().change(function(){
         submitCartForm($(this));
@@ -25,15 +25,16 @@
         return false;
       });
 */
-   document.domain = 'flyer.fr';
+   try{ document.domain = 'flyer.fr'; }
+   catch(e){ console.log(e); }
    var count = 0;
    var visited = 0;
    var visitedControl = 0;
-   var controlvalue = 4.99; 
+   var controlvalue = 4.99;
    var livraisonvalue = 10;
    var previousVatPercentage = parseFloat($('#oldVat').html());
    var tvaSession = previousVatPercentage.toFixed(2);
-   function reloadFormPcCart(){       
+   function reloadFormPcCart(){
        var tvaActuel = 0;
        var tva = tvaSession;
        $('.cartItemsContainer > div > div').each(function(){
@@ -42,7 +43,7 @@
             element.find(".currency").remove();
             var price = element.text();
             price = parseFloat(price.replace(",", "."));
-        
+
             var tvaValue = ($(this).find(".tvaCase").is(":checked"))? 0.06 : tvaSession;
             if ($(this).find(".tvaCase").is(":checked")){
                 tva = 0.06;
@@ -52,7 +53,7 @@
             }
             tvaActuel = tvaActuel + price * tvaValue;
         });
-        var livraison = $('#pccart-cart-form input[name="cart[shipping][type]"]:checked').val(); 
+        var livraison = $('#pccart-cart-form input[name="cart[shipping][type]"]:checked').val();
         if(livraison == 122)
             tvaActuel = tvaActuel + (livraisonvalue * tva);
 
@@ -64,28 +65,28 @@
         var totalDecimals = $('#pccart-cart-form .subtotal .value .decimals').text();
         var total = totalWhole + '.' + totalDecimals
         total = parseFloat(total);
-        
-        var priceTotal = parseFloat(total) + tvaActuel; 
+
+        var priceTotal = parseFloat(total) + tvaActuel;
         priceTotal = priceTotal.toFixed(2);
-        var priceTotalArray = priceTotal.split('.');        
+        var priceTotalArray = priceTotal.split('.');
         $('#pccart-cart-form .actions .value .whole').text(priceTotalArray[0]);
         $('#pccart-cart-form .actions .value .decimals').text(priceTotalArray[1]);
-        
+
         tvaActuel = tvaActuel.toFixed(2);
         var tvaActuelArray = tvaActuel.split('.');
         $('#pccart-cart-form .priceblock .vat .value .whole').text(tvaActuelArray[0])
         $('#pccart-cart-form .priceblock .vat .value .decimals').text(tvaActuelArray[1]);
       //  $('#pccart-cart-form .vat').html('<span decimal_separator="," class="price"><span class="currency">€</span>&nbsp;<span class="value">'+tvaActuel +'</span></span>');
-    } 
-     
+    }
+
       function updatCartItemVat(cartItem, status) {
         $.post('cart/updatItemVat/id/'+cartItem+'/status/'+status,{},function(){
-            
-            
+
+
         });
-        
+
       }
-      
+
       $('#pccart-cart-form .tvaCase').once().click(function(){
         //recuperation de la valeur price
         var p = $(this).parents(".tva").siblings(".price").find(".value");
@@ -102,25 +103,25 @@
            if (confirm("Si vous choisissez le tva 6%, l'adresse de livraison sera en Belgique")) {
                 updatCartItemVat($(this).attr('data-element'), 1);
                 count = count + 1;
-                var vat = price * 0.06;            
+                var vat = price * 0.06;
                 var tvaActuel = tvaOrigin - (price * tvaSession) + vat;
                 tvaActuel = tvaActuel.toFixed(2);
            }else{
                 $(this).removeAttr("checked");
-                return true;             
-            } 
+                return true;
+            }
         }
         else
         {
             updatCartItemVat($(this).attr('data-element'), 0);
             count = count - 1;
-            var vat = price * tvaSession;            
+            var vat = price * tvaSession;
             var tvaActuel = tvaOrigin - (price * 0.06) + vat;
-            tvaActuel = tvaActuel.toFixed(2);   
-        }  
-      
+            tvaActuel = tvaActuel.toFixed(2);
+        }
+
         var control = $('#pccart-cart-form input[name="cart[checks][options]"]:checked').val();
-        if (count != 0 && (control == 1) && (visitedControl != 1) ){         
+        if (count != 0 && (control == 1) && (visitedControl != 1) ){
             tvaActuel = tvaActuel - controlvalue * tvaSession + controlvalue * 0.06;
             visitedControl = 1;
         }
@@ -128,9 +129,9 @@
             tvaActuel = tvaActuel - controlvalue * 0.06 + controlvalue * tvaSession;
             visitedControl = 0;
         }
-        
-        var livraison = $('#pccart-cart-form input[name="cart[shipping][type]"]:checked').val();         
-        if (count != 0 && (livraison == 122) && (visited != 1) ){         
+
+        var livraison = $('#pccart-cart-form input[name="cart[shipping][type]"]:checked').val();
+        if (count != 0 && (livraison == 122) && (visited != 1) ){
             tvaActuel = tvaActuel - livraisonvalue * tvaSession + livraisonvalue * 0.06;
             visited = 1;
         }
@@ -139,7 +140,7 @@
             visited = 0;
         }
         tvaActuel = parseFloat(tvaActuel).toFixed(2);
-        tvaActuel = tvaActuel.toString();          
+        tvaActuel = tvaActuel.toString();
         var tvaActuelArray = tvaActuel.split('.');
         $('#pccart-cart-form .priceblock .vat .value .whole').text(tvaActuelArray[0])
         $('#pccart-cart-form .priceblock .vat .value .decimals').text(tvaActuelArray[1]);
@@ -149,17 +150,17 @@
         var total = totalWhole + '.' + totalDecimals
         total = parseFloat(total);
         tvaActuel = parseFloat(tvaActuel);
-        var priceTotal = parseFloat(total) + tvaActuel; 
-        priceTotal = priceTotal.toFixed(2);        
+        var priceTotal = parseFloat(total) + tvaActuel;
+        priceTotal = priceTotal.toFixed(2);
         var priceTotalArray = priceTotal.split('.');
-        
+
         $('#pccart-cart-form .actions .value .whole').text(priceTotalArray[0]);
         $('#pccart-cart-form .actions .value .decimals').text(priceTotalArray[1]);
-    
-      }); 
-      
-      
-      
+
+      });
+
+
+
       $('#pccart-cart-form .discount input[type="text"]').bind("keydown", function(event) {
         var keycode = (event.keyCode ? event.keyCode : (event.which ? event.which : event.charCode));
         if (keycode == 13) {
@@ -236,20 +237,20 @@
       $('#pccart-cart-form input[name="message"]').once().each(function(){
         alert($(this).val());
       });
-     // remove control 
+     // remove control
     $('#pccart-cart-form .removecontrol').once().click(function(){
-        if (confirm("Voulez-vous supprimer le controle  professionnel ?")) {              
-            $.post('cart/controlprof/'+$(this).attr('rel')+'/delete',{},function(){             
+        if (confirm("Voulez-vous supprimer le controle  professionnel ?")) {
+            $.post('cart/controlprof/'+$(this).attr('rel')+'/delete',{},function(){
             }).done(function() {
                  location.reload();
             });
-            return false;             
-        }else{             
-            return false;        
-        } 
+            return false;
+        }else{
+            return false;
+        }
       });
     }
-     
+
   }
 })(jQuery);
 
@@ -265,7 +266,7 @@ function submitCartForm(triggeringElement) {
   var data = form.serialize();
 
   form.css('cursor', 'wait');
-  
+
 
   if (triggeringElement) {
     data = '_triggering_element_name=' + triggeringElement.attr("name") + '&' + data;
@@ -334,13 +335,13 @@ function pccartPickerCallback(pup){
   jQuery('#pccart-cart-form .pup').replaceWith(pup.html);
   jQuery('#pccart-cart-form input[name="cart[shipping][pup][id]"]').val(pup.id);
   jQuery('#pccart-cart-form input[name="cart[shipping][pup][countryCode]"]').val(pup.countryCode);
-  
+
 
   jQuery.fancybox.close() ;
-  
+
 // jQuery('#pccart-cart-form #edit-cart-shipping-type-29').click();
-  
-  
+
+
 }
 
 function designtoolCallback(){

@@ -465,7 +465,7 @@ function _pcogone_cancel($args) {
   }
   
   drupal_goto($callback);
-
+  print update_domain();
   print '
   <script language="JavaScript">
     top.location = "' . $callback . '";
@@ -539,6 +539,7 @@ function _pcogone_accept($args) {
     }
 
     drupal_goto($callback);
+    print update_domain();
     print'
      <script language="JavaScript">
     top.location = "' . $callback . '";

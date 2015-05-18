@@ -651,7 +651,7 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
 
     $script = "<script type='text/javascript'>
         var GlobalProductId = ". $productId .";
-	var GlobalLabels = ". json_encode($labels) .";
+	      var GlobalLabels = ". json_encode($labels) .";
         var GlobalIsAdmin = ". $isAdmin .";
         var GlobalDefaultItems = ".json_encode($gItems).";
         var GlobalDefaultOptions = ".json_encode($gOtions).";

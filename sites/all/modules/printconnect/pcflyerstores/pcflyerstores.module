@@ -930,7 +930,7 @@ function pcflyerstores_picker_callback($id) {
     if ($cart) {
         $store = \printconnect\Stores\Factory::Get($id);
         \printconnect\Stores\Factory::LoadStore($store);
-	$cart->pickuppoint = $store;
+	    $cart->pickuppoint = $store;
         \printconnect\Carts\Factory::SaveStore($cart);
     }
 

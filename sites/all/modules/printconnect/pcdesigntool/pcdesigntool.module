@@ -169,6 +169,7 @@ function pcdesigntool_callback() {
     case 2:
 
     case 1:
+      print update_domain();
       print '<script type="text/javascript">top.location = top.location;</script>';
       break;
     default:
@@ -211,6 +212,7 @@ function pcdesigntool_callback() {
         \printconnect\Carts\Factory::SaveItem($item);
 //\printconnect\Carts\Factory::RefreshItem($item);
         \printconnect\Carts\Factory::Refresh($cart);
+        print update_domain();
         print '<script type="text/javascript">top.location = top.location;</script>';
         break;
       }

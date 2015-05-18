@@ -534,6 +534,7 @@ function pctemplates_callback($type) {
         }
 
         Carts\Factory::SaveItem($item);
+        print update_domain();
         print "<script type=\"text/javascript\">top.location = '" . url('cart') . "';</script>";
         break;
       }

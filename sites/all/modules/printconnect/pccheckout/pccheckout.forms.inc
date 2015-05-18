@@ -1311,10 +1311,11 @@ function pccheckout_payment_form($form, &$form_state) {
         '#attributes' => array('class' => array('grid', 'clearfix', 'rows-' . count($methods), 'payment-methods-table')),
         '#default_value' => $cart->payment_method,
     );
-
+  
     $form['payment']['method']['text'] = array(
         '#type' => 'container',
-        '#attributes' => array('class' => array('text')),
+        "#id" => 'edit-payment-method-text',
+        '#attributes' => array('class' => array('text', 'imgpayment')),
         'content' => array(
             '#markup' => '',
         ),
@@ -1463,6 +1464,9 @@ function _pccheckout_payment_form_build_overview($cart) {
         }
         $type = \printconnect\Shipping\Types\Factory::Get($cart->orderItemShipping->shippingTypeResellerShop);
 	\printconnect\Shipping\Types\Factory::LoadType($type);
+     if(!isset($type->shippingType->tag)){
+         $type->shippingType->tag  = t('shippingType');
+     }
         $rows[] = array(
             'data' => array(
                 '<strong>'. $type->shippingType->tag . '</strong>',

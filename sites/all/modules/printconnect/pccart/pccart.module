@@ -750,29 +750,31 @@ function _pccart_callback() {
         break;
        case 'discount':
         $code = $_POST['code'];
-	if ($code != null) {
-        $cart = Factory::Current();
-	$orderItems = $cart->orderItems;
-        $data = array("order"=>$cart->id,"code"=> $code);
-        $jsondata = json_encode($data);
-        $apikey = variable_get('pc_apikey');
-        $url = variable_get('pc_url');
-        $url .= "order-discount-code/?apikey=$apikey&language=10";
-        $header = array('Content-Type' => 'application/x-www-form-urlencoded');
-        $jsonResponse = drupal_http_request($url, array('header' => $header, 'method' => 'POST', 'data' => $jsondata));
-        $response = json_decode($jsonResponse->data);
-        if (isset($response->orderItemDiscount) && $response->orderItemDiscount != null) {
-            $orderItems[] = $response->orderItemDiscount;
-            $cart->orderItems = $orderItems;
-	    $cartAmounts = $response->cartAmount;
-            Factory::saveInCache($cart, array(
-                'orderItems' => $orderItems,
-		'subTotalAmount' => $cartAmounts->subTotalAmount,
-                'vatAmount' => $cartAmounts->vatAmount,
-                'totalAmount' => $cartAmounts->totalAmount,
-            ));
-	}
-            echo $jsonResponse->data;die;
+        $force = isset($_POST['force']) ? $_POST['force'] : 0;
+      	if ($code != null) {
+              $cart = Factory::Current();
+              $orderItems = $cart->orderItems;
+              $data = array("order"=>$cart->id,"code"=> $code, "force" => $force);
+              $jsondata = json_encode($data);
+              $apikey = variable_get('pc_apikey');
+              $url = variable_get('pc_url');
+              $url .= "order-discount-code/?apikey=$apikey&language=10";
+              $header = array('Content-Type' => 'application/x-www-form-urlencoded');
+              $jsonResponse = drupal_http_request($url, array('header' => $header, 'method' => 'POST', 'data' => $jsondata));
+              $response = json_decode($jsonResponse->data);
+              if (isset($response->orderItemDiscount) && $response->orderItemDiscount != null) {
+                  $orderItems[] = $response->orderItemDiscount;
+                  $cart->orderItems = $orderItems;
+      	          $cartAmounts = $response->cartAmount;
+                  Factory::saveInCache($cart, array(
+                      'orderItems' => $orderItems,
+      		            'subTotalAmount' => $cartAmounts->subTotalAmount,
+                      'vatAmount' => $cartAmounts->vatAmount,
+                      'totalAmount' => $cartAmounts->totalAmount,
+                  ));
+      	}
+        
+        echo $jsonResponse->data;die;
 	}
       break;
       case 'item_delete':

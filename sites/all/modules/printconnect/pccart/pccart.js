@@ -16,7 +16,11 @@
    }); 
    
    $('.removecontrol').click(function(){
-	$.post('cart/controlprof/'+$(this).attr('rel')+'/delete');
+	$.post('cart/controlprof/'+$(this).attr('rel')+'/delete', function(response){
+    if(typeof $("#discountCodeVal")[0] != "undefined"){
+      applyDiscount($("#discountCodeVal"), 1);
+    }
+  });
 	$(this).parent().fadeOut("slow");
 	$(this).parent().remove();
 	$('.itemfile-'+$(this).attr('rel')).remove();
@@ -30,6 +34,9 @@
 	$(this).parents('.job').fadeOut("slow"); 		
 	$.post('cart/deletedesign/'+$(this).attr('itemFileId'),{},function(){
 	   $(this).parents('.job').remove(); 
+      if(typeof $("#discountCodeVal")[0] != "undefined"){
+        applyDiscount($("#discountCodeVal"), 1);
+      }
 	});
 	if ($('.fotolia-items-'+$(this).attr('itemFileId')).length < $('.fotolia-items').length) {
             $('.fotolia-items-'+$(this).attr('itemFileId')).parent().remove();
@@ -84,6 +91,9 @@
             type: "POST",
             url: url,
             success: function (data) {
+                if(typeof $("#discountCodeVal")[0] != "undefined"){
+                  applyDiscount($("#discountCodeVal"), 1);
+                }
                 targetItem.parents('job').remove();
                 if (number <= 0) {
                   $('.jsDiscount').remove();
@@ -147,41 +157,49 @@ function PriceCallback(){
    }
 }
 
+function renderDiscount(data)
+{
+  var disocunt = '<input type="hidden" name="disocunt" value="-' + data.discountAmount+  '">';
+  jQuery("#pccart-cart-form #hiddenPrices").append(disocunt);
+  PriceCallback();
+  if (jQuery(".lodediscounts")[0]) {
+      jQuery("#pccart-cart-form .lodediscounts #edit-cart-discounts .fieldset-wrapper").append("<div class='form-wrapper'><div class='prefix form-wrapper'>Promo</div><div class='description form-wrapper'><span class='styleprice price'><span class='value'><span class='whole'>- "+data.discountAmount+"</span><span class='decimalpoint'>,</span><span class='decimals'>00</span>&nbsp;<span class='currency'>€</span></span></span><div class='form-wrapper'>Vous utilisez:" + data.orderItemDiscount.discountId + "</div><div id='edit-cart-discounts-20272-description-items-description' class='form-wrapper'>Code de test pour "+data.orderItemDiscount.productName+"</div></div></div>");
+  }else{
+      if (jQuery("#fieldsetjsDiscount")[0]) {
+          jQuery("#pccart-cart-form .jsDiscount #fieldsetjsDiscount #edit-cart-discounts .fieldset-wrapper").append("<div  class='form-wrapper'><div class='prefix form-wrapper'>Promo</div><div class='description form-wrapper'><span class='styleprice price'><span class='value'><span class='whole'>- "+data.discountAmount+"</span><span class='decimalpoint'>,</span><span class='decimals'>00</span>&nbsp;<span class='currency'>€</span></span></span><div class='form-wrapper'>Vous utilisez:<span id='discountCodeVal'>" + data.orderItemDiscount.code + "</span></div><div id='edit-cart-discounts-20272-description-items-description' class='form-wrapper'>Code de test pour "+data.orderItemDiscount.productName+"</div></div></div>");
+      } else {
+          jQuery("#pccart-cart-form .jsDiscount").append("<div id='fieldsetjsDiscount'><fieldset class='discounts item form-wrappersss' id='edit-cart-discounts'><legend><span class='fieldset-legend'>Réductions</span></legend><div class='fieldset-wrapper'><div  class='form-wrapper'><div class='prefix form-wrapper'>Promo</div><div class='description form-wrapper'><span class='styleprice price'><span class='value'><span class='whole'>- "+data.discountAmount+"</span><span class='decimalpoint'>,</span><span class='decimals'>00</span>&nbsp;<span class='currency'>€</span></span></span><div class='form-wrapper'>Vous utilisez:" + data.orderItemDiscount.discountId + "</div><div id='edit-cart-discounts-20272-description-items-description' class='form-wrapper'>Code de test pour "+data.orderItemDiscount.productName+"</div></div></div></div></fieldset></div>");
+
+      }
+  }
+}
+
+function applyDiscount(code, force)
+{
+  jQuery.ajax({
+      type: "POST",
+      url :'cart/discount',
+      data : {
+          'code' :disocuntname,
+          'force' : force
+      },
+      dataType : 'json',
+
+      success: function (data) {
+          if (!isNaN(data.discountAmount)){
+              renderDiscount(data);
+          }else{
+              jQuery('#edit-cart-discount').before('<p style=" color: #F00; font-weight: 600; font-size: 13px; "> Désolé, ce code promotionnel a déjà été utilisé ou non validé</p>');
+          }
+      }
+  });
+}
 
 jQuery(document).ready(function(){
     jQuery("#edit-cart-discount-add").click(function (event) {
-     event.preventDefault();
-      var disocuntname = jQuery("#pccart-cart-form #edit-cart-discount-code").val();
-        jQuery.ajax({
-            type: "POST",
-            url :'cart/discount',
-            data : {
-                code :disocuntname
-            },
-            dataType : 'json',
-
-            success: function (data) {
-                if (!isNaN(data.discountAmount)){
-                    var disocunt = '<input type="hidden" name="disocunt" value="-' + data.discountAmount+  '">';
-                    jQuery("#pccart-cart-form #hiddenPrices").append(disocunt);
-                    PriceCallback();
-                    if (jQuery(".lodediscounts")[0]) {
-                        jQuery("#pccart-cart-form .lodediscounts #edit-cart-discounts .fieldset-wrapper").append("<div class='form-wrapper'><div class='prefix form-wrapper'>Promo</div><div class='description form-wrapper'><span class='styleprice price'><span class='value'><span class='whole'>- "+data.discountAmount+"</span><span class='decimalpoint'>,</span><span class='decimals'>00</span>&nbsp;<span class='currency'>€</span></span></span><div class='form-wrapper'>Vous utilisez:" + data.orderItemDiscount.discountId + "</div><div id='edit-cart-discounts-20272-description-items-description' class='form-wrapper'>Code de test pour "+data.orderItemDiscount.productName+"</div></div></div>");
-                    }else{
-                        if (jQuery("#fieldsetjsDiscount")[0]) {
-                            jQuery("#pccart-cart-form .jsDiscount #fieldsetjsDiscount #edit-cart-discounts .fieldset-wrapper").append("<div  class='form-wrapper'><div class='prefix form-wrapper'>Promo</div><div class='description form-wrapper'><span class='styleprice price'><span class='value'><span class='whole'>- "+data.discountAmount+"</span><span class='decimalpoint'>,</span><span class='decimals'>00</span>&nbsp;<span class='currency'>€</span></span></span><div class='form-wrapper'>Vous utilisez:" + data.orderItemDiscount.discountId + "</div><div id='edit-cart-discounts-20272-description-items-description' class='form-wrapper'>Code de test pour "+data.orderItemDiscount.productName+"</div></div></div>");
-                        } else {
-                            jQuery("#pccart-cart-form .jsDiscount").append("<div id='fieldsetjsDiscount'><fieldset class='discounts item form-wrappersss' id='edit-cart-discounts'><legend><span class='fieldset-legend'>Réductions</span></legend><div class='fieldset-wrapper'><div  class='form-wrapper'><div class='prefix form-wrapper'>Promo</div><div class='description form-wrapper'><span class='styleprice price'><span class='value'><span class='whole'>- "+data.discountAmount+"</span><span class='decimalpoint'>,</span><span class='decimals'>00</span>&nbsp;<span class='currency'>€</span></span></span><div class='form-wrapper'>Vous utilisez:" + data.orderItemDiscount.discountId + "</div><div id='edit-cart-discounts-20272-description-items-description' class='form-wrapper'>Code de test pour "+data.orderItemDiscount.productName+"</div></div></div></div></fieldset></div>");
-
-                        }
-                    }
-                }else{
-                    jQuery('#edit-cart-discount').before('<p style=" color: #F00; font-weight: 600; font-size: 13px; "> Désolé, ce code promotionnel a déjà été utilisé ou non validé</p>');
-                }
-            }
-        });
-
-     
+        event.preventDefault();
+        var disocuntname = jQuery("#pccart-cart-form #edit-cart-discount-code").val();
+        applyDiscount(disocuntname, 0);
     });
 
 });

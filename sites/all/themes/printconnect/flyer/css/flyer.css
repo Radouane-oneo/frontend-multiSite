@@ -19,6 +19,29 @@
 }*/
 
 /* END - Browser text selection */
+#footer .block.search-footer{
+	float: left;
+	background: url("images/bg_blocks.png") no-repeat 0 0;
+	width: 181px;
+	height: 226px;
+	position: relative;
+	padding: 14px 11px 0;
+}
+
+#footer .block.search-footer a.button{
+	position: absolute;
+	bottom: 4px;
+	width: 96%;
+	left: 0;
+	background: none;
+	-webkit-border-radius: 0 0 3px 3px;
+	-moz-border-radius: 0 0 3px 3px;
+	border-radius: 0 0 3px 3px;
+	background: url(images/sprite_icons.png) no-repeat 28px -459px;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
 html, html a {
 	-webkit-font-smoothing: subpixel-antialiased
 }
@@ -4093,22 +4116,9 @@ a.googleconnect {
 }
 .page-checkout #shipping-address, 
 .page-checkout #invoice-address {
-<<<<<<< HEAD
-padding: 20px 20px;
-width: 952px;
-border-color: #e1e1e1;
-border-style: solid;
-border-width: 1px;
--webkit-border-radius: 3px;
--moz-border-radius: 3px;
-border-radius: 3px;
-padding-bottom: 10px;
-background: #f1f1f1;
-=======
-	/*width: 640px;*/
+
           padding: 0 20px;
     width: 960px;
->>>>>>> f9136c480daccd0818db772eb9e4ad7bde8ed87e
 }
 .page-checkout #shipping-address.form-wrapper, 
 .page-checkout #invoice-address.form-wrapper {
@@ -4477,11 +4487,8 @@ background: #f1f1f1;
 
 .page-paymentrequest table.grid,
 #pccheckout-payment-form table.grid {
-<<<<<<< HEAD
-	width: 526px;
-=======
+
 	width: 497px;
->>>>>>> f9136c480daccd0818db772eb9e4ad7bde8ed87e
 	border: 1px solid #e1e1e1;
 	border-collapse: separate;
 	border-radius: 3px;
@@ -4499,8 +4506,7 @@ background: #f1f1f1;
 #pccheckout-payment-form .payment-methods-table{
     float:left;
        border-right: medium none !important;
-<<<<<<< HEAD
-=======
+
 }
 .imgpayment{
     background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/paymentmethods/payment.jpg") no-repeat scroll center top #fff;
@@ -4513,7 +4519,6 @@ background: #f1f1f1;
     text-align: center;
     width: 476px;
     margin-bottom: 10px;
->>>>>>> f9136c480daccd0818db772eb9e4ad7bde8ed87e
 }
 
 .page-paymentrequest-key table.grid.clearfix:after, 
@@ -8037,29 +8042,7 @@ div.myoffers table.list thead tr th:nth-child(2){
 	height: 8px;
 }
 
-#footer .block.search-footer{
-	float: left;
-	background: url("images/bg_blocks.png") no-repeat 0 0;
-	width: 181px;
-	height: 226px;
-	position: relative;
-	padding: 14px 11px 0;
-}
 
-#footer .block.search-footer a.button{
-	position: absolute;
-	bottom: 4px;
-	width: 96%;
-	left: 0;
-	background: none;
-	-webkit-border-radius: 0 0 3px 3px;
-	-moz-border-radius: 0 0 3px 3px;
-	border-radius: 0 0 3px 3px;
-	background: url(images/sprite_icons.png) no-repeat 28px -459px;
-	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
-	box-sizing: border-box;         /* Opera/IE 8+ */
-}
 
 .page-products #block-system-main .description + div{
 	border-top-width: 1px;
@@ -8223,11 +8206,8 @@ form#pccheckout-payment-form fieldset legend{
 	display: block;
 	padding: 18px 0;
 }
-<<<<<<< HEAD
-form#pccheckout-payment-form fieldset#edit-payment-method legend{
-=======
+
 form#pccheckout-payment-form fieldset.paymentmethodefond legend{
->>>>>>> f9136c480daccd0818db772eb9e4ad7bde8ed87e
 	
 	border-width: 1px 1px 0 1px;
 	margin: 0;
@@ -8253,11 +8233,8 @@ form#pccheckout-payment-form fieldset{
 	-moz-border-radius: 0 0 3px 3px;
     border-radius: 0 0 3px 3px;
 }
-<<<<<<< HEAD
-form#pccheckout-payment-form  #edit-payment-method{
-=======
+
 form#pccheckout-payment-form  .paymentmethodefond{
->>>>>>> f9136c480daccd0818db772eb9e4ad7bde8ed87e
       background-color: #f1f1f1;
 }
 
@@ -8273,11 +8250,8 @@ form#pccheckout-payment-form .payment-methods-table tr {
 form#pccheckout-payment-form table{
   padding-bottom: 13px;
 }
-<<<<<<< HEAD
-form#pccheckout-payment-form fieldset#edit-payment-method .fieldset-wrapper{
-=======
+
 form#pccheckout-payment-form fieldset.paymentmethodefond .fieldset-wrapper{
->>>>>>> f9136c480daccd0818db772eb9e4ad7bde8ed87e
 	padding-bottom: 0;
 	margin-bottom: 0;
          border-left: 1px solid #e1e1e1;

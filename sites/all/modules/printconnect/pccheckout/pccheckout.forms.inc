@@ -742,6 +742,8 @@ function pccheckout_invoiceanddelivery_form_invoice_validate($form, &$form_state
     $billingAccount->customer = $customer->id;
     try {
         \printconnect\Customers\BillingAccounts\Factory::Validate(clone $billingAccount);
+        //j'ai ajouté cette ligne pour corriger le bug BUGS-3987
++       $_SESSION['billingAccountId'] = $billingAccountId;
     } catch (\printconnect\Dal\Exception $ex) {
         \printconnect\Drupal\Forms::HandleException($ex, $form, 'invoice][address][current][');
     }
@@ -799,6 +801,8 @@ function pccheckout_invoiceanddelivery_form_shipping_validate($form, &$form_stat
     $address->customer = $customer->id;
     try {
         \printconnect\Customers\Addresses\Factory::Validate(clone $address);
+        //j'ai ajouté cette ligne pour corriger le bug BUGS-3987
++       $_SESSION['shippingAddress'] = $form_state['values']['shipping']['detail']['current']['select'];
     } catch (\printconnect\Dal\Exception $ex) {
         \printconnect\Drupal\Forms::HandleException($ex, $form, 'shipping][detail][current][');
     }
@@ -1582,7 +1586,29 @@ function pccheckout_payment_form_callback($form, &$form_state) {
 }
 
 function pccheckout_payment_form_validate($form, &$form_state) {
-    $cart = $form_state['storage']['cart'];
+    $cart = $form_state['storage']['cart'];    
+    
+    //loubna: j'ai ajouté ce code pour corriger le bug BUGS-3987
+    if( empty($cart->billingAccount) ){
+        $cartcurrent = \printconnect\Carts\Factory::Current(FALSE);        
+        if ( empty($cartcurrent->billingAccount) ){
+            $cartcurrent->billingAccount = $_SESSION['billingAccountId'];
+            \printconnect\Carts\Factory::Save($cartcurrent);
+        }    
+    }
+    
+    if(!isset($cart->pickuppoint)){
+        if( empty($cart->shipping_address) ){
+            $cartcurrent = \printconnect\Carts\Factory::Current(FALSE);
+            if ( empty($cartcurrent->shipping_address)) { 
+                $cartcurrent->shipping_address = $_SESSION['shippingAddress'];
+                $cartcurrent->pickuppoint = FALSE;
+                \printconnect\Carts\Factory::Save($cartcurrent);
+            }
+        }
+    }
+    //fin code
+   
     $totalAmount = $cart->totalAmount;
     if (isset($form_state['values']['payment']['credit']['use'])
             && $form_state['values']['payment']['credit']['use'] == 'yes'

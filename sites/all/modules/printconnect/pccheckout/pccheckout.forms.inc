@@ -1598,7 +1598,7 @@ function pccheckout_payment_form_validate($form, &$form_state) {
     }
     
     if(!isset($cart->pickuppoint)){
-        if( empty($cart->shipping_address) ){echo 'lolo';
+        if( empty($cart->shipping_address) ){
             $cartcurrent = \printconnect\Carts\Factory::Current(FALSE);
             if ( empty($cartcurrent->shipping_address)) { 
                 $cartcurrent->shipping_address = $_SESSION['shippingAddress'];

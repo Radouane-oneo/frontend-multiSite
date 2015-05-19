@@ -748,10 +748,6 @@ global $language;
     }
 
         $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop != null ? $cart->orderItemShipping->shippingTypeResellerShop : 86;
-        $myval = intval($cart->convertedTotalAmount) - 19;
-    if ($myval <= 50) {
-        unset($options[349]);
-    }
   
         $cart->shipping_type = $_SESSION['defaultindex'];
 

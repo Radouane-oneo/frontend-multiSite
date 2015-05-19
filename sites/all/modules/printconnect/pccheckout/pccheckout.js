@@ -6,7 +6,6 @@
              $('#fademe').addClass('black_overlay');
         $("input[name='invoice[address][current][vatNumber][number]']").val('');
     });
-
     $(".valid-button-btt").live("click", function () {
         var number = $('#edit-invoice-address-current-vatnumber-number').val();
         var country = $('#edit-invoice-address-current-vatnumber-country').val();
@@ -38,9 +37,7 @@
             $('#edit-invoice-address-current-vatnumber-country').removeClass('error');
         }
     });
-
-
-
+  
     /* display  vat & company on load if adress is Company */
     $(document).ready(function () {
 
@@ -371,7 +368,7 @@ function pccheckout_submit_form(form, triggeringElement) {
     form.css('cursor', 'wait');
 
     if (triggeringElement) {
-        data = '_triggering_element_name=' + triggeringElement.attr("name") + '&' + data;
+        data = '_triggering_element_name=' + triggeringElement.attr("name") + '&' + data; 
     }
 
     data = data + '&op=ajax';

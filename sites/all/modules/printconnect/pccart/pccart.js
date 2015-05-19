@@ -1,113 +1,111 @@
-
 (function ($) {
-  Drupal.behaviors.pccart = {
-    detach: function (context) {
-    },
-    attach: function (context, settings) {
+    Drupal.behaviors.pccart = {
+        detach: function (context) {
+        },
+        attach: function (context, settings) {
+            try{document.domain = 'flyer.fr';}
+            catch(e){console.log(e);}
 
-   $('.refCustomer').blur(function() {
-	$.post('cart/customer/ref/'+$(this).attr('cart'),{'ref' : $(this).val()});       
-   });
+            $('.refCustomer').blur(function() {
+                 $.post('cart/customer/ref/'+$(this).attr('cart'),{'ref' : $(this).val()});       
+            });
 
-   $('.refjobTxt').blur(function(){
-       $.post('cart/job/ref/'+$(this).attr('orderItem'),{'ref' : $(this).val()});
-   }); 
-   
-   $('.removecontrol').click(function(){
-	$.post('cart/controlprof/'+$(this).attr('rel')+'/delete');
-	$(this).parent().fadeOut("slow");
-	$(this).parent().remove();
-	$('.itemfile-'+$(this).attr('rel')).remove();
-	PriceCallback();
-		
-	return false;
-   });
+            $('.refjobTxt').blur(function(){
+                $.post('cart/job/ref/'+$(this).attr('orderItem'),{'ref' : $(this).val()});
+            }); 
 
-   $('.deletedesign').click(function(e){
-	$('.item-hide-'+$(this).attr('itemFileId')).fadeIn("slow");
-	$(this).parents('.job').fadeOut("slow"); 		
-	$.post('cart/deletedesign/'+$(this).attr('itemFileId'),{},function(){
-	   $(this).parents('.job').remove(); 
-	});
-	if ($('.fotolia-items-'+$(this).attr('itemFileId')).length < $('.fotolia-items').length) {
-            $('.fotolia-items-'+$(this).attr('itemFileId')).parent().remove();
-        } else if ($('.fotolia-items-'+$(this).attr('itemFileId')).length == $('.fotolia-items').length) {
-            $('.fotolia-items-'+$(this).attr('itemFileId')).parents('fieldset').remove();
-        }
-	$('.item-'+$(this).attr('itemFileId')).remove();
-	PriceCallback();	
-	return false;
-	/*$.post(Drupal.settings.basePath+'/designdelete/'+$(this).attr('itemFileId').val());
-	PriceCallback();
-        return false;*/
-   });
-   
-    $('table.targetPrice tr').each(function(){
-	if ($(this).find('input.targetPrice').is(":checked") && $(this).find('.storeLink').length > 0){
-		$(this).find('.storeLink').show();
-	}
-	if ($(this).find('input.targetPrice').is(":checked")) {
-	    $.post('cart/'+$(this).find('input.targetPrice').val()+'/submit');
-	}
-	
-   });
-   $('table.targetPrice tr').mousedown(function () {
-	   $('.storeLink').hide();
-	   if ($(this).find('.storeLink').length > 0) {
-	       $(this).find('.storeLink').show();
-	   }
-           if ($(this).find('input.targetPrice').is(":not(:checked)")){
-               if($(this).find('input.targetPrice').val() ==  84){
-               var shpping = '<input type="hidden" name="shpping" value="14.99">';
-               $("#pccart-cart-form #hiddenPrices").append(shpping);
-                }else{
-                    $("input[name='shpping']").remove();
+            $('.removecontrol').click(function(){
+                $.post('cart/controlprof/'+$(this).attr('rel')+'/delete');
+                $(this).parent().fadeOut("slow");
+                $(this).parent().remove();
+                $('.itemfile-'+$(this).attr('rel')).remove();
+                PriceCallback();
+
+                return false;
+            });
+
+            $('.deletedesign').click(function(e){
+                $('.item-hide-'+$(this).attr('itemFileId')).fadeIn("slow");
+                $(this).parents('.job').fadeOut("slow"); 		
+                $.post('cart/deletedesign/'+$(this).attr('itemFileId'),{},function(){
+                   $(this).parents('.job').remove(); 
+                });
+                if ($('.fotolia-items-'+$(this).attr('itemFileId')).length < $('.fotolia-items').length) {
+                    $('.fotolia-items-'+$(this).attr('itemFileId')).parent().remove();
+                } else if ($('.fotolia-items-'+$(this).attr('itemFileId')).length == $('.fotolia-items').length) {
+                    $('.fotolia-items-'+$(this).attr('itemFileId')).parents('fieldset').remove();
+                }
+                $('.item-'+$(this).attr('itemFileId')).remove();
+                PriceCallback();	
+                return false;
+                /*$.post(Drupal.settings.basePath+'/designdelete/'+$(this).attr('itemFileId').val());
+                PriceCallback();
+                return false;*/
+            });
+
+            $('table.targetPrice tr').each(function(){
+                if ($(this).find('input.targetPrice').is(":checked") && $(this).find('.storeLink').length > 0){
+                        $(this).find('.storeLink').show();
+                }
+                if ($(this).find('input.targetPrice').is(":checked")) {
+                    $.post('cart/'+$(this).find('input.targetPrice').val()+'/submit');
+                }
+
+            });
+            $('table.targetPrice tr').mousedown(function () {
+                   $('.storeLink').hide();
+                   if ($(this).find('.storeLink').length > 0) {
+                       $(this).find('.storeLink').show();
+                   }
+                   if ($(this).find('input.targetPrice').is(":not(:checked)")){
+                       if($(this).find('input.targetPrice').val() ==  84){
+                       var shpping = '<input type="hidden" name="shpping" value="14.99">';
+                       $("#pccart-cart-form #hiddenPrices").append(shpping);
+                        }else{
+                            $("input[name='shpping']").remove();
+                        }
+                        PriceCallback();
+                        $.post('cart/'+$(this).find('input.targetPrice').val()+'/submit');
+                   }
+            });
+
+            /* ------------Remove items------------*/ 
+
+            $("#pccart-cart-form .removecart").live('click',function () {
+                var targetItem = $(this);
+                itemid = $(this).siblings('.itemID').text();
+                $(this).parents('.item').fadeOut("slow");
+                var url = "cart/" + itemid + "/delete";
+                var nameitemid = "cart[items][hidden][" + itemid + "]";
+                var form = jQuery('#pccart-cart-form');
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    success: function (data) {
+                        //form.html(jQuery('#pccart-cart-form', data).html());
+                        //Drupal.attachBehaviors(form);
+                        targetItem.parents('job').remove();
+                    }
+                });
+                $("input[name='"+nameitemid+"']").remove();
+                $('.item-' + itemid).remove();
+                if ($('.fotolia-items-'+itemid).length < $('.fotolia-items').length) {
+                    $('.fotolia-items-'+itemid).parent().remove();
+                } else if ($('.fotolia-items-'+itemid).length == $('.fotolia-items').length) {
+                    $('.fotolia-items-'+itemid).parents('fieldset').remove();
+                }
+                var baseText = $('.cartCounter').attr('translatedtext');
+                var number = $('.cartCounter').attr('number') - 1;
+                $('.cartCounter').attr('number', number);
+                $('.cartCounter span').html(baseText+ ' ('+number+')');
+                if (number <= 0) {
+                    $('.jsDiscount').remove();
+                    window.location.replace('/products/');
                 }
                 PriceCallback();
-                $.post('cart/'+$(this).find('input.targetPrice').val()+'/submit');
-           }
-   });
-
-    /* ------------Remove items------------*/ 
-
-        $("#pccart-cart-form .removecart").live('click',function () {
-	    var targetItem = $(this);
-            itemid = $(this).siblings('.itemID').text();
-            $(this).parents('.item').fadeOut("slow");
-            var url = "cart/" + itemid + "/delete";
-            var nameitemid = "cart[items][hidden][" + itemid + "]";
-            var form = jQuery('#pccart-cart-form');
-            $.ajax({
-                type: "POST",
-                url: url,
-                success: function (data) {
-                    //form.html(jQuery('#pccart-cart-form', data).html());
-                    //Drupal.attachBehaviors(form);
-		    targetItem.parents('job').remove();
-                }
-            });
-            $("input[name='"+nameitemid+"']").remove();
-	    $('.item-' + itemid).remove();
-	    if ($('.fotolia-items-'+itemid).length < $('.fotolia-items').length) {
-		$('.fotolia-items-'+itemid).parent().remove();
-	    } else if ($('.fotolia-items-'+itemid).length == $('.fotolia-items').length) {
-		$('.fotolia-items-'+itemid).parents('fieldset').remove();
-	    }
-	    var baseText = $('.cartCounter').attr('translatedtext');
-	    var number = $('.cartCounter').attr('number') - 1;
-	    $('.cartCounter').attr('number', number);
-	    $('.cartCounter span').html(baseText+ ' ('+number+')');
-	    if (number <= 0) {
-		$('.jsDiscount').remove();
-		window.location.replace('/products/');
-	    }
-            PriceCallback();
-        });
-            /* ------------------------------*/ 
-    
-    
-    
-    }}
+            });   
+        }
+    }
 })(jQuery);
 
 function PriceCallback(){
@@ -143,11 +141,10 @@ function PriceCallback(){
    }
 }
 
-
 jQuery(document).ready(function(){
     jQuery("#edit-cart-discount-add").click(function (event) {
-     event.preventDefault();
-      var disocuntname = jQuery("#pccart-cart-form #edit-cart-discount-code").val();
+        event.preventDefault();
+        var disocuntname = jQuery("#pccart-cart-form #edit-cart-discount-code").val();
         jQuery.ajax({
             type: "POST",
             url :'cart/discount',
@@ -155,7 +152,6 @@ jQuery(document).ready(function(){
                 code :disocuntname
             },
             dataType : 'json',
-
             success: function (data) {
                 if (!isNaN(data.discountAmount)){
                     var disocunt = '<input type="hidden" name="disocunt" value="-' + data.discountAmount+  '">';
@@ -175,9 +171,6 @@ jQuery(document).ready(function(){
                     jQuery('#edit-cart-discount').before('<p style=" color: #F00; font-weight: 600; font-size: 13px; "> Désolé, ce code promotionnel a déjà été utilisé ou non validé</p>');
                 }
             }
-        });
-
-     
+        });     
     });
-
 });

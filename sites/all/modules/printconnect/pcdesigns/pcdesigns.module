@@ -207,7 +207,7 @@ function pcdesigns_callback() {
     case 2:
 
     case 1:
-      print '<script type="text/javascript">top.location = top.location;</script>';
+      print '<script type="text/javascript">try{document.domain="flyer.fr";}catch(e){console.log(e);};top.location = top.location;</script>';
       break;
     default:
       if (!isset($_GET['versionsaved'])) {
@@ -250,19 +250,19 @@ function pcdesigns_callback() {
 
 
 
-        print '<script type="text/javascript">top.location = "' . url('cart') . '";</script>';
+        print '<script type="text/javascript">try{document.domain="flyer.fr";}catch(e){console.log(e);};top.location = "' . url('cart') . '";</script>';
         break;
       } else {
         //print '<script type="text/javascript">top.location = top.location;</script>';
       }
   }
   if (isset($_GET['myPcId'])) {
-      Factory::Delete($_GET['myPcId']);   
+      Factory::Delete($_GET['myPcId']);
   }
 
   exit;
   if (isset($_GET['doClose']) && $_GET['doClose'] > 0) {
-    print '<script type="text/javascript">top.location = top.location;</script>';
+    print '<script type="text/javascript">try{document.domain="flyer.fr";}catch(e){console.log(e);};top.location = top.location;</script>';
     exit;
   }
 }
@@ -277,7 +277,7 @@ function pcdesigns_form_pcorders_order_form_alter(&$form, $form_state, $form_id)
       try {
         Factory::Delete($_SESSION['savedDesigns'][$item->id]);
       } catch (\Exception $ex) {
-        
+
       }
       unset($_SESSION['savedDesigns'][$item->id]);
     }

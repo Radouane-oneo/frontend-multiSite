@@ -169,7 +169,7 @@ function pcdesigntool_callback() {
     case 2:
 
     case 1:
-      print '<script type="text/javascript">top.location = top.location;</script>';
+      print '<script type="text/javascript">try{document.domain="flyer.fr";}catch(e){console.log(e);}top.location = top.location;</script>';
       break;
     default:
       if (!isset($_GET['versionsaved'])) {
@@ -211,7 +211,7 @@ function pcdesigntool_callback() {
         \printconnect\Carts\Factory::SaveItem($item);
 //\printconnect\Carts\Factory::RefreshItem($item);
         \printconnect\Carts\Factory::Refresh($cart);
-        print '<script type="text/javascript">top.location = top.location;</script>';
+        print '<script type="text/javascript">try{document.domain="flyer.fr";}catch(e){console.log(e);}top.location = top.location;</script>';
         break;
       }
   }
@@ -235,7 +235,7 @@ function pcdesigntool_preview_url($jobId) {
   $baseurl = "/job/preview/rg/1/id/$jobId/lang/$langCode/impkey/$impkey";
 
   $customer = Customers\Factory::Current();
-  
+
   if ($customer) {
       $baseurl .= '/k/' . $customer->id;
       $hash = sha1($customer->id . 'agD04vQPx1?FSspl');
@@ -402,15 +402,15 @@ function theme_designtoollink($vars) {
   }
     if(!$vars['params']['shop_apikey']){
         if($vars['params']['pricePreflight']){
-            return l($content, $url, array('query' => $query, 'html' => $html, 'attributes' => $attributes));   
+            return l($content, $url, array('query' => $query, 'html' => $html, 'attributes' => $attributes));
         }else{
-          return $content;    
+          return $content;
         }
-    
+
     }else{
-    return l($content, $url, array('query' => $query, 'html' => $html, 'attributes' => $attributes));   
+    return l($content, $url, array('query' => $query, 'html' => $html, 'attributes' => $attributes));
     }
-  
+
 }
 
 function theme_designtoolproflink($vars) {
@@ -454,7 +454,7 @@ function theme_designtoolproflink($vars) {
 
 
   $url .= '/l/' . $langCode;
-  
+
     if ($customer) {
         $url .= '/k/' . $customer->id;
         $hash = sha1($customer->id . 'agD04vQPx1?FSspl');

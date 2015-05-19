@@ -1,6 +1,8 @@
 <?php
-// $Id$
-
+/**
+ * @file
+ * Main functions of the module.
+ */
 
 /**
  * Implementation of hook_menu().
@@ -41,7 +43,7 @@ function block_tab_preprocess_block(&$vars) {
   $region_setting = variable_get('block_tab-regions', array());
   if ($region_setting[$vars['elements']['#block']->region]) {
     $vars['elements']['#block']->title = $vars['elements']['#block']->subject;
-    $vars['elements']['#block']->subject = null;
+    $vars['elements']['#block']->subject = NULL;
   }
 }
 
@@ -69,6 +71,7 @@ function block_tab_preprocess_region(&$variables) {
           'title' => empty($block->title) ? $bid : $block->title,
           'key' => $bid,
           'active' => $first_flag ? ' active' : '',
+          'bid' => $block->bid,
         );
 
         $variables['elements'][$bid]['#block']->subject = '';
@@ -80,7 +83,7 @@ function block_tab_preprocess_region(&$variables) {
 
     $title_html = '';
     foreach ((array) $titles as $title) {
-      $title_html .= '<span class="block_tab-title' . $title['active'] . '" id="block_tab-title-' . $title['key'] . '">' . check_plain($title['title']) . '</span>';
+      $title_html .= '<span class="block_tab-title' . $title['active'] . '" id="block_tab-title-' . $title['key'] . '" bid="' . $title['bid'] . '"><a href="#tab' . $title['bid'] . '">' . check_plain($title['title']) . '</a></span>';
     }
 
     $variables['content'] = '<div class="block_tab-titles" region="' . $region . '">' . $title_html . '</div>

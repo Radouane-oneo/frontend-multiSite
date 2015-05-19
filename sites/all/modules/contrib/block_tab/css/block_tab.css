@@ -17,3 +17,8 @@
 .block_tab-title:hover {
   background-color: #4099CF;
 }
+
+.block_tab-title a,
+.block_tab-title a:hover {
+  color: white;
+}

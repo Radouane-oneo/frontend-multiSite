@@ -174,7 +174,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
     float: none !important;
     position: relative;
     top: -10px;
-    width: 200px !important;
+    width: 210px !important;
 }
 #pccustomers-newaddress-billingaddresses-form .form-item-isCompany label,
 #pccustomers-address-billingaddresses-form .form-item-isCompany label{

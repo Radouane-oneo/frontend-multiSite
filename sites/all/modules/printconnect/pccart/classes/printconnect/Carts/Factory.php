@@ -356,9 +356,9 @@ use printconnect\Customers;
                 'subTotalAmount' => $cartAmounts->subTotalAmount,
                 'vatAmount' => $cartAmounts->vatAmount,
                 'totalAmount' => $cartAmounts->totalAmount,
-	        'fotoliaItems' => ($item->fotoliaItems != null) ?
-		    $item->fotoliaItems : null
-            )
+      	        'fotoliaItems' => ($item->fotoliaItems != null) ?
+          		    $item->fotoliaItems : null
+                )
         );
 	
       return $item;
@@ -368,21 +368,31 @@ use printconnect\Customers;
       $cartItems = $cart->orderItems;
       $counter = 0; 
       foreach($cartItems as $key => $job) {
-	  if($job->discountId == null) {
-		$counter++;
-	   }
+          if($job->discountId == null) {
+            $counter++;
+          }
           if ($job->id == $id) {
               unset($cartItems[$key]);
           }
       }
       if ($counter <= 1) {
-	self::Clear();
+        self::Clear();
       }
       $cart->orderItems = array_values($cartItems);
+
+      $fotolias = $cart->fotoliaItems;
+      foreach($fotolias as $key => $fotolia) {
+        if ($fotolia->parentId = $id) {
+            unset($fotolias[$key]);
+        }
+      }
+      $cart->fotoliaItems = $fotolias;
+
       Dal::updateElement($cart, 'cart', 
         array('id' => $cart->id), 
         array(
-            'orderItems' => $cart->orderItems
+            'orderItems' => $cart->orderItems,
+            'fotoliaItems' => $fotolias
         )
       );
        
@@ -400,9 +410,9 @@ use printconnect\Customers;
       }
       $fotolias = $cart->fotoliaItems;
       foreach($fotolias as $key => $fotolia) {
-	if ($fotolia->parentId = $id) {
-	    unset($fotolias[$key]);
-	}
+      	if ($fotolia->parentId = $id) {
+      	    unset($fotolias[$key]);
+      	}
       }
       $cart->fotoliaItems = $fotolias;
       $cart->orderItems = array_values($cartItems);

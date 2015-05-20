@@ -15,7 +15,7 @@
        $.getJSON(Drupal.settings.basePath + 'index.php?q=/js/pcvat/' + country.val() + '/' + number.val(), function(data){
           if (data.status == "Inactive"){
             number.addClass('error');
-            number.val( Drupal.t("Not valide"));
+            number.val('');
           }else{
               validate = "validated";
           }

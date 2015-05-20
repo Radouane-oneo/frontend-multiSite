@@ -1461,15 +1461,15 @@ function pccustomers_login_form_register_validate(&$form, &$form_state) {
 function pccustomers_login_form_submit($form, &$form_state) {
   
   $customer = $form_state['storage']['customer'];
-//  var_dump($customer);
-//      die('ok');
   Factory::Save($customer);
 
   Factory::LoginByObject($customer);
   $cart = printconnect\Carts\Factory::Current();
-  printconnect\Carts\Factory::saveInCache($cart, array(
+  if($cart){
+      printconnect\Carts\Factory::saveInCache($cart, array(
       'customer' => $customer->id,
-  ));
+  ));  
+  }
   
   pccustomers_login_form_send_mail($form, $form_state);
   if (isset($_GET['return'])) {

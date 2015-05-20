@@ -757,7 +757,7 @@ global $language;
     if ($myval <= 50) {
         unset($options[349]);
     }
-        //var_dump($_SESSION['defaultindex'], $cart->shipping_type);die;
+
         $cart->shipping_type = $_SESSION['defaultindex'];
 
         $form['cart']['shipping']['type'] = array(

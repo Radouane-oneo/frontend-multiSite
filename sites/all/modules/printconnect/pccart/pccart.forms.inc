@@ -636,7 +636,7 @@ global $language;
             '#weight' => 50,
             '#title' => t('Discounts'),
             '#prefix' => '<div class ="lodediscounts">',
-        '#suffix' => '</div>',
+            '#suffix' => '</div>',
         );
         unset($_SESSION['discountId']);
         foreach($cart->discountItems as $item){
@@ -972,5 +972,6 @@ function pccart_cart_form2_validate($form, &$form_state){
 }
 
 function pccart_cart_form2_submit($form, &$form_state){
+     $_SESSION['shippingtypeID'] = $form_state['values']['cart']['shipping']['type'];
      drupal_goto('checkout'); 
 }

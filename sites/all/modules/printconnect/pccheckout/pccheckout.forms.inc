@@ -1466,11 +1466,15 @@ function _pccheckout_payment_form_build_overview($cart) {
             }
                $elementRow[]= $item->fileCheck->price;
         }
+        
+        if(!$cart->orderItemShipping->shippingTypeResellerShop){
+        $type = \printconnect\Shipping\Types\Factory::Get($_SESSION['shippingtypeID']);
+        }else{
         $type = \printconnect\Shipping\Types\Factory::Get($cart->orderItemShipping->shippingTypeResellerShop);
+        }
+ 
 	\printconnect\Shipping\Types\Factory::LoadType($type);
-     if(!isset($type->shippingType->tag)){
-         $type->shippingType->tag  = t('shippingType');
-     }
+   
         $rows[] = array(
             'data' => array(
                 '<strong>'. $type->shippingType->tag . '</strong>',

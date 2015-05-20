@@ -162,8 +162,7 @@ use printconnect\Customers;
       unset($_SESSION['payment_method']);
     }
     
-    public static function SaveStore($object)
-    {
+    public static function SaveStore($object){
         if ($object->pickuppoint) {
             $_SESSION['cart']['shipping']['pup'] = serialize($object->pickuppoint);
             unset($_SESSION['shipping_address']);

@@ -1466,7 +1466,6 @@ function _pccheckout_payment_form_build_overview($cart) {
             }
                $elementRow[]= $item->fileCheck->price;
         }
-        
         if(!$cart->orderItemShipping->shippingTypeResellerShop){
         $type = \printconnect\Shipping\Types\Factory::Get($_SESSION['shippingtypeID']);
         }else{
@@ -1474,16 +1473,17 @@ function _pccheckout_payment_form_build_overview($cart) {
         }
  
 	\printconnect\Shipping\Types\Factory::LoadType($type);
+
    
         $rows[] = array(
             'data' => array(
                 '<strong>'. $type->shippingType->tag . '</strong>',
-                theme('price', array('value' => $cart->orderItemShipping->price, 'free' => TRUE)),
+                theme('price', array('value' => $cart->orderItemShipping->price ? $cart->orderItemShipping->price : $type->price , 'free' => TRUE)),
             ),
            
         );
        
-        $elementRow[] =  $cart->orderItemShipping->price;
+        $elementRow[] = $type->price;
       
         if (count($cart->orderItemsPayment)) {
             foreach ($cart->orderItemsPayment as $payment) {

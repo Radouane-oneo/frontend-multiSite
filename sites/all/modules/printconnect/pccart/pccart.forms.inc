@@ -748,11 +748,12 @@ global $language;
         $options[$type->id]['price'] = theme('price', array('value' => $type->price, 'free' => TRUE));
     }
     $shop = printconnect\Shop\Configuration\Factory::Current();
-            
-    if (58 != $shop->id) {
+
+        if (58 != $shop->id) {
         $options[84]['label'] = "<span>" . t('Livraison 48H') . "</span>"; // set Livraison 48H for cobradad.
     }
         $_SESSION['defaultindex'] = isset($_SESSION['defaultindex']) ? $_SESSION['defaultindex'] : 86;
+
 
         $cart->shipping_type = $_SESSION['defaultindex'];
 

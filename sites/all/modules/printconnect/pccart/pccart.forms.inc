@@ -743,9 +743,9 @@ global $language;
     }
     $shop = printconnect\Shop\Configuration\Factory::Current();
             
-    if (58 != $shop->id) {
-        $options[84]['label'] = "<span>" . t('Livraison 48H') . "</span>"; // set Livraison 48H for cobradad.
-    }
+        if (58 != $shop->id) {
+            $options[84]['label'] = "<span>" . t('Livraison 48H') . "</span>"; // set Livraison 48H for cobradad.
+        }
 
         $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop != null ? $cart->orderItemShipping->shippingTypeResellerShop : 86;
   

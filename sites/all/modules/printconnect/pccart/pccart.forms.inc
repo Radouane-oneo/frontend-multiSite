@@ -753,10 +753,6 @@ global $language;
         $options[84]['label'] = "<span>" . t('Livraison 48H') . "</span>"; // set Livraison 48H for cobradad.
     }
         $_SESSION['defaultindex'] = isset($_SESSION['defaultindex']) ? $_SESSION['defaultindex'] : 86;
-        $myval = intval($cart->convertedTotalAmount) - 19;
-    if ($myval <= 50) {
-        unset($options[349]);
-    }
 
         $cart->shipping_type = $_SESSION['defaultindex'];
 

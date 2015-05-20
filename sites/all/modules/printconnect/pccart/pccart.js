@@ -55,6 +55,7 @@
       	    $.post('cart/'+$(this).find('input.targetPrice').val()+'/submit');
       	}
 	  });*/
+    
 
    $('table.targetPrice input.targetPrice').click(function () {
         $('.storeLink').hide();
@@ -74,6 +75,8 @@
         });
            
    });
+
+   $('table.targetPrice input.targetPrice:checked').click();
 
     /* ------------Remove items------------*/ 
 

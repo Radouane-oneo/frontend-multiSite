@@ -752,8 +752,12 @@ global $language;
     if (58 != $shop->id) {
         $options[84]['label'] = "<span>" . t('Livraison 48H') . "</span>"; // set Livraison 48H for cobradad.
     }
-        $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop != null ? $cart->orderItemShipping->shippingTypeResellerShop : 86;
-  
+        $_SESSION['defaultindex'] = isset($_SESSION['defaultindex']) ? $_SESSION['defaultindex'] : 86;
+        $myval = intval($cart->convertedTotalAmount) - 19;
+    if ($myval <= 50) {
+        unset($options[349]);
+    }
+
         $cart->shipping_type = $_SESSION['defaultindex'];
 
         $form['cart']['shipping']['type'] = array(
@@ -761,7 +765,7 @@ global $language;
             '#multiple' => FALSE,
             '#options' => $options,
             '#header' => array('label' => ''),
-            '#default_value' => $cart->shipping_type,
+            '#default_value' => $_SESSION['defaultindex'],
             '#sticky' => FALSE,
             '#attributes' => array('class' => array('grid targetPrice')),
             '#weight' => -50,

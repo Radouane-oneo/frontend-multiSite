@@ -641,7 +641,13 @@ global $language;
         unset($_SESSION['discountId']);
         foreach($cart->discountItems as $item){
             $form['cart']['items']['hidden'][$item->discountId] = array(
-                '#type' => 'hidden', '#value' => $item->price,
+                '#type' => 'hidden', 
+                '#value' => $item->price,
+                '#attributes' => array(
+                    'id' => 'discount-hidden-' . strtolower($item->discountId),
+                    'class' => 'hidden-discount',
+                    'discount-code' => $item->discountId,
+                )
             );
             $form['cart']['discounts'][$item->discountId] = array(
                 '#type' => 'container',
@@ -668,7 +674,7 @@ global $language;
                 ),
                 'code' => array(
                     '#type' => 'container',
-                    'content' => array('#markup' => t('You are using') . ': ' . $item->discountId),
+                    'content' => array('#markup' => t('You are using') . ': <span id="discountCodeVal">' . $item->discountId . '</span>'),
                 ),
                 'description' => array(
                     '#type' => 'container',
@@ -746,7 +752,6 @@ global $language;
     if (58 != $shop->id) {
         $options[84]['label'] = "<span>" . t('Livraison 48H') . "</span>"; // set Livraison 48H for cobradad.
     }
-
         $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop != null ? $cart->orderItemShipping->shippingTypeResellerShop : 86;
         $myval = intval($cart->convertedTotalAmount) - 19;
     if ($myval <= 50) {

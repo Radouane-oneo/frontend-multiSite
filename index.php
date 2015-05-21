@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @fille
+ * @file
  * The PHP page that serves all page requests on a Drupal installation.
  *
  * The routines here dispatch control to the appropriate handler, which then
@@ -14,6 +14,7 @@
 /**
  * Root directory of Drupal installation.
  */
+
 define('DRUPAL_ROOT', getcwd());
 
 require_once DRUPAL_ROOT . '/includes/bootstrap.inc';

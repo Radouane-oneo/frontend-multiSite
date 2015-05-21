@@ -65,7 +65,7 @@ body.page-stores-picker {
 }
 
 .store .description .address {
-    max-width:150px;
+    /*max-width:150px;*/
 }
 
 .store .info{
@@ -291,7 +291,7 @@ body.page-stores-picker{
 
 .store .description > div {
     width: 100%;
-    float: left;
+    /*float: left;*/
 }
 
 .store .description h2 {
@@ -768,7 +768,6 @@ body.page-stores-picker{
     background-position:-80px -20px;
 }
 .mapContainer img {
-    height:125px;
 }
 
 
@@ -776,6 +775,10 @@ body.page-stores-picker{
 
 #pcflyerstores-picker-form .form-item {
     display: inline-block;
+}
+
+#pcflyerstores-picker-form #edit-search.txt_search_postal >.form-item{
+    float: left;
 }
 
 #account {
@@ -804,9 +807,16 @@ body.page-stores-picker{
     background: #f1f1f1;
     border-radius: 4px 4px 4px 4px;
     width: 934px;
-    height: 79px;
+    height: auto;
 }
-
+#pcflyerstores-picker-form #edit-search:after{
+    content: '';
+    height: 1px;
+    width: 100%;
+    display: block;
+    clear: both;
+}
+ 
 
 #pcflyerstores-picker-form .form-submit, #pccart-cart-form #edit-search .form-submit {
     width: 231px;
@@ -828,6 +838,17 @@ body.page-stores-picker{
     float: right;
     position: relative;
     top: 15px;
+}
+#pcflyerstores-picker-form #btnsearch{
+    width: 231px;
+    display: block;
+    text-align: center;
+    bottom: 0;
+    float: right;
+    position: relative;
+    top: 0;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 #pccart-cart-form #edit-search .form-submit{
     width: 231px;
@@ -858,15 +879,7 @@ body.page-stores-picker{
     height: 372px !important;
     overflow: auto;
 }
-#pcflyerstores-picker-form #edit-search{
-    padding-left: 9px;
-    padding-right: 9px;
-    margin-bottom: 13px;
-    background: #f1f1f1;
-    border-radius: 4px 4px 4px 4px;
-    width: 933px;
-    height: 72px
-}
+
 #pcflyerstores-picker-form label{
     display: inline-block;
 }
@@ -1241,10 +1254,10 @@ width: 195px !important;
 float: left;
 clear: both;
 }
-
-#pcflyerstores-landingpage-form  div#DetailStor {
+#pcflyerstores-landingpage-form div#DetailStor {
 height: 84px;
 float: left;
+max-width: 250px;
 }
 #pcflyerstores-landingpage-form div#Mapimg {
 float: right;
@@ -1446,4 +1459,8 @@ box-shadow: 0 0 2px #999;
 
 #pcflyerstores-search-form span.Slink {
 margin-right: 15px;
+}
+
+#pcflyerstores-search-form #edit-results ul li{
+    list-style: none ;
 }

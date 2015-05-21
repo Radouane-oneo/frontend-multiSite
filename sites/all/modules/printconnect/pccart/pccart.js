@@ -1,11 +1,13 @@
-
 (function ($) {
-  Drupal.behaviors.pccart = {
-    detach: function (context) {
-    },
-    attach: function (context, settings) {
+    Drupal.behaviors.pccart = {
+        detach: function (context) {
+        },
+        attach: function (context, settings) {
+            try{document.domain = 'flyer.fr';}
+            catch(e){console.log(e);}
 
-      updateDomain();
+
+    updateDomain();
 
    $('.refCustomer').blur(function() {
 	$.post('cart/customer/ref/'+$(this).attr('cart'),{'ref' : $(this).val()});       
@@ -117,10 +119,6 @@
         $('.cartCounter span').html(baseText+ ' ('+number+')');        
         PriceCallback();
       });
-            /* ------------------------------*/ 
-    
-    
-    
     }}
 })(jQuery);
 
@@ -232,7 +230,7 @@ jQuery(document).ready(function(){
     jQuery("#edit-cart-discount-add").click(function (event) {
         event.preventDefault();
         var disocuntname = jQuery("#pccart-cart-form #edit-cart-discount-code").val();
+
         applyDiscount(disocuntname, 0);
     });
-
 });

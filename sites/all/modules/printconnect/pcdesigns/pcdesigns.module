@@ -248,8 +248,6 @@ function pcdesigns_callback() {
 //  //\printconnect\Carts\Factory::RefreshItem($item);
         Carts\Factory::Refresh($cart);
 
-
-
         print update_domain();
         print '<script type="text/javascript">top.location = "' . url('cart') . '";</script>';
         break;
@@ -258,7 +256,7 @@ function pcdesigns_callback() {
       }
   }
   if (isset($_GET['myPcId'])) {
-      Factory::Delete($_GET['myPcId']);   
+      Factory::Delete($_GET['myPcId']);
   }
 
   exit;
@@ -279,7 +277,7 @@ function pcdesigns_form_pcorders_order_form_alter(&$form, $form_state, $form_id)
       try {
         Factory::Delete($_SESSION['savedDesigns'][$item->id]);
       } catch (\Exception $ex) {
-        
+
       }
       unset($_SESSION['savedDesigns'][$item->id]);
     }

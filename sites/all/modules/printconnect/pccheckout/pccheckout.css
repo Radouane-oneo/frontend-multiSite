@@ -334,6 +334,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
     margin-left: 0;
     border-bottom: 1px solid #e3e3e3;
     padding-bottom: 12px;
+    padding-top: 14px;
 }
 #pccheckout-invoiceanddelivery-form .blocright{
   display: block;

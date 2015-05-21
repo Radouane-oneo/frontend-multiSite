@@ -946,22 +946,25 @@ function pccart_cart_form2_delete_discount_submit($form, &$form_state) {
     $discountId = $form_state['triggering_element']['#parents'][2];
     Discounts\Factory::Delete($cart->id, $discountId);
 }
+
 function pccart_cart_form2_validate($form, &$form_state){
+
     $cart = Factory::Current();
     if (!$cart) {
         form_set_error('', t('No cart or empty'));
-        form_set_error('', t('Please upload a file for all your items'));
     }
-    unset($form_state['values']['cart']['items']['hidden']);
-    foreach (element_children($form_state['values']['cart']['items']) as $key) {
-        if (!$form_state['values']['cart']['items'][$key]["ready"]['designer']['check']) {
+   unset($form_state['values']['cart']['items']['hidden']);
+   foreach ($cart->productItems as $item) {
+        if (!$form_state['values']['cart']['items'][$item->id]["ready"]['designer']['check']) {
             if (!count($item->files)) {
                 form_set_error('', t('Please upload a file for all your items'));
             }
         }
     }
+
     $form_state['storage']['cart'] =  $cart; 
 }
+
 function pccart_cart_form2_submit($form, &$form_state){
      $_SESSION['shippingtypeID'] = $form_state['values']['cart']['shipping']['type'];
      drupal_goto('checkout'); 

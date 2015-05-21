@@ -1,5 +1,9 @@
 (function ($) {
-
+    $(document).ready(function () {
+           if($('.error')[0]){
+                $('#pccart-cart-form .form-checkbox').attr('checked', false);
+           }
+     });
   Drupal.behaviors.pcdesigner = {
     detach: function (context) {
 
@@ -12,6 +16,8 @@
         $.getJSON(href, function(data){          
          if(!data){
          $(wopper).css({ "border":"1px solid red"});
+         }else{
+              $(wopper).css({ "border":"1px solid #77b800"});
          }
         });
       });

@@ -53,8 +53,6 @@ function pcdesigner_form_alter(&$form, $form_state, $form_id) {
 
   switch ($form_id) {
     case 'pccart_cart_form2':
-     
-//    case 'pccheckout_upload_form':
       $cart = $form_state['storage']['cart'];
       $checkableItems = array();
       $emailDesigner = FALSE;
@@ -70,7 +68,6 @@ function pcdesigner_form_alter(&$form, $form_state, $form_id) {
 
             $checkableItems[] = $item->id;
           }
-
 
             $form['cart']['items'][$item->id]['ready']['designer']['inputdesigner'] = array(
                 '#type' => 'container',
@@ -90,13 +87,9 @@ function pcdesigner_form_alter(&$form, $form_state, $form_id) {
                 '#markup' => t('Attention! If you don`t upload your files now, we cannot guarantee the estimated delivery date. You will be informed when your designer uploads the file.'),
             );
 
-//          $validate = $form['#validate'];
-//          array_unshift($validate, 'pcdesigner_form_validate');
-//          $form['#validate'] = $validate;
-//
-//          $submit = $form['actions']['checkout']['#submit'];
-//          array_unshift($submit, 'pcdesigner_form_submit');
-//          $form['actions']['checkout']['#submit'] = $submit;
+          $submit = $form['actions']['checkout']['#submit'];
+          array_unshift($submit, 'pcdesigner_form_submit');
+          $form['actions']['checkout']['#submit'] = $submit;
         }
       }
 
@@ -111,8 +104,8 @@ function pcdesigner_form_submit($form, &$form_state){
     $item = \printconnect\Carts\Factory::GetItem($cart, $key);
     $item->EnsureLoaded();
 
-    if (isset($form_state['values']['cart']['items'][$key]['designer']) && $form_state['values']['cart']['items'][$key]['designer']['check']) {
-        $item->emailDesigner = $form_state['values']['cart']['items'][$key]['designer']['inputdesigner']['email'];
+    if (isset($form_state['values']['cart']['items'][$key]["ready"]['designer']) && $form_state['values']['cart']['items'][$key]["ready"]['designer']['check']) {
+        $item->emailDesigner = $form_state['values']['cart']['items'][$key]["ready"]['designer']['inputdesigner']['email'];
     } else {
         $item->Remove('emailDesigner');
     }

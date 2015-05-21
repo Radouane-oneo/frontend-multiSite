@@ -317,9 +317,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
       foreach ($items as $country) {
              $countries[$country->id] = $country->tag;
       }
-    
-    $billingAccounts = printconnect\Customers\BillingAccounts\Factory::GetBillingAccounts($customer, false);
-    $mybillingAccounts = printconnect\Customers\BillingAccounts\Factory::LoadBillingAccounts($billingAccounts);
+
      $deliveryCountries = array (
         "21"=>t('Belgique'),
         "73"=>t('France'),
@@ -333,6 +331,10 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         $country = \printconnect\Countries\Factory::Get(73);
         $deliveryCountries[$country->id] = $country->tag;
     }
+      $addresses = array();
+    $addresses[0] = t('New');
+    $billingAccounts = printconnect\Customers\BillingAccounts\Factory::GetBillingAccounts($customer, false);
+    $mybillingAccounts = printconnect\Customers\BillingAccounts\Factory::LoadBillingAccounts($billingAccounts);
     foreach ($mybillingAccounts as $address) {
         
         if (!is_null($address->id)) {
@@ -354,7 +356,6 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
     }
 
     $AllShippingAddress = array();
-// $AllShippingAddress [0] = t('New');
 
     foreach (printconnect\Customers\Addresses\Factory::GetAddresses($customer, FALSE) as $address) {
         if ($address->company != '') {
@@ -369,7 +370,8 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
 
         }
     }
-   foreach ($mybillingAccounts as $address) {          
+    
+    foreach ($mybillingAccounts as $address) {          
         if (!is_null($address->id)) {
             $option = array();
             if ($address->company) {
@@ -463,7 +465,6 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         '#attributes' => array('id' => 'invoice'),
     );
      
-/* start popup*/
 
    $form['invoice']['address']['current']['popup']= array(
         '#type' => 'fieldset',
@@ -828,7 +829,6 @@ function pccheckout_invoiceanddelivery_form_invoice_submit($form, &$form_state) 
     }
 }
 
-
 function pccheckout_invoiceanddelivery_form_shipping_validate($form, &$form_state) {
     $customer = $form_state['storage']['customer'];
     //$addressId = $form_state['values']['shipping']['detail']['current']['select'];
@@ -887,7 +887,6 @@ function pccheckout_invoiceanddelivery_form_validate($form, &$form_state) {
         pccheckout_invoiceanddelivery_form_shipping_validate($form, $form_state);
     }
 }
-
 
 function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
     $billingaccoutcustomer = \printconnect\Customers\Factory::Current();
@@ -1296,7 +1295,6 @@ function pccheckout_upload_form_validate($form, &$form_state) {
 function pccheckout_upload_form_submit($form, &$form_state) {
     drupal_goto('checkout/payment');
 }
-
 
 function CalculateCostamount($amount,$rate,$cost) {
       return (($amount * ($rate)) + $cost);

@@ -968,17 +968,14 @@ function pccart_cart_form2_validate($form, &$form_state){
     if (!$cart) {
         form_set_error('', t('No cart or empty'));
     }
-
-
-    unset($form_state['values']['cart']['items']['hidden']);
-    foreach (element_children($form_state['values']['cart']['items']) as $key) {
-        if (!$form_state['values']['cart']['items'][$key]["ready"]['designer']['check']) {
+   unset($form_state['values']['cart']['items']['hidden']);
+   foreach ($cart->productItems as $item) {
+        if (!$form_state['values']['cart']['items'][$item->id]["ready"]['designer']['check']) {
             if (!count($item->files)) {
                 form_set_error('', t('Please upload a file for all your items'));
             }
         }
     }
-
 
     $form_state['storage']['cart'] =  $cart; 
 }

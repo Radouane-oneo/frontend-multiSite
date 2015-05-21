@@ -34,13 +34,19 @@ use printconnect\Dal\ForbiddenException;
   
             if(variable_get('pc_env', 'production') == 'production') {
                 $json = $this->fromCache($url);
+		if ($entity == 'pickuppointdetail/service/store') {
+                   $json = utf8_encode($json);
+                }
             }else {
                 $json = $this->Call($url);
-                if(preg_match('/store/', $entity)) {
+                /*if(preg_match('/store/', $entity)) {
                     $input = iconv('UTF-8', 'UTF-8//IGNORE', utf8_encode($json));
                     $json = json_decode($input);
                     return $json;
-                }
+                }*/
+		if ($entity == 'pickuppointdetail/service/store') {
+		   $json = utf8_encode($json);
+		}
             }
 	return json_decode($json);
     }
@@ -128,6 +134,8 @@ use printconnect\Dal\ForbiddenException;
         } else {
             $url .= '&language=2';
         }
+        if ($entity == 'pickuppointdetail/service/store') {
+	}
       return $url;
     }
 
@@ -136,8 +144,9 @@ use printconnect\Dal\ForbiddenException;
 //      $json = $this->fromCache($url);
  $json = $this->Call($url);
       $items = json_decode($json);
-      if ($entity == 'pickuppoint/service/store') {
+      if ($entity == 'pickuppoint/service/store' || $entity == 'pickuppointdetail/service/store') {
 	$json = utf8_encode($json);
+	$items = json_decode($json);
       } 
      
       return $items;
@@ -179,8 +188,7 @@ use printconnect\Dal\ForbiddenException;
           $properties['pPrice'] = $properties['price'];
         }
       }
-       
-      $data = json_encode($properties);
+	$data = json_encode($properties);
       $start = microtime(true);
       $response = drupal_http_request($url, array('header' => $header, 'method' => 'PUT', 'data' => $data));
       $end = microtime(true);

@@ -207,7 +207,8 @@ function pcdesigns_callback() {
     case 2:
 
     case 1:
-      print '<script type="text/javascript">try{document.domain="flyer.fr";}catch(e){console.log(e);};top.location = top.location;</script>';
+      print update_domain();
+      print '<script type="text/javascript">top.location = top.location;</script>';
       break;
     default:
       if (!isset($_GET['versionsaved'])) {
@@ -247,10 +248,8 @@ function pcdesigns_callback() {
 //  //\printconnect\Carts\Factory::RefreshItem($item);
         Carts\Factory::Refresh($cart);
 
-
-
-
-        print '<script type="text/javascript">try{document.domain="flyer.fr";}catch(e){console.log(e);};top.location = "' . url('cart') . '";</script>';
+        print update_domain();
+        print '<script type="text/javascript">top.location = "' . url('cart') . '";</script>';
         break;
       } else {
         //print '<script type="text/javascript">top.location = top.location;</script>';
@@ -262,7 +261,8 @@ function pcdesigns_callback() {
 
   exit;
   if (isset($_GET['doClose']) && $_GET['doClose'] > 0) {
-    print '<script type="text/javascript">try{document.domain="flyer.fr";}catch(e){console.log(e);};top.location = top.location;</script>';
+    print update_domain();
+    print '<script type="text/javascript">top.location = top.location;</script>';
     exit;
   }
 }

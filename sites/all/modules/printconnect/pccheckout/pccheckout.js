@@ -17,8 +17,8 @@
             $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-postalcode').val(dataset.postalCode);
             $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-city').val(dataset.city);
             $('#pccheckout-invoiceanddelivery-form #companyInput').val(dataset.company);
-//            $('#invoice-address input[type=text]').attr('readonly', true);
-//            $('#edit-invoice-address-current-country').attr('disabled', true);
+            $('#invoice-address input[type=text]').attr('readonly', true);
+            $('#edit-invoice-address-current-country').attr('disabled', true);
         });
     });
 
@@ -61,25 +61,24 @@
 
 
         /* add prop readonly to invoice-address on load page */
+        if(!$('.error')[0]){
+            $('#invoice-address input[type=text]').attr('readonly', true);
+                $('#edit-invoice-address-current-country').attr('disabled', true);
 
-        $('#invoice-address input[type=text]').attr('readonly', true);
-        $('#edit-invoice-address-current-country').attr('readonly', true);
-
-        if ($(".selectBilling2")[0]) {
-            if ($('.selectBilling2').val() == 0) {
-                $('#isUserCompany').attr('disabled', false);
-            } else {
-                $('#isUserCompany').attr('disabled', true);
-            }
-        } else {
-            $('#isUserCompany').attr('disabled', false);
+                if ($(".selectBilling2")[0]) {
+                    if ($('.selectBilling2').val() == 0) {
+                        $('#isUserCompany').attr('disabled', false);
+                    } else {
+                        $('#isUserCompany').attr('disabled', true);
+                    }
+                } else {
+                    $('#isUserCompany').attr('disabled', false);
+                }
         }
         
-
-        if ($(".isa_info")[0]) {
-            $(".isa_info").remove();
-        }
-
+            if ($(".isa_info")[0]) {
+                $(".isa_info").remove();
+            }
         /* end */
 
     });

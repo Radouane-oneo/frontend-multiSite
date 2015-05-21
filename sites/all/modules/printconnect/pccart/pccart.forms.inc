@@ -610,18 +610,36 @@ function pccart_cart_form2($form, &$form_state) {
         /* Discount */
         $form['cart']['js'] = array(
             '#weight' => 50,
-            '#prefix' => '<div class ="jsDiscount">',
+            '#title' => t('Discounts'),
+            '#prefix' => '<div class ="lodediscounts">',
             '#suffix' => '</div>',
-	);
-	$data = serialize($cart);
-        if (count($cart->discountItems) > 0) {
-            $form['cart']['discounts'] = array(
-                '#type' => 'fieldset',
-                '#attributes' => array('class' => array('discounts', 'item')),
-                '#weight' => 50,
-                '#title' => t('Discounts'),
-                '#prefix' => '<div class ="lodediscounts">',
-            '#suffix' => '</div>',
+        );
+        unset($_SESSION['discountId']);
+        foreach($cart->discountItems as $item){
+            $form['cart']['items']['hidden'][$item->discountId] = array(
+                '#type' => 'hidden', 
+                '#value' => $item->price,
+                '#attributes' => array(
+                    'id' => 'discount-hidden-' . strtolower($item->discountId),
+                    'class' => 'hidden-discount',
+                    'discount-code' => $item->discountId,
+                )
+            );
+            $form['cart']['discounts'][$item->discountId] = array(
+                '#type' => 'container',
+            );
+
+            $form['cart']['discounts'][$item->discountId]['prefix'] = array(
+                '#type' => 'container',
+                '#attributes' => array('class' => array('prefix')),
+                'content' => array(
+                    '#markup' => t('Promo'),
+                )
+            );
+
+            $form['cart']['discounts'][$item->discountId]['description'] = array(
+                '#type' => 'container',
+                '#attributes' => array('class' => array('description')),
             );
             unset($_SESSION['discountId']);
             foreach($cart->discountItems as $item){
@@ -634,16 +652,11 @@ function pccart_cart_form2($form, &$form_state) {
 
                 $form['cart']['discounts'][$item->discountId]['prefix'] = array(
                     '#type' => 'container',
-                    '#attributes' => array('class' => array('prefix')),
-                    'content' => array(
-                        '#markup' => t('Promo'),
-                    )
-                );
-
-                $form['cart']['discounts'][$item->discountId]['description'] = array(
+                    'content' => array('#markup' => t('You are using') . ': <span id="discountCodeVal">' . $item->discountId . '</span>'),
+                    'description' => array(
                     '#type' => 'container',
                     '#attributes' => array('class' => array('description')),
-                );
+                    ));
 
                 $form['cart']['discounts'][$item->discountId]['description']['items'] = array(
                     'price' => array(
@@ -727,15 +740,12 @@ function pccart_cart_form2($form, &$form_state) {
         }
         $shop = printconnect\Shop\Configuration\Factory::Current();
 
+      
+
         if (58 != $shop->id) {
             $options[84]['label'] = "<span>" . t('Livraison 48H') . "</span>"; // set Livraison 48H for cobradad.
         }
-
-        $_SESSION['defaultindex'] = $cart->orderItemShipping->shippingTypeResellerShop != null ? $cart->orderItemShipping->shippingTypeResellerShop : 86;
-        $myval = intval($cart->convertedTotalAmount) - 19;
-        if ($myval <= 50) {
-            unset($options[349]);
-        }
+        $_SESSION['defaultindex'] = isset($_SESSION['defaultindex']) ? $_SESSION['defaultindex'] : 86;
 
         $cart->shipping_type = $_SESSION['defaultindex'];
 
@@ -744,7 +754,7 @@ function pccart_cart_form2($form, &$form_state) {
             '#multiple' => FALSE,
             '#options' => $options,
             '#header' => array('label' => ''),
-            '#default_value' => $cart->shipping_type,
+            '#default_value' => $_SESSION['defaultindex'],
             '#sticky' => FALSE,
             '#attributes' => array('class' => array('grid targetPrice')),
             '#weight' => -50,
@@ -754,7 +764,7 @@ function pccart_cart_form2($form, &$form_state) {
             $form['cart']['shipping']['type']['#header']['price'] = '';
         }
 
-            $form['cart']['reference'] = array(
+        $form['cart']['reference'] = array(
             '#type' => 'fieldset',
             '#title' => t('Reference'),
             '#attributes' => array('class' => array('discount', 'ref')),
@@ -949,5 +959,6 @@ function pccart_cart_form2_validate($form, &$form_state){
     $form_state['storage']['cart'] =  $cart; 
 }
 function pccart_cart_form2_submit($form, &$form_state){
+     $_SESSION['shippingtypeID'] = $form_state['values']['cart']['shipping']['type'];
      drupal_goto('checkout'); 
 }

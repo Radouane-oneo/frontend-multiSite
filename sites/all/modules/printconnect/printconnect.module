@@ -143,6 +143,18 @@ function printconnect_init() {
     
 }
 
+function update_domain() {
+   $script = "<script type='text/javascript'>
+    var hosts = window.location.hostname.split('.').reverse();
+    var domain = hosts[1] + '.' + hosts[0];
+    if(domain == 'flyer.fr'){
+        document.domain = domain;
+    }
+   </script>";
+
+   return $script; 
+}
+
 function printconnect_cron() {
     define('DRUPAL_ROOT', getcwd());
     include_once('../../../includes/bootstrap.inc');

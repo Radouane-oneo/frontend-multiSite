@@ -318,7 +318,21 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
              $countries[$country->id] = $country->tag;
       }
     
-
+    $billingAccounts = printconnect\Customers\BillingAccounts\Factory::GetBillingAccounts($customer, false);
+    $mybillingAccounts = printconnect\Customers\BillingAccounts\Factory::LoadBillingAccounts($billingAccounts);
+     $deliveryCountries = array (
+        "21"=>t('Belgique'),
+        "73"=>t('France'),
+        "150"=>t('Pays-Bas'),
+        "199"=>t('Espagne'),
+        "124"=>t('Luxembourg'),
+      );
+    
+    if ($cart->orderItemShipping->shippingTypeResellerShop == 351) {
+        $deliveryCountries = array();
+        $country = \printconnect\Countries\Factory::Get(73);
+        $deliveryCountries[$country->id] = $country->tag;
+    }
     foreach ($mybillingAccounts as $address) {
         
         if (!is_null($address->id)) {
@@ -481,6 +495,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
          '#prefix' => '<div class="headerforminvoice forminvoiceheader">',  
          '#markup' => '<div class="blocright"><span>'.t('Select from addressbook').'</span>'.t('line2invoice').'</div>',
         );
+    
     $form['invoice']['address']['current']['select'] = array(
         '#type' => 'select',
         
@@ -506,15 +521,16 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         '#size' => 30,
          '#required' => TRUE,
     );
-    $form['invoice']['address']['current']['postalCode'] = array(
+
+     $form['invoice']['address']['current']['postalCode'] = array(
         '#type' => 'textfield',
+         '#required' => TRUE,
         '#default_value' => $defaultBillingAddress ? $defaultBillingAddress->postalCode : '',
         '#title' => t('Postal code and City'),
-        '#element_validate' => array('invoice_country_validate'),
         '#size' => 6,
-       '#required' => TRUE,
         '#attributes' => array(
             'placeholder' => '1000',
+            'id' => 'edit-invoice-address-current-postalCode'
         )
     );
     $form['invoice']['address']['current']['city'] = array(
@@ -651,15 +667,14 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->postalCode : '',
         '#size' => 6,
     );
-    $form['shipping']['detail']['current']['city'] = array(
+  
+     $form['shipping']['detail']['current']['city'] = array(
         '#type' => 'textfield',
          '#required' => TRUE,
          '#attributes' => array('id' => 'edit-shipping-detail-current-city'),
-        '#element_validate' => array('shipping_country_validate'),
         '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->city : '',
         '#size' => 30,
     );
-    
   
     $form['shipping']['detail']['current']['country'] = array(
         '#type' => 'select',

@@ -4122,7 +4122,7 @@ a.googleconnect {
 }
 .page-checkout #shipping-address.form-wrapper, 
 .page-checkout #invoice-address.form-wrapper {
-	margin: 20px 10px 10px 10px;
+	margin: 20px 0 19px;
 }
 .page-checkout #shipping-address.form-wrapper h3, 
 .page-checkout #invoice-address.form-wrapper h3 {

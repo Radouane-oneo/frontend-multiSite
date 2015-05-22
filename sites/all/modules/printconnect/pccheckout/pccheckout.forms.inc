@@ -548,7 +548,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
     $form['invoice']['address']['current']['country'] = array(
         '#type' => 'select',
         '#required' => TRUE,
-        '#attributes' => array('id' => 'edit-invoice-address-current-country'),
+        '#attributes' => array('id' => 'edit-invoice-address-current-country','class' => array('selectStyle')),
         '#title' => t('Country'),
         '#options' => $countries,
         '#default_value' => $defaultBillingAddress ? $defaultBillingAddress->country : $defaultCountry->id ,
@@ -681,7 +681,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         '#type' => 'select',
          '#required' => TRUE,
         '#title' => t('Country'),
-        '#attributes' => array('id' => 'edit-shipping-detail-current-country'),
+        '#attributes' => array('id' => 'edit-shipping-detail-current-country' ,'class' => array('selectStyle')),
         '#required' => TRUE,
         '#options' => $deliveryCountries,
         '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->country : $defaultCountry->id,
@@ -1315,6 +1315,7 @@ function pccheckout_payment_form($form, &$form_state) {
     );
 
     $subTotalWithoutPayment = $cart->subTotalAmountWithoutPayment;
+    
     foreach ($paymentMethods as $paymentMethod) {
 
     $form_state['storage']['paymentmethods'][$paymentMethod->id] = $paymentMethod;
@@ -1324,28 +1325,6 @@ function pccheckout_payment_form($form, &$form_state) {
      );
     }
 
-    $form['payment']['method'] = array(
-        '#type' => 'fieldset',
-        '#attributes' => array('class' => array('paymentmethodefond')),
-        '#title' => t('Choose your payment method'),
-    );
-
-    $form['payment']['method']['table'] = array(
-        '#title' => t('Select payment method'),
-        '#type' => 'tableselect',
-        '#multiple' => FALSE,
-        '#options' => $methods,
-        '#required' => FALSE,
-        '#attributes' => array('class' => array('grid', 'clearfix', 'rows-' . count($methods), 'payment-methods-table')),
-        '#default_value' => $cart->payment_method,
-    );
-    $form['payment']['method']['text'] = array(
-        '#type' => 'container',
-        '#attributes' => array('class' => array('imgpayment')),
-        'content' => array(
-            '#markup' => '',
-        ),
-    );
 
   if ($cart->totalAmount <= 0 || (isset($form_state['values']['payment']['credit']) &&
      $form_state['values']['payment']['credit']['use'] == 'yes')) {

@@ -1325,7 +1325,29 @@ function pccheckout_payment_form($form, &$form_state) {
      );
     }
 
+ $form['payment']['method'] = array(
+        '#type' => 'fieldset',
+        '#attributes' => array('class' => array('paymentmethodefond')),
+        '#title' => t('Choose your payment method'),
+    );
 
+    $form['payment']['method']['table'] = array(
+        '#title' => t('Select payment method'),
+        '#type' => 'tableselect',
+        '#multiple' => FALSE,
+        '#header' => array( 'name' => '', 'cost' => ''),
+        '#options' => $methods,
+        '#required' => FALSE,
+        '#attributes' => array('class' => array('grid', 'clearfix', 'rows-' . count($methods), 'payment-methods-table')),
+        '#default_value' => $cart->payment_method,
+    );
+    $form['payment']['method']['text'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('imgpayment')),
+        'content' => array(
+            '#markup' => '',
+        ),
+    );
   if ($cart->totalAmount <= 0 || (isset($form_state['values']['payment']['credit']) &&
      $form_state['values']['payment']['credit']['use'] == 'yes')) {
         hide($form['payment']['method']);

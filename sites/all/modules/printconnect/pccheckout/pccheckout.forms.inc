@@ -1303,7 +1303,7 @@ function CalculateCostamount($amount,$rate,$cost) {
 function pccheckout_payment_form($form, &$form_state) {
     _pccustomers_ensureloggedin();
     $customer = \printconnect\Customers\Factory::Current();
-    $cart = \printconnect\Carts\Factory::Current(FALSE);
+    $cart = \printconnect\Carts\Factory::Current(TRUE);
     if(!isset($cart->billingAccount) or empty($cart->billingAccount)){
     drupal_goto('checkout/invoiceanddelivery');
     drupal_set_message(t('Please check your order because no invoice address related with it'), 'error');

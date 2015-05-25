@@ -21,20 +21,21 @@ function updateDomain() {
     },
     attach: function (context, settings) {
       
-//      $(document).ajaxStart(function() {
-//       $('body',this).css('cursor','progress');
-//       $(':submit').attr('disabled', 'disabled');
-//        
-//      });
-//      
-//      $(document).ajaxStop(function() {
+      $(document).ajaxStart(function() {
+          //$('body',this).css('cursor','progress');
+       $(':submit').attr('disabled', 'disabled');
+        
+      });
+      
+      $(document).ajaxStop(function() {
+          console.log('llll');
 //        $('body', this).css('cursor','default');
-//        $(':submit').removeAttr('disabled');
-//      });
-//      
-//      $('.contactus').click(function(){
-//          
-//      });
+        $(':submit').removeAttr('disabled');
+      });
+      
+      $('.contactus').click(function(){
+          
+      });
       if ($.fancybox){
           var targetElement = null;
         $('.fancybox').each(function(){

@@ -84,10 +84,7 @@
                     $('#isUserCompany').attr('disabled', false);
                 }
         }
-        
-            if ($(".isa_info")[0]) {
-                $(".isa_info").remove();
-            }
+       
         /* end */
 
     });
@@ -319,15 +316,7 @@ function setShppingAddress(id) {
             $('#pccheckout-invoiceanddelivery-form #edit-shipping-detail-current-postalCode').val(data.postalCode);
             $('#pccheckout-invoiceanddelivery-form #edit-shipping-detail-current-city').val(data.city);
             $('#pccheckout-invoiceanddelivery-form #edit-shipping-detail-current-country').val(data.country);
-            if (data.vatStatus) {
-                if (!$(".isa_info")[0]) {
-                    $('.form-item-shipping-detail-current-select').before('<div class="isa_info">' + Drupal.t('Votre adresse de facturation sera l \' adresse de livraison') + '</div>');
-                }
-            } else {
-                if ($(".isa_info")[0]) {
-                    $(".isa_info").remove();
-                }
-            }
+          
         });
     }
 

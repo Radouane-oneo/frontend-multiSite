@@ -838,12 +838,14 @@ function pcflyerstores_form_pccheckout_invoiceanddelivery_form_alter(&$form, &$f
         $form['shipping']['detail']['phone'] = array(
             '#type' => 'textfield',
             '#title' => t('SMS'),
+            '#required' => TRUE,
             '#default_value' => isset($cart->pickuppoint) && isset($cart->pickuppoint->contactPhone) ? $cart->pickuppoint->contactPhone : ($customer ? $customer->phone : ''),
             '#size' => 30,
         );
         $form['shipping']['detail']['email'] = array(
             '#type' => 'textfield',
             '#title' => t('Email'),
+            '#required' => TRUE,
             '#default_value' => isset($cart->pickuppoint) && isset($cart->pickuppoint->contactEmail) ? $cart->pickuppoint->contactEmail : ($customer ? $customer->email : ''),
             '#size' => 30,
         );

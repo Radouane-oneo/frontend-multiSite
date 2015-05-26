@@ -28,7 +28,6 @@ function updateDomain() {
       });
       
       $(document).ajaxStop(function() {
-          console.log('llll');
 //        $('body', this).css('cursor','default');
         $(':submit').removeAttr('disabled');
       });

@@ -6,7 +6,6 @@
              $('#fademe').addClass('black_overlay');
         $("input[name='invoice[address][current][vatNumber][number]']").val('');
     });
-
     $(".valid-button-btt").live("click", function () {
         var number = $('#edit-invoice-address-current-vatnumber-number').val();
         var country = $('#edit-invoice-address-current-vatnumber-country').val();
@@ -38,12 +37,19 @@
             $('#edit-invoice-address-current-vatnumber-country').removeClass('error');
         }
     });
-
-
-
+  
     /* display  vat & company on load if adress is Company */
     $(document).ready(function () {
-
+        jQuery(".selectBilling2").select2();
+        jQuery(".selectStyle").select2();
+        
+        if ($('#pccheckout-invoiceanddelivery-form  input[name="pcflyerstores[id]"]').val() != ''){
+               $('#pccheckout-invoiceanddelivery-form #edit-summary-shipping h6').html($('#pccheckout-invoiceanddelivery-form .storcomande h2').html());
+               $('#pccheckout-invoiceanddelivery-form #edit-summary-shipping .address').html($('#pccheckout-invoiceanddelivery-form  .storcomande .address').html());
+               $('#pccheckout-invoiceanddelivery-form #edit-summary-shipping .phone').html($('#pccheckout-invoiceanddelivery-form  .storcomande .phone').html());
+               $('#pccheckout-invoiceanddelivery-form #edit-summary-shipping .fax').html($('#pccheckout-invoiceanddelivery-form  .storcomande .fax').html());
+               $('#pccheckout-invoiceanddelivery-form #edit-summary-shipping .email').html($('#pccheckout-invoiceanddelivery-form  .storcomande .email').html());
+           }
         if (typeof $("#isUserCompany")[0] != "undefined") {
             if ($("#companyInput").val() != '') {
                 $("#isUserCompany")[0].checked = true;
@@ -78,10 +84,7 @@
                     $('#isUserCompany').attr('disabled', false);
                 }
         }
-        
-            if ($(".isa_info")[0]) {
-                $(".isa_info").remove();
-            }
+       
         /* end */
 
     });
@@ -313,15 +316,7 @@ function setShppingAddress(id) {
             $('#pccheckout-invoiceanddelivery-form #edit-shipping-detail-current-postalCode').val(data.postalCode);
             $('#pccheckout-invoiceanddelivery-form #edit-shipping-detail-current-city').val(data.city);
             $('#pccheckout-invoiceanddelivery-form #edit-shipping-detail-current-country').val(data.country);
-            if (data.vatStatus) {
-                if (!$(".isa_info")[0]) {
-                    $('.form-item-shipping-detail-current-select').before('<div class="isa_info">' + Drupal.t('Votre adresse de facturation sera l \' adresse de livraison') + '</div>');
-                }
-            } else {
-                if ($(".isa_info")[0]) {
-                    $(".isa_info").remove();
-                }
-            }
+          
         });
     }
 
@@ -370,7 +365,7 @@ function pccheckout_submit_form(form, triggeringElement) {
     form.css('cursor', 'wait');
 
     if (triggeringElement) {
-        data = '_triggering_element_name=' + triggeringElement.attr("name") + '&' + data;
+        data = '_triggering_element_name=' + triggeringElement.attr("name") + '&' + data; 
     }
 
     data = data + '&op=ajax';

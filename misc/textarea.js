@@ -1,6 +1,6 @@
 (function ($) {
-	
-	Drupal.behaviors.textarea = {
+
+Drupal.behaviors.textarea = {
   attach: function (context, settings) {
     $('.form-textarea-wrapper.resizable', context).once('textarea', function () {
       var staticOffset = null;
@@ -17,13 +17,7 @@
       }
 
       function performDrag(e) {
-        var  before = textarea.height();
         textarea.height(Math.max(32, staticOffset + e.pageY) + 'px');
-        var after = textarea.height();
-        if (parent.jQuery('#fancybox-content').length > 0) {
-            parent.jQuery('#fancybox-content').height(parent.jQuery('#fancybox-content').height() + (after - before));
-        }
-        
         return false;
       }
 
@@ -34,7 +28,5 @@
     });
   }
 };
-	
-
 
 })(jQuery);

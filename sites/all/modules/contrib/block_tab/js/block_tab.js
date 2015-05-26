@@ -16,6 +16,11 @@
         $('[region="' + region + '"] #block_tab-block-' + id).fadeIn('fast');
         $(this).addClass('active');
       });
+      
+      if (window.location.href.toString().match(/^.*(?:#tab){1}(.*)$/i)) {
+        var selected_bid = window.location.href.toString().replace(/^.*(?:#tab){1}(.*)$/i, '$1');
+        $('[bid="' + selected_bid + '"]').click();
+      }
     }
   }
 })(jQuery)

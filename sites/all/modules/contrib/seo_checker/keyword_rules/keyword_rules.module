@@ -65,6 +65,10 @@ function keyword_rules_density($form_values) {
   if (count($tags) === 0) {
     return 0;
   }
+  if (!isset($form_values['body'])) {
+    // No body field on this node.
+    return FALSE;
+  }
   $body = strip_tags($form_values['body'][$form_values['body']['#language']][0]['value']['#value']);
   $words = preg_split('/\W+/', $body);
   $total = count($words);
@@ -137,9 +141,13 @@ function keyword_rules_headings($form_values) {
   if ($tags === FALSE) {
       return FALSE;
   }
+  if (!isset($form_values['body'])) {
+    // No body field on this node.
+    return FALSE;
+  }
   $body = $form_values['body'][$form_values['body']['#language']][0]['value']['#value'];
   if (!($nr_matches = preg_match_all('/<h(\d)>(.*?)<\/h\d>/i', $body, $matches, PREG_SET_ORDER))) {
-    return 100;
+    return FALSE;
   }
 
   $good_weight = 0;
@@ -189,14 +197,10 @@ function _keyword_rules_extract_tags($form_values) {
 
     /* other CCK fields */
     $field_instance = field_info_instance('node', $keyword_field, $form_values['type']['#value']);
-
     switch ($field_instance['widget']['module']) {
       case 'taxonomy':
         /* we always have an array of term names. */
-        $terms = $form_values[$keyword_field][$form_values[$keyword_field]['#language']];
-        foreach ($terms as $term) {
-            $tags[] = $term['name'];
-        }
+        $tags = drupal_explode_tags(drupal_strtolower($form_values[$keyword_field][$form_values[$keyword_field]['#language']]['#value']));
         break;
       case 'options':
         $transposed = options_array_transpose($form_values[$keyword_field][$form_values[$keyword_field]['#language']]);
@@ -230,7 +234,7 @@ function _keyword_rules_extract_tags($form_values) {
  * The SEO Checker has to be enabled per content type
  */
 function keyword_rules_form_node_type_form_alter(&$form, $form_status) {
-  $fieldarr = field_info_instances('node', $form['orig_type']['#value']);
+  $fieldarr = field_info_instances('node', $form['type']['#default_value']);
   $fields['disabled'] = t('Disable Keyword Check');
 
   if (is_array($fieldarr)) {
@@ -239,7 +243,7 @@ function keyword_rules_form_node_type_form_alter(&$form, $form_status) {
     }
   }
 
-  $extra_fields = field_info_extra_fields('node', $form['orig_type']['#value'], 'form');
+  $extra_fields = field_info_extra_fields('node', $form['type']['#default_value'], 'form');
   if (is_array($extra_fields)) {
     foreach ($extra_fields as $code => $field) {
       $fields[$code] = $field['label'];

@@ -79,10 +79,6 @@
 	position: relative;
 	overflow: hidden;
 	z-index: 1102;
-<<<<<<< HEAD
-=======
-
->>>>>>> 3f4175c5ba65a6a79418eb28549b5c2b36579250
 }
 
 #fancybox-hide-sel-frame {
@@ -97,7 +93,7 @@
 
 #fancybox-close {
 	position: absolute;
-	top: -15px;
+	top: -24px;
 	right: -15px;
 	width: 30px;
 	height: 30px;

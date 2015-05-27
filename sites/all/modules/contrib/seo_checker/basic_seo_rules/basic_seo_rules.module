@@ -40,8 +40,13 @@ function basic_seo_rules_register_seo_rules() {
  * @param array $form_values
  */
 function basic_seo_rules_alt_attribute($form_values) {
+  if (!isset($form_values['body'])) {
+    // No body field on this node.
+    return FALSE;
+  }
+
   if (!preg_match_all('/<img[^>]+>/i', $form_values['body'][$form_values['body']['#language']][0]['value']['#value'], $matches)) {
-    return 100;
+    return FALSE;
   }
   $total = 0;
   $successful = 0;
@@ -60,8 +65,13 @@ function basic_seo_rules_alt_attribute($form_values) {
  * @param array $form_values
  */
 function basic_seo_rules_title_attribute($form_values) {
+  if (!isset($form_values['body'])) {
+    // No body field on this node.
+    return FALSE;
+  }
+
   if (!preg_match_all('/<a[^>]+href[^>]*>/i', $form_values['body'][$form_values['body']['#language']][0]['value']['#value'], $matches)) {
-    return 100;
+    return FALSE;
   }
 
   $total = 0;

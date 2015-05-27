@@ -5,7 +5,7 @@ namespace printconnect\Files {
   class File extends \printconnect\Object {
 
     function get_url() {
-      return 'file/' . $this->id;
+      return 'pc_file/' . $this->id;
     }
 
     function get_serverUrl() {
@@ -13,7 +13,7 @@ namespace printconnect\Files {
         return $attachment->url;
       }
     }
-    
+
   }
 
 }

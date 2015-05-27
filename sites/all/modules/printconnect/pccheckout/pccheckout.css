@@ -42,7 +42,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 }
 #pccheckout-invoiceanddelivery-form input[type="text"]{
     font-size: 12px;
-    border-color: #e1e1e1;
+    border-color: #e1e1e1 !important;
 }
 .page-checkout #shipping-address .form-item, .page-checkout #invoice-address .form-item{
     margin: 9px 0 0 !important;
@@ -115,9 +115,10 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
   display: inline-block;
   margin-left: 0;
   float: right;
-  top: -65px;
-  right: 29px;
+
+  top: -20px;
   position: absolute;
+  right: 0;
 }
 #shipping-address .openinghours caption h1{
   margin-bottom: 0 !important;
@@ -333,6 +334,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
     margin-left: 0;
     border-bottom: 1px solid #e3e3e3;
     padding-bottom: 12px;
+    padding-top: 14px;
 }
 #pccheckout-invoiceanddelivery-form .blocright{
   display: block;
@@ -419,7 +421,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 }
 .page-checkout .storcomande{
   float: left !important;
-   width: 255%!important;
+  width: 46%!important;
   margin-top: -5px;
 }
 #pccheckout-invoiceanddelivery-form .form-item-shipping-detail-current-company{
@@ -444,59 +446,10 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 }
 #pccheckout-payment-form .textpayment{
   bottom: 54px;
-  position: absolute;
   width: 100%;
   text-align: center;
 }
 
 .page-checkout-payment .whitebox h1{
   font-size: 14px !important;
-}
-
-
-
-.error{
-    border:1px solid red !important;
-}
-.validated{
-    border:1px solid #77b800 !important;
-}
-
-.valid-button-btt{
-  color: #fff;
-  display: block;
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  padding: 8px 10px;
-  border-radius: 4px 4px 4px 4px;
-  border: none;
-  margin: 0;
-  text-align: left;
-  background: #77b800;
-  background: -webkit-linear-gradient(top, #77b800 0%, #669c02 100%);
-  background: -moz-linear-gradient(top, #77b800 0%, #669c02 100%);
-  background: -o-linear-gradient(top, #77b800 0%, #669c02 100%);
-  text-align: center;
-  float: right;
-}
-
-.isa_info {
-    margin: 10px 0px;
-    padding:12px;
-    color: #00529B;
-    background-color: #BDE5F8;
-    border-radius: 12px;
-}
-.imgpayment {
-  background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/paymentmethods/payment.jpg") no-repeat scroll center top #fff;
-  float: left;
-  margin-left: 16px;
-  position: relative;
-  text-align: center;
-  width: 441px;
-  margin-top: 0px;
-  padding-top: 196px;
-  margin-bottom: 20px;
-  height: 123px;
 }

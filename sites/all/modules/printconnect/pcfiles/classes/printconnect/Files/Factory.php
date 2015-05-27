@@ -31,7 +31,7 @@ namespace printconnect\Files {
     }
 
     public static function getFileUrl($id) {
-      return 'pc_file/' . $id;
+      return 'file/' . $id;
     }
 
     public static function getServerFileUrl($id) {

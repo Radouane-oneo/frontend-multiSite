@@ -12,9 +12,9 @@ function pcfiles_menu() {
     'type' => MENU_LOCAL_TASK,
     );
    */
-  $items['pc_file/%'] = array('title' => 'Files', 'page callback' => '_pcfiles_file', 'page arguments' => array(1), 'access arguments' => array('access content'), 'type' => MENU_CALLBACK,);
+  $items['file/%'] = array('title' => 'Files', 'page callback' => '_pcfiles_file', 'page arguments' => array(1), 'access arguments' => array('access content'), 'type' => MENU_CALLBACK,);
 
-  $items['pc_file/%/%'] = array('title' => 'Files', 'page callback' => '_pcfiles_file', 'page arguments' => array(1, 2), 'access arguments' => array('access content'), 'type' => MENU_CALLBACK,);
+  $items['file/%/%'] = array('title' => 'Files', 'page callback' => '_pcfiles_file', 'page arguments' => array(1, 2), 'access arguments' => array('access content'), 'type' => MENU_CALLBACK,);
 
   $items['pcfiles'] = array('title' => 'Files', 'page callback' => 'drupal_get_form', 'page arguments' => array('pcfiles_files_form'), 'access arguments' => array('access content'), 'type' => MENU_LOCAL_TASK,);
 
@@ -87,7 +87,7 @@ function theme_pcfilesthumb($vars) {
       $url .= '?' . md5(uniqid(rand(), true));
     }
   } else {
-    $url = 'pc_file/' . $vars['file'];
+    $url = 'file/' . $vars['file'];
     if ($vars['cache']) {
       $url .= '/' . variable_get('css_js_query_string', '0');
     } else {

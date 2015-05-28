@@ -16,6 +16,8 @@
           if (data.status == "Inactive"){
             number.addClass('error');
             number.val('');
+            var vatplaceholder = Drupal.t('insert a valid vat number please');
+            number.attr("placeholder", vatplaceholder);
           }else{
               validate = "validated";
           }

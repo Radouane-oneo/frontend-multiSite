@@ -73,7 +73,6 @@ class Factory {
   }
   
   public static function Save(\printconnect\Object $object) {
-
     $id = $object->Get('id');
     $cart = \printconnect\Carts\Factory::Current();
     $object->cart = $cart->id;
@@ -81,8 +80,8 @@ class Factory {
       $customer = \printconnect\Customers\Factory::Current();
       $object->customer = $customer->id;
       Dal::Save($object, 'billing-account', array($id));
-     
     } else {
+ 
       Dal::Save($object, 'billing-account', array());
     }
     $_SESSION['billingAccountId'] = $object->id;

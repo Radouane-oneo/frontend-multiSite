@@ -42,7 +42,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 }
 #pccheckout-invoiceanddelivery-form input[type="text"]{
     font-size: 12px;
-    border-color: #e1e1e1 !important;
+    border-color: #e1e1e1;
 }
 .page-checkout #shipping-address .form-item, .page-checkout #invoice-address .form-item{
     margin: 9px 0 0 !important;
@@ -452,4 +452,26 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 
 .page-checkout-payment .whitebox h1{
   font-size: 14px !important;
+}
+.error{
+    border: 1px solid red !important;
+}
+.valid-button-btt{
+    outline: none;
+  color: #fff;
+  display: block;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  padding: 8px 10px;
+  border-radius: 4px 4px 4px 4px;
+  border: none;
+  margin: 0;
+  text-align: left;
+  background: #77b800;
+  background: -webkit-linear-gradient(top, #77b800 0%, #669c02 100%);
+  background: -moz-linear-gradient(top, #77b800 0%, #669c02 100%);
+  background: -o-linear-gradient(top, #77b800 0%, #669c02 100%);
+  text-align: center;
+  float: right;
 }

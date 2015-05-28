@@ -145,6 +145,7 @@ function pccheckout_personal_form($form, &$form_state) {
         '#type' => 'select',
         '#title' => t('Country'),
         '#required' => TRUE,
+        '#empty_value' => 0,
         '#options' => $countries,
     );
 

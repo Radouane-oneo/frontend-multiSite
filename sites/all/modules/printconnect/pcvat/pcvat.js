@@ -42,7 +42,7 @@
       $('.form-type-vatfield').once('vat-validation').each(function(){
         var control = $(this);
         $(control).vatfieldValidate(false);
-        $('.number, .country', this).once('vat-validation-change').change(function (){
+        $('.number, .country', this).blur(function (){
           $(control).vatfieldValidate(true);
         });
       });

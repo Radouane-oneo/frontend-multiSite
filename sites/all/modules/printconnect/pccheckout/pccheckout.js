@@ -2,9 +2,9 @@
 
     /* popup button annuler */
     $(".button_null_address_vat").live("click", function () {
+             $("#edit-vatnumber-number").val('');
              $('#fademe').removeClass('black_overlay2');
              $('#fademe').addClass('black_overlay');
-        $("input[name='invoice[address][current][vatNumber][number]']").val('');
     });
     $(".valid-button-btt").live("click", function () {
         var number = $('.number').val();
@@ -15,11 +15,11 @@
             var billingAccountResult = '<input type="hidden" name="billingAccountResult" value="'+dataset.id+'">';
             $("input[name='billingAccountResult']").remove();
             $('#pccheckout-invoiceanddelivery-form #invoice-address').before(billingAccountResult);
-            $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-name, #editname ').val(dataset.name);
+            $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-name, #edit-name').val(dataset.name);
             $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-street, #edit-street').val(dataset.street);
             $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-postalCode, #edit-postalcode').val(dataset.postalCode);
             $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-city, #edit-city').val(dataset.city);
-            $('#pccheckout-invoiceanddelivery-form #companyInput, #company').val(dataset.company);
+            $('#pccheckout-invoiceanddelivery-form #companyInput, #companyInput').val(dataset.company);
             
             if($('#pccheckout-invoiceanddelivery-form')[0]){
             $('#invoice-address input[type=text]').attr('readonly', true);
@@ -119,9 +119,20 @@ Drupal.behaviors.pccheckout = {
         detach: function (context) {
         },
         attach: function (context, settings) {
+  $('#pccheckout-personal-form').submit(function (e) {
+                           var number = $('.number');
+                           var company = $('#companyInput');
+                           if (UserCompany == "yes") {
+                               if (number.val() == '' || company.val() == '') {
+                                   e.preventDefault();
+                                    number.addClass('error');
+                                    company.addClass('error');
 
+                               }
+                           }
+});
   
-            $('#pccheckout-invoiceanddelivery-form').submit(function (e) {
+    $('#pccheckout-invoiceanddelivery-form').submit(function (e) {
                            var number = $('#edit-invoice-address-current-vatnumber-number');
                            var company = $('#companyInput');
 

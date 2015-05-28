@@ -185,6 +185,6 @@ function _pcoffers_from_cart() {
   }
   $offer = Factory::FromCart($cart);
 
-  drupal_goto('pc_file/' . $offer->pdf);
+  drupal_goto('file/' . $offer->pdf);
   exit;
 }

@@ -60,6 +60,35 @@ function pccheckout_personal_form($form, &$form_state) {
         '#title' => t('Personal'),
         '#collapsible' => FALSE,
     );
+    
+    
+    
+    $form['personal']['popup']= array(
+        '#type' => 'fieldset',
+        '#prefix' => '<span id="fademe" class="black_overlay" style=" height: 612px;">',
+        '#suffix' => '</span>',
+         
+       );
+    
+    $form['personal']['popup']['message'] = array(
+        '#type' => 'container',
+        '#prefix' => '<div id="light" class="white_content">',
+        '#suffix' => '</div>',
+    );
+    
+    $form['personal']['popup']['message']['text'] = array(
+        '#markup' => '<p>' . t('this billing address is already exist would you want load this address as your default billing address') . '</p>',
+    );
+    
+    $form['personal']['popup']['message']['valid'] = array(
+    '#type' => 'markup',
+    '#markup' => '<input type="button" name="valid-button" value="' . t('Valider') . '" class="valid-button-btt" >',
+        );
+    
+    $form['personal']['popup']['message']['null'] = array(
+        '#type' => 'markup',
+        '#markup' => '<input type="button" id="null-address-vat" name="null_address_vat" value="' . t('Annuler') . '" class="button_null_address_vat" >',
+    );
 
     $form['personal']['firstName'] = array(
         '#type' => 'textfield',
@@ -92,14 +121,12 @@ function pccheckout_personal_form($form, &$form_state) {
         '#type' => 'textfield',
         '#title' => t('Street'),
         '#required' => TRUE,
-        '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->street : '',
         '#size' => 30,
     );
     $form['address']['postalCode'] = array(
         '#type' => 'textfield',
         '#title' => t('Postal code'),
         '#required' => TRUE,
-        '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->postalCode : '',
         '#size' => 30,
         '#attributes' => array(
             'placeholder' => '75000',
@@ -109,7 +136,6 @@ function pccheckout_personal_form($form, &$form_state) {
         '#type' => 'textfield',
         '#title' => t('City'),
         '#required' => TRUE,
-        '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->city : '',
         '#size' => 30,
         '#attributes' => array(
             'placeholder' => t('Paris'),
@@ -119,19 +145,7 @@ function pccheckout_personal_form($form, &$form_state) {
         '#type' => 'select',
         '#title' => t('Country'),
         '#required' => TRUE,
-        '#empty_value' => 0,
         '#options' => $countries,
-        '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->country : $defaultCountry->id,
-        '#ajax' => array(
-            'callback' => 'pccheckout_personal_form_country_callback',
-            'wrapper' => 'vatNumber',
-            'method' => 'replace',
-            'effect' => 'fade',
-            'progress' => array(
-                'message' => NULL,
-                'type' => NULL,
-            ),
-        ),
     );
 
     
@@ -153,7 +167,6 @@ function pccheckout_personal_form($form, &$form_state) {
         '#type' => 'textfield',
         '#title' => t('Company'),
         '#required' => FALSE,
-        '#default_value' => $customer->company,
         '#size' => 30,
         '#attributes' => array(
             'id' => 'companyInput'
@@ -168,7 +181,6 @@ function pccheckout_personal_form($form, &$form_state) {
         '#type' => 'vatfield',
         '#title' => t('Vat number'),
         '#required' => FALSE,
-        '#default_value' => $defaultBillingAddress ? ($defaultBillingAddress->vatNumber != '' ? $defaultBillingAddress->vatNumber : $country->iso) : $defaultCountry->iso,
     );
 
     $form['actions'] = array(
@@ -190,12 +202,6 @@ function pccheckout_personal_form($form, &$form_state) {
     return $form;
 }
 
-function pccheckout_personal_form_country_callback($form, &$form_state) {
-    $country = \printconnect\Countries\Factory::Get($form_state['values']['country']);
-    $form['company']['vatNumber']['country']['#value'] = $country->vatPrefix;
-
-    return $form['company']['vatNumber'];
-}
 
 function pccheckout_personal_form_validate($form, &$form_state) {
     global $language;
@@ -772,6 +778,11 @@ function pccheckout_invoiceanddelivery_form_invoice_validate($form, &$form_state
     $cart = \printconnect\Carts\Factory::Current();
     $customer = $form_state['storage']['customer'];
     $billingAccountId = $form_state['values']['invoice']['address']['current']['select'];
+    
+        if($_POST['billingAccountResult']){
+              $billingAccountId = $_POST['billingAccountResult'];
+              $form_state['values']['invoice']['address']['current']['select']=$billingAccountId;
+         }   
 
     if ($billingAccountId == "0") {
         $billingAccount = \printconnect\Customers\BillingAccounts\Factory::Create();
@@ -784,12 +795,13 @@ function pccheckout_invoiceanddelivery_form_invoice_validate($form, &$form_state
         $form_state['storage']['$billingAccount'] = $billingAccount;
         $form_state['storage']['cart'] = $cart;
     }
+ 
     \printconnect\Drupal\Forms::LoadObject($form_state['values']['invoice']['address']['current'], $billingAccount);
     $billingAccount->customer = $customer->id;
     try {
         \printconnect\Customers\BillingAccounts\Factory::Validate(clone $billingAccount);
         //j'ai ajouté cette ligne pour corriger le bug BUGS-3987
-+       $_SESSION['billingAccountId'] = $billingAccountId;
+         $_SESSION['billingAccountId'] = $billingAccountId;
     } catch (\printconnect\Dal\Exception $ex) {
         \printconnect\Drupal\Forms::HandleException($ex, $form, 'invoice][address][current][');
     }
@@ -800,7 +812,6 @@ function pccheckout_invoiceanddelivery_form_invoice_submit($form, &$form_state) 
     $billingaccoutcustomer = \printconnect\Customers\Factory::Current();
     $billingAccount = $form_state['storage']['invoice']['address'];
     if (isset($form_state['storage']['invoice']['address'])) {
-        \printconnect\Customers\BillingAccounts\Factory::Save($billingAccount);
         if ($billingAccount->select == 0) {
             \printconnect\Customers\BillingAccounts\Factory::Save($billingAccount);
             $billingaccoutcustomer->billingAccount = $billingAccount->id;

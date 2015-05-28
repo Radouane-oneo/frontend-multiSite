@@ -265,12 +265,14 @@ case 'billingAccountVat':
          \printconnect\Customers\BillingAccounts\Factory::LoadBillingAccountVat($billingAccount);
         if($billingAccount->number){
         $data = array(
-        'status'=> 'exicte',
+        'status' => 'exicte',
         'name'=> $billingAccount->name,
         'company'=> $billingAccount->company,
         'street' => $billingAccount->street,
         'postalCode' => $billingAccount->postalCode,
         'city' => $billingAccount->city,
+        'number'=>$billingAccount->number ,
+        'id'=>$billingAccount->id,
          );
             drupal_json_output($data);
         }

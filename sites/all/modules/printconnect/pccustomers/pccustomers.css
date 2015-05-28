@@ -74,3 +74,7 @@ width: 100px;
 pccustomers-newaddress-billingaddresses-form .form-item-company, .form-item-vatNumber{
     display: block;
 }
+
+#edit-vatnumber-number{
+   width: 390px;   
+}

@@ -7,18 +7,26 @@
         $("input[name='invoice[address][current][vatNumber][number]']").val('');
     });
     $(".valid-button-btt").live("click", function () {
-        var number = $('#edit-invoice-address-current-vatnumber-number').val();
-        var country = $('#edit-invoice-address-current-vatnumber-country').val();
+        var number = $('.number').val();
+        var country = $('.country').val();
         $('#fademe').removeClass('black_overlay2');
         $('#fademe').addClass('black_overlay');
         $.getJSON(Drupal.settings.basePath + 'index.php?q=/billingAccountVat/' + country + number, function (dataset) {
-            $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-name').val(dataset.name);
-            $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-street').val(dataset.street);
-            $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-postalcode').val(dataset.postalCode);
-            $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-city').val(dataset.city);
-            $('#pccheckout-invoiceanddelivery-form #companyInput').val(dataset.company);
+            var billingAccountResult = '<input type="hidden" name="billingAccountResult" value="'+dataset.id+'">';
+            $("input[name='billingAccountResult']").remove();
+            $('#pccheckout-invoiceanddelivery-form #invoice-address').before(billingAccountResult);
+            $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-name, #editname ').val(dataset.name);
+            $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-street, #edit-street').val(dataset.street);
+            $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-postalCode, #edit-postalcode').val(dataset.postalCode);
+            $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-city, #edit-city').val(dataset.city);
+            $('#pccheckout-invoiceanddelivery-form #companyInput, #company').val(dataset.company);
+            
+            if($('#pccheckout-invoiceanddelivery-form')[0]){
             $('#invoice-address input[type=text]').attr('readonly', true);
             $('#edit-invoice-address-current-country').attr('disabled', true);
+            $('#isUserCompany').attr('disabled', true);      
+            }
+            
         });
     });
 
@@ -26,15 +34,14 @@
 
     /* display  vat & company input afther click box */
     $("#isUserCompany").live('click', function () {
-        if (this.checked) {
+        if (this.checked){
             UserCompany = "yes";
             $(".form-item-company, .form-item-vatNumber, .form-item-invoice-address-current-company, .form-item-invoice-address-current-vatNumber").show();
         } else {
             UserCompany = "no";
+            $("#companyInput, .number ").val('');
+            $(".form-item-company, .form-item-vatNumber, .form-item-invoice-address-current-company, .form-item-invoice-address-current-vatNumber").removeClass('error');
             $(".form-item-company, .form-item-vatNumber, .form-item-invoice-address-current-company, .form-item-invoice-address-current-vatNumber").hide();
-            $('#edit-invoice-address-current-vatnumber-number').removeClass('error');
-            $('#companyInput').removeClass('error');
-            $('#edit-invoice-address-current-vatnumber-country').removeClass('error');
         }
     });
   
@@ -74,8 +81,8 @@
             $('#invoice-address input[type=text]').attr('readonly', true);
                 $('#edit-invoice-address-current-country').attr('disabled', true);
 
-                if ($(".selectBilling2")[0]) {
-                    if ($('.selectBilling2').val() == 0) {
+                if ($("#edit-invoice-address-current-select")[0]) {
+                    if ($('#edit-invoice-address-current-select').val() == 0) {
                         $('#isUserCompany').attr('disabled', false);
                     } else {
                         $('#isUserCompany').attr('disabled', true);
@@ -113,9 +120,32 @@ Drupal.behaviors.pccheckout = {
         },
         attach: function (context, settings) {
 
+  
+            $('#pccheckout-invoiceanddelivery-form').submit(function (e) {
+                           var number = $('#edit-invoice-address-current-vatnumber-number');
+                           var company = $('#companyInput');
+
+                           $('#invoice-address input[type=text]').blur(function (){
+                                if($(this).val() == ''){
+                                 $(this).addClass('error');
+                                }else{
+                                 $(this).removeClass('error');
+                                }
+                             });
 
 
- var pricePaiement = 0;
+                           if (UserCompany == "yes") {
+                               if (number.val() == '' || company.val() == '') {
+                                   e.preventDefault();
+                                   $('#edit-invoice-address-current-vatnumber-number').addClass('error');
+                                   $('#companyInput').addClass('error');
+                                   $('#edit-invoice-address-current-vatnumber-country').addClass('error');
+
+                               }
+                           }
+           });
+      
+            var pricePaiement = 0;
             $("#pccheckout-payment-form  table.payment-methods-table tbody tr").mousedown(function () {
                 if ($(this).find('input.grid').is(":not(:checked)")) {
                     var id = $(this).find('input.grid').val();
@@ -175,24 +205,6 @@ Drupal.behaviors.pccheckout = {
            });
 
 
-
-
-            $('#pccheckout-invoiceanddelivery-form').submit(function (e) {
-
-                var number = $('#edit-invoice-address-current-vatnumber-number');
-                var company = $('#companyInput');
-                if (UserCompany == "yes") {
-                    if (number.val() == '' || company.val() == '') {
-                        e.preventDefault();
-                        $('#edit-invoice-address-current-vatnumber-number').addClass('error');
-                        $('#companyInput').addClass('error');
-                        $('#edit-invoice-address-current-vatnumber-country').addClass('error');
-
-                    }
-                }
-            });
-
-
             if ($("#pccheckout-payment-form table ")) {
                 var width = (662 / $("#pccheckout-payment-form  table.payment-methods-table tbody tr").length) - 21.2;
                 $('#pccheckout-payment-form').find('table.payment-methods-table tbody tr').css('width', width + 'px');
@@ -247,15 +259,19 @@ Drupal.behaviors.pccheckout = {
                     $('#edit-invoice-address-current-vatnumber-country').val(data.vatPrefix).trigger('change');
                 });
             });
+            
+              $('#pccheckout-personal-form #edit-country').change(function () {
+                var url = Drupal.settings.basePath + '?q=js/country/' + $(this).val();
+                $.getJSON(url, null, function (data) {
+                    $('#edit-vatnumber-country').val(data.vatPrefix).trigger('change');
+                });
+            });
 
         }
     }
 
 function setInvoiceAddress(id) {
     if (id == 0) {
-        $('#isUserCompany').attr('disabled', false);
-        $('#invoice-address input[type=text]').attr('readonly', false);
-        $('#edit-invoice-address-current-country').attr('disabled', false);
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-name').val('');
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-street').val('');
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-postalCode').val('');
@@ -264,19 +280,26 @@ function setInvoiceAddress(id) {
         $('#pccheckout-invoiceanddelivery-form #companyInput').val('');
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-vatnumber-country').val('BE');
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-vatnumber-number').val('');
+        
+        $('#isUserCompany').attr('disabled', false);
+        $('#invoice-address input[type=text]').attr('readonly', false);
+        $('#edit-invoice-address-current-country').attr('disabled', false);
     } else {
         var url = Drupal.settings.basePath + 'invoceform/' + id;
         $.getJSON(url, function (data) {
-        $('#invoice-address input[type=text]').attr('readonly', true);
-        $('#edit-invoice-address-current-country').attr('readonly', true);
-        $('#isUserCompany').attr('disabled', true);
-
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-name').val(data.name);
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-street').val(data.street);
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-postalCode').val(data.postalCode);
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-city').val(data.city);
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-country').val(data.country);
-
+        $('#pccheckout-invoiceanddelivery-form #select2-chosen-3').html($('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-country option:selected').text());
+        $('#invoice-address input[type=text]').attr('readonly', true);
+        $('#edit-invoice-address-current-country').attr('disabled', true);
+        $('#isUserCompany').attr('disabled', true);
+        if( $("input[name='billingAccountResult']")[0]){
+            $("input[name='billingAccountResult']").remove();
+        }
+       
     if (data.vatNumber) {
         $('#isUserCompany').attr('checked', true);
         $(".form-item-company, .form-item-vatNumber, .form-item-invoice-address-current-company, .form-item-invoice-address-current-vatNumber").show();

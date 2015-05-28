@@ -17,24 +17,20 @@ function updateDomain() {
 
   Drupal.behaviors.printconnect = {
     detach: function (context) {
-
     },
     attach: function (context, settings) {
       
       $(document).ajaxStart(function() {
           //$('body',this).css('cursor','progress');
-       $(':submit').attr('disabled', 'disabled');
+       $(':submit').attr('disabled', true);
         
       });
       
       $(document).ajaxStop(function() {
 //        $('body', this).css('cursor','default');
-        $(':submit').removeAttr('disabled');
+        $(':submit').attr('disabled', false);
       });
       
-      $('.contactus').click(function(){
-          
-      });
       if ($.fancybox){
           var targetElement = null;
         $('.fancybox').each(function(){

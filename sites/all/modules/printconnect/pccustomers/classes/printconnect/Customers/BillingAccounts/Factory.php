@@ -74,21 +74,23 @@ class Factory {
   
   public static function Save(\printconnect\Object $object) {
     $id = $object->Get('id');
-    $cart = \printconnect\Carts\Factory::Current();
-    $object->cart = $cart->id;
+
     if ($id) {
       $customer = \printconnect\Customers\Factory::Current();
       $object->customer = $customer->id;
       Dal::Save($object, 'billing-account', array($id));
     } else {
- 
       Dal::Save($object, 'billing-account', array());
     }
     $_SESSION['billingAccountId'] = $object->id;
+    if(!$_SESSION['newaddress']){
+        $cart = \printconnect\Carts\Factory::Current();
+    $object->cart = $cart->id;
     \printconnect\Carts\Factory::saveInCache($cart, array(
         'billingAccount' => $object->id,
 	'shipping_address' => ($object->shippingAddressId) ? $object->shippingAddressId : null
-    ));
+    ));  
+    }
   }
 
   public static function Validate(BillingAccount $object) {

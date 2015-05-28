@@ -1015,6 +1015,7 @@ function pccustomers_newaddress_form_submit($form, &$form_state) {
   }
 }
 function pccustomers_newaddress_form_Billingaddresses_submit($form, &$form_state) {
+    $_SESSION['newaddress'] = 'yes';
     $Billingcustomer = Factory::Current();
     $Billingaddress = \printconnect\Customers\BillingAccounts\Factory::Create();
     Forms::LoadObject($form_state['values'], $Billingaddress);
@@ -1036,6 +1037,7 @@ function pccustomers_newaddress_form_Billingaddresses_submit($form, &$form_state
 
     $form_state['rebuild'] = true;
     drupal_set_message(t('societe'));
+    unset($_SESSION['newaddress']);
     drupal_goto('myprintconnect/addresses');
 }
 

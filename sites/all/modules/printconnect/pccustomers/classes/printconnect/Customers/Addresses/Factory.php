@@ -57,9 +57,9 @@ class Factory {
     } else {
       Dal::Save($object, 'customer-address', array());
     }
-    /*\printconnect\Carts\Factory::saveInCache($cart, array(
+   \printconnect\Carts\Factory::saveInCache($cart, array(
         'shipping_address' => $object->id,
-    ));*/
+    ));
   }
 
   public static function Validate(Address $object) {

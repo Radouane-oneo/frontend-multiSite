@@ -1,5 +1,11 @@
 (function ($) {
-
+    $(document).ready(function () {
+         if ($('#edit-vatnumber-number').val()) {
+                $('#isUserCompany').attr('disabled', true);
+            } else {
+                $('#isUserCompany').attr('disabled', false);
+            }
+    });
   Drupal.behaviors.pccustomers= {
     detach: function (context) {
 

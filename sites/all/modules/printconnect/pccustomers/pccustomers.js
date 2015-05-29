@@ -1,17 +1,20 @@
 (function ($) {
     $(document).ready(function () {
-         if ($('#edit-vatnumber-number').val()) {
+ if($('#pccustomers-address-billingaddresses-form')[0]){
+     if ($('#edit-vatnumber-number').val()) {
                 $('#isUserCompany').attr('disabled', true);
             } else {
                 $('#isUserCompany').attr('disabled', false);
             }
+ }
+         
     });
+    
   Drupal.behaviors.pccustomers= {
     detach: function (context) {
-
     },
     attach: function(context, settings) {
-         var UserCompany;
+    var UserCompany;
 
     /* display  vat & company input afther click box */
     $("#isUserCompany").live('click', function () {

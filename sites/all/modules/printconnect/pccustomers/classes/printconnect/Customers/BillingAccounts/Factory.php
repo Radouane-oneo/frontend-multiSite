@@ -84,7 +84,7 @@ class Factory {
     }
     $_SESSION['billingAccountId'] = $object->id;
     if(!$_SESSION['newaddress']){
-        $cart = \printconnect\Carts\Factory::Current();
+    $cart = \printconnect\Carts\Factory::Current();
     $object->cart = $cart->id;
     \printconnect\Carts\Factory::saveInCache($cart, array(
         'billingAccount' => $object->id,

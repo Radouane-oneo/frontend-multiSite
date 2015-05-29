@@ -44,6 +44,8 @@
             $(".form-item-company, .form-item-vatNumber, .form-item-invoice-address-current-company, .form-item-invoice-address-current-vatNumber").hide();
         }
     });
+    
+   
   
     /* display  vat & company on load if adress is Company */
     $(document).ready(function () {
@@ -119,6 +121,21 @@ Drupal.behaviors.pccheckout = {
         detach: function (context) {
         },
         attach: function (context, settings) {
+            
+        var  agree = "no";
+        $("#edit-agree").live('click', function () {
+            if (this.checked){
+                agree = "yes";
+            }
+        });      
+    
+$('#pccheckout-payment-form').submit(function (e) {
+                if (agree == "no"){
+                         e.preventDefault();
+                 $(".form-item-agree").after('<p style=" color: white; text-align: center; background-color:#ff6600;">' + Drupal.t('champ obligatoire') + '<p>').fadeIn();
+                      } 
+});      
+            
   $('#pccheckout-personal-form').submit(function (e) {
                            var number = $('.number');
                            var company = $('#companyInput');

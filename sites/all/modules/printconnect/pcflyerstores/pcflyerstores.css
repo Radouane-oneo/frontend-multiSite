@@ -1259,6 +1259,9 @@ height: 84px;
 float: left;
 max-width: 250px;
 }
+#pcflyerstores-landingpage-form div#DetailStor > div{
+    line-height: 18px;
+}
 #pcflyerstores-landingpage-form div#Mapimg {
 float: right;
 margin-top: -110px;

@@ -904,15 +904,10 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
     $billingaccoutcustomer = \printconnect\Customers\Factory::Current();
     $cart = \printconnect\Carts\Factory::Current();
     $billingAccount = $form_state['storage']['$billingAccount'];
-        
     
     if (isset($form_state['storage']['invoice']['address'])) {
         $address = $form_state['storage']['invoice']['address'];
-        if (is_null($billingaccoutcustomer->billingAccount->id)) {
-            $billingAccountId = $billingaccoutcustomer->billingAccount;
-        } else {
-            $billingAccountId = $billingaccoutcustomer->billingAccount->id;
-        }
+        $billingAccountId = $address->id;
         $cart->billingAccount = $billingAccountId;
         $isNeutralActive = 0;
         if ($form_state['values']['shipping']['neutral']['check'] == 1) {
@@ -928,6 +923,7 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
 	$billingAccount = \printconnect\Customers\BillingAccounts\Factory::Get($billingAccountId);
         $billingAccount->EnsureLoaded();
 	$billingAccount->cart = $cart->id;
+   
         \printconnect\Customers\BillingAccounts\Factory::Save($billingAccount);
 
     }

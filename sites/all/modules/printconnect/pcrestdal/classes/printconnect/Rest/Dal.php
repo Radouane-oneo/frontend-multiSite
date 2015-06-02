@@ -35,7 +35,7 @@ use printconnect\Dal\ForbiddenException;
             if(variable_get('pc_env', 'production') == 'production') {
                 $json = $this->fromCache($url);
 		if ($entity == 'pickuppointdetail/service/store') {
-                   $json = utf8_encode($json);
+                  // $json = utf8_encode($json);
                 }
             }else {
                 $json = $this->Call($url);

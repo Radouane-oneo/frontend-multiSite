@@ -65,7 +65,7 @@ namespace printconnect {
       }
       $hash = $dal->GetHash($entity, $params, $language);
       $data = false;
-      if ($entity == 'cart' || $cache) {
+      if ($cache) {
         if (array_key_exists($hash, self::$_cache)) {
           $data = self::$_cache[$hash];
         }

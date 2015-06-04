@@ -896,11 +896,14 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
     
     if (isset($form_state['storage']['invoice']['address'])) {
         $address = $form_state['storage']['invoice']['address'];
-        if (is_null($billingaccoutcustomer->billingAccount->id)) {
+        if (is_null($billingaccoutcustomer->billingAccount->id) && !is_null($billingaccoutcustomer->billingAccount)) {
             $billingAccountId = $billingaccoutcustomer->billingAccount;
+        } elseif (is_null($billingaccoutcustomer->billingAccount)) {
+             $billingAccountId = $form_state['storage']['invoice']['address']->id;
         } else {
             $billingAccountId = $billingaccoutcustomer->billingAccount->id;
         }
+
         $cart->billingAccount = $billingAccountId;
         $isNeutralActive = 0;
         if ($form_state['values']['shipping']['neutral']['check'] == 1) {

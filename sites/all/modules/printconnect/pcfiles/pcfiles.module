@@ -69,7 +69,7 @@ function theme_pcfilesdownloadlink($vars) {
       $url .= '?' . md5(uniqid(rand(), true));
     }
   } else {
-    $url = 'pc_file/' . $vars['file'];
+    $url = 'file/' . $vars['file'];
   }
   if(preg_match("/^template/",$vars['file'])) {
       $url.=".zip";

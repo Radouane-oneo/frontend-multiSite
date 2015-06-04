@@ -524,7 +524,9 @@ function pctemplates_callback($type) {
 	    ? $_SESSION['templateProductId']
 	    : null;
         $item = Carts\Factory::CreateItem($cart, $priceGroupId, $qty, NULL, NULL, $options, $vatPercentage);
-        $item->file = $file;
+        $item = Carts\Factory::GetItem($cart, $item->id);
+	$item = Carts\Factory::LoadItem($item);
+	$item->file = $file;
         $item->thumbnail = $thumbnail;
         $item->design_tool_job_id = $jobId;
         $item->controlpro = $controlpro;

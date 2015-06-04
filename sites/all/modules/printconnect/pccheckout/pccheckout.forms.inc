@@ -906,6 +906,7 @@ function pccheckout_invoiceanddelivery_form_validate($form, &$form_state) {
 }
 
 function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
+
     $billingAccount = $form_state['storage']['$billingAccount'] ? $form_state['storage']['$billingAccount'] : $form_state['storage']['invoice']['address'] ;
     if ($billingAccount->id){
         $cart->billingAccount = $billingAccount->id;

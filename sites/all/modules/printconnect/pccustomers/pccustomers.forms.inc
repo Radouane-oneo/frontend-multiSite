@@ -167,10 +167,6 @@ function pccustomers_Billingaddress_form_delete_submit($form, $form_state) {
 function pccustomers_profile_form($form, &$form_state) {
   _pccustomers_ensureloggedin();
   $customer = Factory::Current();
-//  $form['profile'] = array(
-//      '#type' => 'container',
-//      '#title' => t('Profile'),
-//  );
 
   $form['email'] = array(
       '#type' => 'textfield',
@@ -777,6 +773,15 @@ function pccustomers_newaddress_form($form, $form_state) {
 }
 function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
  _pccustomers_ensureloggedin();
+ 
+        $countries = array (
+           "21"=>t('Belgique'),
+           "73"=>t('France'),
+           "150"=>t('Pays-Bas'),
+           "199"=>t('Espagne'),
+           "124"=>t('Luxembourg'),
+         );
+        
        $form['company'] = array(
            '#type' => 'fieldset',
        );
@@ -808,6 +813,7 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
         '#type' => 'vatfield',
         '#title' => t('Vat number'),
         '#required' => FALSE,
+        '#default_value' => 'FR',
     );
   
     $form['summary'] = array(
@@ -843,8 +849,6 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
         '#markup' => '<input type="button" id="null-address-vat" name="null_address_vat" value="' . t('Annuler') . '" class="button_null_address_vat" >',
     );
     
-    
-
 
   $form['summary']['name'] = array(
       '#type' => 'textfield',
@@ -876,21 +880,14 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
       '#attributes' => array('class' => array('city')),
   );
 
-    $countries = array();
-    foreach (\printconnect\Countries\Factory::GetAll() as $country) {
-        $countries = array (
-       "21"=>t('Belgique'),
-       "73"=>t('France'),
-       "150"=>t('Pays-Bas'),
-       "199"=>t('Espagne'),
-       "124"=>t('Luxembourg'),
-     );
-    }
+
+   
   $form['summary']['country'] = array(
         '#type' => 'select',
         '#title' => t('Country'),
         '#required' => TRUE,
         '#options' => $countries,
+      '#default_value' => 73
     );
 
   

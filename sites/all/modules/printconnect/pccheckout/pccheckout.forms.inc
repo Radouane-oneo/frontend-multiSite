@@ -546,7 +546,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         '#default_value' => $defaultBillingAddress ? $defaultBillingAddress->city : '',
         '#size' => 30,
         '#title' => t('City'),
-        //'#required' => TRUE,
+        '#required' => TRUE,
         '#attributes' => array(
             'placeholder' => t('Brussel'),
         )
@@ -582,7 +582,6 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         '#title' => t('Company'),
         '#default_value' => $defaultBillingAddress ? $defaultBillingAddress->company : '',
         '#size' => 30,
-      //   '#required' => TRUE,
         '#attributes' => array(
             'id' => 'companyInput'
         )
@@ -848,21 +847,14 @@ function pccheckout_invoiceanddelivery_form_invoice_submit($form, &$form_state) 
 
 function pccheckout_invoiceanddelivery_form_shipping_validate($form, &$form_state) {
     $customer = $form_state['storage']['customer'];
-    //$addressId = $form_state['values']['shipping']['detail']['current']['select'];
-    
-     if(empty($form_state['values']['shipping']['detail']['current']['company'])){
-        form_set_error('shipping][detail][current][company', t('Le champ nom entreprise est requis'));
-        return false;
-    } 
     $address = \printconnect\Customers\Addresses\Factory::Create();
     $address->firstName = $customer->firstName;
     $address->lastName = $customer->lastName;
     $address->phone = $customer->phone;
     \printconnect\Drupal\Forms::LoadObject($form_state['values']['shipping']['detail']['current'], $address);
     $address->customer = $customer->id;
-    try {
-        \printconnect\Customers\Addresses\Factory::Validate(clone $address);
-        //j'ai ajouté cette ligne pour corriger le bug BUGS-3987
+   try {
+    \printconnect\Customers\Addresses\Factory::Validate(clone $address);
    $_SESSION['shippingAddress'] = $form_state['values']['shipping']['detail']['current']['select'];
     } catch (\printconnect\Dal\Exception $ex) {
         \printconnect\Drupal\Forms::HandleException($ex, $form, 'shipping][detail][current][');
@@ -890,7 +882,6 @@ function pccheckout_invoiceanddelivery_form_shipping_submit($form, &$form_state)
 }
 
 function pccheckout_invoiceanddelivery_form_validate($form, &$form_state) {
-
     pccheckout_invoiceanddelivery_form_invoice_validate($form, $form_state);
 
     switch ($form_state['storage']['shippingType']) {
@@ -906,7 +897,7 @@ function pccheckout_invoiceanddelivery_form_validate($form, &$form_state) {
 }
 
 function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
-
+$cart = \printconnect\Carts\Factory::Current();
     $billingAccount = $form_state['storage']['$billingAccount'] ? $form_state['storage']['$billingAccount'] : $form_state['storage']['invoice']['address'] ;
     if ($billingAccount->id){
         $cart->billingAccount = $billingAccount->id;
@@ -926,14 +917,16 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
         drupal_set_message(t('Please save your adress befor you go to payement'), 'error');
         drupal_goto('checkout/invoiceanddelivery');
     }
-    
+
     $contactName = $form_state['values']['shipping']['detail']['contact'];
     $email = $form_state['values']['shipping']['detail']['email'];
     $phone = $form_state['values']['shipping']['detail']['phone'];
+    
     switch ($form_state['storage']['shippingType']){
        case 'shippingTypeStore':
        case 'shippingTypePrinter':
        case 'shippingTypeStoreInAntwerpen':
+   
             if($form_state['storage']['shippingType'] == 'shippingTypeStoreInAntwerpen'){
                 $form_state['values']['pcflyerstores']['id'] = 111;
 		$cart->shipping_type = '8-D';
@@ -950,24 +943,27 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
 		    'pickuppoint' => TRUE,
                 ));
             }
-
+  
             if (isset($form_state['values']['pcflyerstores']['id']) && !empty($form_state['values']['pcflyerstores']['id'])) {
+                
                 $poi = \printconnect\Stores\Factory::Get($form_state['values']['pcflyerstores']['id']);
                 $poi->EnsureLoaded();
                 $cart->pickuppoint = $poi->cartObject;
+        
                 $cart->pickuppoint->contactName = ($contactName) ? $contactName : $form_state['storage']['defaultShippingAddress']->name;
                 $cart->pickuppoint->email = ($email) ? $email : $form_state['storage']['defaultShippingAddress']->email;
                 $cart->pickuppoint->phone = ($phone) ? $phone :$form_state['storage']['defaultShippingAddress']->phone;
 		printconnect\Carts\Factory::saveInCache($cart, array(
                     'pickuppoint' => $cart->pickuppoint,
                 ));
+        
             } else {
                 $cart->pickuppoint = FALSE;
 		printconnect\Carts\Factory::saveInCache($cart, array(
                     'pickuppoint' => FALSE,
                 ));
             }
-            
+          
             break;
             
         case 'shippingTypeBpostPickupPoint':

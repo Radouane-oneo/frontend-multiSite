@@ -81,7 +81,7 @@
         /* add prop readonly to invoice-address on load page */
         if(!$('.error')[0]){
             $('#invoice-address input[type=text]').attr('readonly', true);
-                $('#edit-invoice-address-current-country').attr('disabled', true);
+                    $('#edit-invoice-address-current-country').attr('disabled', true);
 
                 if ($("#edit-invoice-address-current-select")[0]) {
                     if ($('#edit-invoice-address-current-select').val() == 0) {
@@ -273,7 +273,7 @@ $('#pccheckout-payment-form').submit(function (e) {
             $('.form-item-invoice-address-current-select #edit-invoice-address-current-select').on('change', function () {
                 setInvoiceAddress($(this).val());
             });
-            /*  setInvoiceAddress from select  */
+            /*  setShppingAddress from select  */
             $('.form-item-shipping-detail-current-select #edit-shipping-detail-current-select').on('change', function () {
                 setShppingAddress($(this).val());
             });
@@ -305,9 +305,10 @@ function setInvoiceAddress(id) {
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-street').val('');
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-postalCode').val('');
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-city').val('');
-        $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-country').val(21);
+          $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-country option[value="73"]').attr("selected","selected");
+        $('#pccheckout-invoiceanddelivery-form #select2-chosen-3').html($('#edit-invoice-address-current-country option:selected').text());
         $('#pccheckout-invoiceanddelivery-form #companyInput').val('');
-        $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-vatnumber-country').val('BE');
+        $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-vatnumber-country').val('FR');
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-vatnumber-number').val('');
         
         $('#isUserCompany').attr('disabled', false);
@@ -316,12 +317,13 @@ function setInvoiceAddress(id) {
     } else {
         var url = Drupal.settings.basePath + 'invoceform/' + id;
         $.getJSON(url, function (data) {
+     
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-name').val(data.name);
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-street').val(data.street);
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-postalCode').val(data.postalCode);
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-city').val(data.city);
-        $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-country').val(data.country);
-        $('#pccheckout-invoiceanddelivery-form #select2-chosen-3').html($('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-country option:selected').text());
+        $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-country option[value="'+data.country+'"]').attr("selected","selected");
+        $('#pccheckout-invoiceanddelivery-form #select2-chosen-3').html($('#edit-invoice-address-current-country option:selected').text());
         $('#invoice-address input[type=text]').attr('readonly', true);
         $('#edit-invoice-address-current-country').attr('disabled', true);
         $('#isUserCompany').attr('disabled', true);
@@ -337,7 +339,7 @@ function setInvoiceAddress(id) {
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-vatnumber-number').val(data.vatNumber.substring(2));
     } else {
         $('#pccheckout-invoiceanddelivery-form #companyInput').val('');
-        $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-vatnumber-country').val('BE');
+        $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-vatnumber-country').val(data.iso);
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-vatnumber-number').val('');
         $('#isUserCompany').attr('checked', false);
         $(".form-item-company, .form-item-vatNumber, .form-item-invoice-address-current-company, .form-item-invoice-address-current-vatNumber").hide();
@@ -381,18 +383,7 @@ function pccheckout_forgotpassword_callback() {
 }
 
 function pccheckout_picker_callback(pup) {
-    /*
-     var picker = jQuery('#pccheckout-checkout-form .pup');
-     jQuery('.id', picker).val(pup.id);
-     jQuery('.country-code', picker).val(pup.countryCode);
-     jQuery('.name', picker).html(pup.name);
-     jQuery('.address', picker).html(pup.address  + '<br/>' + pup.postalCode + ' ' + pup.city);
-     jQuery('.openinghours-container', picker).html(jQuery(pup.openingHours));
-     Drupal.attachBehaviors(picker);
-     
-     picker.show();
-     jQuery('#pccheckout-checkout-form .nopup').hide();
-     */
+   
     jQuery('#pccheckout-checkout-form .pup').replaceWith(pup.html);
     jQuery('#pccheckout-checkout-form input[name="shipping[pickup][id]"]').val(pup.id);
     jQuery('#pccheckout-checkout-form input[name="shipping[pickup][country]"]').val(pup.countryCode);

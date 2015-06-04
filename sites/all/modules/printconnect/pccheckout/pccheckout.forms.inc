@@ -780,49 +780,54 @@ function pccheckout_invoiceanddelivery_form_invoice_validate($form, &$form_state
     $customer = $form_state['storage']['customer'];
     $billingAccountId = $form_state['values']['invoice']['address']['current']['select'];
     
-        if($_POST['billingAccountResult']){
-              $billingAccountId = $_POST['billingAccountResult'];
-              $form_state['values']['invoice']['address']['current']['select']=$billingAccountId;
-         }   
-
-    if ($billingAccountId == "0") {
+    if($_POST['billingAccountResult']){
+          $billingAccountId = $_POST['billingAccountResult'];
+          $form_state['values']['invoice']['address']['current']['select']=$billingAccountId;
+     }   
+    if ($billingAccountId == "0"){
         $billingAccount = \printconnect\Customers\BillingAccounts\Factory::Create();
         $billingAccount->firstName = $customer->firstName;
         $billingAccount->lastName = $customer->lastName;
         $billingAccount->phone = $customer->phone;
+        
+        \printconnect\Drupal\Forms::LoadObject($form_state['values']['invoice']['address']['current'], $billingAccount);
+        $billingAccount->customer = $customer->id;
+        try {
+        \printconnect\Customers\BillingAccounts\Factory::Validate(clone $billingAccount);
+        $_SESSION['billingAccountId'] = $billingAccountId;
+        } catch (\printconnect\Dal\Exception $ex) {
+        \printconnect\Drupal\Forms::HandleException($ex, $form, 'invoice][address][current][');
+        }
+        $form_state['storage']['invoice']['address'] = $billingAccount;
+        
     } else {
         $billingAccount = \printconnect\Customers\BillingAccounts\Factory::Get($billingAccountId);
         $billingAccount->EnsureLoaded();
+      
         $form_state['storage']['$billingAccount'] = $billingAccount;
         $form_state['storage']['cart'] = $cart;
     }
  
-    \printconnect\Drupal\Forms::LoadObject($form_state['values']['invoice']['address']['current'], $billingAccount);
-    $billingAccount->customer = $customer->id;
-    try {
-        \printconnect\Customers\BillingAccounts\Factory::Validate(clone $billingAccount);
-        //j'ai ajouté cette ligne pour corriger le bug BUGS-3987
-         $_SESSION['billingAccountId'] = $billingAccountId;
-    } catch (\printconnect\Dal\Exception $ex) {
-        \printconnect\Drupal\Forms::HandleException($ex, $form, 'invoice][address][current][');
-    }
-    $form_state['storage']['invoice']['address'] = $billingAccount;
+  
 }
 
 function pccheckout_invoiceanddelivery_form_invoice_submit($form, &$form_state) {
     $billingaccoutcustomer = \printconnect\Customers\Factory::Current();
     $billingAccount = $form_state['storage']['invoice']['address'];
-    if (isset($form_state['storage']['invoice']['address'])) {
-        if ($billingAccount->select == 0) {
+    $existedbillingAccount =  $form_state['storage']['$billingAccount'];
+
+    try {
+         if($billingAccount) {
             \printconnect\Customers\BillingAccounts\Factory::Save($billingAccount);
             $billingaccoutcustomer->billingAccount = $billingAccount->id;
             \printconnect\Customers\Factory::Save($billingaccoutcustomer);
             \printconnect\Customers\BillingAccounts\Factory::ClearBillingAccountsCache($billingaccoutcustomer);
         } else {
-            \printconnect\Customers\BillingAccounts\Factory::Save($billingAccount);
+            \printconnect\Customers\BillingAccounts\Factory::Save($existedbillingAccount);
             \printconnect\Customers\Factory::Save($billingaccoutcustomer);
             \printconnect\Customers\BillingAccounts\Factory::ClearBillingAccountsCache($billingaccoutcustomer);
         }
+        
         switch ($billingAccount->vatStatus) {
             case 'vat_tag_3' :
                 form_set_error('invoice][address][current][vatNumber', t('Your Vat Number is invalid'));
@@ -835,9 +840,9 @@ function pccheckout_invoiceanddelivery_form_invoice_submit($form, &$form_state) 
             default:
                 break;
         }
-        drupal_set_message(t('Adress valider'));
-    } else {
-        drupal_set_message(t('Please check your adrres '), 'error');
+          drupal_set_message(t('Adress valider'));
+    } catch (Exception $ex) {
+          drupal_set_message(t('Please check your adrres '), 'error');
     }
 }
 
@@ -858,7 +863,7 @@ function pccheckout_invoiceanddelivery_form_shipping_validate($form, &$form_stat
     try {
         \printconnect\Customers\Addresses\Factory::Validate(clone $address);
         //j'ai ajouté cette ligne pour corriger le bug BUGS-3987
-+       $_SESSION['shippingAddress'] = $form_state['values']['shipping']['detail']['current']['select'];
+   $_SESSION['shippingAddress'] = $form_state['values']['shipping']['detail']['current']['select'];
     } catch (\printconnect\Dal\Exception $ex) {
         \printconnect\Drupal\Forms::HandleException($ex, $form, 'shipping][detail][current][');
     }
@@ -901,32 +906,26 @@ function pccheckout_invoiceanddelivery_form_validate($form, &$form_state) {
 }
 
 function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
-    $billingaccoutcustomer = \printconnect\Customers\Factory::Current();
-    $cart = \printconnect\Carts\Factory::Current();
-    $billingAccount = $form_state['storage']['$billingAccount'];
-    
-    if (isset($form_state['storage']['invoice']['address'])) {
-        $address = $form_state['storage']['invoice']['address'];
-        $billingAccountId = $address->id;
-        $cart->billingAccount = $billingAccountId;
+    $billingAccount = $form_state['storage']['$billingAccount'] ? $form_state['storage']['$billingAccount'] : $form_state['storage']['invoice']['address'] ;
+    if ($billingAccount->id){
+        $cart->billingAccount = $billingAccount->id;
         $isNeutralActive = 0;
         if ($form_state['values']['shipping']['neutral']['check'] == 1) {
             $isNeutralActive = 1;
         }
-         
         $cart->neutralShipping = $isNeutralActive;
+        
         if ($billingAccount->discountPercentage != null && count($cart->discountItems) == 0) {
             $discount = \printconnect\Carts\Discounts\Factory::Create($cart->id, $billingAccount->discountCode);
             \printconnect\Carts\Discounts\Factory::Save($discount);
         }
-	
-	$billingAccount = \printconnect\Customers\BillingAccounts\Factory::Get($billingAccountId);
-        $billingAccount->EnsureLoaded();
 	$billingAccount->cart = $cart->id;
-   
         \printconnect\Customers\BillingAccounts\Factory::Save($billingAccount);
-
+    }else{
+        drupal_set_message(t('Please save your adress befor you go to payement'), 'error');
+        drupal_goto('checkout/invoiceanddelivery');
     }
+    
     $contactName = $form_state['values']['shipping']['detail']['contact'];
     $email = $form_state['values']['shipping']['detail']['email'];
     $phone = $form_state['values']['shipping']['detail']['phone'];
@@ -998,12 +997,14 @@ function pccheckout_invoiceanddelivery_form_submit($form, &$form_state) {
             }
     }
 
-    \printconnect\Carts\Factory::Save($cart);
+  \printconnect\Carts\Factory::Save($cart);
+  
   if(!isset($cart->billingAccount) or empty($cart->billingAccount)){
         $billingAccount = $form_state['storage']['invoice']['address'];
         AttacheBillingAccount($cart, $billingAccount->id , $form_state);
   }
-    drupal_goto('checkout/payment');
+ 
+  drupal_goto('checkout/payment');
 
 }
 function getFotolia($jobId) {

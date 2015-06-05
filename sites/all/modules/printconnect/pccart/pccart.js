@@ -10,13 +10,13 @@
     updateDomain();
 
    $('.refCustomer').blur(function() {
-	$.post('cart/customer/ref/'+$(this).attr('cart'),{'ref' : $(this).val()});       
+	$.post('cart/customer/ref/'+$(this).attr('cart'),{'ref' : $(this).val()});
    });
 
    $('.refjobTxt').blur(function(){
        $.post('cart/job/ref/'+$(this).attr('orderItem'),{'ref' : $(this).val()});
-   }); 
-   
+   });
+
    $('.removecontrol').click(function(){
 	$.post('cart/controlprof/'+$(this).attr('rel')+'/delete', function(response){
       updateDiscounts();
@@ -25,15 +25,15 @@
 	$(this).parent().remove();
 	$('.itemfile-'+$(this).attr('rel')).remove();
 	PriceCallback();
-		
+
 	return false;
    });
 
    $('.deletedesign').click(function(e){
 	$('.item-hide-'+$(this).attr('itemFileId')).fadeIn("slow");
-	$(this).parents('.job').fadeOut("slow"); 		
+	$(this).parents('.job').fadeOut("slow");
 	$.post('cart/deletedesign/'+$(this).attr('itemFileId'),{},function(){
-	   $(this).parents('.job').remove(); 
+	   $(this).parents('.job').remove();
       updateDiscounts();
 	});
 	if ($('.fotolia-items-'+$(this).attr('itemFileId')).length < $('.fotolia-items').length) {
@@ -42,13 +42,13 @@
             $('.fotolia-items-'+$(this).attr('itemFileId')).parents('fieldset').remove();
         }
 	$('.item-'+$(this).attr('itemFileId')).remove();
-	PriceCallback();	
+	PriceCallback();
 	return false;
 	/*$.post(Drupal.settings.basePath+'/designdelete/'+$(this).attr('itemFileId').val());
 	PriceCallback();
         return false;*/
    });
-   
+
 /*    $('table.targetPrice tr').each(function(){
       	if ($(this).find('input.targetPrice').is(":checked") && $(this).find('.storeLink').length > 0){
       		  $(this).find('.storeLink').show();
@@ -57,7 +57,7 @@
       	    $.post('cart/'+$(this).find('input.targetPrice').val()+'/submit');
       	}
 	  });*/
-    
+
 
    $('table.targetPrice input.targetPrice').click(function () {
         $('.storeLink').hide();
@@ -75,12 +75,12 @@
         $.post('cart/'+$(this).val()+'/submit', function (response){
           updateDiscounts();
         });
-           
+
    });
 
    $('table.targetPrice input.targetPrice:checked').click();
 
-    /* ------------Remove items------------*/ 
+    /* ------------Remove items------------*/
 
       $("#pccart-cart-form .removecart").live('click',function () {
         var targetItem = $(this);
@@ -116,7 +116,7 @@
         var baseText = $('.cartCounter').attr('translatedtext');
         var number = $('.cartCounter').attr('number') - 1;
         $('.cartCounter').attr('number', number);
-        $('.cartCounter span').html(baseText+ ' ('+number+')');        
+        $('.cartCounter span').html(baseText+ ' ('+number+')');
         PriceCallback();
       });
     }}
@@ -125,7 +125,7 @@
 function updateDiscounts() {
   if(typeof jQuery(".hidden-discount:first")[0] != "undefined"){
       applyDiscount(jQuery(".hidden-discount:first").attr('discount-code'), 1);
-  }  
+  }
 }
 
 function PriceCallback(){
@@ -139,14 +139,14 @@ function PriceCallback(){
     });
 
     jQuery("#pccart-cart-form .subtotal .value").html(buildPriceHtml(totalprice, false));
-       
+
     var vat = 0.21 ;
     vatprice = totalprice * vat ;
-    
+
     jQuery("#pccart-cart-form .vat .value").html(buildPriceHtml(vatprice, false));
 
     total = vatprice + totalprice;
-   
+
     jQuery("#pccart-cart-form #price .value").html(buildPriceHtml(total, false));
    if(total == 0){
     jQuery("#pccart-cart-form").find(jQuery('input[type="submit"]')).attr('disabled','disabled');
@@ -174,7 +174,7 @@ function renderDiscount(data)
   PriceCallback();
 }
 
-function buildPriceHtml(price, isDiscount) 
+function buildPriceHtml(price, isDiscount)
 {
     var wholevat = (price.toFixed(2) +"").split(".")[0];
     var decPartvat = (price.toFixed(2) +"").split(".")[1];
@@ -218,10 +218,7 @@ function applyDiscount(code, force)
               PriceCallback();
               return;
           }
-          jQuery('#edit-cart-discount').before('<p id="tmp-error-msg" style=" color: #F00; font-weight: 600; font-size: 13px; "> Désolé, ce code promotionnel a déjà été utilisé ou non validé</p>');
-          setTimeout(function(){
-            jQuery("#tmp-error-msg").remove();
-          }, 6000);
+          jQuery(".whitebox h1").after('<div class="messages error">' + Drupal.t('Sorry, this coupon code was already used or not validated') + '</div>');
       }
   });
 }

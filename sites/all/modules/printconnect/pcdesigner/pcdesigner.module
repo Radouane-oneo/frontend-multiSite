@@ -86,10 +86,6 @@ function pcdesigner_form_alter(&$form, $form_state, $form_id) {
                 '#id' => 'edit-cart-designer-warning',
                 '#markup' => t('Attention! If you don`t upload your files now, we cannot guarantee the estimated delivery date. You will be informed when your designer uploads the file.'),
             );
-
-          $submit = $form['actions']['checkout']['#submit'];
-          array_unshift($submit, 'pcdesigner_form_submit');
-          $form['actions']['checkout']['#submit'] = $submit;
         }
       }
 
@@ -110,7 +106,6 @@ function pcdesigner_form_submit($form, &$form_state){
 
       $item->Remove('emailDesigner');
     }
-
     \printconnect\Carts\Factory::SaveItem($item);
   }
 

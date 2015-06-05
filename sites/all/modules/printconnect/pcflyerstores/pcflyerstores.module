@@ -1,16 +1,16 @@
 <?php
 
-function pcflyerstores_init(){
+function pcflyerstores_init(){  
+if(arg(0) == 'stores' or arg(0) == 'flyerstores' or arg(0) == 'storesinfo' or arg(0) == 'cart' or arg(0) == 'checkout'or arg(0) == 'mystores'){
 global $language;
 $shopConfig = \printconnect\Shop\Configuration\Factory::Current();
 $defaultCountry = \printconnect\Countries\Factory::Get($shopConfig->defaultCountry);
 $defaultCountryCode = $defaultCountry->iso;
 $mapLanguage =  $language->language == 'fr-Be' ? 'fr' : 'nl';
-drupal_add_js('https://maps.googleapis.com/maps/api/js?key=AIzaSyBS0SrsMbBXJ_v2kkgCvbiqwFUatl1pd_s&sensor=true&language='.$mapLanguage,'external');
-drupal_add_js('https://maps.googleapis.com/maps/api/js?libraries=geometry,places', 'external');
 $_SESSION["CountryCode"] = $defaultCountryCode;
-$_SESSION["stores"] = \printconnect\Stores\Factory::Find($defaultCountryCode, $region, $postalcode);
-
+$_SESSION["stores"] = \printconnect\Stores\Factory::Find($defaultCountryCode, $region, $postalcode);   
+}
+    drupal_add_js('https://maps.googleapis.com/maps/api/js?key=AIzaSyBS0SrsMbBXJ_v2kkgCvbiqwFUatl1pd_s&libraries=geometry,places&sensor=true&language='.$mapLanguage,'external');
 }
 function pcflyerstores_menu() {
     $items['stores/picker'] = array(
@@ -682,9 +682,10 @@ function pcflyerstores_form_pccart_cart_form2_alter(&$form, &$form_state) {
         '#attributes' => array('class' => array('pcflyerstores', 'id')),
     );
 
-    $cart = $form_state['storage']['cart'];
+    $cart = \printconnect\Carts\Factory::Current();
+    
     $selectedOption = $form_state['values']['cart']['shipping']['type'];
-    if ($cart) {
+    if ($cart){
         if (isset($form_state['values']['cart']['shipping']['type'])) {
             $currentType = $form_state['values']['cart']['shipping']['type'];
 
@@ -692,22 +693,17 @@ function pcflyerstores_form_pccart_cart_form2_alter(&$form, &$form_state) {
             $currentType = $cart->orderItemShipping->shippingTypeResellerShop;
         }
 
-        if (isset($form_state['storage']['shipping']['types']) || $_SESSION['defaultindex'] == 134 ){
-
+        if (isset($form_state['storage']['shipping']['types'])){
+            
             $types = $form_state['storage']['shipping']['types'];
-            foreach ($types as $type) {
 
+            foreach ($types as $type) {
                 if ($type->shippingType->type == 'shippingTypeStore') {
                     $typeId = $type->id;
                 }
             }
-
-            if($_SESSION['defaultindex'] == 134  && $selectedOption == 134  ){
-                $currentType =  $_SESSION['defaultindex'];
-            }
+            
             if ($currentType == $typeId && isset($form['cart']['shipping']['type']['#options'][$typeId])) {
-
-
                 $store = $cart->pickuppoint;
                 if ($store) {
                     $id = $store->id;
@@ -715,42 +711,31 @@ function pcflyerstores_form_pccart_cart_form2_alter(&$form, &$form_state) {
                     $id = FALSE;
                 }
 
-                $form['cart']['shipping']['type']['#options'][$typeId]['label'] .= theme('pcflyerstores_picker_link', array('callback' => 'pcflyerstores_callback'));
-
                 $form['cart']['shipping']['pup']['countryCode']['#default_value'] = '';
-
                 $form['cart']['shipping']['pup']['id']['#default_value'] = $id;
 
                 if ($id) {
-
                     $store = \printconnect\Stores\Factory::Get($id);
                     $form['pcflyerstores']['id']['#default_value'] = $id;
                 } else {
                     $store = FALSE;
                 }
-                $form['cart']['shipping']['type']['#options'][$typeId]['label'] .= '<br/>' . theme('pcflyerstores_store_info', array('store' => $store, 'attributes' => array('class' => array('store', 'clearfix'))));
-            } else {
-		$form['cart']['shipping']['type']['#options'][$typeId]['label'] .= theme('pcflyerstores_picker_link', array('callback' => 'pcflyerstores_callback', 'display' => 'none'));
-	    }
+            } 
         }
     }
-
-    $submit = $form['#submit'];
-    array_unshift($submit, 'pcflyerstores_pccart_cart_form2_submit');
-    $form['#submit'] = $submit;
 }
 
 function pcflyerstores_pccart_cart_form2_submit($form, &$form_state) {
-    $cart = $form_state['storage']['cart'];
+    $cart = \printconnect\Carts\Factory::Current();
     $id = FALSE;
     if ($cart) {
-        if (isset($form_state['values']['cart']['shipping']['type'])) {
+        if (isset($form_state['values']['cart']['shipping']['type'])){
             $currentType = $form_state['values']['cart']['shipping']['type'];
         } else {
             $currentType = $cart->orderItemShipping->shippingTypeResellerShop;
         }
 
-        if (isset($form_state['storage']['shipping']['types'])) {
+        if (isset($form_state['storage']['shipping']['types'])){
             $types = $form_state['storage']['shipping']['types'];
             foreach ($types as $type) {
                 if ($type->shippingType->type == 'shippingTypeStore') {
@@ -767,44 +752,29 @@ function pcflyerstores_pccart_cart_form2_submit($form, &$form_state) {
                     $id = 22;
                     break;
             }
-
-            if ($id) {
-                $store = \printconnect\Stores\Factory::Get($id);
-                $store->EnsureLoaded();
-
-                $cart->pickuppoint = $store->cartObject;
-            } else {
-                $cart->pickuppoint = FALSE;
-            }
-
-            $form_state['storage']['cart'] = $cart;
+     $_SESSION["pcflyerstoresID"]  = $id;
         }
     }
 }
 
 function pcflyerstores_form_pccheckout_invoiceanddelivery_form_alter(&$form, &$form_state) {
-
-    $cart = $form_state['storage']['cart'];
     $customer = $form_state['storage']['customer'];
-
     $form['pcflyerstores']['id'] = array(
         '#type' => 'hidden',
         '#default_value' => FALSE,
         '#attributes' => array('class' => array('pcflyerstores', 'id')),
     );
-
+ 
     if ($form_state['storage']['shippingType'] == 'shippingTypeStore' ||
             $form_state['storage']['shippingType'] == 'shippingTypePrinter') {
-
-
-
-        if (isset($cart->pickuppoint) && isset($cart->pickuppoint->id)) {
-            $store = \printconnect\Stores\Factory::Get($cart->pickuppoint->id);
-            $form['pcflyerstores']['id']['#default_value'] = $cart->pickuppoint->id;
+        if (isset($_SESSION["pcflyerstoresID"])){
+            $store = \printconnect\Stores\Factory::Get($_SESSION["pcflyerstoresID"]);
+            $form['pcflyerstores']['id']['#default_value'] = $_SESSION["pcflyerstoresID"];
         } else {
             $store = FALSE;
         }
-          if ($form_state['storage']['shippingType'] == 'shippingTypeStore') {
+        
+       if ($form_state['storage']['shippingType'] == 'shippingTypeStore'){
 
             $form['shipping']['detail']['flyerstore'] = array(
                 '#theme' => 'pcflyerstores_picker_link',
@@ -812,11 +782,11 @@ function pcflyerstores_form_pccheckout_invoiceanddelivery_form_alter(&$form, &$f
                 '#attributes' => array('class' => array('button','linkflyerstore')),
             );
         }
+        
         $form['shipping']['detail']['selected'] = array(
             '#theme' => 'pcflyerstores_store_info',
             '#store' => $store,
             '#attributes' => array('class' => array('store', 'clearfix')),
-
         );
 
 
@@ -826,7 +796,7 @@ function pcflyerstores_form_pccheckout_invoiceanddelivery_form_alter(&$form, &$f
                         '#prefix' => '<div class="quivacollecter"><h1>',
                         '#suffix' => '</h1></div>',
                         '#markup' => t('quivacollecterlacommande'),
-                    );
+        );
 
         $form['shipping']['detail']['contact'] = array(
             '#type' => 'textfield',
@@ -856,19 +826,12 @@ function pcflyerstores_form_pccheckout_invoiceanddelivery_form_alter(&$form, &$f
             '#validate' => array('pcflyerstores_invoiceanddelivery_form_shipping_validate'),
             '#submit' => array('pcflyerstores_invoiceanddelivery_form_shipping_submit'),
         );
-    }
-
-    $form['#validate'][] = 'pcflyerstores_pccheckout_invoiceanddelivery_form_validate';
-}
-
-function pcflyerstores_pccheckout_invoiceanddelivery_form_validate($form, &$form_state) {
-    if ($form_state['storage']['shippingType'] == 'shippingTypeStore' ||
-            $form_state['storage']['shippingType'] == 'shippingTypePrinter') {
-        if (!isset($form_state['values']['pcflyerstores']['id']) || !$form_state['values']['pcflyerstores']['id']) {
-            form_set_error('', t('Please select a pickup point'));
-        }
+    }else{
+           unset($_SESSION["pcflyerstoresID"]);
     }
 }
+
+
 
 function pcflyerstores_invoiceanddelivery_form_shipping_validate($form, &$form_state) {
     $cart = $form_state['storage']['cart'];
@@ -881,6 +844,7 @@ function pcflyerstores_invoiceanddelivery_form_shipping_submit($form, &$form_sta
     $cart = $form_state['storage']['cart'];
     $store = \printconnect\Stores\Factory::Get($form_state['values']['pcflyerstores']['id']);
     $store->EnsureLoaded();
+    $_SESSION["pcflyerstoresID"] = $form_state['values']['pcflyerstores']['id'];
     $cart->pickuppoint = $store->cartObject;
     $cart->pickuppoint->contactName = $form_state['values']['shipping']['detail']['contact'];
     $cart->pickuppoint->contactEmail = $form_state['values']['shipping']['detail']['email'];
@@ -888,51 +852,7 @@ function pcflyerstores_invoiceanddelivery_form_shipping_submit($form, &$form_sta
     \printconnect\Carts\Factory::Save($cart);
 }
 
-function pcflyerstores_form_pccheckout_shipping_form_alter(&$form, &$form_state) {
-    $cart = $form_state['storage']['cart'];
-    $customer = $form_state['storage']['customer'];
 
-    $form['pcflyerstores']['id'] = array(
-        '#type' => 'hidden',
-        '#default_value' => FALSE,
-        '#attributes' => array('class' => array('pcflyerstores', 'id')),
-    );
-
-    if ($form_state['storage']['shippingType'] == 'shippingTypeStore' ||
-            $form_state['storage']['shippingType'] == 'shippingTypePrinter') {
-        if (isset($cart->pickuppoint) && isset($cart->pickuppoint->id)) {
-            $store = \printconnect\Stores\Factory::Get($cart->pickuppoint->id);
-            $form['pcflyerstores']['id']['#default_value'] = $cart->pickuppoint->id;
-        } elseif (isset($form_state['values']['pcflyerstores']['id']) && $form_state['values']['pcflyerstores']['id']) {
-            $store = \printconnect\Stores\Factory::Get($form_state['values']['pcflyerstore']['id']);
-            $form['pcflyerstores']['id']['#default_value'] = $form_state['values']['pcflyerstore']['id'];
-        } else {
-            $store = FALSE;
-        }
-
-        $form['shipping']['pickup']['selected'] = array(
-            '#theme' => 'pcflyerstores_store_info',
-            '#store' => $store,
-            '#attributes' => array('class' => array('store', 'clearfix')),
-        );
-        $form['shipping']['pickup']['change'] = array(
-            '#theme' => 'pcflyerstores_picker_link',
-            '#callback' => 'pcflyerstores_callback',
-            '#attributes' => array('class' => array('button')),
-        );
-    }
-
-    $form['#validate'][] = 'pcflyerstores_pccheckout_shipping_form_validate';
-}
-
-function pcflyerstores_pccheckout_shipping_form_validate($form, &$form_state) {
-    if ($form_state['storage']['shippingType'] == 'shippingTypeStore' ||
-            $form_state['storage']['shippingType'] == 'shippingTypePrinter') {
-        if (!isset($form_state['values']['pcflyerstores']['id']) || !$form_state['values']['pcflyerstores']['id']) {
-            form_set_error('', t('Please select a pickup point'));
-        }
-    }
-}
 function pcflyerstores_picker_callback($id) {
     $cart = \printconnect\Carts\Factory::Current();
     if ($cart) {

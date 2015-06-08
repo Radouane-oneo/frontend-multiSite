@@ -21,13 +21,13 @@ function updateDomain() {
     attach: function (context, settings) {
       
       $(document).ajaxStart(function() {
-          //$('body',this).css('cursor','progress');
+          $('body',this).css('cursor','progress');
        $(':submit').attr('disabled', true);
         
       });
       
       $(document).ajaxStop(function() {
-//        $('body', this).css('cursor','default');
+      $('body', this).css('cursor','default');
         $(':submit').attr('disabled', false);
       });
       

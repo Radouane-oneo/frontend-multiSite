@@ -49,7 +49,6 @@ function getArrayConfig($configs, $itemrequested) {
     return $resolt;
 }
 function pccart_cart_form2($form, &$form_state) {
-    //drupal_add_js(array('pccart' => array('testvar' => "sqdfqsdfsdqfdqs",'ley' => "yeysy",)), array('type' => 'setting'));
     global $language;
     $cart = Factory::Current();
     $form_state['storage']['cart'] = $cart;
@@ -739,31 +738,36 @@ function pccart_cart_form2($form, &$form_state) {
                 'price' => theme('price', array('value' => $type->price, 'free' => TRUE)),
             );
         }
+     
         $shop = printconnect\Shop\Configuration\Factory::Current();
-
-
-
         if (58 != $shop->id) {
-            $options[84]['label'] = "<span>" . t('Livraison 48H') . "</span>"; // set Livraison 48H for cobradad.
+        $options[84]['label'] = "<span>" . t('Livraison 48H') . "</span>"; // set Livraison 48H for cobradad.
         }
-        $_SESSION['defaultindex'] = isset($_SESSION['defaultindex']) ? $_SESSION['defaultindex'] : 86;
-
-        $cart->shipping_type = $_SESSION['defaultindex'];
+        
+        $findme   = 'FlyerStore';
+        foreach ($options as $key => $value){
+            $mystring = $value["label"];
+            $pos = strpos($mystring, $findme);
+           if($pos){
+            $pop = $value;
+            unset($options[$key]);
+            $pop["label"] = $pop["label"] .theme('pcflyerstores_picker_link', array('callback' => 'pcflyerstores_callback'));
+            $options[$key] = $pop;
+            }
+        }
+        $preserved = array_reverse($options, true);
 
         $form['cart']['shipping']['type'] = array(
-            '#type' => 'tableselect',
-            '#multiple' => FALSE,
-            '#options' => $options,
-            '#header' => array('label' => ''),
-            '#default_value' => $_SESSION['defaultindex'],
-            '#sticky' => FALSE,
-            '#attributes' => array('class' => array('grid targetPrice')),
-            '#weight' => -50,
+                '#type' => 'tableselect',
+                '#multiple' => FALSE,
+                '#options' => $preserved,
+                '#header' => array('label' => ''),
+                '#default_value' => isset($cart->shipping_type) ? $cart->shipping_type : $_SESSION['defaultindex'],
+                '#sticky' => FALSE,
+                '#attributes' => array('class' => array('grid targetPrice')),
+                '#weight' => -50,
         );
-
-        if ('flyer' == variable_get('pc_flow', '')) {
-            $form['cart']['shipping']['type']['#header']['price'] = '';
-        }
+        $form['cart']['shipping']['type']['#header']['price'] = '';
 
         $form['cart']['reference'] = array(
             '#type' => 'fieldset',
@@ -924,12 +928,9 @@ function pccart_cart_form2($form, &$form_state) {
 
     /* Control order have Designer */
 
-//    $validate = $form['actions']['checkout']['#validate'];
-//    array_unshift($validate, 'pcdesigner_form_validate');
-//    $form['actions']['checkout']['#validate'] = $validate;
 
     $submit = $form['actions']['checkout']['#submit'];
-    array_unshift($submit, 'pcdesigner_form_submit');
+    array_unshift($submit, 'pcdesigner_form_submit', 'pcflyerstores_pccart_cart_form2_submit');
     $form['actions']['checkout']['#submit'] = $submit;
     return $form;
 }
@@ -967,6 +968,6 @@ function pccart_cart_form2_validate($form, &$form_state){
 }
 
 function pccart_cart_form2_submit($form, &$form_state){
-     $_SESSION['shippingtypeID'] = $form_state['values']['cart']['shipping']['type'];
+    $_SESSION['shippingtypeID'] = $form_state['values']['cart']['shipping']['type'];
      drupal_goto('checkout');
 }

@@ -361,7 +361,7 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
          }
       
     }
-
+    if ($form_state['storage']['shippingType'] != 'shippingTypeStore') {
     $AllShippingAddress = array();
 
     foreach (printconnect\Customers\Addresses\Factory::GetAddresses($customer, FALSE) as $address) {
@@ -392,6 +392,8 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         }           
     }
     asort($AllShippingAddress);
+    }
+    
     $form['summary'] = array(
         '#type' => 'container',
         '#attributes' => array('class' => array('summary', 'clearfix')),
@@ -446,14 +448,11 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
 
     }
     if ($form_state['storage']['shippingType'] == 'shippingTypeStore') {
-    //if ($cart->orderItemShipping->shippingTypeResellerShop != 204) {
-       // if (!isset($cart->pickuppoint)) {
-
             $form['summary']['shipping']['change'] = array(
                 '#markup' => '<a id="toggle-shipping-form" href="#shipping-address" class="toggle">' . t('Change shipping address flyer store') . '</a>',
                 '#weight' => 200,
             );
-       // }
+
     }else{
          $form['summary']['shipping']['change'] = array(
                 '#markup' => '<a id="toggle-shipping-form" href="#shipping-address" class="toggle">' . t('Change shipping address') . '</a>',
@@ -590,7 +589,6 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
         '#prefix' => '<div id="vatNumber">',
         '#suffix' => '</div>',
         '#id' => 'vatNumber',
-       // '#required' => TRUE,
         '#type' => 'vatfield',
         '#title' => t('Vat number'),
         '#attributes' => array('class' => array('vat'), 'id' => 'vatNumber'),
@@ -756,7 +754,7 @@ function pccheckout_invoiceanddelivery_form_invoice_validate($form, &$form_state
         form_set_error('postalCode', t('Le champ Code postal doit être numérique.'));
     }
     if(is_numeric($form_state['values']['invoice']['address']['current']['postalCode']) && strlen($form_state['values']['invoice']['address']['current']['postalCode'])<4){
-        form_set_error('postalCode', t('Le champ Code postal doit être supérieur à  3 chiffres.'));
+        form_set_error('postalCode', t('Le champ Code postal doit être supérieur à  3 chiffres.'));
         return false;
     } 
   if($form_state['values']['invoice']['address']['current']['isCompany']){

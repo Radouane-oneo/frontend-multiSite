@@ -1,0 +1,173 @@
+@media screen and (max-width: 480px) {
+	.block-slider .carousel-indicators{ 
+		bottom: 10px;
+		left: 100%; 
+		width: auto;
+		padding-left: 0;
+		margin-left: -10%;  
+	}
+
+	.block-slider .carousel-indicators li{
+		display: block;
+	} 
+
+	.block-menu .iteam-menu.iteam-2-top{
+		margin-bottom: 7.8%;
+	}
+
+	.block-menu .iteam-menu.iteam-2-middel{
+		margin-bottom: 4.6%;
+	}
+
+
+}
+@media screen and (max-height: 384px) { 
+	/****** CSS GLOBAL **********/
+	.block-slider {
+	  padding: 3% 0 6.8% !important;
+	} 
+	.mobile-block {
+		padding:29px 0 7%;  
+	}
+	.mobile-block > .container{
+		overflow-y:auto;
+		height: 100%;
+	}
+	 
+	.mobile-block .header h1 {
+  		min-height: 4.857rem;
+  		margin-bottom: 0;
+	}
+	.mobile-block .header h1 span {
+	  font-size: 1.5rem;
+	}
+	.mobile-block .header h1 .icon-header { 
+		width: 4.857rem;
+	  	background-size: 4rem;
+	  	height: 4rem;
+	}
+	.form-control {
+  	  font-size: 1rem;
+  	}
+	.btn-green { 
+		font-size: 1.286rem; 
+	}
+	.block-topvente .step-3 form.form-inline .form-group,
+	.block-sampleflip .step-2 form.form-inline .form-group,
+	.block-newsletter .step-1-1 form.form-inline .form-group,
+	.block-flyerstore .step-2 form.form-inline .form-group
+	{
+		width: 100%;
+	}
+	.mobile-block form.form-inline .form-group {
+		margin-bottom: 1.5%;
+		display: inline-block;
+		width: 49%;
+		float: left;
+		margin-right: 1.5%;
+	}
+
+	.mobile-block form.form-inline .form-group:nth-child(2n){
+		margin-right:0px; 
+	}
+	.mobile-block .msg span { 
+	  font-size: 1.286rem; 
+	}
+	.mobile-block .wrap-contact h2,
+	.mobile-block .wrap-contact ul li a
+	{
+	  font-size: 1.214rem;
+	}
+	
+	.mobile-block .wrap-contact ul li a.mail{
+		font-size: 0.9286rem
+	}
+	.mobile-block .wrap-contact:after{
+		clear: both;
+		width: 100%;
+		height: 1px;
+		display: block;
+		content: '';
+	}
+	.mobile-block .wrap-contact ul.contact li { 
+	  float: left;
+	  width: 50%;
+	}
+	.mobile-block .wrap-contact h2 {
+	  margin: 0 0 0.714rem;
+	}
+	 
+	 
+	.mobile-block .control-call{
+		margin-top: 7.143rem;
+	}
+	.mobile-block .wrap-contact {
+	  padding: 12px 10px 11px 10px;
+	}
+	.mobile-block .wrap-contact h3 {
+  		font-size: 1.286rem;
+  		margin: 0 0 1.2%;
+	}
+	.mobile-block .wrap-contact ul.calander li span {
+  	  font-size: 1.214rem;
+  	}
+  	.mobile-block .wrap-contact ul.calander li span {
+  		line-height: 26px;
+	}
+	.mobile-block .wrap-txt p { 
+  		font-size: 1.143rem; 
+	}
+	/***************************/
+
+    
+	.mobile-block .logo.logo_1 {
+		padding-bottom: 4.1%;
+	}
+	 
+	.block-menu .iteam-menu .icon-menu{
+		font-size: 1rem;
+	}
+
+	 
+	.block-menu .iteam-menu.col-xs-6 {
+	 	width: 25%;
+	}
+	.block-menu .iteam-menu.iteam-2-top {
+	 	margin-bottom: 3.2%;
+	} 
+	 
+	 .block-sampleflip .wrap-txt.wrap-txt-headbg{ 
+		background-size: 28%;
+		 
+	} 
+	.block-sampleflip .step-call-sampleflip{
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+
+	.block-contact .wrap-contact-bottom {
+  		margin-top: 18px;
+	}
+	.block-contact .wrap-contact-bottom ul.contact li {
+	  margin-bottom: 12px;
+	}
+	.block-contact .wrap-contact-bottom ul li a {
+	  font-size: 1.214rem;
+	}
+	 .block-flyerstore .logo-flyerstore img {
+	  display: inline-block;
+	  width: 35%;
+	  height: auto;
+	}
+	/*.block-sampleflip .step-1 .wrap-btn .control-btn{
+		  width: 49%;
+  		display: inline-block;
+	}
+	.block-sampleflip .step-2 .wrap-txt {
+	  padding-bottom: 0.929rem;
+	}*/
+
+	..pagination-down{
+		margin-top: 0;
+	}
+}

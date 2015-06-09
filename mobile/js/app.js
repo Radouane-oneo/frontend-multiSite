@@ -5,10 +5,10 @@ $(window).load(function() {
 $(function(){ 
 
   function switchblocktoshow(parent,toshow,tohide,hideme){  
-       $("#"+parent+" ."+toshow).show();
-       $("#"+parent+" ."+tohide).hide(); 
+       $("."+parent+" ."+toshow).show();
+       $("."+parent+" ."+tohide).hide(); 
        if(hideme!=""){
-        $("#"+parent+" ."+hideme).hide(); 
+        $("."+parent+" ."+hideme).hide(); 
        }
   }
 
@@ -131,16 +131,7 @@ $(".btn-menu")
     if (pagetoslide == 'page-3') {
         reloadslider();
     }; 
-  });
-
-
-
-
-
-
-
-
-
+  }); 
 
  reloadslider();
 $(".btn-down").on("click",function(){
@@ -155,7 +146,7 @@ $(".btn-down").on("click",function(){
 
 $(".btn-up").on("click",function(){ 
   var pagetoslide=$(this).attr("data-slideto");
-  index=0;//$("."+pagetoslide).index()-2;
+  index=0; 
   slidePagination(pagetoslide,index);
 }); 
 /**** End Function *****/
@@ -177,14 +168,18 @@ $(".form-topvente .btn").click(function(){
     return isvalidateb; 
 }); 
 
-$("#block-topvente .btn-step1").on("click",function(){
-   var thisbtn=$(this); 
-   switchblocktoshow("block-topvente",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),'');
+$("#block-topvente .btn-step1").on("click",function(){ 
+  var pagetoslide=$(this).attr("data-slideto"); 
+  index=$("."+pagetoslide).index()-1;
+  slidePagination(pagetoslide,index); 
 });
- $("#block-topvente .step-4 .msg .close").on("click",function(){
-   var thisbtn=$(this); 
-   switchblocktoshow("block-topvente",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),thisbtn.attr("data-hideme"));
-   switchsecondaire("block-topvente",thisbtn.attr("data-showsecondaire"));
+
+$(".block-topvente .step-4 .msg .close").on("click",function(){ 
+  var thisbtn=$(this);   
+  switchblocktoshow("block-topvente",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),''); 
+  var pagetoslide=$(this).attr("data-slideto");
+  index=0; 
+  slidePagination(pagetoslide,index); 
 });
 
 /* END Pagination Block topvente ****/ 
@@ -193,96 +188,112 @@ $("#block-topvente .btn-step1").on("click",function(){
 $(".form-find-sampleflip  .btn-step1").click(function(){
   var thisbtn=$(this);
   var isvalidateb = false;
-  var codepostal =$(".form-find-sampleflip input[name='codepostal']"); 
- 
+  var codepostal =$(".form-find-sampleflip input[name='codepostal']");  
   if(!validateNumber(codepostal.val())) {  
     codepostal.addClass("msgerror").attr("placeholder"," Veuillez saisir un code postal valable."); 
   }
   else{
-    codepostal.removeClass("msgerror"); 
-    switchblocktoshow("block-sampleflip",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),'');
+    codepostal.removeClass("msgerror");  
+    var pagetoslide=$(this).attr("data-slideto"); 
+    index=$("."+pagetoslide).index()-1;
+    slidePagination(pagetoslide,index); 
   }  
   return isvalidateb; 
 });
 
 
 $(".send-mail-sampleflip .btn").click(function(){
+
   var count=0;
   var thisbtn=$(this);
   var isvalidateb = false;
-  var email =$(".send-mail-sampleflip input[name='email']");
-  var nom =$(".send-mail-sampleflip input[name='nom']");  
-  var phone =$(".send-mail-sampleflip input[name='phone']");
-  var commentaire =$(".send-mail-sampleflip input[name='commentaire']"); 
+  var email = $(".send-mail-sampleflip input[name='email']");
+  var nom = $(".send-mail-sampleflip input[name='nom']");  
+  var phone = $(".send-mail-sampleflip input[name='phone']");
+  var commentaire = $(".send-mail-sampleflip input[name='commentaire']"); 
 
-  if(!validateEmail(email.val())) {             
-    email.addClass("msgerror").empty().attr("placeholder","Adresse e-mail non valable"); 
+  if(!validateEmail(email.val())) {           
+    email.addClass("msgerror").attr("placeholder","Adresse e-mail non valable"); 
   }
   else{
     email.removeClass("msgerror"); count++; 
   }  
 
-  if(!validatechar(nom.val())){
-    nom.addClass("msgerror").empty().attr("placeholder","Nom non valable"); 
+  if(!validatechar(nom.val())){ 
+    nom.addClass("msgerror").attr("placeholder","Nom non valable"); 
   }
   else{
     nom.removeClass("msgerror"); count++; 
   }  
 
-  if(!validatePhone(phone.val())){
-     phone.addClass("msgerror").empty().attr("placeholder"," Téléphone non valable"); 
+  if(!validatePhone(phone.val())){ 
+     phone.addClass("msgerror").attr("placeholder"," Téléphone non valable"); 
   }
   else{
     phone.removeClass("msgerror");count++;
   }
 
-  if(!validatecomme(commentaire.val())) {
-     commentaire.addClass("msgerror").empty().attr("placeholder","Le commentaire est tres court"); 
+  if(!validatecomme(commentaire.val())) { 
+    commentaire.addClass("msgerror").attr("placeholder","Le commentaire est tres court"); 
   }
   else{
     commentaire.removeClass("msgerror");count++;
-  } 
-
+  }  
   if(count==4)
-  {
+  {    
     switchblocktoshow("block-sampleflip",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),'');
   }
   return isvalidateb; 
 });
 
-$("#block-sampleflip .step-1 .btn-step1").on("click",function(){
- var thisbtn=$(this); 
- switchblocktoshow("block-sampleflip",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),'');
+$("#block-sampleflip .step-1 .btn-step1").on("click",function(){ 
+  var pagetoslide=$(this).attr("data-slideto"); 
+  index=$("."+pagetoslide).index()-1;
+  slidePagination(pagetoslide,index);  
 });
-$("#block-sampleflip .step-1 .btn-step2").on("click",function(){
- var thisbtn=$(this); 
- switchblocktoshow("block-sampleflip",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),'');
+
+$("#block-sampleflip .step-1 .btn-step2").on("click",function(){ 
+  var pagetoslide=$(this).attr("data-slideto"); 
+  index=$("."+pagetoslide).index()-1;
+  slidePagination(pagetoslide,index);
 });
 
 $("#block-sampleflip .step-3 .btn-map-sampleflip").on("click",function(){
- var thisbtn=$(this); 
- switchblocktoshow("block-sampleflip",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),'');
- return false;
+  var thisbtn=$(this); 
+  switchblocktoshow("block-sampleflip",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),'');
+  return false;
 });
 
 $("#block-sampleflip .step-4 .link-contact").on("click",function(){
   var thisbtn=$(this); 
   switchblocktoshow("block-sampleflip",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),'');
   return false;
+});
+$("#block-sampleflip .step-4 .mail").on("click",function(){
+  var pagetoslide=$(this).attr("data-slideto"); 
+  index=$("."+pagetoslide).index()-1;
+  slidePagination(pagetoslide,index);
+  return false;
 }); 
+
 $("#block-sampleflip .step-6-2 .msg .close").on("click",function(){
+  var pagetoslide=$(this).attr("data-slideto"); 
+  index=0;
+  slidePagination(pagetoslide,index);
   var thisbtn=$(this); 
-  switchblocktoshow("block-sampleflip",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),thisbtn.attr("data-hideme")); 
+  switchblocktoshow("block-sampleflip",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),''); 
+  return false;
 });
 
-$("#block-sampleflip .msg .close").on("click",function(){
+$("#block-sampleflip .msg .close").on("click",function(){ 
+  var pagetoslide=$(this).attr("data-slideto"); 
+  index=0;
+  slidePagination(pagetoslide,index);
   var thisbtn=$(this); 
-  switchblocktoshow("block-sampleflip",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),thisbtn.attr("data-hideme"));
-  switchsecondaire("block-sampleflip",thisbtn.attr("data-showsecondaire"));
+  switchblocktoshow("block-sampleflip",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),''); 
+  return false; 
 });
-
-
-
+ 
 $("#block-sampleflip .step-8-2 .msg .close").on("click",function(){
  var thisbtn=$(this); 
  switchblocktoshow("block-sampleflip",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),thisbtn.attr("data-hideme")); 
@@ -292,6 +303,7 @@ $("#block-sampleflip .step-5 .annuler").on("click",function(){
  var thisbtn=$(this); 
  switchblocktoshow("block-sampleflip",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),''); 
 });
+
 $("#block-sampleflip  .wrap-contact .close").on("click",function(){
  var thisbtn=$(this); 
  switchblocktoshow("block-sampleflip",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),''); 
@@ -336,10 +348,12 @@ $(".form-commander .btn").click(function(){
 });
 /* end Block sampleflip */
 /* script Block Flyerstore*/
-$("#block-flyerstore .step-1 .btn").on("click",function(){
- var thisbtn=$(this); 
- switchblocktoshow("block-flyerstore",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),''); 
+$("#block-flyerstore .step-1 .btn").on("click",function(){ 
+  var pagetoslide=$(this).attr("data-slideto"); 
+  index=$("."+pagetoslide).index()-1;
+  slidePagination(pagetoslide,index);
 });
+
 $(".form-find-flyerstore .btn-step1").click(function(){
   var thisbtn=$(this);
   var isvalidateb = false;
@@ -350,34 +364,44 @@ $(".form-find-flyerstore .btn-step1").click(function(){
   }
   else{
     codepostal.removeClass("msgerror"); 
-    switchblocktoshow("block-flyerstore",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),'');
+    var pagetoslide=$(this).attr("data-slideto"); 
+    index=$("."+pagetoslide).index()-1;
+    slidePagination(pagetoslide,index);
   }  
   return isvalidateb; 
 });
 
 
-$("#block-flyerstore .step-3 .btn-map-flyerstore").on("click",function(){
+$(".block-flyerstore .step-3 .btn-map-flyerstore").on("click",function(){ 
+  var thisbtn=$(this); 
+  switchblocktoshow("block-flyerstore",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),'');
+  return false;
+});
+
+$(".block-flyerstore .step-4 .link-contact").on("click",function(){
  var thisbtn=$(this); 
  switchblocktoshow("block-flyerstore",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),'');
  return false;
 });
-
-$("#block-flyerstore .step-4 .link-contact").on("click",function(){
- var thisbtn=$(this); 
- switchblocktoshow("block-flyerstore",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),'');
- return false;
+$(".block-flyerstore .step-4 .mail").on("click",function(){
+  var pagetoslide=$(this).attr("data-slideto"); 
+  index=$("."+pagetoslide).index()-1;
+  slidePagination(pagetoslide,index);
+  return false;
 }); 
-$("#block-flyerstore  .wrap-contact .close").on("click",function(){
+$(".block-flyerstore  .wrap-contact .close").on("click",function(){
  var thisbtn=$(this); 
  switchblocktoshow("block-flyerstore",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),''); 
 });
-$("#block-flyerstore .step-6-2 .msg .close").on("click",function(){
- var thisbtn=$(this); 
- switchblocktoshow("block-flyerstore",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),thisbtn.attr("data-hideme")); 
- switchsecondaire("block-flyerstore",thisbtn.attr("data-showsecondaire"));
+$(".block-flyerstore .step-6-2 .msg .close").on("click",function(){
+  var thisbtn=$(this); 
+  switchblocktoshow("block-flyerstore",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),''); 
+  var pagetoslide=$(this).attr("data-slideto"); 
+  index=0;
+  slidePagination(pagetoslide,index);
 });
 
-$("#block-flyerstore .step-5 .annuler").on("click",function(){
+$(".block-flyerstore .step-5 .annuler").on("click",function(){
  var thisbtn=$(this); 
  switchblocktoshow("block-flyerstore",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),thisbtn.attr("data-hideme")); 
 });
@@ -451,12 +475,19 @@ $("#block-newsletter .step-1-2 .msg .close").on("click",function(){
 
 /* End block newsletter */
 /*Script block contact */
-  $("#block-contact .link-contact").on("click",function(){
+$("#block-contact .link-contact").on("click",function(){
    var thisbtn=$(this); 
    switchblocktoshow("block-contact",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),'');
    return false;
 }); 
 
+
+$("#block-contact .mail").on("click",function(){
+  var pagetoslide=$(this).attr("data-slideto"); 
+  index=$("."+pagetoslide).index()-1;
+  slidePagination(pagetoslide,index);
+  return false;
+}); 
 $("#block-contact .step-1-2 .annuler").on("click",function(){
    var thisbtn=$(this); 
    switchblocktoshow("block-contact",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),thisbtn.attr("data-hideme")); 
@@ -509,25 +540,12 @@ $(".send-mail-contact .btn").click(function(){
 
  $("#block-contact .step-2-2 .msg .close").on("click",function(){
     var thisbtn=$(this); 
-    switchblocktoshow("block-contact",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),thisbtn.attr("data-hideme")); 
-    switchsecondaire("block-contact",thisbtn.attr("data-showsecondaire"));
+    switchblocktoshow("block-contact",thisbtn.attr("data-toshow"),thisbtn.attr("data-tohide"),'');  
+    var pagetoslide=$(this).attr("data-slideto"); 
+    index=0;
+    slidePagination(pagetoslide,index);
   });
 /* End block contact */
 
-
-     $("#owl-demo").owlCarousel({
- 
-      navigation : true, // Show next and prev buttons
-      slideSpeed : 300,
-      paginationSpeed : 400,
-      singleItem:true
- 
-      // "singleItem:true" is a shortcut for:
-      // items : 1, 
-      // itemsDesktop : false,
-      // itemsDesktopSmall : false,
-      // itemsTablet: false,
-      // itemsMobile : false
- 
-  });    
+    
 });

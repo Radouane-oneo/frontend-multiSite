@@ -349,9 +349,17 @@ html,body,.Gridmain,#map-canvas{
 
    form{
       &.form-inline{
-         .form-group{
-            margin-bottom: 1.5%;
+         &.form-find-sampleflip,&.form-topvente,&.form-newsletter,&.form-find-flyerstore{
+            .form-group{
+               margin-bottom: 0.571em;
+            }
          }
+         &.send-mail-contact,&.form-commander,&.send-mail-flyerstore,&.send-mail-sampleflip{
+            .form-group{
+               margin-bottom: 2px;
+            }
+         }
+
          .form-control{
             &.text{
                border: 1px solid #505050  ;
@@ -417,7 +425,6 @@ html,body,.Gridmain,#map-canvas{
                line-height: 14px;
             }
          }
-
       }
    }
 
@@ -873,6 +880,11 @@ html,body,.Gridmain,#map-canvas{
                text-align: left;
             }
          }
+         &.send-mail-flyerstore{
+            button[type="submit"] {
+               margin-top: 0.688em;
+            }
+         }
       }
    }
 
@@ -923,6 +935,11 @@ html,body,.Gridmain,#map-canvas{
       &.form-inline{
          .form-control.text{
             text-align: left;
+         }
+      }
+      &.send-mail-contact{
+         button[type="submit"] {
+            margin-top: 0.688em;
          }
       }
    } 

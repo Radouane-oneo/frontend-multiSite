@@ -9,6 +9,7 @@
 
 	.block-slider .carousel-indicators li{
 		display: block;
+		margin-bottom: 5px;
 	} 
 
 	.block-menu .iteam-menu.iteam-2-top{
@@ -18,7 +19,6 @@
 	.block-menu .iteam-menu.iteam-2-middel{
 		margin-bottom: 4.6%;
 	}
-
 
 }
 @media screen and (max-height: 384px) { 

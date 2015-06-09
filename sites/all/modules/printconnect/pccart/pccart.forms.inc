@@ -185,6 +185,29 @@ function pccart_cart_form2($form, &$form_state) {
             '#prefix' => '<div id="hiddenPrices">',
             '#suffix' => '</div>',
         );
+        
+        $form['cart']['errors']['fileNotFound'] = array(
+               '#type' => 'hidden',
+               '#value' => t('Please upload a file for all your items'),
+               '#attributes' => array('id' => 'errorFileNotFound')
+       );
+       $form['cart']['errors']['errorDiscoun'] = array(
+               '#type' => 'hidden',
+               '#value' => t('Please log customer'),
+               '#attributes' => array('id' => 'errorDiscoun')
+       );
+       $form['cart']['errors']['discountOk'] = array(
+               '#type' => 'hidden',
+               '#value' => t('Your discount code has been converted checkout your order'),
+               '#attributes' => array('id' => 'messageDiscounok')
+       );
+        $form['cart']['errors']['messageDiscounUsed'] = array(
+               '#type' => 'hidden',
+               '#value' => t('Sorry, this coupon code was already used or not validated'),
+               '#attributes' => array('id' => 'messageDiscounUsed')
+       );
+        
+        
 	foreach($cart->fotoliaItems as $fotoliaItem) {
 	    $form['cart']['items']['hidden']['fotolia'][$fotoliaItem->parentId][$fotoliaItem->id] = array(
                 '#type' => 'hidden', '#value' => $fotoliaItem->price,
@@ -606,12 +629,21 @@ function pccart_cart_form2($form, &$form_state) {
                 }
             }
         }
-        /* Discount */
-        $form['cart']['js'] = array(
+      /* Discount */
+    $form['cart']['js'] = array(
+         '#weight' => 50,
+        '#prefix' => '<div class ="jsDiscount">',
+        '#suffix' => '</div>',
+	    );
+	$data = serialize($cart);
+    if (count($cart->discountItems) > 0) {
+        $form['cart']['discounts'] = array(
+            '#type' => 'fieldset',
+            '#attributes' => array('class' => array('discounts', 'item')),
             '#weight' => 50,
             '#title' => t('Discounts'),
             '#prefix' => '<div class ="lodediscounts">',
-            '#suffix' => '</div>',
+        '#suffix' => '</div>',
         );
         unset($_SESSION['discountId']);
         foreach($cart->discountItems as $item){
@@ -640,42 +672,25 @@ function pccart_cart_form2($form, &$form_state) {
                 '#type' => 'container',
                 '#attributes' => array('class' => array('description')),
             );
-            unset($_SESSION['discountId']);
-            foreach($cart->discountItems as $item){
-                $form['cart']['items']['hidden'][$item->discountId] = array(
-                    '#type' => 'hidden', '#value' => $item->price,
-                );
-                $form['cart']['discounts'][$item->discountId] = array(
-                    '#type' => 'container',
-                );
 
-                $form['cart']['discounts'][$item->discountId]['prefix'] = array(
+            $form['cart']['discounts'][$item->discountId]['description']['items'] = array(
+                'price' => array(
+                    '#theme' => 'price',
+                    '#value' => $item->price,
+                    '#attributes' => array('class' => array('styleprice')),
+                ),
+                'code' => array(
                     '#type' => 'container',
                     'content' => array('#markup' => t('You are using') . ': <span id="discountCodeVal">' . $item->discountId . '</span>'),
-                    'description' => array(
+                ),
+                'description' => array(
                     '#type' => 'container',
-                    '#attributes' => array('class' => array('description')),
-                    ));
-
-                $form['cart']['discounts'][$item->discountId]['description']['items'] = array(
-                    'price' => array(
-                        '#theme' => 'price',
-                        '#value' => $item->price,
-                        '#attributes' => array('class' => array('styleprice')),
-                    ),
-                    'code' => array(
-                        '#type' => 'container',
-                        'content' => array('#markup' => t('You are using') . ': ' . $item->discountId),
-
-                    ),
-                    'description' => array(
-                        '#type' => 'container',
-                        'content' => array('#markup' => $item->productName),
-                    ),
-                );
-                $_SESSION['discountId'][] = $item->discountId;
-            }
+                    'content' => array('#markup' => $item->productName),
+                ),
+            );
+            $_SESSION['discountId'][] = $item->discountId;
         }
+    }
         /* end discount */
 
         $options = array();

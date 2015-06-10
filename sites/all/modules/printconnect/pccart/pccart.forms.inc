@@ -51,6 +51,12 @@ function getArrayConfig($configs, $itemrequested) {
 function pccart_cart_form2($form, &$form_state) {
     global $language;
     $cart = Factory::Current();
+    $VatCart = 0.21;
+    $jobs = array_values($cart->orderItems);
+    $job = $jobs[0];
+    $VatCart=$job->vat;
+    drupal_add_js(array('pccart' => array('VatCart' => $VatCart)), array('type' => 'setting'));
+    
     $form_state['storage']['cart'] = $cart;
     $endarray = $cart != null ? end($cart->orderItems) : null;
     $jobs = $cart != null ? $cart->orderItems : array();

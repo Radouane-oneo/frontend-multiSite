@@ -124,7 +124,11 @@ function PriceCallback() {
 	});
 	map.forEach(function(Price) { totalprice += Price; });
 	jQuery("#pccart-cart-form .subtotal .value").html(buildPriceHtml(totalprice, false));
-	var vat = 0.21 ;
+            try{
+          var vat = Drupal.settings.pccart.VatCart;
+         }catch(e){
+         }
+        vat = parseFloat(vat);
 	vatprice = totalprice * vat ;
 	jQuery("#pccart-cart-form .vat .value").html(buildPriceHtml(vatprice, false));
 	total = vatprice + totalprice;

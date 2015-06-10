@@ -977,6 +977,9 @@ function pccart_cart_form2_validate($form, &$form_state){
             }
         }
     }
+    if($form_state['values']['cart']['shipping']['type'] == 0){
+        form_set_error('', t('Merci de choisir une méthode de livraison'));
+    }
 
     $form_state['storage']['cart'] =  $cart; 
 }

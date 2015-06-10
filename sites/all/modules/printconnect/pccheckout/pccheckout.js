@@ -130,7 +130,7 @@ Drupal.behaviors.pccheckout = {
        $('input.payment[type="submit"]').click(function (e) {
             if($('.storcomande').length > 0){
                 if ($('input[name="pcflyerstores[id]"]').val() == ''){
-                    $("h1").after('<div class="messages error"><ul><li>Merci de choisir un flyer store</li></ul></div>');
+                    $("h1:first").after('<div class="messages error"><ul><li>Merci de choisir un flyer store</li></ul></div>');
                     return false;
                 }
             }

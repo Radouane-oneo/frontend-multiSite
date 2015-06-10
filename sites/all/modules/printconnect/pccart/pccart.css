@@ -438,9 +438,6 @@ float: right;
   padding-top: 16px;
 }
 
-
-
-
 #pccart-cart-form fieldset.products .fieldset-wrapper{
   padding: 0;
   border: 0;
@@ -559,7 +556,6 @@ width: 50px;
 float: left;
 }
 
-
 .page-cart #pccart-cart-form .item .description .refJob-code label{
 	font-weight: bold;
 	color: #666666;
@@ -618,7 +614,6 @@ body.page-cart #pccart-cart-form .control-block .removecontrol{
     padding-top: 0;
 }
 
-
 .cart .cartItemsContainer  .prodactTemplates:after{
   content: '';
   width: 100%;
@@ -635,7 +630,17 @@ body.page-cart #pccart-cart-form .control-block .removecontrol{
 .centroid-1 .first {
   margin-left: 215px!important;
 }
+
 .centroid-2 .poll-form {
   margin-left: 77px!important;
 }
 
+table.targetPrice td:nth-child(1),
+table.targetPrice td:nth-child(2),
+table.targetPrice td:nth-child(1) *,
+table.targetPrice td:nth-child(2) * {
+  cursor: pointer;
+}
+
+table.targetPrice tbody tr td { border-top:none; border-bottom:1px solid #dbd9d9; }
+table.targetPrice tbody tr.last-child td { border:none; }

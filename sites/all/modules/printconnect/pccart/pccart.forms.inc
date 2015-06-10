@@ -48,7 +48,7 @@ function getArrayConfig($configs, $itemrequested) {
     }
     return $resolt;
 }
-function pccart_cart_form2($form, &$form_state) {    
+function pccart_cart_form2($form, &$form_state) {
     global $language;
     $cart = Factory::Current();
     $form_state['storage']['cart'] = $cart;
@@ -92,7 +92,7 @@ function pccart_cart_form2($form, &$form_state) {
     if (!$cart || !$cart->isFilled) {
         $items = array();
         $emailDesigner = FALSE;
-        
+
         $form['empty'] = array(
             '#type' => 'container',
             '#attributes' => array('class' => array('box')),
@@ -241,7 +241,7 @@ function pccart_cart_form2($form, &$form_state) {
             $configs = $item->configuration->config;
 
             $list = array();
-            
+
             foreach ($configs as $config) {
                 $items[] = $config->toolboxItemId;
             }
@@ -341,7 +341,7 @@ function pccart_cart_form2($form, &$form_state) {
                     $form['cart']['items'][$item->id]['files']['description']['list'] = array(
                         '#theme' => 'item_list',
                         '#items' => $list,
-                    );  
+                    );
                     $form['cart']['items'][$item->id]['files']['description']['refJob'] = array(
                         '#type' => 'textfield',
                         '#title' => t('Give a reference to this product'),
@@ -354,7 +354,7 @@ function pccart_cart_form2($form, &$form_state) {
                     );
                     $totalPrice += $item->originPrice;
                     $listProductId .= $item->configuration->productId . ',';
-                    
+
                     $form['cart']['items'][$item->id]['files']['preview'] = array(
                         '#prefix' => '<div class="btns-box"><div class="preview">',
                         '#suffix' => '</div>',
@@ -648,7 +648,7 @@ function pccart_cart_form2($form, &$form_state) {
         unset($_SESSION['discountId']);
         foreach($cart->discountItems as $item){
             $form['cart']['items']['hidden'][$item->discountId] = array(
-                '#type' => 'hidden', 
+                '#type' => 'hidden',
                 '#value' => $item->price,
                 '#attributes' => array(
                     'id' => 'discount-hidden-' . strtolower($item->discountId),
@@ -735,7 +735,7 @@ function pccart_cart_form2($form, &$form_state) {
         );
 
         $form_state['storage']['shipping']['types'] = $types;
-       
+
         foreach ($types as $type) {
             if ($type->shippingType->deliveryType != 'deliveryTypePostal' && ($type->shippingType->deliveryType != 'deliveryTypePickup' || variable_get('pcpickuppoints_enabled', true) )) {
                 $enabledTypes[] = $type;
@@ -745,12 +745,13 @@ function pccart_cart_form2($form, &$form_state) {
             $label = $type->shippingType->tag;
             if ($type->price > 0) {
                 $label .= '(' . t('!value exc. VAT', array('!value' => theme('price', array('value' => $type->price, 'free' => TRUE)))) . ' / ' . t('!value inc. VAT', array('!value' => theme('price', array('value' => $type->price * (1 + $_SESSION['shop_vat']), 'free' => TRUE)))) . ') *';
-            }        
+            }
             $options[$type->id] = array(
+                '#attributes' => array('class' => array("shipp-$type->id", 'shipp-item')),
                 'label' => '<span >' . $label . '</span>',
                 'delivery' => $type->estimatedDeliveryTime,
+                'price' => theme('price', array('value' => $type->price, 'free' => TRUE)),
             );
-            $options[$type->id]['price'] = theme('price', array('value' => $type->price, 'free' => TRUE));
         }
      
         $shop = printconnect\Shop\Configuration\Factory::Current();
@@ -811,14 +812,14 @@ function pccart_cart_form2($form, &$form_state) {
             '#weight' => 100,
         );
 
-        
+
         $form['actions'] = array(
             '#type' => 'container',
             '#attributes' => array('class' => array('actions', 'form-actions', 'clearfix')),
         );
 
-   
-      
+
+
         $form['actions']['price'] = array(
             '#id' => 'price',
             '#theme' => 'price',
@@ -939,9 +940,9 @@ function pccart_cart_form2($form, &$form_state) {
         '#items' => $items,
     );
     /* END bloc TOP produits */
-    
+
     /* Control order have Designer */
-    
+
 
     $submit = $form['actions']['checkout']['#submit'];
     array_unshift($submit, 'pcdesigner_form_submit', 'pcflyerstores_pccart_cart_form2_submit');
@@ -954,7 +955,7 @@ function pccart_cart_form2_delete_creat_submit($form, &$form_state) {
     try {
         Factory::DeleteItemFile($id);
     } catch (\printconnect\Rest\Exceptions\Exception $ex) {
-        
+
     }
 }
 function pccart_cart_form2_delete_discount_submit($form, &$form_state) {
@@ -978,10 +979,10 @@ function pccart_cart_form2_validate($form, &$form_state){
         }
     }
 
-    $form_state['storage']['cart'] =  $cart; 
+    $form_state['storage']['cart'] =  $cart;
 }
 
 function pccart_cart_form2_submit($form, &$form_state){
     $_SESSION['shippingtypeID'] = $form_state['values']['cart']['shipping']['type'];
-     drupal_goto('checkout'); 
+     drupal_goto('checkout');
 }

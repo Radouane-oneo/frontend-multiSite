@@ -16,9 +16,8 @@ use printconnect\Customers\Factory as CustomersFactory;
 use printconnect\Carts\Discounts;
 
 function pccart_menu() {
- 
-$items['cart/%/submit'] = array(
 
+$items['cart/%/submit'] = array(
       'page callback' => '_pccart_callback',
       'page arguments' => array('cart_submit', 1),
       'access arguments' => array('access content'),
@@ -53,7 +52,6 @@ $items['cart/%/submit'] = array(
   );
 
   $items['cart/files/%/delete'] = array(
-
       'page callback' => '_pccart_callback',
       'page arguments' => array('file_delete', 2),
       'access arguments' => array('access content'),
@@ -71,7 +69,7 @@ $items['cart/%/submit'] = array(
       'page arguments' => array('edit', 2),
       'access arguments' => array('access content'),
   );
-  
+
   $items["cart/discount"] = array(
       'title' => 'Cart callback',
       'page callback' => '_pccart_callback',
@@ -230,7 +228,7 @@ function pccart_block_view($delta = '') {
               '#theme' => 'item_list',
               '#items' => $list,
           );
-          
+
         }
 
         $orderItemsAdditional = $cart->orderItemsAdditional;
@@ -394,7 +392,7 @@ function pccart_block_view($delta = '') {
 	    $number++;
 	}
       }
-	
+
       if ($cart) {
         $content .= ' (' . $number . ')';
       } else {
@@ -619,7 +617,7 @@ function add_cartitem_submit() {
     drupal_not_found();
   }
   $productId = $_POST['productId'];
-  $qty = $_POST['quantity']; 
+  $qty = $_POST['quantity'];
   $options = explode(',', $_POST['options']);
   $priceGroupId = $_POST['priceGroupId'];
   $vat = false;
@@ -659,8 +657,8 @@ function _pccart_callback() {
 	Factory::saveInCache($cart, array(
             'customer_reference' => $ref,
 	    'customerReference' => $ref,
-        )); 
-	printconnect\Carts\Factory::SaveCustomData($cart);		
+        ));
+	printconnect\Carts\Factory::SaveCustomData($cart);
       break;
       case 'edit_jobref':
 	$orderItem = array_shift($args);
@@ -675,13 +673,13 @@ function _pccart_callback() {
 		   break;
 	       }
 	   }
-	   
+
 	   Factory::saveInCache($cart, array(
             'order_items' => $cart->orderItems,
            ));
-	   
-	   printconnect\Carts\Factory::SaveCustomData($cartItem); 
-	} 		   
+
+	   printconnect\Carts\Factory::SaveCustomData($cartItem);
+	}
       break;
       case 'cart_submit':
         $cart = Factory::Current();
@@ -806,7 +804,7 @@ function _pccart_callback() {
                   ));
                 }
             }
-      
+
             echo $jsonResponse->data;die;
 	     }
       break;
@@ -842,7 +840,7 @@ function _pccart_callback() {
         }
 	if ($itemId) {
 	    printconnect\Carts\Factory::DeleteItemFile($itemId);
-	}	
+	}
         return t('The file was deleted');
         break;
       case 'discount_delete':

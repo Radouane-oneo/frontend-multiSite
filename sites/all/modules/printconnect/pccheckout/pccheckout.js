@@ -136,13 +136,13 @@ Drupal.behaviors.pccheckout = {
             }
         });
         
-$('#pccheckout-payment-form').submit(function (e) {
-    if (agree == "no"){
-     e.preventDefault();
-     $("#jsagree").remove();
-     $(".form-item-agree").after('<p id="jsagree" style=" color: white; text-align: center; background-color:#ff6600;">' + Drupal.t('champ obligatoire') + '<p>').fadeIn();
-    } 
-});      
+//$('#pccheckout-payment-form').submit(function (e) {
+//    if (agree == "no"){
+//     e.preventDefault();
+//     $("#jsagree").remove();
+//     $(".form-item-agree").after('<p id="jsagree" style=" color: white; text-align: center; background-color:#ff6600;">' + Drupal.t('champ obligatoire') + '<p>').fadeIn();
+//    } 
+//});      
             
   $('#pccheckout-personal-form').submit(function (e) {
                            var number = $('.number');

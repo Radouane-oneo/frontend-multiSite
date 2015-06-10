@@ -120,7 +120,9 @@ function PriceCallback() {
 	var map = [];
 	var totalprice = 0;
 	jQuery("#pccart-cart-form #hiddenPrices input").each(function() {
-		map.push(parseFloat(jQuery(this).val()));
+		if(jQuery(this).val()){
+			map.push(parseFloat(jQuery(this).val()));
+		}
 	});
 	map.forEach(function(Price) { totalprice += Price; });
 	jQuery("#pccart-cart-form .subtotal .value").html(buildPriceHtml(totalprice, false));

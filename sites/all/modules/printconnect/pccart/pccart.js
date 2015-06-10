@@ -161,8 +161,7 @@ function buildPriceHtml(price, isDiscount) {
 	return htmlPrice;
 }
 
-function applyDiscount(code, force) {
-	if(force == 1 && typeof jQuery(".hidden-discount")[0] == "undefined") {	return false; }
+function applyDiscount(code, force){
 	if(force == 0) { jQuery("#edit-cart-discount-add").after("<img id='loading-ajax-tmp' style='top:8px;left:-4px;position:relative' src='/sites/all/themes/printconnect/flyer/ajax-loading.gif'>"); }
 	jQuery.ajax({
 		type: "POST",
@@ -174,10 +173,14 @@ function applyDiscount(code, force) {
 		dataType : 'json',
 		success: function (data) {
 			jQuery("#loading-ajax-tmp").remove();
-			if(typeof data.code != "undefined" && force == 1 && jQuery("#discount-hidden-"+data.code.toLowerCase()).next()[0] && jQuery("#discount-hidden-"+data.code.toLowerCase()).next().hasClass('hidden-discount')) {
+          if(typeof data.code != "undefined" && 
+                  force == 1 && 
+                  jQuery("#discount-hidden-"+data.code.toLowerCase()).next()[0] &&
+                  jQuery("#discount-hidden-"+data.code.toLowerCase()).next().hasClass('hidden-discount')) {
 				applyDiscount(jQuery("#discount-hidden-"+data.code.toLowerCase()).next().attr('discount-code'), 1);
 			}
 			if (typeof data.discountAmount != "undefined"){
+              console.log('5');
 				renderDiscount(data);
 				return;
 			}else if(force == 1){
@@ -195,7 +198,22 @@ jQuery(document).ready(function(){
 	SwitchShipping(jQuery('table.targetPrice tr input.targetPrice:checked').val());
 	jQuery("#edit-cart-discount-add").click(function (event) {
 		event.preventDefault();
-		var disocuntname = jQuery("#pccart-cart-form #edit-cart-discount-code").val();
-		applyDiscount(disocuntname, 0);
+        jQuery(".messages.error").remove();
+		var errorDiscoun = jQuery("#errorDiscoun").val();
+		var isError = true;
+		if(typeof jQuery("#block-pccustomers-profile")[0] != "undefined"){
+			isError = false;
+		}
+		if (isError) {
+			if (typeof jQuery(".messages.error")[0] != "undefined") {
+				jQuery(".messages.error").append("<br>" + errorDiscoun);
+			} else {
+				jQuery(".whitebox h1").after('<div class="messages error">' + errorDiscoun + '</div>');
+			}
+			jQuery('body, html').animate({scrollTop: 400}, '500', 'swing', function () {});
+		} else {
+			var disocuntname = jQuery("#pccart-cart-form #edit-cart-discount-code").val();
+			applyDiscount(disocuntname, 0);
+		}
 	});
 });

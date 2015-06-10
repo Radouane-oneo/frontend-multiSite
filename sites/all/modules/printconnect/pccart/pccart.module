@@ -793,7 +793,6 @@ function _pccart_callback() {
                         unset($orderItems[$key]);
                     }
                 }
-
                 if($deleted) {
                   $cart->orderItems = $orderItems;
                   $cartAmounts = $response->cartAmount;

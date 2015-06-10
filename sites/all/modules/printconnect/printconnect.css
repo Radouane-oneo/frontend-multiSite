@@ -7,7 +7,7 @@
 }
 #block-printconnect-progress li{
   float:left;
-  padding: 5px; 
+  padding: 5px;
   margin:0;
   margin-left:30px;
 }
@@ -21,7 +21,7 @@
 }
 .price{
   text-align:right;
-  white-space: nowrap;  
+  white-space: nowrap;
 }
 .price.total{
   font-size: larger;
@@ -60,16 +60,16 @@ a.delete{
   display: none;
   position : absolute;
   z-index : 2000;
-  border: 1px solid #dddddd;  
+  border: 1px solid #dddddd;
 }
 
 #block-locale-language.dropdown .content ul li{
-  margin: 0;	
+  margin: 0;
   padding: 0 10px 0 5px;
   background: #ffffff;
   border-bottom: 1px solid #dddddd;
   display : block;
-  float : none;    
+  float : none;
 }
 
 #block-locale-language.dropdown .content ul li:hover{
@@ -124,7 +124,7 @@ a.delete{
 
 
 
-.loading .overlay { 
+.loading .overlay {
   /*  position:fixed;
     top:0;
     left:0;
@@ -136,7 +136,7 @@ a.delete{
     opacity:0.3;*/
 }
 
-.loading .message { 
+.loading .message {
   /*  position:fixed;
     top:35%;
     left:35%;
@@ -144,7 +144,7 @@ a.delete{
     z-index:2000;*/
   background:white url(images/loader.gif) 10px center no-repeat;
   text-align: center;
-  padding:.2em; 
+  padding:.2em;
   -moz-box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
   -webkit-box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
   box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
@@ -182,7 +182,7 @@ html.js fieldset.collapsed .fieldset-legend{
 
 input[type="submit"].remove{
   background: transparent url('images/delete.png') center center no-repeat;
-  border:none; 
+  border:none;
   height: 16px;
   margin: 0;
   padding: 0;
@@ -205,7 +205,7 @@ input[type="submit"].remove{
   background:#F0F0F0;
   bottom:0;
   color:white;
-  background: rgb(0,0,0); 
+  background: rgb(0,0,0);
   background: rgba(0,0,0,0.75);
 }
 
@@ -219,4 +219,10 @@ input[type="submit"].remove{
 }
 #printconnect-cookies-form .text, #printconnect-browserwarning-form .text{
   padding: 0 5px;
+}
+
+.grised:hover {
+  cursor: wait;
+  opacity: .5;
+  background-color: #999!important;
 }

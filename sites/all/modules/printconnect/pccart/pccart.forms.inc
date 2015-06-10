@@ -51,6 +51,12 @@ function getArrayConfig($configs, $itemrequested) {
 function pccart_cart_form2($form, &$form_state) {
     global $language;
     $cart = Factory::Current();
+    $VatCart = 0.21;
+    $jobs = array_values($cart->orderItems);
+    $job = $jobs[0];
+    $VatCart=$job->vat;
+    drupal_add_js(array('pccart' => array('VatCart' => $VatCart)), array('type' => 'setting'));
+    
     $form_state['storage']['cart'] = $cart;
     $endarray = $cart != null ? end($cart->orderItems) : null;
     $jobs = $cart != null ? $cart->orderItems : array();
@@ -977,6 +983,9 @@ function pccart_cart_form2_validate($form, &$form_state){
                 form_set_error('', t('Please upload a file for all your items'));
             }
         }
+    }
+    if($form_state['values']['cart']['shipping']['type'] == 0){
+        form_set_error('', t('Merci de choisir une méthode de livraison'));
     }
 
     $form_state['storage']['cart'] =  $cart;

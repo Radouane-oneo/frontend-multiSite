@@ -46,18 +46,17 @@
     });
     
    
-  
-    /* display  vat & company on load if adress is Company */
     $(document).ready(function () {
         jQuery(".selectBilling2").select2();
         jQuery(".selectStyle").select2();
-        
+       
         if ($('#pccheckout-invoiceanddelivery-form  input[name="pcflyerstores[id]"]').val() != ''){
-               $('#pccheckout-invoiceanddelivery-form #edit-summary-shipping h6').html($('#pccheckout-invoiceanddelivery-form .storcomande h2').html());
-               $('#pccheckout-invoiceanddelivery-form #edit-summary-shipping .address').html($('#pccheckout-invoiceanddelivery-form  .storcomande .address').html());
-               $('#pccheckout-invoiceanddelivery-form #edit-summary-shipping .phone').html($('#pccheckout-invoiceanddelivery-form  .storcomande .phone').html());
-               $('#pccheckout-invoiceanddelivery-form #edit-summary-shipping .fax').html($('#pccheckout-invoiceanddelivery-form  .storcomande .fax').html());
-               $('#pccheckout-invoiceanddelivery-form #edit-summary-shipping .email').html($('#pccheckout-invoiceanddelivery-form  .storcomande .email').html());
+            $('#allresault').show();
+            $('#pccheckout-invoiceanddelivery-form #edit-summary-shipping h6').html($('#pccheckout-invoiceanddelivery-form .storcomande h2').html());
+            $('#pccheckout-invoiceanddelivery-form #edit-summary-shipping .address').html($('#pccheckout-invoiceanddelivery-form  .storcomande .address').html());
+            $('#pccheckout-invoiceanddelivery-form #edit-summary-shipping .phone').html($('#pccheckout-invoiceanddelivery-form  .storcomande .phone').html());
+            $('#pccheckout-invoiceanddelivery-form #edit-summary-shipping .fax').html($('#pccheckout-invoiceanddelivery-form  .storcomande .fax').html());
+            $('#pccheckout-invoiceanddelivery-form #edit-summary-shipping .email').html($('#pccheckout-invoiceanddelivery-form  .storcomande .email').html());
            }
         if (typeof $("#isUserCompany")[0] != "undefined") {
             if ($("#companyInput").val() != '') {
@@ -128,7 +127,15 @@ Drupal.behaviors.pccheckout = {
                 agree = "yes";
             }
         });      
-    
+       $('input.payment[type="submit"]').click(function (e) {
+            if($('.storcomande').length > 0){
+                if ($('input[name="pcflyerstores[id]"]').val() == ''){
+                    $("h1").after('<div class="messages error"><ul><li>Merci de choisir un flyer store</li></ul></div>');
+                    return false;
+                }
+            }
+        });
+        
 $('#pccheckout-payment-form').submit(function (e) {
     if (agree == "no"){
      e.preventDefault();

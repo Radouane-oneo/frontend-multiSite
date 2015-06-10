@@ -19,18 +19,16 @@ function updateDomain() {
     detach: function (context) {
     },
     attach: function (context, settings) {
-      
+
       $(document).ajaxStart(function() {
-          $('body',this).css('cursor','progress');
-       $(':submit').attr('disabled', true);
-        
+       $(':submit').attr('disabled', true).addClass('grised');
+
       });
-      
+
       $(document).ajaxStop(function() {
-      $('body', this).css('cursor','default');
-        $(':submit').attr('disabled', false);
+        $(':submit').attr('disabled', false).removeClass('grised');
       });
-      
+
       if ($.fancybox){
           var targetElement = null;
         $('.fancybox').each(function(){
@@ -44,7 +42,7 @@ function updateDomain() {
           if (!w){
             w = 815;
           }
-            
+
           $(this).fancybox({
             width: w,
             height: h,

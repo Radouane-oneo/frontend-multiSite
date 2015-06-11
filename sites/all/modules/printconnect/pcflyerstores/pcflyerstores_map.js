@@ -256,7 +256,11 @@ function chooseMarker(id) {
             
             function simpleMap() {
 		$('#Mapimg').css('height', '300px').css('width','400px');
-		var simplePosition = $('#Mapimg').attr('position').split('_');
+		try{
+			var simplePosition = $('#Mapimg').attr('position').split('_');
+		}catch(e){
+		}
+
 		var mapOptions = {
     			zoom: 10,
     			center: new google.maps.LatLng(simplePosition[1], simplePosition[0])

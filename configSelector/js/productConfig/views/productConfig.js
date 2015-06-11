@@ -17,7 +17,8 @@ define([
             "click #edit-calculer" : "calculatePrice",
             "keypress #edit-custom" : "checkQuantity",
             "click #deadlinestooltip legend" : "toggleCollapse",
-            "click #deadlinestooltip legend a" : "preventDefault"
+            "click #deadlinestooltip legend a" : "preventDefault",
+            "focus #edit-custom" : "editCustomQuantity"
         },
         initialize: function() {
             this.config = require("config");
@@ -33,6 +34,7 @@ define([
                 "totalPrice" : this.model.totalPrice,
                 "priceTpl" : _.template(priceTemplate),
                 "shippingHTML" : this.$("#bloc-shipping").html(),
+                "customQuantity" : !(this.model.get("toolBoxGroup")["pricing"][this.model.get("quantity")]),
                 "expandedOptions" : this.$("#edit-options").is(":visible")
             }));
             $(this.config.containerId).html(this.$el);
@@ -125,7 +127,10 @@ define([
         checkQuantity: function(e){
             if(e.which != 8 && isNaN(String.fromCharCode(e.which)))
                 e.preventDefault();
-        }
+        },
+        editCustomQuantity: function(){
+            $("#edit-quantity-custom").attr("checked", "checked");
+        },
     });
 
 });

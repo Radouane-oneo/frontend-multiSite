@@ -89,7 +89,7 @@
             var i = 0;
             _.each(model.toolBoxGroup.pricing, function(price){
             i = i+ 1;
-            var checked = (price['quantity']==model.quantity)?"checked='checked'":"";
+            var checked = (price['quantity']==model.quantity && !customQuantity)?"checked='checked'":"";
             %>
             <tr class="<%= (i%2==0)?'even':'odd' %>">
                 <td class="first-child">
@@ -115,18 +115,21 @@
                 %></td>
             </tr>
             <% }); %>
+            <%
+            var checked = (customQuantity)?"checked='checked'":"";
+            %>
             <tr class="custom even last-child child-item-calcul-qte">
                 <td class="first-child">
                     <div class="form-item form-type-radio form-item-quantity">
                         <input type="radio" value="custom" name="quantity" id="edit-quantity-custom"
-                               class="grid clearfix form-radio">
+                               class="grid clearfix form-radio" <%= checked %>>
                     </div>
                 </td>
                 <td colspan="4" class="last-child">
                     <div class="form-item form-type-textfield form-item-custom form-item-calcul-qte">
                         <label for="edit-custom"><%= config.labels["enterQuantity"] %></label>
                         <div class="wrap-input-calcul">
-                        <input type="text" class="form-text" maxlength="128" size="60" value="" name="custom" id="edit-custom"> 
+                        <input type="text" class="form-text" maxlength="128" size="60" value="<%= (customQuantity)?model.quantity:'' %>" name="custom" id="edit-custom"> 
                         <input type="submit" value="<%= config.labels['calculate'] %>" name="op" id="edit-calculer" class="ajax-calculate form-submit ui-button ui-widget ui-state-default ui-corner-all btn-calcul" role="button">
                         </div>
                     </div>

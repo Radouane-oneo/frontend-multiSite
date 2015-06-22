@@ -1053,8 +1053,10 @@ $product = Products\Factory::Get($productId);
   $quantities = array(
       'custom' => array(
           'qty' => '',
+          'oldprice' => '',
           'price' => '',
           'priceperpiece' => '',
+          'priceinclvat' => '',
           '#attributes' => array('class' => array('custom')),
       ),
   );
@@ -1093,6 +1095,7 @@ $product = Products\Factory::Get($productId);
       'price' => '',
       'priceperpiece' => '',
       'priceinclvat' => '',
+      '#attributes' => array('class' => array('custom')),
   );
 
   $customQty = FALSE;
@@ -1105,6 +1108,8 @@ $product = Products\Factory::Get($productId);
           'price' => theme('price', array('value' => $price)),
           'priceperpiece' => theme('price', array('value' => $price / $customQty)),
           'priceinclvat' => theme('price', array('value' => $price * (1 + $_SESSION['shop_vat']))),
+          'oldprice' => '',
+          '#attributes' => array('class' => array('custom'))    
       );
     }
   }
@@ -1114,7 +1119,7 @@ $product = Products\Factory::Get($productId);
       '#multiple' => FALSE,
       '#header' => array('qty' => t('Quantity'), 'oldprice' => '', 'price' => t('Price VAT excl.'), 'priceinclvat' => t('Price VAT incl.')),
       '#required' => TRUE,
-      '#attributes' => array('class' => array('grid', 'clearfix')),
+      '#attributes' => array('class' => array('grid quanityOptions', 'clearfix')),
       '#options' => $quantities,
       '#default_value' => $qty,
       '#ajax' => $ajax,
@@ -1124,9 +1129,11 @@ $product = Products\Factory::Get($productId);
   $form['custom'] = array(
       '#type' => 'textfield',
       '#ajax' => $ajax,
-      '#description' => t('Enter your amount'),
+      '#placeholder' => t('Enter your amount'),
+      "#prefix"=>"<div class='amount'><label class='label'>". t('Enter your amount')."</label>",
+      "#suffix"=>"<input type='button' value=".t('Calculer')." id='calculeramount' class='button'/></div>"
   );
-
+  
   $form['productId']=array(
       '#type' => 'hidden',
       '#id' => 'productId',

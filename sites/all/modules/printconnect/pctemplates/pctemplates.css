@@ -532,3 +532,52 @@ margin: 0 16px -10px 0px !important;
 	clear: none;
 	margin-top: -50px;
 }
+
+#calculeramount{
+  background: #77b800 url("/sites/all/themes/printconnect/flyer/css/images/flesh-button-seul.png") no-repeat scroll 17px center;
+  display: inline-block;
+  font-weight: bold;
+  padding-left: 40px;
+  vertical-align: middle;
+  font-size: 14px;
+  cursor: pointer;color: #FFFFFF; outline:none;border: 0 none;
+   
+}
+.custom{
+    
+}
+
+.quanityOptions .custom.last-child > td:nth-child(3),.quanityOptions .custom.last-child > td:nth-child(4),.quanityOptions .custom.last-child > td:nth-child(5){
+  display: none;
+}
+
+.quanityOptions .custom.last-child>td:nth-child(2){ 
+  padding-right: 15px;
+  font-size: 16px;
+}
+.quanityOptions .custom.last-child>td:nth-child(2) .amount{position: relative;padding: 15px 0;}
+.quanityOptions .custom.last-child>td:nth-child(2) .amount:after{
+  clear: both;
+  width: 100%;
+  height: 1px;
+  display: block;
+  content: '';
+}
+.quanityOptions .custom.last-child>td:nth-child(2) .amount .label{
+color: #999999;
+display: inline-block;
+font-size: 13px;
+font-weight: 700;
+width: 253px;
+}
+.quanityOptions .custom.last-child>td:nth-child(2) .amount .form-item{  
+  display: inline-block;
+  vertical-align: middle;
+}
+.quanityOptions .custom.last-child>td:nth-child(2) .amount .form-item input[type='text']{ 
+  margin: 0 !important;
+
+}
+.quanityOptions .custom.last-child>td:nth-child(2) .amount #calculeramount{ 
+  vertical-align: middle;
+}

@@ -2,6 +2,10 @@
         Drupal.behaviors.pctemplates = {
             detach: function (context) {},
             attach: function (context, settings) {
+                 $(".custom.last-child > td:nth-child(2)").attr('colspan','4');
+                $("input[name='custom']").click(function(){
+                    $("input[name='quantity'][value='custom']").attr("checked","checked");
+                })
                 $(".item-list ul.type-1 li a").toggle(function () {
                         $(this).addClass("designSelectedColor");
                         $(this).attr('isselected', true);

@@ -47,6 +47,7 @@
     
    
     $(document).ready(function () {
+
         jQuery(".selectBilling2").select2();
         jQuery(".selectStyle").select2();
        
@@ -144,7 +145,7 @@ Drupal.behaviors.pccheckout = {
 //    } 
 //});      
             
-  $('#pccheckout-personal-form').submit(function (e) {
+    $('#pccheckout-personal-form').submit(function (e) {
                            var number = $('.number');
                            var company = $('#companyInput');
                            if (UserCompany == "yes") {
@@ -180,9 +181,10 @@ Drupal.behaviors.pccheckout = {
                                }
                            }
            });
-      
-            var pricePaiement = 0;
-            $("#pccheckout-payment-form  table.payment-methods-table tbody tr").mousedown(function () {
+
+    var pricePaiement = 0;
+
+    $("#pccheckout-payment-form  table.payment-methods-table tbody tr").mousedown(function () {
                 if ($(this).find('input.grid').is(":not(:checked)")) {
                     var id = $(this).find('input.grid').val();
                     $.post('/Methods/'+id);
@@ -199,12 +201,11 @@ Drupal.behaviors.pccheckout = {
                     }
                    var contentTr = '<tr class="even"><td class="first-child"><span id="orderItemsPayment"><strong>' + name + '</strong><span></td><td class="last-child"><span class="price"><span class="value"><span class="whole">' + wholevat + '</span><span class="decimalpoint">,</span><span class="decimals">' + decPartvat + '</span>&nbsp;<span class="currency">€</span></span></span></td></tr>';
                    if ($("#orderItemsPayment")[0]){
-                       console.log('1');
                   $('#orderItemsPayment').parents("tr").replaceWith(contentTr);
                     } else {
                   $('.page-checkout-payment #edit-overview').find('.total-excl-vat').before(contentTr);
                     }
-                    
+
                     var map = [];
                     var totalprice = 0;
                     $("#pccheckout-payment-form #CalculePrice input").each(function () {
@@ -225,8 +226,18 @@ Drupal.behaviors.pccheckout = {
                     var contenthtml = '<tr class="total-excl-vat odd last-child"><td class="first-child">Total HTVA</td><td class="last-child"><span class="price"><span class="value"><span class="whole">' + whole + '</span><spanclass="decimalpoint">,</span><span class="decimals">' + decPart + '</span>&nbsp;<span class="currency">€</span></span></span></td> </tr>';
                     $('.page-checkout-payment .overview table ').find('tr.total-excl-vat').replaceWith(contenthtml);
 
+                    //* Get var from order to calculate price.
+                    var vat;
+                    try{
+                        vat = Drupal.settings.pccheckout.VatCart;
+                        vat = parseFloat(vat);
+                    }catch(e){
+                    }
+                    if(isNaN(vat)){
+                        vat = 0.21;
+                    }
 
-                    var vat = 0.21;
+                    vat = parseFloat(vat);
                     var vatprice = myprice * vat;
                     var total = myprice + vatprice;
                     total = total.toFixed(2) + "";
@@ -241,67 +252,67 @@ Drupal.behaviors.pccheckout = {
            });
 
 
-            if ($("#pccheckout-payment-form table ")) {
-                var width = (662 / $("#pccheckout-payment-form  table.payment-methods-table tbody tr").length) - 21.2;
-                $('#pccheckout-payment-form').find('table.payment-methods-table tbody tr').css('width', width + 'px');
-                $('#pccheckout-payment-form').find('table.payment-methods-table tbody tr.last-child').css('border-right', 'none');
-            }
+    if ($("#pccheckout-payment-form table ")) {
+        var width = (662 / $("#pccheckout-payment-form  table.payment-methods-table tbody tr").length) - 21.2;
+        $('#pccheckout-payment-form').find('table.payment-methods-table tbody tr').css('width', width + 'px');
+        $('#pccheckout-payment-form').find('table.payment-methods-table tbody tr.last-child').css('border-right', 'none');
+    }
 
 
-            $(".popupOverlay").live('click', function () {
-                $('#popup_overlay.popin_overlay').css('display', 'block');
-            });
+    $(".popupOverlay").live('click', function () {
+        $('#popup_overlay.popin_overlay').css('display', 'block');
+    });
 
-            $(".headpopin .closeme").live('click', function () {
-                $('#popup_overlay.popin_overlay').css('display', 'none');
-            });
-
-
-            /* Show adresses  after lod page if it's already visibel */
-
-            jQuery('#pccheckout-invoiceanddelivery-form fieldset.tohiding').hide();
-            var hash = location.hash;
-            if (hash != "") {
-                jQuery("#pccheckout-invoiceanddelivery-form fieldset.tohiding" + hash).show();
-            }
+    $(".headpopin .closeme").live('click', function () {
+        $('#popup_overlay.popin_overlay').css('display', 'none');
+    });
 
 
-            /* Show adresses  summary on click */
+    /* Show adresses  after lod page if it's already visibel */
 
-            $('#pccheckout-invoiceanddelivery-form .summary .toggle').once().click(function () {
-                var url = jQuery(this).attr('href');
-                var target = url.substring(url.indexOf('#'));
-                jQuery('form fieldset.tohiding').hide();
-                jQuery(target).show();
-                jQuery(".select2-display-none").hide();
-            });
-
-            /* setInvoiceAddress from select  */
-            $('.form-item-invoice-address-current-select #edit-invoice-address-current-select').on('change', function () {
-                setInvoiceAddress($(this).val());
-            });
-            /*  setShppingAddress from select  */
-            $('.form-item-shipping-detail-current-select #edit-shipping-detail-current-select').on('change', function () {
-                setShppingAddress($(this).val());
-            });
+    jQuery('#pccheckout-invoiceanddelivery-form fieldset.tohiding').hide();
+    var hash = location.hash;
+    if (hash != "") {
+        jQuery("#pccheckout-invoiceanddelivery-form fieldset.tohiding" + hash).show();
+    }
 
 
+    /* Show adresses  summary on click */
 
-            /* change prefix vat  if countr country changed */
+    $('#pccheckout-invoiceanddelivery-form .summary .toggle').once().click(function () {
+        var url = jQuery(this).attr('href');
+        var target = url.substring(url.indexOf('#'));
+        jQuery('form fieldset.tohiding').hide();
+        jQuery(target).show();
+        jQuery(".select2-display-none").hide();
+    });
 
-            $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-country').change(function () {
-                var url = Drupal.settings.basePath + '?q=js/country/' + $(this).val();
-                $.getJSON(url, null, function (data) {
-                    $('#edit-invoice-address-current-vatnumber-country').val(data.vatPrefix).trigger('change');
-                });
-            });
-            
-              $('#pccheckout-personal-form #edit-country').change(function () {
-                var url = Drupal.settings.basePath + '?q=js/country/' + $(this).val();
-                $.getJSON(url, null, function (data) {
-                    $('#edit-vatnumber-country').val(data.vatPrefix).trigger('change');
-                });
-            });
+    /* setInvoiceAddress from select  */
+    $('.form-item-invoice-address-current-select #edit-invoice-address-current-select').on('change', function () {
+        setInvoiceAddress($(this).val());
+    });
+    /*  setShppingAddress from select  */
+    $('.form-item-shipping-detail-current-select #edit-shipping-detail-current-select').on('change', function () {
+        setShppingAddress($(this).val());
+    });
+
+
+
+    /* change prefix vat  if countr country changed */
+
+    $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-country').change(function () {
+        var url = Drupal.settings.basePath + '?q=js/country/' + $(this).val();
+        $.getJSON(url, null, function (data) {
+            $('#edit-invoice-address-current-vatnumber-country').val(data.vatPrefix).trigger('change');
+        });
+    });
+
+      $('#pccheckout-personal-form #edit-country').change(function () {
+        var url = Drupal.settings.basePath + '?q=js/country/' + $(this).val();
+        $.getJSON(url, null, function (data) {
+            $('#edit-vatnumber-country').val(data.vatPrefix).trigger('change');
+        });
+    });
 
         }
     }

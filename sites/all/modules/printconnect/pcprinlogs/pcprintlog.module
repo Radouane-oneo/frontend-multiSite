@@ -1,0 +1,27 @@
+<?php
+
+
+
+function pcprintlog_HandelError($customer, $order ,  $type, $message, $variables ) {
+    global  $base_root;
+    try {
+        db_insert('print_logs')
+            ->fields(array(
+                'log_cid' => $customer,
+                'log_orderid' => $order,
+                'log_type' => $type,
+                'log_message' => $message,
+                'log_variables'=> serialize($variables),
+                'log_hostname' => $base_root . request_uri(),
+                'log_time' => time(),
+            ))
+            ->execute();
+
+    }
+  catch (PDOException $e) {
+
+    }
+
+}
+
+

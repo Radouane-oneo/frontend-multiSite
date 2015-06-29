@@ -51,10 +51,18 @@ function getArrayConfig($configs, $itemrequested) {
 function pccart_cart_form2($form, &$form_state) {
     global $language;
     $cart = Factory::Current();
-    $VatCart = 0.21;
-    $jobs = array_values($cart->orderItems);
-    $job = $jobs[0];
-    $VatCart=$job->vat;
+    if (isset($_SESSION['customerid'])) {
+        try{
+            $Billingaddresses = \printconnect\Customers\BillingAccounts\Factory::Get($cart->billingAccount);
+            $BillingAccountVat = \printconnect\Customers\BillingAccounts\Factory::BillingAccountVat($Billingaddresses, $_SESSION['customerid'] , $cart->id);
+        }catch (\printconnect\Rest\Exceptions\Exception $ex) {
+        }
+        $VatCart = $BillingAccountVat->vat;
+    }else{
+        $VatCart = 0.21;
+    }
+
+    $VatCart = $BillingAccountVat->vat;
     drupal_add_js(array('pccart' => array('VatCart' => $VatCart)), array('type' => 'setting'));
     
     $form_state['storage']['cart'] = $cart;

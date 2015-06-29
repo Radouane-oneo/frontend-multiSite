@@ -68,11 +68,22 @@ class Factory {
     if ($vat) {
       Dal::Load($object, 'billing-account', array('vatNumber' => $vat), $cache);
     }
-  
-    return $object;
+
   }
-  
-  
+
+
+    public static function BillingAccountVat(BillingAccount $object, $customer, $cart,  $cache=FALSE) {
+        $vat = $object->Get('id');
+        if ($vat) {
+            Dal::Load($object, 'billing-account', array(
+                'id' => $vat,
+                'customer' => $customer,
+                'cart' => $cart,
+                'vatNumber' => '',
+            ), $cache);
+        }
+return $object;
+    }
    public static function Save(\printconnect\Object $object) {
     $id = $object->Get('id');
     $cart = \printconnect\Carts\Factory::Current();

@@ -133,7 +133,6 @@ function PriceCallback() {
           var vat = Drupal.settings.pccart.VatCart;
 	}catch(e){
 	}
-
 	vat = parseFloat(vat);
 	vatprice = totalprice * vat ;
 	jQuery("#pccart-cart-form .vat .value").html(buildPriceHtml(vatprice, false));

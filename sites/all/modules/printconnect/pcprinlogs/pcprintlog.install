@@ -1,0 +1,65 @@
+<?php
+
+function pcprintlog_schema() {
+    $schema['print_logs'] = array(
+        'description' => 'TODO: please describe this table!',
+        'fields' => array(
+            'log_id' => array(
+                'type' => 'serial',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+            ),
+
+            'log_cid' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+            ),
+
+            'log_orderid' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+            ),
+
+            'log_type' => array(
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+                'default' => ''
+            ),
+
+            'log_message' => array(
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+                'default' => ''
+            ),
+
+            'log_variables' => array(
+                'type' => 'blob',
+                'not null' => TRUE,
+            ),
+
+            'log_hostname' => array(
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+                'default' => ''
+            ),
+
+            'log_time' => array(
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+                'default' => ''
+            ),
+        ),
+
+        'primary key' => array('log_id'),
+    );
+
+    return $schema;
+}

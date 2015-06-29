@@ -1308,9 +1308,21 @@ function pccheckout_payment_form($form, &$form_state) {
     _pccustomers_ensureloggedin();
     $customer = \printconnect\Customers\Factory::Current();
     $cart = \printconnect\Carts\Factory::Current(TRUE);
+
+
+    try{
+        $Billingaddresses = \printconnect\Customers\BillingAccounts\Factory::Get($cart->billingAccount);
+        $BillingAccountVat = \printconnect\Customers\BillingAccounts\Factory::BillingAccountVat($Billingaddresses, $customer->id , $cart->id);
+
+    }catch (\printconnect\Rest\Exceptions\Exception $ex) {
+
+    }
+
+
     $jobs = array_values($cart->orderItems);
-    $job = $jobs[0];
-    $VatCart = $job->vat;
+//    $job = $jobs[0];
+//    $VatCart =  $BillingAccountVat->vat ? $BillingAccountVat->vat : $job->vat;
+    $VatCart =  $BillingAccountVat->vat ;
     drupal_add_js(array('pccheckout' => array('VatCart' => $VatCart)), array('type' => 'setting'));
 
     if(!isset($cart->billingAccount) or empty($cart->billingAccount)){

@@ -31,7 +31,7 @@ use printconnect\Dal\ForbiddenException;
 
     public function Get($entity, $params, $language = FALSE) {
       $url = $this->GetUrl($entity, $params, FALSE, $language);
-  
+
             if(variable_get('pc_env', 'production') == 'production') {
                 $json = $this->fromCache($url);
 		if ($entity == 'pickuppointdetail/service/store') {

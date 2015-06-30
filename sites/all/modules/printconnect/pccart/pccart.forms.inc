@@ -492,7 +492,7 @@ function pccart_cart_form2($form, &$form_state) {
                         '#markup' => '<h2 class="title-chose">' . t('choisissez une optios de mise-en-page') . '</h2>',
                     );
 
-
+                    if($item->hasProUpload){
                     $form['cart']['items'][$item->id]['ready']['product-container']['proflink'] = array(
                         '#prefix' => '<div class="poll-form first">',
                         '#suffix' => '<p class="txto">' . t('télécharger vos fichiers') . '</p></div> ',
@@ -510,31 +510,59 @@ function pccart_cart_form2($form, &$form_state) {
                         '#attributes' => array('class' => array('designtool', 'iframe')),
                     );
 
-                    $form['cart']['items'][$item->id]['ready']['product-container']['upload']['link'] = array(
-                        '#prefix' => '<div class="poll-form ">',
-                        '#suffix' => '<p class="txto">' . t('utilisez le designtool') . '</p></div> ',
-                        '#theme' => 'designtoollink',
-                        '#content' => array('#markup' => '<div class="text">' . t('je crée en ligne') . '</div>',),
-                        '#templateId' => $template->id,
-                        '#title' => $product->name . ' ' . $firstConfig->name,
-                        '#html' => true,
-                        '#oi' => array(
-                            'priceGroupId' => $item->productPriceGroupId,
-                            'quantity' => $item->quantity,
-                            'options' => $optionsDt,
-                            'hasModel' => ($ProdactHasTemplates) ? 1 : 0
-                        ),
-                        '#params' => array(
-                            'id' => $item->id,
-                            'cartid' => $cart->id,
-                            'shop_apikey' => variable_get('pc_apikey'),
-                            'hasModel' => ($ProdactHasTemplates) ? 1 : 0
-                        ),
-                        '#callback' => 'cart/callback/',
-                        '#versioning' => TRUE,
-                        '#attributes' => array('class' => array('upload', 'designtool', 'iframe')),
-                    );
-                    if ($ProdactHasTemplates) {
+                        $form['cart']['items'][$item->id]['ready']['product-container']['upload']['link'] = array(
+                            '#prefix' => '<div class="poll-form ">',
+                            '#suffix' => '<p class="txto">' . t('utilisez le designtool') . '</p></div> ',
+                            '#theme' => 'designtoollink',
+                            '#content' => array('#markup' => '<div class="text">' . t('je crée en ligne') . '</div>',),
+                            '#templateId' => $template->id,
+                            '#title' => $product->name . ' ' . $firstConfig->name,
+                            '#html' => true,
+                            '#oi' => array(
+                                'priceGroupId' => $item->productPriceGroupId,
+                                'quantity' => $item->quantity,
+                                'options' => $optionsDt,
+                                'hasModel' => ($ProdactHasTemplates) ? 1 : 0
+                            ),
+                            '#params' => array(
+                                'id' => $item->id,
+                                'cartid' => $cart->id,
+                                'shop_apikey' => variable_get('pc_apikey'),
+                                'hasModel' => ($ProdactHasTemplates) ? 1 : 0
+                            ),
+                            '#callback' => 'cart/callback/',
+                            '#versioning' => TRUE,
+                            '#attributes' => array('class' => array('upload', 'designtool', 'iframe')),
+                        );
+
+
+                    }else {
+                        $form['cart']['items'][$item->id]['ready']['product-container']['upload']['link'] = array(
+                            '#prefix' => '<div class="poll-form "style=" margin-left: 202px; " >',
+                            '#suffix' => '<p class="txto">' . t('utilisez le designtool') . '</p></div> ',
+                            '#theme' => 'designtoollink',
+                            '#content' => array('#markup' => '<div class="text">' . t('je crée en ligne') . '</div>',),
+                            '#templateId' => $template->id,
+                            '#title' => $product->name . ' ' . $firstConfig->name,
+                            '#html' => true,
+                            '#oi' => array(
+                                'priceGroupId' => $item->productPriceGroupId,
+                                'quantity' => $item->quantity,
+                                'options' => $optionsDt,
+                                'hasModel' => ($ProdactHasTemplates) ? 1 : 0
+                            ),
+                            '#params' => array(
+                                'id' => $item->id,
+                                'cartid' => $cart->id,
+                                'shop_apikey' => variable_get('pc_apikey'),
+                                'hasModel' => ($ProdactHasTemplates) ? 1 : 0
+                            ),
+                            '#callback' => 'cart/callback/',
+                            '#versioning' => TRUE,
+                            '#attributes' => array('class' => array('upload', 'designtool', 'iframe')),
+                        );
+                    }
+                if ($ProdactHasTemplates) {
                         $form['cart']['items'][$item->id]['ready']['product-container']['modele'] = array(
                             '#prefix' => '<div class="poll-form">',
                             '#suffix' => '<p class="txto">' . t('choisissez parmis 6000 créas') . '</p></div>',
@@ -559,10 +587,11 @@ function pccart_cart_form2($form, &$form_state) {
                             '#versioning' => TRUE,
                             '#attributes' => array('class' => array('upload', 'designtool', 'iframe')),
                         );
-                    }
+                 }
 
                     $checkableItems[] = $item->id;
             }
+
             if (null == $offerId) {
                 $form['cart']['items'][$item->id]['files']['description']['actions'] = array(
                     '#type' => 'container',

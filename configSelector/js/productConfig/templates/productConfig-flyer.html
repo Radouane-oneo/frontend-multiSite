@@ -91,17 +91,17 @@
             i = i+ 1;
             var checked = (price['quantity']==model.quantity && !customQuantity)?"checked='checked'":"";
             %>
-            <tr class="<%= (i%2==0)?'even':'odd' %>">
+            <tr class="<%= (i%2==0)?'even':'odd' %> <%= (!price['crossedPrice'] && price['promoPrice'])? 'superdeal':'' %>">
                 <td class="first-child">
                     <div class="form-item form-type-radio form-item-quantity">
                         <input type="radio" value="<%= price['quantity'] %>" name="quantity"
                                id="edit-quantity-<%= price['quantity'] %>" class="grid clearfix form-radio" <%= checked %>>
                     </div>
                 </td>
-                <td><%= price['quantity'] %> ex.</td>
+                <td><%= price['quantity'] %> ex. <% if(!price['crossedPrice'] && price['promoPrice']) print('<span class="messagedeal">'+config.labels['superDeal']+'</span>&nbsp;') %> </td>
                 <td><%
-                    if(price['promoPrice']) {
-                        print(priceTpl({price:Math.round(price['sellPrice']*100)/100,classToAdd:'old'}));
+                    if(price['crossedPrice'] && price['promoPrice']) {
+                    print(priceTpl({price:Math.round(price['sellPrice']*100)/100,classToAdd:'old'}));
                     }
                 %></td>
                 <td><%
@@ -129,16 +129,16 @@
                     <div class="form-item form-type-textfield form-item-custom form-item-calcul-qte">
                         <label for="edit-custom"><%= config.labels["enterQuantity"] %></label>
                         <div class="wrap-input-calcul">
-                        <input type="text" class="form-text" maxlength="128" size="60" value="<%= (customQuantity)?model.quantity:'' %>" name="custom" id="edit-custom"> 
+                        <input type="text" class="form-text" maxlength="128" size="60" value="<%= (customQuantity)?model.quantity:'' %>" name="custom" id="edit-custom">
                         <input type="submit" value="<%= config.labels['calculate'] %>" name="op" id="edit-calculer" class="ajax-calculate form-submit ui-button ui-widget ui-state-default ui-corner-all btn-calcul" role="button">
                         </div>
                     </div>
-                </td> 
+                </td>
             </tr>
             </tbody>
         </table>
         </div>
-         
+
         <!-- End pricesTable -->
 
         <!-- addToCart -->

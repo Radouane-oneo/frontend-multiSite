@@ -1,6 +1,7 @@
 <?php
 
 function printconnect_init() {
+
   global $language;
   global $conf;
   global $browscap;

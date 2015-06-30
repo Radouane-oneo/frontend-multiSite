@@ -159,10 +159,10 @@ use printconnect\Dal\ForbiddenException;
       $response = drupal_http_request($url, array('header' => $header, 'method' => 'GET', 'timeout' => $this->timeout));
       $end = microtime(true);
         try{
-            if((int) $response->code !=200 ){
-                pcprintlog_HandelError( $_SESSION['customerid'], $_SESSION['cartid'], 'pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'GET', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), $url );
+        if((int) $response->code !=200 ){
+            pcprintlog_HandelError( $_SESSION['customerid'], $_SESSION['cartid'], 'pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'GET', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), $url );
 
-            }
+        }
         }catch (\printconnect\Rest\Exceptions\Exception $ex) {
         }
       watchdog('pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'GET', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), WATCHDOG_DEBUG, ($end - $start) . ' on GET ' . $url);
@@ -203,13 +203,12 @@ use printconnect\Dal\ForbiddenException;
       watchdog('pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'PUT', '%url' => $url, '%timing' => ($end - $start), '%data' => $data, '%response' => print_r($response, TRUE)), WATCHDOG_DEBUG, ($end - $start) . ' on PUT ' . $url);
       if ($response->code == 200) {
         $data = json_decode($response->data);
-
-          try{
-           pcprintlog_HandelError( $_SESSION['customerid'], $_SESSION['cartid'], 'pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'GET', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), $url );
-          }catch (\printconnect\Rest\Exceptions\Exception $ex) {
-          }
         return $data;
       } else {
+          try{
+              pcprintlog_HandelError( $_SESSION['customerid'], $_SESSION['cartid'], 'pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'GET', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), $url );
+          }catch (\printconnect\Rest\Exceptions\Exception $ex) {
+          }
         throw new Exception('PUT ' . $url, $data, $this->ReadErrorInformation($response));
       }
     }
@@ -230,12 +229,13 @@ use printconnect\Dal\ForbiddenException;
       watchdog('pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'POST', '%url' => $url, '%timing' => ($end - $start), '%data' => $data, '%response' => print_r($response, TRUE)), WATCHDOG_DEBUG, ($end - $start) . ' on POST ' . $url);
       if ($response->code == 200) {
         $data = json_decode($response->data);
+
+        return $data;
+      } else {
           try{
               pcprintlog_HandelError( $_SESSION['customerid'], $_SESSION['cartid'], 'pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'GET', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), $url );
           }catch (\printconnect\Rest\Exceptions\Exception $ex) {
           }
-        return $data;
-      } else {
         throw new Exception('POST ' . $url, $data, $this->ReadErrorInformation($response));
       }
 //     if($entity == "order-discount-code"){
@@ -251,13 +251,13 @@ use printconnect\Dal\ForbiddenException;
       $end = microtime(true);
       watchdog('pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'DELETE', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), WATCHDOG_DEBUG, ($end - $start) . ' on DELETE ' . $url);
       if ($response->code == 200) {
+        $data = json_decode($response->data);
+        return $data;
+      } else {
           try{
               pcprintlog_HandelError( $_SESSION['customerid'], $_SESSION['cartid'], 'pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'GET', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), $url );
           }catch (\printconnect\Rest\Exceptions\Exception $ex) {
           }
-        $data = json_decode($response->data);
-        return $data;
-      } else {
         throw new Exception('DELETE ' . $url, null, $this->ReadErrorInformation($response));
       }
     }

@@ -10743,3 +10743,21 @@ a.cart.button{
 	overflow: visible !important;
 	margin-top: 0 !important;
 }
+
+.superdeal{
+	background-color: #15B7D3 !important;
+}
+
+.superdeal * {
+	color: #fff; !important;
+}
+.superdeal:hover *{
+	color: #15B7D3; !important;
+	background-color: #fff !important;
+}
+.messagedeal{
+	float: right;
+	color: white;
+	margin-right: 16px;
+}
+}

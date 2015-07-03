@@ -168,7 +168,13 @@
                 </div>
                 <div id="edit-templates-desciption" class="description form-wrapper">
                     <div id="edit-templates-desciption-name" class="name form-wrapper">
-                        <%= config.labels['size'] %> : <%= model.toolBoxGroup.template.size %>
+                        <%= config.labels['formatToProvide'] %> : <%
+                            var size =  model.toolBoxGroup.template.size.match(/\d+/g);
+                            var bleed =  model.toolBoxGroup.template.bleed.match(/\d+/g);
+                            var v1 = parseInt(bleed[0]) * 2 + parseInt(size[0]) ;
+                            var v2 = parseInt(bleed[0]) * 2 + parseInt(size[1]) ;
+                            print( v1 +" x "+v2 +" mm");
+                        %>
                     </div>
                     <div class="form-item form-type-item" id="edit-templates-desciption-size">
                         <label for="edit-templates-desciption-size"><%= config.labels['size'] %> : </label>

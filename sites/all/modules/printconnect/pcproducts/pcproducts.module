@@ -80,8 +80,8 @@ function pcproducts_menu() {
   if (function_exists('printconnect_ensureinitialized')) {
     printconnect_ensureinitialized();
     //$products = Factory::GetAll();
-    $flow = variable_get('pc_flow', 'whitelabel');  
-    
+    $flow = variable_get('pc_flow', 'whitelabel');
+
     $items['products'] = array(
         'title' => 'Products',
         'description' => t('Product catalog'),
@@ -92,7 +92,7 @@ function pcproducts_menu() {
         'menu_name' => 'main-menu',
         'options' => array('attributes' => array('class' => array('products'))),
     );
-      
+
         //foreach ($products as $product) {
           $items["getshippingdate"] = array(
               'title' => 'Configuration',
@@ -113,7 +113,7 @@ function pcproducts_menu() {
               'page arguments' => array(1,2),
               'access arguments' => array('access content')
           );
-          
+
           $items["products/%"] = array(
               'title' => 'Configuration',
               'title callback' => '_pcproducts_getproductname',
@@ -311,19 +311,19 @@ function pcproducts_block_view($delta = '') {
         usort($products, function ($a, $b) {
             return strcmp($a->name, $b->name);
         });
-        
+
         $i=0;
         $data = null;
         $total = count($products);
-        foreach ($products as $product) {                      
-            if( ($i % intval($total/3))  == 0 && $i <> 0 && $i <> $total-1 ) $data .= '</ul><ul class="menu">';  
+        foreach ($products as $product) {
+            if( ($i % intval($total/3))  == 0 && $i <> 0 && $i <> $total-1 ) $data .= '</ul><ul class="menu">';
             $data .= '<li>'.l($product->name, 'products/' . $product->id).'</li>';
             $i++;
         }
         $block['content']['products']['list'] = array('#markup' => '<div class="item-list"><ul class="menu">'.$data.'</ul></div>' );
        // $block['content']['products']['list'] = array('#markup' => theme('item_list', array('items' => $items, 'attributes' => array('class' => array('menu')))));
         return $block;
-        
+
       break;
     case 'top':
       $products = Factory::GetTop();
@@ -613,7 +613,7 @@ function callback_getjson_ajax($action, $productId) {
         $jsonFile = getFromServer($filename);
     }else {
         $jsonFile = file_get_contents($filePath);
-    }	
+    }
 
     echo $jsonFile;exit(0);
 }
@@ -624,7 +624,7 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
     global $user;
     //ini_set('memory_limit', '5000M');
     //ini_set('max_execution_time', '50000');
-    
+
     $items = ($items == '') ? array() : explode(',', $items);
     $options = ($options == '') ? array() : explode(',', $options);
 
@@ -686,6 +686,10 @@ function getLabels($edit = false) {
         "directLink" => t('Direct link'),
         "downloadText" => t('Download all design document'),
         "superDeal"=> t('TOP AFFAIRE'),
+        "formatToProvide" => t('Format à fourni'),
+        "Format" => t('Format'),
+        "rawFormat" => t('brut'),
+        "finishedFormat" => t('size'),
     );
 
     for($i=0; $i <= 114; $i++) {
@@ -895,7 +899,7 @@ function pcproducts_calculator_form($form, &$form_state) {
 
     foreach ($products as $product) {
       $items[$product->id] = $product->name;
-    } 
+    }
 
   $form['about'] = array(
       '#type' => 'item',
@@ -1128,7 +1132,7 @@ function pcproducts_pcmenumain() {
   $products = Factory::GetTop();
   $i = 0;
   $top = variable_get('pcproducts_top', 3);
-  
+
   foreach ($products as $product) {
     $i++;
     $class = array();
@@ -1141,7 +1145,7 @@ function pcproducts_pcmenumain() {
       break;
     }
   }
-    
+
   $menuItems['product'] = array(
       '#title' => t('Products'),
       '#link' => 'products',
@@ -1159,7 +1163,7 @@ function pcproducts_pcmenumain() {
           ),
       ),
   );
-  
+
     $content[0] = $alphaArray;
     foreach ($content[0] as $letter => $products) {
     $menuItems['product']['#dropdown']['products']['second'][$letter] = array(

@@ -176,10 +176,17 @@
                             print( v1 +" x "+v2 +" mm");
                         %>
                     </div>
+
+                    <div class="form-item form-type-item" id="edit-templates-desciption-brut">
+                        <label for="edit-templates-desciption-brut"><%= config.labels['Format'] %> <%= config.labels['rawFormat'] %> : </label>
+                        <% print( v1 +" x "+v2 +" mm"); %>
+                    </div>
+
                     <div class="form-item form-type-item" id="edit-templates-desciption-size">
-                        <label for="edit-templates-desciption-size"><%= config.labels['size'] %> : </label>
+                        <label for="edit-templates-desciption-size"><%= config.labels['Format'] %> <%= config.labels['finishedFormat'] %> : </label>
                         <%= model.toolBoxGroup.template.size %>
                     </div>
+
                     <div class="form-item form-type-item" id="edit-templates-desciption-bleed">
                         <label for="edit-templates-desciption-bleed"><%= config.labels['bleed'] %> : </label>
                         <%= model.toolBoxGroup.template.bleed %>

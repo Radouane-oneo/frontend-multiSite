@@ -687,6 +687,9 @@ function getLabels($edit = false) {
         "downloadText" => t('Download all design document'),
         "superDeal"=> t('TOP AFFAIRE'),
         "formatToProvide" => t('Format à fourni'),
+        "Format" => t('Format'),
+        "rawFormat" => t('brut'),
+        "finishedFormat" => t('size'),
     );
 
     for($i=0; $i <= 114; $i++) {

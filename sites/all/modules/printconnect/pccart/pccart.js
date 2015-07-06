@@ -131,6 +131,7 @@ function PriceCallback() {
 
 	try{
 	var vat = Drupal.settings.pccart.VatCart;
+		console.log(vat);
 		if(isNaN(vat) || vat == null ){
 			vat = 0.21;
 		}
@@ -138,7 +139,7 @@ function PriceCallback() {
 		vat = 0.21;
 	}
 
-	
+
 	vatprice = totalprice * vat ;
 	jQuery("#pccart-cart-form .vat .value").html(buildPriceHtml(vatprice, false));
 	total = vatprice + totalprice;

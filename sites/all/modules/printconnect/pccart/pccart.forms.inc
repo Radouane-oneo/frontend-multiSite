@@ -58,11 +58,14 @@ function pccart_cart_form2($form, &$form_state) {
         }catch (\printconnect\Rest\Exceptions\Exception $ex) {
         }
         $VatCart = $BillingAccountVat->vat;
+
+   if(is_null($VatCart)){
+            $VatCart = 0.21;
+            }
     }else{
         $VatCart = 0.21;
     }
 
-    $VatCart = $BillingAccountVat->vat;
     drupal_add_js(array('pccart' => array('VatCart' => $VatCart)), array('type' => 'setting'));
     
     $form_state['storage']['cart'] = $cart;

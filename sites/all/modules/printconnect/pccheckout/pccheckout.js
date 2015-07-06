@@ -233,7 +233,7 @@ Drupal.behaviors.pccheckout = {
                         vat = parseFloat(vat);
                     }catch(e){
                     }
-                    if(isNaN(vat)){
+                    if(isNaN(vat) || vat == null ){
                         vat = 0.21;
                     }
 

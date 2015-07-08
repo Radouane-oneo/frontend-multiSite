@@ -1333,6 +1333,7 @@ function pccheckout_payment_form($form, &$form_state) {
         }catch (\printconnect\Rest\Exceptions\Exception $ex) {
             $VatCart = 0.21;
         }
+
         $VatCart = $BillingAccountVat->vat;
         if(is_null($VatCart)){
             $VatCart = 0.21;
@@ -1340,6 +1341,7 @@ function pccheckout_payment_form($form, &$form_state) {
     }else{
         $VatCart = 0.21;
     }
+
     drupal_add_js(array('pccheckout' => array('VatCart' => $VatCart)), array('type' => 'setting'));
 
     if(!isset($cart->billingAccount) or empty($cart->billingAccount)){
@@ -1406,12 +1408,19 @@ function pccheckout_payment_form($form, &$form_state) {
         '#attributes' => array('class' => array('actions')),
         '#weight' => 200,
     );
+    
+    if($VatCart == 0.21){
+        $Amount = $cart->totalAmount;
+    }
+    else{
+        $Amount = $cart->subTotalAmount;
+    }
 
     $form['actions']['price'] = array(
         '#id' => 'price',
-        '#title' => t('Total excl. Vat'),
+        '#title' => t('Total TTC'),
         '#theme' => 'price',
-        '#value' => $cart->totalAmount,
+        '#value' => $Amount,
         '#attributes' => array('id' => 'price'),
     );
 

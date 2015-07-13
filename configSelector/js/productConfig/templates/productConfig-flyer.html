@@ -60,13 +60,15 @@
             <% _.each(model.toolBoxGroup.options, function(option, i){
             var checked = ($.inArray(option.id, model.options)!=-1)?"checked='checked'":"";
             %>
-            <div class="form-item form-type-checkbox">
-                <input type="checkbox" value="<%= option.id %>" name="options[<%= option.id %>]" id="edit-options-<%= option.id %>"
-                       class="clearfix form-checkbox" <%= checked %>> <label for="edit-options-<%= option.id %>"
-                                                                             class="option"><%= option.name %> ( +
-                <%= priceTpl({price:priceOption(option)}) %>) </label>
+                <% if(option.active){ %>
+                    <div class="form-item form-type-checkbox">
+                        <input type="checkbox" value="<%= option.id %>" name="options[<%= option.id %>]" id="edit-options-<%= option.id %>"
+                               class="clearfix form-checkbox" <%= checked %>> <label for="edit-options-<%= option.id %>"
+                                                                                     class="option"><%= option.name %> ( +
+                        <%= priceTpl({price:priceOption(option)}) %>) </label>
 
-            </div>
+                    </div>
+                <% } %>
             <% }); %>
         </div>
         <% } %>

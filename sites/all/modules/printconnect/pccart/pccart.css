@@ -675,6 +675,7 @@ table.targetPrice tbody tr.last-child td { border:none; }
   width: 50%;
 }
 .technic-details-container .templates .description {
+  padding-top: 20px;
   min-height: 197px;
   float: right;
   width: 48%;
@@ -825,3 +826,50 @@ div#edit-linkcart a {
   border-right: none !important;
 }
 
+#edit-templates-linktodownload {
+  margin-left: 10px;
+  float: left;
+}
+
+#edit-templates-linktodownload a {
+  display: block;
+  padding: 10px 15px;
+  border: 1px solid #dadada;
+  background-color: white;
+  font-size: 13px;
+  color: #666666;
+  font-weight: 600;
+}
+
+#pccart-cart-form #templates .form-item.form-type-item label {
+  display: inline;
+  width: inherit;
+  margin-right: 5px;
+  font-weight: 400;
+  font-size: 12px;
+  background-position: left;
+  background-repeat: no-repeat;
+  padding-left: 10px;
+  width: 30%;
+  background: url("images/calc_dot.png") no-repeat left;
+}
+
+#pccart-cart-form #templates .form-item.form-type-item {
+  background: none;
+  float: left;
+  width: 100%;
+  cursor: default;
+  padding: 0;
+  font-size: 12px;
+  border: 0;
+}
+
+#pccart-cart-form .description .name {
+  margin-bottom: 15px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#edit-templates-text {
+  padding: 5px 0 30px;
+}

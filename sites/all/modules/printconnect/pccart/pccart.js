@@ -108,7 +108,8 @@
 			/* ----- technic-details -----*/
 			$('.technic-details').click(function(e){
 				e.preventDefault();
-				var iframe = '<iframe id="iframed-content" src="'+$(this).parents('.real-order-item').find('.wrapimageedit a').attr('href')+'"></iframe>';
+				var	prod_url = $(this).attr('data-link'),
+					iframe = '<iframe id="iframed-content" src="'+prod_url+'"></iframe>';
 				$(iframe).appendTo('body').load(function(){
 					var myframe=this;
 					var timer = setInterval(function(){

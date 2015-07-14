@@ -116,6 +116,7 @@
 						if($(myframe).contents().find('#templates').length>0) {
 							clearInterval(timer);
 							$('.technic-details-container').show('fade',function(){
+								$('.technic-details-container').css('left',(( $(window).width() - 682 ) / 2)+"px");
 								$(this).append($(myframe).contents().find('#templates'));
 								$('.close-tdc').appendTo('.technic-details-container #templates legend');
 							})

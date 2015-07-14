@@ -554,7 +554,7 @@ function pccart_cart_form2($form, &$form_state) {
                                                         <li>'. t('Respectez les <a href="#" class="technic-details model-form" data-id="'. $item->id .'" data-link="/products/'.$product->id.'">détails techniques</a> ou <a href="/node/102" id="predef-params" class="model-form">paramètres prédéfinis</a>') .'</li>
                                                         <li>'. t('Contrôle du fichier optionnel (€ 4,99 hors TVA)') .'</li>
                                                     </ul>',
-                            '#suffix' => '</div> ',
+                             '#suffix' => '</div> ',
                             '#content'=> array('#markup' => '<span class="buttonlayout btnupfile"><span class="txtgras">'.t("COMMENCER").'</span>',),
                             '#theme' => 'designtoollink',
                             '#templateId' => $template->id,

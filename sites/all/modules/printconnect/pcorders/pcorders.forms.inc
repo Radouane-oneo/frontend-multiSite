@@ -1,7 +1,6 @@
 <?php
 
 function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALSE) {
- _pccustomers_ensureloggedin();
 \printconnect\Carts\Factory::Clear();
 $order = \printconnect\Orders\Factory::Get($orderId, false);
 $customer = \printconnect\Customers\Factory::Get($order->customer);

@@ -145,6 +145,13 @@ function pcpayments_request_form($form, &$form_state, $key) {
 function pcpayments_request_form_submit($form, &$form_state) {
   $paymentgateway = variable_get('pc_paymentgateway', 'pcogone');
   $paymentgateway = 'pcpayments';
+   $paymentMethod = \printconnect\PaymentMethods\Factory::Get($form_state['values']['method']);
+  \printconnect\PaymentMethods\Factory::LoadPaymentMethod($paymentMethod);
+
+  if ($paymentMethod->paymentMethod->internalName == 'transfer' || $paymentMethod->paymentMethod->internalName == 'cheque') {
+    $request = $form_state['storage']['request'];
+    drupal_goto('myprintconnect/orders/' . $request->order . '/confirmation');
+  }
   // $requestInfo = \printconnect\Payments\Requests\Info\Factory::CreatePaymentRequest($request->id, $paymentMethodId);
   if (function_exists(($paymentgateway . '_processpayment'))) {
     $request = $form_state['storage']['request'];

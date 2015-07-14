@@ -1312,19 +1312,18 @@ function pccheckout_payment_form($form, &$form_state) {
     if (isset($_SESSION['customerid'])) {
         try{
             $Billingaddresses = \printconnect\Customers\BillingAccounts\Factory::Get($cart->billingAccount);
-            $BillingAccountVat = \printconnect\Customers\BillingAccounts\Factory::BillingAccountVat($Billingaddresses, $_SESSION['customerid'] , $cart->id);
+	    $Billingaddresses->cart = $cart->id;
+	    \printconnect\Customers\BillingAccounts\Factory::LoadBillingAccount($Billingaddresses);
         }catch (\printconnect\Rest\Exceptions\Exception $ex) {
             $VatCart = 0.21;
         }
-
-        $VatCart = $BillingAccountVat->vat;
+        $VatCart = $Billingaddresses->vat;
         if(is_null($VatCart)){
             $VatCart = 0.21;
         }
     }else{
         $VatCart = 0.21;
     }
-
     drupal_add_js(array('pccheckout' => array('VatCart' => $VatCart)), array('type' => 'setting'));
 
     if(!isset($cart->billingAccount) or empty($cart->billingAccount)){

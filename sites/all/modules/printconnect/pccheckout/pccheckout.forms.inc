@@ -1309,20 +1309,22 @@ function pccheckout_payment_form($form, &$form_state) {
     $customer = \printconnect\Customers\Factory::Current();
     $cart = \printconnect\Carts\Factory::Current(TRUE);
 
+    if (isset($_SESSION['customerid'])) {
+        try{
+            $Billingaddresses = \printconnect\Customers\BillingAccounts\Factory::Get($cart->billingAccount);
+            $BillingAccountVat = \printconnect\Customers\BillingAccounts\Factory::BillingAccountVat($Billingaddresses, $_SESSION['customerid'] , $cart->id);
+        }catch (\printconnect\Rest\Exceptions\Exception $ex) {
+            $VatCart = 0.21;
+        }
 
-    try{
-        $Billingaddresses = \printconnect\Customers\BillingAccounts\Factory::Get($cart->billingAccount);
-        $BillingAccountVat = \printconnect\Customers\BillingAccounts\Factory::BillingAccountVat($Billingaddresses, $customer->id , $cart->id);
-
-    }catch (\printconnect\Rest\Exceptions\Exception $ex) {
-
+        $VatCart = $BillingAccountVat->vat;
+        if(is_null($VatCart)){
+            $VatCart = 0.21;
+        }
+    }else{
+        $VatCart = 0.21;
     }
 
-
-    $jobs = array_values($cart->orderItems);
-//    $job = $jobs[0];
-//    $VatCart =  $BillingAccountVat->vat ? $BillingAccountVat->vat : $job->vat;
-    $VatCart =  $BillingAccountVat->vat ;
     drupal_add_js(array('pccheckout' => array('VatCart' => $VatCart)), array('type' => 'setting'));
 
     if(!isset($cart->billingAccount) or empty($cart->billingAccount)){
@@ -1389,12 +1391,19 @@ function pccheckout_payment_form($form, &$form_state) {
         '#attributes' => array('class' => array('actions')),
         '#weight' => 200,
     );
+    
+    if($VatCart == 0.21){
+        $Amount = $cart->totalAmount;
+    }
+    else{
+        $Amount = $cart->subTotalAmount;
+    }
 
     $form['actions']['price'] = array(
         '#id' => 'price',
-        '#title' => t('Total excl. Vat'),
+        '#title' => t('Total TTC'),
         '#theme' => 'price',
-        '#value' => $cart->totalAmount,
+        '#value' => $Amount,
         '#attributes' => array('id' => 'price'),
     );
 

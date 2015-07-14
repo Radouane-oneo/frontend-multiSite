@@ -105,6 +105,26 @@
 				$('.cartCounter span').html(baseText+ ' ('+number+')');
 				PriceCallback();
 			});
+			/* ----- technic-details -----*/
+			$('.technic-details').click(function(e){
+				e.preventDefault();
+				var iframe = '<iframe id="iframed-content" src="'+$(this).parents('.real-order-item').find('.wrapimageedit a').attr('href')+'"></iframe>';
+				$(iframe).appendTo('body').load(function(){
+					var myframe=this;
+					var timer = setInterval(function(){
+						if($(myframe).contents().find('#templates').length>0) {
+							clearInterval(timer);
+							$('.technic-details-container').show('fade',function(){
+								$(this).append($(myframe).contents().find('#templates'));
+								$('.close-tdc').appendTo('.technic-details-container #templates legend');
+							})
+						}
+					}, 100);
+				})
+			});
+			$('.close-tdc').live('click',function(){
+				$('.technic-details-container').hide('fade',function(){$('.technic-details-container').html('<i class="close-tdc"></i>');});
+			});
 		}
 	}
 })(jQuery);
@@ -126,11 +146,12 @@ function PriceCallback() {
 		}
 	});
 	map.forEach(function(Price) { totalprice += Price; });
-	
+
 	jQuery("#pccart-cart-form .subtotal .value").html(buildPriceHtml(totalprice, false));
 
 	try{
 	var vat = Drupal.settings.pccart.VatCart;
+		console.log(vat);
 		if(isNaN(vat) || vat == null ){
 			vat = 0.21;
 		}
@@ -138,7 +159,7 @@ function PriceCallback() {
 		vat = 0.21;
 	}
 
-	
+
 	vatprice = totalprice * vat ;
 	jQuery("#pccart-cart-form .vat .value").html(buildPriceHtml(vatprice, false));
 	total = vatprice + totalprice;
@@ -187,8 +208,8 @@ function applyDiscount(code, force){
 		dataType : 'json',
 		success: function (data) {
 			jQuery("#loading-ajax-tmp").remove();
-          if(typeof data.code != "undefined" && 
-                  force == 1 && 
+          if(typeof data.code != "undefined" &&
+                  force == 1 &&
                   jQuery("#discount-hidden-"+data.code.toLowerCase()).next()[0] &&
                   jQuery("#discount-hidden-"+data.code.toLowerCase()).next().hasClass('hidden-discount')) {
 				applyDiscount(jQuery("#discount-hidden-"+data.code.toLowerCase()).next().attr('discount-code'), 1);

@@ -1391,7 +1391,7 @@ function pccheckout_payment_form($form, &$form_state) {
         '#attributes' => array('class' => array('actions')),
         '#weight' => 200,
     );
-    
+
     if($VatCart == 0.21){
         $Amount = $cart->totalAmount;
     }

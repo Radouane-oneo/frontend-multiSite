@@ -1266,7 +1266,7 @@ function pccustomers_loginnew_form($form, &$form_state) {
 
 function pccustomers_login_form_login_validate(&$form, &$form_state) {
   global $language;
-
+    $form_state['values']['email'] =  trim($form_state['values']['email']);
 //  if (!(isset($form_state['values']['password']) || count($form_state['values']['password']) < 5)) {
 //    form_set_error('password', t('Password not long enough'));
 //  }
@@ -1294,7 +1294,7 @@ function pccustomers_login_form_login_validate(&$form, &$form_state) {
 
 function pccustomers_login_form_register_validate(&$form, &$form_state) {
   global $language;
-
+    $form_state['values']['emailnew'] =  trim($form_state['values']['emailnew']);
   if (!valid_email_address($form_state['values']['emailnew'])) {
     form_set_error('emailnew', t('Not a valid email address'));
     return;
@@ -1308,7 +1308,7 @@ function pccustomers_login_form_register_validate(&$form, &$form_state) {
     form_set_error('emailnew', t('This email address is already registered'));
     return FALSE;
   } else {
-    $form_state['values']['email']=$form_state['values']['emailnew'];
+    $form_state['values']['email'] = $form_state['values']['emailnew'];
     $customer = Factory::Create();
     Forms::LoadObject($form_state['values'], $customer);
     $customer->password = $form_state['values']['newpassword'];

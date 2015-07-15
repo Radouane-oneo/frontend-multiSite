@@ -1,17 +1,17 @@
 <?php
 	$Products = array(
 		'1' 	=> array(		'title'	=> t('Flyers'),
-							'price'	=> '14,83',
-							'pack'	=> t('for @qty pcs.', array( '@qty' => '10')),	),
+							'price'	=> '15,58',
+							'pack'	=> t('for @qty pcs.', array( '@qty' => '10')),
+							'image'=> 'https://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/products/1.png',		),
 		'4'	=> array(		'title'	=> t('Posters'),
 							'price'	=> '15,00',
-							'pack'	=> t('for @qty pcs.', array( '@qty' => '1')),	),
+							'pack'	=> t('for @qty pcs.', array( '@qty' => '1')),
+							'image'=> 'https://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/products/4.png',		),
 		'8' 	=> array(		'title'	=> t('Business cards'),
-							'price'	=> '13,00',
-							'pack'	=> t('for @qty pcs.', array( '@qty' => '50')),	),
-		'6' 	=> array(		'title'	=> t('Folders'),
-							'price'	=> '41,00',
-							'pack'	=> t('for @qty pcs.', array( '@qty' => '10')),	),
+							'price'	=> '39,00',
+							'pack'	=> t('for @qty pcs.', array( '@qty' => '50')),
+							'image'=> 'https://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/products/8.png',		),
 	);
 
 	switch (arg(1)) {
@@ -32,7 +32,7 @@
 
 		<div class="item form-wrapper" id="edit-other-<?php print $id; ?>">
 			<div class="image form-wrapper" id="edit-other-<?php print $id; ?>-image">
-				<img typeof="foaf:Image" src="http://pc-images.s3-eu-west-1.amazonaws.com/images.printconcept.com/products/<?php print $id; ?>.png" alt="">
+				<img typeof="foaf:Image" src="<?php print $Products[$id]['image']; ?>" alt="">
 			</div>
 			<h3><?php print $Products[$id]['title'] ?></h3>
 			<span class="price" decimal_separator=",">

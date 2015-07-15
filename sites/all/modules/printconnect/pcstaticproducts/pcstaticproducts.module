@@ -1,5 +1,5 @@
 <?php
-
+	use printconnect\Carts\Factory;
 	/**
 	* Implements hook_block_info().
 	*/
@@ -19,14 +19,17 @@
 	* Implements hook_block_view().
 	*/
 	function pcstaticproducts_block_view($delta='') {
-		$block = array();
-		switch ($delta) {
-			case 'pc_static_products':
-				$block['subject'] = '';
-				$block['content'] = array( '#theme' => 'pcstaticproducts_block', );
-				break;
+		$cart = Factory::Current();
+		if (!$cart) {
+			$block = array();
+			switch ($delta) {
+				case 'pc_static_products':
+					$block['subject'] = '';
+					$block['content'] = array( '#theme' => 'pcstaticproducts_block', );
+					break;
+			}
+			return $block;
 		}
-		return $block;
 	}
 
 	/**

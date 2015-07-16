@@ -665,11 +665,6 @@ table.targetPrice tbody tr.last-child td { border:none; }
   width: 100%;
 }
 
-.options-file-impression li {
-  background: url(images/3.png) no-repeat left 6px;
-  padding-left: 16px!important;
-}
-
 .technic-details-container .templates .image {
   float: left;
   width: 50%;
@@ -764,6 +759,7 @@ table.targetPrice tbody tr.last-child td { border:none; }
   background: url(images/3.png) no-repeat left 6px;
   padding-left: 16px!important;
   text-align: left;
+  font-size: 11px;
 }
 
 .option-title {
@@ -789,7 +785,7 @@ table.targetPrice tbody tr.last-child td { border:none; }
   line-height: inherit;
   text-align: left;
   height: auto;
-  font-size: 12px!important;
+  font-size: inherit!important;
   text-decoration: underline;
   font-weight: normal;
 }
@@ -802,6 +798,7 @@ table.targetPrice tbody tr.last-child td { border:none; }
 ul.options-file-impression {
   height: 145px;
   display: block;
+  width: 320px;
 }
 
 div#edit-linkcart a {
@@ -812,7 +809,7 @@ div#edit-linkcart a {
   text-align: center;
   display: inline-block;
   float: left;
-  padding: 9px;
+  padding-left: 10px;
   border-right: 1px solid #e6e6e6;
   border-left: 1px solid #f9f9f9;
   width: 300px;

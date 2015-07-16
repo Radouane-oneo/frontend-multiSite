@@ -123,55 +123,6 @@ function pccart_cart_form2($form, &$form_state) {
             '#type' => 'item',
             '#markup' => l(t('Click here to continue shopping'), 'products'),
         );
-
-        $form['products'] = array(
-            '#type' => 'fieldset',
-            '#title' => t('Top products'),
-            '#attributes' => array('class' => array('products')),
-        );
-
-        $products = \printconnect\Products\Factory::GetTop();
-
-        foreach ($products as $product) {
-            $build = array();
-            $build['image'] = array(
-                '#theme' => 'image',
-                '#path' => printconnect_getimage('products', $product->id),
-                '#weight' => 10,
-                '#prefix' => '<div class="blocprd"><a href="products/' . $product->id . '">',
-            );
-            $build['name'] = array(
-                '#markup' => $product->name,
-                '#prefix' => '<h2>',
-                '#suffix' => '</h2></a></div>',
-                '#weight' => 20,
-            );
-            $build['from'] = array(
-                '#type' => 'container',
-                '#attributes' => array('class' => array('from')),
-                '#weight' => 40,
-            );
-            $build['from']['text'] = array(
-                '#markup' => '<span class="txt">' . t('from_price') . '</span> ' . theme('price', array('value' => $product->sellPrice)),
-            );
-            $build['order'] = array(
-                '#prefix' => '<a class="order btn-cmd" href="products/' . $product->id . '"><span class="flesh"></span>',
-                '#suffix' => '</a>',
-                '#weight' => 50,
-            );
-            $build['order']['text'] = array(
-                '#markup' => t('Order now'),
-            );
-            $items[] = drupal_render($build);
-
-            if (count($items) >= 6) {
-                break;
-            }
-        }
-        $form['products']['list'] = array(
-            '#theme' => 'item_list',
-            '#items' => $items,
-        );
     } else {
         $form['cart'] = array(
             '#type' => 'container',
@@ -954,68 +905,12 @@ function pccart_cart_form2($form, &$form_state) {
     $form['#cache'] = FALSE;
     $form['#tree'] = TRUE;
     $form['#id'] = 'pccart-cart-form';
-   /* Start bloc TOP produits */
-
-    $form['products'] = array(
-        '#type' => 'fieldset',
-        '#title' => t('Top products'),
-        '#attributes' => array('class' => array('products')),
-    );
-
-    $items = array();
-    $products = \printconnect\Products\Factory::GetTop();
-    foreach ($products as $product) {
-        $build = array();
-        $build['image'] = array(
-            '#theme' => 'image',
-            '#path' => printconnect_getimage('products', $product->id),
-            '#attributes' => array('width' => '194', 'height' => '187'),
-            '#weight' => 10,
-            '#prefix' => '<div class="blocprd"><a href="products/' . $product->id . '">',
-        );
-        $build['name'] = array(
-            '#markup' => $product->name,
-            '#prefix' => '<h2>',
-            '#suffix' => '</h2></a></div>',
-            '#weight' => 20,
-        );
-
-        $build['from'] = array(
-            '#type' => 'container',
-            '#attributes' => array('class' => array('from')),
-            '#weight' => 40,
-        );
-        $build['from']['text'] = array(
-            '#markup' => '<span class="txt">' . t('from_price') . '</span> ' . theme('price', array('value' => $product->sellPrice)),
-        );
-        $build['order'] = array(
-            '#prefix' => '<a class="order btn-cmd" href="products/' . $product->id . '"><span class="flesh"></span>',
-            '#suffix' => '</a>',
-            '#weight' => 50,
-        );
-        $build['order']['text'] = array(
-            '#markup' => t('Order now'),
-        );
-        $items[] = drupal_render($build);
-
-        if (count($items) >= 6) {
-            break;
-        }
-    }
 
     $form['technic_details_container'] = array(
         '#markup' => '<span class="technic-details-container"><i class="close-tdc"></i></span>',
     );
 
-    $form['products']['list'] = array(
-        '#theme' => 'item_list',
-        '#items' => $items,
-    );
-    /* END bloc TOP produits */
-
     /* Control order have Designer */
-
-
     $submit = $form['actions']['checkout']['#submit'];
     array_unshift($submit, 'pcdesigner_form_submit', 'pcflyerstores_pccart_cart_form2_submit');
     $form['actions']['checkout']['#submit'] = $submit;

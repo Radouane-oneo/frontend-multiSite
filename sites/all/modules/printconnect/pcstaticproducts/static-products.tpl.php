@@ -1,16 +1,16 @@
 <?php
 	$Products = array(
-		'1' 	=> array(		'title'	=> t('Flyers'),
-							'price'	=> '15,58',
-							'pack'	=> t('for @qty pcs.', array( '@qty' => '10')),
+		'1' 	=> array(		'title'	=> t('Flyers / Tracts'),
+							'price'	=> '23,00',
+							'pack'	=> t('for @qty pcs.', array( '@qty' => '500')),
 							'image'=> 'https://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/products/1.png',		),
 		'4'	=> array(		'title'	=> t('Posters'),
-							'price'	=> '15,00',
-							'pack'	=> t('for @qty pcs.', array( '@qty' => '1')),
+							'price'	=> '55,00',
+							'pack'	=> t('for @qty pcs.', array( '@qty' => '50')),
 							'image'=> 'https://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/products/4.png',		),
 		'8' 	=> array(		'title'	=> t('Business cards'),
-							'price'	=> '39,00',
-							'pack'	=> t('for @qty pcs.', array( '@qty' => '50')),
+							'price'	=> '31,00',
+							'pack'	=> t('for @qty pcs.', array( '@qty' => '250')),
 							'image'=> 'https://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/products/8.png',		),
 	);
 
@@ -34,13 +34,13 @@
 			<div class="image form-wrapper" id="edit-other-<?php print $id; ?>-image">
 				<img typeof="foaf:Image" src="<?php print $Products[$id]['image']; ?>" alt="">
 			</div>
-			<h3><?php print $Products[$id]['title'] ?></h3>
+			<h3><?php print t($Products[$id]['title']) ?></h3>
 			<span class="price" decimal_separator=",">
 				<span class="currency">€</span>
 				<span class="value"><?php print $Products[$id]['price'] ?></span>
 			</span> <?php print $Products[$id]['pack'] ?>
 			<div class="a-icon form-wrapper" id="edit-other-<?php print $id; ?>-link">
-				<?php print l($Products[$id]['title'] . ' ' .  t('Ordering'), 'products/'.$id, array('language' => $lang)) ; ?>
+				<?php print l(t($Products[$id]['title']) . ' ' .  t('Ordering'), 'products/'.$id, array('language' => $lang)) ; ?>
 			</div>
 		</div>
 

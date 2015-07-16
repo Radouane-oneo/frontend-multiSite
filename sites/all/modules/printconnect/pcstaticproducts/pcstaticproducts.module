@@ -20,7 +20,7 @@
 	*/
 	function pcstaticproducts_block_view($delta='') {
 		$cart = Factory::Current();
-		if (!$cart||count($cart->orderItems)==0) {
+		// if (!$cart||count($cart->orderItems)==0) {
 			$block = array();
 			switch ($delta) {
 				case 'pc_static_products':
@@ -29,7 +29,7 @@
 					break;
 			}
 			return $block;
-		}
+		// }
 	}
 
 	/**

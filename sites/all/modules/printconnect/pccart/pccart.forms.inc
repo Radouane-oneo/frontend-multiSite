@@ -465,10 +465,10 @@ function pccart_cart_form2($form, &$form_state) {
                         $li_model = '';
                         $model_list_index=4;
                     }
+                    $form['cart']['items'][$item->id]['ready']['product-container']['product-items'] = array(
+                        '#markup' => '<div class="title-chose">' . t('Téléchargez votre fichier ou créez en ligne') . '</div>',
+                    );
                     if($item->hasProUpload){
-                        $form['cart']['items'][$item->id]['ready']['product-container']['product-items'] = array(
-                            '#markup' => '<div class="title-chose">' . t('Téléchargez votre fichier ou créez en ligne') . '</div>',
-                        );
                         $form['cart']['items'][$item->id]['ready']['product-container']['proflink'] = array(
                             '#prefix' =>  '<div class="poll-form poll-form1 first">' .
                                                     '<div class="title-image designtool"></div>' .
@@ -528,9 +528,6 @@ function pccart_cart_form2($form, &$form_state) {
                             '#attributes' => array('class' => array('upload', 'designtool', 'iframe')),
                         );
                     }else {
-                        $form['cart']['items'][$item->id]['ready']['product-container']['product-items'] = array(
-                            '#markup' => '<div class="title-chose">' . t('Créez en ligne votre fichier') . '</div>',
-                        );
                         $form['cart']['items'][$item->id]['ready']['product-container']['upload']['link'] = array(
                             '#prefix' =>  '<div class="poll-form poll-form1 first">' .
                                                     '<div class="title-image designtool"></div>' .

@@ -174,29 +174,21 @@ padding-bottom: 5px;
   margin: 0 0 10px;
   line-height: 14px;
 }
-.prodactHasTemplates .poll-form.first{
-  /*margin-left: 65px;*/
+
+#pccart-cart-form .prodactTemplates .poll-form1.double.first{
+    padding-left: 0;
+    width: 320px;
 }
+
 .prodactHasTemplates .poll-form{
     background-color: transparent;
-}
-.prodactHasTemplates .poll-form:not(.first){
-  /*margin-left: 60px;*/
 }
 .poll-form .visu{
   height: 95px;
   background-position: center;
   background-repeat: no-repeat;
 }
-/*.poll-form .img1{
-  background-image: url(images/importez.png);
-}
-.poll-form .img2{
-  background-image: url(images/cree.png);
-}
-.poll-form .img3{
-  background-image: url(images/choisisser.png);
-}*/
+
 .poll-form a{
   font-weight: bold;
   color: #ff6600;
@@ -208,45 +200,6 @@ padding-bottom: 5px;
 .img2 .text {
 margin-right: 23px;
 }
-
-
-/*
-
-.page-cart form .shipping, .page-cart forms .discount{
-  float:left;
-  width:48%;
-  margin-left: 0;
-  margin-right: 2%;
-  box-sizing:border-box;
-  -moz-box-sizing:border-box;  Firefox
-  -webkit-box-sizing:border-box;  Safari
-}
-.page-cart form .shipping{
-  margin-left: 0;
-  margin-right:2%;
-}
-
-.page-cart form .shipping .deadline,
-.page-cart form .shipping .delivery  {
-  width:50%;
-  float:left;
-    box-sizing:border-box;
-  -moz-box-sizing:border-box;  Firefox
-  -webkit-box-sizing:border-box;  Safari
-}
-
-.page-cart form .shipping .deadline label,
-.page-cart form .shipping .delivery label  {
-  float:none;
-  width:inherit;
-  clear:none;
-}
-
-.page-cart form .discount{
-  margin-left:1%;
-  margin-right: 0;
-}*/
-
 
 #pccart-cart-form .products li{
   float: left;
@@ -623,10 +576,6 @@ body.page-cart #pccart-cart-form .control-block .removecontrol{
 .centroid-1 .first {
   margin-left: 160px!important;
   border: none!important;
-}
-
-.centroid-2 .poll-form {
-  /*margin-left: 77px!important;*/
 }
 
 table.targetPrice td:nth-child(1),

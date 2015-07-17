@@ -469,18 +469,20 @@ function pccart_cart_form2($form, &$form_state) {
                         '#markup' => '<div class="title-chose">' . t('Téléchargez votre fichier ou créez en ligne') . '</div>',
                     );
                     if($item->hasProUpload){
-                        $form['cart']['items'][$item->id]['ready']['product-container']['upload']['link'] = array(
-                            '#prefix' => '<div class="poll-form poll-form1 double first">' .
-                                                    '<div class="title-image pro-upload"></div>' .
-                                                    '<div class="option-title">PRO UPLOAD</div>' .
-                                                    '<p class="txto">'.t('Pour les graphistes professionnels').'</p>' .
-                                                    '<ul class="options-file-impression indice-'. $model_list_index .'" data-id="'. $item->id .'" data-link="/products/'.$product->id.'">
-                                                        <li>'. t('Téléchargez immédiatement votre fichier bon à tirer') .'</li>
-                                                        <li>'. t('Respectez les <a href="#" class="technic-details model-form">détails techniques</a> ou <a href="/node/102" id="predef-params" class="model-form" target="_blank">paramètres prédéfinis</a>') .'</li>
+                        $form['cart']['items'][$item->id]['ready']['product-container']['proflink'] = array(
+                            '#prefix' =>  '<div class="poll-form poll-form1 first">' .
+                                                    '<div class="title-image designtool"></div>' .
+                                                    '<div class="option-title">DESIGNTOOL</div>' .
+                                                    '<p class="txto">'.t('Pour tous les clients (recommandé)').'</p>' .
+                                                    '<ul class="options-file-impression indice-'. $model_list_index .'">
+                                                        <li>'. t('Téléchargez votre fichier dans notre designtool') .'</li>
+                                                        <li>'. t('Recevez un aperçu de vos impressions') .'</li>
+                                                        <li>'. t('Faites votre conception gratuitement en ligne') .'</li>
+                                                        '.$li_model.'
                                                         <li>'. t('Contrôle du fichier optionnel (€ 4,99 hors TVA)') .'</li>
                                                     </ul>',
                             '#suffix' => '</div> ',
-                            '#content'=> array('#markup' => '<span class="buttonlayout btnupfile"><span class="txtgras">'.t("COMMENCER").'</span>',),
+                            '#content'=> array('#markup' => '<span class="text buttondesigntool btnupfile"><span class="txtgras">'.t('COMMENCER').'</span>',),
                             '#theme' => 'designtoollink',
                             '#templateId' => $template->id,
                             '#title' => $product->name . ' ' . $firstConfig->name,
@@ -501,20 +503,18 @@ function pccart_cart_form2($form, &$form_state) {
                             '#versioning' => TRUE,
                             '#attributes' => array('class' => array('upload', 'designtool', 'iframe')),
                         );
-                        $form['cart']['items'][$item->id]['ready']['product-container']['proflink'] = array(
-                            '#prefix' =>  '<div class="poll-form poll-form2">' .
-                                                    '<div class="title-image designtool"></div>' .
-                                                    '<div class="option-title">DESIGNTOOL</div>' .
-                                                    '<p class="txto">'.t('Pour tous les clients (recommandé)').'</p>' .
-                                                    '<ul class="options-file-impression indice-'. $model_list_index .'">
-                                                        <li>'. t('Téléchargez votre fichier dans notre designtool') .'</li>
-                                                        <li>'. t('Recevez un aperçu de vos impressions') .'</li>
-                                                        <li>'. t('Faites votre conception gratuitement en ligne') .'</li>
-                                                        '.$li_model.'
+                        $form['cart']['items'][$item->id]['ready']['product-container']['upload']['link'] = array(
+                            '#prefix' => '<div class="poll-form poll-form2">' .
+                                                    '<div class="title-image pro-upload"></div>' .
+                                                    '<div class="option-title">PRO UPLOAD</div>' .
+                                                    '<p class="txto">'.t('Pour les graphistes professionnels').'</p>' .
+                                                    '<ul class="options-file-impression indice-'. $model_list_index .'" data-id="'. $item->id .'" data-link="/products/'.$product->id.'">
+                                                        <li>'. t('Téléchargez immédiatement votre fichier bon à tirer') .'</li>
+                                                        <li>'. t('Respectez les <a href="#" class="technic-details model-form">détails techniques</a> ou <a href="/node/102" id="predef-params" class="model-form" target="_blank">paramètres prédéfinis</a>') .'</li>
                                                         <li>'. t('Contrôle du fichier optionnel (€ 4,99 hors TVA)') .'</li>
                                                     </ul>',
                             '#suffix' => '</div> ',
-                            '#content'=> array('#markup' => '<span class="text buttondesigntool btnupfile"><span class="txtgras">'.t('COMMENCER').'</span>',),
+                            '#content'=> array('#markup' => '<span class="buttonlayout btnupfile"><span class="txtgras">'.t("COMMENCER").'</span>',),
                             '#theme' => 'designtoolproflink',
                             '#templateId' => $template->id,
                             '#title' => $product->name . ' ' . $firstConfig->name,
@@ -529,37 +529,28 @@ function pccart_cart_form2($form, &$form_state) {
                         );
                     }else {
                         $form['cart']['items'][$item->id]['ready']['product-container']['upload']['link'] = array(
-                            '#prefix' =>  '<div class="poll-form poll-form1 first">' .
-                                                    '<div class="title-image designtool"></div>' .
-                                                    '<div class="option-title">DESIGNTOOL</div>' .
-                                                    '<p class="txto">'.t('Pour tous les clients (recommandé)').'</p>' .
-                                                    '<ul class="options-file-impression indice-'. $model_list_index .'">
-                                                        <li>'. t('Téléchargez votre fichier dans notre designtool') .'</li>
-                                                        <li>'. t('Recevez un aperçu de vos impressions') .'</li>
-                                                        <li>'. t('Faites votre conception gratuitement en ligne') .'</li>
-                                                        '.$li_model.'
+                            '#prefix' => '<div class="poll-form poll-form1 first">' .
+                                                    '<div class="title-image pro-upload"></div>' .
+                                                    '<div class="option-title">PRO UPLOAD</div>' .
+                                                    '<p class="txto">'.t('Pour les graphistes professionnels').'</p>' .
+                                                    '<ul class="options-file-impression indice-'. $model_list_index .'" data-id="'. $item->id .'" data-link="/products/'.$product->id.'">
+                                                        <li>'. t('Téléchargez immédiatement votre fichier bon à tirer') .'</li>
+                                                        <li>'. t('Respectez les <a href="#" class="technic-details model-form">détails techniques</a> ou <a href="/node/102" id="predef-params" class="model-form" target="_blank">paramètres prédéfinis</a>') .'</li>
                                                         <li>'. t('Contrôle du fichier optionnel (€ 4,99 hors TVA)') .'</li>
                                                     </ul>',
                             '#suffix' => '</div> ',
-                            '#theme' => 'designtoollink',
-                            '#content'=> array('#markup' => '<span class="text buttondesigntool btnupfile"><span class="txtgras">'.t('COMMENCER').'</span>',),
+                            '#content'=> array('#markup' => '<span class="buttonlayout btnupfile"><span class="txtgras">'.t("COMMENCER").'</span>',),
+                            '#theme' => 'designtoolproflink',
+                            '#templateId' => $template->id,
                             '#title' => $product->name . ' ' . $firstConfig->name,
-                            '#html' => true,
-                            '#oi' => array(
-                                'priceGroupId' => $item->productPriceGroupId,
-                                'quantity' => $item->quantity,
-                                'options' => $optionsDt,
-                                'hasModel' => ($ProdactHasTemplates) ? 1 : 0
-                            ),
                             '#params' => array(
                                 'id' => $item->id,
                                 'cartid' => $cart->id,
-                                'shop_apikey' => variable_get('pc_apikey'),
+                                'currencyPreflight' => '€',
+                                'pricePreflight' => $preflightPrice,
                                 'hasModel' => ($ProdactHasTemplates) ? 1 : 0
                             ),
-                            '#callback' => 'cart/callback/',
-                            '#versioning' => TRUE,
-                            '#attributes' => array('class' => array('upload', 'designtool', 'iframe', 'linkdesigtool')),
+                            '#attributes' => array('class' => array('designtool', 'iframe')),
                         );
                     }
                     $checkableItems[] = $item->id;

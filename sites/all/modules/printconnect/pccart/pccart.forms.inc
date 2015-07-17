@@ -474,12 +474,12 @@ function pccart_cart_form2($form, &$form_state) {
                                                     '<div class="title-image pro-upload"></div>' .
                                                     '<div class="option-title">PRO UPLOAD</div>' .
                                                     '<p class="txto">'.t('Pour les graphistes professionnels').'</p>' .
-                                                    '<ul class="options-file-impression indice-'. $model_list_index .'">
+                                                    '<ul class="options-file-impression indice-'. $model_list_index .'" data-id="'. $item->id .'" data-link="/products/'.$product->id.'">
                                                         <li>'. t('Téléchargez immédiatement votre fichier bon à tirer') .'</li>
-                                                        <li>'. t('Respectez les <a href="#" class="technic-details model-form" data-id="'. $item->id .'" data-link="/products/'.$product->id.'">détails techniques</a> ou <a href="/node/102" id="predef-params" class="model-form" target="_blank">paramètres prédéfinis</a>') .'</li>
+                                                        <li>'. t('Respectez les <a href="#" class="technic-details model-form">détails techniques</a> ou <a href="/node/102" id="predef-params" class="model-form" target="_blank">paramètres prédéfinis</a>') .'</li>
                                                         <li>'. t('Contrôle du fichier optionnel (€ 4,99 hors TVA)') .'</li>
                                                     </ul>',
-                             '#suffix' => '</div> ',
+                            '#suffix' => '</div> ',
                             '#content'=> array('#markup' => '<span class="buttonlayout btnupfile"><span class="txtgras">'.t("COMMENCER").'</span>',),
                             '#theme' => 'designtoollink',
                             '#templateId' => $template->id,

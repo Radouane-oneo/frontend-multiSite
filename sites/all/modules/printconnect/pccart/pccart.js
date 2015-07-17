@@ -108,7 +108,7 @@
 			/* ----- technic-details -----*/
 			$('.technic-details').click(function(e){
 				e.preventDefault();
-				var	prod_url = $(this).attr('data-link'),
+				var	prod_url = $(this).parents('ul').attr('data-link'),
 					iframe = '<iframe id="iframed-content" src="'+prod_url+'"></iframe>';
 				$(iframe).appendTo('body').load(function(){
 					var myframe=this;

@@ -140,28 +140,21 @@ function updateDiscounts() {
 function PriceCallback() {
 	var map = [];
 	var totalprice = 0;
-
-
 	jQuery("#pccart-cart-form #hiddenPrices input").each(function() {
 		if(jQuery(this).val()){
 			map.push(parseFloat(jQuery(this).val()));
 		}
 	});
 	map.forEach(function(Price) { totalprice += Price; });
-
 	jQuery("#pccart-cart-form .subtotal .value").html(buildPriceHtml(totalprice, false));
-
 	try{
 	var vat = Drupal.settings.pccart.VatCart;
-		console.log(vat);
 		if(isNaN(vat) || vat == null ){
 			vat = 0.21;
 		}
 	}catch(e){
 		vat = 0.21;
 	}
-
-
 	vatprice = totalprice * vat ;
 	jQuery("#pccart-cart-form .vat .value").html(buildPriceHtml(vatprice, false));
 	total = vatprice + totalprice;
@@ -194,7 +187,7 @@ function buildPriceHtml(price, isDiscount) {
 	var wholevat = (price.toFixed(2) +"").split(".")[0];
 	var decPartvat = (price.toFixed(2) +"").split(".")[1];
 	if(isDiscount) { wholevat = '- ' + wholevat; }
-	var htmlPrice = '<span class="value"><span class="whole">'+wholevat+'</span><span class="decimalpoint">,</span><span class="decimals">'+decPartvat+'</span><span class="currency"> €</span></span>';
+	var htmlPrice = '<span class="value"><span class="whole">'+wholevat+'</span><span class="decimalpoint">,</span><span class="decimals">'+decPartvat.slice(0,2)+'</span><span class="currency"> €</span></span>';
 	return htmlPrice;
 }
 
@@ -217,7 +210,6 @@ function applyDiscount(code, force){
 				applyDiscount(jQuery("#discount-hidden-"+data.code.toLowerCase()).next().attr('discount-code'), 1);
 			}
 			if (typeof data.discountAmount != "undefined"){
-              console.log('5');
 				renderDiscount(data);
 				return;
 			}else if(force == 1){

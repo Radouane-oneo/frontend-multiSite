@@ -5,7 +5,7 @@
 	*/
 	function pcstaticproducts_block_info() {
 		$blocks = array();
-		$blocks['pc_static_products'] = array(
+		$blocks['pcstaticproducts'] = array(
 			'info' => t('Static Products'),
 			'visibility' => 1,
 			'pages' => 'cart',
@@ -23,7 +23,7 @@
 		if (!$cart||count($cart->orderItems)==0) {
 			$block = array();
 			switch ($delta) {
-				case 'pc_static_products':
+				case 'pcstaticproducts':
 					$block['subject'] = '';
 					$block['content'] = array( '#theme' => 'pcstaticproducts_block', );
 					break;

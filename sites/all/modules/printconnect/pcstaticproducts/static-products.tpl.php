@@ -34,10 +34,10 @@
 			<div class="image form-wrapper" id="edit-other-<?php print $id; ?>-image">
 				<img typeof="foaf:Image" src="<?php print $Products[$id]['image']; ?>" alt="">
 			</div>
-			<h3><?php print t($Products[$id]['title']) ?></h3>
+			<h3 class="prod-title"><?php print t($Products[$id]['title']) ?></h3>
 			<span class="price" decimal_separator=",">
 				<span class="currency">€</span>
-				<span class="value"><?php print $Products[$id]['price'] ?></span>
+				<span class="value"><?php print $Products[$id]['price'] . ' (hors TVA)' ?></span>
 			</span> <?php print $Products[$id]['pack'] ?>
 			<div class="a-icon form-wrapper" id="edit-other-<?php print $id; ?>-link">
 				<?php print l(t($Products[$id]['title'].' '.'Ordering'), $Products[$id]['link'], array('language' => $lang)) ; ?>

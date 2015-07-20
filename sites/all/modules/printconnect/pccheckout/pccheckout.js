@@ -20,13 +20,13 @@
             $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-postalCode, #edit-postalcode').val(dataset.postalCode);
             $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-city, #edit-city').val(dataset.city);
             $('#pccheckout-invoiceanddelivery-form #companyInput, #companyInput').val(dataset.company);
-            
+
             if($('#pccheckout-invoiceanddelivery-form')[0]){
             $('#invoice-address input[type=text]').attr('readonly', true);
             $('#edit-invoice-address-current-country').attr('disabled', true);
-            $('#isUserCompany').attr('disabled', true);      
+            $('#isUserCompany').attr('disabled', true);
             }
-            
+
         });
     });
 
@@ -44,13 +44,13 @@
             $(".form-item-company, .form-item-vatNumber, .form-item-invoice-address-current-company, .form-item-invoice-address-current-vatNumber").hide();
         }
     });
-    
-   
+
+
     $(document).ready(function () {
 
         jQuery(".selectBilling2").select2();
         jQuery(".selectStyle").select2();
-       
+
         if ($('#pccheckout-invoiceanddelivery-form  input[name="pcflyerstores[id]"]').val() != ''){
             $('#allresault').show();
             $('#pccheckout-invoiceanddelivery-form #edit-summary-shipping h6').html($('#pccheckout-invoiceanddelivery-form .storcomande h2').html());
@@ -93,7 +93,7 @@
                     $('#isUserCompany').attr('disabled', false);
                 }
         }
-       
+
         /* end */
 
     });
@@ -121,30 +121,33 @@ Drupal.behaviors.pccheckout = {
         detach: function (context) {
         },
         attach: function (context, settings) {
-            
+
         var  agree = "no";
         $("#edit-agree").live('click', function () {
             if (this.checked){
                 agree = "yes";
             }
-        });      
+        });
        $('input.payment[type="submit"]').click(function (e) {
             if($('.storcomande').length > 0){
+                if(!!$('.messages.error .store-select').length) $('.messages.error .store-select').remove();
                 if ($('input[name="pcflyerstores[id]"]').val() == ''){
-                    $("h1:first").after('<div class="messages error"><ul><li>Merci de choisir un flyer store</li></ul></div>');
+                    if(!$('.messages.error').length)$('.region.region-content').before('<div class="messages error"></div>');
+                    $('.messages.error').append('<li class="store-select">Merci de choisir un flyer store</li>');
+                    $('body, html').animate({scrollTop: $(".messages.error").offset().top-50 }, '300', 'swing', function() {});
                     return false;
                 }
             }
         });
-        
+
 //$('#pccheckout-payment-form').submit(function (e) {
 //    if (agree == "no"){
 //     e.preventDefault();
 //     $("#jsagree").remove();
 //     $(".form-item-agree").after('<p id="jsagree" style=" color: white; text-align: center; background-color:#ff6600;">' + Drupal.t('champ obligatoire') + '<p>').fadeIn();
-//    } 
-//});      
-            
+//    }
+//});
+
     $('#pccheckout-personal-form').submit(function (e) {
                            var number = $('.number');
                            var company = $('#companyInput');
@@ -157,30 +160,47 @@ Drupal.behaviors.pccheckout = {
                                }
                            }
 });
-  
-    $('#pccheckout-invoiceanddelivery-form').submit(function (e) {
-                           var number = $('#edit-invoice-address-current-vatnumber-number');
-                           var company = $('#companyInput');
 
-                           $('#invoice-address input[type=text]').blur(function (){
-                                if($(this).val() == ''){
-                                 $(this).addClass('error');
-                                }else{
-                                 $(this).removeClass('error');
-                                }
-                             });
+        $('#pccheckout-invoiceanddelivery-form').submit(function (e) {
 
+               if (!ValidateNameLength()) return false;
 
-                           if (UserCompany == "yes") {
-                               if (number.val() == '' || company.val() == '') {
-                                   e.preventDefault();
-                                   $('#edit-invoice-address-current-vatnumber-number').addClass('error');
-                                   $('#companyInput').addClass('error');
-                                   $('#edit-invoice-address-current-vatnumber-country').addClass('error');
+               var number = $('#edit-invoice-address-current-vatnumber-number');
+               var company = $('#companyInput');
 
-                               }
-                           }
+               $('#invoice-address input[type=text]').blur(function (){
+                    if($(this).val() == ''){
+                      $(this).addClass('error');
+                    }else{
+                      $(this).removeClass('error');
+                    }
+               });
+
+               if (UserCompany == "yes") {
+                   if (number.val() == '' || company.val() == '') {
+                       e.preventDefault();
+                       $('#edit-invoice-address-current-vatnumber-number').addClass('error');
+                       $('#companyInput').addClass('error');
+                       $('#edit-invoice-address-current-vatnumber-country').addClass('error');
+
+                   }
+               }
+
            });
+
+           function ValidateNameLength() {
+                var length = $('#edit-shipping-detail-contact').val().length;
+                if (!!$('.name-length').length) $('.messages.error .name-length').remove();
+                if (length>32){
+                    if(!$('.messages.error').length)$('.region.region-content').before('<div class="messages error"></div>');
+                    $('.messages.error').append('<li class="name-length">'+Drupal.t('The name length should not be longer than 32 letters')+'</li>');
+                    $('body, html').animate({scrollTop: $(".messages.error").offset().top-50 }, '300', 'swing', function() {});
+                    return false;
+                }
+                else {
+                    return true;
+                }
+           }
 
     var pricePaiement = 0;
 
@@ -245,8 +265,8 @@ Drupal.behaviors.pccheckout = {
                     var decPartvat = total.split(".")[1];
                     var End = '<span id="price" class="price"><label>Total HTVA</label><span class="value"><span class="whole">' + wholevat + '</span><span class="decimalpoint">,</span><span class="decimals">' + decPartvat + '</span>&nbsp;<span class="currency">€</span></span></span>';
                     $('.page-checkout-payment #edit-actions').find('#price').replaceWith(End);
-                    
-                   
+
+
                 }
 
            });
@@ -328,14 +348,14 @@ function setInvoiceAddress(id) {
         $('#pccheckout-invoiceanddelivery-form #companyInput').val('');
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-vatnumber-country').val('FR');
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-vatnumber-number').val('');
-        
+
         $('#isUserCompany').attr('disabled', false);
         $('#invoice-address input[type=text]').attr('readonly', false);
         $('#edit-invoice-address-current-country').attr('disabled', false);
     } else {
         var url = Drupal.settings.basePath + 'invoceform/' + id;
         $.getJSON(url, function (data) {
-     
+
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-name').val(data.name);
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-street').val(data.street);
         $('#pccheckout-invoiceanddelivery-form #edit-invoice-address-current-postalCode').val(data.postalCode);
@@ -348,7 +368,7 @@ function setInvoiceAddress(id) {
         if( $("input[name='billingAccountResult']")[0]){
             $("input[name='billingAccountResult']").remove();
         }
-       
+
     if (data.vatNumber) {
         $('#isUserCompany').attr('checked', true);
         $(".form-item-company, .form-item-vatNumber, .form-item-invoice-address-current-company, .form-item-invoice-address-current-vatNumber").show();
@@ -388,7 +408,7 @@ function setShppingAddress(id) {
             $('#pccheckout-invoiceanddelivery-form #edit-shipping-detail-current-postalCode').val(data.postalCode);
             $('#pccheckout-invoiceanddelivery-form #edit-shipping-detail-current-city').val(data.city);
             $('#pccheckout-invoiceanddelivery-form #edit-shipping-detail-current-country').val(data.country);
-          
+
         });
     }
 
@@ -401,7 +421,7 @@ function pccheckout_forgotpassword_callback() {
 }
 
 function pccheckout_picker_callback(pup) {
-   
+
     jQuery('#pccheckout-checkout-form .pup').replaceWith(pup.html);
     jQuery('#pccheckout-checkout-form input[name="shipping[pickup][id]"]').val(pup.id);
     jQuery('#pccheckout-checkout-form input[name="shipping[pickup][country]"]').val(pup.countryCode);
@@ -426,7 +446,7 @@ function pccheckout_submit_form(form, triggeringElement) {
     form.css('cursor', 'wait');
 
     if (triggeringElement) {
-        data = '_triggering_element_name=' + triggeringElement.attr("name") + '&' + data; 
+        data = '_triggering_element_name=' + triggeringElement.attr("name") + '&' + data;
     }
 
     data = data + '&op=ajax';

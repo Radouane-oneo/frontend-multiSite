@@ -29,4 +29,10 @@
 .static-products h3.sp-title {
   text-transform: none;
   color: #f60;
+  margin-bottom: 10px;
+}
+
+h3.prod-title {
+  font-weight: bold;
+  margin-top: 8px;
 }

@@ -105,6 +105,28 @@
 				$('.cartCounter span').html(baseText+ ' ('+number+')');
 				PriceCallback();
 			});
+			/* ----- technic-details -----*/
+			$('.technic-details').click(function(e){
+				e.preventDefault();
+				var	prod_url = $(this).parents('ul').attr('data-link'),
+					iframe = '<iframe id="iframed-content" src="'+prod_url+'"></iframe>';
+				$(iframe).appendTo('body').load(function(){
+					var myframe=this;
+					var timer = setInterval(function(){
+						if($(myframe).contents().find('#templates').length>0) {
+							clearInterval(timer);
+							$('.technic-details-container').show('fade',function(){
+								$('.technic-details-container').css('left',(( $(window).width() - 682 ) / 2)+"px");
+								$(this).append($(myframe).contents().find('#templates'));
+								$('.close-tdc').appendTo('.technic-details-container #templates legend');
+							})
+						}
+					}, 100);
+				})
+			});
+			$('.close-tdc').live('click',function(){
+				$('.technic-details-container').hide('fade',function(){$('.technic-details-container').html('<i class="close-tdc"></i>');});
+			});
 		}
 	}
 })(jQuery);
@@ -118,28 +140,21 @@ function updateDiscounts() {
 function PriceCallback() {
 	var map = [];
 	var totalprice = 0;
-
-
 	jQuery("#pccart-cart-form #hiddenPrices input").each(function() {
 		if(jQuery(this).val()){
 			map.push(parseFloat(jQuery(this).val()));
 		}
 	});
 	map.forEach(function(Price) { totalprice += Price; });
-	
 	jQuery("#pccart-cart-form .subtotal .value").html(buildPriceHtml(totalprice, false));
-
 	try{
 	var vat = Drupal.settings.pccart.VatCart;
-		console.log(vat);
 		if(isNaN(vat) || vat == null ){
 			vat = 0.21;
 		}
 	}catch(e){
 		vat = 0.21;
 	}
-
-
 	vatprice = totalprice * vat ;
 	jQuery("#pccart-cart-form .vat .value").html(buildPriceHtml(vatprice, false));
 	total = vatprice + totalprice;
@@ -172,7 +187,7 @@ function buildPriceHtml(price, isDiscount) {
 	var wholevat = (price.toFixed(2) +"").split(".")[0];
 	var decPartvat = (price.toFixed(2) +"").split(".")[1];
 	if(isDiscount) { wholevat = '- ' + wholevat; }
-	var htmlPrice = '<span class="value"><span class="whole">'+wholevat+'</span><span class="decimalpoint">,</span><span class="decimals">'+decPartvat+'</span><span class="currency"> €</span></span>';
+	var htmlPrice = '<span class="value"><span class="whole">'+wholevat+'</span><span class="decimalpoint">,</span><span class="decimals">'+decPartvat.slice(0,2)+'</span><span class="currency"> €</span></span>';
 	return htmlPrice;
 }
 
@@ -188,14 +203,13 @@ function applyDiscount(code, force){
 		dataType : 'json',
 		success: function (data) {
 			jQuery("#loading-ajax-tmp").remove();
-          if(typeof data.code != "undefined" && 
-                  force == 1 && 
+          if(typeof data.code != "undefined" &&
+                  force == 1 &&
                   jQuery("#discount-hidden-"+data.code.toLowerCase()).next()[0] &&
                   jQuery("#discount-hidden-"+data.code.toLowerCase()).next().hasClass('hidden-discount')) {
 				applyDiscount(jQuery("#discount-hidden-"+data.code.toLowerCase()).next().attr('discount-code'), 1);
 			}
 			if (typeof data.discountAmount != "undefined"){
-              console.log('5');
 				renderDiscount(data);
 				return;
 			}else if(force == 1){

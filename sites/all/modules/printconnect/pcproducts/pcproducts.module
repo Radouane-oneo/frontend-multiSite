@@ -619,8 +619,28 @@ function callback_getjson_ajax($action, $productId) {
     echo $jsonFile;exit(0);
 }
 
+function pcproducts_validate_product() {
+  if (arg(0)=="products") {
+    $flag = true;
+    $current_id = arg(1);
+    $products = _pcproducts_activeproducts();
+    foreach ($products as $i => $product) {
+      if ($current_id == $product->id){
+        $flag = false;
+      }
+    }
+    if ($flag) {
+      drupal_not_found();
+      exit;
+    }
+  }
+}
+
 function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = FALSE, $edit = FALSE) {
     header('Cache-Control: public, max-age=' . 3600);
+
+    pcproducts_validate_product();
+
     global $language;
     global $user;
     //ini_set('memory_limit', '5000M');

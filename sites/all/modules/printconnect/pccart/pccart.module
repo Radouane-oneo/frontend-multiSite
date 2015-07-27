@@ -620,6 +620,9 @@ function add_cartitem_submit() {
   $qty = $_POST['quantity'];
   $options = explode(',', $_POST['options']);
   $priceGroupId = $_POST['priceGroupId'];
+  $widthCF = $_POST['widthCF'];
+  $heightCF = $_POST['heightCF'];
+  $cf = $_POST['CF'];
   $vat = false;
   $customer = CustomersFactory::Current();
   $cart = Factory::CurrentOrCreate();
@@ -634,7 +637,7 @@ function add_cartitem_submit() {
   $relatedProducts = array();
   $description = '';
   $cart->productId = $productId;
-  Factory::CreateItem($cart, $priceGroupId, $qty, $description, $relatedProducts, $options, $vat);
+  Factory::CreateItem($cart, $priceGroupId, $qty, $description, $relatedProducts, $options, $vat, $widthCF, $heightCF, $cf);
   Factory::Refresh($cart);
 
   drupal_goto('cart');

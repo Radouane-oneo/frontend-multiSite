@@ -597,7 +597,8 @@ function pcproducts_js_callback() {
 function getFromServer($filename) {
     $apikey = variable_get('pc_apikey', '');
     $url = "http://admin.preprd.printconcept.com/rest/json/filename/{$filename}?apikey={$apikey}";
-
+    $url = "http://admin.stg.printconcept.com/rest/json/filename/{$filename}?apikey={$apikey}";
+   $url = "http://flyerfr.dev/json.json";
     return file_get_contents($url);
 }
 
@@ -690,6 +691,14 @@ function getLabels($edit = false) {
         "Format" => t('Format'),
         "rawFormat" => t('brut'),
         "finishedFormat" => t('size'),
+        "berekenen" => t('Berekenen'),
+        "breedte" => t('Breedte'),
+        "hoogte" => t('Hoogte'),
+        "newCF"=> t('newCF'),
+        "msgErrorCF"=> t('msgErrorCF'),
+        "msgCFValid"=> t('msgCFValid'),
+        "msgErrorCFNotValid"=> t('msgErrorCFNotValid'),
+        
     );
 
     for($i=0; $i <= 114; $i++) {

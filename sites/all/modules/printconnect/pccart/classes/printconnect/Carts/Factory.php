@@ -279,7 +279,7 @@ use printconnect\Customers;
       unset($_SESSION['billing_address']);
     }
    
-    public static function CreateItem($cart, $priceGroup, $quantity, $description, $relatedProducts, $options, $vat = FALSE) {
+    public static function CreateItem($cart, $priceGroup, $quantity, $description, $relatedProducts, $options, $vat = FALSE, $widthCF, $heightCF, $cf) {
 	$object = new Item();
       $object->cart = $cart->id;
       $object->productId = $cart->productId;
@@ -289,7 +289,9 @@ use printconnect\Customers;
       $object->related_products = $relatedProducts;
       $object->options = $options;
       $object->comments = ' ';
-
+      $object->widthCF = $widthCF;
+      $object->heightCF = $heightCF;
+      $object->CF = $cf;
       if ($vat && $vat != $_SESSION['shop_vat']) {
         $object->vatCustom = $vat;
       }

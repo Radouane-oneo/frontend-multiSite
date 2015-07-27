@@ -10,7 +10,10 @@ define([
                 "priceGroupId" : this.config.toolBoxGroups["defaultGroup"]["priceGroupId"],
                 "options" : [],
                 "quantity" : this.getDefaultQuantity(null),
-                "price" : this.getDefaultPrice(null)
+                "price" : this.getDefaultPrice(null),
+                "widthCF" : null,
+                "heightCF" : null,
+                "CF" : null
             }
         },
         initialize: function() {
@@ -74,7 +77,9 @@ define([
 
             var pricing = toolBoxGroup["pricing"][this.get("quantity")];
             var price = null;
-            if(pricing) {
+            var customHeight = this.get('heightCF');
+            var customWidth  = this.get('widthCF');
+            if(pricing && !(customHeight) && !(customWidth)){
                 price = (pricing["promoPrice"]) ? pricing["promoPrice"] : pricing["sellPrice"];
             } else {
                 price = this.calculatePrice(this.get("quantity"));
@@ -101,6 +106,13 @@ define([
             return true;
         },
         calculatePrice: function(quantity) {
+            var customHeight = this.get('heightCF');
+            var customWidth  = this.get('widthCF');
+            if((customHeight) && (customWidth)){
+                var price = ((customHeight * customWidth * _.toArray(this.get("toolBoxGroup")["pricing"])[0]["sellPrice"]) / (1 * 1000 * 1000)) * quantity;
+                console.log('price: '+price+ 'quantity' + quantity);
+                return price;
+            }
             var betweenPrice, betweenBlock, previousQuantity, previousPrice, nextQuantityPrice, price, diff, multiplyUnit;
 
             for(var i in this.get("toolBoxGroup")["pricing"]){

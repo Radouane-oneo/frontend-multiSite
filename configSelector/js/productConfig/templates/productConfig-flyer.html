@@ -25,9 +25,32 @@
                 <%= config.labels["toolBoxDescription_" + toolBoxItem.id] %>
             </div>
             <div class="item-list">
+                <% if(toolBoxItem.id == config.labels["format"]) { %> 
+                    <% if(config.labels["customFormat"] == true) { %>
+                        <div class="blocCustomFormat">   
+                            <div class="inputCustomFormat">
+                                <div class='msgErrorCF'></div>
+                                <form>
+                                <div class="wrapTxt">
+                                    <label class="bold-txt label-txt"><%= config.labels['newCF'] %> :</label>
+                                    <input type="text" id="wcf" name="widthCF" value="<%= model.widthCF %>" placeholder="<%= config.labels['breedte'] %>"><label class="light-txt label-txt">mm &nbsp; X</label>
+                                    <input type="text" id="hcf" name="heightCF" value="<%= model.heightCF %>"  placeholder="<%= config.labels['hoogte'] %>"><label class="light-txt label-txt">mm</label>                             
+                                    <input type="hidden" id="msgErrorCF" class="msgErrorCF" value="<%= config.labels['msgErrorCF'] %>">
+                                    <input type="hidden" id="msgCFValid" class="msgCFValid" value="<%= config.labels['msgCFValid'] %>">
+                                    <input type="hidden" id="msgErrorCFNotValid" class="msgErrorCFNotValid" value="<%= config.labels['msgErrorCFNotValid'] %>">
+                                </div>
+                                <div class="wrapBtn">
+                                    <input type="button" value="<%= config.labels['berekenen'] %>" class="form-submit calculCF">
+                                </div>
+                               
+                                </form>
+                            </div>
+                        </div>
+                    <% } %> 
+                <% } %>
                 <ul>
                     <% _.each(toolBoxItem.data,function(item){ %>
-                    <li>
+                     <li class='<%= item.code %>'>
                         <a id="<%= item.id %>" href=""><img width="154" height="154" alt="" src="<%= config.imagesUrl %>items/<%= item.id %>.png">
 
                         <div class="text"><%= item.name %></div>
@@ -106,11 +129,19 @@
                     print(priceTpl({price:Math.round(price['sellPrice']*100)/100,classToAdd:'old'}));
                     }
                 %></td>
-                <td><%
+                <td><%  
+                var customHeight = model.heightCF;
+                var customWidth  = model.widthCF;
+                if((customHeight) && (customWidth)){
+                    var validPrice = ((customHeight * customWidth * price['sellPrice']) / (1 * 1000 * 1000));
+                    print(priceTpl({price:validPrice,classToAdd:className}));
+                } else { 
+                %>    
+                    <%
                     var validPrice = (price['promoPrice'])?price['promoPrice']:price['sellPrice'];
                     var className = (price['promoPrice'])?'promo':undefined;
                     print(priceTpl({price:Math.round(validPrice*100)/100,classToAdd:className}));
-                %></td>
+               } %></td>
                 <td class="last-child"><%
                     var priceWithTVA = validPrice * ( 1 + config.TVA );
                     print(priceTpl({price:Math.round(priceWithTVA*100)/100}));
@@ -148,7 +179,7 @@
                 <%= priceTpl({price:totalPrice(),label:config.labels["totalNoTVA"]}) %>
                 <input
                 type="submit" value="<%= config.labels['addToCart'] %>" name="op" id="edit-actions-addtocart"
-                class="action cart large display-block form-submit ui-button ui-widget ui-state-default ui-corner-all"
+                class="cart  form-submit ui-button"
                 role="button"></div>
         <!-- End addToCart -->
 
@@ -226,5 +257,8 @@
         <input type="hidden" name="priceGroupId" value="<%= model.priceGroupId %>" />
         <input type="hidden" name="quantity" value="<%= model.quantity %>" />
         <input type="hidden" name="options" value="<%= model.options.join(",") %>" />
+        <input type="hidden" name="widthCF" value="<%= model.widthCF %>" />
+        <input type="hidden" name="heightCF" value="<%= model.heightCF %>" />
+        <input type="hidden" id="cf" name="CF" value='<%= model.CF %>'>
     </div>
 </form>

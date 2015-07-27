@@ -234,6 +234,13 @@ function pccart_cart_form2($form, &$form_state) {
 
             $templates = Products\Templates\Factory::GetTemplates($item->configuration->productId, $items);
             $template = $templates->items[0];
+            if ($item->customWidth != 0 && $item->customHeight != 0){
+                $nrOfPages = count($template->templatePages);
+                $custom = 'width:'.$item->customWidth.'!height:'.$item->customHeight.'!nrOfPages:'.$nrOfPages;
+            }
+            else{
+                $custom = false;
+            }
             $ProdactHasTemplates = ProdactHasTemplates($template->id, $item->id);
 	    $fileExist = false;
             if (count($item->files)) {
@@ -399,26 +406,40 @@ function pccart_cart_form2($form, &$form_state) {
                     '#type' => 'container',
                     '#attributes' => array('class' => array('description')),
                 );
-
-                $form['cart']['items'][$item->id]['ready']['description']['title'] = array(
-                    '#prefix' => '<h3>',
-                    '#suffix' => '</h3>',
-                    '#markup' => $item->quantity . ' ' . t('pcs.') . ' ' . $product->name . ' ' . $firstConfig->name,
-                );
-
-                if ($itemValue < $item->originPrice) {
-                    $promoPrice = '<del>&euro; ' . $item->originPrice . '</del>';
-                    $form['cart']['items'][$item->id]['ready']['description']['promoPrice'] = array(
-                        '#prefix' => '<div class="origin-price">',
-                        '#suffix' => '</div>',
-                        '#markup' => $promoPrice,
+                if ($item->customWidth != 0 && $item->customHeight != 0){
+                    $form['cart']['items'][$item->id]['ready']['description']['title'] = array(
+                        '#prefix' => '<h3>',
+                        '#suffix' => '</h3>',
+                        '#markup' =>  $item->quantity . ' ' . t('pcs.') . ' ' . $product->name . ' ' . $item->customWidth.'mm X '. $item->customHeight. 'mm',
+                    );
+                }else
+                {
+                    $form['cart']['items'][$item->id]['ready']['description']['title'] = array(
+                        '#prefix' => '<h3>',
+                        '#suffix' => '</h3>',
+                        '#markup' => $item->quantity . ' ' . t('pcs.') . ' ' . $product->name . ' ' . $firstConfig->name,
                     );
                 }
-                $form['cart']['items'][$item->id]['ready']['description']['price'] = array(
-                    '#theme' => 'price',
-                    '#value' => $itemValue,
-                );
-
+                if ($item->customWidth != 0 && $item->customHeight != 0){
+                    $form['cart']['items'][$item->id]['ready']['description']['price'] = array(
+                        '#theme' => 'price',
+                        '#value' => $itemValue,
+                    );
+                }else{
+                    if ($itemValue < $item->originPrice) {
+                        $promoPrice = '<del>&euro; ' . $item->originPrice . '</del>';
+                        $form['cart']['items'][$item->id]['ready']['description']['promoPrice'] = array(
+                            '#prefix' => '<div class="origin-price">',
+                            '#suffix' => '</div>',
+                            '#markup' => $promoPrice,
+                        );
+                    
+                    }
+                    $form['cart']['items'][$item->id]['ready']['description']['price'] = array(
+                        '#theme' => 'price',
+                        '#value' => $itemValue,
+                    );
+                }
                 $form['cart']['items'][$item->id]['ready']['description']['list'] = array(
                     '#theme' => 'item_list',
                     '#items' => $list,
@@ -485,6 +506,7 @@ function pccart_cart_form2($form, &$form_state) {
                             '#content'=> array('#markup' => '<span class="text buttondesigntool btnupfile"><span class="txtgras">'.t('COMMENCER').'</span>',),
                             '#theme' => 'designtoollink',
                             '#templateId' => $template->id,
+                            '#custom' => $custom,
                             '#title' => $product->name . ' ' . $firstConfig->name,
                             '#html' => true,
                             '#oi' => array(
@@ -518,6 +540,7 @@ function pccart_cart_form2($form, &$form_state) {
                             '#content'=> array('#markup' => '<span class="buttonlayout btnupfile"><span class="txtgras">'.t("COMMENCER").'</span>',),
                             '#theme' => 'designtoolproflink',
                             '#templateId' => $template->id,
+                            '#custom' => $custom,
                             '#title' => $product->name . ' ' . $firstConfig->name,
                             '#params' => array(
                                 'id' => $item->id,
@@ -545,6 +568,7 @@ function pccart_cart_form2($form, &$form_state) {
                             '#content'=> array('#markup' => '<span class="text buttondesigntool btnupfile"><span class="txtgras">'.t('COMMENCER').'</span>',),
                             '#theme' => 'designtoollink',
                             '#templateId' => $template->id,
+                            '#custom' => $custom,
                             '#title' => $product->name . ' ' . $firstConfig->name,
                             '#html' => true,
                             '#oi' => array(

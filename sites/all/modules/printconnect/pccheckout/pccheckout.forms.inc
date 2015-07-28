@@ -245,7 +245,7 @@ function pccheckout_personal_form_validate($form, &$form_state) {
     } else {
         $customer->language = 1;
     }
-
+    /** preparing shipping address **/
     $address = $form_state['storage']['address'];
     if (!$address) {
         $address = \printconnect\Customers\Addresses\Factory::Create();
@@ -253,26 +253,37 @@ function pccheckout_personal_form_validate($form, &$form_state) {
         $address->lastName = $customer->lastName;
         $address->phone = $customer->phone;
     }
-
     $address->name = $customer->firstName . ' ' . $customer->lastName;
     $address->defaultShipping = true;
     $address->defaultBilling = true;
     $address->customer = $customer->id;
-
     \printconnect\Drupal\Forms::LoadObject($form_state['values'], $address);
-
+    /** end preparing shipping address **/
+    
+    /** preparing billing Account **/
+    $billingAccount = $form_state['storage']['billingAccount'];
+    if(!$billingAccount) {
+        $billingAccount = \printconnect\Customers\BillingAccounts\Factory::Create();
+        $billingAccount->name = $customer->firstName . ' ' . $customer->lastName;
+        $billingAccount->defaultBilling = true;
+        $billingAccount->customer = $customer->id;
+    }
+    \printconnect\Drupal\Forms::LoadObject($form_state['values'], $billingAccount);
+    /** end preparing billing Account **/
     try {
         \printconnect\Customers\Addresses\Factory::Validate(clone $address);
+        \printconnect\Customers\BillingAccounts\Factory::Validate(clone $billingAccount);
     } catch (\printconnect\Dal\Exception $ex) {
         \printconnect\Drupal\Forms::HandleException($ex, $form, 'personal][');
     }
     $form_state['storage']['address'] = $address;
     $form_state['storage']['customer'] = $customer;
+    $form_state['storage']['billingAccount'] = $billingAccount;
 }
 
 function pccheckout_personal_form_submit($form, &$form_state) {
-    $billingAccount = $form_state['storage']['address'];
-    $customerbillingAccount = $form_state['storage']['customer'];
+     /** save billing account **/
+    $billingAccount = $form_state['storage']['billingAccount'];
     \printconnect\Customers\BillingAccounts\Factory::Save($billingAccount);
     switch ($billingAccount->vatStatus) {
         case 'vat_tag_3' :
@@ -286,11 +297,17 @@ function pccheckout_personal_form_submit($form, &$form_state) {
         default:
             break;
     }
+    $customerbillingAccount = $form_state['storage']['customer'];
     $customerbillingAccount->billingAccount = $billingAccount->id;
-    \printconnect\Customers\Addresses\Factory::Save($billingAccount);
     \printconnect\Customers\Factory::Save($customerbillingAccount);
+    /** end saving billing account **/
+    
+    /** save shipping address **/
+    $address = $form_state['storage']['address'];
+    \printconnect\Customers\Addresses\Factory::Save($address);
     \printconnect\Customers\BillingAccounts\Factory::ClearBillingAccountsCache($customerbillingAccount);
-    drupal_goto('checkout/invoiceanddelivery');
+    /** end saving shipping address*/
+     drupal_goto('checkout/invoiceanddelivery');
 }
 
 

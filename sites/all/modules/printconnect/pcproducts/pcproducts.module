@@ -598,7 +598,6 @@ function getFromServer($filename) {
     $apikey = variable_get('pc_apikey', '');
     $url = "http://stg.oneo.dev/rest/json/filename/{$filename}?apikey={$apikey}";
     $url = "http://admin.stg.printconcept.com/rest/json/filename/{$filename}?apikey={$apikey}";
-   $url = "http://flyerfr.dev/json.json";
     return file_get_contents($url);
 }
 

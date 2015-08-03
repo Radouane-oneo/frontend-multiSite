@@ -263,7 +263,7 @@ Drupal.behaviors.pccheckout = {
                     total = total.toFixed(2) + "";
                     var wholevat = total.split(".")[0];
                     var decPartvat = total.split(".")[1];
-                    var End = '<span id="price" class="price"><label>Total HTVA</label><span class="value"><span class="whole">' + wholevat + '</span><span class="decimalpoint">,</span><span class="decimals">' + decPartvat + '</span>&nbsp;<span class="currency">€</span></span></span>';
+                    var End = '<span id="price" class="price"><label>Total TTC</label><span class="value"><span class="whole">' + wholevat + '</span><span class="decimalpoint">,</span><span class="decimals">' + decPartvat + '</span>&nbsp;<span class="currency">€</span></span></span>';
                     $('.page-checkout-payment #edit-actions').find('#price').replaceWith(End);
 
 

@@ -685,12 +685,12 @@ table.targetPrice tbody tr.last-child td { border:none; }
   width: inherit;
   height: inherit;
 }
-.title-image.designtool {
-  background: url("images/1.png")center no-repeat ;
+.title-image.design-tool {
+  background: url("images/2.png")center no-repeat ;
   height: 50px;
 }
 .title-image.pro-upload {
-  background: url("images/2.png")center no-repeat ;
+  background: url("images/1.png")center no-repeat ;
   height: 50px;
 }
 

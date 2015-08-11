@@ -116,3 +116,11 @@ function seven_css_alter(&$css) {
     $css['misc/ui/jquery.ui.theme.css']['type'] = 'file';
   }
 }
+
+/**
+ * Implements hook_css_alter().
+ */
+function seven_js_alter(&$javascript) {
+    unset($javascript['sites/all/modules/printconnect/pccart/pccart.js']);
+    unset($javascript['sites/all/modules/printconnect/pccheckout/pccheckout.js']);
+}

@@ -7,7 +7,8 @@ core = 7.x
 stylesheets[all][] = css/flyer.css
 stylesheets[all][] = libraries/jquery.selectBox/jquery.selectBox.css
 stylesheets[all][] = css/pcstoresBlock.css
-
+stylesheets[all][] = css/flyerstrap1.css
+stylesheets[all][] = css/flyerstrap2.css
 stylesheets-conditional[lt IE 9][all][] = css/flyer-ie8-and-below.css
 stylesheets-conditional[IE][all][] = css/ie.css
 stylesheets-conditional[IE 7][all][] = css/ie7.css
@@ -41,6 +42,7 @@ scripts[] = js/selectivizr-min.js
 
 
 scripts[] = js/flyer.js
+scripts[] = js/flyerstrap.js
 #scripts[] = js/sldr.js
 scripts[] = js/select2.min.js
 

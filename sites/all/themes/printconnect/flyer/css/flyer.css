@@ -2373,7 +2373,7 @@ body.front #block-block-13:after {
 	background-repeat: no-repeat;
 	padding: 8px 8px 10px 15px;
 	clear: left;
-	font-size: 12px;
+	font-size: 13px;
 	border-style: solid;
 	border-color:#e1e1e1;
 	border-width: 0 1px 1px 1px;
@@ -2688,7 +2688,8 @@ a.ui-button.inactivebtn{
 	height: 43px;
 }
 .page-products #pcproducts-config-form table.grid tbody tr.last-child td:first-child .form-item{
-
+	display: none;
+	visibility: hidden;
 }
 .page-products #pcproducts-config-form tr.last-child .form-item-calcul-qte{
 	text-indent: 0;
@@ -2714,12 +2715,10 @@ a.ui-button.inactivebtn{
 	line-height: 16px;
 	display: inline-block; 
 	vertical-align: middle;
-        padding-left: 27px;
-        font-weight: 700;
 }
 .page-products #pcproducts-config-form tr.last-child .form-item-calcul-qte .wrap-input-calcul{
 	position: absolute;
-	right: -16px;
+	right: -12px;
 	top: 4px;
 }
 .page-products #pcproducts-config-form tr.last-child .form-item-calcul-qte input[type="text"]{
@@ -10742,22 +10741,4 @@ a.cart.button{
 	border-radius: 0 !important;
 	overflow: visible !important;
 	margin-top: 0 !important;
-}
-
-.superdeal{
-	background-color: #15B7D3 !important;
-}
-
-.superdeal * {
-	color: #fff; !important;
-}
-.superdeal:hover *{
-	color: #15B7D3; !important;
-	background-color: #fff !important;
-}
-.messagedeal{
-	float: right;
-	color: white;
-	margin-right: 16px;
-}
 }

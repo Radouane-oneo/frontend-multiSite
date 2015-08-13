@@ -186,7 +186,7 @@
         <!-- shippingDetail -->
         <div id="bloc-shipping"><%= shippingHTML %></div>
         <!-- End shippingDetail -->
-
+        <% if(model.widthCF == null && model.heightCF == null)  {%> 
         <!-- templateDetail -->
         <fieldset id="templates" class="templates form-wrappersss">
             <legend><span class="fieldset-legend"><%= config.labels['technicalDetails'] %></span></legend>
@@ -243,7 +243,7 @@
             </div>
         </fieldset>
         <!-- End templateDetail -->
-
+<%}%>
         <% if(config.isAdmin) { %>
         <div class="form-item form-type-item">
             <label><%= config.labels["directLink"] %> :</label>

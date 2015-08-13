@@ -1,6 +1,0 @@
-name = Static Products block
-description = Tree products with one variante in static mode, [flayers, affiches, cartes de visites, [dépliants]]
-package = printconnect
-core = 7.x
-
-stylesheets[all][] = pcstaticproducts.css

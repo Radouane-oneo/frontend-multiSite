@@ -1,6 +1,0 @@
-name = pcprintlog
-description = set logs from web service
-package = printconnect
-core = 7.x
-
-

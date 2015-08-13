@@ -220,7 +220,7 @@ define([
                             "heightCF":hcfVal,                            
                             "CF":"CF"
                         },{silent: true});
-                    this.$("li.CF a").trigger("click");
+                    //this.$("li.CF a").trigger("click");
                     return true;
                     //$('.msgCFValid').text($('#msgCFValid').val());
                 }

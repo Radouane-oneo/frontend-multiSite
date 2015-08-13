@@ -554,7 +554,7 @@ function pccart_cart_form2($form, &$form_state) {
                     }else {
                         $form['cart']['items'][$item->id]['ready']['product-container']['proflink'] = array(
                             '#prefix' =>  '<div class="poll-form poll-form1 first">' .
-                                                    '<div class="title-image designtool"></div>' .
+                                                    '<div class="title-image design-tool"></div>' .
                                                     '<div class="option-title">DESIGNTOOL</div>' .
                                                     '<p class="txto">'.t('Pour tous les clients (recommandé)').'</p>' .
                                                     '<ul class="options-file-impression indice-'. $model_list_index .'">

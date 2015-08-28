@@ -1196,7 +1196,7 @@ a.button.request:active {
 }
 
 a.btn-cmd span.flesh{
-	background-image: url(images/sprite_icons.png);
+	 background:url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/Lp15/elements/icon_action_hover.png) no-repeat scroll center / 20px padding-box border-box;
 }
 .newDesignUpload .owndesigntop:hover, 
 #pctemplates-selection-form .owndesign:hover {

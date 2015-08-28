@@ -7,6 +7,7 @@ body.flyerstrap.page-node-edit #content { z-index: 99; position: relative; }
 #flyerstrap { margin-top: -37px; }
 .flyerstrap .whitebox { background-color: transparent; }
 b { font-weight: 600; }
+.page-node-edit .whitebox { background-color: #FFF!important; padding: 10px; margin: 25px 162px; width: 680px; }
 
 /* GENERAL */
 .flyerstrap-block {
@@ -47,7 +48,7 @@ b { font-weight: 600; }
 	height: 250px;
 	position: absolute;
 	top: -37px;
-	z-index: 1;
+	z-index: 7;
 }
 
 #header-content {
@@ -72,7 +73,7 @@ h1.title-main {
 	color: #F60;
 	font-weight: 100 !important;
 	font-size: 30px !important;
-	line-height: 52px !important;
+	line-height: 32px !important;
 }
 
 #header-content p.sub-title-main {
@@ -183,12 +184,11 @@ select.form-element { padding: 7px 10px 8px 6px !important; height: 34px; backgr
 	margin-right: 8px;
 }
 .form-element.tierce.last { margin-right: 9px; }
-.btn.empty-i { padding: 17px; }
+.btn.no-icon { padding: 17px; }
 #form-full-width { width: 990px; }
 input.form-element { height: 18px; }
 
-/* BOTTONS */
-
+/* BOTTONS */ 
 .btn {font-family: Open Sans; font-size: 14px; font-weight: 400; padding: 9px 12px 7px 12px; text-decoration: none; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; display: inline-block; line-height: 0; cursor: pointer;
 	-webkit-transition:all .2s ease-in-out;
 	-moz-transition:all .2s ease-in-out;
@@ -197,7 +197,7 @@ input.form-element { height: 18px; }
 	transition:all .2s ease-in-out;
 }
 .btn:hover { text-decoration: none; }
-.btn:visited { color: #fff; }
+.btn:not(.btn-white):visited { color: #fff; }
 
 .btn i { width: 18px; height: 18px; display: inline-block; margin-right: 9px; vertical-align: middle; position: relative; top: -1px; }
 .btn span { vertical-align: middle; }

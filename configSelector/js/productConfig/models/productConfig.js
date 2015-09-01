@@ -65,7 +65,7 @@ define([
 
             return Math.round(totalPrice*100)/100;
         },
-        setToolBoxGroup: function(items){
+        setToolBoxGroup: function(items, submit){
             var me = this;
             var toolBoxGroup = undefined;
             while(typeof toolBoxGroup == "undefined"){
@@ -95,7 +95,8 @@ define([
             this.set({
                 "priceGroupId" : toolBoxGroup["priceGroupId"],
                 "options" : validOptions,
-                "price" : price
+                "price" : price,
+                "submit" : submit
             })
         },
         containsArray: function(arrParent, arrChild){

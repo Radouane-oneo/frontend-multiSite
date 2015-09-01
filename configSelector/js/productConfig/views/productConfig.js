@@ -47,6 +47,9 @@ define([
                 "options" : this.model.get("options"),
                 "quantity" : this.model.get("quantity")
             });
+            if(this.model.get("submit")) {
+                $("#pcproducts-config-form").submit();
+            }
         },
         toggleExpand: function(e){
             $(e.currentTarget).toggleClass("expanded");
@@ -67,8 +70,8 @@ define([
         preventDefault: function(e){
             e.preventDefault();
         },
-        changeToolBoxGroup: function(e){
-              if(!e.isTrigger) {
+        changeToolBoxGroup: function(e, submit){
+            if(!e.isTrigger && parseInt($(e.currentTarget).parents(".dropdown").attr("data-id")) == this.config.labels["format"]) {
                 this.model.set({
                     "widthCF": null,
                     "heightCF":null,
@@ -90,7 +93,7 @@ define([
             });
 
             dropDown.promise().done(function(){
-                me.model.setToolBoxGroup(selectedItems);
+                me.model.setToolBoxGroup(selectedItems, submit);
                 $(window).scrollTop(me.$(".form-type-select").offset().top);
             });
 
@@ -164,34 +167,81 @@ define([
                 $('.msgErrorCF').text($('#msgErrorCF').val());
                 return false;
             }
-            else{
-                $('.msgErrorCF').text("");
-                var wcfVal = parseFloat(wcf.replace(",", "."));                      
-                var hcfVal = parseFloat(hcf.replace(",", "."));
-                var cfTol = wcfVal/hcfVal;
-                console.log('goodfirst');
-                if (( wcfVal >= minWCF && wcfVal <= maxWCF ) &&  ( hcfVal >= minHCF && hcfVal <= maxHCF ) &&  ( cfTol >= minTOL && cfTol <= maxTOL )){
-                    console.log('good');
-                    $('.msgErrorCF').text($('#msgCFValid').val());
-                    $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
-                    $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
-                   this.model.set({
-                            "widthCF": wcfVal,
-                            "heightCF":hcfVal,
-                            "CF":"CF",
-                            "quantity" : 1
-                        },{silent: true});
-                    this.$("li.CF a").trigger("click");
-                 
-                }
-                else{
-                    console.log('not correct '+cfTol);
-                    $('#wcf').css({ "border":"1px solid red", "color":"red"});
-                    $('#hcf').css({ "border":"1px solid red", "color":"red"});
-                    $('.msgErrorCF').text($('#msgErrorCFNotValid').val());
-                    
-                }
+            if (isNaN(hcf) && isNaN(wcf)){
+                $('#hcf').css({ "border":"1px solid red", "color":"red"});
+                $('#wcf').css({ "border":"1px solid red", "color":"red"});
+                console.log($('#msgErrorCFNotFloat').val());
+                $('.msgErrorCF').text($('#msgErrorCFNotFloat').val());
+                return false;
             }
+            else{
+                $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});  
+            }
+            if (isNaN(hcf)){
+                $('#hcf').css({ "border":"1px solid red", "color":"red"});
+                $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                $('.msgErrorCF').text($('#msgErrorCFNotFloat').val());
+                return false;
+            }
+            else {
+                $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+            }
+            if(isNaN(wcf)){
+                $('#wcf').css({ "border":"1px solid red", "color":"red"});
+                $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                $('.msgErrorCF').text($('#msgErrorCFNotFloat').val());
+                return false;
+            }
+            else
+                $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+            var wcfVal = parseFloat(wcf.replace(",", "."));                      
+            var hcfVal = parseFloat(hcf.replace(",", "."));
+            if ( (hcfVal < minHCF || hcfVal > maxHCF) && (wcfVal < minWCF || wcfVal > maxWCF)){
+                $('#hcf').css({ "border":"1px solid red", "color":"red"});
+                $('#wcf').css({ "border":"1px solid red", "color":"red"});                
+                $('.msgErrorCF').html(
+                        $('#textHeightNotValid').val() +" "+ minHCF + " mm "  + $('#et').val()+" " +maxHCF+ " mm."
+                        + " <br>" + 
+                        $('#textWidthNotValid').val() +" "+ minWCF + " mm " + $('#et').val() +" " +maxWCF+ " mm.");
+                return false;
+            }
+            if ( wcfVal < minWCF || wcfVal > maxWCF){
+                console.log(minWCF);
+                $('#wcf').css({ "border":"1px solid red", "color":"red"});
+                $('.msgErrorCF').text($('#textWidthNotValid').val() +" "+ minWCF + " mm " + $('#et').val() +" " +maxWCF+ " mm.");
+                return false;
+            }
+            if ( hcfVal < minHCF || hcfVal > maxHCF){
+                $('#hcf').css({ "border":"1px solid red", "color":"red"});
+                $('.msgErrorCF').text($('#textHeightNotValid').val() +" "+ minHCF + " mm "  + $('#et').val()+" " +maxHCF+ " mm.");
+                return false;
+            }  
+            
+            $('.msgErrorCF').text("");              
+            if (wcfVal > hcfVal) var cfTol = wcfVal / hcfVal; else var cfTol = hcfVal / wcfVal;
+            console.log('minT'+ maxTOL);
+            if ( cfTol < minTOL || cfTol > maxTOL) {
+                $('#wcf').css({ "border":"1px solid red", "color":"red"});
+                $('#hcf').css({ "border":"1px solid red", "color":"red"});
+                $('.msgErrorCF').text($('#textTolNotValid').val() +" "+ minTOL + " "  + $('#et').val()+" " +maxTOL+ ".");
+                return false;
+            }
+            
+            if (( wcfVal >= minWCF && wcfVal <= maxWCF ) &&  ( hcfVal >= minHCF && hcfVal <= maxHCF ) &&  ( cfTol >= minTOL && cfTol <= maxTOL ))
+            {                
+                $('.msgCFValid').text($('#msgCFValid').val());
+                $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"}); 
+                this.model.set({
+                           "widthCF": wcfVal,
+                           "heightCF":hcfVal,
+                           "CF":"CF",
+                           "quantity" : 1
+                       },{silent: true});
+                   this.$("li.CF a").trigger("click");
+            }
+                       
         },
         calculCFOrder: function(e){ 
             var minHCF = this.config.labels['minHCF'];
@@ -202,36 +252,92 @@ define([
             var maxTOL = this.config.labels['maxTOL'];
             var wcf = $('#wcf').val();
             var hcf = $('#hcf').val();
-            if (wcf == '' || hcf == ''){
+            if (wcf == '' && hcf == ''){
                 return true;
             }
             else{
-                $('.msgErrorCF').text("");
-                wcfVal = parseFloat(wcf.replace(",", "."));                      
-                hcfVal = parseFloat(hcf.replace(",", "."));
-                cfTol = wcfVal/hcfVal;
-                if (( wcfVal >= minWCF && wcfVal <= maxWCF ) &&  ( hcfVal >= minHCF && hcfVal <= maxHCF ) &&  ( cfTol >= minTOL && cfTol <= maxTOL )){
-                    $('.msgErrorCF').text($('#msgCFValid').val());
+                if (wcf == '' || hcf == ''){
+                    if (wcf == '' && hcf != '') $('#wcf').css({ "border":"1px solid red", "color":"red"});else $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                    if (hcf == '' && wcf != '') $('#hcf').css({ "border":"1px solid red", "color":"red"}); else $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                    $('.msgErrorCF').text($('#msgErrorCF').val());
+                    return false;
+                }
+                if (isNaN(hcf) && isNaN(wcf)){
+                    $('#hcf').css({ "border":"1px solid red", "color":"red"});
+                    $('#wcf').css({ "border":"1px solid red", "color":"red"});
+                    $('.msgErrorCF').text($('#msgErrorCFNotFloat').val());
+                    return false;
+                }
+                else{
                     $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                    $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});  
+                }
+                if (isNaN(hcf)){
+                    $('#hcf').css({ "border":"1px solid red", "color":"red"});
+                    $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                    $('.msgErrorCF').text($('#msgErrorCFNotFloat').val());
+                    return false;
+                }
+                else {
                     $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
-                    console.log('correct '+cfTol);
-                    this.model.set({
-                            "widthCF": wcfVal,
-                            "heightCF":hcfVal,                            
-                            "CF":"CF"
-                        },{silent: true});
-                    //this.$("li.CF a").trigger("click");
-                    return true;
-                    //$('.msgCFValid').text($('#msgCFValid').val());
+                }
+                if(isNaN(wcf)){
+                    $('#wcf').css({ "border":"1px solid red", "color":"red"});
+                    $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                    $('.msgErrorCF').text($('#msgErrorCFNotFloat').val());
+                    return false;
                 }
                 else
-                    $('.msgErrorCF').text($('#msgErrorCFNotValid').val());
-                     console.log('not correct '+cfTol);
+                    $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                var wcfVal = parseFloat(wcf.replace(",", "."));                      
+                var hcfVal = parseFloat(hcf.replace(",", "."));
+                if ( (hcfVal < minHCF || hcfVal > maxHCF) && (wcfVal < minWCF || wcfVal > maxWCF)){
+                    $('#hcf').css({ "border":"1px solid red", "color":"red"});
+                    $('#wcf').css({ "border":"1px solid red", "color":"red"});                
+                    $('.msgErrorCF').html(
+                            $('#textHeightNotValid').val() +" "+ minHCF + " mm "  + $('#et').val()+" " +maxHCF+ " mm."
+                            + " <br>" + 
+                            $('#textWidthNotValid').val() +" "+ minWCF + " mm " + $('#et').val() +" " +maxWCF+ " mm.");
+                    return false;
+                }
+                if ( wcfVal < minWCF || wcfVal > maxWCF){
+                    console.log(minWCF);
+                    $('#wcf').css({ "border":"1px solid red", "color":"red"});
+                    $('.msgErrorCF').text($('#textWidthNotValid').val() +" "+ minWCF + " mm " + $('#et').val() +" " +maxWCF+ " mm.");
+                    return false;
+                }
+                if ( hcfVal < minHCF || hcfVal > maxHCF){
+                    $('#hcf').css({ "border":"1px solid red", "color":"red"});
+                    $('.msgErrorCF').text($('#textHeightNotValid').val() +" "+ minHCF + " mm "  + $('#et').val()+" " +maxHCF+ " mm.");
+                    return false;
+                }  
+            
+                $('.msgErrorCF').text("");              
+                if (wcfVal > hcfVal) var cfTol = wcfVal / hcfVal; else var cfTol = hcfVal / wcfVal;
+                console.log('minT'+ maxTOL);
+                if ( cfTol < minTOL || cfTol > maxTOL) {
                     $('#wcf').css({ "border":"1px solid red", "color":"red"});
                     $('#hcf').css({ "border":"1px solid red", "color":"red"});
-                    $('#wcf').focus();
+                    $('.msgErrorCF').text($('#textTolNotValid').val() +" "+ minTOL + " "  + $('#et').val()+" " +maxTOL+ ".");
                     return false;
-            }
+                }
+            
+                if (( wcfVal >= minWCF && wcfVal <= maxWCF ) &&  ( hcfVal >= minHCF && hcfVal <= maxHCF ) &&  ( cfTol >= minTOL && cfTol <= maxTOL ))
+                {             
+                    $('.msgCFValid').text($('#msgCFValid').val());
+                    $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                    $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"}); 
+                    this.model.set({
+                               "widthCF": wcfVal,
+                               "heightCF":hcfVal,
+                               "CF":"CF",
+                               "quantity" : 1
+                           },{silent: true});
+                           //console.log(this.model);
+                            this.$("li.CF a").trigger("click", 1);
+                       return true;
+                }
+         }
         },
         checkQuantity: function(e){
             if(e.which != 8 && isNaN(String.fromCharCode(e.which)))

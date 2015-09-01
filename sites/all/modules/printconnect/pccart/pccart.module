@@ -1,5 +1,4 @@
 <?php
-die;
 use printconnect\Carts\Factory;
 use printconnect\Shipping;
 use printconnect\Diagnostics\Debug;

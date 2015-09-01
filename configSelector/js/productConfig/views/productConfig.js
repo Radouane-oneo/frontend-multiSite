@@ -85,6 +85,7 @@ define([
             var oldSelectedValue = selectEl.find("div.selected-item").attr("data-id");
             var selectedItems = [];
             var me = this;
+            if(!submit)
             selectEl.click();
 
             this.$("div.selected-item").each(function(){

@@ -20,7 +20,7 @@
             <% var selected = _.find(toolBoxItem.data, function(item){ return $.inArray(item.id, model.toolBoxGroup.toolboxItems)!=-1 }); %>
             <div class="text selected-item" href="#" data-id="<%= selected.id %>"><%= selected.name %></div>
         </div>
-        <div class="dropdown clearfix form-wrapper" style="display: none;">
+        <div class="dropdown clearfix form-wrapper" style="display: none;"  data-id="<%= toolBoxItem.id %>">
             <div class="description form-wrapper">
                 <%= config.labels["toolBoxDescription_" + toolBoxItem.id] %>
             </div>
@@ -38,6 +38,14 @@
                                     <input type="hidden" id="msgErrorCF" class="msgErrorCF" value="<%= config.labels['msgErrorCF'] %>">
                                     <input type="hidden" id="msgCFValid" class="msgCFValid" value="<%= config.labels['msgCFValid'] %>">
                                     <input type="hidden" id="msgErrorCFNotValid" class="msgErrorCFNotValid" value="<%= config.labels['msgErrorCFNotValid'] %>">
+                                     <input type="hidden" id="msgErrorCFHeightNotValid" class="msgErrorCF" value="<%= config.labels['msgErrorCFHeightNotValid'] %>">
++                                    <input type="hidden" id="msgErrorCFWidthNotValid" class="msgErrorCF" value="<%= config.labels['msgErrorCFWidthNotValid'] %>">
++                                    <input type="hidden" id="msgErrorCFTolNotValid" class="msgErrorCF" value="<%= config.labels['msgErrorCFTolNotValid'] %>">
++                                    <input type="hidden" id="msgErrorCFNotFloat" class="msgErrorCF" value="<%= config.labels['msgErrorCFNotFloat'] %>">
++                                    <input type="hidden" id="textWidthNotValid" class="msgErrorCF" value="<%= config.labels['textWidthNotValid'] %>">
++                                    <input type="hidden" id="textHeightNotValid" class="msgErrorCF" value="<%= config.labels['textHeightNotValid'] %>">
++                                    <input type="hidden" id="textTolNotValid" class="msgErrorCF" value="<%= config.labels['textTolNotValid'] %>">
++                                    <input type="hidden" id="et" class="msgErrorCF" value="<%= config.labels['et'] %>">
                                 </div>
                                 <div class="wrapBtn">
                                     <input type="button" value="<%= config.labels['berekenen'] %>" class="form-submit calculCF">
@@ -186,7 +194,7 @@
         <!-- shippingDetail -->
         <div id="bloc-shipping"><%= shippingHTML %></div>
         <!-- End shippingDetail -->
-
+        <% if(model.widthCF == null && model.heightCF == null)  {%> 
         <!-- templateDetail -->
         <fieldset id="templates" class="templates form-wrappersss">
             <legend><span class="fieldset-legend"><%= config.labels['technicalDetails'] %></span></legend>
@@ -243,7 +251,7 @@
             </div>
         </fieldset>
         <!-- End templateDetail -->
-
+<%}%>
         <% if(config.isAdmin) { %>
         <div class="form-item form-type-item">
             <label><%= config.labels["directLink"] %> :</label>

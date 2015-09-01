@@ -231,7 +231,12 @@ function pccart_cart_form2($form, &$form_state) {
             }
 
             $product = Products\Factory::Get($item->configuration->productId);
-
+            if ($item->customWidth != 0 && $item->customHeight != 0){
+                $title = $product->name . ' ' . $item->customWidth.' X '. $item->customHeight. ' mm';
+            }else
+            {
+                $title = $product->name . ' ' . $firstConfig->name;
+            }
             $templates = Products\Templates\Factory::GetTemplates($item->configuration->productId, $items);
             $template = $templates->items[0];
             if ($item->customWidth != 0 && $item->customHeight != 0){
@@ -348,7 +353,7 @@ function pccart_cart_form2($form, &$form_state) {
                         '#suffix' => '</div>',
                         '#theme' => $themequickupload,
                         '#templateId' => $template->id,
-                        '#title' => $product->name . ' ' . $firstConfig->name,
+                        '#title' => $title,
                         '#params' => array(
                             'id' => $item->id,
                             'vs' => 1,
@@ -380,7 +385,7 @@ function pccart_cart_form2($form, &$form_state) {
                         $form['cart']['items'][$item->id]['files']['control']['text'] = array(
                             '#prefix' => '<div class="text">',
                             '#suffix' => '</div>',
-                            '#markup' => '<h3>' . t('Control professional') . ' ' . $item->quantity . ' ' . t('pcs.') . ' ' . $product->name . ' ' . $firstConfig->name . '</h3><span class="price"><span class="value">&nbsp;<span class="whole">4</span><span class="decimalpoint">,</span><span class="decimals">99</span><span class="currency">€</span></span></span>',
+                            '#markup' => '<h3>' . t('Control professional') . ' ' . $item->quantity . ' ' . t('pcs.') . ' ' . $title . '</h3><span class="price"><span class="value">&nbsp;<span class="whole">4</span><span class="decimalpoint">,</span><span class="decimals">99</span><span class="currency">€</span></span></span>',
                         );
 
 
@@ -417,7 +422,7 @@ function pccart_cart_form2($form, &$form_state) {
                     $form['cart']['items'][$item->id]['ready']['description']['title'] = array(
                         '#prefix' => '<h3>',
                         '#suffix' => '</h3>',
-                        '#markup' => $item->quantity . ' ' . t('pcs.') . ' ' . $product->name . ' ' . $firstConfig->name,
+                        '#markup' => $item->quantity . ' ' . t('pcs.') . ' ' . $title,
                     );
                 }
                 if ($item->customWidth != 0 && $item->customHeight != 0){
@@ -460,7 +465,7 @@ function pccart_cart_form2($form, &$form_state) {
                         $modelform = array(
                             '#theme' => 'designtoolModele',
                             '#templateId' => $template->id,
-                            '#title' => $product->name . ' ' . $firstConfig->name,
+                            '#title' => $title,
                             '#html' => true,
                             '#content' => t("1000+ modèles gratuits en ligne"),
                             '#oi' => array(
@@ -489,6 +494,7 @@ function pccart_cart_form2($form, &$form_state) {
                     $form['cart']['items'][$item->id]['ready']['product-container']['product-items'] = array(
                         '#markup' => '<div class="title-chose">' . t('Téléchargez votre fichier ou créez en ligne') . '</div>',
                     );
+                    
                     if($item->hasProUpload){
                         $form['cart']['items'][$item->id]['ready']['product-container']['proflink'] = array(
                             '#prefix' =>  '<div class="poll-form poll-form1 first">' .
@@ -507,7 +513,7 @@ function pccart_cart_form2($form, &$form_state) {
                             '#theme' => 'designtoollink',
                             '#templateId' => $template->id,
                             '#custom' => $custom,
-                            '#title' => $product->name . ' ' . $firstConfig->name,
+                            '#title' => $title,
                             '#html' => true,
                             '#oi' => array(
                                 'priceGroupId' => $item->productPriceGroupId,
@@ -541,7 +547,7 @@ function pccart_cart_form2($form, &$form_state) {
                             '#theme' => 'designtoolproflink',
                             '#templateId' => $template->id,
                             '#custom' => $custom,
-                            '#title' => $product->name . ' ' . $firstConfig->name,
+                            '#title' => $title,
                             '#params' => array(
                                 'id' => $item->id,
                                 'cartid' => $cart->id,
@@ -554,7 +560,7 @@ function pccart_cart_form2($form, &$form_state) {
                     }else {
                         $form['cart']['items'][$item->id]['ready']['product-container']['proflink'] = array(
                             '#prefix' =>  '<div class="poll-form poll-form1 first">' .
-                                                    '<div class="title-image designtool"></div>' .
+                                                    '<div class="title-image design-tool"></div>' .
                                                     '<div class="option-title">DESIGNTOOL</div>' .
                                                     '<p class="txto">'.t('Pour tous les clients (recommandé)').'</p>' .
                                                     '<ul class="options-file-impression indice-'. $model_list_index .'">
@@ -569,7 +575,7 @@ function pccart_cart_form2($form, &$form_state) {
                             '#theme' => 'designtoollink',
                             '#templateId' => $template->id,
                             '#custom' => $custom,
-                            '#title' => $product->name . ' ' . $firstConfig->name,
+                            '#title' => $title,
                             '#html' => true,
                             '#oi' => array(
                                 'priceGroupId' => $item->productPriceGroupId,

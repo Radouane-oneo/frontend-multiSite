@@ -1196,7 +1196,7 @@ a.button.request:active {
 }
 
 a.btn-cmd span.flesh{
-	background-image: url(images/sprite_icons.png);
+	 background:url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/Lp15/elements/icon_action_hover.png) no-repeat scroll center / 20px padding-box border-box;
 }
 .newDesignUpload .owndesigntop:hover, 
 #pctemplates-selection-form .owndesign:hover {
@@ -3994,20 +3994,21 @@ a.googleconnect {
 }
 .page-checkout #pccheckout-invoiceanddelivery-form .invoice{
 	float: left;
-        margin-top: 15px;
-        min-height: 182px;
-        padding: 6px 10px 10px 25px;
-        position: relative;
-        width: 477px;
+	margin-top: 15px;
+	min-height: 182px;
+	padding: 6px 10px 10px 25px;
+	position: relative;
+	width: 375px;
 }
 .page-checkout #pccheckout-invoiceanddelivery-form .shipping {
 	border-left: 1px solid #e1e1e1;
-        margin-left: 0;
-        margin-top: 16px;
-        min-height: 182px;
-        padding: 7px 9px 10px 32px;
-        position: relative;
-        width: 401px;
+	margin-left: 0;
+	margin-top: 16px;
+	min-height: 182px;
+	padding: 7px 9px 10px 32px;
+	position: relative;
+	width: 385px;
+	float: left;
 }
 .page-checkout #pccheckout-invoiceanddelivery-form .invoice > .fieldset-wrapper,
 .page-checkout #pccheckout-invoiceanddelivery-form .shipping > .fieldset-wrapper{

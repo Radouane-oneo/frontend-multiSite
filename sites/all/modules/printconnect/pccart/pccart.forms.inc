@@ -299,10 +299,16 @@ function pccart_cart_form2($form, &$form_state) {
                         '#attributes' => array('class' => array('description')),
                     );
                     $weight--;
+                    if ($item->customWidth != 0 && $item->customHeight != 0){
+                        $title = $product->name . ' ' . $item->customWidth.' X '. $item->customHeight. ' mm';
+                    }else
+                    {
+                        $title = $product->name . ' ' . $firstConfig->name;
+                    }
                     $form['cart']['items'][$item->id]['files']['description']['title'] = array(
                         '#prefix' => '<h3>',
                         '#suffix' => '</h3>',
-                        '#markup' => $item->quantity . ' ' . t('pcs.') . ' ' . $product->name . ' ' . $firstConfig->name,
+                        '#markup' => $item->quantity . ' ' . t('pcs.') . ' ' . $title,
                     );
 
                     if ($itemValue < $item->originPrice) {

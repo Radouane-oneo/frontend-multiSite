@@ -18,7 +18,9 @@ define([
             "keypress #edit-custom" : "checkQuantity",
             "click #deadlinestooltip legend" : "toggleCollapse",
             "click #deadlinestooltip legend a" : "preventDefault",
-            "focus #edit-custom" : "editCustomQuantity"
+            "focus #edit-custom" : "editCustomQuantity",
+            "click .calculCF " : "calculCF",
+            "click #edit-actions-addtocart" : "calculCFOrder"            
         },
         initialize: function() {
             this.config = require("config");
@@ -45,6 +47,9 @@ define([
                 "options" : this.model.get("options"),
                 "quantity" : this.model.get("quantity")
             });
+            if(this.model.get("submit")) {
+                $("#pcproducts-config-form").submit();
+            }
         },
         toggleExpand: function(e){
             $(e.currentTarget).toggleClass("expanded");
@@ -65,12 +70,22 @@ define([
         preventDefault: function(e){
             e.preventDefault();
         },
-        changeToolBoxGroup: function(e){
+        changeToolBoxGroup: function(e, submit){
+            if(!e.isTrigger && parseInt($(e.currentTarget).parents(".dropdown").attr("data-id")) == this.config.labels["format"]) {
+                this.model.set({
+                    "widthCF": null,
+                    "heightCF":null,
+                    "CF":null
+                },{silent: true});
+            }
+            $('.msgErrorCF').text('');
+            $('.msgCFValid').text('');
             var dropDown = $(e.currentTarget).parents(".dropdown");
             var selectEl = dropDown.prev();
             var oldSelectedValue = selectEl.find("div.selected-item").attr("data-id");
             var selectedItems = [];
             var me = this;
+            if(!submit)
             selectEl.click();
 
             this.$("div.selected-item").each(function(){
@@ -79,7 +94,7 @@ define([
             });
 
             dropDown.promise().done(function(){
-                me.model.setToolBoxGroup(selectedItems);
+                me.model.setToolBoxGroup(selectedItems, submit);
                 $(window).scrollTop(me.$(".form-type-select").offset().top);
             });
 
@@ -96,13 +111,24 @@ define([
             me.model.set("options", options);
         },
         changeQuantity: function(e){
-            var quantity = parseInt($(e.target).val());
-            var pricing = this.model.get("toolBoxGroup")["pricing"][quantity];
-            var price = (pricing["promoPrice"]) ? pricing["promoPrice"] : pricing["sellPrice"];
-            this.model.set({
+            var customHeight = this.model.get('heightCF');
+            var customWidth  = this.model.get('widthCF');
+            if((customHeight) && (customWidth)){
+                var price = ((customHeight * customWidth * _.toArray(this.model.get("toolBoxGroup")["pricing"])[0]["sellPrice"]) / (1 * 1000 * 1000)) * 1;
+                console.log('price1custom: '+price+ 'quantity1custom' + 1);    
+                this.model.set({
                 "price" : price,
-                "quantity" : quantity
-            });
+                "quantity" : 1
+                });
+            }else{
+                var quantity = parseInt($(e.target).val());
+                var pricing = this.model.get("toolBoxGroup")["pricing"][quantity];
+                var price = (pricing["promoPrice"]) ? pricing["promoPrice"] : pricing["sellPrice"];
+                this.model.set({
+                    "price" : price,
+                    "quantity" : quantity
+                });
+            }
         },
         selectInput: function(e){
             $(e.currentTarget).find("input.form-radio").attr("checked","checked");
@@ -113,7 +139,9 @@ define([
             if(isNaN(quantity)) return false;
             var pricing = this.model.get("toolBoxGroup")["pricing"][quantity];
             var price = null;
-            if(pricing){
+            var customHeight = this.model.get('heightCF');
+            var customWidth  = this.model.get('widthCF');
+            if(pricing && !(customHeight) && !(customWidth)){
                 price = (pricing["promoPrice"]) ? pricing["promoPrice"] : pricing["sellPrice"];
             } else {
                 price = this.model.calculatePrice(quantity);
@@ -123,6 +151,194 @@ define([
                 "quantity" : quantity
             });
             return false;
+        },
+        calculCF: function(e){
+            
+            var minHCF = this.config.labels['minHCF'];
+            var maxHCF = this.config.labels['maxHCF'];
+            var minWCF = this.config.labels['minWCF'];
+            var maxWCF = this.config.labels['maxWCF'];
+            var minTOL = this.config.labels['minTOL'];
+            var maxTOL = this.config.labels['maxTOL'];
+            var wcf = $('#wcf').val();
+            var hcf = $('#hcf').val();
+            if (wcf == '' || hcf == ''){
+                if (wcf == '') $('#wcf').css({ "border":"1px solid red", "color":"red"});else $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                if (hcf == '') $('#hcf').css({ "border":"1px solid red", "color":"red"}); else $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                $('.msgErrorCF').text($('#msgErrorCF').val());
+                return false;
+            }
+            if (isNaN(hcf) && isNaN(wcf)){
+                $('#hcf').css({ "border":"1px solid red", "color":"red"});
+                $('#wcf').css({ "border":"1px solid red", "color":"red"});
+                console.log($('#msgErrorCFNotFloat').val());
+                $('.msgErrorCF').text($('#msgErrorCFNotFloat').val());
+                return false;
+            }
+            else{
+                $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});  
+            }
+            if (isNaN(hcf)){
+                $('#hcf').css({ "border":"1px solid red", "color":"red"});
+                $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                $('.msgErrorCF').text($('#msgErrorCFNotFloat').val());
+                return false;
+            }
+            else {
+                $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+            }
+            if(isNaN(wcf)){
+                $('#wcf').css({ "border":"1px solid red", "color":"red"});
+                $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                $('.msgErrorCF').text($('#msgErrorCFNotFloat').val());
+                return false;
+            }
+            else
+                $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+            var wcfVal = parseFloat(wcf.replace(",", "."));                      
+            var hcfVal = parseFloat(hcf.replace(",", "."));
+            if ( (hcfVal < minHCF || hcfVal > maxHCF) && (wcfVal < minWCF || wcfVal > maxWCF)){
+                $('#hcf').css({ "border":"1px solid red", "color":"red"});
+                $('#wcf').css({ "border":"1px solid red", "color":"red"});                
+                $('.msgErrorCF').html(
+                        $('#textHeightNotValid').val() +" "+ minHCF + " mm "  + $('#et').val()+" " +maxHCF+ " mm."
+                        + " <br>" + 
+                        $('#textWidthNotValid').val() +" "+ minWCF + " mm " + $('#et').val() +" " +maxWCF+ " mm.");
+                return false;
+            }
+            if ( wcfVal < minWCF || wcfVal > maxWCF){
+                console.log(minWCF);
+                $('#wcf').css({ "border":"1px solid red", "color":"red"});
+                $('.msgErrorCF').text($('#textWidthNotValid').val() +" "+ minWCF + " mm " + $('#et').val() +" " +maxWCF+ " mm.");
+                return false;
+            }
+            if ( hcfVal < minHCF || hcfVal > maxHCF){
+                $('#hcf').css({ "border":"1px solid red", "color":"red"});
+                $('.msgErrorCF').text($('#textHeightNotValid').val() +" "+ minHCF + " mm "  + $('#et').val()+" " +maxHCF+ " mm.");
+                return false;
+            }  
+            
+            $('.msgErrorCF').text("");              
+            if (wcfVal > hcfVal) var cfTol = wcfVal / hcfVal; else var cfTol = hcfVal / wcfVal;
+            console.log('minT'+ maxTOL);
+            if ( cfTol < minTOL || cfTol > maxTOL) {
+                $('#wcf').css({ "border":"1px solid red", "color":"red"});
+                $('#hcf').css({ "border":"1px solid red", "color":"red"});
+                $('.msgErrorCF').text($('#textTolNotValid').val() +" "+ minTOL + " "  + $('#et').val()+" " +maxTOL+ ".");
+                return false;
+            }
+            
+            if (( wcfVal >= minWCF && wcfVal <= maxWCF ) &&  ( hcfVal >= minHCF && hcfVal <= maxHCF ) &&  ( cfTol >= minTOL && cfTol <= maxTOL ))
+            {                
+                $('.msgCFValid').text($('#msgCFValid').val());
+                $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"}); 
+                this.model.set({
+                           "widthCF": wcfVal,
+                           "heightCF":hcfVal,
+                           "CF":"CF",
+                           "quantity" : 1
+                       },{silent: true});
+                   this.$("li.CF a").trigger("click");
+            }
+                       
+        },
+        calculCFOrder: function(e){ 
+            var minHCF = this.config.labels['minHCF'];
+            var maxHCF = this.config.labels['maxHCF'];
+            var minWCF = this.config.labels['minWCF'];
+            var maxWCF = this.config.labels['maxWCF'];
+            var minTOL = this.config.labels['minTOL'];
+            var maxTOL = this.config.labels['maxTOL'];
+            var wcf = $('#wcf').val();
+            var hcf = $('#hcf').val();
+            if (wcf == '' && hcf == ''){
+                return true;
+            }
+            else{
+                if (wcf == '' || hcf == ''){
+                    if (wcf == '' && hcf != '') $('#wcf').css({ "border":"1px solid red", "color":"red"});else $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                    if (hcf == '' && wcf != '') $('#hcf').css({ "border":"1px solid red", "color":"red"}); else $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                    $('.msgErrorCF').text($('#msgErrorCF').val());
+                    return false;
+                }
+                if (isNaN(hcf) && isNaN(wcf)){
+                    $('#hcf').css({ "border":"1px solid red", "color":"red"});
+                    $('#wcf').css({ "border":"1px solid red", "color":"red"});
+                    $('.msgErrorCF').text($('#msgErrorCFNotFloat').val());
+                    return false;
+                }
+                else{
+                    $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                    $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});  
+                }
+                if (isNaN(hcf)){
+                    $('#hcf').css({ "border":"1px solid red", "color":"red"});
+                    $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                    $('.msgErrorCF').text($('#msgErrorCFNotFloat').val());
+                    return false;
+                }
+                else {
+                    $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                }
+                if(isNaN(wcf)){
+                    $('#wcf').css({ "border":"1px solid red", "color":"red"});
+                    $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                    $('.msgErrorCF').text($('#msgErrorCFNotFloat').val());
+                    return false;
+                }
+                else
+                    $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                var wcfVal = parseFloat(wcf.replace(",", "."));                      
+                var hcfVal = parseFloat(hcf.replace(",", "."));
+                if ( (hcfVal < minHCF || hcfVal > maxHCF) && (wcfVal < minWCF || wcfVal > maxWCF)){
+                    $('#hcf').css({ "border":"1px solid red", "color":"red"});
+                    $('#wcf').css({ "border":"1px solid red", "color":"red"});                
+                    $('.msgErrorCF').html(
+                            $('#textHeightNotValid').val() +" "+ minHCF + " mm "  + $('#et').val()+" " +maxHCF+ " mm."
+                            + " <br>" + 
+                            $('#textWidthNotValid').val() +" "+ minWCF + " mm " + $('#et').val() +" " +maxWCF+ " mm.");
+                    return false;
+                }
+                if ( wcfVal < minWCF || wcfVal > maxWCF){
+                    console.log(minWCF);
+                    $('#wcf').css({ "border":"1px solid red", "color":"red"});
+                    $('.msgErrorCF').text($('#textWidthNotValid').val() +" "+ minWCF + " mm " + $('#et').val() +" " +maxWCF+ " mm.");
+                    return false;
+                }
+                if ( hcfVal < minHCF || hcfVal > maxHCF){
+                    $('#hcf').css({ "border":"1px solid red", "color":"red"});
+                    $('.msgErrorCF').text($('#textHeightNotValid').val() +" "+ minHCF + " mm "  + $('#et').val()+" " +maxHCF+ " mm.");
+                    return false;
+                }  
+            
+                $('.msgErrorCF').text("");              
+                if (wcfVal > hcfVal) var cfTol = wcfVal / hcfVal; else var cfTol = hcfVal / wcfVal;
+                console.log('minT'+ maxTOL);
+                if ( cfTol < minTOL || cfTol > maxTOL) {
+                    $('#wcf').css({ "border":"1px solid red", "color":"red"});
+                    $('#hcf').css({ "border":"1px solid red", "color":"red"});
+                    $('.msgErrorCF').text($('#textTolNotValid').val() +" "+ minTOL + " "  + $('#et').val()+" " +maxTOL+ ".");
+                    return false;
+                }
+            
+                if (( wcfVal >= minWCF && wcfVal <= maxWCF ) &&  ( hcfVal >= minHCF && hcfVal <= maxHCF ) &&  ( cfTol >= minTOL && cfTol <= maxTOL ))
+                {             
+                    $('.msgCFValid').text($('#msgCFValid').val());
+                    $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                    $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"}); 
+                    this.model.set({
+                               "widthCF": wcfVal,
+                               "heightCF":hcfVal,
+                               "CF":"CF",
+                               "quantity" : 1
+                           },{silent: true});
+                           //console.log(this.model);
+                            this.$("li.CF a").trigger("click", 1);
+                       return true;
+                }
+         }
         },
         checkQuantity: function(e){
             if(e.which != 8 && isNaN(String.fromCharCode(e.which)))

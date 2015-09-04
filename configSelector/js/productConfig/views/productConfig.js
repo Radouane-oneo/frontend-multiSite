@@ -331,8 +331,7 @@ define([
                     this.model.set({
                                "widthCF": wcfVal,
                                "heightCF":hcfVal,
-                               "CF":"CF",
-                               "quantity" : 1
+                               "CF":"CF"
                            },{silent: true});
                            //console.log(this.model);
                             this.$("li.CF a").trigger("click", 1);

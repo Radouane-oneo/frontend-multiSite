@@ -4,7 +4,7 @@
 body.flyerstrap #content { width: 1030px; }
 body.logged-in.toolbar.toolbar-drawer.flyerstrap #content { margin-top: -36px; }
 body.flyerstrap.page-node-edit #content { z-index: 99; position: relative; }
-#flyerstrap { margin-top: -37px; }
+#flyerstrap { margin-top: 27px; }
 .flyerstrap .whitebox { background-color: transparent; }
 b { font-weight: 600; }
 .page-node-edit .whitebox { background-color: #FFF!important; padding: 10px; margin: 25px 162px; width: 680px; }

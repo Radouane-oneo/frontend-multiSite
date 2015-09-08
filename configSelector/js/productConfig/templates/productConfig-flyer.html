@@ -1,0 +1,272 @@
+<form accept-charset="UTF-8" id="pcproducts-config-form" method="post"
+      action="/cart/additem/submit">
+    <div>
+        <div id="edit-description" class="description clearfix form-wrapper">
+
+            <div id="edit-description-image" class="image form-wrapper">
+                <img width="178" height="172" alt="" src="<%= config.imagesUrl %>products/<%= config.labels['productId'] %>.png">
+                <h3><%= config.labels["productName"] %></h3>
+            </div>
+            <div id="edit-description-text" class="text form-wrapper">
+                <%= $('<div/>').html(config.labels["productDescription"]).text() %>
+            </div>
+
+        </div>
+
+        <!-- toolBoxItems -->
+        <% _.each(model.toolBoxGroup.tree,function(toolBoxItem, i){ %>
+        <div class="form-item <%= (_.toArray(toolBoxItem.data).length==1)?'form-type-item':'form-type-select' %>">
+            <label><%= toolBoxItem.name %></label>
+            <% var selected = _.find(toolBoxItem.data, function(item){ return $.inArray(item.id, model.toolBoxGroup.toolboxItems)!=-1 }); %>
+            <div class="text selected-item" href="#" data-id="<%= selected.id %>"><%= selected.name %></div>
+        </div>
+        <div class="dropdown clearfix form-wrapper" style="display: none;"  data-id="<%= toolBoxItem.id %>">
+            <div class="description form-wrapper">
+                <%= config.labels["toolBoxDescription_" + toolBoxItem.id] %>
+            </div>
+            <div class="item-list">
+                <% if(toolBoxItem.id == config.labels["format"]) { %> 
+                    <% if(config.labels["customFormat"] == true) { %>
+                        <div class="blocCustomFormat">   
+                            <div class="inputCustomFormat">
+                                <div class='msgErrorCF'></div>
+                                <form>
+                                <div class="wrapTxt">
+                                    <label class="bold-txt label-txt"><%= config.labels['newCF'] %> :</label>
+                                    <input type="text" id="wcf" name="widthCF" value="<%= model.widthCF %>" placeholder="<%= config.labels['breedte'] %>"><label class="light-txt label-txt">mm &nbsp; X</label>
+                                    <input type="text" id="hcf" name="heightCF" value="<%= model.heightCF %>"  placeholder="<%= config.labels['hoogte'] %>"><label class="light-txt label-txt">mm</label>                             
+                                    <input type="hidden" id="msgErrorCF" class="msgErrorCF" value="<%= config.labels['msgErrorCF'] %>">
+                                    <input type="hidden" id="msgCFValid" class="msgCFValid" value="<%= config.labels['msgCFValid'] %>">
+                                    <input type="hidden" id="msgErrorCFNotValid" class="msgErrorCFNotValid" value="<%= config.labels['msgErrorCFNotValid'] %>">
+                                     <input type="hidden" id="msgErrorCFHeightNotValid" class="msgErrorCF" value="<%= config.labels['msgErrorCFHeightNotValid'] %>">
+                                    <input type="hidden" id="msgErrorCFWidthNotValid" class="msgErrorCF" value="<%= config.labels['msgErrorCFWidthNotValid'] %>">
+                                    <input type="hidden" id="msgErrorCFTolNotValid" class="msgErrorCF" value="<%= config.labels['msgErrorCFTolNotValid'] %>">
+                                    <input type="hidden" id="msgErrorCFNotFloat" class="msgErrorCF" value="<%= config.labels['msgErrorCFNotFloat'] %>">
+                                    <input type="hidden" id="textWidthNotValid" class="msgErrorCF" value="<%= config.labels['textWidthNotValid'] %>">
+                                    <input type="hidden" id="textHeightNotValid" class="msgErrorCF" value="<%= config.labels['textHeightNotValid'] %>">
+                                    <input type="hidden" id="textTolNotValid" class="msgErrorCF" value="<%= config.labels['textTolNotValid'] %>">
+                                    <input type="hidden" id="et" class="msgErrorCF" value="<%= config.labels['et'] %>">
+                                </div>
+                                <div class="wrapBtn">
+                                    <input type="button" value="<%= config.labels['berekenen'] %>" class="form-submit calculCF">
+                                </div>
+                               
+                                </form>
+                            </div>
+                        </div>
+                    <% } %> 
+                <% } %>
+                <ul>
+                    <% _.each(toolBoxItem.data,function(item){ %>
+                     <li class='<%= item.code %>'>
+                        <a id="<%= item.id %>" href=""><img width="154" height="154" alt="" src="<%= config.imagesUrl %>items/<%= item.id %>.png">
+
+                        <div class="text"><%= item.name %></div>
+                        <div class="detail"><%= item.detail %></div>
+                        </a>
+                    </li>
+                    <% }); %>
+                </ul>
+            </div>
+        </div>
+        <% }); %>
+        <!-- End toolBoxItems -->
+
+        <!-- Options -->
+        <% if(model.toolBoxGroup.options.length!=0){ %>
+        <div class="form-item form-type-checkboxes form-item-options <%= (expandedOptions)?'expanded':'' %>">
+            <label for="edit-options"><%= config.labels["options"] %></label>
+
+            <div class="text" href="#">
+                <% if(model.options.length==0){ %>
+                <%= config.labels["noOptions"] %>
+                <% } else {
+                var options = _.filter(model.toolBoxGroup.options, function(option){ return $.inArray(option.id, model.options)!=-1 });
+                _.each(options, function(option){ %>
+                <%= option.name %> ( + <%= priceTpl({price:priceOption(option)}) %> ) <br>
+                <% }); } %>
+            </div></div>
+
+        <div class="form-checkboxes clearfix" id="edit-options" style="<%= (expandedOptions)?'':'display:none;' %>">
+            <% _.each(model.toolBoxGroup.options, function(option, i){
+            var checked = ($.inArray(option.id, model.options)!=-1)?"checked='checked'":"";
+            %>
+                <% if(option.active){ %>
+                    <div class="form-item form-type-checkbox">
+                        <input type="checkbox" value="<%= option.id %>" name="options[<%= option.id %>]" id="edit-options-<%= option.id %>"
+                               class="clearfix form-checkbox" <%= checked %>> <label for="edit-options-<%= option.id %>"
+                                                                                     class="option"><%= option.name %> ( +
+                        <%= priceTpl({price:priceOption(option)}) %>) </label>
+
+                    </div>
+                <% } %>
+            <% }); %>
+        </div>
+        <% } %>
+        <!-- End Options-->
+
+        <!-- pricesTable -->
+        <div class="wrap-tableqte">
+        <table id="prices-table" class="grid clearfix sticky-enabled">
+            <thead>
+            <tr>
+                <th class="first-child"></th>
+                <th><%= config.labels["quantity"] %></th>
+                <th></th>
+                <th><%= config.labels["priceNoTVA"] %></th>
+                <th class="last-child"><%= config.labels["priceWithTVA"] %></th>
+            </tr>
+            </thead>
+            <tbody>
+            <%
+            var i = 0;
+            _.each(model.toolBoxGroup.pricing, function(price){
+            i = i+ 1;
+            var checked = (price['quantity']==model.quantity && !customQuantity)?"checked='checked'":"";
+            %>
+            <tr class="<%= (i%2==0)?'even':'odd' %> <%= (!price['crossedPrice'] && price['promoPrice'])? 'superdeal':'' %>">
+                <td class="first-child">
+                    <div class="form-item form-type-radio form-item-quantity">
+                        <input type="radio" value="<%= price['quantity'] %>" name="quantity"
+                               id="edit-quantity-<%= price['quantity'] %>" class="grid clearfix form-radio" <%= checked %>>
+                    </div>
+                </td>
+                <td><%= price['quantity'] %> ex. <% if(!price['crossedPrice'] && price['promoPrice']) print('<span class="messagedeal">'+config.labels['superDeal']+'</span>&nbsp;') %> </td>
+                <td><%
+                    if(price['crossedPrice'] && price['promoPrice']) {
+                    print(priceTpl({price:Math.round(price['sellPrice']*100)/100,classToAdd:'old'}));
+                    }
+                %></td>
+                <td><%  
+                var customHeight = model.heightCF;
+                var customWidth  = model.widthCF;
+                if((customHeight) && (customWidth)){
+                    var validPrice = ((customHeight * customWidth * price['sellPrice']) / (1 * 1000 * 1000));
+                    print(priceTpl({price:validPrice,classToAdd:className}));
+                } else { 
+                %>    
+                    <%
+                    var validPrice = (price['promoPrice'])?price['promoPrice']:price['sellPrice'];
+                    var className = (price['promoPrice'])?'promo':undefined;
+                    print(priceTpl({price:Math.round(validPrice*100)/100,classToAdd:className}));
+               } %></td>
+                <td class="last-child"><%
+                    var priceWithTVA = validPrice * ( 1 + config.TVA );
+                    print(priceTpl({price:Math.round(priceWithTVA*100)/100}));
+                %></td>
+            </tr>
+            <% }); %>
+            <%
+            var checked = (customQuantity)?"checked='checked'":"";
+            %>
+            <tr class="custom even last-child child-item-calcul-qte">
+                <td class="first-child">
+                    <div class="form-item form-type-radio form-item-quantity">
+                        <input type="radio" value="custom" name="quantity" id="edit-quantity-custom"
+                               class="grid clearfix form-radio" <%= checked %>>
+                    </div>
+                </td>
+                <td colspan="4" class="last-child">
+                    <div class="form-item form-type-textfield form-item-custom form-item-calcul-qte">
+                        <label for="edit-custom"><%= config.labels["enterQuantity"] %></label>
+                        <div class="wrap-input-calcul">
+                        <input type="text" class="form-text" maxlength="128" size="60" value="<%= (customQuantity)?model.quantity:'' %>" name="custom" id="edit-custom">
+                        <input type="submit" value="<%= config.labels['calculate'] %>" name="op" id="edit-calculer" class="ajax-calculate form-submit ui-button ui-widget ui-state-default ui-corner-all btn-calcul" role="button">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+
+        <!-- End pricesTable -->
+
+        <!-- addToCart -->
+        <div id="edit-actions" class="edit-actions-product actions form-actions form-wrapper">
+                <%= priceTpl({price:totalPrice(),label:config.labels["totalNoTVA"]}) %>
+                <input
+                type="submit" value="<%= config.labels['addToCart'] %>" name="op" id="edit-actions-addtocart"
+                class="cart  form-submit ui-button"
+                role="button"></div>
+        <!-- End addToCart -->
+
+        <!-- shippingDetail -->
+        <div id="bloc-shipping"><%= shippingHTML %></div>
+        <!-- End shippingDetail -->
+        <% if(model.widthCF == null && model.heightCF == null)  {%> 
+        <!-- templateDetail -->
+        <fieldset id="templates" class="templates form-wrappersss">
+            <legend><span class="fieldset-legend"><%= config.labels['technicalDetails'] %></span></legend>
+            <div class="fieldset-wrapper detailtechnique-wrapper">
+                <div id="edit-templates-text" class="text form-wrapper">
+                    <%= config.labels['technicalDescription'] %>
+                </div>
+                <div id="edit-templates-image" class="image form-wrapper"><a target="_blank"
+                                                                             href="/file/template_<%= model.toolBoxGroup.template.id %>__<%= config.labels['langId'] %>.zip"><img
+                        alt=""
+                        src="/file/<%= model.toolBoxGroup.template.thumbnail %>"></a>
+                </div>
+                <div id="edit-templates-desciption" class="description form-wrapper">
+                    <div id="edit-templates-desciption-name" class="name form-wrapper">
+                        <%= config.labels['formatToProvide'] %> : <%
+                            var size =  model.toolBoxGroup.template.size.match(/\d+/g);
+                            var bleed =  model.toolBoxGroup.template.bleed.match(/\d+/g);
+                            var v1 = parseInt(bleed[0]) * 2 + parseInt(size[0]) ;
+                            var v2 = parseInt(bleed[0]) * 2 + parseInt(size[1]) ;
+                            print( v1 +" x "+v2 +" mm");
+                        %>
+                    </div>
+
+                    <div class="form-item form-type-item" id="edit-templates-desciption-brut">
+                        <label for="edit-templates-desciption-brut"><%= config.labels['Format'] %> <%= config.labels['rawFormat'] %> : </label>
+                        <% print( v1 +" x "+v2 +" mm"); %>
+                    </div>
+
+                    <div class="form-item form-type-item" id="edit-templates-desciption-size">
+                        <label for="edit-templates-desciption-size"><%= config.labels['Format'] %> <%= config.labels['finishedFormat'] %> : </label>
+                        <%= model.toolBoxGroup.template.size %>
+                    </div>
+
+                    <div class="form-item form-type-item" id="edit-templates-desciption-bleed">
+                        <label for="edit-templates-desciption-bleed"><%= config.labels['bleed'] %> : </label>
+                        <%= model.toolBoxGroup.template.bleed %>
+                    </div>
+                    <div class="form-item form-type-item" id="edit-templates-desciption-color">
+                        <label for="edit-templates-desciption-color"><%= config.labels['color'] %> : </label>
+                        <%= model.toolBoxGroup.template.colorMode %>
+                    </div>
+                    <div class="form-item form-type-item" id="edit-templates-desciption-resolution">
+                        <label for="edit-templates-desciption-resolution"><%= config.labels['resolution'] %> : </label>
+                        <%= model.toolBoxGroup.template.resolution %>
+                    </div>
+                </div>
+                <div id="edit-templates-linktodownload" class="link form-wrapper">
+                    <div class="form-item form-type-item" id="edit-templates-linktodownload-link">
+                        <a target="_blank" href="/file/template_<%= model.toolBoxGroup.template.id %>__<%= config.labels['langId'] %>.zip">
+                            <%= config.labels['downloadText'] %>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <!-- End templateDetail -->
+<%}%>
+        <% if(config.isAdmin) { %>
+        <div class="form-item form-type-item">
+            <label><%= config.labels["directLink"] %> :</label>
+            <%
+                var directLink = "http://" + document.location.host + "/products/" + config.labels['productId'] + "/" + encodeURIComponent(model.toolBoxGroup["toolboxItems"].join(",")) + "/" + encodeURIComponent(model.options.join(",")) + "/" + model.quantity;
+                print(directLink);
+            %>
+        </div>
+        <% } %>
+        <input type="hidden" name="productId" value="<%= config.labels['productId'] %>" />
+        <input type="hidden" name="priceGroupId" value="<%= model.priceGroupId %>" />
+        <input type="hidden" name="quantity" value="<%= model.quantity %>" />
+        <input type="hidden" name="options" value="<%= model.options.join(",") %>" />
+        <input type="hidden" name="widthCF" value="<%= model.widthCF %>" />
+        <input type="hidden" name="heightCF" value="<%= model.heightCF %>" />
+        <input type="hidden" id="cf" name="CF" value='<%= model.CF %>'>
+    </div>
+</form>

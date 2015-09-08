@@ -106,7 +106,7 @@ function pcoffers_block_view_pccustomers_profile_alter(&$data, $block) {
       }
     }
   } catch (\Exception $ex) {
-    
+
   }
 }
 
@@ -119,14 +119,14 @@ function pcoffers_form_pccustomers_dashboard_form_alter(&$form, &$form_state) {
     $rows = array();
     $i = 0;
     foreach ($offers as $offer) {
-      
+
       if ($offer->status->tag == 'offerStatusOpen') {
         $link = l($offer->number, "myprintconnect/offers/$offer->hash", array('html' => TRUE, 'attributes' => array('class' => array('open'))));
       }
       else{
         $link = $offer->number;
       }
-      
+
       $rows[] = array(
           format_date(strtotime($offer->creationDate), 'medium', 'y-m-d'),
           theme('price', array('value' => $offer->convertedTotalAmount)),
@@ -165,7 +165,7 @@ function pcoffers_form_pccustomers_dashboard_form_alter(&$form, &$form_state) {
       $form['recentoffers']['all'] = array('#markup' => l(t('All offers'), 'myprintconnect/offers'));
     }
   } catch (\Exception $ex) {
-    
+
   }
 }
 

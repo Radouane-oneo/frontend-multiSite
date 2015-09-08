@@ -207,6 +207,7 @@ function pcdesigns_callback() {
     case 2:
 
     case 1:
+      print update_domain();
       print '<script type="text/javascript">top.location = top.location;</script>';
       break;
     default:
@@ -233,7 +234,9 @@ function pcdesigns_callback() {
         }
 
         $item = Carts\Factory::CreateItem($cart, $priceGroupId, $qty, NULL, NULL, $options);
-        $item->file = $file;
+        $item = Carts\Factory::GetItem($cart, $item->id);
+	Carts\Factory::LoadItem($item);
+	$item->file = $file;
         $item->thumbnail = $thumbnail;
         $item->design_tool_job_id = $jobId;
         $item->controlpro = $controlpro;
@@ -242,14 +245,11 @@ function pcdesigns_callback() {
         if (isset($_GET['myPcId'])) {
           $_SESSION['savedDesigns'][$item->id] = $_GET['myPcId'];
         }
-
         Carts\Factory::SaveItem($item);
 //  //\printconnect\Carts\Factory::RefreshItem($item);
         Carts\Factory::Refresh($cart);
 
-
-
-
+        print update_domain();
         print '<script type="text/javascript">top.location = "' . url('cart') . '";</script>';
         break;
       } else {
@@ -257,11 +257,12 @@ function pcdesigns_callback() {
       }
   }
   if (isset($_GET['myPcId'])) {
-      Factory::Delete($_GET['myPcId']);   
+      //Factory::Delete($_GET['myPcId']);
   }
 
   exit;
   if (isset($_GET['doClose']) && $_GET['doClose'] > 0) {
+    print update_domain();
     print '<script type="text/javascript">top.location = top.location;</script>';
     exit;
   }
@@ -277,7 +278,7 @@ function pcdesigns_form_pcorders_order_form_alter(&$form, $form_state, $form_id)
       try {
         Factory::Delete($_SESSION['savedDesigns'][$item->id]);
       } catch (\Exception $ex) {
-        
+
       }
       unset($_SESSION['savedDesigns'][$item->id]);
     }

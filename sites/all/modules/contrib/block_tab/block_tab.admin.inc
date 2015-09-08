@@ -1,6 +1,8 @@
 <?php
-// $Id$
-
+/**
+ * @file
+ * Admin interface functions.
+ */
 
 /**
  * Admin form.

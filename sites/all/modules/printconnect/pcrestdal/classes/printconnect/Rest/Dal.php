@@ -31,16 +31,23 @@ use printconnect\Dal\ForbiddenException;
 
     public function Get($entity, $params, $language = FALSE) {
       $url = $this->GetUrl($entity, $params, FALSE, $language);
-  
+
             if(variable_get('pc_env', 'production') == 'production') {
                 $json = $this->fromCache($url);
+		if ($entity == 'pickuppointdetail/service/store') {
+                    if ($_SERVER["HTTP_HOST"] == 'http://preprd.flyer.fr/')
+                        $json = utf8_encode($json);
+                }
             }else {
                 $json = $this->Call($url);
-                if(preg_match('/store/', $entity)) {
+                /*if(preg_match('/store/', $entity)) {
                     $input = iconv('UTF-8', 'UTF-8//IGNORE', utf8_encode($json));
                     $json = json_decode($input);
                     return $json;
-                }
+                }*/
+		if ($entity == 'pickuppointdetail/service/store') {
+		   $json = utf8_encode($json);
+		}
             }
 	return json_decode($json);
     }
@@ -128,6 +135,8 @@ use printconnect\Dal\ForbiddenException;
         } else {
             $url .= '&language=2';
         }
+        if ($entity == 'pickuppointdetail/service/store') {
+	}
       return $url;
     }
 
@@ -136,7 +145,7 @@ use printconnect\Dal\ForbiddenException;
 //      $json = $this->fromCache($url);
  $json = $this->Call($url);
       $items = json_decode($json);
-      if ($entity == 'pickuppoint/service/store') {
+      if ($entity == 'pickuppoint/service/store' || $entity == 'pickuppointdetail/service/store') {
 	$json = utf8_encode($json);
 	$items = json_decode($json);
       } 
@@ -149,6 +158,13 @@ use printconnect\Dal\ForbiddenException;
       $start = microtime(true);
       $response = drupal_http_request($url, array('header' => $header, 'method' => 'GET', 'timeout' => $this->timeout));
       $end = microtime(true);
+        try{
+        if((int) $response->code !=200 ){
+            pcprintlog_HandelError( $_SESSION['customerid'], $_SESSION['cartid'], 'pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'GET', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), $url );
+
+        }
+        }catch (\printconnect\Rest\Exceptions\Exception $ex) {
+        }
       watchdog('pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'GET', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), WATCHDOG_DEBUG, ($end - $start) . ' on GET ' . $url);
       switch ((int) $response->code) {
         case 200:
@@ -180,9 +196,7 @@ use printconnect\Dal\ForbiddenException;
           $properties['pPrice'] = $properties['price'];
         }
       }
-
-      $data = json_encode($properties);
-      
+	$data = json_encode($properties);
       $start = microtime(true);
       $response = drupal_http_request($url, array('header' => $header, 'method' => 'PUT', 'data' => $data));
       $end = microtime(true);
@@ -191,13 +205,16 @@ use printconnect\Dal\ForbiddenException;
         $data = json_decode($response->data);
         return $data;
       } else {
+          try{
+              pcprintlog_HandelError( $_SESSION['customerid'], $_SESSION['cartid'], 'pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'GET', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), $url );
+          }catch (\printconnect\Rest\Exceptions\Exception $ex) {
+          }
         throw new Exception('PUT ' . $url, $data, $this->ReadErrorInformation($response));
       }
     }
 
     public function Create($properties, $entity, $params, $validateOnly = FALSE) {
       $url = $this->GetUrl($entity, $params, $validateOnly);
-      
      
       $header = array('Content-Type' => 'application/json');
       $start = microtime(true);
@@ -212,11 +229,18 @@ use printconnect\Dal\ForbiddenException;
       watchdog('pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'POST', '%url' => $url, '%timing' => ($end - $start), '%data' => $data, '%response' => print_r($response, TRUE)), WATCHDOG_DEBUG, ($end - $start) . ' on POST ' . $url);
       if ($response->code == 200) {
         $data = json_decode($response->data);
+
         return $data;
       } else {
+          try{
+              pcprintlog_HandelError( $_SESSION['customerid'], $_SESSION['cartid'], 'pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'GET', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), $url );
+          }catch (\printconnect\Rest\Exceptions\Exception $ex) {
+          }
         throw new Exception('POST ' . $url, $data, $this->ReadErrorInformation($response));
       }
-     
+//     if($entity == "order-discount-code"){
+//        $_SESSION['data']=$data;
+//      }
     }
 
     public function Delete($entity, $params) {
@@ -230,6 +254,10 @@ use printconnect\Dal\ForbiddenException;
         $data = json_decode($response->data);
         return $data;
       } else {
+          try{
+              pcprintlog_HandelError( $_SESSION['customerid'], $_SESSION['cartid'], 'pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'GET', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), $url );
+          }catch (\printconnect\Rest\Exceptions\Exception $ex) {
+          }
         throw new Exception('DELETE ' . $url, null, $this->ReadErrorInformation($response));
       }
     }

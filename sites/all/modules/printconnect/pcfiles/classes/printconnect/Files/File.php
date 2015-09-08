@@ -13,7 +13,7 @@ namespace printconnect\Files {
         return $attachment->url;
       }
     }
-    
+
   }
 
 }

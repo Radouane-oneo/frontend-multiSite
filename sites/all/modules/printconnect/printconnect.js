@@ -4,38 +4,31 @@ window.alert = function(arg) {
   }
 };
 
+function updateDomain() {
+  var hosts = window.location.hostname.split('.').reverse();
+  var domain = hosts[1] + '.' + hosts[0];
+  if(domain == 'flyer.fr'){
+      document.domain = domain;
+  }
+
+}
 
 (function ($) {
 
   Drupal.behaviors.printconnect = {
     detach: function (context) {
-
     },
     attach: function (context, settings) {
-      
+
       $(document).ajaxStart(function() {
-        $('body',this).css('cursor','progress');
-        $(':submit').attr('disabled', 'disabled');
-        $('.loading').slideDown();
-        
+       $(':submit').attr('disabled', true).addClass('grised');
+
       });
-      
+
       $(document).ajaxStop(function() {
-        $('body', this).css('cursor','default');
-        $(':submit').removeAttr('disabled');
-        $('.loading').slideUp();
+        $(':submit').attr('disabled', false).removeClass('grised');
       });
-      
-      //      $('form table tr td input[type=radio]').each(function(){
-      //        var radio = $(this);
-      //        $(this).parents('tr').click(function(){
-      //          radio.attr('checked', true);
-      //          radio.trigger('change');
-      //        })
-      //      });
-      $('.contactus').click(function(){
-          
-      });
+
       if ($.fancybox){
           var targetElement = null;
         $('.fancybox').each(function(){
@@ -49,7 +42,7 @@ window.alert = function(arg) {
           if (!w){
             w = 815;
           }
-            
+
           $(this).fancybox({
             width: w,
             height: h,

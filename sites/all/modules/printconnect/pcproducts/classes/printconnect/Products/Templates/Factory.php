@@ -5,27 +5,24 @@ namespace printconnect\Products\Templates {
   use \printconnect\Dal;
 
   class Factory {
-    public static function GetTemplates($productId, $items) {
+    public static function GetTemplates($productId, $items, $templateId = NULL) {
       $object = new Templates();
       try {
-        Dal::LoadCollection($object, 'template', array('productId' => $productId, 'toolboxItem' => implode(',', $items)), function ($value) {
-                          $template = new Template($value);
-                          $template->loaded = TRUE;
-                          return $template;
-                        });
-//        if (count($items) && ($object->count == 0)) {
-//          array_pop($items);
-//          return Factory::GetTemplates($productId, $items);
-//        } else {
+          if($productId) {
+              $data = array('productId' => $productId, 'toolboxItem' => implode(',', $items));
+          }else {
+              $data = array('templateId' => $templateId);
+          }
+
+          Dal::LoadCollection($object, 'template', $data, function ($value) {
+              $template = new Template($value);
+              $template->loaded = TRUE;
+              return $template;
+          });
+
           return $object;
-        //}
       } catch (\printconnect\Dal\NotFoundException $ex) {
-//        if (count($items)) {
-//          array_pop($items);
-//           return Factory::GetTemplates($productId, $items);
-//        } else {
           return $object;
-        //}
       }
     }
   }

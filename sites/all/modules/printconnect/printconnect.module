@@ -1,6 +1,7 @@
 <?php
 
 function printconnect_init() {
+
   global $language;
   global $conf;
   global $browscap;
@@ -141,6 +142,18 @@ function printconnect_init() {
     }  
     
     
+}
+
+function update_domain() {
+   $script = "<script type='text/javascript'>
+    var hosts = window.location.hostname.split('.').reverse();
+    var domain = hosts[1] + '.' + hosts[0];
+    if(domain == 'flyer.fr'){
+        document.domain = domain;
+    }
+   </script>";
+
+   return $script; 
 }
 
 function printconnect_cron() {
@@ -859,6 +872,8 @@ function _printconnect_js_callback() {
       return drupal_json_output($country->properties);
   }
 }
+
+
 function printconnect_exit($destination = NULL) {
   if (!isset($destination)) {
 //    \printconnect\Diagnostics\Debug::Clear();

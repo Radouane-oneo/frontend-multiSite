@@ -14,25 +14,18 @@ function pccustomers_dashboard_form($form, &$form_state) {
 }
 
 function pccustomers_addresses_form($form, $form_state) {
-    _pccustomers_ensureloggedin();
-    $customer = Factory::Current();
-    $addresses = Addresses\Factory::GetAddresses($customer, FALSE);
-    $form['addresses'] = array(
-        '#type' => 'container',
-        '#title' => t('Your addresses'),
-    );
-    
-    $rows = array();
-    // sort billing acount
-    $address_sort = array();
-    foreach ($addresses as $address) {
-        $address_sort[] = $address;
-    }
-    usort($address_sort, function ($a, $b) {
-            return strcmp(strtolower(t($a->name)), strtolower(t($b->name)));
-    });
-    // end sort
-  foreach ($address_sort as $address) {
+  _pccustomers_ensureloggedin();
+  $customer = Factory::Current();
+  $addresses = Addresses\Factory::GetAddresses($customer, FALSE);
+
+  $form['addresses'] = array(
+      '#type' => 'container',
+      '#title' => t('Your addresses'),
+  );
+
+  $rows = array();
+
+  foreach ($addresses as $address) {
 
     $form['addresses'][$address->id]['edit'] = array(
         '#markup' => l(t('edit'), 'myprintconnect/addresses/' . $address->id, array('attributes' => array('class' => 'edit'))),
@@ -92,16 +85,8 @@ function pccustomers_addresses_form($form, $form_state) {
     $Billingcustomer =  \printconnect\Customers\Factory::Current();
     $rowsBilling = array();
     $allbellingacounts = \printconnect\Customers\BillingAccounts\Factory::GetBillingAccounts($Billingcustomer, false);
-    // sort billing adresses
-    $address_sort = array();
-    foreach ($allbellingacounts as $address) {
-        $address_sort[] = $address;
-    }
-    usort($address_sort, function ($a, $b) {
-            return strcmp(strtolower(t($a->name)), strtolower(t($b->name)));
-    });
-    // end sort
-foreach ( $address_sort as $MyBillingaddress) {
+    
+foreach ( $allbellingacounts as $MyBillingaddress) {
  if (!is_null($MyBillingaddress->id)){
     $form['Billingaddresses'][$MyBillingaddress->id]['edit'] = array(
         '#markup' => l(t('edit'), 'myprintconnect/editBillingaddresses/' . $MyBillingaddress->id, array('attributes' => array('class' => 'edit'))),
@@ -182,10 +167,6 @@ function pccustomers_Billingaddress_form_delete_submit($form, $form_state) {
 function pccustomers_profile_form($form, &$form_state) {
   _pccustomers_ensureloggedin();
   $customer = Factory::Current();
-//  $form['profile'] = array(
-//      '#type' => 'container',
-//      '#title' => t('Profile'),
-//  );
 
   $form['email'] = array(
       '#type' => 'textfield',
@@ -262,7 +243,9 @@ function pccustomers_profile_form_validate($form, &$form_state) {
   if (!is_numeric($form_state['values']['phone'])) {
      form_set_error('phone',t('Please enter your Phone Number as Number value.'));
   }
-
+  if (is_numeric($form_state['values']['phone']) && strlen($form_state['values']['phone']) >= 10) {
+      form_set_error('phone',t('Please enter a valid phone number.'));
+  }
   if (!valid_email_address($form_state['values']['email'])) {
     form_set_error('email', t('Email is not valid'));
   }
@@ -491,15 +474,12 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
   _pccustomers_ensureloggedin();
   $Billingaddresses = \printconnect\Customers\BillingAccounts\Factory::Get($BillingaddressesId);
   $customer = Factory::Current();
- /*if ($Billingaddresses->customer != $customer->id) {
-    drupal_access_denied();
-    exit;
-  }*/
+
   $form['name'] = array(
       '#type' => 'textfield',
       '#title' => t('Name'),
       '#required' => TRUE,
-      '#size' => 71,
+      '#size' => 61,
       '#default_value' => $Billingaddresses->name,
   );
 
@@ -508,14 +488,14 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#type' => 'textfield',
       '#title' => t('Street'),
       '#required' => TRUE,
-      '#size' => 71,
+      '#size' => 61,
       '#default_value' => $Billingaddresses->street,
   );
   $form['postalCode'] = array(
       '#type' => 'textfield',
       '#title' => t('PostalCode'),
       '#required' => TRUE,
-      '#size' => 71,
+      '#size' => 61,
       '#default_value' => $Billingaddresses->postalCode,
       '#attributes' => array('class' => array('postalCode')),
   );
@@ -523,7 +503,7 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#type' => 'textfield',
       '#title' => t('City'),
       '#required' => TRUE,
-      '#size' => 71,
+      '#size' => 61,
       '#default_value' => $Billingaddresses->city,
       '#attributes' => array('class' => array('city')),
   );
@@ -539,16 +519,6 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#required' => TRUE,
       '#disabled' => TRUE,
       '#options' => $options,
-//      '#ajax' => array(
-//          'callback' => 'pccheckout_billingaccount_country_callback',
-//          'wrapper' => 'vatNumber',
-//          'method' => 'replace',
-//          'effect' => 'fade',
-//          'progress' => array(
-//              'message' => NULL,
-//              'type' => NULL,
-//          ),
-//      ),
       '#default_value' => $Billingaddresses->country,
   );
   
@@ -564,18 +534,19 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
   $form['company'] = array(
       '#type' => 'textfield',
       '#title' => t('Company'),
-      '#size' => 71,
+      '#size' => 61,
+      '#id' => 'companyInput',
       '#default_value' => $Billingaddresses->company,
   );
-    $country = printconnect\Countries\Factory::Get($Billingaddresses->country);
-
+  $country = printconnect\Countries\Factory::Get($Billingaddresses->country);
   $form['vatNumber'] = array(
       '#prefix' => '<div id="vatNumber">',
       '#suffix' => '</div>',
       '#type' => 'vatfield',
       '#title' => t('Vat number'),
       '#attributes' => array('class' => array('vat')),
-      '#default_value' => $country->vatPrefix,
+         '#default_value' => $Billingaddresses->vatNumber,
+
       '#disabled' => TRUE,
   );
   $form['actions'] = array(
@@ -602,6 +573,9 @@ function pccustomers_address_form_validate($form, &$form_state) {
  
   if (!is_numeric($form_state['values']['phone'])) {
      form_set_error('phone',t('Please enter your Phone Number as Number value.'));
+  }
+  if (is_numeric($form_state['values']['phone']) && strlen($form_state['values']['phone'])!= 10) {
+      form_set_error('phone',t('Please enter your Phone Number as 10 Number.'));
   }
   if(!empty($tva)){
  if (!is_numeric($tva)) {
@@ -736,18 +710,11 @@ function pccustomers_newaddress_form($form, $form_state) {
       '#attributes' => array('class' => array('city')),
   );
 
-//  $options = array();
-//  $countries = \printconnect\Countries\Factory::GetAll();
-//  foreach ($countries as $country) {
-//    $options[$country->id] = $country->tag;
-//  }
-    $options = array (
-       "21"=>"Belgique",
-       "73"=>"France",
-       "150"=>"Pays-Bas",
-       "199"=>"Espagne",
-       "124"=>"Luxembourg",
-     );
+  $options = array();
+  $countries = \printconnect\Countries\Factory::GetAll();
+  foreach ($countries as $country) {
+    $options[$country->id] = $country->tag;
+  }
   natsort($options);
   $form['country'] = array(
       '#type' => 'select',
@@ -807,18 +774,47 @@ function pccustomers_newaddress_form($form, $form_state) {
 function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
  _pccustomers_ensureloggedin();
  
-    $statu = array(
-           'visible' => array(
-             ':input[name="option"]' => array('value' => 'societe'),
-           ),
+        $countries = array (
+           "21"=>t('Belgique'),
+           "73"=>t('France'),
+           "150"=>t('Pays-Bas'),
+           "199"=>t('Espagne'),
+           "124"=>t('Luxembourg'),
          );
- 
-
-  $active = array(
-          t('personellement') => t('personellement'),
-          t('societe') => t('societe')
-      );
+        
+       $form['company'] = array(
+           '#type' => 'fieldset',
+       );
     
+    $form['company']['isCompany'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Are you a company ?'),
+        '#attributes' => array(
+            'id' => 'isUserCompany',
+            'checked'=> 'false'
+        )
+    );
+
+    $form['company']['company'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Company'),
+        '#required' => FALSE,
+        '#size' => 61,
+        '#attributes' => array(
+            'id' => 'companyInput'
+        )
+    );
+
+    $form['company']['vatNumber'] = array(
+        '#attributes' => array('id' => 'vatNumber'),
+        '#id' => 'vatNumber',
+        '#prefix' => '<div id="vatNumber">',
+        '#suffix' => '</div>',
+        '#type' => 'vatfield',
+        '#title' => t('Vat number'),
+        '#required' => FALSE,
+        '#default_value' => 'FR',
+    );
   
     $form['summary'] = array(
         '#type' => 'fieldset',
@@ -826,12 +822,11 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
         '#prefix' => '<div id="FormBillingaddresses">',
         '#suffix' => '</div>',
     );
-    
-      $form['summary']['popup']= array(
+   
+   $form['summary']['popup']= array(
         '#type' => 'fieldset',
-        '#prefix' => '<span id="fademe" class="black_overlay">',
+        '#prefix' => '<span id="fademe" class="black_overlay" style=" height: 612px;">',
         '#suffix' => '</span>',
-         
        );
     
     $form['summary']['popup']['message'] = array(
@@ -845,78 +840,34 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
     );
     
     $form['summary']['popup']['message']['valid'] = array(
-    '#type' => 'button',
-    '#value' => t('Valider'),
-     '#class' => array('valid-button'),
-        '#ajax' => array(
-            'callback' => 'pccustomers_validat_vat_callback',
-            'wrapper' => 'FormBillingaddresses',
-            'method' => 'replace',
-            'effect' => 'fade',
-            'progress' => array(
-                'message' => NULL,
-                'type' => NULL,
-            ),
-        ),
-        );
-    
-    $onclick = "document.getElementById('light').style.display='none';document.getElementById('fademe').style.display='none'";
+    '#type' => 'markup',
+    '#markup' => '<input type="button" name="valid-button" value="' . t('Valider') . '" class="valid-button-btt" >',
+     );
     
     $form['summary']['popup']['message']['null'] = array(
-        '#markup' => '<input type="button" id="null-address-vat" name="null_address_vat" value="' . t('Annuler') . '" class="button_null_address_vat" onclick = "'.$onclick.'">',
+        '#type' => 'markup',
+        '#markup' => '<input type="button" id="null-address-vat" name="null_address_vat" value="' . t('Annuler') . '" class="button_null_address_vat" >',
     );
- 
-    $form['summary']['option'] = array(
-    '#type' => 'radios',
-    '#title' => t('Quelle type de commande ?'),
-    '#default_value' => isset($node->active) ? $node->active : t('personellement'),
-    '#options' => $active,
-  
-  );
-
- $form['summary']['vatNumber'] = array(
-      '#type' => 'textfield',
-      '#title' => t('VatNumber'),
-      '#attributes' => array('class' => array('vat')),
-      '#size' => 71,
-      '#states' => $statu, 
-      '#ajax' => array(
-            'callback' => 'pccustomers_newaddress_Billingaddresses_form_callback',
-            'wrapper' => 'FormBillingaddresses',
-            'method' => 'replace',
-            'effect' => 'fade',
-            'progress' => array(
-                'message' => NULL,
-                'type' => NULL,
-            ),
-        ),
-  );
- 
-  $form['summary']['company'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Company'),
-      '#size' => 71,
-       '#states' => $statu, 
-  );
+    
 
   $form['summary']['name'] = array(
       '#type' => 'textfield',
       '#title' => t('Name'),
-      '#size' => 71,
+      '#size' => 61,
       '#required' => TRUE,
   );
 
   $form['summary']['street'] = array(
       '#type' => 'textfield',
       '#title' => t('Street'),
-      '#size' => 71,
+      '#size' => 61,
       '#required' => TRUE,
   );
 
   $form['summary']['postalCode'] = array(
       '#type' => 'textfield',
       '#title' => t('PostalCode'),
-      '#size' => 71,
+      '#size' => 61,
       '#required' => TRUE,
       '#attributes' => array('class' => array('postalCode')),
   );
@@ -924,34 +875,22 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
   $form['summary']['city'] = array(
       '#type' => 'textfield',
       '#title' => t('City'),
-      '#size' => 71,
+      '#size' => 61,
       '#required' => TRUE,
       '#attributes' => array('class' => array('city')),
   );
 
-  $options = array();
-  $countries = \printconnect\Countries\Factory::GetAll();
-  foreach ($countries as $country) {
-    $options[$country->id] = $country->tag;
-  }
-  natsort($options);
+
+   
   $form['summary']['country'] = array(
-      '#type' => 'select',
-      '#title' => t('Country'),
+        '#type' => 'select',
+        '#title' => t('Country'),
+        '#required' => TRUE,
+        '#options' => $countries,
+      '#default_value' => 73
+    );
+
   
-      '#options' => $options,
-      '#required' => TRUE,
-      '#ajax' => array(
-          'callback' => 'pccheckout_billingaccount_country_callback',
-          'wrapper' => 'vatNumber',
-          'method' => 'replace',
-          'effect' => 'fade',
-          'progress' => array(
-              'message' => NULL,
-              'type' => NULL,
-          ),
-      ),
-  );
     $form['summary']['id'] = array(
       '#type' => 'hidden',
       '#title' => t('id'),
@@ -978,39 +917,6 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
  return $form;
 }
 
-function pccustomers_newaddress_Billingaddresses_form_callback(&$form, &$form_state) {
-    $address = $form_state['values']['vatNumber'];
-    $billingAccount = \printconnect\Customers\BillingAccounts\Factory::Get($address);
-    \printconnect\Customers\BillingAccounts\Factory::LoadBillingAccountVat($billingAccount);
-    if (isset($billingAccount->number)) {
-        $form['summary']['popup']['#prefix'] = '<span id="fademe" class="black_overlay2">';
-    }
-  return $form['summary'];
-}
-
-function pccustomers_validat_vat_callback(&$form, &$form_state) {
-   $val = $form_state['values']['vatNumber'];
-   $billingAccount = \printconnect\Customers\BillingAccounts\Factory::Get($val);
-   \printconnect\Customers\BillingAccounts\Factory::LoadBillingAccountVat($billingAccount);
-        $form['summary']['popup']['#prefix'] = '<span id="fademe" class="black_overlay">';
-        $form['summary']['id']['#value'] = $billingAccount->id;
-        $form['summary']['name']['#value'] = $billingAccount->name;
-        $form['summary']['company']['#value'] = $billingAccount->company;
-        $form['summary']['street']['#value'] = $billingAccount->street;
-        $form['summary']['postalCode']['#value'] = $billingAccount->postalCode;
-        $form['summary']['city']['#value'] = $billingAccount->city;
-        $form['summary']['country']['#value'] = $billingAccount->country;
-      
- return $form['summary'];
-}
-
-
-function pccheckout_billingaccount_country_callback($form, $form_state) {
-  
-  $country = printconnect\Countries\Factory::Get($form_state['values']['country']);
-  $form['vatNumber']['country']['#value'] = $country->vatPrefix;
-  return $form['vatNumber'];
-}
 
 /**
  * New address form validation
@@ -1020,7 +926,9 @@ function pccustomers_newaddress_form_validate($form, &$form_state) {
   if (!is_numeric($form_state['values']['phone'])) {
      form_set_error('phone',t('Please enter your Phone Number as Number value.'));
   }
-
+  if (is_numeric($form_state['values']['phone']) && strlen($form_state['values']['phone'])!= 10) {
+      form_set_error('phone',t('Please enter your Phone Number as 10 Number.'));
+  }
     $tva = substr($form_state['values']['vatNumber'], 2, 2);
      if(!empty($tva)){
  if (!is_numeric($tva)) {
@@ -1091,13 +999,11 @@ function pccustomers_newaddress_form_submit($form, &$form_state) {
   }
 }
 function pccustomers_newaddress_form_Billingaddresses_submit($form, &$form_state) {
+    $_SESSION['newaddress'] = 'yes';
     $Billingcustomer = Factory::Current();
     $Billingaddress = \printconnect\Customers\BillingAccounts\Factory::Create();
     Forms::LoadObject($form_state['values'], $Billingaddress);
     $Billingaddress->customer = $Billingcustomer->id;
-     if(isset($form_state['values']['isDefault'])){
-        $billingAccount->isDefault = $form_state['values']['isDefault'];
-      }
     \printconnect\Customers\BillingAccounts\Factory::Save($Billingaddress);
     \printconnect\Customers\BillingAccounts\Factory::ClearBillingAccountsCache($Billingcustomer);
     switch($Billingaddress->vatStatus) {
@@ -1114,7 +1020,8 @@ function pccustomers_newaddress_form_Billingaddresses_submit($form, &$form_state
     }
 
     $form_state['rebuild'] = true;
-    drupal_set_message(t('societe'));
+    drupal_set_message(t('Adresse de facturation valider'));
+    unset($_SESSION['newaddress']);
     drupal_goto('myprintconnect/addresses');
 }
 
@@ -1128,10 +1035,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
       '#type' => variable_get('pc_flow', '') == 'printconcept' ? 'fieldset' : 'container',
       '#title' => t('Login or register'),
   );
-//  $form['login']['advantages'] = array(
-//      '#markup' => t('Account advantages'),
-//  );
-//if (variable_get('pc_fbappid', '187894038012933') || variable_get('pc_googleappid', '630860089189.apps.googleusercontent.com')) {
+
   if (variable_get('pc_fbappid', FALSE) || variable_get('pc_googleappid', FALSE)) {
 
     $form['login']['intro'] = array(
@@ -1160,15 +1064,6 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
         '#attributes' => array('class' => array('clearfix')),
     );
   }
-
-//  $form['login']['options'] = array(
-//      '#type' => 'radios',
-//      '#default_value' => 'existing',
-//      '#options' => array(
-//          'existing' => t("I'm a customer already"),
-//          'new' => t("I'm not a customer yet"),
-//      ),
-//  );
    $form['login']['decription'] = array(
       '#prefix'=> '<div class="login-form-item first-item"><p>',
       '#markup'=>"Déja client? ", //l('Connectez-vous.','#',array('attributes' => array('class' => 'logbl')))
@@ -1371,7 +1266,7 @@ function pccustomers_loginnew_form($form, &$form_state) {
 
 function pccustomers_login_form_login_validate(&$form, &$form_state) {
   global $language;
-
+    $form_state['values']['email'] =  trim($form_state['values']['email']);
 //  if (!(isset($form_state['values']['password']) || count($form_state['values']['password']) < 5)) {
 //    form_set_error('password', t('Password not long enough'));
 //  }
@@ -1399,7 +1294,7 @@ function pccustomers_login_form_login_validate(&$form, &$form_state) {
 
 function pccustomers_login_form_register_validate(&$form, &$form_state) {
   global $language;
-
+    $form_state['values']['emailnew'] =  trim($form_state['values']['emailnew']);
   if (!valid_email_address($form_state['values']['emailnew'])) {
     form_set_error('emailnew', t('Not a valid email address'));
     return;
@@ -1413,7 +1308,7 @@ function pccustomers_login_form_register_validate(&$form, &$form_state) {
     form_set_error('emailnew', t('This email address is already registered'));
     return FALSE;
   } else {
-    $form_state['values']['email']=$form_state['values']['emailnew'];
+    $form_state['values']['email'] = $form_state['values']['emailnew'];
     $customer = Factory::Create();
     Forms::LoadObject($form_state['values'], $customer);
     $customer->password = $form_state['values']['newpassword'];
@@ -1699,4 +1594,3 @@ function pccustomers_redeem_form_validate($form, &$form_state) {
 function pccustomers_redeem_form_submit($form, &$form_state) {
   drupal_goto('myprintconnect/credit');
 }
-

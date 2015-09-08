@@ -169,6 +169,7 @@ function pcdesigntool_callback() {
     case 2:
 
     case 1:
+      print update_domain();
       print '<script type="text/javascript">top.location = top.location;</script>';
       break;
     default:
@@ -211,6 +212,7 @@ function pcdesigntool_callback() {
         \printconnect\Carts\Factory::SaveItem($item);
 //\printconnect\Carts\Factory::RefreshItem($item);
         \printconnect\Carts\Factory::Refresh($cart);
+        print update_domain();
         print '<script type="text/javascript">top.location = top.location;</script>';
         break;
       }
@@ -235,7 +237,7 @@ function pcdesigntool_preview_url($jobId) {
   $baseurl = "/job/preview/rg/1/id/$jobId/lang/$langCode/impkey/$impkey";
 
   $customer = Customers\Factory::Current();
-  
+
   if ($customer) {
       $baseurl .= '/k/' . $customer->id;
       $hash = sha1($customer->id . 'agD04vQPx1?FSspl');
@@ -300,27 +302,15 @@ function theme_designtoollink($vars) {
     $url .= '/j/' . $jobId;
   }
 
-  $pp = FALSE;
-  if (isset($vars['custom']) && !empty($vars['custom'])) {
-    if (is_array($vars['custom'])) {
-      foreach ($vars['custom'] as $key => $value) {
-        $pp[] = $key . ':' . $value;
-      }
-      $pp = implode('!', $pp);
-    } else {
-      $pp = $vars['custom'];
+    if (isset($vars['custom']) && $vars['custom'] != FALSE ) {
+        $url .= '/pp/' . $vars['custom'];
+    } else if(isset($vars['templateId'])) {
+        $url .= '/p/' . $vars['templateId'];
     }
-  }
-  if ($pp) {
-    $url .= '/pp/' . $pp;
-  } else {
-    if (isset($vars['templateId'])) {
-      $url .= '/p/' . $vars['templateId'];
-    }
+  
     if (isset($vars['designtoolTemplateId'])) {
       $url .= '/t/' . $vars['designtoolTemplateId'];
     }
-  }
   if (isset($vars['oi'])) {
     if (isset($vars['oi']['priceGroupId'])) {
       $url .= '/order_pg/' . $vars['oi']['priceGroupId'];
@@ -402,15 +392,15 @@ function theme_designtoollink($vars) {
   }
     if(!$vars['params']['shop_apikey']){
         if($vars['params']['pricePreflight']){
-            return l($content, $url, array('query' => $query, 'html' => $html, 'attributes' => $attributes));   
+            return l($content, $url, array('query' => $query, 'html' => $html, 'attributes' => $attributes));
         }else{
-          return $content;    
+          return $content;
         }
-    
+
     }else{
-    return l($content, $url, array('query' => $query, 'html' => $html, 'attributes' => $attributes));   
+    return l($content, $url, array('query' => $query, 'html' => $html, 'attributes' => $attributes));
     }
-  
+
 }
 
 function theme_designtoolproflink($vars) {
@@ -429,32 +419,19 @@ function theme_designtoolproflink($vars) {
   //$url .= '/designtool/index/resize/1'; No resize
   $url .= '/designtool/index';
 
+    if (isset($vars['custom']) && $vars['custom'] != FALSE ) {
+           $url .= '/pp/' . $vars['custom'];
+     } else if(isset($vars['templateId'])) {
+         $url .= '/p/' . $vars['templateId'];
+     }
 
-  $pp = FALSE;
-  if (isset($vars['custom'])) {
-    if (is_array($vars['custom'])) {
-      foreach ($vars['custom'] as $key => $value) {
-        $pp[] = $key . ':' . $value;
-      }
-      $pp = implode('!', $pp);
-    } else {
-      $pp = $vars['custom'];
-    }
-  }
-  if ($pp) {
-    $url .= '/pp/' . $pp;
-  } else {
-    if (isset($vars['templateId'])) {
-      $url .= '/p/' . $vars['templateId'];
-    }
     if (isset($vars['designtoolTemplateId'])) {
       $url .= '/t/' . $vars['designtoolTemplateId'];
     }
-  }
-
+ 
 
   $url .= '/l/' . $langCode;
-  
+
     if ($customer) {
         $url .= '/k/' . $customer->id;
         $hash = sha1($customer->id . 'agD04vQPx1?FSspl');

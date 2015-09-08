@@ -68,22 +68,44 @@ class Factory {
     if ($vat) {
       Dal::Load($object, 'billing-account', array('vatNumber' => $vat), $cache);
     }
-  
-    return $object;
-  }
-  
-  public static function Save(\printconnect\Object $object) {
 
+  }
+
+
+    public static function BillingAccountVat(BillingAccount $object, $customer, $cart,  $cache=FALSE) {
+        $vat = $object->Get('id');
+        if ($vat) {
+            Dal::Load($object, 'billing-account', array(
+                'id' => $vat,
+                'customer' => $customer,
+                'cart' => $cart,
+                'vatNumber' => '',
+            ), $cache);
+        }
+return $object;
+    }
+   public static function Save(\printconnect\Object $object) {
     $id = $object->Get('id');
+    $cart = \printconnect\Carts\Factory::Current();
+    $object->cart = $cart->id;
     if ($id) {
+      $customer = \printconnect\Customers\Factory::Current();
+      $object->customer = $customer->id;
       Dal::Save($object, 'billing-account', array($id));
      
     } else {
       Dal::Save($object, 'billing-account', array());
     }
     $_SESSION['billingAccountId'] = $object->id;
+    if(!$_SESSION['newaddress']){
+        \printconnect\Carts\Factory::saveInCache($cart, array(
+        'billingAccount' => $object->id,
+	'shipping_address' => ($object->shippingAddressId) ? $object->shippingAddressId : null
+    )); 
+    }
+   
   }
-
+  
   public static function Validate(BillingAccount $object) {
     $id = $object->Get('id');
     if ($id) {

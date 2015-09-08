@@ -26,7 +26,7 @@ function pcfiles_theme() {
       'variables' => array(
           'file' => NULL,
           'content' => FALSE,
-          'title' => 'Download', 
+          'title' => 'Download',
           'attributes' => array(),),),
       'pcfilesthumb' => array(
           'variables' => array(
@@ -114,6 +114,22 @@ function _pcfiles_file($fileId, $cache = FALSE) {
 
   $fileparts = explode('.', $fileId);
   $fileId = $fileparts[0];
+
+  $parts = explode('_', $fileId);
+  
+  if($parts[0] == 'template') {
+    global $language;
+    $templates = \printconnect\Products\Templates\Factory::GetTemplates(NULL, NULL, $parts[1]);
+    $template = $templates[0];
+
+    foreach ($template->templateImages as $value) {
+        if($value->languageId == $language->id) {
+            $fileId = $value->file;
+            break;
+        }
+    }
+  }
+
   $file = Factory::Get($fileId);
   $url = FALSE;
   $found = FALSE;
@@ -143,7 +159,7 @@ function _pcfiles_file($fileId, $cache = FALSE) {
       header('Cache-Control:private');
       header('Cache-control: max-age=' . (60 * 60 * 24 * 365));
       header('Expires: ' . gmdate(DATE_RFC1123, time() + 60 * 60 * 24 * 365));
-      header('Last-Modified: ' . gmdate(DATE_RFC1123, time())); 
+      header('Last-Modified: ' . gmdate(DATE_RFC1123, time()));
     } else {
       // IE Fix
       header('Cache-Control:');
@@ -183,7 +199,7 @@ function pcfiles_files_form($form, &$form_state) {
 
   $i = 0;
   foreach ($data->rows as $file) {
-    
+
     $response = drupal_http_request($baseUrl . $file->value->_id . '?rev=' . $file->value->_rev, array('method' => 'DELETE'));
 
     if ($i++ > 1000)

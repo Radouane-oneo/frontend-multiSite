@@ -17,14 +17,14 @@ use printconnect\Cache;
       }
     }
 
-    public static function Find($countryCode, $region, $postalcode) {
+  public static function Find($countryCode, $region, $postalcode) {
      $stores = new Stores();
     
      Dal::LoadCollection($stores, 'pickuppoint/service/store', array('countryCode' => $countryCode, 'region' => $region,'postalCode' => $postalcode), function ($value, $params) {
                 $object = new Store(get_object_vars($value));
                 $object->loaded = true;
                 return $object;
-              }, FALSE);
+              }, TRUE);
 
       return $stores;
     }

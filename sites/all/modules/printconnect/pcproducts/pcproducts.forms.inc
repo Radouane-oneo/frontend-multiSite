@@ -15,6 +15,7 @@ use printconnect\Shipping;
 
 
 function pcproducts_products_form($form, &$form_state) {
+ header('Cache-Control: public, max-age=' . 3600);
  $banner = variable_get('pc_images') . '/productpage_banners/prod-banner.png';
     $form['banner'] = array(
         '#type' => 'container',

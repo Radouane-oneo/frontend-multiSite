@@ -10,13 +10,13 @@ function pcflyerstores_picker_form($form, &$form_state, $countryCode = '', $regi
     $form['searchZone']['search'] = array(
         '#type' => 'container',
         '#attributes' => array(
-            'class' => array('search')),
+            'class' => array('search','txt_search_postal')),
     );
-    
+     
    
        $form['searchZone']['search']['postal'] = array(
         '#type' => 'textfield',
-        '#size' => 100,
+        '#size' => 90,
         '#id' => 'map-selector',
         '#attributes' => array(
             'placeholder' => t("Insérez votre code postal"),

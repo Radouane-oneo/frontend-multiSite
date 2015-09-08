@@ -709,13 +709,8 @@ function pccheckout_invoiceanddelivery_form($form, &$form_state) {
     );
      $form['shipping']['detail']['current']['company'] = array(
         '#type' => 'textfield',
-/*<<<<<<< HEAD
-        '#title' => t('livraison entreprise'),
-        '#required' => FALSE,
-=======*/
         '#title' => t('livraison entreprise').' <span title="Ce champ est requis." class="form-required">*</span>',
         '#required' => false,
->>>>>>> 40a46f0f2360ff9d5b70acdd382bb253d12a5e9a
         '#default_value' => $defaultShippingAddress ? $defaultShippingAddress->company : '',
         '#size' => 30,
     );

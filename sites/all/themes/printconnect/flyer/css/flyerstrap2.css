@@ -1,6 +1,6 @@
 /* CORRECTIFS */
 .flyerstrap .breadcrumb, .flyerstrap .page-title, .flyerstrap #block-pcsamplepacks-request { display: none; }
-.flyerstrap #sidebar-first { height: 0; }
+.flyerstrap #sidebar-first { height: 0; position: relative; z-index: 30 !important;}
 body.flyerstrap #content { width: 1030px; }
 body.logged-in.toolbar.toolbar-drawer.flyerstrap #content { margin-top: -36px; }
 body.flyerstrap.page-node-edit #content { z-index: 99; position: relative; }
@@ -34,7 +34,7 @@ b { font-weight: 600; }
 	line-height: 20px;
 }
 
-#header-box { height: 250px; }
+#header-box { height: 213px; }
 
 .flyerstrap-block.first {
 	margin-top: 0;
@@ -48,12 +48,12 @@ b { font-weight: 600; }
 	height: 250px;
 	position: absolute;
 	top: -37px;
-	z-index: 7;
+	/*z-index: 7;*/
 }
 
 #header-content {
 	position: relative;
-	z-index: 9;
+	/*z-index: 9;*/
 	width: 830px;
 	padding: 22px 0 22px 40px;
 	margin-left: 150px;
@@ -66,7 +66,7 @@ b { font-weight: 600; }
 	position: absolute;
 	top: -37px;
 	right: -50px;
-	z-index: 8;
+	/*z-index: 8;*/
 }
 
 h1.title-main {

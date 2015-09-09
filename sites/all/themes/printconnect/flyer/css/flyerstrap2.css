@@ -55,9 +55,10 @@ b { font-weight: 600; }
 	position: relative;
 	/*z-index: 9;*/
 	width: 830px;
-	padding: 22px 0 22px 40px;
+	padding: 0px 0 22px 40px;
 	margin-left: 150px;
 	float: left;
+    margin-top: -5px;
 }
 
 #header-image {

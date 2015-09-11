@@ -4491,7 +4491,7 @@ a.googleconnect {
 .page-paymentrequest table.grid,
 #pccheckout-payment-form table.grid {
 
-	width: 497px;
+	width: 328px;
 	border: 1px solid #e1e1e1;
 	border-collapse: separate;
 	border-radius: 3px;
@@ -8220,13 +8220,14 @@ form#pccheckout-payment-form fieldset.paymentmethodefond legend{
 	background-color: #f1f1f1;
         margin: 0;
         padding: 18px 15px;
-        width: 969px;
+        width: 833px;
         
         
     border-left: 1px solid #e1e1e1;
     border-radius: 3px 3px 0 0;
     border-right: 1px solid #e1e1e1;
     border-top: 1px solid #e1e1e1;
+    box-sizing: border-box;
 }
 #edit-payment-method fieldset{
     /*border: 1px solid #e1e1e1;*/    

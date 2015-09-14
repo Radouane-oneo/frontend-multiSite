@@ -253,7 +253,7 @@ define([
             var maxTOL = this.config.labels['maxTOL'];
             var wcf = $('#wcf').val();
             var hcf = $('#hcf').val();
-            if (wcf == '' && hcf == ''){
+            if ((wcf == '' && hcf == '') || (typeof wcf == 'undefined' && typeof hcf == 'undefined')){
                 return true;
             }
             else{
@@ -331,8 +331,7 @@ define([
                     this.model.set({
                                "widthCF": wcfVal,
                                "heightCF":hcfVal,
-                               "CF":"CF",
-                               "quantity" : 1
+                               "CF":"CF"
                            },{silent: true});
                            //console.log(this.model);
                             this.$("li.CF a").trigger("click", 1);

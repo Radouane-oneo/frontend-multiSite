@@ -127,6 +127,72 @@ function pcanalytics_page_alter(&$page) {
             $page['page_bottom']['pcanalytics']['remarketingProduct']['#markup'] = $remarketingProduct;
         }
     }
+
+
+
+
+    if (count($path) == 4 && $path[1] == 'orders' && $path[3] == 'confirmation') {
+        $orderId = $path[2];
+
+        $order = \printconnect\Orders\Factory::Get($orderId);
+        $total = $order->subTotalAmount;
+        $customer = $order->customer;
+        $productname = array();
+        foreach ($order->productItems as $item){
+            $product = $item->productName . ' x ' . $item->quantity;
+            $productname[] = $product;
+        }
+        $lastprodact = end($productname);
+        $googleoptionTracking = '<script type="text/javascript">
+              var ttConversionOptions = {';
+        $googleoptionTracking .= "
+                            type: 'sales',
+                            campaignID: '20542',
+                            productID: '30255',
+                            transactionID: '".$order->id."',
+                            transactionAmount: '".$total."',
+                            quantity: '1',
+                            email: '".$address."',
+                            descrMerchant: '";
+        foreach($productname as $value){
+            ereg_replace("<[^>]*>", "", $value);
+            $htmlcaracter = array("<strong>", "</strong>", "<p>", "</p>", "<br>", ", ", " ", ":", "/", "___", "_-_", "__", "m²");
+            $replace  = array("", "_", "", "", "", "_", "_", "", "_", "_", "_", "_", "m");
+            $newphrase = str_replace($htmlcaracter, $replace, $value);
+            if($lastprodact != $value){
+                $googleoptionTracking .= $newphrase."_and_";
+            }else{
+                $googleoptionTracking .= $newphrase;
+            }
+        }
+        $googleoptionTracking .= "',
+                            descrAffiliate: '',
+                            currency: 'EUR'
+                        };
+
+                        (function(ttConversionOptions) {
+                            var campaignID = 'campaignID' in ttConversionOptions ? ttConversionOptions.campaignID : ('length' in ttConversionOptions && ttConversionOptions.length ? ttConversionOptions[0].campaignID : null);
+                            var tt = document.createElement('script'); tt.type = 'text/javascript'; tt.async = true; tt.src = '//tm.tradetracker.net/conversion?s=' + encodeURIComponent(campaignID) + '&t=m';
+                            var s = document.getElementsByTagName('script'); s = s[s.length - 1]; s.parentNode.insertBefore(tt, s);
+                        })(ttConversionOptions);
+                    </script>
+            <noscript>
+             <img src='//ts.tradetracker.net/?cid=20542&amp;pid=30255&amp;tid=".$order->id."&amp;tam=".$total."&amp;data=&amp;qty=1&amp;eml=email&amp;descrMerchant=";
+        foreach($productname as $value){
+            ereg_replace("<[^>]*>", "", $value);
+            $htmlcaracter = array("<strong>", "</strong>", "<p>", "</p>", "<br>", ", ", " ", ":", "/", "___", "_-_", "__", "m²");
+            $replace  = array("", "_", "", "", "", "_", "_", "", "_", "_", "_", "_", "m");
+            $newphrase = str_replace($htmlcaracter, $replace, $value);
+            if($lastprodact != $value){
+                $googleoptionTracking .= $newphrase."_and_";
+            }else{
+                $googleoptionTracking .= $newphrase;
+            }
+        }
+        $googleoptionTracking .="&amp;descrAffiliate=&amp;event=sales&amp;currency=EUR' alt='' /></noscript>
+        ";
+        $page['page_bottom']['pcanalytics']['tradetracke']['#markup'] = $googleoptionTracking;
+    }
 }
 
 function pcanalytics_form_pcorders_order_form_alter(&$form, $form_state, $form_id) {

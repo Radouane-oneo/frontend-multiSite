@@ -338,10 +338,12 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
     $rows = array();
 
     foreach ($item->configuration->config as $config) {
-//      $rows[] = array(
-//          'no_striping' => TRUE,
-//          'data' => array('<label>' . $config->groupName . '</label>', $config->name, ''),
-//      );
+        if ($item->customWidth != 0 && $item->customHeight != 0 && $config->code == 'CF'){
+            $title = $item->customWidth.' X '. $item->customHeight. ' mm';
+        }else
+        {
+            $title = $config->name;
+        }
       $rows[] = '<label class="labelOrder">' . $config->groupName . '</label>' . $config->name;
     }
 

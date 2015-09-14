@@ -31,7 +31,6 @@ use printconnect\Dal\ForbiddenException;
 
     public function Get($entity, $params, $language = FALSE) {
       $url = $this->GetUrl($entity, $params, FALSE, $language);
-
             if(variable_get('pc_env', 'production') == 'production') {
                 $json = $this->fromCache($url);
 		if ($entity == 'pickuppointdetail/service/store') {
@@ -137,6 +136,7 @@ use printconnect\Dal\ForbiddenException;
         }
         if ($entity == 'pickuppointdetail/service/store') {
 	}
+        //echo $url;echo '<br>';
       return $url;
     }
 
@@ -188,6 +188,7 @@ use printconnect\Dal\ForbiddenException;
     }
 
     public function Update($properties, $entity, $params, $validateOnly = FALSE) {
+     //   var_dump($properties);die;
       $url = $this->GetUrl($entity, $params, $validateOnly);
       $header = array('Content-Type' => 'application/json');
 
@@ -196,11 +197,14 @@ use printconnect\Dal\ForbiddenException;
           $properties['pPrice'] = $properties['price'];
         }
       }
+     
 	$data = json_encode($properties);
+        // echo 'update';var_dump($data,$url);echo '<br><br>';die;
       $start = microtime(true);
       $response = drupal_http_request($url, array('header' => $header, 'method' => 'PUT', 'data' => $data));
       $end = microtime(true);
       watchdog('pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'PUT', '%url' => $url, '%timing' => ($end - $start), '%data' => $data, '%response' => print_r($response, TRUE)), WATCHDOG_DEBUG, ($end - $start) . ' on PUT ' . $url);
+  
       if ($response->code == 200) {
         $data = json_decode($response->data);
         return $data;
@@ -225,6 +229,8 @@ use printconnect\Dal\ForbiddenException;
         $data = array();
         $response = drupal_http_request($url, array('header' => $header, 'method' => 'POST'));
       }
+      echo $url;
+      var_dump($data); 
       $end = microtime(true);
       watchdog('pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'POST', '%url' => $url, '%timing' => ($end - $start), '%data' => $data, '%response' => print_r($response, TRUE)), WATCHDOG_DEBUG, ($end - $start) . ' on POST ' . $url);
       if ($response->code == 200) {

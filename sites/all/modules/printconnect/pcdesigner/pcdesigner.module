@@ -106,6 +106,8 @@ function pcdesigner_form_submit($form, &$form_state){
 
       $item->Remove('emailDesigner');
     }
+    //var_dump($item);
+   // die('ryry');
     \printconnect\Carts\Factory::SaveItem($item);
   }
 
@@ -122,6 +124,7 @@ function pcdesigner_form_validate($form, &$form_state) {
     ) {
       $checkEmailIsValid = true;
     }
+    die('ryryry');
    \printconnect\Carts\Factory::SaveItem($item);
   }
 

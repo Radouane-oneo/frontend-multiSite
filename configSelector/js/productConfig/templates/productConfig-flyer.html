@@ -142,6 +142,9 @@
                 var customWidth  = model.widthCF;
                 if((customHeight) && (customWidth)){
                     var validPrice = ((customHeight * customWidth * price['sellPrice']) / (1 * 1000 * 1000));
+                    if (validPrice < price['costPrice']){
+                        validPrice = price['costPrice'];
+                    }
                     print(priceTpl({price:validPrice,classToAdd:className}));
                 } else { 
                 %>    

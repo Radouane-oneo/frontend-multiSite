@@ -323,7 +323,7 @@ use printconnect\Customers;
       return $object;
     }
 
-    public static function SaveItem(Item $object) {
+    public static function SaveItem(Item $object) {var_dump($object);echo '<br><br>';
       //$object->cart_item = $object->id;
       $refJob = $object->refJob;
       $object->product_price_group = $object->productPriceGroupId;

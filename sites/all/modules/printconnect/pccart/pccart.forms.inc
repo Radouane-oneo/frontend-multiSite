@@ -969,6 +969,7 @@ function pccart_cart_form2_delete_discount_submit($form, &$form_state) {
 function pccart_cart_form2_validate($form, &$form_state){
 
     $cart = Factory::Current();
+  
     if (!$cart) {
         form_set_error('', t('No cart or empty'));
     }
@@ -985,9 +986,11 @@ function pccart_cart_form2_validate($form, &$form_state){
     }
 
     $form_state['storage']['cart'] =  $cart;
+    
 }
 
 function pccart_cart_form2_submit($form, &$form_state){
+    $cart = Factory::Current();
     $_SESSION['shippingtypeID'] = $form_state['values']['cart']['shipping']['type'];
      drupal_goto('checkout');
 }

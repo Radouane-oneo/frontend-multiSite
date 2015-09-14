@@ -1,7 +1,7 @@
 <?php
 
 use printconnect\Customers\Factory as CustomersFactory;
-
+use printconnect\Carts\Factory as CartsFactory;
 function pccheckout_redirect() {
     _pccustomers_ensureloggedin();
     $customer = \printconnect\Customers\Factory::Current();

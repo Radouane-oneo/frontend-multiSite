@@ -206,7 +206,9 @@ function pccustomers_profile_form($form, &$form_state) {
       '#size' => 71,
       '#default_value' => $customer->phone,
   );
-
+  $form['requireitems'] = array(
+     '#markup'=> "<p class='requieredfields'>".t('fieldswitha')."<span class='form-required' title='Ce champ est requis.'>*</span>".t('areRequieredfields')."</p>", 
+  );  
   $options = array();
   $shopConfig = printconnect\Shop\Configuration\Factory::Current();
   foreach ($shopConfig->languages as $language) {

@@ -1463,27 +1463,36 @@ function _pccheckout_payment_form_build_overview($cart) {
                     $itemValue += $option->price;
                 }
             }
-        $elementRow[]= $itemValue;
-            if($itemValue < $item->originPrice) {
+            $elementRow[]= $itemValue;
+            if ($item->customWidth != 0 && $item->customHeight != 0){
                 $rows[] = array(
-                    'data' => array(
-                        $item->quantity . ' ' . $item->configuration->name . ' - ' . $primaryItem->name,
-                        theme('price', array('value' => $itemValue)) . '<del class="payment-origin-price">&euro; '.$item->originPrice.'</del>',
-                    ),
-                    'class' => array('item'),
-                );
-         
-            }else {
-                $rows[] = array(
+                            'data' => array(
+                                $item->quantity . ' ' . $item->configuration->name . ' - ' . $item->customWidth.' X '. $item->customHeight. ' mm',
+                                theme('price', array('value' => $itemValue)),
+                            ),
+                            'class' => array('item'),
+                    );
+            }else{
+                if($itemValue < $item->originPrice) {
+                    $rows[] = array(
                         'data' => array(
                             $item->quantity . ' ' . $item->configuration->name . ' - ' . $primaryItem->name,
-                            theme('price', array('value' => $itemValue)),
+                            theme('price', array('value' => $itemValue)) . '<del class="payment-origin-price">&euro; '.$item->originPrice.'</del>',
                         ),
                         'class' => array('item'),
-                );
-            }
-        }
+                    );
 
+                }else {
+                    $rows[] = array(
+                            'data' => array(
+                                $item->quantity . ' ' . $item->configuration->name . ' - ' . $primaryItem->name,
+                                theme('price', array('value' => $itemValue)),
+                            ),
+                            'class' => array('item'),
+                    );
+                }
+            }
+        }   
 	$cartItemsFull = printconnect\Carts\Factory::GetItems($cart);
         foreach ($cartItemsFull as $cartItem) {
             if ($cartItem->parentId != null) {

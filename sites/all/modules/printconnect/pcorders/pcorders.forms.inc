@@ -318,14 +318,15 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
     $price *= (1-$item->discount);
 
     $form['order']['details']['item'][$item->id]['description']['price'] = array('#markup' => theme('price', array('value' => $price)));
-
-    if($price < $item->originPrice){
-        $promoPrice = '<del>&euro; '.$item->originPrice.'</del>';
-        $form['order']['details']['item'][$item->id]['description']['promoPrice'] = array(
-        '#prefix' => '<div class="order-origin-price">',
-        '#suffix' => '</div>',
-        '#markup' => $promoPrice,
-        );
+    if ($item->customWidth == 0 && $item->customHeight == 0){
+        if($price < $item->originPrice){
+            $promoPrice = '<del>&euro; '.$item->originPrice.'</del>';
+            $form['order']['details']['item'][$item->id]['description']['promoPrice'] = array(
+            '#prefix' => '<div class="order-origin-price">',
+            '#suffix' => '</div>',
+            '#markup' => $promoPrice,
+            );
+        }
     }
     $form['order']['details']['item'][$item->id]['description']['name'] = array(
         '#prefix' => '<h3>',

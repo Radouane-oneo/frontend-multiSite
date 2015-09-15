@@ -188,6 +188,7 @@ namespace printconnect {
       
       $dal = Dal::GetDal();
       $properties = $object->GetProperties();
+      
       if ($object->id) {
         $data = $dal->Update($properties, $entity, $params, $validateOnly);
         $object->LoadProperties($data);

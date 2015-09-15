@@ -31,7 +31,6 @@ use printconnect\Dal\ForbiddenException;
 
     public function Get($entity, $params, $language = FALSE) {
       $url = $this->GetUrl($entity, $params, FALSE, $language);
-
             if(variable_get('pc_env', 'production') == 'production') {
                 $json = $this->fromCache($url);
 		if ($entity == 'pickuppointdetail/service/store') {
@@ -137,6 +136,7 @@ use printconnect\Dal\ForbiddenException;
         }
         if ($entity == 'pickuppointdetail/service/store') {
 	}
+        //echo $url;echo '<br>';
       return $url;
     }
 
@@ -196,11 +196,13 @@ use printconnect\Dal\ForbiddenException;
           $properties['pPrice'] = $properties['price'];
         }
       }
+     
 	$data = json_encode($properties);
       $start = microtime(true);
       $response = drupal_http_request($url, array('header' => $header, 'method' => 'PUT', 'data' => $data));
       $end = microtime(true);
       watchdog('pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'PUT', '%url' => $url, '%timing' => ($end - $start), '%data' => $data, '%response' => print_r($response, TRUE)), WATCHDOG_DEBUG, ($end - $start) . ' on PUT ' . $url);
+  
       if ($response->code == 200) {
         $data = json_decode($response->data);
         return $data;
@@ -227,6 +229,7 @@ use printconnect\Dal\ForbiddenException;
       }
       $end = microtime(true);
       watchdog('pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'POST', '%url' => $url, '%timing' => ($end - $start), '%data' => $data, '%response' => print_r($response, TRUE)), WATCHDOG_DEBUG, ($end - $start) . ' on POST ' . $url);
+      
       if ($response->code == 200) {
         $data = json_decode($response->data);
 

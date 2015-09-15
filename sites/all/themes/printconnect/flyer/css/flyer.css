@@ -2373,7 +2373,7 @@ body.front #block-block-13:after {
 	background-repeat: no-repeat;
 	padding: 8px 8px 10px 15px;
 	clear: left;
-	font-size: 12px;
+	font-size: 13px;
 	border-style: solid;
 	border-color:#e1e1e1;
 	border-width: 0 1px 1px 1px;
@@ -2688,7 +2688,8 @@ a.ui-button.inactivebtn{
 	height: 43px;
 }
 .page-products #pcproducts-config-form table.grid tbody tr.last-child td:first-child .form-item{
-
+	display: none;
+	visibility: hidden;
 }
 .page-products #pcproducts-config-form tr.last-child .form-item-calcul-qte{
 	text-indent: 0;
@@ -2714,12 +2715,10 @@ a.ui-button.inactivebtn{
 	line-height: 16px;
 	display: inline-block; 
 	vertical-align: middle;
-        padding-left: 27px;
-        font-weight: 700;
 }
 .page-products #pcproducts-config-form tr.last-child .form-item-calcul-qte .wrap-input-calcul{
 	position: absolute;
-	right: -16px;
+	right: -12px;
 	top: 4px;
 }
 .page-products #pcproducts-config-form tr.last-child .form-item-calcul-qte input[type="text"]{
@@ -4024,7 +4023,7 @@ a.googleconnect {
 }
 .page-checkout-invoiceanddelivery #invoice-address input[type="submit"], 
 .page-checkout-invoiceanddelivery #shipping-address input[type="submit"] {
-	margin-left: 493px; 
+	margin-left: 347px; 
 	margin-top: 20px;
 }
 .page-pcbpost-picker .whitebox {
@@ -4125,6 +4124,8 @@ a.googleconnect {
 .page-checkout #shipping-address.form-wrapper, 
 .page-checkout #invoice-address.form-wrapper {
 	margin: 20px 0 19px;
+    width: 100%;
+    box-sizing: border-box;
 }
 .page-checkout #shipping-address.form-wrapper h3, 
 .page-checkout #invoice-address.form-wrapper h3 {
@@ -4490,7 +4491,7 @@ a.googleconnect {
 .page-paymentrequest table.grid,
 #pccheckout-payment-form table.grid {
 
-	width: 497px;
+	width: 328px;
 	border: 1px solid #e1e1e1;
 	border-collapse: separate;
 	border-radius: 3px;
@@ -8219,13 +8220,14 @@ form#pccheckout-payment-form fieldset.paymentmethodefond legend{
 	background-color: #f1f1f1;
         margin: 0;
         padding: 18px 15px;
-        width: 969px;
+        width: 833px;
         
         
     border-left: 1px solid #e1e1e1;
     border-radius: 3px 3px 0 0;
     border-right: 1px solid #e1e1e1;
     border-top: 1px solid #e1e1e1;
+    box-sizing: border-box;
 }
 #edit-payment-method fieldset{
     /*border: 1px solid #e1e1e1;*/    
@@ -10743,22 +10745,4 @@ a.cart.button{
 	border-radius: 0 !important;
 	overflow: visible !important;
 	margin-top: 0 !important;
-}
-
-.superdeal{
-	background-color: #15B7D3 !important;
-}
-
-.superdeal * {
-	color: #fff; !important;
-}
-.superdeal:hover *{
-	color: #15B7D3; !important;
-	background-color: #fff !important;
-}
-.messagedeal{
-	float: right;
-	color: white;
-	margin-right: 16px;
-}
 }

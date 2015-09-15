@@ -6,6 +6,14 @@ define([
     GlobalLabels['productId'] = JsonFileGroups.id;
     GlobalLabels['productName'] = JsonFileGroups.name;
     GlobalLabels['productDescription'] = unescape(JsonFileGroups.shortDescription + JsonFileGroups.longDescription + JsonFileGroups.baselineDescription);
+    GlobalLabels['customFormat'] = JsonFileGroups.customFormat;
+    GlobalLabels['format'] = JsonFileGroups.format;
+    GlobalLabels['minHCF'] = JsonFileGroups.heightMin;
+    GlobalLabels['maxHCF'] = JsonFileGroups.heightMax;
+    GlobalLabels['minWCF'] = JsonFileGroups.widthMin;
+    GlobalLabels['maxWCF'] = JsonFileGroups.widthMax;
+    GlobalLabels['minTOL'] = JsonFileGroups.toleranceMin;
+    GlobalLabels['maxTOL'] = JsonFileGroups.toleranceMax;
     return {
         themeFile : "productConfig-flyer.html",
         containerId : "#myForm",

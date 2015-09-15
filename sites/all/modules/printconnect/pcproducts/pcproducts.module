@@ -596,8 +596,8 @@ function pcproducts_js_callback() {
 
 function getFromServer($filename) {
     $apikey = variable_get('pc_apikey', '');
-    $url = "http://admin.preprd.printconcept.com/rest/json/filename/{$filename}?apikey={$apikey}";
-
+    $rest = variable_get('pc_url');
+    $url = "{$rest}json/filename/{$filename}?apikey={$apikey}";
     return file_get_contents($url);
 }
 
@@ -710,6 +710,22 @@ function getLabels($edit = false) {
         "Format" => t('Format'),
         "rawFormat" => t('brut'),
         "finishedFormat" => t('size'),
+        "berekenen" => t('Berekenen'),
+        "breedte" => t('Breedte'),
+        "hoogte" => t('Hoogte'),
+        "newCF"=> t('newCF'),
+        "msgErrorCF"=> t('msgErrorCF'),
+        "msgCFValid"=> t('msgCFValid'),
+        "msgErrorCFNotValid"=> t('msgErrorCFNotValid'),
+        "msgErrorCFHeightNotValid"=> t('msgErrorCFHeightNotValid'),
+        "msgErrorCFWidthNotValid"=> t('msgErrorCFWidthNotValid'),
+        "msgErrorCFTolNotValid"=> t('msgErrorCFTolNotValid'),
+        "textWidthNotValid"=> t('textWidthNotValid'),
+        "textHeightNotValid"=> t('textHeightNotValid'),
+        "et"=> t('et'),
+        "textTolNotValid"=> t('textTolNotValid'),
+        "msgErrorCFNotFloat"=> t('msgErrorCFNotFloat'),
+        
     );
 
     for($i=0; $i <= 114; $i++) {

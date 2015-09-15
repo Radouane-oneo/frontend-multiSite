@@ -345,7 +345,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         {
             $title = $config->name;
         }
-      $rows[] = '<label class="labelOrder">' . $config->groupName . '</label>' . $config->name;
+      $rows[] = '<label class="labelOrder">' . $config->groupName . '</label>' . $title;
     }
 
     foreach ($item->options as $option) {
@@ -381,7 +381,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
     }
     $form['order']['details']['item'][$item->id]['description']['recommander'] = array(
         '#type' => 'submit',
-        '#value' => t('Recommander'),
+        '#value' => t('Recommandertt'),
         '#name' => $item->id,
         '#has_garbage_value' => FALSE,
         '#attributes' => array('class' => array('recommander')),

@@ -94,23 +94,24 @@ function pcdesigner_form_alter(&$form, $form_state, $form_id) {
 }
 
 function pcdesigner_form_submit($form, &$form_state){
-  $cart = Factory::Current();
-    unset($form_state['values']['cart']['items']['hidden']);
-    foreach (element_children($form_state['values']['cart']['items']) as $key) {
-    $item = \printconnect\Carts\Factory::GetItem($cart, $key);
-    $item->EnsureLoaded();
-
-    if (isset($form_state['values']['cart']['items'][$key]["ready"]['designer']) && $form_state['values']['cart']['items'][$key]["ready"]['designer']['check']) {
-        $item->emailDesigner = $form_state['values']['cart']['items'][$key]["ready"]['designer']['inputdesigner']['email'];
-    } else {
-
-      $item->Remove('emailDesigner');
-    }
-   
-    \printconnect\Carts\Factory::SaveItem($item, $item->customWidth, $item->customHeight);
-  }
-
-  unset($_SESSION['pcdesigner']['email']);
+//  $cart = Factory::Current();
+//    unset($form_state['values']['cart']['items']['hidden']);
+//    foreach (element_children($form_state['values']['cart']['items']) as $key) {
+//    $item = \printconnect\Carts\Factory::GetItem($cart, $key);
+//    $item->EnsureLoaded();
+//
+//    if (isset($form_state['values']['cart']['items'][$key]["ready"]['designer']) && $form_state['values']['cart']['items'][$key]["ready"]['designer']['check']) {
+//        $item->emailDesigner = $form_state['values']['cart']['items'][$key]["ready"]['designer']['inputdesigner']['email'];
+//    } else {
+//
+//      $item->Remove('emailDesigner');
+//    }
+//   
+//    \printconnect\Carts\Factory::SaveItem($item, $item->customWidth, $item->customHeight);
+//    
+//  }
+//
+//  unset($_SESSION['pcdesigner']['email']);
 }
 
 function pcdesigner_form_validate($form, &$form_state) {

@@ -280,6 +280,7 @@ use printconnect\Customers;
     }
    
     public static function CreateItem($cart, $priceGroup, $quantity, $description, $relatedProducts, $options, $vat = FALSE, $widthCF, $heightCF, $cf) {
+     
 	$object = new Item();
       $object->cart = $cart->id;
       $object->productId = $cart->productId;
@@ -323,7 +324,7 @@ use printconnect\Customers;
       return $object;
     }
 
-    public static function SaveItem( Item $object, $widthCF, $heightCF, $cf ) {
+    public static function SaveItem( Item $object, $widthCF, $heightCF, $cf ) {        
       //$object->cart_item = $object->id;
         
       $refJob = $object->refJob;

@@ -280,6 +280,7 @@ use printconnect\Customers;
     }
    
     public static function CreateItem($cart, $priceGroup, $quantity, $description, $relatedProducts, $options, $vat = FALSE, $widthCF, $heightCF, $cf) {
+     
 	$object = new Item();
       $object->cart = $cart->id;
       $object->productId = $cart->productId;
@@ -323,12 +324,16 @@ use printconnect\Customers;
       return $object;
     }
 
-    public static function SaveItem(Item $object) {
+    public static function SaveItem( Item $object, $widthCF, $heightCF, $cf ) {        
       //$object->cart_item = $object->id;
+        
       $refJob = $object->refJob;
       $object->product_price_group = $object->productPriceGroupId;
       $object->description = '';
       $object->refJob = $refJob;
+      $object->widthCF = $widthCF;
+      $object->heightCF = $heightCF;
+      $object->CF = $cf;
       //$object->cart = $object->order;
       $options = array();
       foreach ($object->options as $option) {
@@ -340,6 +345,7 @@ use printconnect\Customers;
       }
       $object->options = $options;
       $item = Dal::Save($object, 'cart-item', array('id' => $object->id, 'cart' => $object->cart));
+   //var_dump($item);die;
       $cart = self::Current();
       $orderItems =  $cart->orderItems;
       for($i=0; $i< count($orderItems); $i++) {

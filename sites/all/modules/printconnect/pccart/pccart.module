@@ -581,7 +581,6 @@ function pccart_editcartitem_submit2($form, &$form_state) {
       $vatpercentage = $form_state['storage']['vatpercentage'];
       $item->vatCustom = $vatpercentage;
     }
-
     Factory::SaveItem($item);
     Factory::Refresh($cart);
     unset($_SESSION['cart']['items'][$itemId]);

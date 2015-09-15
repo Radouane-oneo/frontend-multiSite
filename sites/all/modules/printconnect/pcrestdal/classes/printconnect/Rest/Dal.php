@@ -188,7 +188,6 @@ use printconnect\Dal\ForbiddenException;
     }
 
     public function Update($properties, $entity, $params, $validateOnly = FALSE) {
-     //   var_dump($properties);die;
       $url = $this->GetUrl($entity, $params, $validateOnly);
       $header = array('Content-Type' => 'application/json');
 
@@ -199,7 +198,6 @@ use printconnect\Dal\ForbiddenException;
       }
      
 	$data = json_encode($properties);
-        // echo 'update';var_dump($data,$url);echo '<br><br>';die;
       $start = microtime(true);
       $response = drupal_http_request($url, array('header' => $header, 'method' => 'PUT', 'data' => $data));
       $end = microtime(true);
@@ -229,8 +227,6 @@ use printconnect\Dal\ForbiddenException;
         $data = array();
         $response = drupal_http_request($url, array('header' => $header, 'method' => 'POST'));
       }
-      echo $url;
-      var_dump($data); 
       $end = microtime(true);
       watchdog('pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'POST', '%url' => $url, '%timing' => ($end - $start), '%data' => $data, '%response' => print_r($response, TRUE)), WATCHDOG_DEBUG, ($end - $start) . ' on POST ' . $url);
       if ($response->code == 200) {

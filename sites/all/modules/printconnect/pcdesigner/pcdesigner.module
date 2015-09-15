@@ -106,9 +106,8 @@ function pcdesigner_form_submit($form, &$form_state){
 
       $item->Remove('emailDesigner');
     }
-    //var_dump($item);
-   // die('ryry');
-    \printconnect\Carts\Factory::SaveItem($item);
+   
+    \printconnect\Carts\Factory::SaveItem($item, $item->customWidth, $item->customHeight);
   }
 
   unset($_SESSION['pcdesigner']['email']);

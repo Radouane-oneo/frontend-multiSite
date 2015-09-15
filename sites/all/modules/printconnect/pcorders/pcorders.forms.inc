@@ -381,7 +381,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
     }
     $form['order']['details']['item'][$item->id]['description']['recommander'] = array(
         '#type' => 'submit',
-        '#value' => t('Recommandertt'),
+        '#value' => t('Recommander'),
         '#name' => $item->id,
         '#has_garbage_value' => FALSE,
         '#attributes' => array('class' => array('recommander')),

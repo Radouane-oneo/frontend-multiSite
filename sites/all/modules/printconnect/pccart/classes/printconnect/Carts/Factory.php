@@ -325,6 +325,7 @@ use printconnect\Customers;
 
     public static function SaveItem(Item $object, $widthCF, $heightCF, $cf) {
       //$object->cart_item = $object->id;
+        
       $refJob = $object->refJob;
       $object->product_price_group = $object->productPriceGroupId;
       $object->description = '';

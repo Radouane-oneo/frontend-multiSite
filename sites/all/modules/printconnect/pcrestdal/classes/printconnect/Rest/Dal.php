@@ -229,6 +229,7 @@ use printconnect\Dal\ForbiddenException;
       }
       $end = microtime(true);
       watchdog('pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'POST', '%url' => $url, '%timing' => ($end - $start), '%data' => $data, '%response' => print_r($response, TRUE)), WATCHDOG_DEBUG, ($end - $start) . ' on POST ' . $url);
+      
       if ($response->code == 200) {
         $data = json_decode($response->data);
 

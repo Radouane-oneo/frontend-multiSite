@@ -37,10 +37,9 @@ $items['cart/%/submit'] = array(
   );
   $items['cart'] = array(
       'title' => 'Cart',
-      'page callback' => 'drupal_get_form',
-      'page arguments' => array('pccart_cart_form2'),
-      'access arguments' => array('access content'),
-      'file' => 'pccart.forms.inc',
+      'page callback' => 'pccart_js_form',
+      'page arguments' => array(),
+      'access arguments' => array('access content')
   );
 
   $items['cart/%/delete'] = array(
@@ -1170,5 +1169,14 @@ function pccart_loggedout() {
     }
   } catch (\Exception $ex) {
   }
+}
+
+function pccart_js_form() {
+    header('Cache-Control: public, max-age=' . 3600);
+
+    $script = '<script data-main="/webapp/js/cart/main" src="/webapp/js/libs/requirejs/require.js"></script>';
+    $script .= '<div id="myCart"></div>';
+
+    return $script;
 }
 

@@ -19,7 +19,7 @@ define([
                 "config" : this.config
             }));
 
-            $(this.config.containerId).html(this.$el);
+            $(this.config.bottomBox).html(this.$el);
         }
 
     });

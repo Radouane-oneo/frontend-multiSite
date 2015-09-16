@@ -1,22 +1,26 @@
-var jobempty = Backbone.View.extend({
-    initialize: function() {
-        this.render();
-    },
+define([
+	'backbone',
+    'text!../templates/jobFull.html',
+    'text!../templates/jobEmpty.html'
+], function (Backbone, jobFull, jobEmpty){
 
-    render: function() {
-    	this.template = _.template($('#templateJobEmpty').html());
-        this.$el.html( template );
-    }
-});
+	return Backbone.View.extend({
+		initialize: function(model) {
+			this.config = require("config");
+            this.model = model;
+	        this.render();
+	    },
 
+	    render: function() {
+	    	this.template = _.template(jobEmpty);
 
-var jobFull = Backbone.View.extend({
-    initialize: function() {
-        this.render();
-    },
+	        this.setElement(this.template({
+                "model" : this.model.toJSON(),
+                "config" : this.config
+            }));
 
-    render: function() {
-    	this.template = _.template($('#templateJobFull').html());
-        this.$el.html( template );
-    }
+            $(this.config.jobBox).html(this.$el);
+	    }
+	});
+
 });

@@ -5,7 +5,8 @@ define([
 ], function (Backbone, cartJSON, shippingJSON) {
     return {
         containerId : '#myCart',
-        jobCreated : true,
+        jobBox : '#jobBox',
+        bottomBox : '#bottomBox',
         cart : $.parseJSON(cartJSON),
         shipping : $.parseJSON(shippingJSON),
         labels : {

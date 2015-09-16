@@ -10,7 +10,13 @@ define([
             }
         },
         initialize: function() {
-           
+            if(this.config.jobCreated === true){
+                // load JobFull.html
+                var jobempty = new jobempty({ el: $("#dtContainer") });
+            }else {
+                // load jobEmpty.html
+                var jobFull = new jobFull({ el: $("#dtContainer") });
+            }
         }
         
     });

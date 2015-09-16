@@ -3,6 +3,7 @@ require.config({
         "jquery": "../libs/jquery/jquery.min",
         "underscore": "../libs/underscore/underscore-min",
         "backbone": "../libs/backbone/backbone",
+        "jobview" : "views/jobView",
         "text": "../libs/requirejs-text/text"
     },
     shim: {
@@ -15,9 +16,9 @@ require.config({
         }
     },
     waitSeconds: 0,
-    //urlArgs: "t=" +  (new Date()).getTime()
+    urlArgs: "t=" +  (new Date()).getTime()
 });
 
-require(['backbone', 'views/cart'], function(Backbone, cart){
+require(['backbone', 'views/cart', 'jobview'], function(Backbone, cart){
     new cart();
 });

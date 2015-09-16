@@ -58,8 +58,10 @@ class Factory {
 
   public static function LoadBillingAccount(BillingAccount $object, $cache=TRUE) {
     $id = $object->Get('id');
+    $cart = \printconnect\Carts\Factory::Current();
+    
     if ($id) {
-      Dal::Load($object, 'billing-account', array($id), $cache);
+      Dal::Load($object, 'billing-account', array('id' => $id,'cart' => $cart->id), $cache);
     }
   }
 

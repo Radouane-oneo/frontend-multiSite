@@ -16,7 +16,7 @@ define([
             this.render();
 
             //jobView
-            //this.jobView = new jobView(this.model);
+            this.jobView = new jobView(this.model);
 
             //shipping View
             this.shippingView = new shippingView(this.model);

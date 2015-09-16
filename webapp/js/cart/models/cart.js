@@ -1,6 +1,6 @@
 define([
     'backbone'
-], function (Backbone) {
+], function (Backbone, cart) {
 
     return Backbone.Model.extend({
         defaults: function() {
@@ -10,9 +10,8 @@ define([
             }
         },
         initialize: function() {
-           
+
         }
-        
     });
 
 });

@@ -1,8 +1,9 @@
 define([
     'backbone',
     '../models/cart',
-    'text!../templates/cart.html'
-], function (Backbone, cartModel, cartTemplate) {
+    'text!../templates/cart.html',
+    'views/shipping'
+], function (Backbone, cartModel, cartTemplate, shippingView) {
 
     return Backbone.View.extend({
         template: _.template(cartTemplate),
@@ -10,18 +11,10 @@ define([
         },
         initialize: function() {
             this.config = require("config");
-            this.model = new cartModel();
-            this.render();
-            this.model.on("change",this.render,this);
-        },
-        render:function(){
-            this.setElement(this.template({
-                "model" : this.model.toJSON(),
-                "config" : this.config
-                
-            }));
-            
-            $(this.config.containerId).html(this.$el);
+            this.model = new cartModel(this.config.cart);
+            this.shippingView = new shippingView(this.model);
+
+
         }
         
     });

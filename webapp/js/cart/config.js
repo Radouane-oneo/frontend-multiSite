@@ -1,10 +1,13 @@
 define([
-    'backbone'
-], function (Backbone) {
-    
+    'backbone',
+    'text!../../cart.json',
+    'text!../../shipping.json'
+], function (Backbone, cartJSON, shippingJSON) {
     return {
         containerId : '#myCart',
         jobCreated : true,
+        cart : $.parseJSON(cartJSON),
+        shipping : $.parseJSON(shippingJSON),
         labels : {
             'downloadDevis' : 'Téléchargez le panier en devis',
             'designtoolTitle' : 'Téléchargez votre fichier ou créez en ligne',

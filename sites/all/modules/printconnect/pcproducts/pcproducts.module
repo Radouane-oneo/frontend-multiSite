@@ -596,7 +596,7 @@ function pcproducts_js_callback() {
 
 function getFromServer($filename) {
     $apikey = variable_get('pc_apikey', '');
-    $rest = variable_get('pc_url');
+    $rest = 'http://admin.preprd.printconcept.com/rest/';
     $url = "{$rest}json/filename/{$filename}?apikey={$apikey}";
     return file_get_contents($url);
 }

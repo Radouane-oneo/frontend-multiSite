@@ -15,7 +15,7 @@ require.config({
         }
     },
     waitSeconds: 0,
-    //urlArgs: "t=" +  (new Date()).getTime()
+    urlArgs: "t=" +  (new Date()).getTime()
 });
 
 require(['backbone', 'views/cart'], function(Backbone, cart){

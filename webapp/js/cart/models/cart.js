@@ -6,7 +6,7 @@ define([
         defaults: function() {
             this.config = require("config");
             return {
-               "myProperty" : "azerty"
+               
             }
         },
         initialize: function() {

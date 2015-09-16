@@ -1,1 +1,46 @@
-<div>Livraison</div>
+<form id="pccart-cart-form" accept-charset="UTF-8" method="post" action="/panier">
+<fieldset id="edit-cart-shipping" class="shipping clearfix form-wrapper">
+    <legend><span class="fieldset-legend"><%= config.labels['shipping'] %></span></legend>
+    <div class="fieldset-wrapper">
+        <table class="grid targetPrice sticky-enabled">
+            <tbody>
+            <% _.each(config.shipping, function(shipping, i){ %>
+
+                <tr class="shipp-item odd <%= (i == 0)?'first-child':'' %> <%= (i == config.shipping.length-1)?'last-child':'' %>">
+                    <td class="first-child">
+                        <div class="form-item form-type-radio form-item-cart-shipping-type">
+                            <input type="radio" value="<%= shipping.id %>" name="shipping-type" class="grid targetPrice form-radio" >
+                        </div>
+                    </td>
+                    <td>
+                        <span><%= shipping.shippingType.tag %></span>
+                        <% if(shipping.id == 134){ %>
+                            <span style="margin-left:100px" class="storeLink">
+                                <a class="pcflyerstores-picker-link iframe" href="/stores/picker/callback/pcflyerstores_callback/FR?contentonly=1" style="display: inline;">
+                                    <%= config.labels['chooseFlyerStore'] %>
+                                </a>
+                            </span>
+                        <% } %>
+                        <% if(shipping.id == 123){ %>
+                            <span style="margin-left:100px" class="storeLink">
+                                <a class="pcflyerstores-picker-link iframe" href="/stores/picker/callback/pcflyerstores_callback/FR?contentonly=1" style="display: inline;">
+                                    <%= config.labels['chooseBpostPickupPoint'] %>
+                                </a>
+                            </span>
+                        <% } %>
+                    </td>
+                    <td class="last-child">
+                        <span class="price" style="display: inline;">
+                            <span class="value" style="display: inline;">
+                                <%= (shipping.price == 0)? config.labels['free'] : shipping.price %>
+                            </span>
+                        </span>
+                    </td>
+                </tr>
+
+            <% }); %>
+            </tbody>
+        </table>
+    </div>
+</fieldset>
+</form>

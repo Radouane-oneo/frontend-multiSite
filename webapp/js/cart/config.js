@@ -8,7 +8,10 @@ define([
         cart : $.parseJSON(cartJSON),
         shipping : $.parseJSON(shippingJSON),
         labels : {
-            "open" : "Ouvrir"
+            "shipping" : "Livraison",
+            "chooseFlyerStore" : "Choisissez votre FlyerStore",
+            "chooseBpostPickupPoint" : "Choisissez votre point de relais",
+            "free" : "GRATUIT"
         }
         
     };

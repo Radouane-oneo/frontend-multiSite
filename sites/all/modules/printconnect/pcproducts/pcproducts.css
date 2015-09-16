@@ -504,3 +504,69 @@ body #footer #block-pcproducts-list ul.menu li{
     display: block;
     width: 100%;
 }
+.blocCustomFormat {
+  display: block;
+}
+.CF{
+    display: none;
+}
+.blocCustomFormat{
+	margin-top: 12px;
+}
+.blocCustomFormat .inputCustomFormat{
+	padding: 11px 10px 9px 20px;
+	border: 1px solid #f1f1f1;
+    display: block;
+    border-radius: 4px;
+}
+.blocCustomFormat .inputCustomFormat:after{
+	clear: both;
+	width: 100%;
+	height: 1px;
+	display: block;
+	content: '';
+}
+
+.blocCustomFormat .inputCustomFormat .wrapTxt{
+	float: left;
+}
+
+.blocCustomFormat .inputCustomFormat .wrapBtn{
+	float: right;
+}
+
+.blocCustomFormat .inputCustomFormat  .label-txt{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.blocCustomFormat .inputCustomFormat  .bold-txt{
+	font-weight: 700;
+	margin-right: 4px;
+}
+.blocCustomFormat .inputCustomFormat  .light-txt{
+	font-weight: 400;
+	margin-right: 10px;
+	margin-left: 7px;
+}
+.blocCustomFormat .inputCustomFormat  #wcf , .blocCustomFormat .inputCustomFormat  #hcf{
+	width: 104px;
+}
+
+.blocCustomFormat .inputCustomFormat  #wcf , .blocCustomFormat .inputCustomFormat  #hcf,.blocCustomFormat .inputCustomFormat .calculCF{
+	float: none !important;
+	margin-top: 0 !important;
+	vertical-align: middle;
+	display: inline-block;
+}
+.blocCustomFormat .inputCustomFormat .wrapBtn{
+	margin-top: 4px;
+}
+.blocCustomFormat .inputCustomFormat .wrapBtn .calculCF{
+	background: #79b51d;
+	padding: 6px 30px;
+}
+
+.msgErrorCF{ 
+	color: #f00 !important; 
+}

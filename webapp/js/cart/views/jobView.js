@@ -5,21 +5,42 @@ define([
 ], function (Backbone, jobFull, jobEmpty){
 
 	return Backbone.View.extend({
-		initialize: function(model) {
+		events: {
+			'change .checkbox-event input[type="checkbox"]' : 'swithcJobEmpty'
+		},
+		initialize: function(model, templatetoLoad) {
 			this.config = require("config");
             this.model = model;
-	        this.render();
+	        this.render(templatetoLoad);
 	    },
 
-	    render: function() {
-	    	this.template = _.template(jobEmpty);
+	    render: function(templatetoLoad) {
+	    	//if order has created
+	    	if (templatetoLoad == true) {
+	    		template = _.template(jobFull);
 
-	        this.setElement(this.template({
-                "model" : this.model.toJSON(),
+	    	}else{template = _.template(jobEmpty)};
+
+	        this.setElement(template({
+                "model" : this.model,
                 "config" : this.config
             }));
 
-            $(this.config.jobBox).html(this.$el);
+            $(this.config.jobBox).append(this.$el);
+
+	    },
+
+	    swithcJobEmpty : function(e){
+
+	    	jobItemEvent = $(e.currentTarget).parents('.job-item-event');
+	    	if (e.currentTarget.checked) {
+	    		jobItemEvent.find('.prodactTemplates').hide();
+	    		jobItemEvent.find('.inputdesigner').show();
+	    	}else{
+
+	    		jobItemEvent.find('.prodactTemplates').show();
+	    		jobItemEvent.find('.inputdesigner').hide();
+	    	}
 	    }
 	});
 

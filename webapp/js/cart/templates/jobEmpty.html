@@ -1,9 +1,9 @@
 <fieldset class="items cartItemsContainer form-wrapper" id="edit-cart-items">
 	<div class="fieldset-wrapper">
-		<div class="item job  clearfix form-wrapper">
+		<div class="item job  clearfix form-wrapper job-item-event">
 			<div class="preview2">
 				<div class="description form-wrapper">
-					<h3>500 ex. Flyers / Tracts A7 </h3>
+					<h3><%= model.quantity %> <%= config.labels.ex %>. <%= model.configuration.name %> <%= model.configuration.config[0].name %></h3>
 					<span class="price">
 						<span class="value">
 							<span class="whole">23</span>
@@ -14,15 +14,21 @@
 					</span>
 					<div class="item-list">
 						<ul>
-							<li class="first"><label>Couleurs et impression:</label>  Quadrichromie, Recto/Verso</li>
-							<li class="last"><label>Type:</label>  Light - papier 135 g/m² satiné</li>
+						<% _.each(model.configuration.config, function(itemConfig, i){ %>
+							<% if(i!=0) { %>
+								<li class="<%= (i == 1)?'first':'' %> <%= (i == model.configuration.config.length-1)?'last':'' %>"><label><%= model.configuration.config[i].groupName %>:</label>  <%= model.configuration.config[i].name %> </li>
+							<% } %>
+						<% }); %>
 						</ul>
+					</div>
+					<div class="items_actions">
+						<span class="removecart"></span>
 					</div>
 				</div>
 			</div>
 			<!-- end preview -->
 
-			<div class="prodactTemplates centroid-2">
+			<div class="prodactTemplates centroid-2" style="display: <%= (model.emailDesigner ==null)?'block':'none' %>;">
 				<div class="prodactHasTemplates">
 					<div class="title-chose"><%= config.labels["designtoolTitle"] %></div>
 					<div class="poll-form poll-form1 first">
@@ -32,18 +38,22 @@
 						<ul class="options-file-impression indice-5">
                             <li><%= config.labels["dtOptions1"] %></li>
                             <li><%= config.labels["dtOptions2"] %></li>
-                            <li>F<%= config.labels["dtOptions3"] %></li>
-                            <li><%= config.labels["dtOptionsModule"] %> <a href="" class="upload designtool iframe linkmodel model-form designtool iframe"><%= config.labels["dtOptionsModuleLink"] %></a></li>
+                            <li><%= config.labels["dtOptions3"] %></li>
+                            <% if(model.hasLayouts == true){ %>
+                            	<li><%= config.labels["dtOptionsModule"] %> <a href="" class="upload designtool iframe linkmodel model-form designtool iframe"><%= config.labels["dtOptionsModuleLink"] %></a></li>
+                            <% } %>
+
                             <li><%= config.labels["dtOptions4"] %></li>
                 		</ul>
 
-                		<a href="" class="upload designtool iframe designtool iframe">
+                		<a href="http://designtool.prd.printconcept.com<%= model.configuration.designtoolLink %>" class="upload designtool iframe">
                 			<span class="text buttondesigntool btnupfile">
                 				<span class="txtgras"><%= config.labels["dtBtnText"] %></span>
                 			</span>
                 		</a>
                 	</div>
 
+                	<% if(model.hasProUpload == true){ %>
                 	<div class="poll-form poll-form2">
                 		<div class="title-image pro-upload"></div>
                 		<div class="option-title"><%= config.labels["proUploadLinkTitle"] %></div>
@@ -55,25 +65,26 @@
                             <li><%= config.labels["proUploadOptions3"] %></li>
                 		</ul>
                 		
-                		<a href="http://designtool.new.prd.flyer.fr/designtool/index/p/5/l/fr_FR_1_1348063973/shop/23/rc/ribbons_design/quickupload/1/impkey/printconcept?dcb=http%253A%252F%252Fwww.flyer.fr%252Fdesigntool%252Fcallback&amp;style=http%3A//www.flyer.fr/sites/all/themes/printconnect/flyer/css/designtool.css&amp;id=1572303&amp;cartid=727641&amp;currencyPreflight=%E2%82%AC&amp;pricePreflight=4%2C99&amp;hasModel=1" class="designtool iframe designtool iframe">
+                		<a href="http://designtool.prd.printconcept.com<%= model.configuration.prouploadLink %>" class="designtool iframe">
                 			<span class="buttonlayout btnupfile">
                 				<span class="txtgras"><%= config.labels["proUploadBtnText"] %></span>
                 			</span>
                 		</a>
                 	</div>
+                	<% } %>
                 </div>
             </div>
             <!-- designtool -->
 
-            <div class="form-item form-type-checkbox">
-				<input type="checkbox" id="no-download" name="cart[items][1572303][ready][designer][check]" value="1" class="form-checkbox">
-				<label class="option" for="no-download"><%= config.labels["graphisteOptions"] %> </label>
+            <div class="form-item form-type-checkbox checkbox-event">
+				<input type="checkbox" id="checke-label-<%= model.id %>" name="cart[items][1572303][ready][designer][check]" value="<%= model.emailDesigner %>" class="form-checkbox" <% if(model.emailDesigner !=null){ %> checked <% } %> >
+				<label class="option" for="checke-label-<%= model.id %>"><%= config.labels["graphisteOptions"] %> </label>
 			</div>
 			<!-- end No download -->
 
-			<div class="clearfix inputdesigner form-wrapper" style="display: none;">
+			<div class="clearfix inputdesigner form-wrapper" style="display: <%= (model.emailDesigner ==null)?'none':'block' %>;">
 				<div class="form-item form-type-textfield">
-					<label for=""><%= config.labels["graphisteAdresse"] %>Adresse e-mail du designer </label>
+					<label for=""><%= config.labels["graphisteAdresse"] %></label>
 					<input class="inputdesigneremail form-text" type="text" id="" name="cart[items][1572303][ready][designer][inputdesigner][email]" value="" size="50" maxlength="128">
 				</div>
 

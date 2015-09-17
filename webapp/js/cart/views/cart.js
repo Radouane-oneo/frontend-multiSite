@@ -11,15 +11,23 @@ define([
         events: {
         },
         initialize: function() {
+            _this = this;
             this.config = require("config");
             this.model = new cartModel(this.config.cart);
             this.render();
 
-            //jobView
-            this.jobView = new jobView(this.model);
-
             //shipping View
             this.shippingView = new shippingView(this.model);
+
+            //jobView
+            _.each(this.model.toJSON().orderItems, function(item, i){
+                var jobCeated;
+                orderItems = _this.model.toJSON();
+                orderItem = orderItems.orderItems[i];
+                jobCeated = (item.files.length> 0)? true : false;
+
+                _this.jobView = new jobView(orderItem, jobCeated);
+            });
 
 
         },

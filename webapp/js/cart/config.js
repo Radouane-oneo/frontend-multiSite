@@ -38,7 +38,14 @@ define([
             'graphisteOptions' : 'Je ne vais pas télécharger moi-même les fichiers. Mon graphiste va le faire pour moi.',
             'graphisteAdresse' : 'Adresse e-mail du designer',
             'graphisteAttention' : "Attention !! Si vous avez choisi l'option 'fichiers téléchargés par mon graphiste', nous ne pouvons pas vous garantir la date de livraison pour l'instant.",
-            'test' : 'test test'
+            'ex' : 'ex',
+            'refjob' : 'reference job',
+            'previsualis' : 'Prévisualiser',
+            'updatePage' : 'Modifier la mise en page',
+            'deleteOrder' : 'Supprimer',
+            'fotoliaImg' :  'Fotolia Image',
+            'controleProfessionel' : 'Contrôle professionel de'
+
         }
         
     };

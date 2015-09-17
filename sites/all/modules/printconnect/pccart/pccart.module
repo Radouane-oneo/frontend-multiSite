@@ -33,8 +33,64 @@ $items['cart/ajax/getcart'] = array(
     'type' => MENU_CALLBACK,
 );
 
-$items['cart/ajax/getshippingtyes'] = array(
-    'page callback' => 'new_cart_ajax_getshippingtyes',
+$items['cart/ajax/getshippingtypes'] = array(
+    'page callback' => 'new_cart_ajax_getshippingtypes',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/removeitem/%'] = array(
+    'page callback' => 'new_cart_ajax_removeitem',
+    'page arguments' => array(3),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/removedesign/%'] = array(
+    'page callback' => 'new_cart_ajax_removedesign',
+    'page arguments' => array(3),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/removefilecheck/%'] = array(
+    'page callback' => 'new_cart_ajax_removefilecheck',
+    'page arguments' => array(3),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/setrefjob'] = array(
+    'page callback' => 'new_cart_ajax_setrefjob',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/setemaildesigner'] = array(
+    'page callback' => 'new_cart_ajax_setemaildesigner',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/setreforder'] = array(
+    'page callback' => 'new_cart_ajax_setreforder',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/selectshippingtype/%'] = array(
+    'page callback' => 'new_cart_ajax_selectshippingtype',
+    'page arguments' => array(3),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/applydiscount'] = array(
+    'page callback' => 'new_cart_ajax_applydiscount',
     'page arguments' => array(),
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
@@ -142,14 +198,104 @@ function new_cart_loadpage() {
 
 // function to get json cart
 function new_cart_ajax_getcart() {
-    $jsonCart = Factory::GetCartJson();
+    $response = Factory::GetCartJson();
 
-    Dal::BuildJson($jsonCart);
+    Dal::BuildJson($response->data);
 }
 
 // function to get json of shipping types
-function new_cart_ajax_getshippingtyes() {
+function new_cart_ajax_getshippingtypes() {
+    $shippingsTypes = printconnect\Carts\Shipping\Factory::GetShippingTypes();
 
+    $shippingsTypes = json_decode($shippingsTypes->data, 1);
+
+    foreach ($shippingsTypes as $key => $type) {
+        $label = $type['shippingType']['tag'];
+        if ($type['price'] > 0) {
+            $label .= '(' . t('!value exc. VAT', array('!value' => theme('price', array('value' => $type['price'], 'free' => TRUE)))) . ' / ' . t('!value inc. VAT', array('!value' => theme('price', array('value' => $type['price'] * (1 + $_SESSION['shop_vat']), 'free' => TRUE)))) . ') *';
+        }
+
+        $shippingsTypes[$key]['shippingType']['tag'] = $label;
+    }
+
+    Dal::BuildJson($shippingsTypes);
+}
+
+function new_cart_ajax_removeitem($itemId) {
+    $response = Factory::DeleteItem($itemId);
+
+    Dal::BuildJson(json_decode($response->data, 1));
+}
+
+function new_cart_ajax_removedesign($itemId) {
+    $response = Factory::DeleteDesign($itemId);
+
+    Dal::BuildJson(json_decode($response->data, 1));
+}
+
+function new_cart_ajax_setrefjob() {
+    $itemId = $_POST['id'];
+    $refJob = $_POST['refJob'];
+
+    $response = Factory::SaveRefJob($itemId, $refJob);
+    if($response) {
+        Dal::BuildJson();
+    }else {
+        Dal::BuildJson(array(), 500);
+    }
+}
+
+function new_cart_ajax_setemaildesigner() {
+    $itemId = $_POST['id'];
+    $email = $_POST['email'];
+
+    $response = Factory::SaveEmailDesigner($itemId, $email);
+
+    if($response) {
+        Dal::BuildJson();
+    }else {
+        Dal::BuildJson(array(), 500);
+    }
+}
+
+function new_cart_ajax_setreforder() {
+    $cartId = $_POST['cartId'];
+    $orderRef = $_POST['orderRef'];
+
+    $response = Factory::SaveRefOrder($cartId, $orderRef);
+
+    if($response) {
+        Dal::BuildJson();
+    }else {
+        Dal::BuildJson(array(), 500);
+    }
+}
+
+function new_cart_ajax_selectshippingtype($shippingTypeId) {
+    $response = printconnect\Carts\Shipping\Factory::SetShippingType($shippingTypeId);
+
+    Dal::BuildJson(json_decode($response->data, 1));
+}
+
+function new_cart_ajax_applydiscount() {
+    $discountCode = $_POST['code'];
+    $response = Factory::ApplyDiscount($discountCode);
+
+    if($response->code == 200) {
+        Dal::BuildJson(json_decode($response->data, 1));
+    }else {
+        Dal::BuildJson(array(), $response->code, $response->data);
+    }
+}
+
+function new_cart_ajax_removefilecheck($itemId) {
+    $response = Factory::RemoveFileCheck($itemId);
+
+    if($response->code == 200) {
+        Dal::BuildJson(json_decode($response->data, 1));
+    }else {
+        Dal::BuildJson(array(), $response->code, $response->data);
+    }
 }
 
 // ==============================================================================================
@@ -1192,6 +1338,7 @@ function pccart_loggedin($customerId) {
   if ($cart) {
     if ($customerId != $cart->customer) {
       $cart->customer = $customerId;
+      $cart->onlyAttachCustomer = TRUE;
       Factory::Save($cart);
     }
   } else {

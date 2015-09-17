@@ -1,4 +1,5 @@
 <?php
+use \printconnect\Dal;
 use printconnect\Carts\Factory;
 use printconnect\Shipping;
 use printconnect\Diagnostics\Debug;
@@ -15,6 +16,31 @@ use printconnect\Customers\Factory as CustomersFactory;
 use printconnect\Carts\Discounts;
 
 function pccart_menu() {
+
+// ===== ORDER WEEK HOOKS ================================================================
+
+$items['cart'] = array(
+    'page callback' => 'new_cart_loadpage',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/getcart'] = array(
+    'page callback' => 'new_cart_ajax_getcart',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/getshippingtyes'] = array(
+    'page callback' => 'new_cart_ajax_getshippingtyes',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+// =======================================================================================
 
 $items['cart/%/submit'] = array(
       'page callback' => '_pccart_callback',
@@ -34,13 +60,6 @@ $items['cart/%/submit'] = array(
       'page arguments' => array('cart_customer_ref', 3),
       'access arguments' => array('access content'),
       'type' => MENU_CALLBACK,
-  );
-  $items['cart'] = array(
-      'title' => 'Cart',
-      'page callback' => 'drupal_get_form',
-      'page arguments' => array('pccart_cart_form2'),
-      'access arguments' => array('access content'),
-      'file' => 'pccart.forms.inc',
   );
 
   $items['cart/%/delete'] = array(
@@ -105,6 +124,35 @@ $items['cart/%/submit'] = array(
   return $items;
 
 }
+
+// ================================== ORDER WEEK V3 FUNCTIONS ===================================
+
+// main function to load cart page
+function new_cart_loadpage() {
+    global $language;
+    
+    $labels = array(
+      'js_key' => t('drupal_tag'),
+    );
+
+    var_dump($labels);die;
+
+    return '';
+}
+
+// function to get json cart
+function new_cart_ajax_getcart() {
+    $jsonCart = Factory::GetCartJson();
+
+    Dal::BuildJson($jsonCart);
+}
+
+// function to get json of shipping types
+function new_cart_ajax_getshippingtyes() {
+
+}
+
+// ==============================================================================================
 
 function pccart_progress() {
 
@@ -614,6 +662,7 @@ function add_cartitem_submit() {
   if(!isset($_POST)) {
     drupal_not_found();
   }
+
   $productId = $_POST['productId'];
   $qty = $_POST['quantity'];
   $options = explode(',', $_POST['options']);
@@ -632,6 +681,7 @@ function add_cartitem_submit() {
       Factory::Save($cart);
     }
   }
+
   $relatedProducts = array();
   $description = '';
   $cart->productId = $productId;

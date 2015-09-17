@@ -4879,7 +4879,7 @@ a.googleconnect {
 .page-myprintconnect table tr.odd {
 	background: none;
 	color: #646464; /* maincolor */
-	border-bottom: 1px solid #f1f1f1;
+	border-bottom: 0;
 }
 .page-myprintconnect table tr.even {
 	background: #f1f1f1;

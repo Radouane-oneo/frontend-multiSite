@@ -4860,17 +4860,6 @@ a.googleconnect {
 #pcorders-order-form #edit-invoices {
 	display: none;
 }
-.page-myprintconnect table {
-	width: 100%;
-	border: 1px solid #f1f1f1;
-	margin: 10px 0;
-}
-.page-myprintconnect table thead {
-	background: #ff6600;
-	height: 23px;
-	line-height: 23px;
-	color: #fff;
-}
 .page-myprintconnect table th {
 	color: #fff;
 	text-transform: uppercase;
@@ -7764,10 +7753,6 @@ float:left;
 
 .page-myprintconnect table th, .page-myprintconnect table tr td {
     vertical-align: top;
-}
-.page-myprintconnect table th {
-
-    font-size: 13px !important;
 }
 .page-myprintconnect .region-content {
   /*margin-left: 5px;*/
@@ -10748,6 +10733,8 @@ a.cart.button{
 }
 
 /* ======= Order week new CSS ======= */ 
+
+/* Page profil */
 .page-myprintconnect-profile #pccustomers-profile-form label {
 	display: block;
 	margin: 0;
@@ -10819,4 +10806,47 @@ p.requieredfields {
 
 p.requieredfields span.form-required {
     margin: 0 4px;
+}
+
+/* Page factures */
+.page-myprintconnect #edit-invoices div#edit-list {
+    border: 1px solid #dcdcdc;
+    border-top: 0;
+    overflow: hidden;
+
+    border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+	-webkit-border-radius: 5px 5px 5px 5px;
+}
+.page-myprintconnect #edit-invoices table {
+	width: 100%;
+    margin: 0 !important;
+    border-collapse: collapse;
+}
+.page-myprintconnect table thead {
+	background: #ff6600;
+	line-height: 35px;
+	color: #fff;
+}
+.page-myprintconnect #edit-invoices table th {
+    font-size: 11px !important;
+    font-weight: bold;
+    border-top: 0;
+    border-bottom: 1px solid #dcdcdc;
+}
+.page-myprintconnect #edit-invoices table tr td {
+    border-right: 1px solid #dcdcdc;
+    vertical-align: middle;
+    width: 99px;
+}
+.page-myprintconnect #edit-invoices table tr td.last-child {
+    width: 20px;
+    border: 0;
+}
+.page-myprintconnect #edit-invoices table tr td.last-child a {
+	background: url('http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/order_week/icon_pdf.png') no-repeat;
+    width: 32px;
+    height: 32px;
+    display: block;
+    text-indent: 2000px;
 }

@@ -1142,6 +1142,7 @@ function pccart_loggedin($customerId) {
   if ($cart) {
     if ($customerId != $cart->customer) {
       $cart->customer = $customerId;
+      $cart->onlyAttachCustomer = TRUE;
       Factory::Save($cart);
     }
   } else {

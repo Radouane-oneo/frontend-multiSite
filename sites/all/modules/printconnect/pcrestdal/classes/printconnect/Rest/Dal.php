@@ -158,13 +158,7 @@ use printconnect\Dal\ForbiddenException;
       $start = microtime(true);
       $response = drupal_http_request($url, array('header' => $header, 'method' => 'GET', 'timeout' => $this->timeout));
       $end = microtime(true);
-        try{
-        if((int) $response->code !=200 ){
-            pcprintlog_HandelError( $_SESSION['customerid'], $_SESSION['cartid'], 'pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'GET', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), $url );
-
-        }
-        }catch (\printconnect\Rest\Exceptions\Exception $ex) {
-        }
+       
       watchdog('pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'GET', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), WATCHDOG_DEBUG, ($end - $start) . ' on GET ' . $url);
       switch ((int) $response->code) {
         case 200:

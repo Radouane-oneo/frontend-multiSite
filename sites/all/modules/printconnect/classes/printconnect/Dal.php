@@ -23,17 +23,17 @@ namespace printconnect {
         global $language;
         $url = sprintf('%s%s?apikey=%s&language=%d', variable_get('pc_url'), $request, variable_get('pc_apikey'), $language->id);
 
-        $header = array('Content-Type' => 'application/x-www-form-urlencoded');
+        $header = array('Content-Type' => 'application/json');
         $response = drupal_http_request($url, array(
             'header' => $header, 
             'method' => $method, 
             'data' => json_encode($data)
         ));
 
-        return $response->data;
+        return $response;  
     }
 
-    public static function BuildJson($data, $code = 200, $message = NULL)
+    public static function BuildJson($data = array(), $code = 200, $message = NULL)
     {
         header('Content-Type: application/json');
 

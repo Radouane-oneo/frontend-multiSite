@@ -188,6 +188,7 @@ use printconnect\Dal\ForbiddenException;
     }
 
     public function Update($properties, $entity, $params, $validateOnly = FALSE) {
+
       $url = $this->GetUrl($entity, $params, $validateOnly);
       $header = array('Content-Type' => 'application/json');
 
@@ -207,10 +208,7 @@ use printconnect\Dal\ForbiddenException;
         $data = json_decode($response->data);
         return $data;
       } else {
-          try{
-              pcprintlog_HandelError( $_SESSION['customerid'], $_SESSION['cartid'], 'pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'GET', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), $url );
-          }catch (\printconnect\Rest\Exceptions\Exception $ex) {
-          }
+          var_dump("Error", $url, $data);die;
         throw new Exception('PUT ' . $url, $data, $this->ReadErrorInformation($response));
       }
     }

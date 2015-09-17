@@ -5,7 +5,16 @@ namespace printconnect\Carts {
   use printconnect\Dal;
 use printconnect\Customers;
 
-  class Factory {
+class Factory {
+
+    public static function GetCartJson()
+    {
+        if (isset($_SESSION['cartid'])) {
+            return Dal::SendRequest('cart/id/'. $_SESSION['cartid']);
+        }else {
+            return NULL;
+        }
+    }
   
     public static function saveInCache($object, $data) 
     {
@@ -17,7 +26,7 @@ use printconnect\Customers;
             );
         }
     }
-  
+
     public static function Get($id, $cache = TRUE) {
       return new Cart(array('id' => $id), $cache);
     }

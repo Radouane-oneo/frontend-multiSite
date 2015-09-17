@@ -3,8 +3,11 @@ define([
     '../models/cart',
     'text!../templates/cart.html',
     'views/shipping',
-    'views/jobView'
-], function (Backbone, cartModel, cartTemplate, shippingView, jobView) {
+    'views/jobView',
+    'views/discountCode',
+    'views/customerReference',
+    'views/priceBlock'
+], function (Backbone, cartModel, cartTemplate, shippingView, jobView, discountView, customerReferenceView, priceBlockView) {
 
     return Backbone.View.extend({
         template: _.template(cartTemplate),
@@ -21,7 +24,14 @@ define([
             //shipping View
             this.shippingView = new shippingView(this.model);
 
+            //discount View
+            this.discountView = new discountView(this.model);
 
+            //customerReference View
+            this.customerReferenceView = new customerReferenceView(this.model);
+
+            //priceBlock View
+            this.priceBlockView = new priceBlockView(this.model);
         },
         render : function(){
             this.setElement(this.template({

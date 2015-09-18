@@ -2,7 +2,8 @@ define([], function () {
     return{
         urls: {
             "deleteDiscount" : "/webapp/deleteDiscount.json",
-            "addDiscount" : "/webapp/addDiscount.json"
+            "addDiscount" : "/webapp/addDiscount.json",
+            "changeShipping" : "/webapp/changeShipping.json"
         },
         call : function(action, data){
             return $.ajax({

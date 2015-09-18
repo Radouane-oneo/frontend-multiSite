@@ -78,6 +78,15 @@ class Factory {
             'id' => $itemId
         ));
     }
+
+    public static function SetStore($store)
+    {
+        $cartId = isset($_SESSION['cartid']) ? $_SESSION['cartid'] : NULL;
+        return Dal::SendRequest('pickuppointdetail', 'PUT', array(
+            'id' => $cartId,
+            'pickuppoint' => $store->GetProperties()
+        ));
+    }
   
     public static function saveInCache($object, $data) 
     {

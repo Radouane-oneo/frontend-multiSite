@@ -2,7 +2,6 @@
 <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-W44FMM"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-<!-- End Google Tag Manager -->
 <!--[if !IE]><!--><script>  
 if (/*@cc_on!@*/false) {  
     document.documentElement.className+=' ie10';  

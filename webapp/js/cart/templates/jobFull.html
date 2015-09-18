@@ -1,4 +1,4 @@
-<fieldset class="items cartItemsContainer form-wrapper" id="edit-cart-items">
+<fieldset class="items cartItemsContainer form-wrapper orderBox">
 	<div class="fieldset-wrapper">
 		<div class="item job clearfix form-wrapper">
 			<div class="image form-wrapper">
@@ -8,14 +8,7 @@
 			<div class="preview1">
 				<div class="description form-wrapper">
 					<h3><%= model.quantity %> <%= config.labels.ex %>. <%= model.configuration.name %> <%= model.configuration.config[0].name %></h3>
-					<span class="price">
-						<span class="value">
-							<span class="whole">23</span>
-							<span class="decimalpoint">,</span>
-							<span class="decimals">00</span>&nbsp;
-							<span class="currency">€</span>
-						</span>
-					</span>
+					<%= priceTpl({price:model.price,classToAdd:'price'}) %>
 
 					<div class="item-list">
 						<ul>
@@ -35,7 +28,7 @@
 					</div>
 
 					<div class="items_actions">
-						<span class="removecart"></span>
+						<span data-orderItem="<%= model.id %>" class="removecart"></span>
 					</div>
 
 				</div>
@@ -61,7 +54,7 @@
 				<div class="control-block form-wrapper">
 					<div class="text">
 						<h3><%= config.labels.controleProfessionel %> </h3>
-						<span class="price"><span class="value"><%= model.fileCheck.price %></span></span>
+						<%= priceTpl({price:model.fileCheck.price,classToAdd:'price'}) %>
 					</div>
 					<a href="/%23" class="removecontrol noreplace" rel="1574652"></a>
 				</div>
@@ -74,7 +67,7 @@
 					<% _.each(model.fotoliaItems, function(fotolia, i){ %>
 						<div class="fotolia-items">
 							<span><%= config.labels.fotoliaImg %> &nbsp;"<%= fotolia.fotoliaId %>"</span>
-							<span class="pricepreflight price"><span class="value"><span class="whole"><%= fotolia.price %></span><span class="decimalpoint">,</span><span class="decimals">00</span>&nbsp;<span class="currency">€</span></span></span>
+							<%= priceTpl({price:fotolia.price,classToAdd:'pricepreflight'}) %>
 						</div>
 					<% }) %>
 				<% }  %>

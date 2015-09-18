@@ -4419,7 +4419,7 @@ a.googleconnect {
 	margin-bottom: 10px;
 }
 .page-cart #edit-cart-designer-warning {
-	margin-bottom: 20px;
+	margin-bottom: 0;
 }
 .page-checkout-upload .designer-content-email {
 	background: #dfdfdf;

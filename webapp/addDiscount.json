@@ -1,0 +1,14 @@
+[
+    {
+        "id": 20823,
+        "code": "DISCOUNT-CODE-001",
+        "price": "-8.2600",
+        "description": "Ayoub Percent"
+    },
+    {
+        "id": 20824,
+        "code": "CODE-FLYERS-001",
+        "price": "-2.2500",
+        "description": "Discount on flyers"
+    }
+]

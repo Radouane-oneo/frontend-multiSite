@@ -206,7 +206,6 @@ function pccustomers_profile_form($form, &$form_state) {
       '#size' => 71,
       '#default_value' => $customer->phone,
   );
-
   $options = array();
   $shopConfig = printconnect\Shop\Configuration\Factory::Current();
   foreach ($shopConfig->languages as $language) {

@@ -4877,7 +4877,7 @@ a.googleconnect {
 .page-myprintconnect table tr.odd {
 	background: none;
 	color: #646464; /* maincolor */
-	border-bottom: 1px solid #f1f1f1;
+	border-bottom: 0;
 }
 .page-myprintconnect table tr.even {
 	background: #f1f1f1;
@@ -10847,4 +10847,9 @@ p.requieredfields span.form-required {
     height: 32px;
     display: block;
     text-indent: 2000px;
+}
+
+.page-myprintconnect #edit-invoices .price {
+	font-weight: bold;
+	color: #f60;
 }

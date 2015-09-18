@@ -1,15 +1,16 @@
 define([
     'backbone',
-    'text!../../cart.json',
-    'text!../../shipping.json'
+    'text!/befr/cart/ajax/getcart',
+    'text!/befr/cart/ajax/getshippingtypes'
 ], function (Backbone, cartJSON, shippingJSON) {
     return {
         containerId : '#myCart',
         jobBox : '#jobBox',
         bottomBox : '#bottomBox',
         cart : $.parseJSON(cartJSON),
-        shipping : $.parseJSON(shippingJSON),
+        shipping : $.parseJSON(shippingJSON).data,
         vat : 0.21,
+        prefix : "befr",
         labels : {
             "shipping" : "Livraison",
             "chooseFlyerStore" : "Choisissez votre FlyerStore",
@@ -36,7 +37,8 @@ define([
             "day_6" : "Samedi",
             "day_7" : "Dimanche",
             "chooseOtherFlyerStore" : "Choisissez un autre FlyerStore",
-            "" : "",
+            "nameBpost" : "Nom du point poste",
+            "chooseOtherBpostPickupPoint" : "Choisissez un autre point poste",
             'downloadDevis' : 'Téléchargez le panier en devis',
             'designtoolTitle' : 'Téléchargez votre fichier ou créez en ligne',
             'dlLinkTitle' : 'DESIGNTOOL',

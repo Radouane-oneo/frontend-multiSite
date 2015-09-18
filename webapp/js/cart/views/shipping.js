@@ -8,7 +8,8 @@ define([
     return Backbone.View.extend({
         template: _.template(shippingTemplate),
         events: {
-            "change input[name='shipping-type']" : "changeShipping"
+            "change input[name='shipping-type']" : "changeShipping",
+            "click .shipp-item" : "selectShipping"
         },
         initialize: function(model) {
             this.config = require("config");
@@ -33,6 +34,10 @@ define([
                 me.model.set("orderItemShipping", orderItemShipping);
             });
             e.preventDefault();
+        },
+        selectShipping : function(e){
+            $(e.currentTarget).find(".form-radio").attr("checked", "checked");
+            $(e.currentTarget).find(".form-radio").change();
         }
 
     });

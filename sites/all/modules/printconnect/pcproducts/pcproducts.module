@@ -641,6 +641,7 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
     pcproducts_validate_product();
 
     global $language;
+ 
     global $user;
     //ini_set('memory_limit', '5000M');
     //ini_set('max_execution_time', '50000');
@@ -677,6 +678,7 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
         var GlobalDefaultOptions = ".json_encode($gOtions).";
         var GlobalDefaultQuantity = ".(!$qty ? 'null' : $qty).";
         var GlobalJobId = ".(!$edit ? 'null' : $edit->id).";
+        var GlobalPrefix = '".$language->prefix."';
     </script>";
 
     $script .= '<script data-main="/configSelector/js/main" src="/configSelector/js/libs/requirejs/require.js"></script>';
@@ -686,8 +688,9 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
 }
 
 function getLabels($edit = false) {
+    global $language;
     $labels = array(
-        "langId" => 10,
+        "langId" => $language->id,
         "options" => t('Options'),
         "noOptions" => t('No options selected'),
         "quantity" => t('Quantity'),

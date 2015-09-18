@@ -10,7 +10,7 @@ class Factory {
     public static function GetCartJson()
     {
         if (isset($_SESSION['cartid'])) {
-            return Dal::SendRequest('cart/id/'. $_SESSION['cartid']);
+            return Dal::SendRequest('new-cart/id/'. $_SESSION['cartid']);
         }else {
             return NULL;
         }

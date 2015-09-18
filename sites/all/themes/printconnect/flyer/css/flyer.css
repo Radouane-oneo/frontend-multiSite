@@ -10850,3 +10850,8 @@ p.requieredfields span.form-required {
     display: block;
     text-indent: 2000px;
 }
+
+.page-myprintconnect #edit-invoices .price {
+	font-weight: bold;
+	color: #f60;
+}

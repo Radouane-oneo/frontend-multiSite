@@ -22,7 +22,6 @@
 .price{
   text-align:right;
   white-space: nowrap;
-  font-weight: bold;
 }
 .price.total{
   font-size: larger;

@@ -4023,7 +4023,7 @@ a.googleconnect {
 }
 .page-checkout-invoiceanddelivery #invoice-address input[type="submit"], 
 .page-checkout-invoiceanddelivery #shipping-address input[type="submit"] {
-	margin-left: 347px; 
+	margin-left: 493px; 
 	margin-top: 20px;
 }
 .page-pcbpost-picker .whitebox {
@@ -4124,8 +4124,6 @@ a.googleconnect {
 .page-checkout #shipping-address.form-wrapper, 
 .page-checkout #invoice-address.form-wrapper {
 	margin: 20px 0 19px;
-    width: 100%;
-    box-sizing: border-box;
 }
 .page-checkout #shipping-address.form-wrapper h3, 
 .page-checkout #invoice-address.form-wrapper h3 {
@@ -4860,17 +4858,6 @@ a.googleconnect {
 #pcorders-order-form #edit-invoices {
 	display: none;
 }
-.page-myprintconnect table {
-	width: 100%;
-	border: 1px solid #f1f1f1;
-	margin: 10px 0;
-}
-.page-myprintconnect table thead {
-	background: #ff6600;
-	height: 23px;
-	line-height: 23px;
-	color: #fff;
-}
 .page-myprintconnect table th {
 	color: #fff;
 	text-transform: uppercase;
@@ -4890,7 +4877,7 @@ a.googleconnect {
 .page-myprintconnect table tr.odd {
 	background: none;
 	color: #646464; /* maincolor */
-	border-bottom: 1px solid #f1f1f1;
+	border-bottom: 0;
 }
 .page-myprintconnect table tr.even {
 	background: #f1f1f1;
@@ -7765,10 +7752,6 @@ float:left;
 .page-myprintconnect table th, .page-myprintconnect table tr td {
     vertical-align: top;
 }
-.page-myprintconnect table th {
-
-    font-size: 13px !important;
-}
 .page-myprintconnect .region-content {
   /*margin-left: 5px;*/
 } 
@@ -8220,7 +8203,7 @@ form#pccheckout-payment-form fieldset.paymentmethodefond legend{
 	background-color: #f1f1f1;
         margin: 0;
         padding: 18px 15px;
-        width: 833px;
+        width: 998px;
         
         
     border-left: 1px solid #e1e1e1;
@@ -10747,6 +10730,7 @@ a.cart.button{
 	margin-top: 0 !important;
 }
 
+
 .cart-fotolias{
 	clear: both;
 	padding: 10px;
@@ -10757,4 +10741,128 @@ a.cart.button{
 	width: 100%;
 	padding-bottom: 5px;
 	padding-top: 5px;
+}
+/* ======= Order week new CSS ======= */ 
+
+/* Page profil */
+.page-myprintconnect-profile #pccustomers-profile-form label {
+	display: block;
+	margin: 0;
+	font-weight: 400;
+	text-transform: uppercase;
+	float: left;
+	padding-right: 0;
+	width: 188px;
+	text-align: left;
+	line-height: 38px;
+    padding-left: 10px;
+}
+
+.page-myprintconnect-profile #pccustomers-profile-form .form-item.form-type-textfield.form-item-email {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d6d6d6;
+}
+.page-myprintconnect-profile #pccustomers-profile-form input[type="text"] {
+	width: 428px;
+}
+
+#pccustomers-profile-form > div {
+    background-color: #f1f1f1;
+    padding-top: 18px;
+    margin-top: 10px;
+    border: 1px solid #d6d6d6;
+
+    -webkit-border-radius: 4px 4px 4px 4px;
+       -moz-border-radius: 4px 4px 4px 4px;
+    		border-radius: 4px 4px 4px 4px;
+}
+
+.region-content .form-actions {
+	padding: 0;    
+	margin: -1px;
+}
+
+.page-myprintconnect-profile .region-content .form-actions input[type=submit] {
+	background: #71ad00;
+    padding-left: 0;
+    text-align: center;
+}
+
+.page-myprintconnect-profile .region-content .form-actions input[type=submit]:hover {
+	background-image: none;
+}
+
+.region-content .form-actions input[type=submit] {
+	height: 62px;
+	min-width: 220px;
+	/* float:left;  IE BUG */
+	display: inline-block;
+	float: right;
+	margin-right: 0;
+	font-weight: normal;
+	text-align: center;
+	border: none;
+
+	-webkit-border-radius: 0 0 3px 0;
+	-moz-border-radius: 0 0 3px 0;
+	border-radius: 0 0 3px 0;
+}
+
+p.requieredfields {
+    margin-left: 200px;
+    margin: -5px 0 5px 202px;
+}
+
+p.requieredfields span.form-required {
+    margin: 0 4px;
+}
+
+/* Page factures */
+.page-myprintconnect #edit-invoices div#edit-list {
+    border: 1px solid #dcdcdc;
+    border-top: 0;
+    overflow: hidden;
+
+    border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+	-webkit-border-radius: 5px 5px 5px 5px;
+}
+.page-myprintconnect #edit-invoices table {
+	width: 100%;
+    margin: 0 !important;
+    border-collapse: collapse;
+}
+.page-myprintconnect table thead {
+	background: #ff6600;
+	line-height: 35px;
+	color: #fff;
+}
+.page-myprintconnect #edit-invoices table th {
+    font-size: 11px !important;
+    font-weight: bold;
+    border-top: 0;
+    border-bottom: 1px solid #dcdcdc;
+}
+.page-myprintconnect #edit-invoices table tr td {
+    border-right: 1px solid #dcdcdc;
+    vertical-align: middle;
+    width: 99px;
+}
+.page-myprintconnect #edit-invoices table tr td.last-child {
+    width: 20px;
+    border: 0;
+}
+.page-myprintconnect #edit-invoices table tr td.last-child a {
+	background: url('http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/order_week/icon_pdf.png') no-repeat;
+    width: 32px;
+    height: 32px;
+    display: block;
+    text-indent: 2000px;
+}
+
+.page-myprintconnect #edit-invoices .price {
+	font-weight: bold;
+	color: #f60;
+>>>>>>> 6367fd2d9a9acf078395bade94a9639029b2d235
 }

@@ -1,7 +1,7 @@
 <?php
 
 use printconnect\Customers\Factory as CustomersFactory;
-
+use printconnect\Carts\Factory as CartsFactory;
 function pccheckout_redirect() {
     _pccustomers_ensureloggedin();
     $customer = \printconnect\Customers\Factory::Current();
@@ -1329,19 +1329,18 @@ function pccheckout_payment_form($form, &$form_state) {
     if (isset($_SESSION['customerid'])) {
         try{
             $Billingaddresses = \printconnect\Customers\BillingAccounts\Factory::Get($cart->billingAccount);
-            $BillingAccountVat = \printconnect\Customers\BillingAccounts\Factory::BillingAccountVat($Billingaddresses, $_SESSION['customerid'] , $cart->id);
+	    $Billingaddresses->cart = $cart->id;
+	    \printconnect\Customers\BillingAccounts\Factory::LoadBillingAccount($Billingaddresses);
         }catch (\printconnect\Rest\Exceptions\Exception $ex) {
             $VatCart = 0.21;
         }
-
-        $VatCart = $BillingAccountVat->vat;
+        $VatCart = $Billingaddresses->vat;
         if(is_null($VatCart)){
             $VatCart = 0.21;
         }
     }else{
         $VatCart = 0.21;
     }
-
     drupal_add_js(array('pccheckout' => array('VatCart' => $VatCart)), array('type' => 'setting'));
 
     if(!isset($cart->billingAccount) or empty($cart->billingAccount)){
@@ -1463,27 +1462,36 @@ function _pccheckout_payment_form_build_overview($cart) {
                     $itemValue += $option->price;
                 }
             }
-        $elementRow[]= $itemValue;
-            if($itemValue < $item->originPrice) {
+            $elementRow[]= $itemValue;
+            if ($item->customWidth != 0 && $item->customHeight != 0){
                 $rows[] = array(
-                    'data' => array(
-                        $item->quantity . ' ' . $item->configuration->name . ' - ' . $primaryItem->name,
-                        theme('price', array('value' => $itemValue)) . '<del class="payment-origin-price">&euro; '.$item->originPrice.'</del>',
-                    ),
-                    'class' => array('item'),
-                );
-         
-            }else {
-                $rows[] = array(
+                            'data' => array(
+                                $item->quantity . ' ' . $item->configuration->name . ' - ' . $item->customWidth.' X '. $item->customHeight. ' mm',
+                                theme('price', array('value' => $itemValue)),
+                            ),
+                            'class' => array('item'),
+                    );
+            }else{
+                if($itemValue < $item->originPrice) {
+                    $rows[] = array(
                         'data' => array(
                             $item->quantity . ' ' . $item->configuration->name . ' - ' . $primaryItem->name,
-                            theme('price', array('value' => $itemValue)),
+                            theme('price', array('value' => $itemValue)) . '<del class="payment-origin-price">&euro; '.$item->originPrice.'</del>',
                         ),
                         'class' => array('item'),
-                );
-            }
-        }
+                    );
 
+                }else {
+                    $rows[] = array(
+                            'data' => array(
+                                $item->quantity . ' ' . $item->configuration->name . ' - ' . $primaryItem->name,
+                                theme('price', array('value' => $itemValue)),
+                            ),
+                            'class' => array('item'),
+                    );
+                }
+            }
+        }   
 	$cartItemsFull = printconnect\Carts\Factory::GetItems($cart);
         foreach ($cartItemsFull as $cartItem) {
             if ($cartItem->parentId != null) {

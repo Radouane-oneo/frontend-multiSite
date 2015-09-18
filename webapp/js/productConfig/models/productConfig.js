@@ -110,7 +110,13 @@ define([
             var customHeight = this.get('heightCF');
             var customWidth  = this.get('widthCF');
             if((customHeight) && (customWidth)){
-                var price = ((customHeight * customWidth * _.toArray(this.get("toolBoxGroup")["pricing"])[0]["sellPrice"]) / (1 * 1000 * 1000)) * quantity;
+                var price = ((customHeight * customWidth * _.toArray(this.get("toolBoxGroup")["pricing"])[0]["sellPrice"]) / (1 * 1000 * 1000)) * 1;
+                console.log('selprice'+price);
+                console.log(_.toArray(this.get("toolBoxGroup")["pricing"])[0]["costPrice"]); 
+                if (price < _.toArray(this.get("toolBoxGroup")["pricing"])[0]["costPrice"]){
+                    price = _.toArray(this.get("toolBoxGroup")["pricing"])[0]["costPrice"];
+                }
+                price = price * quantity;
                 console.log('price: '+price+ 'quantity' + quantity);
                 return price;
             }

@@ -5,7 +5,69 @@ namespace printconnect\Carts {
   use printconnect\Dal;
 use printconnect\Customers;
 
-  class Factory {
+class Factory {
+
+    public static function GetCartJson()
+    {
+        if (isset($_SESSION['cartid'])) {
+            return Dal::SendRequest('new-cart/id/'. $_SESSION['cartid']);
+        }else {
+            return NULL;
+        }
+    }
+
+    public static function DeleteItem($id) 
+    {
+        $cartId = isset($_SESSION['cartid']) ? $_SESSION['cartid'] : NULL;
+        return Dal::SendRequest(sprintf('cart-item/id/%d/cart/%d', $id, $cartId), 'DELETE');
+    }
+
+    public static function DeleteDesign($id) 
+    {
+        return Dal::SendRequest(sprintf('order-item-file/orderItemId/%d', $id), 'DELETE');
+    }
+
+    public static function SaveRefJob($id, $refJob)
+    {
+        return Dal::SendRequest('supplement-parameter', 'POST', array(
+            'id' => $id,
+            'refJob' => $refJob
+        ));
+    }
+
+    public static function SaveEmailDesigner($id, $email)
+    {
+        return Dal::SendRequest('supplement-parameter', 'POST', array(
+            'id' => $id,
+            'emailDesigner' => $email
+        ));
+    }
+    
+    public static function SaveRefOrder($id, $orderRef)
+    {
+        return Dal::SendRequest('supplement-parameter', 'POST', array(
+            'id' => $id,
+            'customer_reference' => $orderRef
+        ));
+    }    
+
+    public static function ApplyDiscount($code)
+    {
+        $cartId = isset($_SESSION['cartid']) ? $_SESSION['cartid'] : NULL;
+
+        return Dal::SendRequest('order-discount-code', 'POST', array(
+            'order' => $cartId,
+            'code' => $code
+        ));
+    }
+
+    public static function RemoveFileCheck($itemId)
+    {
+        return Dal::SendRequest('supplement-parameter', 'POST', array(
+            'fileCheck' => 'remove',
+            'id' => $itemId
+        ));
+    }
   
     public static function saveInCache($object, $data) 
     {
@@ -17,7 +79,7 @@ use printconnect\Customers;
             );
         }
     }
-  
+
     public static function Get($id, $cache = TRUE) {
       return new Cart(array('id' => $id), $cache);
     }
@@ -280,6 +342,7 @@ use printconnect\Customers;
     }
    
     public static function CreateItem($cart, $priceGroup, $quantity, $description, $relatedProducts, $options, $vat = FALSE, $widthCF, $heightCF, $cf) {
+     
 	$object = new Item();
       $object->cart = $cart->id;
       $object->productId = $cart->productId;
@@ -323,12 +386,16 @@ use printconnect\Customers;
       return $object;
     }
 
-    public static function SaveItem(Item $object) {
+    public static function SaveItem( Item $object, $widthCF, $heightCF, $cf ) {        
       //$object->cart_item = $object->id;
+        
       $refJob = $object->refJob;
       $object->product_price_group = $object->productPriceGroupId;
       $object->description = '';
       $object->refJob = $refJob;
+      $object->widthCF = $widthCF;
+      $object->heightCF = $heightCF;
+      $object->CF = $cf;
       //$object->cart = $object->order;
       $options = array();
       foreach ($object->options as $option) {
@@ -340,6 +407,7 @@ use printconnect\Customers;
       }
       $object->options = $options;
       $item = Dal::Save($object, 'cart-item', array('id' => $object->id, 'cart' => $object->cart));
+   //var_dump($item);die;
       $cart = self::Current();
       $orderItems =  $cart->orderItems;
       for($i=0; $i< count($orderItems); $i++) {
@@ -366,40 +434,6 @@ use printconnect\Customers;
       return $item;
     }
 
-    public static function DeleteItem($id, Cart $cart) {
-      $cartItems = $cart->orderItems;
-      $counter = 0; 
-      foreach($cartItems as $key => $job) {
-          if($job->discountId == null) {
-            $counter++;
-          }
-          if ($job->id == $id) {
-              unset($cartItems[$key]);
-          }
-      }
-      if ($counter <= 1) {
-        self::Clear();
-      }
-      $cart->orderItems = array_values($cartItems);
-
-      $fotolias = $cart->fotoliaItems;
-      foreach($fotolias as $key => $fotolia) {
-        if ($fotolia->parentId = $id) {
-            unset($fotolias[$key]);
-        }
-      }
-      $cart->fotoliaItems = $fotolias;
-
-      Dal::updateElement($cart, 'cart', 
-        array('id' => $cart->id), 
-        array(
-            'orderItems' => $cart->orderItems,
-            'fotoliaItems' => $fotolias
-        )
-      );
-       
-      return Dal::Delete('cart-item', array('id' => $id, 'cart' => $cart->id));
-    }
     public static function DeleteItemFile($id) {
       $cart = self::Current();
       $cartItems = $cart->orderItems;

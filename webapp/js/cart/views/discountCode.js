@@ -39,8 +39,9 @@ define([
             var me = this;
             ajaxCaller.call("addDiscount",{
                 code : this.$("#edit-cart-discount-code").val()
-            }).done(function(discountItems){
-                me.model.set("discountItems", discountItems);
+            }).done(function(resultData){
+                 if(resultData.code == "200")
+                    me.model.set("discountItems", resultData.data.discountItems);
             });
             e.preventDefault();
         }

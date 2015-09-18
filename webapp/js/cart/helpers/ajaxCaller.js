@@ -2,9 +2,10 @@ define([], function () {
     return{
         urls: {
             "deleteDiscount" : "/webapp/deleteDiscount.json",
-            "addDiscount" : "/webapp/addDiscount.json",
+            "addDiscount" : "/cart/ajax/applydiscount",
             "changeShipping" : "/webapp/changeShipping.json",
-            "changeCustomerReference" : "/cart/ajax/setreforder"
+            "changeCustomerReference" : "/cart/ajax/setreforder",
+            "deleteJob" :    "/webapp/deleteOrderItem.json"
         },
         call : function(action, data){
             var config = require("config");

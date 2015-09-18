@@ -41,6 +41,7 @@ define([
             "chooseOtherBpostPickupPoint" : "Choisissez un autre point poste",
             'downloadDevis' : 'Téléchargez le panier en devis',
             'designtoolTitle' : 'Téléchargez votre fichier ou créez en ligne',
+            'designtoolLink' : 'http://designtool.prd.printconcept.com',
             'dlLinkTitle' : 'DESIGNTOOL',
             'dlLinkSubtitle' : 'Pour tous les clients (recommandé)',
             'dtOptions1' : 'Téléchargez votre fichier dans notre designtool',
@@ -63,7 +64,14 @@ define([
             'graphisteOptions' : 'Je ne vais pas télécharger moi-même les fichiers. Mon graphiste va le faire pour moi.',
             'graphisteAdresse' : 'Adresse e-mail du designer',
             'graphisteAttention' : "Attention !! Si vous avez choisi l'option 'fichiers téléchargés par mon graphiste', nous ne pouvons pas vous garantir la date de livraison pour l'instant.",
-            'test' : 'test test'
+            'ex' : 'ex',
+            'refjob' : 'reference job',
+            'previsualis' : 'Prévisualiser',
+            'updatePage' : 'Modifier la mise en page',
+            'deleteOrder' : 'Supprimer',
+            'fotoliaImg' :  'Fotolia Image',
+            'controleProfessionel' : 'Contrôle professionel de'
+
         }
         
     };

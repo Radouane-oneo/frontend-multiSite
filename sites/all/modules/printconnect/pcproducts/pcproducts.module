@@ -681,7 +681,7 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
         var GlobalPrefix = '".$language->prefix."';
     </script>";
 
-    $script .= '<script data-main="/configSelector/js/main" src="/configSelector/js/libs/requirejs/require.js"></script>';
+    $script .= '<script data-main="/webapp/js/productConfig/main" src="/webapp/js/libs/requirejs/require.js"></script>';
     $script .= '<div id="myForm"></div>';
 
     return $script;

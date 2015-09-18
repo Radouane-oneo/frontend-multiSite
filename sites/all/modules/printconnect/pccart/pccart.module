@@ -191,9 +191,12 @@ function new_cart_loadpage() {
       'js_key' => t('drupal_tag'),
     );
 
-    var_dump($labels);die;
+    header('Cache-Control: public, max-age=' . 3600);
 
-    return '';
+    $script = '<script data-main="/webapp/js/cart/main" src="/webapp/js/libs/requirejs/require.js"></script>';
+    $script .= '<div id="myCart"></div>';
+
+    return $script;
 }
 
 // function to get json cart
@@ -1367,4 +1370,3 @@ function pccart_loggedout() {
   } catch (\Exception $ex) {
   }
 }
-

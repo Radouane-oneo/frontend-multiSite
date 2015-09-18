@@ -14,13 +14,14 @@ define([
         events: {
         },
         initialize: function() {
+            _this = this;
             this.config = require("config");
             this.model = new cartModel(this.config.cart);
             this.render();
-
+            console.log(this.model)
             //jobView
-            //this.jobView = new jobView(this.model);
-
+            this.jobView = new jobView(this.model);
+           
             //shipping View
             this.shippingView = new shippingView(this.model);
 

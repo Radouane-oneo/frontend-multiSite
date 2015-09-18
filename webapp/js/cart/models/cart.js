@@ -4,7 +4,7 @@ define([
 
     return Backbone.Model.extend({
         defaults: function() {
-            this.config = require("config");
+            //this.config = require("config");
             return {
                
             }

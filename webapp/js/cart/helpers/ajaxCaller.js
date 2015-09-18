@@ -5,13 +5,16 @@ define([], function () {
             "addDiscount" : "/cart/ajax/applydiscount",
             "changeShipping" : "/webapp/changeShipping.json",
             "changeCustomerReference" : "/cart/ajax/setreforder",
-            "deleteJob" :    "/webapp/deleteOrderItem.json"
+            "deleteJob" :    "/cart/ajax/removeitem/"
         },
-        call : function(action, data){
+        call : function(action, data, method, params){
+            if (!method) {method = "POST"}
+            if (!params) {params = ""}
             var config = require("config");
             return $.ajax({
-                type: "POST",
-                url: "/" + config.prefix + this.urls[action],
+                type: method,
+                url: "/" + config.prefix + this.urls[action] + params,
+
                 data : data
             }).done(function(resultData) {
 

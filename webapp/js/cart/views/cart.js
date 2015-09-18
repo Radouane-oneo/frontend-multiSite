@@ -18,8 +18,8 @@ define([
             this.config = require("config");
             this.model = new cartModel(this.config.cart);
             this.render();
-            console.log(this.model)
-            //jobView
+
+            //job View
             this.jobView = new jobView(this.model);
            
             //shipping View

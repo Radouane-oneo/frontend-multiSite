@@ -61,12 +61,10 @@ define([
 	    	orderitem = elmTarget.data('orderitem');
 
 	    	// remove job
-            ajaxCaller.call("deleteJob",{
-                orderId : orderitem
-            }).done(function(job){
-                job.jobID = orderitem;
-                if (job.jobDeleted) {
-                	_this.deleteOrderFromMdel(orderitem);
+            ajaxCaller.call("deleteJob",{}, 'GET', orderitem).done(function(result){
+                //job.jobID = orderitem;
+                if (result.code == '200') {
+                	_this.deleteOrderFromMdel(result, orderitem);
                 };
             });
 
@@ -75,8 +73,9 @@ define([
             });
 
 	    },
-	    deleteOrderFromMdel : function(jobID){
-	    	console.log(this.model)
+	    deleteOrderFromMdel : function(result, jobID){
+
+	    	console.log(result);
 	    }
 	});
 

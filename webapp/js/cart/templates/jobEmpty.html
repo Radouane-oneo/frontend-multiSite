@@ -12,6 +12,13 @@
 								<li class="<%= (i == 1)?'first':'' %> <%= (i == model.configuration.config.length-1)?'last':'' %>"><label><%= model.configuration.config[i].groupName %>:</label>  <%= model.configuration.config[i].name %> </li>
 							<% } %>
 						<% }); %>
+
+						<% if(model.options.length>0) { %>
+							<% _.each(model.options, function(option, i){ %>
+								<li class="<%= (i == model.options.length-1)?'last':'' %>"> <%= option.optionName %> </li>
+							<% }); %>
+						<% } %>
+
 						</ul>
 					</div>
 					<div class="items_actions">

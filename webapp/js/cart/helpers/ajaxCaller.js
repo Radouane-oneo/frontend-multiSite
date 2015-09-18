@@ -3,13 +3,16 @@ define([], function () {
         urls: {
             "deleteDiscount" : "/webapp/deleteDiscount.json",
             "addDiscount" : "/webapp/addDiscount.json",
-            "deleteJob" :    "/webapp/deleteOrderItem.json",
+            "deleteJob" :    "/befr/cart/ajax/removeitem/",
             "changeShipping" : "/webapp/changeShipping.json"
         },
-        call : function(action, data){
+        call : function(action, data, method, params){
+            if (!method) {method = "POST"};
+            if (!params) {params = ""};
+            
             return $.ajax({
-                type: "POST",
-                url: this.urls[action],
+                type: method,
+                url: this.urls[action] + params,
                 data : data
             }).done(function(resultData) {
 

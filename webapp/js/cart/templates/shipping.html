@@ -95,7 +95,10 @@
                             <%= model.orderItemShipping.orderShippingAddress.postalCode %> , <%= model.orderItemShipping.orderShippingAddress.street %>
                             <%= model.orderItemShipping.orderShippingAddress.city %> <br />
                             <%= model.orderItemShipping.orderShippingAddress.phone %> <br />
-                            <%= model.orderItemShipping.orderShippingAddress.email %> <br /><br />
+                            <%= model.orderItemShipping.orderShippingAddress.email %> <br />
+                            <a class="pcflyerstores-picker-link iframe" href="/stores/picker/callback/pcflyerstores_callback/FR?contentonly=1" style="display: block;">
+                                <%= config.labels['chooseOtherBpostPickupPoint'] %>
+                            </a><br />
                             <b><%= config.labels['openingHours'] %></b><br />
                             <table>
                                 <% _.each(model.orderItemShipping.orderShippingAddress.openingHours, function(openingHour, index){ %>

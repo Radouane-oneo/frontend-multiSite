@@ -1,7 +1,7 @@
 define([
     'backbone',
-    'text!/befr/cart/ajax/getcart',
-    'text!/befr/cart/ajax/getshippingtypes'
+    'text!/' + GlobalPrefix + '/cart/ajax/getcart',
+    'text!/' + GlobalPrefix + '/cart/ajax/getshippingtypes'
 ], function (Backbone, cartJSON, shippingJSON) {
     return {
         containerId : '#myCart',
@@ -9,8 +9,9 @@ define([
         bottomBox : '#bottomBox',
         cart : $.parseJSON(cartJSON),
         shipping : $.parseJSON(shippingJSON).data,
-        vat : 0.21,
-        prefix : "befr",
+        vat : GlobalVat,
+        prefix : GlobalPrefix,
+        isConnected : GlobalPrefix,
         labels : {
             "shipping" : "Livraison",
             "chooseFlyerStore" : "Choisissez votre FlyerStore",

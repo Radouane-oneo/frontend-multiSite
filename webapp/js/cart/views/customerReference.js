@@ -1,7 +1,8 @@
 define([
     'backbone',
-    'text!../templates/customerReference.html'
-], function (Backbone, customerReferenceTemplate) {
+    'text!../templates/customerReference.html',
+    '../helpers/ajaxCaller'
+], function (Backbone, customerReferenceTemplate, ajaxCaller) {
 
     return Backbone.View.extend({
         template: _.template(customerReferenceTemplate),
@@ -24,6 +25,13 @@ define([
         },
         changeCustomerReference : function(e){
             this.model.set({"customerReference": $(e.currentTarget).val()}, {silent: true});
+            ajaxCaller.call("changeCustomerReference",{
+                cartId : this.model.id,
+                orderRef : $(e.currentTarget).val()
+            }).done(function(resultData){
+
+            });
+            e.preventDefault();
         }
 
     });

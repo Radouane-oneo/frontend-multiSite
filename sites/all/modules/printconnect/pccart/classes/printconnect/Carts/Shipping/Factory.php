@@ -2,9 +2,23 @@
 
 namespace printconnect\Carts\Shipping {
 
-  use printconnect\Dal;
+use printconnect\Dal;
 
-  class Factory {
+class Factory {
+
+    public static function GetShippingTypes()
+    {
+        return Dal::SendRequest('shipping-type');
+    }    
+
+    public static function SetShippingType($shippingTypeId)
+    {
+        $cartId = isset($_SESSION['cartid']) ? $_SESSION['cartid'] : NULL;
+        return Dal::SendRequest('shipping-type', 'POST', array(
+            'cart' => $cartId,
+            'shipping_type' => $shippingTypeId
+        ));
+    }
 
     public static function GetType($id) {
       return new Type(array('id' => $id));

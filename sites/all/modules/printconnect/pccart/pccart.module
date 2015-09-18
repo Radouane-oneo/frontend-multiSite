@@ -1,4 +1,5 @@
 <?php
+use \printconnect\Dal;
 use printconnect\Carts\Factory;
 use printconnect\Shipping;
 use printconnect\Diagnostics\Debug;
@@ -15,6 +16,87 @@ use printconnect\Customers\Factory as CustomersFactory;
 use printconnect\Carts\Discounts;
 
 function pccart_menu() {
+
+// ===== ORDER WEEK HOOKS ================================================================
+
+$items['cart'] = array(
+    'page callback' => 'new_cart_loadpage',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/getcart'] = array(
+    'page callback' => 'new_cart_ajax_getcart',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/getshippingtypes'] = array(
+    'page callback' => 'new_cart_ajax_getshippingtypes',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/removeitem/%'] = array(
+    'page callback' => 'new_cart_ajax_removeitem',
+    'page arguments' => array(3),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/removedesign/%'] = array(
+    'page callback' => 'new_cart_ajax_removedesign',
+    'page arguments' => array(3),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/removefilecheck/%'] = array(
+    'page callback' => 'new_cart_ajax_removefilecheck',
+    'page arguments' => array(3),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/setrefjob'] = array(
+    'page callback' => 'new_cart_ajax_setrefjob',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/setemaildesigner'] = array(
+    'page callback' => 'new_cart_ajax_setemaildesigner',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/setreforder'] = array(
+    'page callback' => 'new_cart_ajax_setreforder',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/selectshippingtype/%'] = array(
+    'page callback' => 'new_cart_ajax_selectshippingtype',
+    'page arguments' => array(3),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/applydiscount'] = array(
+    'page callback' => 'new_cart_ajax_applydiscount',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+// =======================================================================================
 
 $items['cart/%/submit'] = array(
       'page callback' => '_pccart_callback',
@@ -34,13 +116,6 @@ $items['cart/%/submit'] = array(
       'page arguments' => array('cart_customer_ref', 3),
       'access arguments' => array('access content'),
       'type' => MENU_CALLBACK,
-  );
-  $items['cart'] = array(
-      'title' => 'Cart',
-      'page callback' => 'drupal_get_form',
-      'page arguments' => array('pccart_cart_form2'),
-      'access arguments' => array('access content'),
-      'file' => 'pccart.forms.inc',
   );
 
   $items['cart/%/delete'] = array(
@@ -105,6 +180,125 @@ $items['cart/%/submit'] = array(
   return $items;
 
 }
+
+// ================================== ORDER WEEK V3 FUNCTIONS ===================================
+
+// main function to load cart page
+function new_cart_loadpage() {
+    global $language;
+    
+    $labels = array(
+      'js_key' => t('drupal_tag'),
+    );
+
+    var_dump($labels);die;
+
+    return '';
+}
+
+// function to get json cart
+function new_cart_ajax_getcart() {
+    $response = Factory::GetCartJson();
+
+    Dal::BuildJson($response->data);
+}
+
+// function to get json of shipping types
+function new_cart_ajax_getshippingtypes() {
+    $shippingsTypes = printconnect\Carts\Shipping\Factory::GetShippingTypes();
+
+    $shippingsTypes = json_decode($shippingsTypes->data, 1);
+
+    foreach ($shippingsTypes as $key => $type) {
+        $label = $type['shippingType']['tag'];
+        if ($type['price'] > 0) {
+            $label .= '(' . t('!value exc. VAT', array('!value' => theme('price', array('value' => $type['price'], 'free' => TRUE)))) . ' / ' . t('!value inc. VAT', array('!value' => theme('price', array('value' => $type['price'] * (1 + $_SESSION['shop_vat']), 'free' => TRUE)))) . ') *';
+        }
+
+        $shippingsTypes[$key]['shippingType']['tag'] = $label;
+    }
+
+    Dal::BuildJson($shippingsTypes);
+}
+
+function new_cart_ajax_removeitem($itemId) {
+    $response = Factory::DeleteItem($itemId);
+
+    Dal::BuildJson(json_decode($response->data, 1));
+}
+
+function new_cart_ajax_removedesign($itemId) {
+    $response = Factory::DeleteDesign($itemId);
+
+    Dal::BuildJson(json_decode($response->data, 1));
+}
+
+function new_cart_ajax_setrefjob() {
+    $itemId = $_POST['id'];
+    $refJob = $_POST['refJob'];
+
+    $response = Factory::SaveRefJob($itemId, $refJob);
+    if($response) {
+        Dal::BuildJson();
+    }else {
+        Dal::BuildJson(array(), 500);
+    }
+}
+
+function new_cart_ajax_setemaildesigner() {
+    $itemId = $_POST['id'];
+    $email = $_POST['email'];
+
+    $response = Factory::SaveEmailDesigner($itemId, $email);
+
+    if($response) {
+        Dal::BuildJson();
+    }else {
+        Dal::BuildJson(array(), 500);
+    }
+}
+
+function new_cart_ajax_setreforder() {
+    $cartId = $_POST['cartId'];
+    $orderRef = $_POST['orderRef'];
+
+    $response = Factory::SaveRefOrder($cartId, $orderRef);
+
+    if($response) {
+        Dal::BuildJson();
+    }else {
+        Dal::BuildJson(array(), 500);
+    }
+}
+
+function new_cart_ajax_selectshippingtype($shippingTypeId) {
+    $response = printconnect\Carts\Shipping\Factory::SetShippingType($shippingTypeId);
+
+    Dal::BuildJson(json_decode($response->data, 1));
+}
+
+function new_cart_ajax_applydiscount() {
+    $discountCode = $_POST['code'];
+    $response = Factory::ApplyDiscount($discountCode);
+
+    if($response->code == 200) {
+        Dal::BuildJson(json_decode($response->data, 1));
+    }else {
+        Dal::BuildJson(array(), $response->code, $response->data);
+    }
+}
+
+function new_cart_ajax_removefilecheck($itemId) {
+    $response = Factory::RemoveFileCheck($itemId);
+
+    if($response->code == 200) {
+        Dal::BuildJson(json_decode($response->data, 1));
+    }else {
+        Dal::BuildJson(array(), $response->code, $response->data);
+    }
+}
+
+// ==============================================================================================
 
 function pccart_progress() {
 
@@ -614,6 +808,7 @@ function add_cartitem_submit() {
   if(!isset($_POST)) {
     drupal_not_found();
   }
+
   $productId = $_POST['productId'];
   $qty = $_POST['quantity'];
   $options = explode(',', $_POST['options']);
@@ -632,6 +827,7 @@ function add_cartitem_submit() {
       Factory::Save($cart);
     }
   }
+
   $relatedProducts = array();
   $description = '';
   $cart->productId = $productId;
@@ -1142,6 +1338,7 @@ function pccart_loggedin($customerId) {
   if ($cart) {
     if ($customerId != $cart->customer) {
       $cart->customer = $customerId;
+      $cart->onlyAttachCustomer = TRUE;
       Factory::Save($cart);
     }
   } else {

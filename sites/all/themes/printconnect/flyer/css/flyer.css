@@ -4023,7 +4023,7 @@ a.googleconnect {
 }
 .page-checkout-invoiceanddelivery #invoice-address input[type="submit"], 
 .page-checkout-invoiceanddelivery #shipping-address input[type="submit"] {
-	margin-left: 347px; 
+	margin-left: 493px; 
 	margin-top: 20px;
 }
 .page-pcbpost-picker .whitebox {
@@ -4124,8 +4124,6 @@ a.googleconnect {
 .page-checkout #shipping-address.form-wrapper, 
 .page-checkout #invoice-address.form-wrapper {
 	margin: 20px 0 19px;
-    width: 100%;
-    box-sizing: border-box;
 }
 .page-checkout #shipping-address.form-wrapper h3, 
 .page-checkout #invoice-address.form-wrapper h3 {
@@ -8205,7 +8203,7 @@ form#pccheckout-payment-form fieldset.paymentmethodefond legend{
 	background-color: #f1f1f1;
         margin: 0;
         padding: 18px 15px;
-        width: 833px;
+        width: 998px;
         
         
     border-left: 1px solid #e1e1e1;

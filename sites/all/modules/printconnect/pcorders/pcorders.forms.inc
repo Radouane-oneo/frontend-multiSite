@@ -344,7 +344,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         {
             $title = $config->name;
         }
-      $rows[] = '<label class="labelOrder">' . $config->groupName . '</label>' . $config->name;
+      $rows[] = '<label class="labelOrder">' . $config->groupName . '</label>' . $title;
     }
 
     foreach ($item->options as $option) {

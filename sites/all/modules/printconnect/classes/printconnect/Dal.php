@@ -18,6 +18,38 @@ namespace printconnect {
     protected static $_cache = array();
     public static $totalCountTemplates ;
 
+    public static function SendRequest($request, $method = 'GET', $data = array())
+    {
+        global $language;
+        $url = sprintf('%s%s?apikey=%s&language=%d', variable_get('pc_url'), $request, variable_get('pc_apikey'), $language->id);
+
+        $header = array('Content-Type' => 'application/json');
+        $response = drupal_http_request($url, array(
+            'header' => $header, 
+            'method' => $method, 
+            'data' => json_encode($data)
+        ));
+
+        return $response;  
+    }
+
+    public static function BuildJson($data = array(), $code = 200, $message = NULL)
+    {
+        header('Content-Type: application/json');
+
+        if(!is_array($data)) {
+            echo $data;
+        }else {
+            echo json_encode(array(
+                'code' => $code,
+                'message' => $message,
+                'data' => $data
+            ));
+        }
+
+        exit();
+    }
+
     public static function updateElement(Object $object, $entity, $params, $fieldToUpdate)
     {
         if (!$object->contentlanguage) {

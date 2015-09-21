@@ -856,33 +856,7 @@ function pcflyerstores_invoiceanddelivery_form_shipping_submit($form, &$form_sta
 function pcflyerstores_picker_callback($id) {
     $store = \printconnect\Stores\Factory::Get($id);
     \printconnect\Stores\Factory::LoadStore($store);
-    $response = \printconnect\Carts\Factory::SetStore($store);
+    $response = \printconnect\Carts\Factory::SetPickupPoint($store);
 
     \printconnect\Dal::BuildJson(json_decode($response->data, 1));
-    $cart = \printconnect\Carts\Factory::Current();
-    if ($cart) {
-
-	    $cart->pickuppoint = $store;
-        \printconnect\Carts\Factory::SaveStore($cart);
-    }
-
-    $link = array(
-        '#theme' => 'pcflyerstores_store_link',
-        '#store' => $store,
-    );
-
-    $info = array(
-        '#theme' => 'pcflyerstores_store_info',
-        '#store' => $store,
-    );
-
-
-
-    drupal_json_output(array(
-        'id' => $id,
-        'countryCode' => $store->country,
-        'link' => drupal_render($link),
-        'info' => drupal_render($info),
-    ));
-    exit;
 }

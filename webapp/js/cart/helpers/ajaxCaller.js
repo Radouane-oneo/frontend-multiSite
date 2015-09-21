@@ -1,9 +1,9 @@
 define([], function () {
     return{
         urls: {
-            "deleteDiscount" : "/webapp/deleteDiscount.json",
+            "deleteDiscount" : "/cart/ajax/removediscount",
             "addDiscount" : "/cart/ajax/applydiscount",
-            "changeShipping" : "/webapp/changeShipping.json",
+            "changeShipping" : "/cart/ajax/selectshippingtype/",
             "changeCustomerReference" : "/cart/ajax/setreforder",
             "deleteJob" :    "/cart/ajax/removeitem/"
         },
@@ -14,7 +14,6 @@ define([], function () {
             return $.ajax({
                 type: method,
                 url: "/" + config.prefix + this.urls[action] + params,
-
                 data : data
             }).done(function(resultData) {
 

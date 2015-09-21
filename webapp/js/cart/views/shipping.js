@@ -25,13 +25,23 @@ define([
             }));
 
             $(this.config.bottomBox).html(this.$el);
+
+            $('.pcflyerstores-picker-link, .pcbpost-picker-link').fancybox({
+                width: 993,
+                height: 500,
+                padding: 0,
+                margin: 0,
+                scrolling: false,
+                autoScale: false,
+                hideOnOverlayClick: false,
+                autoDimensions: false
+            });
         },
         changeShipping : function(e){
             var me = this;
-            ajaxCaller.call("changeShipping",{
-                id : $(e.currentTarget).val()
-            }).done(function(orderItemShipping){
-                me.model.set("orderItemShipping", orderItemShipping);
+            ajaxCaller.call("changeShipping",{},"GET",$(e.currentTarget).val()).done(function(resultData){
+                if(resultData.code == "200")
+                    me.model.set({"orderItemShipping": resultData.data.orderItemShipping, "discountItems": resultData.data.discountItems});
             });
             e.preventDefault();
         },

@@ -284,6 +284,11 @@ function flyer_preprocess_html(&$vars) {
 
 	//Then we remove the Drupal core version
 	unset($javascript['misc/jquery.js']);
+        $args = arg();
+        if($args[0]=="cart") {
+            unset($javascript['sites/all/libraries/fancybox/fancybox/jquery.fancybox-1.3.4.js']);
+            unset($javascript['sites/all/modules/contrib/fancybox/js/fancybox.js']);
+        }
 }
 
 function flyer_css_alter(&$css) {

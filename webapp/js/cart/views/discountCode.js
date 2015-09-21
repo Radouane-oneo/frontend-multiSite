@@ -29,9 +29,10 @@ define([
         deleteDiscount: function(e){
             var me = this;
             ajaxCaller.call("deleteDiscount",{
-                id : $(e.currentTarget).attr("data-id")
-            }).done(function(discountItems){
-                me.model.set("discountItems", discountItems);
+                code : $(e.currentTarget).attr("data-code")
+            }).done(function(resultData){
+                if(resultData.code == "200")
+                    me.model.set("discountItems", resultData.data.discountItems);
             });
             e.preventDefault();
         },

@@ -34,14 +34,14 @@
                         <span><%= shipping.shippingType.tag %></span>
                         <% if(shipping.id == 134){ %>
                             <span style="margin-left:100px;<%= styleLink %>" class="storeLink">
-                                <a class="pcflyerstores-picker-link iframe" href="/stores/picker/callback/pcflyerstores_callback/FR?contentonly=1" style="display: inline;">
+                                <a class="pcflyerstores-picker-link fancybox.iframe" href="/<%= config.prefix %>/stores/picker/callback/pcflyerstores_callback/?contentonly=1" style="display: inline;">
                                     <%= config.labels['chooseFlyerStore'] %>
                                 </a>
                             </span>
                         <% } %>
                         <% if(shipping.id == 123){ %>
                             <span style="margin-left:100px;<%= styleLink %>" class="storeLink">
-                                <a class="pcflyerstores-picker-link iframe" href="/stores/picker/callback/pcflyerstores_callback/FR?contentonly=1" style="display: inline;">
+                                <a class="pcbpost-picker-link fancybox.iframe" href="/<%= config.prefix %>/pcbpost/picker/pcbpost_cart_callback?contentonly=1" style="display: inline;">
                                     <%= config.labels['chooseBpostPickupPoint'] %>
                                 </a>
                             </span>
@@ -56,14 +56,14 @@
                     </td>
                 </tr>
                 <%
-                if(shipping.id == 134 && model.orderItemShipping.shippingTypeResellerShop == 134) { %>
+                if(shipping.id == 134 && model.orderItemShipping.shippingTypeResellerShop == 134 && model.orderItemShipping.orderShippingAddress) { %>
                 <tr>
                     <td colspan="3">
                         <div>
                             <iframe  width='425' height='350' frameborder='0' scrolling='no' marginheight='0' marginwidth='0'
                                      src='https://maps.google.com/maps?ie=UTF8&t=roadmap&q=<%= model.orderItemShipping.orderShippingAddress.geographical["latitude"] %>,<%= model.orderItemShipping.orderShippingAddress.geographical["longitude"] %>&z=16&output=embed'>
                                      </iframe>
-                            <a class="pcflyerstores-picker-link iframe" href="/stores/picker/callback/pcflyerstores_callback/FR?contentonly=1" style="display: block;">
+                            <a class="pcflyerstores-picker-link fancybox.iframe" href="/<%= config.prefix %>/stores/picker/callback/pcflyerstores_callback/?contentonly=1" style="display: block;">
                                 <%= config.labels['chooseOtherFlyerStore'] %>
                             </a>
                         </div>
@@ -87,7 +87,7 @@
                     </td>
                 </tr>
                 <% } %>
-                <% if(shipping.id == 123 && model.orderItemShipping.shippingTypeResellerShop == 123) { %>
+                <% if(shipping.id == 123 && model.orderItemShipping.shippingTypeResellerShop == 123 && model.orderItemShipping.orderShippingAddress) { %>
                 <tr>
                     <td colspan="3">
                         <div>
@@ -96,7 +96,7 @@
                             <%= model.orderItemShipping.orderShippingAddress.city %> <br />
                             <%= model.orderItemShipping.orderShippingAddress.phone %> <br />
                             <%= model.orderItemShipping.orderShippingAddress.email %> <br />
-                            <a class="pcflyerstores-picker-link iframe" href="/stores/picker/callback/pcflyerstores_callback/FR?contentonly=1" style="display: block;">
+                            <a class="pcbpost-picker-link fancybox.iframe" href="/<%= config.prefix %>/pcbpost/picker/pcbpost_cart_callback?contentonly=1" style="display: block;">
                                 <%= config.labels['chooseOtherBpostPickupPoint'] %>
                             </a><br />
                             <b><%= config.labels['openingHours'] %></b><br />

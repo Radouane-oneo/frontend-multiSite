@@ -42,6 +42,9 @@ define([
 
 
             $(this.config.containerId).html(this.$el);
+        },
+        changeShipping : function(orderItemShipping){
+            this.model.set("orderItemShipping", orderItemShipping);
         }
         
     });

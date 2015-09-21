@@ -1,5 +1,5 @@
 <form accept-charset="UTF-8" id="pcproducts-config-form" method="post"
-      action="/cart/additem/submit">
+      action="/<%= config.prefix %>/cart/additem/submit">
     <div>
         <div id="edit-description" class="description clearfix form-wrapper">
 
@@ -206,7 +206,7 @@
                     <%= config.labels['technicalDescription'] %>
                 </div>
                 <div id="edit-templates-image" class="image form-wrapper"><a target="_blank"
-                                                                             href="/file/template_<%= model.toolBoxGroup.template.id %>__<%= config.labels['langId'] %>.zip"><img
+                                                                             href="/<%= config.prefix %>/file/template_<%= model.toolBoxGroup.template.id %>__<%= config.labels['langId'] %>.zip"><img
                         alt=""
                         src="/file/<%= model.toolBoxGroup.template.thumbnail %>"></a>
                 </div>
@@ -246,7 +246,7 @@
                 </div>
                 <div id="edit-templates-linktodownload" class="link form-wrapper">
                     <div class="form-item form-type-item" id="edit-templates-linktodownload-link">
-                        <a target="_blank" href="/file/template_<%= model.toolBoxGroup.template.id %>__<%= config.labels['langId'] %>.zip">
+                        <a target="_blank" href="/<%= config.prefix %>/file/template_<%= model.toolBoxGroup.template.id %>__<%= config.labels['langId'] %>.zip">
                             <%= config.labels['downloadText'] %>
                         </a>
                     </div>

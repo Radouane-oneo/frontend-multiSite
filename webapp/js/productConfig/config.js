@@ -1,6 +1,6 @@
 define([
     'backbone',
-    'text!/products/getjson/' + GlobalProductId
+    'text!/' + GlobalPrefix + '/products/getjson/' + GlobalProductId
 ], function (Backbone, JsonFile) {
     var JsonFileGroups = $.parseJSON(JsonFile);
     GlobalLabels['productId'] = JsonFileGroups.id;
@@ -24,7 +24,8 @@ define([
         defaultQuantity : GlobalDefaultQuantity,
         imagesUrl : JsonFileGroups["imagesUrl"],
         labels : GlobalLabels,
-        isAdmin : GlobalIsAdmin
+        isAdmin : GlobalIsAdmin,
+        prefix : GlobalPrefix
     };
 
 });

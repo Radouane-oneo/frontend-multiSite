@@ -1,0 +1,80 @@
+<fieldset class="items cartItemsContainer form-wrapper orderBox">
+	<div class="fieldset-wrapper">
+		<div class="item job clearfix form-wrapper">
+			<div class="image form-wrapper">
+				<img src="https://dt-printconcept-production.s3.amazonaws.com/<%= model.files[0].thumbnail %>">
+			</div>
+
+			<div class="preview1">
+				<div class="description form-wrapper">
+					<h3><%= model.quantity %> <%= config.labels.ex %>. <%= model.configuration.name %> <%= model.configuration.config[0].name %></h3>
+					<%= priceTpl({price:model.price,classToAdd:'price'}) %>
+
+					<div class="item-list">
+						<ul>
+						<% _.each(model.configuration.config, function(itemConfig, i){ %>
+							<% if(i!=0) { %>
+								<li class="<%= (i == 1)?'first':'' %> <%= (i == model.configuration.config.length-1)?'last':'' %>"><label><%= model.configuration.config[i].groupName %>:</label>  <%= model.configuration.config[i].name %> </li>
+							<% } %>
+						<% }); %>
+						</ul>
+					</div>
+
+					<div class="refJob-code">
+						<div class="form-item">
+							<label for=""><%= config.labels["refjob"] %></label>
+							<input class="hint form-text refjobTxt form-text" orderitem="1572303" type="text" id="edit-cart-items-1572303-files-description-refjob" name="cart[items][1572303][files][description][refJob]" value="<%= model.refJob %>" size="20" maxlength="25">
+						</div>
+					</div>
+
+					<div class="items_actions">
+						<span data-orderItem="<%= model.id %>" class="removecart"></span>
+					</div>
+
+				</div>
+			</div>
+			
+			<div class="btns-box">
+				<div class="preview">
+					<a href="http://designtool.new.prd.flyer.fr/job/preview/rg/1/id/1051135/lang/fr_FR_1_1348063973/impkey/printconcept" target="blank" class="previewlink"><%= config.labels["previsualis"] %></a>
+				</div>
+
+				<div class="preview">
+					<a href="http://designtool.new.prd.flyer.fr/designtool/index/resize/1/p/5/order_opts//l/fr_FR_1_1348063973/shop/23/rc/ribbons_design/impkey/printconcept?options=&amp;vat=&amp;dcb=http%253A%252F%252Fwww.flyer.fr%252Fdesigntool%252Fcallback&amp;title=Flyers%20/%20Tracts%20A7%20&amp;style=http%3A//www.flyer.fr/sites/all/themes/printconnect/flyer/css/designtool.css&amp;id=1572303&amp;vs=1&amp;shop_apikey=829dc7b162f77ed761be6cac0ae8782c0ee1866b&amp;cartid=727641&amp;j=1051135&amp;currencyPreflight=%E2%82%AC&amp;pricePreflight=4%2C99" class="designtool iframe reupload designtool iframe"><%= config.labels["updatePage"] %></a>
+				</div>
+
+				<div class="preview">
+					<input class="delete_item deletedesign form-submit ui-button ui-widget ui-state-default ui-corner-all" itemfileid="1572303" type="submit" id="edit-cart-items-1572303-files-remove" name="delete_item_1572303" value="<%= config.labels["deleteOrder"] %>" role="button">
+				</div>
+			</div>
+
+
+			<% if(model.fileCheck.hasOwnProperty('price')) { %>
+				<!-- Controle professionel -->
+				<div class="control-block form-wrapper">
+					<div class="text">
+						<h3><%= config.labels.controleProfessionel %> </h3>
+						<%= priceTpl({price:model.fileCheck.price,classToAdd:'price'}) %>
+					</div>
+					<a href="/%23" class="removecontrol noreplace" rel="1574652"></a>
+				</div>
+				<!-- END Controle professionel -->
+			<% } %>
+		
+			<!-- fotolia -->
+			<div class="file-check cart-fotolias">
+				<% if (model.fotoliaItems.length>0) { %>
+					<% _.each(model.fotoliaItems, function(fotolia, i){ %>
+						<div class="fotolia-items">
+							<span><%= config.labels.fotoliaImg %> &nbsp;"<%= fotolia.fotoliaId %>"</span>
+							<%= priceTpl({price:fotolia.price,classToAdd:'pricepreflight'}) %>
+						</div>
+					<% }) %>
+				<% }  %>
+				
+			</div>
+			<!-- END fotolia -->
+
+		</div>
+	</div>
+</fieldset>

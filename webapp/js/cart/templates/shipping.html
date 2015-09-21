@@ -1,0 +1,121 @@
+<fieldset id="edit-cart-shipping" class="shipping clearfix form-wrapper">
+    <legend><span class="fieldset-legend"><%= config.labels['shipping'] %></span></legend>
+    <div class="fieldset-wrapper">
+        <table class="grid targetPrice sticky-enabled">
+            <tbody>
+            <% _.each(config.shipping, function(shipping, i){ %>
+
+                <%
+                var checked = "";
+                var style = "display:none";
+                var styleLink = "display:none";
+                if (shipping.id == model.orderItemShipping.shippingTypeResellerShop){
+                    checked = "checked='checked'";
+                    style = "display:inline-block";
+                    styleLink = "display:inline-block";
+                    if (model.orderItemShipping.orderShippingAddress){
+                        styleLink = "display:none";
+                    }
+                }
+                if (!model.orderItemShipping.shippingTypeResellerShop && shipping.defaultItem){
+                    checked = "checked='checked'";
+                    style = "display:inline-block";
+                    styleLink = "display:inline-block";
+                }
+                %>
+
+                <tr class="shipp-item odd <%= (i == 0)?'first-child':'' %> <%= (i == config.shipping.length-1)?'last-child':'' %>">
+                    <td class="first-child">
+                        <div class="form-item form-type-radio form-item-cart-shipping-type">
+                            <input type="radio" value="<%= shipping.id %>" name="shipping-type" class="grid targetPrice form-radio" <%= checked %> >
+                        </div>
+                    </td>
+                    <td>
+                        <span><%= shipping.shippingType.tag %></span>
+                        <% if(shipping.id == 134){ %>
+                            <span style="margin-left:100px;<%= styleLink %>" class="storeLink">
+                                <a class="pcflyerstores-picker-link iframe" href="/stores/picker/callback/pcflyerstores_callback/FR?contentonly=1" style="display: inline;">
+                                    <%= config.labels['chooseFlyerStore'] %>
+                                </a>
+                            </span>
+                        <% } %>
+                        <% if(shipping.id == 123){ %>
+                            <span style="margin-left:100px;<%= styleLink %>" class="storeLink">
+                                <a class="pcflyerstores-picker-link iframe" href="/stores/picker/callback/pcflyerstores_callback/FR?contentonly=1" style="display: inline;">
+                                    <%= config.labels['chooseBpostPickupPoint'] %>
+                                </a>
+                            </span>
+                        <% } %>
+                    </td>
+                    <td class="last-child">
+                        <span class="price" style="<%= style %>">
+                            <span class="value" style="display: inline;">
+                                <%= (shipping.price == 0)? config.labels['free'] : priceTpl({price:shipping.price}) %>
+                            </span>
+                        </span>
+                    </td>
+                </tr>
+                <%
+                if(shipping.id == 134 && model.orderItemShipping.shippingTypeResellerShop == 134) { %>
+                <tr>
+                    <td colspan="3">
+                        <div>
+                            <iframe  width='425' height='350' frameborder='0' scrolling='no' marginheight='0' marginwidth='0'
+                                     src='https://maps.google.com/maps?ie=UTF8&t=roadmap&q=<%= model.orderItemShipping.orderShippingAddress.geographical["latitude"] %>,<%= model.orderItemShipping.orderShippingAddress.geographical["longitude"] %>&z=16&output=embed'>
+                                     </iframe>
+                            <a class="pcflyerstores-picker-link iframe" href="/stores/picker/callback/pcflyerstores_callback/FR?contentonly=1" style="display: block;">
+                                <%= config.labels['chooseOtherFlyerStore'] %>
+                            </a>
+                        </div>
+                        <div>
+                            <b><%= config.labels['nameFlyerStore'] %></b><br />
+                            <%= model.orderItemShipping.orderShippingAddress.postalCode %> , <%= model.orderItemShipping.orderShippingAddress.street %>
+                            <%= model.orderItemShipping.orderShippingAddress.city %> <br />
+                            <%= model.orderItemShipping.orderShippingAddress.phone %> <br />
+                            <%= model.orderItemShipping.orderShippingAddress.email %> <br /><br />
+                            <b><%= config.labels['openingHours'] %></b><br />
+                            <table>
+                            <% _.each(model.orderItemShipping.orderShippingAddress.openingHours, function(openingHour, index){ %>
+                            <% if(openingHour[0] && openingHour[1]) { %>
+                            <tr><td><%= config.labels['day_' + index] %></td><td><%= openingHour[0] %> - <%= openingHour[1] %></td></tr>
+                            <%
+                                }
+                                });
+                            %>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                <% } %>
+                <% if(shipping.id == 123 && model.orderItemShipping.shippingTypeResellerShop == 123) { %>
+                <tr>
+                    <td colspan="3">
+                        <div>
+                            <b><%= config.labels['nameBpost'] %></b><br />
+                            <%= model.orderItemShipping.orderShippingAddress.postalCode %> , <%= model.orderItemShipping.orderShippingAddress.street %>
+                            <%= model.orderItemShipping.orderShippingAddress.city %> <br />
+                            <%= model.orderItemShipping.orderShippingAddress.phone %> <br />
+                            <%= model.orderItemShipping.orderShippingAddress.email %> <br />
+                            <a class="pcflyerstores-picker-link iframe" href="/stores/picker/callback/pcflyerstores_callback/FR?contentonly=1" style="display: block;">
+                                <%= config.labels['chooseOtherBpostPickupPoint'] %>
+                            </a><br />
+                            <b><%= config.labels['openingHours'] %></b><br />
+                            <table>
+                                <% _.each(model.orderItemShipping.orderShippingAddress.openingHours, function(openingHour, index){ %>
+                                <% if(openingHour[0] && openingHour[1]) { %>
+                                <tr><td><%= config.labels['day_' + index] %></td><td><%= openingHour[0] %> - <%= openingHour[1] %></td></tr>
+                                <%
+                                }
+                                });
+                                %>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                <% } %>
+
+            <% }); %>
+            </tbody>
+        </table>
+    </div>
+</fieldset>

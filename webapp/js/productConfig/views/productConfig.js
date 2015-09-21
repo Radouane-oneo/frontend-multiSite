@@ -41,7 +41,7 @@ define([
             }));
             $(this.config.containerId).html(this.$el);
 
-            this.$("#bloc-shipping").load("/getshippingdate #edit-shipping", {
+            this.$("#bloc-shipping").load("/" + this.config.prefix + "/getshippingdate #edit-shipping", {
                 "productId" : this.config.labels['productId'],
                 "items" : this.model.get("toolBoxGroup")["toolboxItems"],
                 "options" : this.model.get("options"),

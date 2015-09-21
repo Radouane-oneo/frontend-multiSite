@@ -4417,7 +4417,7 @@ a.googleconnect {
 	margin-bottom: 10px;
 }
 .page-cart #edit-cart-designer-warning {
-	margin-bottom: 20px;
+	margin-bottom: 0;
 }
 .page-checkout-upload .designer-content-email {
 	background: #dfdfdf;
@@ -7461,7 +7461,7 @@ background-color:-webkit-linear-gradient(top, #77B800 0%, #669C02 100%) ;
 padding-left: 61px;
 }
 
-.fotolia-items span{
+.fotolia-items > span:first-child{
 background: url("images/rsz_fotolia-icon.png") no-repeat scroll 0 2px / 28px auto transparent;
 padding-left: 32px;
 padding-top: 3px;
@@ -10730,6 +10730,18 @@ a.cart.button{
 	margin-top: 0 !important;
 }
 
+
+.cart-fotolias{
+	clear: both;
+	padding: 10px;
+}
+.cart-fotolias .fotolia-items{
+	position: relative;
+	border-bottom: 1px solid #ccc;
+	width: 100%;
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
 /* ======= Order week new CSS ======= */ 
 
 /* Page profil */

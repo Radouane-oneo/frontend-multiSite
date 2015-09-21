@@ -10,7 +10,7 @@ class Factory {
     public static function GetCartJson()
     {
         if (isset($_SESSION['cartid'])) {
-            return Dal::SendRequest('cart/id/'. $_SESSION['cartid']);
+            return Dal::SendRequest('new-cart/id/'. $_SESSION['cartid']);
         }else {
             return NULL;
         }
@@ -61,11 +61,30 @@ class Factory {
         ));
     }
 
+    public static function RemoveDiscount($code)
+    {
+        $cartId = isset($_SESSION['cartid']) ? $_SESSION['cartid'] : NULL;
+
+        return Dal::SendRequest('order-discount-code', 'DELETE', array(
+            'order' => $cartId,
+            'code' => $code
+        ));
+    }
+
     public static function RemoveFileCheck($itemId)
     {
         return Dal::SendRequest('supplement-parameter', 'POST', array(
             'fileCheck' => 'remove',
             'id' => $itemId
+        ));
+    }
+
+    public static function SetStore($store)
+    {
+        $cartId = isset($_SESSION['cartid']) ? $_SESSION['cartid'] : NULL;
+        return Dal::SendRequest('pickuppointdetail', 'PUT', array(
+            'id' => $cartId,
+            'pickuppoint' => $store->GetProperties()
         ));
     }
   

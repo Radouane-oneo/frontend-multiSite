@@ -73,7 +73,7 @@
 				});
 			}
 			/* ------------Remove items------------*/
-			$("#pccart-cart-form .removecart").live('click',function () {
+			/*$("#pccart-cart-form .removecart").live('click',function () {
 				var targetItem = $(this);
 				itemid = $(this).siblings('.itemID').text();
 				$(this).parents('.item').fadeOut("slow");
@@ -92,6 +92,7 @@
 						}
 					}
 				});
+				
 				$("input[name='"+nameitemid+"']").remove();
 				$('.item-' + itemid).remove();
 				if ($('.fotolia-items-'+itemid).length < $('.fotolia-items').length) {
@@ -104,7 +105,7 @@
 				$('.cartCounter').attr('number', number);
 				$('.cartCounter span').html(baseText+ ' ('+number+')');
 				PriceCallback();
-			});
+			});*/
 			/* ----- technic-details -----*/
 			$('.technic-details').click(function(e){
 				e.preventDefault();

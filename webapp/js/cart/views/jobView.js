@@ -104,6 +104,8 @@ define([
 	    	for (var i = 0; i< orderItems.length; i++) {
 	    		if (orderItems[i].id== jobID) {
 	    			orderItems[i].files = [];
+	    			orderItems[i].fotoliaItems = [];
+	    			orderItems[i].fileCheck = {};
 	    		};
 	    	};
 	    	this.model.set("orderItems", orderItems);
@@ -127,7 +129,7 @@ define([
 	    	var orderItems = jQuery.extend(true, [], this.model.attributes.orderItems);
 	    	for (var i = 0; i< orderItems.length; i++) {
 	    		if ( orderItems[i].id== jobID) {
-	    			orderItems[i].fileCheck = [];
+	    			orderItems[i].fileCheck = {};
 	    		};
 	    	};
 	    	this.model.set("orderItems", orderItems);

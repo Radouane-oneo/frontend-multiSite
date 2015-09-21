@@ -51,7 +51,7 @@ define([
             $(e.currentTarget).find(".form-radio").change();
         },
         stopPropagation : function(e){
-            e.stopPropagation();
+            //e.stopPropagation();
         },
         errors : function(){
             if(!this.model.get("orderItemShipping").id)

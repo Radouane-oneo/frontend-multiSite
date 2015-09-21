@@ -3,16 +3,22 @@ define([
     'text!/' + GlobalPrefix + '/cart/ajax/getcart',
     'text!/' + GlobalPrefix + '/cart/ajax/getshippingtypes'
 ], function (Backbone, cartJSON, shippingJSON) {
+    var parsedJSON = "";
+    try {
+        parsedJSON = $.parseJSON(cartJSON);
+    } catch (e) {
+        parsedJSON = {};
+    }
     return {
         containerId : '#myCart',
         errorBox : '#errorBox',
         jobBox : '#jobBox',
         bottomBox : '#bottomBox',
-        cart : $.parseJSON(cartJSON),
+        cart : parsedJSON,
         shipping : $.parseJSON(shippingJSON).data,
         vat : GlobalVat,
         prefix : GlobalPrefix,
-        isConnected : GlobalPrefix,
+        isConnected : isConnected,
         labels : {
             "shipping" : "Livraison",
             "chooseFlyerStore" : "Choisissez votre FlyerStore",
@@ -74,8 +80,11 @@ define([
             'fotoliaImg' :  'Fotolia Image',
             'controleProfessionel' : 'Contrôle professionel de',
             'jobNotNullError' : 'jobNotNullError',
-            'shippingNotNullError' : 'shippingNotNullError'
-
+            'shippingNotNullError' : 'shippingNotNullError',
+            'mustConnectedError' : 'Pour activer votre code de réduction, cliquez sur ‘votre compte’ et connectez vous. Ensuite, returnez vers ‘votre panier’.',
+            'invalidDiscountCode' : 'Sorry, this coupon code was already used or not validated',
+            'cartIsEmpty' : 'Votre panier est vide.',
+            'continue' : 'Continuer les achats'
         }
         
     };

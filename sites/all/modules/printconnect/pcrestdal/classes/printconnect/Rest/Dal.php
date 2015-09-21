@@ -227,10 +227,7 @@ use printconnect\Dal\ForbiddenException;
 
         return $data;
       } else {
-          try{
-              pcprintlog_HandelError( $_SESSION['customerid'], $_SESSION['cartid'], 'pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'GET', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), $url );
-          }catch (\printconnect\Rest\Exceptions\Exception $ex) {
-          }
+        var_dump("Error", $response->data, $url, $data);die;
         throw new Exception('POST ' . $url, $data, $this->ReadErrorInformation($response));
       }
 //     if($entity == "order-discount-code"){

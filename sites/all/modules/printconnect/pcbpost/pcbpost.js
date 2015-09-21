@@ -6,7 +6,11 @@ function pcbpost_cart_callback(poi, html){
   jQuery('.pup').html(html);
   jQuery('input[name="cart[shipping][pup][id]"]').val(poi.Id);  
   jQuery('input[name="pcbpost[id]"]').val(poi.Id);  
-  jQuery.get(Drupal.settings.basePath + 'index.php?q=pcbpost/set/pickuppoint/' + poi.Id );
+  jQuery.get(Drupal.settings.basePath + 'index.php?q=pcbpost/set/pickuppoint/' + poi.Id , function(data){
+      if(data.code == 200) {
+          myCart.changeShipping(data.data.orderItemShipping);
+      }
+  });
   
 }
 

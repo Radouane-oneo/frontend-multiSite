@@ -134,15 +134,8 @@ function pcflyerstores_callback(id){
   var url =Drupal.settings.basePath + 'index.php?q=/js/stores/picker/cart/set1/' + id;
   jQuery('input[name="pcflyerstores[id]"]').val(id);
   jQuery.getJSON(url, function(data){
-    jQuery('.store').html(data.info);
-    if (jQuery('#pccheckout-invoiceanddelivery-form  input[name="pcflyerstores[id]"]').val() != ''){
-            jQuery('#allresault').show();
-            jQuery('#pccheckout-invoiceanddelivery-form #edit-summary-shipping h6').html(jQuery('#pccheckout-invoiceanddelivery-form .storcomande h2').html());
-            jQuery('#pccheckout-invoiceanddelivery-form #edit-summary-shipping .address').html(jQuery('#pccheckout-invoiceanddelivery-form  .storcomande .address').html());
-            jQuery('#pccheckout-invoiceanddelivery-form #edit-summary-shipping .phone').html(jQuery('#pccheckout-invoiceanddelivery-form  .storcomande .phone').html());
-            jQuery('#pccheckout-invoiceanddelivery-form #edit-summary-shipping .fax').html(jQuery('#pccheckout-invoiceanddelivery-form  .storcomande .fax').html());
-            jQuery('#pccheckout-invoiceanddelivery-form #edit-summary-shipping .email').html(jQuery('#pccheckout-invoiceanddelivery-form  .storcomande .email').html());
-           }
-    Drupal.attachBehaviors();
+      if(data.code == 200) {
+          myCart.changeShipping(data.data.orderItemShipping);
+      }
   });
 }

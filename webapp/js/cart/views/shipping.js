@@ -9,7 +9,8 @@ define([
         template: _.template(shippingTemplate),
         events: {
             "change input[name='shipping-type']" : "changeShipping",
-            "click .shipp-item" : "selectShipping"
+            "click .shipp-item" : "selectShipping",
+            "click .pcflyerstores-picker-link,.pcbpost-picker-link" : "stopPropagation"
         },
         initialize: function(model) {
             this.config = require("config");
@@ -48,6 +49,9 @@ define([
         selectShipping : function(e){
             $(e.currentTarget).find(".form-radio").attr("checked", "checked");
             $(e.currentTarget).find(".form-radio").change();
+        },
+        stopPropagation : function(e){
+            e.stopPropagation();
         },
         errors : function(){
             if(!this.model.get("orderItemShipping").id)

@@ -59,7 +59,6 @@ namespace printconnect {
       } else {
         $language = $object->contentlanguage;
       }
- 
       if (!$dal) {
         $dal = Dal::GetDal();
       }
@@ -69,12 +68,10 @@ namespace printconnect {
         if (array_key_exists($hash, self::$_cache)) {
           $data = self::$_cache[$hash];
         }
-
         if (!$data) {
           $data = Cache::Get($hash);
         }
 
-        
         if (!$data) {
                 $data = $dal->Get($entity, $params, $language);
                 Cache::Set($hash, serialize($data));

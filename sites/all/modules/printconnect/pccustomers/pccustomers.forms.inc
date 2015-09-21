@@ -1085,8 +1085,6 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
       '#weight' => 8,
       '#description' => t('Your password'),
   );
-  
-  
   /*$form['login']['actions'] = array(
       '#type' => 'actions',
       '#attributes' => array('class' => array('form-actions', 'clearfix')),
@@ -1105,12 +1103,11 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
           array('password'),
       ),
   );
-  $form['login']['forgot'] = array(
+  /*$form['login']['forgot'] = array(
         '#markup' => l(t('Forgot your password?'), 'myprintconnect/forgotpassword', array('query' => array('return' => $redirect), 'attributes' => array('class' => array('link')))),
         '#weight' => 9,
-    );
+    );*/
    /*Secont form */
-  
   
    $form['login']['decriptionnew'] = array(
       '#prefix'=> '<div class="login-form-item last-item"><p>',
@@ -1148,7 +1145,6 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
       ),
     );
   /* End second form */
-    
     
   /*
     $form['forgot'] = array(
@@ -1269,7 +1265,6 @@ function pccustomers_login_form_login_validate(&$form, &$form_state) {
 //  if (!(isset($form_state['values']['password']) || count($form_state['values']['password']) < 5)) {
 //    form_set_error('password', t('Password not long enough'));
 //  }
-
   $customer = Factory::Login($form_state['values']['email'], $form_state['values']['password']);
   if ($customer && !$customer->blocked) {
 
@@ -1302,7 +1297,11 @@ function pccustomers_login_form_register_validate(&$form, &$form_state) {
     form_set_error('newpassword', t('Password not long enough'));
     return;
   }
+  try {
   $customer = Factory::GetByEmail($form_state['values']['emailnew']);
+  } catch(Exception $ex) {
+
+  }
   if ($customer) {
     form_set_error('emailnew', t('This email address is already registered'));
     return FALSE;

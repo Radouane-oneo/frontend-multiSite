@@ -31,7 +31,7 @@ use printconnect\Dal\ForbiddenException;
 
     public function Get($entity, $params, $language = FALSE) {
       $url = $this->GetUrl($entity, $params, FALSE, $language);
-            if(variable_get('pc_env', 'production') == 'production') {
+            if(variable_get('pc_env', 'production') == 'production' && $entity != 'customer') {
                 $json = $this->fromCache($url);
 		if ($entity == 'pickuppointdetail/service/store') {
                     if ($_SERVER["HTTP_HOST"] == 'http://preprd.flyer.fr/')
@@ -160,7 +160,7 @@ use printconnect\Dal\ForbiddenException;
       $end = microtime(true);
         try{
         if((int) $response->code !=200 ){
-            pcprintlog_HandelError( $_SESSION['customerid'], $_SESSION['cartid'], 'pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'GET', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), $url );
+        //    pcprintlog_HandelError( $_SESSION['customerid'], $_SESSION['cartid'], 'pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'GET', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), $url );
 
         }
         }catch (\printconnect\Rest\Exceptions\Exception $ex) {
@@ -172,7 +172,11 @@ use printconnect\Dal\ForbiddenException;
           $data= html_entity_decode($data, ENT_NOQUOTES);
           return $data;
         case 404:
-          throw new NotFoundException($url, array($response->data), array());
+	  /* if (preg_match('/customer/', $url) && $response->data == '"Record does not exist!"') {
+		$data = $response->data;
+          $data= html_entity_decode($data, ENT_NOQUOTES);
+          return $data;
+	    }*/
           return FALSE;
           break;
         case 403:
@@ -235,10 +239,6 @@ use printconnect\Dal\ForbiddenException;
 
         return $data;
       } else {
-          try{
-              pcprintlog_HandelError( $_SESSION['customerid'], $_SESSION['cartid'], 'pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'GET', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), $url );
-          }catch (\printconnect\Rest\Exceptions\Exception $ex) {
-          }
         throw new Exception('POST ' . $url, $data, $this->ReadErrorInformation($response));
       }
 //     if($entity == "order-discount-code"){

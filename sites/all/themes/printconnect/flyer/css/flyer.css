@@ -10853,3 +10853,76 @@ p.requieredfields span.form-required {
 	font-weight: bold;
 	color: #f60;
 }
+
+/* Page Adresses */
+.page-myprintconnect-addresses #pccustomers-newaddress-form > div {
+    background-color: #f1f1f1;
+    padding-top: 18px;
+    margin-top: 10px;
+    border: 1px solid #d6d6d6;
+
+    -webkit-border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    border-radius: 4px 4px 4px 4px;
+}
+.page-myprintconnect-addresses .region-content .form-actions {
+    /*padding-left: 15px;
+    margin-top: 39px;
+    padding: 10px 19px!important;*/
+}
+#pccustomers-newaddress-form input[type="submit"], 
+#pccustomers-address-form input[type="submit"] {
+	background: #71ad00;
+    padding-left: 0;
+    text-align: center;
+    margin-bottom: 0; 
+    top: 0; 
+}
+#pccustomers-newaddress-form input[type="submit"], 
+#pccustomers-address-form input[type="submit"] {
+	background-image: none;
+}
+
+#pccustomers-newaddress-form input[type="text"]#edit-name, 
+#pccustomers-newaddress-form input[type="text"]#edit-lastname {
+    width: 218px;
+}
+#pccustomers-newaddress-form input[type="text"]#edit-name {
+    border-radius: 3px 0px 0px 3px;
+    -moz-border-radius: 3px 0px 0px 3px;
+    -webkit-border-radius: 3px 0px 0px 3px;
+    border-right: 0;
+}
+#pccustomers-newaddress-form input[type="text"]#edit-lastname { 
+    border-radius: 0px 3px 3px 0px;
+    -moz-border-radius: 0px 3px 3px 0px;
+    -webkit-border-radius: 0px 3px 3px 0px;
+}
+#pccustomers-newaddress-form label, 
+#pccustomers-address-form label {
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 0;
+    width: 158px;
+}
+#pccustomers-newaddress-form .form-item-name,
+#pccustomers-newaddress-form .form-item-lastname {
+    margin-top: 0;
+    float: left;
+}
+#pccustomers-newaddress-form .form-item-lastname > label { display: none;}
+#pccustomers-newaddress-form .form-item-phone {
+    clear: both;
+}
+#pccustomers-newaddress-form .form-item-company {
+    display: block;
+    padding-top: 10px;
+    border-top: 1px solid #d6d6d6;
+}
+#pccustomers-newaddress-form .form-item-postalCode,
+ #pccustomers-newaddress-form .form-item-city {
+    float: left;
+}
+#pccustomers-newaddress-form .form-item-postalCode {
+	clear: both;
+}

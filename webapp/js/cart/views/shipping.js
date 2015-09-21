@@ -9,7 +9,8 @@ define([
         template: _.template(shippingTemplate),
         events: {
             "change input[name='shipping-type']" : "changeShipping",
-            "click .shipp-item" : "selectShipping"
+            "click .shipp-item" : "selectShipping",
+            "click .pcflyerstores-picker-link,.pcbpost-picker-link" : "stopPropagation"
         },
         initialize: function(model) {
             this.config = require("config");
@@ -25,19 +26,37 @@ define([
             }));
 
             $(this.config.bottomBox).html(this.$el);
+
+            $('.pcflyerstores-picker-link, .pcbpost-picker-link').fancybox({
+                width: 993,
+                height: 500,
+                padding: 0,
+                margin: 0,
+                scrolling: false,
+                autoScale: false,
+                hideOnOverlayClick: false,
+                autoDimensions: false
+            });
         },
         changeShipping : function(e){
             var me = this;
-            ajaxCaller.call("changeShipping",{
-                id : $(e.currentTarget).val()
-            }).done(function(orderItemShipping){
-                me.model.set("orderItemShipping", orderItemShipping);
+            ajaxCaller.call("changeShipping",{},"GET",$(e.currentTarget).val()).done(function(resultData){
+                if(resultData.code == "200")
+                    me.model.set({"orderItemShipping": resultData.data.orderItemShipping, "discountItems": resultData.data.discountItems});
             });
             e.preventDefault();
         },
         selectShipping : function(e){
             $(e.currentTarget).find(".form-radio").attr("checked", "checked");
             $(e.currentTarget).find(".form-radio").change();
+        },
+        stopPropagation : function(e){
+            e.stopPropagation();
+        },
+        errors : function(){
+            if(!this.model.get("orderItemShipping").id)
+                return this.config.labels['shippingNotNullError'];
+            return false;
         }
 
     });

@@ -8,7 +8,7 @@
     <div id="edit-actions" class="actions form-actions clearfix form-wrapper"><span class="price" id="price"><label>
         <%= config.labels['subTotalWithTVA'] %></label> <%= priceTpl({price:(subTotalAmount * (1 + config.vat))}) %></span>
 
-        <div class="button-wrapper"><input type="submit" value="<%= config.labels['pay'] %>" name="op" id="edit-actions-checkout"
+        <div class="button-wrapper"><input type="button" value="<%= config.labels['pay'] %>" name="op" id="edit-actions-checkout"
                                            class="action large payment button form-submit ui-button ui-widget ui-state-default ui-corner-all"
                                            role="button"></div>
     </div>

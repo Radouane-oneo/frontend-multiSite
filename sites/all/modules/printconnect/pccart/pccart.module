@@ -191,14 +191,22 @@ $items['cart/%/submit'] = array(
 // main function to load cart page
 function new_cart_loadpage() {
     global $language;
-    
+
     $labels = array(
       'js_key' => t('drupal_tag'),
     );
 
     header('Cache-Control: public, max-age=' . 3600);
 
-    $script = '<script data-main="/webapp/js/cart/main" src="/webapp/js/libs/requirejs/require.js"></script>';
+
+    $script = "<script type='text/javascript'>
+        var GlobalPrefix = '".$language->prefix."';
+        var GlobalVat = 0.21;
+        var isConnected = " . (isset($_SESSION['customerid']) ? 1 : 0) . ";
+    </script>";
+    
+    $script .= '<link rel="stylesheet" href="/webapp/js/libs/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />';
+    $script .= '<script data-main="/webapp/js/cart/main" src="/webapp/js/libs/requirejs/require.js"></script>';
     $script .= '<div id="myCart"></div>';
 
     return $script;

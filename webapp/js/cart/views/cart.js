@@ -6,8 +6,9 @@ define([
     'views/jobView',
     'views/discountCode',
     'views/customerReference',
-    'views/priceBlock'
-], function (Backbone, cartModel, cartTemplate, shippingView, jobView, discountView, customerReferenceView, priceBlockView) {
+    'views/priceBlock',
+    'views/Error'
+], function (Backbone, cartModel, cartTemplate, shippingView, jobView, discountView, customerReferenceView, priceBlockView, errorView) {
 
     return Backbone.View.extend({
         template: _.template(cartTemplate),
@@ -18,6 +19,9 @@ define([
             this.config = require("config");
             this.model = new cartModel(this.config.cart);
             this.render();
+
+            //error View
+            this.errorView = new errorView(this.model);
 
             //job View
             this.jobView = new jobView(this.model);
@@ -42,6 +46,9 @@ define([
 
 
             $(this.config.containerId).html(this.$el);
+        },
+        changeShipping : function(orderItemShipping){
+            this.model.set("orderItemShipping", orderItemShipping);
         }
         
     });

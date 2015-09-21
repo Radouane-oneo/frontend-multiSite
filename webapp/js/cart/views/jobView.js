@@ -23,7 +23,7 @@ define([
 	    },
 
 	    render: function() {
-	    	console.log('render')
+	    	console.log('render');
 	    	var _this = this;
             var content = "";
             _.each(this.model.toJSON().orderItems, function(item, i){
@@ -45,6 +45,10 @@ define([
             this.setElement(content);
 
             $(this.config.jobBox).html(this.$el);
+
+            //set fancybox event
+            this.showFancybox();
+
 	    },
 
 	    swithcJobEmpty : function(e){
@@ -188,7 +192,23 @@ define([
 	    	};
 
 	    	this.model.set("orderItems", orderItems);
-	    }
+	    },
+	    showFancybox : function(){
+	    	$('.orderBox .designtool').fancybox({
+                width: 1024,
+                height: '100%',
+                padding: 5,
+                margin: 0,
+                scrolling: false,
+                autoScale: false,
+                hideOnOverlayClick: false,
+                autoDimensions: false,
+                modal: false
+            });
+	    },
+        errors : function(){
+            return this.config.labels['jobNotNullError'];
+        }
 	});
 
 });

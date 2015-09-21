@@ -1,16 +1,18 @@
 define([
     'backbone',
-    'text!/befr/cart/ajax/getcart',
-    'text!/befr/cart/ajax/getshippingtypes'
+    'text!/' + GlobalPrefix + '/cart/ajax/getcart',
+    'text!/' + GlobalPrefix + '/cart/ajax/getshippingtypes'
 ], function (Backbone, cartJSON, shippingJSON) {
     return {
         containerId : '#myCart',
+        errorBox : '#errorBox',
         jobBox : '#jobBox',
         bottomBox : '#bottomBox',
         cart : $.parseJSON(cartJSON),
         shipping : $.parseJSON(shippingJSON).data,
-        vat : 0.21,
-        prefix : "befr",
+        vat : GlobalVat,
+        prefix : GlobalPrefix,
+        isConnected : GlobalPrefix,
         labels : {
             "shipping" : "Livraison",
             "chooseFlyerStore" : "Choisissez votre FlyerStore",
@@ -70,7 +72,9 @@ define([
             'updatePage' : 'Modifier la mise en page',
             'deleteOrder' : 'Supprimer',
             'fotoliaImg' :  'Fotolia Image',
-            'controleProfessionel' : 'Contrôle professionel de'
+            'controleProfessionel' : 'Contrôle professionel de',
+            'jobNotNullError' : 'jobNotNullError',
+            'shippingNotNullError' : 'shippingNotNullError'
 
         }
         

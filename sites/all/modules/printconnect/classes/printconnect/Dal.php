@@ -24,11 +24,23 @@ namespace printconnect {
         $url = sprintf('%s%s?apikey=%s&language=%d', variable_get('pc_url'), $request, variable_get('pc_apikey'), $language->id);
 
         $header = array('Content-Type' => 'application/json');
+
+        if($method == 'GET') {
+            $cached = self::FromCache($url);
+            if($cached) {
+              return $cached;
+            }
+        }
+
         $response = drupal_http_request($url, array(
             'header' => $header, 
             'method' => $method, 
             'data' => json_encode($data)
         ));
+
+        if($response->code == 200 && $method == 'GET') {
+            self::SaveCacheData($url, $response->data);
+        }
 
         return $response;  
     }
@@ -48,6 +60,55 @@ namespace printconnect {
         }
 
         exit();
+    }
+
+    public static function FromCache($urlFinal) 
+    {
+        $data = self::GetCacheData($urlFinal);
+
+        if ($data && !empty($data)) {
+            $object = new \stdClass();
+            $object->code = 200;
+            $object->data = $data;
+            $object->message = NULL;
+            return $object;
+        }else {
+            return FALSE;
+        }
+    }
+
+    public static function SaveCacheData($key, $data) 
+    {
+        $urls = array('cart', 'customer', 'shipping-date', 'billing-account');
+        foreach ($urls as $item) {
+            if (preg_match("@$item@", $key)) {
+                return FALSE;
+            }
+        }
+        $key = md5($key);
+        $saveData = "standard|$key|$data\n";
+        $fp = fopen('cache.txt', 'a+');
+
+        fwrite($fp, $saveData);
+        fclose($fp);
+    }
+
+    public static function GetCacheData($key) 
+    {
+        $key = md5($key);
+        $handle = false;
+        if (($handle = fopen("cache.txt", "r")) !== FALSE) {
+            while (($buffer = fgets($handle)) !== false) {
+                $data = explode("|", $buffer);
+                if ($key == $data[1]) {
+                    return $data[2];
+                }
+            }
+            fclose($handle);
+            $handle = false;
+        }
+
+        return $handle;
     }
 
     public static function updateElement(Object $object, $entity, $params, $fieldToUpdate)

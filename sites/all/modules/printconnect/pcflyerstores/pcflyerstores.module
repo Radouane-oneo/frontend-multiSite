@@ -854,10 +854,14 @@ function pcflyerstores_invoiceanddelivery_form_shipping_submit($form, &$form_sta
 
 
 function pcflyerstores_picker_callback($id) {
+    $store = \printconnect\Stores\Factory::Get($id);
+    \printconnect\Stores\Factory::LoadStore($store);
+    $response = \printconnect\Carts\Factory::SetStore($store);
+
+    \printconnect\Dal::BuildJson(json_decode($response->data, 1));
     $cart = \printconnect\Carts\Factory::Current();
     if ($cart) {
-        $store = \printconnect\Stores\Factory::Get($id);
-        \printconnect\Stores\Factory::LoadStore($store);
+
 	    $cart->pickuppoint = $store;
         \printconnect\Carts\Factory::SaveStore($cart);
     }

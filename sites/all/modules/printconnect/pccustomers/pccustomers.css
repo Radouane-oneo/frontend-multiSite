@@ -53,11 +53,6 @@ a:visited.googleconnect{
     background: url(images/calc_btn.png) no-repeat 27px center,-webkit-linear-gradient(top, #77b800 0%, #669c02 100%);
     padding-left: 63px;
 }
-.page-myprintconnect-addresses .region-content .form-actions {
-    padding-left: 15px;
-    margin-top: 39px;
-    padding: 10px 19px!important;
-}
 .page-myprintconnect-changepassword #pccustomers-changepassword-form label {
     white-space: normal;
     text-align: left;

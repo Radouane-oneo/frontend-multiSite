@@ -7,6 +7,7 @@ define([
     return Backbone.View.extend({
         template: _.template(priceBlockTemplate),
         events: {
+            "click #edit-actions-checkout" : "stepCheckout"
         },
         initialize: function(model) {
             this.config = require("config");
@@ -23,6 +24,23 @@ define([
             }));
 
             $(this.config.bottomBox).append(this.$el);
+        },
+        stepCheckout : function(){
+            var jobsError = myCart.jobView.errors();
+            var shippingError = myCart.shippingView.errors();
+            if(jobsError) {
+                myCart.errorView.render(jobsError);
+                $(window).scrollTop($(this.config.containerId).offset().top);
+                return false;
+            }
+            if(shippingError) {
+                myCart.errorView.render(shippingError);
+                $(window).scrollTop($(this.config.containerId).offset().top);
+                return false;
+            }
+            if(myCart.disable) return false;
+            location.href = "/" + this.config.prefix + "/checkout";
+
         }
 
     });

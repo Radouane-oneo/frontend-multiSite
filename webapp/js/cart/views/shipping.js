@@ -48,6 +48,11 @@ define([
         selectShipping : function(e){
             $(e.currentTarget).find(".form-radio").attr("checked", "checked");
             $(e.currentTarget).find(".form-radio").change();
+        },
+        errors : function(){
+            if(!this.model.get("orderItemShipping").id)
+                return this.config.labels['shippingNotNullError'];
+            return false;
         }
 
     });

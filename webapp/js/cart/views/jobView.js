@@ -76,7 +76,10 @@ define([
 	    deleteOrderFromMdel : function(result, jobID){
 
 	    	console.log(result);
-	    }
+	    },
+        errors : function(){
+            return this.config.labels['jobNotNullError'];
+        }
 	});
 
 });

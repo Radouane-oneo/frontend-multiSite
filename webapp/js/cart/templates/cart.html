@@ -1,17 +1,19 @@
 <form action="/panier" method="post" id="pccart-cart-form" accept-charset="UTF-8">
 	<div>
 		<div class="cart clearfix form-wrapper" id="edit-cart">
-			<a href="/cart/offer" class="download" target="_blank" title="Imprimez votre devis"><%= config.labels["downloadDevis"] %></a>
-			
-			<div id="jobBox">
+			<a href="/cart/offer" class="download" target="_blank" title="<%= config.labels['downloadDevis'] %>"><%= config.labels["downloadDevis"] %></a>
+
+            <div id="errorBox">
+
+            </div>
+
+            <div id="jobBox">
 				
 			</div>
-			
-			
+
 			<div id="bottomBox">
 				
 			</div>
-			
 
 		</div>
 	</div>

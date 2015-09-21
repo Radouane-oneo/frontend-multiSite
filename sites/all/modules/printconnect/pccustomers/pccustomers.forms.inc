@@ -674,7 +674,14 @@ function pccustomers_newaddress_form($form, $form_state) {
 
   $form['name'] = array(
       '#type' => 'textfield',
-      '#title' => t('Name'),
+      '#title' => t('Name & LastName'),
+      '#required' => TRUE,
+      '#size' => 71,
+  );
+
+  $form['lastname'] = array(
+      '#type' => 'textfield',
+      '#title' => t(''),
       '#required' => TRUE,
       '#size' => 71,
   );

@@ -8,6 +8,7 @@ define([], function () {
             "deleteJob" :    "/cart/ajax/removeitem/"
         },
         call : function(action, data, method, params){
+            myCart.disable = true;
             if (!method) {method = "POST"}
             if (!params) {params = ""}
             var config = require("config");
@@ -16,7 +17,9 @@ define([], function () {
                 url: "/" + config.prefix + this.urls[action] + params,
                 data : data
             }).done(function(resultData) {
-
+                myCart.disable = false;
+            }).error(function(){
+                myCart.disable = false;
             });
         }
 

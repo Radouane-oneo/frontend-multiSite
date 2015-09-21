@@ -61,6 +61,16 @@ class Factory {
         ));
     }
 
+    public static function RemoveDiscount($code)
+    {
+        $cartId = isset($_SESSION['cartid']) ? $_SESSION['cartid'] : NULL;
+
+        return Dal::SendRequest('order-discount-code', 'DELETE', array(
+            'order' => $cartId,
+            'code' => $code
+        ));
+    }
+
     public static function RemoveFileCheck($itemId)
     {
         return Dal::SendRequest('supplement-parameter', 'POST', array(

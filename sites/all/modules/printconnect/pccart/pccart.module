@@ -95,7 +95,12 @@ $items['cart/ajax/applydiscount'] = array(
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
 );
-
+$items['cart/ajax/removediscount'] = array(
+    'page callback' => 'new_cart_ajax_removediscount',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
 // =======================================================================================
 
 $items['cart/%/submit'] = array(
@@ -289,6 +294,17 @@ function new_cart_ajax_selectshippingtype($shippingTypeId) {
 function new_cart_ajax_applydiscount() {
     $discountCode = $_POST['code'];
     $response = Factory::ApplyDiscount($discountCode);
+
+    if($response->code == 200) {
+        Dal::BuildJson(json_decode($response->data, 1));
+    }else {
+        Dal::BuildJson(array(), $response->code, $response->data);
+    }
+}
+
+function new_cart_ajax_removediscount() {
+    $discountCode = $_POST['code'];
+    $response = Factory::RemoveDiscount($discountCode);
 
     if($response->code == 200) {
         Dal::BuildJson(json_decode($response->data, 1));

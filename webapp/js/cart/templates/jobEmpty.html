@@ -1,4 +1,4 @@
-<fieldset class="items cartItemsContainer form-wrapper orderBox">
+<fieldset class="items cartItemsContainer form-wrapper orderBox" data-orderItem="<%= model.id %>">
 	<div class="fieldset-wrapper">
 		<div class="item job  clearfix form-wrapper job-item-event">
 			<div class="preview2">
@@ -65,7 +65,7 @@
                             <li><%= config.labels["proUploadOptions3"] %></li>
                 		</ul>
                 		
-                		<a href="<%= config.labels.designtoolLink %><%= model.configuration.designtoolLink %>" class="designtool iframe">
+                		<a href="<%= config.labels.designtoolLink %><%= model.configuration.proUploadLink %>" class="designtool iframe">
                 			<span class="buttonlayout btnupfile">
                 				<span class="txtgras"><%= config.labels["proUploadBtnText"] %></span>
                 			</span>

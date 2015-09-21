@@ -5,7 +5,11 @@ define([], function () {
             "addDiscount" : "/cart/ajax/applydiscount",
             "changeShipping" : "/webapp/changeShipping.json",
             "changeCustomerReference" : "/cart/ajax/setreforder",
-            "deleteJob" :    "/cart/ajax/removeitem/"
+            "deleteJob" :    "/cart/ajax/removeitem/",
+            "deleteJobDesign" :    "/cart/ajax/removedesign/",
+            "deleteFileCheck" :    "/cart/ajax/removefilecheck/",
+            "setRefJob" :    "/cart/ajax/setrefjob",
+            "setMailDeisigner" :    "/cart/ajax/setemaildesigner"
         },
         call : function(action, data, method, params){
             if (!method) {method = "POST"}

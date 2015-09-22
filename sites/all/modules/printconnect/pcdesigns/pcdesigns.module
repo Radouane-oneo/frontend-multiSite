@@ -138,7 +138,7 @@ function pcdesigns_saveddesigns_form($form, $form_state) {
                     'params' => array('designId' => $design->id),
                     'callback' => 'myprintconnect/designs/callback/',
                     'versioning' => TRUE,
-                    'attributes' => array('class' => array('button', 'action', 'order')),
+                    'attributes' => array('class' => array('action', 'order')),
                 ))),
             'delete' => array(
                 '#type' => 'submit',

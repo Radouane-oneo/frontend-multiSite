@@ -243,12 +243,13 @@ define([
         	var orderItems = this.model.attributes.orderItems;
         	for (var i = 0; i< orderItems.length; i++) {
         		var checkBox = $(this.config.jobBox).find('.orderBox[data-orderitem="'+orderItems[i].id+'"]').find('.checkbox-event input[type="checkbox"]');
+        		var inputBox = $(this.config.jobBox).find('.orderBox[data-orderitem="'+orderItems[i].id+'"]').find('.inputdesigneremail');
 	    		if (checkBox.is(':checked')) {
-	    			if (checkBox.val() == "" || checkBox.val() ==null) {
+	    			if (inputBox.val() == "" || inputBox.val() ==null) {
 	    				return this.config.labels['jobNotNullErrorMail'];
 	    			}
 
-	    			if (!this.filter.test(checkBox.val())) {
+	    			if (!this.filter.test(inputBox.val())) {
 	    				return this.config.labels['jobNotNullErrorMailNotValid'];
 	    			}
 

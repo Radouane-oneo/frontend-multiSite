@@ -28,6 +28,12 @@ define([
         },
         deleteDiscount: function(e){
             var me = this;
+
+            if(this.model.get("discountItems").length == 1)
+                $(e.currentTarget).parents(".jsDiscount").remove();
+            else
+                $(e.currentTarget).parents(".discount-code-wrapper").remove();
+
             ajaxCaller.call("deleteDiscount",{
                 code : $(e.currentTarget).attr("data-code")
             }).done(function(resultData){
@@ -37,12 +43,22 @@ define([
             e.preventDefault();
         },
         addDiscount: function(e){
+            if(!this.config.isConnected) {
+                myCart.errorView.render(this.config.labels['mustConnectedError']);
+                $(window).scrollTop($(this.config.containerId).offset().top);
+                return false;
+            }
             var me = this;
             ajaxCaller.call("addDiscount",{
                 code : this.$("#edit-cart-discount-code").val()
             }).done(function(resultData){
                  if(resultData.code == "200")
                     me.model.set("discountItems", resultData.data.discountItems);
+                 else {
+                     myCart.errorView.render(me.config.labels['invalidDiscountCode']);
+                     $(window).scrollTop($(me.config.containerId).offset().top);
+                 }
+
             });
             e.preventDefault();
         }

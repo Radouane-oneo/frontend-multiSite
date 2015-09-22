@@ -22,7 +22,7 @@
                 <legend><span class="fieldset-legend"><%= config.labels['discountsCode'] %></span></legend>
                 <div class="fieldset-wrapper">
                     <% _.each(model.discountItems, function(discountsData){ %>
-                        <div class="form-wrapper">
+                        <div class="form-wrapper discount-code-wrapper">
                             <div class="description form-wrapper">
                                 <%= priceTpl({price:discountsData.price,classToAdd:'price'}) %>
                                 <a href="#" id="delete-discount" data-code="<%= discountsData.code %>">Supprimer</a>

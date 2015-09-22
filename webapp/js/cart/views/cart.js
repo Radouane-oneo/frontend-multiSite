@@ -20,23 +20,25 @@ define([
             this.model = new cartModel(this.config.cart);
             this.render();
 
-            //error View
-            this.errorView = new errorView(this.model);
+            if(this.model.get("id")) {
+                //error View
+                this.errorView = new errorView(this.model);
 
-            //job View
-            this.jobView = new jobView(this.model);
-           
-            //shipping View
-            this.shippingView = new shippingView(this.model);
+                //job View
+                this.jobView = new jobView(this.model);
 
-            //discount View
-            this.discountView = new discountView(this.model);
+                //shipping View
+                this.shippingView = new shippingView(this.model);
 
-            //customerReference View
-            this.customerReferenceView = new customerReferenceView(this.model);
+                //discount View
+                this.discountView = new discountView(this.model);
 
-            //priceBlock View
-            this.priceBlockView = new priceBlockView(this.model);
+                //customerReference View
+                this.customerReferenceView = new customerReferenceView(this.model);
+
+                //priceBlock View
+                this.priceBlockView = new priceBlockView(this.model);
+            }
         },
         render : function(){
             this.setElement(this.template({

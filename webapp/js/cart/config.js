@@ -3,19 +3,29 @@ define([
     'text!/' + GlobalPrefix + '/cart/ajax/getcart',
     'text!/' + GlobalPrefix + '/cart/ajax/getshippingtypes'
 ], function (Backbone, cartJSON, shippingJSON) {
+    var parsedJSON = "";
+    try {
+        parsedJSON = $.parseJSON(cartJSON);
+    } catch (e) {
+        parsedJSON = {};
+    }
     return {
         containerId : '#myCart',
         errorBox : '#errorBox',
         jobBox : '#jobBox',
         detailTechnic : '#technic-details',
         bottomBox : '#bottomBox',
-        cart : $.parseJSON(cartJSON),
+        cart : parsedJSON,
         shipping : $.parseJSON(shippingJSON).data,
         vat : GlobalVat,
         prefix : GlobalPrefix,
+<<<<<<< HEAD
         isConnected : GlobalPrefix,
         langId : '10',
         designtoolLink : 'http://designtool.prd.printconcept.com',
+=======
+        isConnected : isConnected,
+>>>>>>> 6adaafaee7c438205167116459e4eec3bda17e62
         labels : {
             "formatBrut" : "Format brut",
             "formatFini" : "Format fini",
@@ -87,8 +97,11 @@ define([
             'jobNotNullError' : 'jobNotNullError',
             'jobNotNullErrorMail' : 'set adresse of designer',
             'jobNotNullErrorMailNotValid' : 'Adresse de designer not valid',
-            'shippingNotNullError' : 'shippingNotNullError'
-
+            'shippingNotNullError' : 'shippingNotNullError',
+            'mustConnectedError' : 'Pour activer votre code de réduction, cliquez sur ‘votre compte’ et connectez vous. Ensuite, returnez vers ‘votre panier’.',
+            'invalidDiscountCode' : 'Sorry, this coupon code was already used or not validated',
+            'cartIsEmpty' : 'Votre panier est vide.',
+            'continue' : 'Continuer les achats'
         }
         
     };

@@ -11,13 +11,13 @@ define([
             this.config = require("config");
             this.model = model;
             this.render();
-            this.model.on("change",this.render,this);
+            this.model.on("change",this.render, this);
         },
         render : function(message){
-            this.setElement(this.template({
-                "message" : message
-            }));
 
+            this.setElement(this.template({
+                "message" : _.isObject(message) ? null : message
+            }));
 
             $(this.config.errorBox).html(this.$el);
         }

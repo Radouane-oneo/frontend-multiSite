@@ -3,8 +3,9 @@ define([
     'text!../templates/jobFull.html',
     'text!../templates/jobEmpty.html',
     'text!../templates/price.html',
+    'text!../templates/jobTemplate.html',
     '../helpers/ajaxCaller'
-], function (Backbone, jobFull, jobEmpty, priceTemplate, ajaxCaller){
+], function (Backbone, jobFull, jobEmpty, priceTemplate, detailtsTechnic, ajaxCaller){
 
 	return Backbone.View.extend({
 		events: {
@@ -13,9 +14,11 @@ define([
 			'click .deletedesign' : 'deleteOrderDesign',
 			'click .removecontrol' : 'deleteControlePro',
 			'blur .refjobTxt' : 'changeRefJob',
-			'blur .inputdesigneremail' : 'designerEmail'
+			'blur .inputdesigneremail' : 'designerEmail',
+			'click .technic-details' : 'showDetailTechnics'
 		},
 		initialize: function(model) {
+			this.filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 			this.config = require("config");
             this.model = model;
 	        this.render();
@@ -23,7 +26,7 @@ define([
 	    },
 
 	    render: function() {
-	    	console.log('render');
+	    	console.log('79845')
 	    	var _this = this;
             var content = "";
             _.each(this.model.toJSON().orderItems, function(item, i){
@@ -52,6 +55,7 @@ define([
 	    },
 
 	    swithcJobEmpty : function(e){
+	    	var _this = this;
 	    	jobItemEvent = $(e.currentTarget).parents('.job-item-event');
 	    	if (e.currentTarget.checked) {
 	    		jobItemEvent.find('.prodactTemplates').hide();
@@ -62,8 +66,15 @@ define([
 	    		jobItemEvent.find('.inputdesigner').hide();
 
 	    		//set email designer to empty
-	    		/*orderitem = jobItemEvent.parents('.orderBox').data('orderitem');
-	    		this.setDesignerEmailToModel(orderitem, '');*/
+	    		orderitem = jobItemEvent.parents('.orderBox').data('orderitem');
+	    		ajaxCaller.call("setMailDeisigner",{
+	    			'id':orderitem,
+	    			'email': null
+	    		},'POST').done(function(result){
+	                if (result.code == '200') {
+	                	_this.setDesignerEmailToModel(orderitem, null);
+	                };
+	            });
 	    	}
 	    },
 	    deleteOrder : function(e){
@@ -74,7 +85,7 @@ define([
 	    	// remove job
             ajaxCaller.call("deleteJob",{}, 'GET', orderitem).done(function(result){
                 if (result.code == '200') {
-                	_this.deleteOrderFromMdel(orderitem);
+                	_this.deleteOrderFromMdel(orderitem, result);
                 };
             });
 
@@ -83,14 +94,16 @@ define([
             });
 
 	    },
-	    deleteOrderFromMdel : function(jobID){
-	    	var orderItems = jQuery.extend(true, [], this.model.attributes.orderItems);
+	    deleteOrderFromMdel : function(jobID, data){
+	    	var myModel = jQuery.extend(true, [], this.model);
+	    	orderItems = myModel.attributes.orderItems;
 	    	for (var i = 0; i< orderItems.length; i++) {
 	    		if ( orderItems[i].id== jobID) {
 	    			orderItems.splice(i, 1);
+	    			myModel.attributes.discountItems = data.data.discountItems;
 	    		};
 	    	};
-	    	this.model.set("orderItems", orderItems);
+	    	this.model.set({"orderItems": orderItems,"discountItems":  myModel.attributes.discountItems});
 	    },
 	    deleteOrderDesign : function(e){
 	    	var _this = this;
@@ -99,20 +112,22 @@ define([
 	    	// remove job
             ajaxCaller.call("deleteJobDesign",{}, 'GET', orderitem).done(function(result){
                 if (result.code == '200') {
-                	_this.deleteFileFromData(orderitem);
+                	_this.deleteFileFromData(orderitem, result);
                 };
             });
 	    },
-	    deleteFileFromData : function(jobID){
-	    	var orderItems = jQuery.extend(true, [], this.model.attributes.orderItems);
+	    deleteFileFromData : function(jobID, data){
+	    	var myModel = jQuery.extend(true, [], this.model);
+	    	orderItems = myModel.attributes.orderItems;
 	    	for (var i = 0; i< orderItems.length; i++) {
 	    		if (orderItems[i].id== jobID) {
 	    			orderItems[i].files = [];
 	    			orderItems[i].fotoliaItems = [];
 	    			orderItems[i].fileCheck = {};
+	    			myModel.attributes.discountItems = data.data.discountItems;
 	    		};
 	    	};
-	    	this.model.set("orderItems", orderItems);
+	    	this.model.set({"orderItems": orderItems,"discountItems":  myModel.attributes.discountItems});
 	    },
 	    deleteControlePro : function(e){
 	    	var _this = this;
@@ -121,7 +136,7 @@ define([
 	    	// remove job
             ajaxCaller.call("deleteFileCheck",{}, 'GET', orderitem).done(function(result){
                 if (result.code == '200') {
-                	_this.deleteFileCheckFromData(orderitem);
+                	_this.deleteFileCheckFromData(orderitem, result);
                 };
             });
 
@@ -129,14 +144,16 @@ define([
             	$(this).remove();
             });
 	    },
-	    deleteFileCheckFromData : function(jobID){
-	    	var orderItems = jQuery.extend(true, [], this.model.attributes.orderItems);
+	    deleteFileCheckFromData : function(jobID, data){
+	    	var myModel = jQuery.extend(true, [], this.model);
+	    	orderItems = myModel.attributes.orderItems;
 	    	for (var i = 0; i< orderItems.length; i++) {
 	    		if ( orderItems[i].id== jobID) {
 	    			orderItems[i].fileCheck = {};
+	    			myModel.attributes.discountItems = data.data.discountItems;
 	    		};
 	    	};
-	    	this.model.set("orderItems", orderItems);
+	    	this.model.set({"orderItems": orderItems,"discountItems":  myModel.attributes.discountItems});
 	    },
 	    changeRefJob : function(e){
 	    	var value = $(e.currentTarget).val();
@@ -167,9 +184,7 @@ define([
 	    },
 	    designerEmail : function(e){
 	    	var value = $(e.currentTarget).val();
-	    	filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-	    	if (value !='' && filter.test(value)) {
-	    		console.log('mail valid');
+	    	if (value !='' && this.filter.test(value)) {
 	    		var _this = this;
 	    		elmTarget = $(e.currentTarget);
 	    		orderitem = elmTarget.parents('.orderBox').data('orderitem');
@@ -206,8 +221,43 @@ define([
                 modal: false
             });
 	    },
+	    showDetailTechnics : function(e){
+	    	var template = _.template(detailtsTechnic);
+	    	orderId = $(e.currentTarget).data('orderitem');
+	    	orderItems = this.model.attributes.orderItems;
+	    	for (var i = 0; i< orderItems.length; i++) {
+	    		if ( orderItems[i].id== orderId) {
+	    			orderItem = orderItems[i];
+	    		};
+	    	};
+
+	    	tpl = template({
+                "model" : orderItem,
+                "config" : this.config
+            });
+
+            $(this.config.detailTechnic).html(tpl);
+            $('#technic-details').show();
+	    	e.preventDefault();
+	    },
         errors : function(){
-            return this.config.labels['jobNotNullError'];
+        	var orderItems = this.model.attributes.orderItems;
+        	for (var i = 0; i< orderItems.length; i++) {
+        		var checkBox = $(this.config.jobBox).find('.orderBox[data-orderitem="'+orderItems[i].id+'"]').find('.checkbox-event input[type="checkbox"]');
+	    		if (checkBox.is(':checked')) {
+	    			if (checkBox.val() == "") {
+	    				return this.config.labels['jobNotNullErrorMail'];
+	    			}
+
+	    			if (!this.filter.test(checkBox.val())) {
+	    				return this.config.labels['jobNotNullErrorMailNotValid'];
+	    			}
+
+				}else if(orderItems[i].files.length<= 0){
+					return this.config.labels['jobNotNullError'];
+				}
+	    	};
+	    	return false;
         }
 	});
 

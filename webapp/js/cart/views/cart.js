@@ -20,7 +20,7 @@ define([
             this.model = new cartModel(this.config.cart);
             this.render();
 
-            if(this.model.get("id")) {
+            if(this.model.get("id") && this.model.get("orderItems").length > 0) {
                 //error View
                 this.errorView = new errorView(this.model);
 

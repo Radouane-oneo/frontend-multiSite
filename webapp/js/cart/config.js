@@ -19,13 +19,9 @@ define([
         shipping : $.parseJSON(shippingJSON).data,
         vat : GlobalVat,
         prefix : GlobalPrefix,
-<<<<<<< HEAD
         isConnected : GlobalPrefix,
         langId : '10',
         designtoolLink : 'http://designtool.prd.printconcept.com',
-=======
-        isConnected : isConnected,
->>>>>>> 6adaafaee7c438205167116459e4eec3bda17e62
         labels : {
             "formatBrut" : "Format brut",
             "formatFini" : "Format fini",

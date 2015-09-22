@@ -26,7 +26,6 @@ define([
 	    },
 
 	    render: function() {
-	    	console.log('79845')
 	    	var _this = this;
             var content = "";
             _.each(this.model.toJSON().orderItems, function(item, i){
@@ -245,7 +244,7 @@ define([
         	for (var i = 0; i< orderItems.length; i++) {
         		var checkBox = $(this.config.jobBox).find('.orderBox[data-orderitem="'+orderItems[i].id+'"]').find('.checkbox-event input[type="checkbox"]');
 	    		if (checkBox.is(':checked')) {
-	    			if (checkBox.val() == "") {
+	    			if (checkBox.val() == "" || checkBox.val() ==null) {
 	    				return this.config.labels['jobNotNullErrorMail'];
 	    			}
 

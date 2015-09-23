@@ -476,8 +476,9 @@ border-radius: 0;
   font-size: 15px;
   color: #666666;
   text-transform: uppercase;
-  background: url(images/bg_title.png) repeat-x 0 0;
+  /*background: url(images/bg_title.png) repeat-x 0 0;*/
   text-align: center;
+  display: none;
 }
 
 .visu .text {
@@ -696,17 +697,20 @@ table.targetPrice tbody tr.last-child td { border:none; }
 
 .poll-form .designtool.iframe {
   display: inline-block;
-  padding: 5px 30px;
-  background-color: #FF6600;
-  color: #fff;
+  background-color: #6fa900;
   border-radius: 3px;
-  text-align: left;
-  font-size: 14px;
+  text-align: center;
+  width: 267px;
+  height: 40px;
+  line-height: 40px;
+  box-sizing: border-box;
+  font-weight: normal;
+  text-transform: none;
 }
 
 .options-file-impression li {
-  background: url(images/3.png) no-repeat left 6px;
-  padding-left: 16px!important;
+  background: url(images/bg_btns.png) no-repeat -3px -100px;
+  padding-left: 20px!important;
   text-align: left;
   font-size: 11px;
 }
@@ -759,8 +763,8 @@ div#edit-linkcart a {
   display: inline-block;
   float: left;
   padding-left: 10px;
-  border-right: 1px solid #e6e6e6;
-  border-left: 1px solid #f9f9f9;
+  border-right: 1px solid #d1d1d1;
+  /*border-left: 1px solid #f9f9f9;*/
   width: 300px;
 }
 

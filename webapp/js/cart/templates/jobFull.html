@@ -1,6 +1,16 @@
 <fieldset class="items cartItemsContainer form-wrapper orderBox" data-orderItem="<%= model.id %>">
 	<div class="fieldset-wrapper">
 		<div class="item job clearfix form-wrapper">
+			<div class="refJob-code">
+				<div class="form-item">
+					<label for=""><%= config.labels["refjob"] %></label>
+					<input class="refjobTxt" type="text" id="edit-cart-items-1572303-files-description-refjob" name="cart[items][1572303][files][description][refJob]" value="<%= model.refJob %>" size="20" maxlength="25">
+				</div>
+
+				<div class="items_actions">
+					<span data-orderItem="<%= model.id %>" class="removecart"></span>
+				</div>
+			</div>
 			<div class="image form-wrapper">
 				<img src="https://dt-printconcept-production.s3.amazonaws.com/<%= model.files[0].thumbnail %>">
 			</div>
@@ -25,17 +35,6 @@
 						<% } %>
 
 						</ul>
-					</div>
-
-					<div class="refJob-code">
-						<div class="form-item">
-							<label for=""><%= config.labels["refjob"] %></label>
-							<input class="refjobTxt" type="text" id="edit-cart-items-1572303-files-description-refjob" name="cart[items][1572303][files][description][refJob]" value="<%= model.refJob %>" size="20" maxlength="25">
-						</div>
-					</div>
-
-					<div class="items_actions">
-						<span data-orderItem="<%= model.id %>" class="removecart"></span>
 					</div>
 
 				</div>

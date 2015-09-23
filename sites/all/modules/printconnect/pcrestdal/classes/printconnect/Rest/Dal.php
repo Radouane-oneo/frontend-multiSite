@@ -227,8 +227,8 @@ use printconnect\Dal\ForbiddenException;
 
         return $data;
       } else {
-        var_dump("Error", $response->data, $url, $data);die;
-        throw new Exception('POST ' . $url, $data, $this->ReadErrorInformation($response));
+            var_dump("Error", $response->data, $url, $data);die;
+            throw new Exception('POST ' . $url, $data, $this->ReadErrorInformation($response));
       }
 //     if($entity == "order-discount-code"){
 //        $_SESSION['data']=$data;

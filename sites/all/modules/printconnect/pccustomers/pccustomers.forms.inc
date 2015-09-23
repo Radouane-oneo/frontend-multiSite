@@ -77,7 +77,7 @@ function pccustomers_addresses_form($form, $form_state) {
   
     $form['items'] = array(
       '#type' => 'item',
-      '#title' => t('My Billing Address'),
+      '#title' => t('My Billing Address list'),
       '#prefix' => '<h1>',
       '#suffix' => '</h1>', 
     );
@@ -674,14 +674,7 @@ function pccustomers_newaddress_form($form, $form_state) {
 
   $form['name'] = array(
       '#type' => 'textfield',
-      '#title' => t('Name & LastName'),
-      '#required' => TRUE,
-      '#size' => 71,
-  );
-
-  $form['lastname'] = array(
-      '#type' => 'textfield',
-      '#title' => t(''),
+      '#title' => t('Name'),
       '#required' => TRUE,
       '#size' => 71,
   );

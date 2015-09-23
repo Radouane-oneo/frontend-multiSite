@@ -1,7 +1,7 @@
 <form action="/panier" method="post" id="pccart-cart-form" accept-charset="UTF-8">
 	<div>
 		<div class="cart clearfix form-wrapper" id="edit-cart">
-            <% if(!model.id) { %>
+            <% if(!model.id || model.orderItems.length == 0) { %>
             <div class="form-item form-type-item">
                 <%= config.labels['cartIsEmpty'] %>
             </div>

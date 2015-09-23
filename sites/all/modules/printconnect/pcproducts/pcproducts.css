@@ -1,4 +1,4 @@
-.page-segments .list-segment li,.block-pctemplates ul li,.view-best-sales ul li,#pcproducts-products-form ul li, #pcproducts-productoverview-form ul li, #pcproducts-productconfig-form .other li, #block-pcproducts-other li{
+.block-pctemplates ul li,.view-best-sales ul li,#pcproducts-products-form ul li, #pcproducts-productoverview-form ul li, #pcproducts-productconfig-form .other li, #block-pcproducts-other li{
   float:left;
   width:212px;
   margin: 0 10px 10px 0; 
@@ -12,7 +12,20 @@
   -moz-box-sizing: border-box;    /* Firefox, other Gecko */
   box-sizing: border-box;         /* Opera/IE 8+ */
 }
- 
+ .page-segments .list-segment li,.block-pctemplates ul li{
+  float:left;
+  width:206px;
+  margin: 0 10px 10px 0; 
+  list-style:none;
+  padding:0;
+  border: 1px solid #ececec;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;         /* Opera/IE 8+ */
+}
 .page-products .all-products .item-list .clearfix .right-item ,.view-best-sales ul li.views-row-3 , .view-best-sales ul  li.views-row-6,.block-pctemplates ul li.block-pctemplates-row-3{
   margin-right: 0 !important;
 }

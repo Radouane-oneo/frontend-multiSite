@@ -133,7 +133,7 @@ $build['text'] = array(
                     }
                   }
                 }
-                $build['content']['nosmodel']= array('#markup' => "<div class='block-pctemplates'><div class='nosmodel'><span>Personnalisez un modèle</span><a href='".base_path()."créations-en-ligne'>Tous nos modèles GRATUITS</a></div>");
+                $build['content']['nosmodel']= array('#markup' => "<div class='block-pctemplates'><div class='nosmodel'><span>".t('title modele')."</span><a href='/templates'>".t('link modele')."</a></div>");
                 $build['content']['startul']= array('#markup' => "<div id='SliderCreaHomePage'><ul>");
                 $i=0; 
                 $blockrow=0;
@@ -143,8 +143,8 @@ $build['text'] = array(
                 $build['content']['contentlink1'.$i] = array('#markup' =>'<a id="top10Template_'.$i.'" href="'.$GLOBALS['base_url'].'/templates/' . $valueItems["id"] . '">'); 
                 $build['content']['thumb'.$i] = array('#markup' => theme('pcfilesthumb', array('file' => $valueItems["thumbnail"], 'alt' => array('#markup'=>$valueItems->name),'attributes' => array('width' => '194', 'height' => '194'),))); 
                 $build['content']['name'.$i] = array('#markup' => "<h2>". $valueItems["productsname"] ."</h2></a></div>",); 
-                $build['content']['productName'.$i] = array('#markup' =>'<div class="from"><span class="txt">'.$valueItems["name"].'</span></div>');
-                $build['content']['link'.$i] = array('#markup' =>'<a class="btn-cmd" href="'.$GLOBALS['base_url'].'/templates/'.$valueItems["id"].'"><span class="flesh"></span>Utiliser ce modèle</a>');
+                //$build['content']['productName'.$i] = array('#markup' =>'<div class="from"><span class="txt">'.$valueItems["name"].'</span></div>');
+                $build['content']['link'.$i] = array('#markup' =>'<a class="btn-cmd" href="'.$GLOBALS['base_url'].'/templates/'.$valueItems["id"].'"><span class="flesh"></span>'.t("use this modele").'</a>');
                 $build['content']['contentitem2'.$i]= array('#markup' => "</li>"); $i++; } 
                 $build['content']['endul']= array('#markup' => "</ul></div></div>");
   }

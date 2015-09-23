@@ -92,7 +92,7 @@ function pcdesigns_saveddesigns_form($form, $form_state) {
             '#attributes' => array('class' => array('details')),
             'product' => array(
                 '#type' => 'item',              
-                '#markup' => '<h2>' .$design->quantity . ' ' . t('pcs.') . ' ' . $product->name . '</h2>',
+                '#markup' => '<h2 class="productName boldtxt">' .$design->quantity . ' ' . t('pcs.') . ' ' . $product->name . '</h2>',
             ), 
             'items' => array(
                 '#attributes' => array('class' => array('itemsdesign')),
@@ -100,7 +100,7 @@ function pcdesigns_saveddesigns_form($form, $form_state) {
                 '#items' => $list,
             ),
 
-            'updated' => array(
+            'updated' => array( 
                 '#type' => 'item',
                 '#title' => t('Last edited').' :',
                 '#markup' =>  format_date($design->lastEdited),

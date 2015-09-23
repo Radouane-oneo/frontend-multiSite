@@ -30,6 +30,19 @@
     padding: 10px 8px;
     min-height: 214px;
 }
+#pcdesigns-saveddesigns-form .details>.form-item{
+    margin-bottom: 0;
+}
+#pcdesigns-saveddesigns-form .details>div.item-list{
+    margin-bottom: 44px;
+}
+#pcdesigns-saveddesigns-form .details .itemsdesign li{
+    margin: 0;
+}
+#pcdesigns-saveddesigns-form .details h2,#pcdesigns-saveddesigns-form .details .itemsdesign li label,#pcdesigns-saveddesigns-form .details div.form-item> label{
+    font-size: 14px;
+    font-weight: 700;
+}
 #pcdesigns-saveddesigns-form input.delete {
   position: absolute;
   top: 7px;

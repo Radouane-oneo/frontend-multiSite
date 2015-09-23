@@ -1,26 +1,59 @@
 #pcdesigns-saveddesigns-form  .fieldset-wrapper > div.design  {
     background-color: #F1F1F1;
-    border-radius: 5px;
-    padding: 5px;
-    margin-bottom: 10px;
-    height: 150px;
-    border-bottom: none !important;
+    margin-bottom: 0;
+    border-bottom: 1px solid #d2d2d2 !important;
     position: relative;
+    padding-bottom: 0;
 }
+#pcdesigns-saveddesigns-form  .fieldset-wrapper > div.design:after{
+    display: block;
+    clear: both;
+    content: '';
+    width: 100%;
+}
+
+#pcdesigns-saveddesigns-form .image{
+    margin-right: 0;
+    padding: 10px 8px;
+    border-right: 1px solid #d2d2d2;
+    height: 214px;
+}
+
 #pcdesigns-saveddesigns-form .image img {
-    height: 132px;
-    width: 132px;
+    height: 214px;
+    width: 150px;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    border-radius: 4px 4px 4px 4px;
+}
+
+#pcdesigns-saveddesigns-form .details{
+    padding: 10px 8px;
+    min-height: 214px;
+}
+#pcdesigns-saveddesigns-form .details>.form-item{
+    margin-bottom: 0;
+}
+#pcdesigns-saveddesigns-form .details>div.item-list{
+    margin-bottom: 44px;
+}
+#pcdesigns-saveddesigns-form .details .itemsdesign li{
+    margin: 0;
+}
+#pcdesigns-saveddesigns-form .details h2,#pcdesigns-saveddesigns-form .details .itemsdesign li label,#pcdesigns-saveddesigns-form .details div.form-item> label{
+    font-size: 14px;
+    font-weight: 700;
 }
 #pcdesigns-saveddesigns-form input.delete {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-image: url("../../../../all/themes/printconnect/flyer/css/images/delete.png") !important;
-    width: 24px;
-    height: 24px;      
+  position: absolute;
+  top: 7px;
+  right: 5px;
+  background-image: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/Develop/Delete.png") !important;
+  width: 17px;
+  height: 17px;
+  background-repeat: no-repeat;      
 }
 #pcdesigns-saveddesigns-form input.delete:hover {
-    background-position-y: 24px;
+    background-position-y: -19px;
 }
 #pcdesigns-saveddesigns-form legend span {
     font-size: 15px;
@@ -28,14 +61,38 @@
 }
 #pcdesigns-saveddesigns-form .fieldset-wrapper {
     padding: 0px !important;
+    background-color: #f1f1f1;
+    border: 1px solid #d1d1d1;
+    overflow: hidden;
 }
 #pcdesigns-saveddesigns-form a.designtool span {
      background: none !important;
 }
-#pcdesigns-saveddesigns-form a.designtool {
-     background-image: url("../../../../all/themes/printconnect/flyer/css/images/button_request.png") !important;
-     background-repeat: no-repeat;
-     background-position: left;
+#pcdesigns-saveddesigns-form a.designtool {      
+    background-color: #6fa900;
+    padding: 8px 57px 10px;
+    color: #fff;
+    font-size: 14px;
+    line-height: normal;
+    text-transform: capitalize;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    border-radius: 4px 4px 4px 4px;
+    text-decoration: none;
+    position: absolute;
+    bottom: 11px;
+    -webkit-transition: background 0.5s ease;
+    -moz-transition: background 0.5s ease;
+    -ms-transition: background 0.5s ease;
+    -o-transition: background 0.5s ease;
+    transition: background 0.5s ease;
+}
+#pcdesigns-saveddesigns-form a.designtool:hover{
+    background-color: #659606;
+    -webkit-transition: background 0.5s ease;
+    -moz-transition: background 0.5s ease;
+    -ms-transition: background 0.5s ease;
+    -o-transition: background 0.5s ease;
+    transition: background 0.5s ease;
 }
 #pcdesigns-saveddesigns-form .button{
     min-width: 120px;

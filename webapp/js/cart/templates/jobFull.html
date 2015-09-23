@@ -1,4 +1,4 @@
-<fieldset class="items cartItemsContainer form-wrapper orderBox">
+<fieldset class="items cartItemsContainer form-wrapper orderBox" data-orderItem="<%= model.id %>">
 	<div class="fieldset-wrapper">
 		<div class="item job clearfix form-wrapper">
 			<div class="image form-wrapper">
@@ -17,13 +17,20 @@
 								<li class="<%= (i == 1)?'first':'' %> <%= (i == model.configuration.config.length-1)?'last':'' %>"><label><%= model.configuration.config[i].groupName %>:</label>  <%= model.configuration.config[i].name %> </li>
 							<% } %>
 						<% }); %>
+
+						<% if(model.options.length>0) { %>
+							<% _.each(model.options, function(option, i){ %>
+								<li class="<%= (i == model.options.length-1)?'last':'' %>"> <%= option.optionName %> </li>
+							<% }); %>
+						<% } %>
+
 						</ul>
 					</div>
 
 					<div class="refJob-code">
 						<div class="form-item">
 							<label for=""><%= config.labels["refjob"] %></label>
-							<input class="hint form-text refjobTxt form-text" orderitem="1572303" type="text" id="edit-cart-items-1572303-files-description-refjob" name="cart[items][1572303][files][description][refJob]" value="<%= model.refJob %>" size="20" maxlength="25">
+							<input class="refjobTxt" type="text" id="edit-cart-items-1572303-files-description-refjob" name="cart[items][1572303][files][description][refJob]" value="<%= model.refJob %>" size="20" maxlength="25">
 						</div>
 					</div>
 
@@ -36,15 +43,15 @@
 			
 			<div class="btns-box">
 				<div class="preview">
-					<a href="http://designtool.new.prd.flyer.fr/job/preview/rg/1/id/1051135/lang/fr_FR_1_1348063973/impkey/printconcept" target="blank" class="previewlink"><%= config.labels["previsualis"] %></a>
+					<a href="<%= config.designtoolLink %><%= model.configuration.designtoolPreviewLink %>" target="blank" class="previewlink"><%= config.labels["previsualis"] %></a>
 				</div>
 
 				<div class="preview">
-					<a href="http://designtool.new.prd.flyer.fr/designtool/index/resize/1/p/5/order_opts//l/fr_FR_1_1348063973/shop/23/rc/ribbons_design/impkey/printconcept?options=&amp;vat=&amp;dcb=http%253A%252F%252Fwww.flyer.fr%252Fdesigntool%252Fcallback&amp;title=Flyers%20/%20Tracts%20A7%20&amp;style=http%3A//www.flyer.fr/sites/all/themes/printconnect/flyer/css/designtool.css&amp;id=1572303&amp;vs=1&amp;shop_apikey=829dc7b162f77ed761be6cac0ae8782c0ee1866b&amp;cartid=727641&amp;j=1051135&amp;currencyPreflight=%E2%82%AC&amp;pricePreflight=4%2C99" class="designtool iframe reupload designtool iframe"><%= config.labels["updatePage"] %></a>
+					<a href="<%= config.designtoolLink %><%= model.configuration.designtoolLink %>" class="designtool iframe fancybox.iframe"><%= config.labels["updatePage"] %></a>
 				</div>
 
 				<div class="preview">
-					<input class="delete_item deletedesign form-submit ui-button ui-widget ui-state-default ui-corner-all" itemfileid="1572303" type="submit" id="edit-cart-items-1572303-files-remove" name="delete_item_1572303" value="<%= config.labels["deleteOrder"] %>" role="button">
+					<span data-orderItem="<%= model.id %>" class="delete_item deletedesign"><%= config.labels["deleteOrder"] %></span>
 				</div>
 			</div>
 
@@ -56,7 +63,7 @@
 						<h3><%= config.labels.controleProfessionel %> </h3>
 						<%= priceTpl({price:model.fileCheck.price,classToAdd:'price'}) %>
 					</div>
-					<a href="/%23" class="removecontrol noreplace" rel="1574652"></a>
+					<span data-orderItem="<%= model.id %>" class="removecontrol" ></span>
 				</div>
 				<!-- END Controle professionel -->
 			<% } %>

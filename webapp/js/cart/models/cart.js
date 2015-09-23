@@ -25,9 +25,9 @@ define([
                 if(orderItem.fileCheck.price)
                     subTotalAmount += parseFloat(orderItem.fileCheck.price);
             });
-            /*_.each(this.get("discountItems"), function(discountItem){
+            _.each(this.get("discountItems"), function(discountItem){
                 subTotalAmount += parseFloat(discountItem.price);
-            });*/
+            });
             if(this.get("orderItemShipping").price)
                 subTotalAmount += parseFloat(this.get("orderItemShipping").price);
             return subTotalAmount;

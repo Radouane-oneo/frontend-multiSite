@@ -3,16 +3,35 @@ define([
     'text!/' + GlobalPrefix + '/cart/ajax/getcart',
     'text!/' + GlobalPrefix + '/cart/ajax/getshippingtypes'
 ], function (Backbone, cartJSON, shippingJSON) {
+    var parsedJSON = "";
+    try {
+        parsedJSON = $.parseJSON(cartJSON);
+    } catch (e) {
+        parsedJSON = {};
+    }
     return {
         containerId : '#myCart',
+        errorBox : '#errorBox',
         jobBox : '#jobBox',
+        detailTechnic : '#technic-details',
         bottomBox : '#bottomBox',
-        cart : $.parseJSON(cartJSON),
+        cart : parsedJSON,
         shipping : $.parseJSON(shippingJSON).data,
         vat : GlobalVat,
         prefix : GlobalPrefix,
         isConnected : GlobalPrefix,
+        langId : '10',
+        designtoolLink : 'http://designtool.prd.printconcept.com',
         labels : {
+            "formatBrut" : "Format brut",
+            "formatFini" : "Format fini",
+            "bleed" : "Débords",
+            "color" : "Couleur",
+            "resolution" : "Résolution",
+            "downloadTemplateText" : "Téléchargez les gabarits pour ce format",
+            "formatToProvide" : "Format à fournir",
+            "technicalDetails" : "DÉTAILS TECHNIQUES",
+            "technicalDescription" : "Vous devez préparer vos fichiers pour l'impression ? Le type de fichier idéal est JPG ou PDF/X-1a:2001",
             "shipping" : "Livraison",
             "chooseFlyerStore" : "Choisissez votre FlyerStore",
             "chooseBpostPickupPoint" : "Choisissez votre point de relais",
@@ -42,7 +61,6 @@ define([
             "chooseOtherBpostPickupPoint" : "Choisissez un autre point poste",
             'downloadDevis' : 'Téléchargez le panier en devis',
             'designtoolTitle' : 'Téléchargez votre fichier ou créez en ligne',
-            'designtoolLink' : 'http://designtool.prd.printconcept.com',
             'dlLinkTitle' : 'DESIGNTOOL',
             'dlLinkSubtitle' : 'Pour tous les clients (recommandé)',
             'dtOptions1' : 'Téléchargez votre fichier dans notre designtool',
@@ -71,8 +89,15 @@ define([
             'updatePage' : 'Modifier la mise en page',
             'deleteOrder' : 'Supprimer',
             'fotoliaImg' :  'Fotolia Image',
-            'controleProfessionel' : 'Contrôle professionel de'
-
+            'controleProfessionel' : 'Contrôle professionel de',
+            'jobNotNullError' : 'jobNotNullError',
+            'jobNotNullErrorMail' : 'set adresse of designer',
+            'jobNotNullErrorMailNotValid' : 'Adresse de designer not valid',
+            'shippingNotNullError' : 'shippingNotNullError',
+            'mustConnectedError' : 'Pour activer votre code de réduction, cliquez sur ‘votre compte’ et connectez vous. Ensuite, returnez vers ‘votre panier’.',
+            'invalidDiscountCode' : 'Sorry, this coupon code was already used or not validated',
+            'cartIsEmpty' : 'Votre panier est vide.',
+            'continue' : 'Continuer les achats'
         }
         
     };

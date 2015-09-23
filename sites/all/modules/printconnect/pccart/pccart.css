@@ -432,7 +432,7 @@ float: right;
   margin-top: -30px;
 }
 
-#pccart-cart-form .preview input,
+#pccart-cart-form .preview span,
 #pccart-cart-form .preview a{
   color: #666666;
   font-size: 13px;
@@ -443,7 +443,7 @@ float: right;
 #pccart-cart-form .preview a.designtool{
   background-position: 0 -55px;
 }
-#pccart-cart-form .preview input.delete_item{
+#pccart-cart-form .preview span.delete_item{
   background-position: 0 -84px;
   border: none;
   padding: 0 0 0 20px;

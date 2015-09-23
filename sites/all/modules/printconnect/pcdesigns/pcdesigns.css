@@ -22,11 +22,13 @@
 #pcdesigns-saveddesigns-form .image img {
     height: 214px;
     width: 150px;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    border-radius: 4px 4px 4px 4px;
 }
 
 #pcdesigns-saveddesigns-form .details{
     padding: 10px 8px;
-    height: 214px;
+    min-height: 214px;
 }
 #pcdesigns-saveddesigns-form input.delete {
   position: absolute;
@@ -55,7 +57,7 @@
 }
 #pcdesigns-saveddesigns-form a.designtool {      
     background-color: #6fa900;
-    padding: 8px 57px;
+    padding: 8px 57px 10px;
     color: #fff;
     font-size: 14px;
     line-height: normal;
@@ -65,6 +67,19 @@
     text-decoration: none;
     position: absolute;
     bottom: 11px;
+    -webkit-transition: background 0.5s ease;
+    -moz-transition: background 0.5s ease;
+    -ms-transition: background 0.5s ease;
+    -o-transition: background 0.5s ease;
+    transition: background 0.5s ease;
+}
+#pcdesigns-saveddesigns-form a.designtool:hover{
+    background-color: #659606;
+    -webkit-transition: background 0.5s ease;
+    -moz-transition: background 0.5s ease;
+    -ms-transition: background 0.5s ease;
+    -o-transition: background 0.5s ease;
+    transition: background 0.5s ease;
 }
 #pcdesigns-saveddesigns-form .button{
     min-width: 120px;

@@ -7903,13 +7903,13 @@ div.myoffers table.list thead tr th:nth-child(2){
 	background-color: #ff6600;
 }
 
-.block.nos-avantages .content a{
+/*.block.nos-avantages .content a{
 	text-decoration: none;
 	color: #646464;
 	display: block;
 	padding-left: 30px;
 	background: url(images/sprite_icons.png) no-repeat 0 -134px;
-}
+}*/
 .block.nos-avantages ul{
 	list-style: none;
 	margin: 0;
@@ -8012,7 +8012,8 @@ div.myoffers table.list thead tr th:nth-child(2){
 .view-best-sales .headproduct > h2{
 	float: left;
 	font-size: 16px;
-	font-weight: 600;
+	font-weight: 600;*
+        text-transform: uppercase;
 }
 
 .block-pctemplates .nosmodel > a,

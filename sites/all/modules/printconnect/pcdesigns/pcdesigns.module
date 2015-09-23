@@ -39,6 +39,20 @@ function pcdesigns_saveddesigns_form($form, $form_state) {
     $priceGroup = $design->priceGroup->id;
 
     $product = $design->priceGroup->product;
+   // $configs = $design->configuration->config;
+    
+    $list = array();
+    foreach($configs as $config) {
+        $list[] = '<label>' . $config->groupName . ':</label>  ' . $config->name;
+    }
+    $list[] = '<label>Couleurs et impression:</label>  Recto/verso';
+     $list[] = '<label>Couleurs et impression:</label>  Recto/verso';
+    if (count($design->options) > 0) {
+        foreach ($design->options as $option) {
+            //$itemValue += $option->price;
+            $list[] = $option->optionName;
+        }
+    }
 
     $form['designs'][$design->id] = array(
         '#type' => 'container',
@@ -72,48 +86,26 @@ function pcdesigns_saveddesigns_form($form, $form_state) {
              */
             ),
         ),
+        
         'details' => array(
             '#type' => 'container',
             '#attributes' => array('class' => array('details')),
             'product' => array(
-                '#type' => 'item',
-                '#title' => strtoupper(t('Chosen Product')).' :',
-                '#markup' => '<h2>' . $product->name . '</h2>',
-            ), /*
-              'quantity' => array(
-              '#type' => 'item',
-              '#title' => t('Quantity'),
-              '#markup' => $design->quantity,
-              ),
-              'job' => array(
-              '#type' => 'item',
-              '#title' => t('Job'),
-              '#markup' => $design->jobId,
-              ), */
+                '#type' => 'item',              
+                '#markup' => '<h2>' .$design->quantity . ' ' . t('pcs.') . ' ' . $product->name . '</h2>',
+            ), 
+            'items' => array(
+                '#attributes' => array('class' => array('itemsdesign')),
+                '#theme' => 'item_list',
+                '#items' => $list,
+            ),
+
             'updated' => array(
                 '#type' => 'item',
                 '#title' => t('Last edited').' :',
                 '#markup' =>  format_date($design->lastEdited),
             ),
-            /*
-              'link' => array(
-              '#markup' => theme('designtoollink', array(
-              'savedDesignId' => $design->id,
-              'jobId' => $design->jobId,
-              'title' => $product->name,
-              'content' => t('Customize your') . ' ' . strtolower($product->name),
-              'ribbons' => 'design',
-              'oi' => array(
-              'priceGroupId' => $design->priceGroup->id,
-              'quantity' => $design->quantity,
-              'options' => $design->options,
-              ),
-              // 'callback' => 'templates/callback/order',
-
-              'versioning' => TRUE,
-              'attributes' => array('class' => array('button', 'action')),
-              )),
-              ), */
+        
             'order' => array(
                 '#attributes' => array('class' => array('order')),
                 '#type' => 'submit',

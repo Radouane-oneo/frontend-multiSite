@@ -18,16 +18,16 @@
 <% if(model.discountItems.length > 0){ %>
     <div class="jsDiscount">
         <div id="fieldsetjsDiscount">
-            <fieldset id="edit-cart-discounts" class="discounts item form-wrappersss">
+            <fieldset id="edit-cart-discounts" class="discounts form-wrappers">
                 <legend><span class="fieldset-legend"><%= config.labels['discountsCode'] %></span></legend>
                 <div class="fieldset-wrapper">
                     <% _.each(model.discountItems, function(discountsData){ %>
                         <div class="form-wrapper discount-code-wrapper">
                             <div class="description form-wrapper">
                                 <%= priceTpl({price:discountsData.price,classToAdd:'price'}) %>
-                                <a href="#" id="delete-discount" data-code="<%= discountsData.code %>">Supprimer</a>
-                                <div class="form-wrapper"><%= config.labels['useCode'] %> : <span id="discountCodeVal"><%= discountsData.code %></span></div>
-                                <div class="form-wrapper">
+                                <a href="#" id="delete-discount" data-code="<%= discountsData.code %>"></a>
+                                <div class="form-wrapper discounTop"><%= config.labels['useCode'] %> : <span id="discountCodeVal"><%= discountsData.code %></span></div>
+                                <div class="form-wrapper discounBottom">
                                     <%= discountsData.description %>
                                 </div>
                             </div>

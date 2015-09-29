@@ -6,11 +6,21 @@ define([
     var billingAccountList = "";
     var vat = GlobalVat;
     var CountriesList = "";
+    var defaultBA = null;
     try {
         billingAccountList = $.parseJSON(BillingJSON);
+        billingAccountList = billingAccountList.data;
         CountriesList = $.parseJSON(CountriesListJson);
-        console.log(billingAccountList);
-        vat = parsedJSON.data.vat;
+        vat = billingAccountList.vat;
+        delete billingAccountList.discountCode;
+        delete billingAccountList.vat;
+        $.each(billingAccountList, function(i, billingAccount){
+            console.log(billingAccount);
+            if (billingAccount.isDefault) {
+                defaultBA = billingAccount;
+            }
+        });
+        console.log(defaultBA);
     } catch (e) {
         billingAccountList = {};
         vat = GlobalVat;
@@ -24,6 +34,7 @@ define([
         shippingBox : '#shippingBox',
         neutralBox : '#neutralBox',
         billingAccouts : billingAccountList,
+        defaultBA : defaultBA,
         vat : vat,
         prefix : GlobalPrefix,
         isConnected : GlobalPrefix,

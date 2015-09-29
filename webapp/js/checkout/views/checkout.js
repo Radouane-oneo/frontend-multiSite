@@ -1,12 +1,13 @@
 define([
     'backbone',
     '../models/checkout',
-//    './billing',
+    './billing-detail',
+    './billing-edit',
 //    './neutral',
 //    './shipping',
 //    './Error',
     'text!../templates/checkout.html'
-], function (Backbone, checkoutModel, checkoutTemplate) {
+], function (Backbone, checkoutModel, billingDetailView, billingEditView, checkoutTemplate) {
 
     return Backbone.View.extend({
         template: _.template(checkoutTemplate),
@@ -22,8 +23,10 @@ define([
 //            //error View
 //            this.errorView = new errorView(this.model);
 //
-//            //job View
-//            this.billingView = new billingView(this.model);
+            //billing detail View
+            this.billingDetailView = new billingDetailView(this.model);
+            //billing detail View
+            this.billingEditView = new billingEditView(this.model);
 //
 //            //shipping View
 //            this.shippingView = new shippingView(this.model);
@@ -34,8 +37,6 @@ define([
         },
         render : function(){
             this.setElement(this.template());
-
-
             $(this.config.containerId).html(this.$el);
         },
         changeShipping : function(orderItemShipping){

@@ -7,7 +7,16 @@ use printconnect\Customers\Customer;
 
 class Factory {
 
- public static function Current() {
+  public static function GetCustomerBillingAccounts()
+  {
+      if (isset($_SESSION['customerid'])) {
+          return Dal::SendRequest('billing-account/customer/'. $_SESSION['customerid']);
+      }else {
+          return NULL;
+      }
+  }
+
+  public static function Current() {
     static $current;
     if (empty($current)) {
       try {

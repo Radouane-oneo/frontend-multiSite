@@ -1,5 +1,6 @@
 <?php
 
+use \printconnect\Dal;
 use printconnect\Carts\Factory as CartsFactory;
 use printconnect\Diagnostics\Debug;
 use printconnect\Drupal\Forms;
@@ -125,16 +126,32 @@ function pccheckout_access() {
 }
 
 function pccheckout_menu() {
-    
-    /* order week hook menu*/
-      $items['checkout/invoiceanddelivery'] = array(
-        'page callback' => 'new_checkout_loadpage',
-        'page arguments' => array(),
-        'access arguments' => array('access content'),
-        'type' => MENU_CALLBACK,
+
+      // ===== ORDER WEEK HOOKS ================================================================
+
+      $items['checkout/newinvoiceanddelivery'] = array(
+          'page callback' => 'new_checkout_and_delivery_loadpage',
+          'page arguments' => array(),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
       );
-    /* end new menus*/
-    
+
+      $items['checkout/ajax/getshippingaddresses'] = array(
+          'page callback' => 'new_checkout_ajax_getshippingaddresses',
+          'page arguments' => array(),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+
+      $items['checkout/ajax/getbillingaccounts'] = array(
+          'page callback' => 'new_checkout_ajax_getbillingaccounts',
+          'page arguments' => array(),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+
+      // =======================================================================================
+
       $items['checkout'] = array(
           'title' => 'Checkout',
           'page callback' => 'pccheckout_redirect',
@@ -158,8 +175,6 @@ function pccheckout_menu() {
           'file' => 'pccheckout.forms.inc',
       );
 
-      // to delete
-      /*
       $items['checkout/invoiceanddelivery'] = array(
           'title' => 'Invoice and delivery',
           'page callback' => 'drupal_get_form',
@@ -167,7 +182,7 @@ function pccheckout_menu() {
           'access arguments' => array('access content'),
           'file' => 'pccheckout.forms.inc',
       );
-      */
+      
       $items['checkout/upload'] = array(
           'title' => 'Upload',
           'page callback' => 'drupal_get_form',
@@ -207,6 +222,44 @@ function pccheckout_menu() {
   return $items;
 }
 
+// ================================== ORDER WEEK V3 FUNCTIONS ===================================
+
+function new_checkout_and_delivery_loadpage() {
+     global $language;
+
+    $labels = array(
+      'js_key' => t('drupal_tag'),
+    );
+
+    header('Cache-Control: public, max-age=' . 3600);
+
+
+    $script = "<script type='text/javascript'>
+        var GlobalPrefix = '".$language->prefix."';
+        var GlobalVat = 0.21;
+        var isConnected = " . (isset($_SESSION['customerid']) ? 1 : 0) . ";
+    </script>";
+    
+    $script .= '<link rel="stylesheet" href="/webapp/js/libs/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />';
+    $script .= '<script data-main="/webapp/js/checkout/main" src="/webapp/js/libs/requirejs/require.js"></script>';
+    $script .= '<div id="myCheckout"></div>';
+
+    return $script;
+}
+
+function new_checkout_ajax_getshippingaddresses() {
+    $response = \printconnect\Shipping\Types\Factory::GetCustomerShippingAddresses();
+
+    Dal::BuildJson(json_decode($response->data, 1));
+}
+
+function new_checkout_ajax_getbillingaccounts() {
+    $response = \printconnect\Customers\BillingAccounts\Factory::GetCustomerBillingAccounts();
+
+    Dal::BuildJson(json_decode($response->data, 1)); 
+}
+
+// ==============================================================================================
 
 function _pccheckout_set_callback($value) {
     $cart = Carts\Factory::Current();
@@ -370,30 +423,4 @@ function _pccheckout_vatnumber($value) {
     $country = '';
     return $value;
   }
-}
-
-// ================================== ORDER WEEK V3 FUNCTIONS ===================================
-
-// main function to load cart page
-function new_checkout_loadpage() {
-    global $language;
-
-    $labels = array(
-      'js_key' => t('drupal_tag'),
-    );
-
-    header('Cache-Control: public, max-age=' . 3600);
-
-
-    $script = "<script type='text/javascript'>
-        var GlobalPrefix = '".$language->prefix."';
-        var GlobalVat = 0.21;
-        var isConnected = " . (isset($_SESSION['customerid']) ? 1 : 0) . ";
-    </script>";
-    
-    $script .= '<link rel="stylesheet" href="/webapp/js/libs/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />';
-    $script .= '<script data-main="/webapp/js/checkout/main" src="/webapp/js/libs/requirejs/require.js"></script>';
-    $script .= '<div id="myCheckout"></div>';
-
-    return $script;
 }

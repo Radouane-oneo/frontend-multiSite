@@ -1,0 +1,11 @@
+<fieldset id="edit-cart-reference" class="discount ref form-wrapper">
+    <legend><span class="fieldset-legend"><%= config.labels['customerReference'] %></span></legend>
+    <div class="fieldset-wrapper">
+        <div class="form-item form-type-item" id="edit-cart-reference-text">
+            <%= config.labels['customerReferenceText'] %>
+        </div>
+        <div class="form-item form-type-textfield form-item-cart-reference-input">
+            <input type="text" maxlength="128" size="30" value="<%= model.customerReference %>" id="edit-cart-reference-input"  class="refCustomer form-text" >
+        </div>
+    </div>
+</fieldset>

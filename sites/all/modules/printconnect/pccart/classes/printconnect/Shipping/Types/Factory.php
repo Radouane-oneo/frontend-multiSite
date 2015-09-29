@@ -6,6 +6,15 @@ namespace printconnect\Shipping\Types {
 
   class Factory {
 
+    public static function GetCustomerShippingAddresses()
+    {
+        if (isset($_SESSION['customerid'])) {
+            return Dal::SendRequest('customer-address/customer/'. $_SESSION['customerid']);
+        }else {
+            return NULL;
+        }
+    }
+
     public static function Get($id) {
       return new Type(array('id' => $id));
     }

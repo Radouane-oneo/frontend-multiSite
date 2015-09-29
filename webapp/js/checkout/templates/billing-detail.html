@@ -2,14 +2,14 @@
 	<div>
 		<div class="cart clearfix form-wrapper" id="edit-cart">
             <% if(!model.id || model.orderItems.length == 0) { %>
-            <div class="form-item form-type-item cart-empty">
+            <div class="form-item form-type-item">
                 <%= config.labels['cartIsEmpty'] %>
-                <div class="form-item form-type-item continue-shopping">
-                	<a href="/<%= config.prefix  %>/products"><%= config.labels['continue'] %></a>
-           		</div>
-            </div>            
+            </div>
+            <div class="form-item form-type-item">
+                <a href="/<%= config.prefix  %>/products"><%= config.labels['continue'] %></a>
+            </div>
             <% } %>
-			<!-- <a href="/cart/offer" class="download" target="_blank" title="<%= config.labels['downloadDevis'] %>"><%= config.labels["downloadDevis"] %></a> -->
+			<a href="/cart/offer" class="download" target="_blank" title="<%= config.labels['downloadDevis'] %>"><%= config.labels["downloadDevis"] %></a>
 
             <div id="errorBox">
 

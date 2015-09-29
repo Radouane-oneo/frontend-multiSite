@@ -20,7 +20,7 @@ define([
         vat : GlobalVat,
         prefix : GlobalPrefix,
         isConnected : GlobalPrefix,
-        langId : '10',
+        langId : GlobalLandId,
         designtoolLink : 'http://designtool.prd.printconcept.com',
         labels : GlobalLabels
     };

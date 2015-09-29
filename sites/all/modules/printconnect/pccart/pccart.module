@@ -278,6 +278,7 @@ function new_cart_loadpage() {
 
 
     $script = "<script type='text/javascript'>
+        var GlobalLandId = ".$language->id.";
         var GlobalLabels = ".json_encode($labels).";
         var GlobalPrefix = '".$language->prefix."';
         var GlobalVat = 0.21;

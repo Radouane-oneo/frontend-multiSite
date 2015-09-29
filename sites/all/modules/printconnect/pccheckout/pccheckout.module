@@ -126,6 +126,7 @@ function pccheckout_access() {
 }
 
 function pccheckout_menu() {
+
       // ===== ORDER WEEK HOOKS ================================================================
 
       $items['checkout/newinvoiceanddelivery'] = array(
@@ -174,7 +175,6 @@ function pccheckout_menu() {
           'file' => 'pccheckout.forms.inc',
       );
 
-
       $items['checkout/invoiceanddelivery'] = array(
           'title' => 'Invoice and delivery',
           'page callback' => 'drupal_get_form',
@@ -182,7 +182,7 @@ function pccheckout_menu() {
           'access arguments' => array('access content'),
           'file' => 'pccheckout.forms.inc',
       );
-
+      
       $items['checkout/upload'] = array(
           'title' => 'Upload',
           'page callback' => 'drupal_get_form',
@@ -225,7 +225,7 @@ function pccheckout_menu() {
 // ================================== ORDER WEEK V3 FUNCTIONS ===================================
 
 function new_checkout_and_delivery_loadpage() {
-    global $language;
+     global $language;
 
     $labels = array(
       'js_key' => t('drupal_tag'),
@@ -234,7 +234,15 @@ function new_checkout_and_delivery_loadpage() {
     header('Cache-Control: public, max-age=' . 3600);
 
 
-    $script = "";
+    $script = "<script type='text/javascript'>
+        var GlobalPrefix = '".$language->prefix."';
+        var GlobalVat = 0.21;
+        var isConnected = " . (isset($_SESSION['customerid']) ? 1 : 0) . ";
+    </script>";
+    
+    $script .= '<link rel="stylesheet" href="/webapp/js/libs/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />';
+    $script .= '<script data-main="/webapp/js/checkout/main" src="/webapp/js/libs/requirejs/require.js"></script>';
+    $script .= '<div id="myCheckout"></div>';
 
     return $script;
 }

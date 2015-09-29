@@ -11197,3 +11197,12 @@ input.ui-button.payment {
 	color: #666666;
 	margin: 15px 0;
 }
+
+/*FancyBox*/
+.fancybox-skin.designtool{
+	background-color: transparent !important;
+	box-shadow:none !important;
+}
+.fancybox-skin.designtool .fancybox-close{
+	display: none !important;
+} 

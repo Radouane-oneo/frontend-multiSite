@@ -217,8 +217,14 @@ define([
                 autoScale: false,
                 hideOnOverlayClick: false,
                 autoDimensions: false,
-                modal: false
-            });
+                modal: false,
+		       	helpers   : { 
+		          	overlay : {closeClick: false} // prevents closing when clicking OUTSIDE fancybox 
+		       	},
+	                afterLoad: function() { 
+                 		$(".fancybox-skin").addClass("designtool"); 
+		            }  
+		    });
 	    },
 	    showDetailTechnics : function(e){
 	    	var template = _.template(detailtsTechnic);

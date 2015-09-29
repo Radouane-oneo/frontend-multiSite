@@ -1,5 +1,6 @@
 <?php
 
+use \printconnect\Dal;
 use printconnect\Carts\Factory as CartsFactory;
 use printconnect\Diagnostics\Debug;
 use printconnect\Drupal\Forms;
@@ -125,6 +126,31 @@ function pccheckout_access() {
 }
 
 function pccheckout_menu() {
+      // ===== ORDER WEEK HOOKS ================================================================
+
+      $items['checkout/newinvoiceanddelivery'] = array(
+          'page callback' => 'new_checkout_and_delivery_loadpage',
+          'page arguments' => array(),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+
+      $items['checkout/ajax/getshippingaddresses'] = array(
+          'page callback' => 'new_checkout_ajax_getshippingaddresses',
+          'page arguments' => array(),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+
+      $items['checkout/ajax/getbillingaccounts'] = array(
+          'page callback' => 'new_checkout_ajax_getbillingaccounts',
+          'page arguments' => array(),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+
+      // =======================================================================================
+
       $items['checkout'] = array(
           'title' => 'Checkout',
           'page callback' => 'pccheckout_redirect',
@@ -196,6 +222,36 @@ function pccheckout_menu() {
   return $items;
 }
 
+// ================================== ORDER WEEK V3 FUNCTIONS ===================================
+
+function new_checkout_and_delivery_loadpage() {
+    global $language;
+
+    $labels = array(
+      'js_key' => t('drupal_tag'),
+    );
+
+    header('Cache-Control: public, max-age=' . 3600);
+
+
+    $script = "";
+
+    return $script;
+}
+
+function new_checkout_ajax_getshippingaddresses() {
+    $response = \printconnect\Shipping\Types\Factory::GetCustomerShippingAddresses();
+
+    Dal::BuildJson(json_decode($response->data, 1));
+}
+
+function new_checkout_ajax_getbillingaccounts() {
+    $response = \printconnect\Customers\BillingAccounts\Factory::GetCustomerBillingAccounts();
+
+    Dal::BuildJson(json_decode($response->data, 1)); 
+}
+
+// ==============================================================================================
 
 function _pccheckout_set_callback($value) {
     $cart = Carts\Factory::Current();

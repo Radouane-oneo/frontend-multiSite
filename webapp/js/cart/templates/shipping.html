@@ -68,7 +68,7 @@
                             </a>
                         </div>
                         <div class="shipping-info">
-                            <span class="bold-title"><%= config.labels['nameFlyerStore'] %></span><br />
+                            <span class="bold-title"><%= model.orderItemShipping.orderShippingAddress.pickupPointName %></span><br />
                             <%= model.orderItemShipping.orderShippingAddress.postalCode %> , <%= model.orderItemShipping.orderShippingAddress.street %>
                             <%= model.orderItemShipping.orderShippingAddress.city %> <br />
                             <%= model.orderItemShipping.orderShippingAddress.phone %> <br />
@@ -91,7 +91,7 @@
                 <tr>
                     <td class="shipping-BPost" colspan="3">
                         <div class="BPost-info">
-                            <span class="bold-title"><%= config.labels['nameBpost'] %></span><br />
+                            <span class="bold-title"><%= model.orderItemShipping.orderShippingAddress.pickupPointName %></span><br />
                             <%= model.orderItemShipping.orderShippingAddress.postalCode %> , <%= model.orderItemShipping.orderShippingAddress.street %>
                             <%= model.orderItemShipping.orderShippingAddress.city %> <br />
                             <%= model.orderItemShipping.orderShippingAddress.phone %> <br />

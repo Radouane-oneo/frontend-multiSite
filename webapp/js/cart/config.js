@@ -19,7 +19,7 @@ define([
         shipping : $.parseJSON(shippingJSON).data,
         vat : GlobalVat,
         prefix : GlobalPrefix,
-        isConnected : GlobalPrefix,
+        isConnected : isConnected,
         langId : '10',
         designtoolLink : 'http://designtool.prd.printconcept.com',
         labels : {
@@ -97,7 +97,8 @@ define([
             'mustConnectedError' : 'Pour activer votre code de réduction, cliquez sur ‘votre compte’ et connectez vous. Ensuite, returnez vers ‘votre panier’.',
             'invalidDiscountCode' : 'Sorry, this coupon code was already used or not validated',
             'cartIsEmpty' : 'Votre panier est vide.',
-            'continue' : 'Continuer les achats'
+            'continue' : 'Continuer les achats',
+            'updateProduct' : 'Modifier produit'
         }
         
     };

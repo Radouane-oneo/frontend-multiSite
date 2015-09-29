@@ -128,7 +128,13 @@ function pccheckout_access() {
 function pccheckout_menu() {
 
       // ===== ORDER WEEK HOOKS ================================================================
-
+      $items['checkout/countriesList'] = array(
+          'page callback' => 'new_checkout_and_delivery_counties',
+          'page arguments' => array(),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+      
       $items['checkout/newinvoiceanddelivery'] = array(
           'page callback' => 'new_checkout_and_delivery_loadpage',
           'page arguments' => array(),
@@ -259,6 +265,10 @@ function new_checkout_ajax_getbillingaccounts() {
     Dal::BuildJson(json_decode($response->data, 1)); 
 }
 
+function new_checkout_and_delivery_counties(){
+    $response = \printconnect\Countries\Factory::GetCountriesList();
+    Dal::BuildJson(json_decode($response->data, 1));
+}
 // ==============================================================================================
 
 function _pccheckout_set_callback($value) {

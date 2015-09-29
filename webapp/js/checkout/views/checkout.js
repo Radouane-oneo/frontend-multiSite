@@ -1,12 +1,12 @@
 define([
     'backbone',
     '../models/checkout',
-    './billing',
-    './neutral',
-    './shipping',
-    './Error',
+//    './billing',
+//    './neutral',
+//    './shipping',
+//    './Error',
     'text!../templates/checkout.html'
-], function (Backbone, checkoutModel, billingView, neutralView, shippingView, errorView, checkoutTemplate) {
+], function (Backbone, checkoutModel, checkoutTemplate) {
 
     return Backbone.View.extend({
         template: _.template(checkoutTemplate),

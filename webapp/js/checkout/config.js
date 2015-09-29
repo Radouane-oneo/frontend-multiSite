@@ -10,7 +10,7 @@ define([
         parsedJSON = {};
     }
     return {
-        containerId : '#myCart',
+        containerId : '#myCheckout',
         errorBox : '#errorBox',
         billingBox : '#billingBox',
         shippingBox : '#shippingBox',

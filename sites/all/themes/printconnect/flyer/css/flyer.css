@@ -3517,15 +3517,6 @@ legend {
 	color: #ff6600 !important;
 	padding-left: 0 !important;
 }
-.page-cart .download {
-    background: url("images/imprimer.png") no-repeat scroll right center rgba(0, 0, 0, 0);
-    color: #666666;
-    float: right;
-    font-size: 14px;
-    font-weight: bold;
-    line-height: 25px;
-    padding-right: 32px;
-}
 .page-cart .total-container {
 	float: right;
 	position: relative;
@@ -10797,10 +10788,10 @@ p.requieredfields span.form-required {
 .page-cart #pccart-cart-form .item .description {
 	width: 100%;
     max-width: 100%;
-    margin-bottom: 130px;
+    margin-bottom: 155px;
 }
 .page-cart #pccart-cart-form .item .preview2 .description {
-	width: 480px;
+	width: 100%;
 	margin-bottom: 0;
 }
 .page-cart #pccart-cart-form .item {
@@ -10857,11 +10848,12 @@ p.requieredfields span.form-required {
     border-left: 1px solid #d1d1d1;
     border-right: 1px solid #d1d1d1;
     position: relative;
-    padding: 10px 0 0 10px;
+    padding: 10px 0 5px 10px;
     overflow: hidden;
-    height: 231px;
+    height: auto;
     width: 303px;
     display: inline-block;
+    vertical-align: top;
 }
 #pccart-cart-form .refJob-code .items_actions {
     top: -27px;
@@ -10914,8 +10906,12 @@ p.requieredfields span.form-required {
     top: 2px;
     right: 3px;
 }
-#pccart-cart-form .preview1 a.designtool {
-    background-position: 0 -125px;
+#pccart-cart-form .preview1 a.updateProduct {	
+    background: url(images/bg_btns.png) no-repeat 0 -125px;
+    font-size: 11px;
+    color: #666666;
+    float: left;
+    padding-left: 25px;
 }
 #pccart-cart-form .jobFull-img a.previewlink {
     background: none;
@@ -10992,10 +10988,10 @@ a#delete-discount {
     display: inline-block;
     margin: 14px 6px 0 10px;
 }
-.description.form-wrapper {
+.page-cart #edit-cart-discounts .description.form-wrapper {
     margin: 0;
 }
-.description.form-wrapper .form-wrapper {
+.page-cart #edit-cart-discounts .description.form-wrapper .form-wrapper {
     display: inline-block;
     vertical-align: top;
     width: 90%;
@@ -11006,14 +11002,14 @@ span#discountCodeVal {
     color: #f60;
     text-transform: uppercase;
 }
-.description.form-wrapper .form-wrapper.discounBottom {
+.page-cart #edit-cart-discounts .description.form-wrapper .form-wrapper.discounBottom {
     background-color: #e1e1e1;
     border-top: 1px solid #e1e1e1;
     width: 100%;
     padding: 10px 10px 10px 35px;
     box-sizing: border-box;
 }
-.form-wrapper.discounTop {
+.page-cart #edit-cart-discounts .form-wrapper.discounTop {
     padding: 10px 0;
 }
 .page-cart #edit-cart-discounts .price {
@@ -11134,24 +11130,27 @@ table#opening-hours td {
 input.pay-now, 
 input.ui-button.pay-now, input.payment, 
 input.ui-button.payment {
-    background: #79b61a url("images/button_payment.png") no-repeat 105px 13px;
+    background: #79b61a url("images/button_payment.png") no-repeat left center;
 }
 .page-cart #block-system-main .form-wrapper.actions input{
     font-size: 16px;
-	height: 50px;
-    width: 100%;
-    float: right;
+    height: 50px;
     margin: 0;
     font-weight: bold;
     text-align: center;
+    width: auto;
+    display: inline-block;
+    padding-left: 40px;
 
     -webkit-border-radius: 0;
-	   -moz-border-radius: 0;
-			border-radius: 0;
+       -moz-border-radius: 0;
+    		border-radius: 0;
 }
 #edit-actions .button-wrapper {
+    background-color: #79b61a;
     width: 330px;
     display: inline-block;
+    text-align: center;
 }
 #total-price {
     vertical-align: top;
@@ -11197,7 +11196,47 @@ input.ui-button.payment {
 	color: #666666;
 	margin: 15px 0;
 }
-
+.page-cart .download {
+    background: url("images/imprimer.png") no-repeat scroll right center rgba(0, 0, 0, 0);
+    color: #f60;
+    float: right;
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 25px;
+    padding-right: 32px;
+}
+#pccart-cart-form .jobFull-img a {
+	background: none;
+	padding: 0;
+}
+.edit-job {
+    float: right;
+    width: auto;
+    margin-top: 15px;
+}
+#pccart-cart-form .item-list {
+    display: inline-block;
+    max-width: 480px;
+    vertical-align: top;
+}
+.edit-job a {
+    background: url(images/bg_btns.png) no-repeat 0 -125px;
+	color: #666666;
+    font-size: 11px;
+    float: left;
+    padding-left: 25px;
+}    
+.page-cart #pccart-cart-form .item .preview2 .description.jobDesigner {
+    position: relative;
+    padding-top: 6px;
+}
+.page-cart #pccart-cart-form .item .preview2 .description.jobDesigner .price {
+    right: 0;
+}
+.page-cart #pccart-cart-form .item .preview2 .description.jobDesigner .items_actions,
+.page-cart #pccart-cart-form .item .preview2 .description.jobDesigner .edit-job {
+    display: none;
+}
 /*FancyBox*/
 .fancybox-skin.designtool{
 	background-color: transparent !important;

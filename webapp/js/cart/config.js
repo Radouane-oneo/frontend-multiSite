@@ -3,6 +3,7 @@ define([
     'text!/' + GlobalPrefix + '/cart/ajax/getcart',
     'text!/' + GlobalPrefix + '/cart/ajax/getshippingtypes'
 ], function (Backbone, cartJSON, shippingJSON) {
+    GlobalLabels["updateProduct"] = "updateProduct";
     var parsedJSON = "";
     try {
         parsedJSON = $.parseJSON(cartJSON);
@@ -19,7 +20,7 @@ define([
         shipping : $.parseJSON(shippingJSON).data,
         vat : GlobalVat,
         prefix : GlobalPrefix,
-        isConnected : GlobalPrefix,
+        isConnected : isConnected,
         langId : GlobalLandId,
         designtoolLink : 'http://designtool.prd.printconcept.com',
         labels : GlobalLabels

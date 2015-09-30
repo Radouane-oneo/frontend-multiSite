@@ -10788,7 +10788,7 @@ p.requieredfields span.form-required {
 .page-cart #pccart-cart-form .item .description {
 	width: 100%;
     max-width: 100%;
-    margin-bottom: 130px;
+    margin-bottom: 155px;
 }
 .page-cart #pccart-cart-form .item .preview2 .description {
 	width: 100%;
@@ -10906,8 +10906,12 @@ p.requieredfields span.form-required {
     top: 2px;
     right: 3px;
 }
-#pccart-cart-form .preview1 a.designtool {
-    background-position: 0 -125px;
+#pccart-cart-form .preview1 a.updateProduct {	
+    background: url(images/bg_btns.png) no-repeat 0 -125px;
+    font-size: 11px;
+    color: #666666;
+    float: left;
+    padding-left: 25px;
 }
 #pccart-cart-form .jobFull-img a.previewlink {
     background: none;
@@ -10984,10 +10988,10 @@ a#delete-discount {
     display: inline-block;
     margin: 14px 6px 0 10px;
 }
-.description.form-wrapper {
+.page-cart #edit-cart-discounts .description.form-wrapper {
     margin: 0;
 }
-.description.form-wrapper .form-wrapper {
+.page-cart #edit-cart-discounts .description.form-wrapper .form-wrapper {
     display: inline-block;
     vertical-align: top;
     width: 90%;
@@ -10998,14 +11002,14 @@ span#discountCodeVal {
     color: #f60;
     text-transform: uppercase;
 }
-.description.form-wrapper .form-wrapper.discounBottom {
+.page-cart #edit-cart-discounts .description.form-wrapper .form-wrapper.discounBottom {
     background-color: #e1e1e1;
     border-top: 1px solid #e1e1e1;
     width: 100%;
     padding: 10px 10px 10px 35px;
     box-sizing: border-box;
 }
-.form-wrapper.discounTop {
+.page-cart #edit-cart-discounts .form-wrapper.discounTop {
     padding: 10px 0;
 }
 .page-cart #edit-cart-discounts .price {
@@ -11222,6 +11226,17 @@ input.ui-button.payment {
     float: left;
     padding-left: 25px;
 }    
+.page-cart #pccart-cart-form .item .preview2 .description.jobDesigner {
+    position: relative;
+    padding-top: 6px;
+}
+.page-cart #pccart-cart-form .item .preview2 .description.jobDesigner .price {
+    right: 0;
+}
+.page-cart #pccart-cart-form .item .preview2 .description.jobDesigner .items_actions,
+.page-cart #pccart-cart-form .item .preview2 .description.jobDesigner .edit-job {
+    display: none;
+}
 /*FancyBox*/
 .fancybox-skin.designtool{
 	background-color: transparent !important;

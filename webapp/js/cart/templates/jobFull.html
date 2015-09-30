@@ -13,8 +13,12 @@
 			</div>
 			<div class="jobFull-img image form-wrapper">
 				<img src="https://dt-printconcept-production.s3.amazonaws.com/<%= model.files[0].thumbnail %>">
-				<a href="<%= config.designtoolLink %><%= model.configuration.designtoolPreviewLink %>" target="blank" class="previewlink"><%= config.labels["previsualis"] %></a>			
-				<a href="#" class=""><%= config.labels["updatePage"] %></a>	
+				<a href="<%= config.designtoolLink %><%= model.configuration.designtoolPreviewLink %>" target="blank" class="previewlink"><%= config.labels["previsualis"] %></a>
+				<%
+				var urlCallback = encodeURIComponent("http://" + document.location.host + "/" + config.prefix + "/cart/callback");
+    			var designtoolLink = model.configuration.designtoolLink.replace(/(dcb=).*?(&)/,'$1' + urlCallback + '$2');
+				%>			
+				<a href="<%= config.designtoolLink %><%= designtoolLink %>" class="designtool iframe fancybox.iframe"><%= config.labels["updatePage"] %></a>	
 				<span data-orderItem="<%= model.id %>" class="delete_item deletedesign"><%= config.labels["deleteOrder"] %></span>
 			</div>
 
@@ -40,7 +44,10 @@
 					</div>
 
 				</div>
-				<a href="<%= config.designtoolLink %><%= model.configuration.designtoolLink %>" class="designtool iframe fancybox.iframe"><%= config.labels["updatePage"] %></a>
+				<%
+                var directLink = "http://" + document.location.host + "/" + config.prefix + "/products/" + model.configuration['productId'] + "/" + encodeURIComponent(_.map(model.configuration.config, function(conf){ return conf.toolboxItemId; }).join(",")) + "/" + encodeURIComponent(model.options.join(",")) + "/" + model.quantity;
+            	%>
+				<a href="<%= directLink %>" class="updateProduct"><%= config.labels["updateProduct"] %></a>				
 			</div>
 
 			<div class="jobPrice">

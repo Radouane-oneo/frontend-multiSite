@@ -23,10 +23,10 @@ define([], function () {
                 data : data
             }).done(function(resultData) {
                 myCart.disable = false;
-                $('body').css('cursor','pointer');                
+                $('body').css('cursor','default');                
             }).error(function(){
                 myCart.disable = false;
-                $('body').css('cursor','pointer');
+                $('body').css('cursor','default');
             });
         }
 

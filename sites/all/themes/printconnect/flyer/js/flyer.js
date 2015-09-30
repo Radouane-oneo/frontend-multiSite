@@ -182,3 +182,25 @@ jQuery(document).ready(function(e) {
         }
 	}
 })(jQuery);
+
+var timerSaveP= false;
+jQuery(function($) {
+    var val= 0;
+    var doAnim = function($pVal, wD) {
+        $pVal.stop(true).animate({width: wD + '%'},800);
+    }
+    var Animateprogresse = function(){
+
+        var $pVal = $("#save-progress-bar").find("div");
+        timerSaveP=setInterval(function(){
+            var step = (val<60)?10:3;
+            val = val + step;
+            doAnim($pVal, val);
+            if(val >= 90)
+            clearInterval(timerSaveP);
+        }, 800);
+    }
+
+    Animateprogresse();
+
+});

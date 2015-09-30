@@ -37,11 +37,11 @@ define([
 	    			template = _.template(jobFull);
 	    		}else{template = _.template(jobEmpty)};
 
-                content += template({
+                content = template({
                 	"model" : orderItem,
                 	"config" : _this.config,
                 	"priceTpl" : _.template(priceTemplate)
-            	});
+            	}) + content;
             });
 
             this.setElement(content);

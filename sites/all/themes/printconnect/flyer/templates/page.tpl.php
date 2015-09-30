@@ -163,3 +163,12 @@ if (/*@cc_on!@*/false) {
 
   </div>    
 </div>
+
+<!-- loader pour la page produit qui se telecharge tres lentement -->
+<div id="box-progress">
+  <div id="overlay-bar"></div>
+  <div id="save-progress-bar">
+    <div></div>
+  </div>
+    <p><?php echo t('Veuillez patienter, la page se télécharge.'); ?></p>
+</div>

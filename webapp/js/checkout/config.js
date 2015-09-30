@@ -12,8 +12,8 @@ define([
     return {
         containerId : '#myCheckout',
         errorBox : '#errorBox',
-        billingBox : '#billingBox',
-        shippingBox : '#shippingBox',
+        blocDetail : '#blocDetail',
+        blocEdit : '#blocEdit',
         neutralBox : '#neutralBox',
         cart : parsedJSON,
         shipping : $.parseJSON(shippingJSON).data,

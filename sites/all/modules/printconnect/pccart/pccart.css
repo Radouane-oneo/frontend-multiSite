@@ -576,7 +576,7 @@ table.targetPrice td:nth-child(1),
 table.targetPrice td:nth-child(2),
 table.targetPrice td:nth-child(1) *,
 table.targetPrice td:nth-child(2) * {
-  cursor: pointer;
+  /*cursor: pointer;*/
 }
 
 table.targetPrice tbody tr td { border-top:none; border-bottom:1px solid #dbd9d9; }

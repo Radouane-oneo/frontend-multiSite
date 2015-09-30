@@ -10990,6 +10990,7 @@ a#delete-discount {
 }
 .page-cart #edit-cart-discounts .description.form-wrapper {
     margin: 0;
+    position: relative;
 }
 .page-cart #edit-cart-discounts .description.form-wrapper .form-wrapper {
     display: inline-block;

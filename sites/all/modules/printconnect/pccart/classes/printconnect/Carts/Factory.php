@@ -33,6 +33,14 @@ class Factory {
         return Dal::SendRequest(sprintf('order-item-file/orderItemId/%d', $id), 'DELETE');
     }
 
+    public function saveNeutralShipping($neutral)
+    {
+        return Dal::SendRequest('supplement-parameter', 'POST', array(
+            'id' => $_SESSION['cartid'],
+            'neutral' => $neutral
+        ));
+    }
+    
     public static function SaveRefJob($id, $refJob)
     {
         return Dal::SendRequest('supplement-parameter', 'POST', array(

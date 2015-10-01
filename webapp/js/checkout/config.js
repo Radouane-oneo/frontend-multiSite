@@ -15,12 +15,10 @@ define([
         delete billingAccountList.discountCode;
         delete billingAccountList.vat;
         $.each(billingAccountList, function(i, billingAccount){
-            console.log(billingAccount);
             if (billingAccount.isDefault) {
                 defaultBA = billingAccount;
             }
         });
-        console.log(defaultBA);
     } catch (e) {
         billingAccountList = {};
         vat = GlobalVat;
@@ -58,6 +56,11 @@ define([
             "VatNumberBA" : "Numéro de Tva",
             "BAFieldsRequired" : "Ce champ est requis.",
             "existingBA" : "this billing address is already exist would you want load this address as your default billing address",
+            "NeutralShippingTitle" : "ENVOI NEUTRE",
+            "NeutralShipping" : "Envoi neutre",
+            "Neutralexplain" : "Voulez-vous votre commande sans mention de Flyer.fr sur la boîte? S'il vous plaît cocher cette case.",
+            "securePaymentBtn" : "Paiement sécurisé",
+            "BAalreadyExisting" : "this billing address is already exist would you want load this address as your default billing address"
         }
         
     };

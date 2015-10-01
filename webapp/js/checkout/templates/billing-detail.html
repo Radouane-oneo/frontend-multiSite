@@ -4,10 +4,9 @@
     </legend>
     <div class="fieldset-wrapper">
         <div class="address">
-            <div class="name">karim32016</div>
-            <div class="street">andfa diaaa</div>
-            <div class="place">BH - 2100 bruxelles</div>
-
+            <div class="name"><%= model.defaultBA.name %></div>
+            <div class="street"><%= model.defaultBA.street %></div>
+            <div class="place"><%= model.defaultBA.postalCode + " - "+ model.defaultBA.city %></div>
         </div>
         <a id="toggle-invoice-form" href="#invoice-address" class="toggle jquery-once-1-processed">
             <%= model.labels['changeBA'] %>

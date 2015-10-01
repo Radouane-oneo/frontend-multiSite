@@ -26,11 +26,13 @@
                     <%= model.labels['OrCreateBA'] %>
                 </div>
                 <div class="form-item form-type-select form-item-invoice-address-current-select">
-                    <select class="selectBilling2 form-select" id="edit-invoice-address-current-select" 
+                    <select id="baEditSelect" class="selectBilling2 form-select"  
                             name="invoice[address][current][select]" title="">
                         <option value="0">Ajouter une adresse</option>
-                        <% _.each(model.billingAccouts, function(billingAccout){%>
-                        <option value="<%= billingAccout.id %>">
+                        <% _.each(model.billingAccouts, function(billingAccout){ 
+                        var selected =(billingAccout.id == model.defaultBA.id)
+                        ? 'selected = "selected"' : "";%>
+                        <option <%=selected%> value="<%= billingAccout.id %>">
                             <%= billingAccout.company%>&nbsp 
                             - <%= billingAccout.street%>, 
                             <%= billingAccout.postalCode%>&nbsp;<%= billingAccout.city%>
@@ -43,62 +45,76 @@
                 <label for="edit-invoice-address-current-name">
                     <%= model.labels['BAName'] %> <span class="form-required" title="BAFieldsRequired">*</span>
                 </label>
-                <input type="text" id="edit-invoice-address-current-name" name="invoice[address][current][name]" 
-                       value="<%= model.defaultBA.name %>" size="30" maxlength="128" class="form-text required" readonly="readonly">
+                <input type="text" id="baName"
+                       class="baInputs"
+                       value="<%= model.defaultBA.name %>" size="30" maxlength="128" 
+                       <%= (model.defaultBA) ? 'readOnly = "readOnly"' : ''%>
+                       class="form-text required" >
             </div>
             <div class="form-item form-type-textfield form-item-invoice-address-current-street">
                 <label for="edit-invoice-address-current-street">
                     <%= model.labels['StreetBA'] %> <span class="form-required" title="BAFieldsRequired">*</span>
                 </label>
-                <input type="text" id="edit-invoice-address-current-street" name="invoice[address][current][street]" 
-                       value="<%= model.defaultBA.street %>" size="30" maxlength="128" class="form-text required" readonly="readonly">
+                <input type="text" id="baStreet" 
+                       value="<%= model.defaultBA.street %>" 
+                       class ="baInputs"
+                       <%= (model.defaultBA) ? 'readOnly = "readOnly"' : ''%>
+                       size="30" maxlength="128" class="form-text required" >
             </div>
             <div class="form-item form-type-textfield form-item-invoice-address-current-postalCode">
                 <label for="edit-invoice-address-current-postalcode">
                     <%= model.labels['postalCodeCityBA']%> <span class="form-required" title="BAFieldsRequired">*</span>
                 </label>
-                <input placeholder="1000" id="edit-invoice-address-current-postalCode" type="text" name="invoice[address][current][postalCode]" 
-                       value="<%= model.defaultBA.postalCode%>" size="6" maxlength="128" class="form-text required" readonly="readonly">
+                <input placeholder="1000" id="baPostalCode" type="text"
+                       value="<%= model.defaultBA.postalCode%>"
+                       class="baInputs"
+                       <%= (model.defaultBA) ? 'readOnly = "readOnly"' : ''%>
+                       size="6" maxlength="128" class="form-text required" >
             </div>
             <div class="form-item form-type-textfield form-item-invoice-address-current-city">
                 <label class="element-invisible" for="edit-invoice-address-current-city">
                     <%= model.labels['CityBA']%><span class="form-required" title="BAFieldsRequired">*</span>
                 </label>
-                <input placeholder="Bruxelles" type="text" id="edit-invoice-address-current-city" name="invoice[address][current][city]" 
-                       value="<%= model.defaultBA.city%>" size="30" maxlength="128" class="form-text required" readonly="readonly">
+                <input placeholder="Bruxelles" type="text" id="baCity" 
+                       value="<%= model.defaultBA.city%>"
+                       class="baInputs"
+                       <%= (model.defaultBA) ? 'readOnly = "readOnly"' : ''%>
+                       size="30" maxlength="128" class="form-text required" >
             </div>
             <div class="form-item form-type-select form-item-invoice-address-current-country">
                 <label for="edit-invoice-address-current-country">
                     <%= model.labels['CountryBA']%> <span class="form-required" title="BAFieldsRequired">*</span>
                 </label>
-                <select  class="selectStyle form-select required" tabindex="-1" title="Pays *">
-                    <% _.each(model.countries, function(country){console.log(country.id +' | '+ model.defaultBA.country) %>
-                    <option selected= "<%= (country.id == model.defaultBA.country)
-                        ? 'selected' : 0%>" value="<%= country.id %>"><%= country.tag%></option>
+                <select  id="countryList" class="baInputsSelect selectStyle form-select required" <%= (model.defaultBA) ? 'disabled = "true"' : ''%> tabindex="-1" title="Pays *">
+                    <% _.each(model.countries, function(country){ var selected =(country.id == model.defaultBA.country)
+                    ? 'selected = "selected"' : "";%>
+                    <option <%= selected %> value="<%= country.id %>"><%= country.tag%></option>
                     <% }); %>
                 </select>
             </div>
             <div class="form-item form-type-checkbox form-item-invoice-address-current-isCompany">
                 <label for="edit-invoice-address-current-iscompany">J'ai une numéro de TVA </label>
-                <input id="isUserCompany" checked="" type="checkbox" name="invoice[address][current][isCompany]" value="1" class="form-checkbox">
+                <input id="isUserCompany" checked="" type="checkbox" value="1" class="form-checkbox">
             </div>
             <div class="form-item form-type-textfield form-item-invoice-address-current-company" style="display: block;">
                 <label for="edit-invoice-address-current-company"><%= model.labels['CompanyBA'] %> </label>
-                <input id="companyInput" type="text" name="invoice[address][current][company]" value="" size="30" maxlength="128" class="form-text" readonly="readonly">
+                <input id="companyInput" type="text" value="" size="30" maxlength="128" class="form-text">
             </div>
-            <div id="vatNumber"><div class="form-item form-type-vatfield form-item-invoice-address-current-vatNumber vat-validation-processed" style="display: block;">
+            <div id="vatNumber">
+                <div class="form-item form-type-vatfield form-item-invoice-address-current-vatNumber vat-validation-processed" style="display: block;">
                     <label for="vatNumber">
-                        <%= model.labels['VatNumberBA'] %> 
+                        <%= model.labels['VatNumberBA']%> 
                     </label>
-                    <input class="country form-text" readonly="readonly" type="text" id="edit-invoice-address-current-vatnumber-country" name="invoice[address][current][vatNumber][country]" value="BH" size="2" maxlength="2">
-                    <input class="number form-text" type="text" id="edit-invoice-address-current-vatnumber-number" 
-                        name="invoice[address][current][vatNumber][number]" value="" size="60" maxlength="128" readonly="readonly">
+                    <input class="country form-text baInputs"  type="text" id="countryIsoBA" readOnly = "readOnly"
+                           value="<%= (model.defaultBA) ? model.defaultBA.iso : '' %>" size="2" maxlength="2">
+                    <input class="number form-text" type="text" id="vatNumberBA" 
+                           value="<%= (model.defaultBA) ? model.defaultBA.vatNumber.substring(2, model.defaultBA.vatNumber.length) : '' %>" size="60" maxlength="128">
                 </div>
             </div>
         </div>
     </fieldset>
     <div id="edit-invoice-address-actions" class="form-wrapper">
         <input type="hidden" name="invoice[address][actions][message]" value="message tva exist">
-        <input type="submit" id="edit-invoice-address-actions-submit" name="invoice_address_submit" value="Enregistrer" class="form-submit ui-button ui-widget ui-state-default ui-corner-all" role="button">
+        <input type="submit" id="saveEditBA" name="invoice_address_submit" value="Enregistrer" class="form-submit ui-button ui-widget ui-state-default ui-corner-all" role="button">
     </div>
 </div>

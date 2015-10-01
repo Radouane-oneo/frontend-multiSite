@@ -35,7 +35,7 @@
 						<span data-orderItem="<%= model.id %>" class="removecart"></span>
 					</div>
 					<%
-					var directLink = "http://" + document.location.host + "/" + config.prefix + "/products/" + model.configuration['productId'] + "/" + encodeURIComponent(_.map(model.configuration.config, function(conf){ return conf.toolboxItemId; }).join(",")) + "/" + encodeURIComponent(model.options.join(",")) + "/" + model.quantity;
+					var directLink = "http://" + document.location.host + "/" + config.prefix + "/products/" + model.configuration['productId'] + "/" + encodeURIComponent(_.map(model.configuration.config, function(conf){ return conf.toolboxItemId; }).join(",")) + "/" + encodeURIComponent(model.options.join(",")) + "/" + model.quantity+"/"+model.id;
             		%>
 					<div class="edit-job">
 						<a href="<%= directLink %>" class=""><%= config.labels["updateProduct"] %></a>
@@ -47,7 +47,7 @@
 			<div class="prodactTemplates centroid-2" style="display: <%= (model.emailDesigner ==null)?'block':'none' %>;">
 				<div class="prodactHasTemplates">
 					<div class="title-chose"><%= config.labels["designtoolTitle"] %></div>
-					<div class="poll-form poll-form1 first">
+					<div class="poll-form poll-form1 first <%= (model.hasProUpload == true)?'':'designToolOnly' %>">
 						<div class="title-image design-tool"></div>
 						<div class="option-title"><%= config.labels["dlLinkTitle"] %></div>
 						<p class="txto"><%= config.labels["dlLinkSubtitle"] %></p>

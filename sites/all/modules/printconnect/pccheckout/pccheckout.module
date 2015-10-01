@@ -252,9 +252,14 @@ function new_checkout_and_delivery_loadpage() {
 }
 
 function new_checkout_ajax_getshippingaddresses() {
-    $response = \printconnect\Shipping\Types\Factory::GetCustomerShippingAddresses();
+    $shippings = \printconnect\Shipping\Types\Factory::GetCustomerShippingAddresses();
+    $selected = \printconnect\Shipping\Types\Factory::GetSelectedShipping();
 
-    Dal::BuildJson(json_decode($response->data, 1));
+
+    Dal::BuildJson(array(
+        'orderItemShipping' => json_decode($selected->data, 1),
+        'addresses' => json_decode($shippings->data, 1)
+    ));
 }
 
 function new_checkout_ajax_getbillingaccounts() {

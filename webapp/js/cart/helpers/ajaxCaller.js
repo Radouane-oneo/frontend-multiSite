@@ -12,6 +12,7 @@ define([], function () {
             "setMailDeisigner" :    "/cart/ajax/setemaildesigner"
         },
         call : function(action, data, method, params){
+            $('body').css('cursor','wait');
             myCart.disable = true;
             if (!method) {method = "POST"}
             if (!params) {params = ""}
@@ -22,8 +23,10 @@ define([], function () {
                 data : data
             }).done(function(resultData) {
                 myCart.disable = false;
+                $('body').css('cursor','default');                
             }).error(function(){
                 myCart.disable = false;
+                $('body').css('cursor','default');
             });
         }
 

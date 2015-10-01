@@ -10,7 +10,7 @@ define([
         events: {
             "change input[name='shipping-type']" : "changeShipping",
             "click .shipp-item" : "selectShipping",
-            "click .pcflyerstores-picker-link,.pcbpost-picker-link" : "stopPropagation"
+            "click input[name='shipping-type']" : "stopPropagation"
         },
         initialize: function(model) {
             this.config = require("config");
@@ -29,13 +29,16 @@ define([
 
             $('.pcflyerstores-picker-link, .pcbpost-picker-link').fancybox({
                 width: 993,
-                height: 500,
+                height: '100%',
                 padding: 0,
                 margin: 0,
                 scrolling: false,
                 autoScale: false,
                 hideOnOverlayClick: false,
-                autoDimensions: false
+                autoDimensions: false,
+                helpers   : { 
+                    overlay : {closeClick: false} // prevents closing when clicking OUTSIDE fancybox 
+                },
             });
         },
         changeShipping : function(e){
@@ -45,13 +48,14 @@ define([
                     me.model.set({"orderItemShipping": resultData.data.orderItemShipping, "discountItems": resultData.data.discountItems});
             });
             e.preventDefault();
+            e.stopPropagation();
         },
         selectShipping : function(e){
             $(e.currentTarget).find(".form-radio").attr("checked", "checked");
             $(e.currentTarget).find(".form-radio").change();
         },
         stopPropagation : function(e){
-            //e.stopPropagation();
+            e.stopPropagation();
         },
         errors : function(){
             if(!this.model.get("orderItemShipping").id)

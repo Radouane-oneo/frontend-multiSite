@@ -677,7 +677,7 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
         var GlobalDefaultItems = ".json_encode($gItems).";
         var GlobalDefaultOptions = ".json_encode($gOtions).";
         var GlobalDefaultQuantity = ".(!$qty ? 'null' : $qty).";
-        var GlobalJobId = ".(!$edit ? 'null' : $edit->id).";
+        var GlobalJobId = ".(!$edit ? 'null' : $edit).";
         var GlobalPrefix = '".$language->prefix."';
     </script>";
 

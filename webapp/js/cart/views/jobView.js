@@ -37,11 +37,11 @@ define([
 	    			template = _.template(jobFull);
 	    		}else{template = _.template(jobEmpty)};
 
-                content += template({
+                content = template({
                 	"model" : orderItem,
                 	"config" : _this.config,
                 	"priceTpl" : _.template(priceTemplate)
-            	});
+            	}) + content;
             });
 
             this.setElement(content);
@@ -59,10 +59,14 @@ define([
 	    	if (e.currentTarget.checked) {
 	    		jobItemEvent.find('.prodactTemplates').hide();
 	    		jobItemEvent.find('.inputdesigner').show();
+	    		jobItemEvent.find('.refJob-code').show();
+	    		jobItemEvent.find('.preview2 > .description').addClass("jobDesigner");
 	    	}else{
 
 	    		jobItemEvent.find('.prodactTemplates').show();
 	    		jobItemEvent.find('.inputdesigner').hide();
+	    		jobItemEvent.find('.refJob-code').hide();
+	    		jobItemEvent.find('.preview2 > .description').removeClass("jobDesigner");
 
 	    		//set email designer to empty
 	    		orderitem = jobItemEvent.parents('.orderBox').data('orderitem');
@@ -85,6 +89,9 @@ define([
             ajaxCaller.call("deleteJob",{}, 'GET', orderitem).done(function(result){
                 if (result.code == '200') {
                 	_this.deleteOrderFromMdel(orderitem, result);
+                	var cartItems = $('#block-pccart-indicator a span').text();
+                	var newCartItems = cartItems.replace( /\d+/g, _this.model.attributes.orderItems.length);
+                	$('#block-pccart-indicator a span').text(newCartItems);
                 };
             });
 
@@ -103,6 +110,8 @@ define([
 	    		};
 	    	};
 	    	this.model.set({"orderItems": orderItems,"discountItems":  myModel.attributes.discountItems});
+	    	if(this.model.attributes.orderItems.length == 0)
+	    		myCart.render();
 	    },
 	    deleteOrderDesign : function(e){
 	    	var _this = this;
@@ -179,7 +188,7 @@ define([
 	    		};
 	    	};
 
-	    	this.model.set("orderItems", orderItems);
+	    	this.model.set({"orderItems" : orderItems}, {"silent" : true});
 	    },
 	    designerEmail : function(e){
 	    	var value = $(e.currentTarget).val();
@@ -217,8 +226,14 @@ define([
                 autoScale: false,
                 hideOnOverlayClick: false,
                 autoDimensions: false,
-                modal: false
-            });
+                modal: false,
+		       	helpers   : { 
+		          	overlay : {closeClick: false} // prevents closing when clicking OUTSIDE fancybox 
+		       	},
+	                afterLoad: function() { 
+                 		$(".fancybox-skin").addClass("designtool"); 
+		            }  
+		    });
 	    },
 	    showDetailTechnics : function(e){
 	    	var template = _.template(detailtsTechnic);

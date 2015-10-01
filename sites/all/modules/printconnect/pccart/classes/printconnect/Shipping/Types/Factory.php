@@ -15,6 +15,15 @@ namespace printconnect\Shipping\Types {
         }
     }
 
+    public static function GetSelectedShipping()
+    {
+        if (isset($_SESSION['cartid'])) {
+            return Dal::SendRequest('cart-shipping/cart/'. $_SESSION['cartid']);
+        }else {
+            return NULL;
+        }
+    }
+
     public static function Get($id) {
       return new Type(array('id' => $id));
     }

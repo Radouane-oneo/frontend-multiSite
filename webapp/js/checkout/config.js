@@ -1,18 +1,21 @@
 define([
     'backbone',
     'text!/' + GlobalPrefix + '/checkout/ajax/getbillingaccounts',
-    'text!/' + GlobalPrefix + '/checkout/countriesList'
-], function (Backbone, BillingJSON, CountriesListJson) {
+    'text!/' + GlobalPrefix + '/checkout/countriesList',
+    'text!/' + GlobalPrefix + '/checkout/ajax/getshippingaddresses'
+], function (Backbone, BillingJSON, CountriesListJson, shippingAddressesJson) {
     var billingAccountList = "";
+    var shippingAddresses = "";
     var vat = GlobalVat;
     var CountriesList = "";
     try {
         billingAccountList = $.parseJSON(BillingJSON);
+        shippingAddresses = $.parseJSON(shippingAddressesJson);
         CountriesList = $.parseJSON(CountriesListJson);
-        console.log(billingAccountList);
-        vat = parsedJSON.data.vat;
+        vat = billingAccountList.data.vat;
     } catch (e) {
         billingAccountList = {};
+        shippingAddresses = {};
         vat = GlobalVat;
     }
    
@@ -24,9 +27,10 @@ define([
         shippingBox : '#shippingBox',
         neutralBox : '#neutralBox',
         billingAccouts : billingAccountList,
+        shippingAddresses : shippingAddresses.data,
         vat : vat,
         prefix : GlobalPrefix,
-        isConnected : GlobalPrefix,
+        isConnected : isConnected,
         countries : CountriesList.data,
         langId : '10',
         designtoolLink : 'http://designtool.prd.printconcept.com',
@@ -47,6 +51,7 @@ define([
             "VatNumberBA" : "Numéro de Tva",
             "BAFieldsRequired" : "Ce champ est requis.",
             "existingBA" : "this billing address is already exist would you want load this address as your default billing address",
+            "shippingAddress" : "Shipping address"
         }
         
     };

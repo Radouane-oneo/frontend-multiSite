@@ -19,7 +19,7 @@ define([
                 "model" : this.model.toJSON()
             }));
 
-            $(this.config.editBox).find(".shipping").html(this.$el);
+            $(this.config.editBox).find(".shippingBox").html(this.$el);
 
         },
         errors : function(){

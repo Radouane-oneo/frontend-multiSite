@@ -10,7 +10,7 @@ define([
         events: {
             "change input[name='shipping-type']" : "changeShipping",
             "click .shipp-item" : "selectShipping",
-            "click .pcflyerstores-picker-link,.pcbpost-picker-link" : "stopPropagation"
+            "click input[name='shipping-type']" : "stopPropagation"
         },
         initialize: function(model) {
             this.config = require("config");
@@ -48,13 +48,14 @@ define([
                     me.model.set({"orderItemShipping": resultData.data.orderItemShipping, "discountItems": resultData.data.discountItems});
             });
             e.preventDefault();
+            e.stopPropagation();
         },
         selectShipping : function(e){
             $(e.currentTarget).find(".form-radio").attr("checked", "checked");
             $(e.currentTarget).find(".form-radio").change();
         },
         stopPropagation : function(e){
-            //e.stopPropagation();
+            e.stopPropagation();
         },
         errors : function(){
             if(!this.model.get("orderItemShipping").id)

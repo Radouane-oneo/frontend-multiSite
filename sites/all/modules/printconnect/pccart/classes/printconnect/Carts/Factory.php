@@ -19,7 +19,13 @@ class Factory {
     public static function DeleteItem($id) 
     {
         $cartId = isset($_SESSION['cartid']) ? $_SESSION['cartid'] : NULL;
-        return Dal::SendRequest(sprintf('cart-item/id/%d/cart/%d', $id, $cartId), 'DELETE');
+        $response = Dal::SendRequest(sprintf('cart-item/id/%d/cart/%d', $id, $cartId), 'DELETE');
+
+        if($response->code == 200) {
+            self::UpdateCartCount(FALSE);
+        }
+
+        return $response;
     }
 
     public static function DeleteDesign($id) 
@@ -78,7 +84,8 @@ class Factory {
             'id' => $itemId
         ));
     }
-     public static function SetPickupPoint($pickuppoint)
+
+    public static function SetPickupPoint($pickuppoint)
     {
         $cartId = isset($_SESSION['cartid']) ? $_SESSION['cartid'] : NULL;
         return Dal::SendRequest('pickuppointdetail', 'PUT', array(
@@ -86,6 +93,36 @@ class Factory {
             'pickuppoint' => $pickuppoint->GetProperties()
         ));
     }
+
+    public static function GetCartCount()
+    {
+        if(!isset($_SESSION['cartCount'])) {
+            $response = self::GetCartJson();
+            $cart = json_decode($response->data);
+        
+            $number = count($cart->orderItems);
+
+            $_SESSION['cartCount'] = $number;
+        }else {
+            $number = $_SESSION['cartCount'];
+        }
+
+        return $number;
+    }
+
+    public static function UpdateCartCount($append = TRUE) 
+    {
+        $count = self::GetCartCount();
+
+        if($append) {
+            $count++;
+        }else {
+            $count--;
+        }
+
+        $_SESSION['cartCount'] = $count;
+    }
+
     public static function saveInCache($object, $data) 
     {
         if (!empty($data)) {
@@ -400,6 +437,8 @@ class Factory {
 	);
       } catch (\Exception $ex) {
       }
+
+      self::UpdateCartCount(TRUE);
       return $object;
     }
 

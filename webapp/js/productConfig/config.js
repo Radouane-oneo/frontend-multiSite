@@ -25,7 +25,8 @@ define([
         imagesUrl : JsonFileGroups["imagesUrl"],
         labels : GlobalLabels,
         isAdmin : GlobalIsAdmin,
-        prefix : GlobalPrefix
+        prefix : GlobalPrefix,
+        jobId : GlobalJobId
     };
 
 });

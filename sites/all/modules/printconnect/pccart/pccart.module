@@ -275,8 +275,9 @@ function new_cart_loadpage() {
         "desqigntoolLink" => 'http://designtool.prd.printconcept.com'
     );
 
-    header('Cache-Control: public, max-age=' . 3600);
-
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Cache-Control: post-check=0, pre-check=0", false);
+    header("Pragma: no-cache");
 
     $script = "<script type='text/javascript'>
         var GlobalLandId = ".$language->id.";
@@ -446,7 +447,6 @@ function pccart_block_info() {
 }
 
 function pccart_block_view($delta = '') {
-
   printconnect_ensureinitialized();
   switch ($delta) {
     case 'save':
@@ -462,6 +462,7 @@ function pccart_block_view($delta = '') {
       break;
     case 'cart':
       $cart = Factory::Current();
+
       $block = FALSE;
       $items = array();
       if ($cart && $cart->isFilled) {
@@ -685,20 +686,11 @@ function pccart_block_view($delta = '') {
       break;
 
     case 'indicator':
-      $cart = Factory::Current();
+      $number = Factory::GetCartCount();
       $baseContent = $content = t('Cart');
-      $number = 0;
-      foreach($cart->orderItems as $job) {
-	if ($job->discountId == null) {
-	    $number++;
-	}
-      }
 
-      if ($cart) {
-        $content .= ' (' . $number . ')';
-      } else {
-        $content .= ' (0)';
-      }
+      $content .= ' (' . $number . ')';
+
       $block['content'] = l($content, 'cart', array('attributes' => array(
 	    'class' => array('button', 'cart', 'cartCounter'),
 	    'TranslatedText' => $baseContent,
@@ -913,37 +905,45 @@ function _pccart_add($productId, $qty, $options, $priceGroupId, $vat = FALSE) {
 }
 
 function add_cartitem_submit() {
-  if(!isset($_POST)) {
-    drupal_not_found();
-  }
-
-  $productId = $_POST['productId'];
-  $qty = $_POST['quantity'];
-  $options = explode(',', $_POST['options']);
-  $priceGroupId = $_POST['priceGroupId'];
-  $widthCF = $_POST['widthCF'];
-  $heightCF = $_POST['heightCF'];
-  $cf = $_POST['CF'];
-  $vat = false;
-  $customer = CustomersFactory::Current();
-  $cart = Factory::CurrentOrCreate();
-
-  if (!$cart) {
-    $cart = Factory::Create();
-    if ($customer) {
-      $cart->customerId = $customer->id;
-      Factory::Save($cart);
+    if(!isset($_POST)) {
+        drupal_not_found();
     }
-  }
 
-  $relatedProducts = array();
-  $description = '';
-  $cart->productId = $productId;
-  Factory::CreateItem($cart, $priceGroupId, $qty, $description, $relatedProducts, $options, $vat, $widthCF, $heightCF, $cf);
-  Factory::Refresh($cart);
+    $productId = $_POST['productId'];
+    $qty = $_POST['quantity'];
+    $options = explode(',', $_POST['options']);
+    $priceGroupId = $_POST['priceGroupId'];
+    $widthCF = $_POST['widthCF'];
+    $heightCF = $_POST['heightCF'];
+    $cf = $_POST['CF'];
+    $vat = false;
+    $itemId = (isset($_POST['jobId']) && !empty($_POST['jobId'])) ? $_POST['jobId'] : NULL;
 
-  drupal_goto('cart');
-
+    if(!$itemId) {
+        $customer = CustomersFactory::Current();
+        $cart = Factory::CurrentOrCreate();
+        if (!$cart) {
+                $cart = Factory::Create();
+                if ($customer) {
+                        $cart->customerId = $customer->id;
+                        Factory::Save($cart);
+                }
+        }
+        $cart->EnsureLoaded();
+        $relatedProducts = array();
+        $description = '';
+        $cart->productId = $productId;
+        Factory::CreateItem($cart, $priceGroupId, $qty, $description, $relatedProducts, $options, $vat, $widthCF, $heightCF, $cf);
+    }else {
+        $cart = Factory::CurrentOrCreate();
+        $item = Factory::GetItem($cart, $itemId);
+        $item->EnsureLoaded();
+        $item->productPriceGroupId = $priceGroupId;
+        $item->quantity = $qty;
+        $item->options = $options;
+        Factory::SaveItem($item, $widthCF, $heightCF, $cf);
+    }
+    drupal_goto('cart');
 }
 
 function _pccart_callback() {

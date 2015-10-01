@@ -47,7 +47,7 @@
 			<div class="prodactTemplates centroid-2" style="display: <%= (model.emailDesigner ==null)?'block':'none' %>;">
 				<div class="prodactHasTemplates">
 					<div class="title-chose"><%= config.labels["designtoolTitle"] %></div>
-					<div class="poll-form poll-form1 first">
+					<div class="poll-form poll-form1 first <%= (model.hasProUpload == true)?'':'designToolOnly' %>">
 						<div class="title-image design-tool"></div>
 						<div class="option-title"><%= config.labels["dlLinkTitle"] %></div>
 						<p class="txto"><%= config.labels["dlLinkSubtitle"] %></p>

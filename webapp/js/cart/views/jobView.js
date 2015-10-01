@@ -89,6 +89,10 @@ define([
             ajaxCaller.call("deleteJob",{}, 'GET', orderitem).done(function(result){
                 if (result.code == '200') {
                 	_this.deleteOrderFromMdel(orderitem, result);
+                	var cartItems = $('#block-pccart-indicator a span').text();
+                	var newCartItems = cartItems.replace(/[^\d.-]/g, _this.model.attributes.orderItems.length);
+                	console.log(newCartItems);
+                	/*$('#block-pccart-indicator a span').text(newCartItems);*/
                 };
             });
 

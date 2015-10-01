@@ -11238,6 +11238,13 @@ input.ui-button.payment {
 .page-cart #pccart-cart-form .item .preview2 .description.jobDesigner .edit-job {
     display: none;
 }
+#pccart-cart-form .prodactTemplates .poll-form.designToolOnly {
+    border: none;
+    margin: 0 auto;
+    display: block;
+    float: none;
+}
+
 /*FancyBox*/
 .fancybox-skin.designtool{
 	background-color: transparent !important;
@@ -11246,6 +11253,7 @@ input.ui-button.payment {
 .fancybox-skin.designtool .fancybox-close{
 	display: none !important;
 }
+/*End Fancybox*/
 
 #overlay-bar{
     position: absolute;

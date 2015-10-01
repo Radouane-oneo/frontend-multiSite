@@ -29,13 +29,16 @@ define([
 
             $('.pcflyerstores-picker-link, .pcbpost-picker-link').fancybox({
                 width: 993,
-                height: 500,
+                height: '100%',
                 padding: 0,
                 margin: 0,
                 scrolling: false,
                 autoScale: false,
                 hideOnOverlayClick: false,
-                autoDimensions: false
+                autoDimensions: false,
+                helpers   : { 
+                    overlay : {closeClick: false} // prevents closing when clicking OUTSIDE fancybox 
+                },
             });
         },
         changeShipping : function(e){

@@ -58,23 +58,23 @@
                 <%
                 if(shipping.id == 134 && model.orderItemShipping.shippingTypeResellerShop == 134 && model.orderItemShipping.orderShippingAddress) { %>
                 <tr>
-                    <td colspan="3">
-                        <div>
-                            <iframe  width='425' height='350' frameborder='0' scrolling='no' marginheight='0' marginwidth='0'
+                    <td class="shipping-flyerStore" colspan="3">
+                        <div class="shipping-map">
+                            <iframe  width='311' height='198' frameborder='0' scrolling='no' marginheight='0' marginwidth='0'
                                      src='https://maps.google.com/maps?ie=UTF8&t=roadmap&q=<%= model.orderItemShipping.orderShippingAddress.geographical["latitude"] %>,<%= model.orderItemShipping.orderShippingAddress.geographical["longitude"] %>&z=16&output=embed'>
                                      </iframe>
-                            <a class="pcflyerstores-picker-link fancybox.iframe" href="/<%= config.prefix %>/stores/picker/callback/pcflyerstores_callback/?contentonly=1" style="display: block;">
+                            <a class="pcflyerstores-picker-link fancybox.iframe" href="/<%= config.prefix %>/stores/picker/callback/pcflyerstores_callback/?contentonly=1" style="display: inline-block;">
                                 <%= config.labels['chooseOtherFlyerStore'] %>
                             </a>
                         </div>
-                        <div>
-                            <b><%= config.labels['nameFlyerStore'] %></b><br />
+                        <div class="shipping-info">
+                            <span class="bold-title"><%= model.orderItemShipping.orderShippingAddress.pickupPointName %></span><br />
                             <%= model.orderItemShipping.orderShippingAddress.postalCode %> , <%= model.orderItemShipping.orderShippingAddress.street %>
                             <%= model.orderItemShipping.orderShippingAddress.city %> <br />
                             <%= model.orderItemShipping.orderShippingAddress.phone %> <br />
                             <%= model.orderItemShipping.orderShippingAddress.email %> <br /><br />
-                            <b><%= config.labels['openingHours'] %></b><br />
-                            <table>
+                            <span class="bold-title"><%= config.labels['openingHours'] %></span><br />
+                            <table id="opening-hours">
                             <% _.each(model.orderItemShipping.orderShippingAddress.openingHours, function(openingHour, index){ %>
                             <% if(openingHour[0] && openingHour[1]) { %>
                             <tr><td><%= config.labels['day_' + index] %></td><td><%= openingHour[0] %> - <%= openingHour[1] %></td></tr>
@@ -89,18 +89,20 @@
                 <% } %>
                 <% if(shipping.id == 123 && model.orderItemShipping.shippingTypeResellerShop == 123 && model.orderItemShipping.orderShippingAddress) { %>
                 <tr>
-                    <td colspan="3">
-                        <div>
-                            <b><%= config.labels['nameBpost'] %></b><br />
+                    <td class="shipping-BPost" colspan="3">
+                        <div class="BPost-info">
+                            <span class="bold-title"><%= model.orderItemShipping.orderShippingAddress.pickupPointName %></span><br />
                             <%= model.orderItemShipping.orderShippingAddress.postalCode %> , <%= model.orderItemShipping.orderShippingAddress.street %>
                             <%= model.orderItemShipping.orderShippingAddress.city %> <br />
                             <%= model.orderItemShipping.orderShippingAddress.phone %> <br />
                             <%= model.orderItemShipping.orderShippingAddress.email %> <br />
                             <a class="pcbpost-picker-link fancybox.iframe" href="/<%= config.prefix %>/pcbpost/picker/pcbpost_cart_callback?contentonly=1" style="display: block;">
                                 <%= config.labels['chooseOtherBpostPickupPoint'] %>
-                            </a><br />
-                            <b><%= config.labels['openingHours'] %></b><br />
-                            <table>
+                            </a>
+                        </div>
+                        <div class="BPost-hours">
+                            <span class="bold-title"><%= config.labels['openingHours'] %></span><br />
+                            <table id="opening-hours">
                                 <% _.each(model.orderItemShipping.orderShippingAddress.openingHours, function(openingHour, index){ %>
                                 <% if(openingHour[0] && openingHour[1]) { %>
                                 <tr><td><%= config.labels['day_' + index] %></td><td><%= openingHour[0] %> - <%= openingHour[1] %></td></tr>

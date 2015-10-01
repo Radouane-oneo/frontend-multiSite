@@ -1,8 +1,18 @@
 <fieldset class="items cartItemsContainer form-wrapper orderBox" data-orderItem="<%= model.id %>">
 	<div class="fieldset-wrapper">
 		<div class="item job  clearfix form-wrapper job-item-event">
+			<div class="refJob-code" style="display: <%= (model.emailDesigner ==null)?'none':'block' %>;">
+				<div class="form-item">
+					<label for=""><%= config.labels["refjob"] %></label>
+					<input class="refjobTxt" type="text" id="edit-cart-items-1572303-files-description-refjob" name="cart[items][1572303][files][description][refJob]" value="<%= model.refJob %>" size="20" maxlength="25">
+				</div>
+
+				<div class="items_actions">
+					<span data-orderItem="<%= model.id %>" class="removecart"></span>
+				</div>
+			</div>
 			<div class="preview2">
-				<div class="description form-wrapper">
+				<div class="description form-wrapper <%= (model.emailDesigner ==null)?'':'jobDesigner' %>">
 					<h3><%= model.quantity %> <%= config.labels.ex %>. <%= model.configuration.name %> <%= model.configuration.config[0].name %></h3>
 					<%= priceTpl({price:model.price,classToAdd:'price'}) %>
 					<div class="item-list">
@@ -23,6 +33,12 @@
 					</div>
 					<div class="items_actions">
 						<span data-orderItem="<%= model.id %>" class="removecart"></span>
+					</div>
+					<%
+					var directLink = "http://" + document.location.host + "/" + config.prefix + "/products/" + model.configuration['productId'] + "/" + encodeURIComponent(_.map(model.configuration.config, function(conf){ return conf.toolboxItemId; }).join(",")) + "/" + encodeURIComponent(model.options.join(",")) + "/" + model.quantity;
+            		%>
+					<div class="edit-job">
+						<a href="<%= directLink %>" class=""><%= config.labels["updateProduct"] %></a>
 					</div>
 				</div>
 			</div>
@@ -45,8 +61,14 @@
 
                             <li><%= config.labels["dtOptions4"] %></li>
                 		</ul>
-
-                		<a href="<%= config.designtoolLink %><%= model.configuration.designtoolLink %>" class="upload designtool fancybox.iframe iframe">
+                		<%  
+                			var urlCallback = encodeURIComponent("http://" + document.location.host + "/" + config.prefix + "/cart/callback");
+                			var designtoolLink = model.configuration.designtoolLink.replace(/(dcb=).*?(&)/,'$1' + urlCallback + '$2');
+                			designtoolLink = designtoolLink.replace(/(&quickupload=).*/,'');
+                			designtoolLink = designtoolLink.replace(/(&j=).*/,'');
+                			var proUploadLink = designtoolLink + "&quickupload=1";
+                		%>
+                		<a href="<%= config.designtoolLink %><%= designtoolLink %>" class="upload designtool fancybox.iframe iframe">
                 			<span class="text buttondesigntool btnupfile">
                 				<span class="txtgras"><%= config.labels["dtBtnText"] %></span>
                 			</span>
@@ -65,7 +87,7 @@
                             <li><%= config.labels["proUploadOptions3"] %></li>
                 		</ul>
                 		
-                		<a href="<%= config.designtoolLink %><%= model.configuration.proUploadLink %>" class="designtool iframe fancybox.iframe">
+                		<a href="<%= config.designtoolLink %><%= proUploadLink %>" class="designtool iframe fancybox.iframe">
                 			<span class="buttonlayout btnupfile">
                 				<span class="txtgras"><%= config.labels["proUploadBtnText"] %></span>
                 			</span>
@@ -83,7 +105,7 @@
 			<!-- end No download -->
 
 			<div class="clearfix inputdesigner form-wrapper" style="display: <%= (model.emailDesigner ==null)?'none':'block' %>;">
-				<div class="form-item form-type-textfield">
+				<div class="form-item form-type-textfield designer-email">
 					<label for=""><%= config.labels["graphisteAdresse"] %></label>
 					<input class="inputdesigneremail form-text" type="text" id="" name="cart[items][1572303][ready][designer][inputdesigner][email]" value="<%= model.emailDesigner %>" size="50" maxlength="128">
 				</div>

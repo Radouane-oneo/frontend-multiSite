@@ -476,8 +476,9 @@ border-radius: 0;
   font-size: 15px;
   color: #666666;
   text-transform: uppercase;
-  background: url(images/bg_title.png) repeat-x 0 0;
+  /*background: url(images/bg_title.png) repeat-x 0 0;*/
   text-align: center;
+  display: none;
 }
 
 .visu .text {
@@ -485,13 +486,7 @@ padding-top: 86px;
 }
 
 .page-cart .pricepreflight{
-color: #ff6600;
-font-size: 20px;
-font-weight: 600;
-text-align: right;
-width: 120px;
-float: right;
-margin: 5px;
+  padding-top: 10px;
 }
 
 .page-cart .fotolia-items{
@@ -515,55 +510,54 @@ float: left;
 	margin-bottom:	0px;
 }
 .page-cart #pccart-cart-form .control-block{
-    clear: both;
-    overflow: hidden;
-    padding-top: 20px;
+  clear: both;
+  overflow: hidden;
+  padding: 0 10px;
+  background-color: #e1e1e1;
+  border: 1px solid #d1d1d1;
+  border-style: solid none none;
+  position: relative;
 }
 .page-cart #pccart-cart-form .control-block .text{
-    float: left;
-    width: 575px;
+  float: left;
+  width: 474px;
+  border-right: 1px solid #ccc;
+  padding: 10px 0;
 }
 .page-cart #pccart-cart-form .control-block .text h3{
-    float: left;
-    margin: 0;
-    max-width: 520px;
-    text-transform: none;
+  font-size: 12px;
+  float: left;
+  margin: 0;
+  max-width: 520px;
+  text-transform: none;
 
 }
-.page-cart #pccart-cart-form .control-block .text .price{
-    float: right;
-    font-size: 14px;
-    position: static;
-    right: 0;
-
-    margin-top:3px;
+.page-cart #pccart-cart-form .control-block .price, 
+.page-cart .pricepreflight{
+  float: right;
+  font-size: 14px;
+  position: relative;
+  right: 0px;
+  line-height: 18px;
+  font-weight: bold;
+  color: #ff6600;
+  padding-top: 10px;
 }
 
-.page-cart #pccart-cart-form .control-block .text .price span{
-     color: #ff6600 !important;
-    font-size: 18px !important;
-    font-weight: 600 !important;
-}
-body.page-cart #pccart-cart-form .control-block .removecontrol{
-    background: url("images/bg_btns.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
-    clear: none;
-    float: right;
-    margin: 4px 0 0;
-    width: 18px;
-    border: medium none;
-    color: #646464;
-    cursor: pointer;
-    font-size: 12px;
-    height: 20px;
-    padding-bottom: 5px;
-    padding-left: 4px;
-    padding-top: 0;
+#pccart-cart-form .control-block .removecontrol{
+  background: url("images/bg_btns.png") no-repeat scroll -3px 0 rgba(0, 0, 0, 0);
+  clear: none;
+  float: left;
+  margin: 4px 10px 0 0;
+  width: 15px;
+  cursor: pointer;
+  height: 15px;
 }
 
-.cart .cartItemsContainer  .prodactTemplates:after{
+.cart .cartItemsContainer .prodactTemplates:after{
   content: '';
   width: 100%;
-  height: 1px;
+  height: 0px;
   display: block;
   clear: both;
 }
@@ -582,7 +576,7 @@ table.targetPrice td:nth-child(1),
 table.targetPrice td:nth-child(2),
 table.targetPrice td:nth-child(1) *,
 table.targetPrice td:nth-child(2) * {
-  cursor: pointer;
+  /*cursor: pointer;*/
 }
 
 table.targetPrice tbody tr td { border-top:none; border-bottom:1px solid #dbd9d9; }
@@ -696,17 +690,20 @@ table.targetPrice tbody tr.last-child td { border:none; }
 
 .poll-form .designtool.iframe {
   display: inline-block;
-  padding: 5px 30px;
-  background-color: #FF6600;
-  color: #fff;
+  background-color: #6fa900;
   border-radius: 3px;
-  text-align: left;
-  font-size: 14px;
+  text-align: center;
+  width: 267px;
+  height: 40px;
+  line-height: 40px;
+  box-sizing: border-box;
+  font-weight: normal;
+  text-transform: none;
 }
 
 .options-file-impression li {
-  background: url(images/3.png) no-repeat left 6px;
-  padding-left: 16px!important;
+  background: url(images/bg_btns.png) no-repeat -3px -100px;
+  padding-left: 20px!important;
   text-align: left;
   font-size: 11px;
 }
@@ -759,8 +756,8 @@ div#edit-linkcart a {
   display: inline-block;
   float: left;
   padding-left: 10px;
-  border-right: 1px solid #e6e6e6;
-  border-left: 1px solid #f9f9f9;
+  border-right: 1px solid #d1d1d1;
+  /*border-left: 1px solid #f9f9f9;*/
   width: 300px;
 }
 
@@ -818,4 +815,13 @@ div#edit-linkcart a {
 
 #edit-templates-text {
   padding: 5px 0 30px;
+}
+#pccart-cart-form .jobFull-img span, 
+#pccart-cart-form .jobFull-img a,
+#pccart-cart-form .preview1 a.designtool {
+    color: #666666;
+    font-size: 11px;
+    float: left;
+    padding-left: 25px;
+    background: url(images/bg_btns.png) no-repeat 0 -26px;
 }

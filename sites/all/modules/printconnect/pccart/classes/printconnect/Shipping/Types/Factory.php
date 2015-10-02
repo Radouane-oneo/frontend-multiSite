@@ -4,7 +4,7 @@ namespace printconnect\Shipping\Types {
 
   use printconnect\Dal;
 
-  class Factory {
+  class Factory { 
 
     public static function GetCustomerShippingAddresses()
     {
@@ -13,8 +13,8 @@ namespace printconnect\Shipping\Types {
         }else {
             return NULL;
         }
-    }
-
+    } 
+    
     public static function GetSelectedShipping()
     {
         if (isset($_SESSION['cartid'])) {

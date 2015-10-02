@@ -1343,10 +1343,10 @@ function pccheckout_payment_form($form, &$form_state) {
     }
     drupal_add_js(array('pccheckout' => array('VatCart' => $VatCart)), array('type' => 'setting'));
 
-    if(!isset($cart->billingAccount) or empty($cart->billingAccount)){
+    /*if(!isset($cart->billingAccount) or empty($cart->billingAccount)){
     drupal_goto('checkout/invoiceanddelivery');
     drupal_set_message(t('Please check your order because no invoice address related with it'), 'error');
-    }    
+    } */   
     $paymentMethods = \printconnect\PaymentMethods\Factory::GetAll();
     $form['payment']['hidden'] = array(
         '#prefix' => '<div id="hiddenPricesPayment">',

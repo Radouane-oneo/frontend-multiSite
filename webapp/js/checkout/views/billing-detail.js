@@ -22,10 +22,5 @@ define([
 
             $(this.config.billingDetailBox).html(this.$el);
         }
-//        changeShipping : function(orderItemShipping){
-//            this.model.set("orderItemShipping", orderItemShipping);
-//        }
-        
     });
-
 });

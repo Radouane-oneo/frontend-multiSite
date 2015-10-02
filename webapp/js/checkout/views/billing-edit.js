@@ -68,15 +68,9 @@ define([
             if (targetBA != undefined) {
                 this.model.set("defaultBA",targetBA);
             } else if (elmTarget.val() == 0) {
-                this.$('.baInputs').removeAttr('readOnly');
-                this.$('baInputs').val("");
-                this.$('baInputsSelect').val("");
+                this.$('.baInputs').val("");
+                this.$('.baInputsSelect').val("");
             }
         }
-//        changeShipping : function(orderItemShipping){
-//            this.model.set("orderItemShipping", orderItemShipping);
-//        }
-
     });
-
 });

@@ -19,6 +19,7 @@ define([
 
             //billing detail View
             this.billingDetailView = new billingDetailView(this.model);
+            
             //billing Edit View
             this.billingEditView = new billingEditView(this.model);
             //neutral View

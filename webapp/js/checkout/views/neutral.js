@@ -7,7 +7,8 @@ define([
     return Backbone.View.extend({
         template: _.template(neutralTemplate),
         events: {
-            "change #neutralRadioClick" : "neutralOption"
+            "change #neutralRadioClick" : "neutralOption",
+            "click #processPayment" : "processPayment"
         },
         initialize: function(model) {
             this.config = require("config");
@@ -27,6 +28,10 @@ define([
             ).done(function(result) {
                 
             });
+        },
+        processPayment : function(e){
+            location.href = "/" + this.config.prefix + "/checkout/payment";
+            return false;
         }
     });
 });

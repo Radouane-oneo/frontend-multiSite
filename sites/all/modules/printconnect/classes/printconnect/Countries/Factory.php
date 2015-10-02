@@ -25,6 +25,11 @@ class Factory {
     return new Countries();
   }
 
+  public static function GetCountriesList()
+  {
+    return Dal::SendRequest('country/');
+  }
+  
   public static function GetAllActive() {
     $result = new Countries();
     $allCountries = $_self::GetAll();

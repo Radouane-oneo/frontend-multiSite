@@ -27,10 +27,6 @@ define([
             this.model = new productConfigModel();
             this.render();
             this.model.on("change",this.render,this);
-            clearInterval(timerSaveP);
-            $("#save-progress-bar").find("div").stop(true).animate({width: 100 + '%'},1000, function(){
-                $('#box-progress').hide();
-            });
         },
         render:function(){
             this.setElement(this.template({

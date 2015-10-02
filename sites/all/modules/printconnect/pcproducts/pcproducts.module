@@ -680,7 +680,7 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
         var GlobalJobId = ".(!$edit ? 'null' : $edit).";
         var GlobalPrefix = '".$language->prefix."';
     </script>";
-    $script .= "<style>#box-progress{display: block;}</style>";
+
     $script .= '<script data-main="/webapp/js/productConfig/main" src="/webapp/js/libs/requirejs/require.js"></script>';
     $script .= '<div id="myForm"></div>';
 

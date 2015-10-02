@@ -11234,8 +11234,7 @@ input.ui-button.payment {
 .page-cart #pccart-cart-form .item .preview2 .description.jobDesigner .price {
     right: 0;
 }
-.page-cart #pccart-cart-form .item .preview2 .description.jobDesigner .items_actions,
-.page-cart #pccart-cart-form .item .preview2 .description.jobDesigner .edit-job {
+.page-cart #pccart-cart-form .item .preview2 .description.jobDesigner .items_actions {
     display: none;
 }
 #pccart-cart-form .prodactTemplates .poll-form.designToolOnly {

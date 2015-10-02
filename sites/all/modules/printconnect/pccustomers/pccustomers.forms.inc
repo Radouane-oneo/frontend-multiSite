@@ -242,9 +242,9 @@ function pccustomers_profile_form_validate($form, &$form_state) {
   if (!is_numeric($form_state['values']['phone'])) {
      form_set_error('phone',t('Please enter your Phone Number as Number value.'));
   }
-  if (is_numeric($form_state['values']['phone']) && strlen($form_state['values']['phone']) >= 10) {
-      form_set_error('phone',t('Please enter a valid phone number.'));
-  }
+//  if (is_numeric($form_state['values']['phone']) && strlen($form_state['values']['phone']) >= 10) {
+//      form_set_error('phone',t('Please enter a valid phone number.'));
+//  }
   if (!valid_email_address($form_state['values']['email'])) {
     form_set_error('email', t('Email is not valid'));
   }

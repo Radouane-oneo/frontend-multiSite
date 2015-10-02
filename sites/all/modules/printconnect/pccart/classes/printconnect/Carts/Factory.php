@@ -9,12 +9,23 @@ class Factory {
 
     public static function GetCartJson()
     {
+        $response = NULL;
         if (isset($_SESSION['cartid'])) {
-            return Dal::SendRequest('new-cart/id/'. $_SESSION['cartid']);
-        }else {
-            return NULL;
+            $response = Dal::SendRequest('new-cart/id/'. $_SESSION['cartid']);
+        }elseif($_SESSION['customerid']) {
+            $response = Dal::SendRequest('new-cart/customer/'. $_SESSION['customerid']);
         }
-    }
+
+        if(!$response) {
+            $_SESSION['cartCount'] = 0;
+        }else {
+            $cart = json_decode($response->data);
+            $number = count($cart->orderItems);
+            $_SESSION['cartCount'] = $number;
+        }
+
+        return $response;
+    } 
 
     public static function DeleteItem($id) 
     {
@@ -445,7 +456,6 @@ class Factory {
 	);
       } catch (\Exception $ex) {
       }
-
       self::UpdateCartCount(TRUE);
       return $object;
     }

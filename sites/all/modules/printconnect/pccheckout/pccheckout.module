@@ -177,6 +177,13 @@ function pccheckout_menu() {
           'type' => MENU_CALLBACK,
       );
 
+      $items['checkout/ajax/saveshippingaddress'] = array(
+          'page callback' => 'new_checkout_ajax_saveshippingaddress',
+          'page arguments' => array(),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+
       // =======================================================================================
 
       $items['checkout'] = array(
@@ -312,6 +319,12 @@ function new_checkout_ajax_getshippingaddresses() {
         'orderItemShipping' => json_decode($selected->data, 1),
         'addresses' => json_decode($shippings->data, 1)
     ));
+}
+
+function new_checkout_ajax_saveshippingaddress() {
+    $response = \printconnect\Shipping\Types\Factory::SaveOrderShippingAddresses($_POST);
+
+    Dal::BuildJson($response->data);
 }
 
 function new_checkout_ajax_getbillingaccounts() {

@@ -3,7 +3,8 @@ define([], function () {
         urls: {
             "saveBillingAccount" : "/checkout/savenewinvoiceanddelivery",
             "getBillingAccountFromVat" : "/checkout/getBillingAccoutFromVat",
-            "saveNeutralShipping" : "/checkout/saveNeutralShipping"
+            "saveNeutralShipping" : "/checkout/saveNeutralShipping",
+            "saveShipping" : "/checkout/ajax/saveshippingaddress"
         },
         call : function(action, data, method, params){
             if (!method) {method = "POST"}
@@ -14,9 +15,9 @@ define([], function () {
                 url: "/" + config.prefix + this.urls[action] + params,
                 data : data
             }).done(function(resultData) {
-                //myCart.disable = false;
+
             }).error(function(){
-                console.log("erro");
+
             });
         }
 

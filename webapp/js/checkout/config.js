@@ -13,7 +13,6 @@ define([
         billingAccountList = $.parseJSON(BillingJSON);
 
         shippingAddresses = $.parseJSON(shippingAddressesJson);
-        CountriesList = $.parseJSON(CountriesListJson);
 
         billingAccountList = billingAccountList.data;
         CountriesList = $.parseJSON(CountriesListJson);
@@ -93,12 +92,15 @@ define([
             "CitySA" : "Ville",
             "postalCodeCitySA" : "Code Postale",
             "CountrySA" : "Pays",
-            "CompanySA" : "La livraison se fait chez une entreprise ? Veuillez remplir le nom"
+            "CompanySA" : "La livraison se fait chez une entreprise ? Veuillez remplir le nom",
             "NeutralShippingTitle" : "ENVOI NEUTRE",
             "NeutralShipping" : "Envoi neutre",
             "Neutralexplain" : "Voulez-vous votre commande sans mention de Flyer.fr sur la boîte? S'il vous plaît cocher cette case.",
             "securePaymentBtn" : "Paiement sécurisé",
-            "BAalreadyExisting" : "this billing address is already exist would you want load this address as your default billing address"
+            "BAalreadyExisting" : "this billing address is already exist would you want load this address as your default billing address",
+            "shippingTypeStoreError" : "shippingTypeStoreError",
+            "nameEmptyError" : "nameEmptyError",
+            "shippingTypeBpostPickupPointError" : "shippingTypeBpostPickupPointError"
         }
         
     };

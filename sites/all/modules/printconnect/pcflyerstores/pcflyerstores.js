@@ -135,7 +135,10 @@ function pcflyerstores_callback(id){
   jQuery('input[name="pcflyerstores[id]"]').val(id);
   jQuery.getJSON(url, function(data){
       if(data.code == 200) {
-          myCart.changeShipping(data.data.orderItemShipping);
+          if(typeof myCart != "undefined")
+            myCart.changeShipping(data.data.orderItemShipping);
+          if(typeof myCheckout != "undefined")
+            myCheckout.changeShipping(data.data.orderItemShipping);  
       }
   });
 }

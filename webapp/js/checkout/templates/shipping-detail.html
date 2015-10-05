@@ -1,12 +1,19 @@
 <fieldset id="edit-summary-shipping" class="shipping form-wrapper">
     <legend><span class="fieldset-legend"><%= model.labels['shippingAddress'] %></span></legend>
+    <% var orderItemShippingAddress = (model.shippingAddresses.orderItemShipping &&
+    model.shippingAddresses.orderItemShipping.orderShippingAddress) ?
+    model.shippingAddresses.orderItemShipping.orderShippingAddress : model.shippingAddresses.addresses[0]; %>
     <div class="fieldset-wrapper">
+        <% if(orderItemShippingAddress) { %>
         <div class="address">
-            <div class="name"></div>
-            <div class="street">ddsdsdsd</div>
-            <div class="place">BE - 4000 bruxelle</div>
-            <div class="phone">0642032828</div>
+            <div class="name"><%= orderItemShippingAddress.name %></div>
+            <div class="street"><%= orderItemShippingAddress.street %></div>
+            <div class="place"><%= _.findWhere(model.countries, {id : orderItemShippingAddress.country}).iso %> - <%=
+                orderItemShippingAddress.postalCode %> <%= orderItemShippingAddress.city %>
+            </div>
+            <div class="phone"><%= orderItemShippingAddress.phone %></div>
         </div>
-        <a class="toggle jquery-once-1-processed" href="#shipping-address" id="toggle-shipping-form">Change shipping
-            address</a></div>
+        <% } %>
+        <a class="toggle" href="#shipping-address" id="toggle-shipping-form"><%= model.labels['changeShippingAddress'] %></a>
+    </div>
 </fieldset>

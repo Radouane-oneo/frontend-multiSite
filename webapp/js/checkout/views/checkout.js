@@ -41,7 +41,9 @@ define([
             $(this.config.containerId).html(this.$el);
         },
         changeShipping : function(orderItemShipping){
-            this.model.set("orderItemShipping", orderItemShipping);
+            var shippingAddresses = $.extend(true, {}, this.model.get("shippingAddresses"));
+            shippingAddresses.orderItemShipping = orderItemShipping;
+            this.model.set("shippingAddresses", shippingAddresses);
         }
         
     });

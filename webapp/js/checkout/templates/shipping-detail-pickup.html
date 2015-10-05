@@ -1,0 +1,33 @@
+<fieldset id="edit-summary-shipping" class="shipping form-wrapper">
+    <legend><span class="fieldset-legend"><%= model.labels['shippingAddress'] %></span></legend>
+    <div class="fieldset-wrapper">
+        <%
+            var orderItemShipping = model.shippingAddresses.orderItemShipping;
+        %>
+        <%
+            if(orderItemShipping && orderItemShipping.orderShippingAddress) {
+                var shippingAddress = orderItemShipping.orderShippingAddress;
+        %>
+        <div id="detail">
+            <h6><%= shippingAddress.pickupPointName %></h6>
+            <div class="address"><%= shippingAddress.street %> - <%= shippingAddress.postalCode %> <%= shippingAddress.city %></div>
+            <div class="phone"><%= shippingAddress.phone %></div>
+            <div class="email"><a href="mailto:<%= shippingAddress.email %>"><%= shippingAddress.email %></a></div>
+        </div>
+        <div id="hoursDetail">
+            <h6><%= model.labels['openingHours'] %></h6>
+            <table>
+                <% _.each(shippingAddress.openingHours, function(openingHour, index){ %>
+                <% if(openingHour[0] && openingHour[1]) { %>
+                <tr><td><%= model.labels['day_' + index] %></td><td><%= openingHour[0] %> - <%= openingHour[1] %>
+                <% if(openingHour[2] && openingHour[3]) print(openingHour[2]+" - "+openingHour[3]) %></td></tr>
+                <%
+                }
+                });
+                %>
+            </table>
+        </div>
+        <% } %>
+        <a class="toggle" href="#shipping-address" id="toggle-shipping-form"><%= model.labels['changeShippingAddress'] %></a>
+    </div>
+</fieldset>

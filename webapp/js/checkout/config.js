@@ -1,7 +1,7 @@
 define([
     'backbone',
     'text!/' + GlobalPrefix + '/checkout/ajax/getbillingaccounts',
-    'text!/' + GlobalPrefix + '/checkout/countriesList',
+    'text!countries.json',
     'text!/' + GlobalPrefix + '/checkout/ajax/getshippingaddresses'
 ], function (Backbone, BillingJSON, CountriesListJson, shippingAddressesJson) {
     var billingAccountList = "";
@@ -16,6 +16,7 @@ define([
     } catch (e) {
         billingAccountList = {};
         shippingAddresses = {};
+        CountriesList = {};
         vat = GlobalVat;
     }
    
@@ -31,7 +32,7 @@ define([
         vat : vat,
         prefix : GlobalPrefix,
         isConnected : isConnected,
-        countries : CountriesList.data,
+        countries : CountriesList,
         langId : '10',
         designtoolLink : 'http://designtool.prd.printconcept.com',
         labels : {
@@ -51,7 +52,34 @@ define([
             "VatNumberBA" : "Numéro de Tva",
             "BAFieldsRequired" : "Ce champ est requis.",
             "existingBA" : "this billing address is already exist would you want load this address as your default billing address",
-            "shippingAddress" : "Shipping address"
+            "shippingAddress" : "Shipping address",
+            "changeShippingAddress" : "Change shipping address",
+            "openingHours" : "Heures d'ouverture",
+            "day_1" : "Lundi",
+            "day_2" : "Mardi",
+            "day_3" : "Mercredi",
+            "day_4" : "Jeudi",
+            "day_5" : "Vendredi",
+            "day_6" : "Samedi",
+            "day_7" : "Dimanche",
+            "shippingFlyerstore" :'Vous avez choisi "Enlèvement dans un FlyerStore"',
+            "shippingBpost" :'Vous avez choisi "Enlèvement dans un point poste"',
+            "chooseFlyerstore" : "Choisissez votre FlyerStore",
+            "chooseBpost" : "Choisissez votre point poste",
+            "infoTitleFlyerstore" : "Qui va collecter la commande dans le FlyerStore?",
+            "infoTitleBpost" : "Qui va collecter la commande dans le point poste?",
+            "yourName" : "Votre nom et prénom",
+            "requiredField" : "Ce champ est requis.",
+            "save" : "Enregistrer",
+            "selectSA" : "SÉLECTIONNEZ UNE ADRESSE",
+            "OrCreateSA" : "Ou créez une nouvelle adresse en remplissant le formulaire ci-dessous.",
+            "addNewSA" : "Ajouter une adresse",
+            "SAName" : "votre nom livraison",
+            "StreetSA" : "N° et Rue",
+            "CitySA" : "Ville",
+            "postalCodeCitySA" : "Code Postale",
+            "CountrySA" : "Pays",
+            "CompanySA" : "La livraison se fait chez une entreprise ? Veuillez remplir le nom"
         }
         
     };

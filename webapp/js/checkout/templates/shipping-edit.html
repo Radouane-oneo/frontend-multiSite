@@ -3,67 +3,61 @@
         <fieldset class="form-wrapper" id="shipping">
             <div class="fieldset-wrapper">
                 <div class="headerforminvoice">
-                    <div class="invoiceaddress">Adresse de livraison</div>
-                    <div class="blocright"><span>Sélectionnez une adresse</span>Ou entrez une nouvelle adresse dans le
-                        formulaire ci-dessous
+                    <div class="invoiceaddress"><%= model.labels['shippingAddress'] %></div>
+                    <div class="blocright"><span><%= model.labels['selectSA'] %></span><%= model.labels['OrCreateSA'] %>
                     </div>
                     <div class="form-item form-type-select form-item-shipping-detail-current-select">
                         <select name="shipping[detail][current][select]" id="edit-shipping-detail-current-select"
-                                class="selectBilling2 form-select" title="">
-                            <option value="138795-B">hassan taleb - casa alia rue 585 oulfa , 20000 casa</option>
-                            <option selected="selected" value="328205">hassan taleb - casa alia rue 585 oulfa , 20000
-                                casa
-                            </option>
-                            <option value="328123">hassan taleb - casa alia rue 585 oulfa , 20000 casa</option>
-                            <option value="138795">hassan taleb - casa alia rue 585 oulfa , 20000 casa</option>
+                                class="form-select" title="">
+                                <option value="0"><%= model.labels['addNewSA'] %></option>
+                            <% _.each(model.shippingAddresses.addresses, function(shippingAddress){ %>
+                                <option value="<%= shippingAddress.id %>"><%= shippingAddress.name  %> - <%= shippingAddress.street  %> , <%= shippingAddress.postalCode  %> <%= shippingAddress.city %></option>
+                            <% }) %>
                         </select>
                     </div>
                 </div>
                 <div class="form-item form-type-textfield form-item-shipping-detail-current-name">
-                    <label for="edit-shipping-detail-current-name">votre nom livraison <span
-                            title="Ce champ est requis." class="form-required">*</span></label>
-                    <input type="text" class="form-text required" maxlength="128" size="30" value="hassan taleb"
+                    <label for="edit-shipping-detail-current-name"><%= model.labels['SAName'] %><span
+                            title="<%= model.labels['requiredField'] %>" class="form-required">*</span></label>
+                    <input type="text" class="form-text required" maxlength="128" size="30" value=""
                            name="shipping[detail][current][name]" id="edit-shipping-detail-current-name">
                 </div>
                 <div class="form-item form-type-textfield form-item-shipping-detail-current-street">
-                    <label for="edit-shipping-detail-current-street">N° et Rue <span title="Ce champ est requis."
+                    <label for="edit-shipping-detail-current-street"><%= model.labels['StreetSA'] %><span title="<%= model.labels['requiredField'] %>"
                                                                                      class="form-required">*</span></label>
                     <input type="text" class="form-text required" maxlength="128" size="30"
-                           value="casa alia rue 585 oulfa" name="shipping[detail][current][street]"
+                           value="" name="shipping[detail][current][street]"
                            id="edit-shipping-detail-current-street">
                 </div>
                 <div class="form-item form-type-textfield form-item-shipping-detail-current-postalCode">
-                    <label for="edit-shipping-detail-current-postalcode">Code Postal <span title="Ce champ est requis."
+                    <label for="edit-shipping-detail-current-postalcode"><%= model.labels['postalCodeCitySA'] %><span title="<%= model.labels['requiredField'] %>"
                                                                                            class="form-required">*</span></label>
-                    <input type="text" class="form-text required" maxlength="128" size="6" value="20000"
+                    <input type="text" class="form-text required" maxlength="128" size="6" value=""
                            name="shipping[detail][current][postalCode]" id="edit-shipping-detail-current-postalCode">
                 </div>
                 <div class="form-item form-type-textfield form-item-shipping-detail-current-city">
-                    <input type="text" class="form-text required" maxlength="128" size="30" value="casa"
+                    <input type="text" class="form-text required" maxlength="128" size="30" value=""
                            name="shipping[detail][current][city]" id="edit-shipping-detail-current-city">
                 </div>
                 <div class="form-item form-type-select form-item-shipping-detail-current-country">
-                    <label for="edit-shipping-detail-current-country">Pays <span title="Ce champ est requis."
+                    <label for="edit-shipping-detail-current-country"><%= model.labels['CountrySA'] %><span title="<%= model.labels['requiredField'] %>"
                                                                                  class="form-required">*</span></label>
                     <select name="shipping[detail][current][country]" class="selectStyle form-select required"
-                            id="edit-shipping-detail-current-country" title="Pays *">
-                        <option value="21">Belgique</option>
-                        <option selected="selected" value="73">France</option>
-                        <option value="150">Pays-Bas</option>
-                        <option value="199">Espagne</option>
-                        <option value="124">Luxembourg</option>
+                            id="edit-shipping-detail-current-country" title="">
+                        <% _.each(model.countries, function(country){ %>
+                            <option value="<%= country.id %>"><%= country.name %></option>
+                        <% }); %>
                     </select>
                 </div>
                 <div class="form-item form-type-textfield form-item-shipping-detail-current-company">
-                    <label for="edit-shipping-detail-current-company">La livraison se fait chez une entreprise ?
-                        Veuillez remplir le nom . <span class="form-required" title="Ce champ est requis.">*</span>
+                    <label for="edit-shipping-detail-current-company"><%= model.labels['CompanySA'] %><span class="form-required" title="<%= model.labels['requiredField'] %>">*</span>
                     </label>
                     <input type="text" class="form-text" maxlength="128" size="30" value=""
                            name="shipping[detail][current][company]" id="edit-shipping-detail-current-company">
                 </div>
                 <div class="form-wrapper" id="edit-shipping-detail-current-actions"><input type="submit"
                                                                                            class="form-submit ui-button ui-widget ui-state-default ui-corner-all"
-                                                                                           value="Enregistrer"
+                                                                                           value="<%= model.labels['save'] %>"
                                                                                            name="shipping_address_submit"
                                                                                            id="edit-shipping-detail-current-actions-submit"
                                                                                            role="button"></div>

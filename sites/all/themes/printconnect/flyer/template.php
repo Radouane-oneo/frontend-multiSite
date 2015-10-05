@@ -289,6 +289,9 @@ function flyer_preprocess_html(&$vars) {
             unset($javascript['sites/all/libraries/fancybox/fancybox/jquery.fancybox-1.3.4.js']);
             unset($javascript['sites/all/modules/contrib/fancybox/js/fancybox.js']);
         }
+        if($args[0]=="checkout" && $args[1]=="newinvoiceanddelivery") {
+            unset($javascript['sites/all/modules/printconnect/pcflyerstores/pcflyerstores_map.js']);
+        }
 }
 
 function flyer_css_alter(&$css) {

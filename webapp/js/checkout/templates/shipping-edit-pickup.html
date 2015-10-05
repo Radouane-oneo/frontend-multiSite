@@ -1,0 +1,70 @@
+<fieldset class="tohiding styleform form-wrapper" id="shipping-address" style="display: block;">
+    <% var title = (model.shippingAddresses.orderItemShipping.shippingTypeTag == "shippingTypeStore") ?
+    model.labels['shippingFlyerstore'] : model.labels['shippingBpost'];
+
+    var link = (model.shippingAddresses.orderItemShipping.shippingTypeTag == "shippingTypeStore") ?
+    "/stores/picker/callback/pcflyerstores_callback?contentonly=1" :
+    "/pcbpost/picker/pcbpost_cart_callback?contentonly=1";
+
+    var buttonText = (model.shippingAddresses.orderItemShipping.shippingTypeTag == "shippingTypeStore") ?
+    model.labels['chooseFlyerstore'] : model.labels['chooseBpost'];
+
+    var infoTitle = (model.shippingAddresses.orderItemShipping.shippingTypeTag == "shippingTypeStore") ?
+    model.labels['infoTitleFlyerstore'] : model.labels['infoTitleBpost'];
+    %>
+    <div class="legend legend1"><span class="fieldset-legend"><%= title %></span>
+    </div>
+    <div class="fieldset-wrapper"><span style="margin-left:100px;" class="storeLink"><a
+            class="button linkflyerstore picker-link fancybox.iframe ui-button"
+            href="/<%= model.prefix + link %>" role="button"><span
+            class="ui-button-text"><%= buttonText %></span></a></span>
+
+        <div id="allresault" class="store clearfix store clearfix" style="display: block;">
+            <div id="allresault" class="store clearfix">
+                <div style="height:48%" id="map-canvas">
+                </div>
+                <div id="Mapimg">
+                </div>
+                <div id="storethumb"></div>
+                <div class="storcomande">
+                    <%
+                    var orderItemShipping = model.shippingAddresses.orderItemShipping;
+                    %>
+                    <%
+                    if(orderItemShipping && orderItemShipping.orderShippingAddress) {
+                    var shippingAddress = orderItemShipping.orderShippingAddress;
+                    %>
+                    <div id="detail">
+                        <h6><%= shippingAddress.pickupPointName %></h6>
+                        <div class="address"><%= shippingAddress.street %> - <%= shippingAddress.postalCode %> <%= shippingAddress.city %></div>
+                        <div class="phone"><%= shippingAddress.phone %></div>
+                        <div class="email"><a href="mailto:<%= shippingAddress.email %>"><%= shippingAddress.email %></a></div>
+                    </div>
+                    <div id="hoursDetail">
+                        <h6><%= model.labels['openingHours'] %></h6>
+                        <table>
+                            <% _.each(shippingAddress.openingHours, function(openingHour, index){ %>
+                            <% if(openingHour[0] && openingHour[1]) { %>
+                            <tr><td><%= model.labels['day_' + index] %></td><td><%= openingHour[0] %> - <%= openingHour[1] %>
+                                <% if(openingHour[2] && openingHour[3]) print(openingHour[2]+" - "+openingHour[3]) %></td></tr>
+                            <%
+                            }
+                            });
+                            %>
+                        </table>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <div class="quivacollecter"><h1><%= infoTitle %></h1></div>
+        <div class="form-item form-type-textfield form-item-shipping-detail-contact">
+            <label for="edit-shipping-detail-contact"><%= model.labels['yourName'] %><span title="<%= model.labels['requiredField'] %>"
+                                                                                class="form-required">*</span></label>
+            <input type="text" class="form-text required" maxlength="128" size="30" value="<%= (shippingAddress)?shippingAddress.name:'' %>"
+                   name="shipping[detail][contact]" id="edit-shipping-detail-contact">
+        </div>
+
+        <input type="submit" class="form-submit ui-button ui-widget ui-state-default ui-corner-all" value="<%= model.labels['save'] %>"
+               name="shipping_address_submit" id="edit-shipping-detail-submit" role="button"></div>
+</fieldset>

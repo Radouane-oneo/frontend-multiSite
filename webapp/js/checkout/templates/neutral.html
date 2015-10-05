@@ -1,11 +1,16 @@
-<fieldset id="edit-cart-reference" class="discount ref form-wrapper">
-    <legend><span class="fieldset-legend"><%= config.labels['customerReference'] %></span></legend>
-    <div class="fieldset-wrapper">
-        <div class="form-item form-type-item" id="edit-cart-reference-text">
-            <%= config.labels['customerReferenceText'] %>
-        </div>
-        <div class="form-item form-type-textfield form-item-cart-reference-input">
-            <input type="text" maxlength="128" size="30" value="<%= model.customerReference %>" id="edit-cart-reference-input"  class="refCustomer form-text" >
-        </div>
-    </div>
-</fieldset>
+<p class="lineSeparator"><%= model.labels['NeutralShippingTitle'] %></p>
+<div id="edit-shipping-neutral-text" class="form-item form-type-item">
+    <p class="neutralDescritpion">
+        <%= model.labels['Neutralexplain'] %>
+    </p>
+</div>
+<div class="form-item form-type-checkbox form-item-shipping-neutral-check">
+    <input type="checkbox" id="neutralRadioClick" class="form-checkbox">  
+    <label class="option" for="neutralRadio">
+        <%= model.labels['NeutralShipping'] %>
+    </label>
+</div>
+<div class="clearfix form-actions form-wrapper" id="edit-actions">
+    <input id="processPayment"class="payment form-submit ui-button ui-widget ui-state-default ui-corner-all" 
+        type="submit" id="edit-actions-submit" name="op" value="<%= model.labels['securePaymentBtn'] %>" role="button">
+</div>

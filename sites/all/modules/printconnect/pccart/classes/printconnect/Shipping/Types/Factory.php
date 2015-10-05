@@ -4,7 +4,12 @@ namespace printconnect\Shipping\Types {
 
   use printconnect\Dal;
 
-  class Factory {
+  class Factory { 
+
+    public static function SaveOrderShippingAddresses($data)
+    {
+        return Dal::SendRequest('order-shipping-address', 'PUT', $data);
+    } 
 
     public static function GetCustomerShippingAddresses()
     {
@@ -13,8 +18,8 @@ namespace printconnect\Shipping\Types {
         }else {
             return NULL;
         }
-    }
-
+    } 
+    
     public static function GetSelectedShipping()
     {
         if (isset($_SESSION['cartid'])) {

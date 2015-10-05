@@ -287,6 +287,7 @@ function new_cart_loadpage() {
         var isConnected = " . (isset($_SESSION['customerid']) ? 1 : 0) . ";
     </script>";
     $script .= "<style>#box-progress{display: block;}</style>";
+    
     $script .= '<link rel="stylesheet" href="/webapp/js/libs/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />';
     $script .= '<script data-main="/webapp/js/cart/main" src="/webapp/js/libs/requirejs/require.js"></script>';
     $script .= '<div id="myCart"></div>';
@@ -447,6 +448,7 @@ function pccart_block_info() {
 }
 
 function pccart_block_view($delta = '') {
+
   printconnect_ensureinitialized();
   switch ($delta) {
     case 'save':
@@ -462,7 +464,6 @@ function pccart_block_view($delta = '') {
       break;
     case 'cart':
       $cart = Factory::Current();
-
       $block = FALSE;
       $items = array();
       if ($cart && $cart->isFilled) {
@@ -681,7 +682,7 @@ function pccart_block_view($delta = '') {
 
 
         $block['content'] = $content;
-      }
+      } 
       return $block;
       break;
 
@@ -1441,7 +1442,9 @@ function pccart_form_pccustomers_loginas_form_submit($form, &$form_state) {
 }
 
 function pccart_loggedin($customerId) {
-
+  if(isset($_SESSION['cartCount'])) {
+      unset($_SESSION['cartCount']);
+  }
   $cart = Factory::Current();
   if ($cart) {
     if ($customerId != $cart->customer) {

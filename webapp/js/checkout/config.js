@@ -8,11 +8,24 @@ define([
     var shippingAddresses = "";
     var vat = GlobalVat;
     var CountriesList = "";
+    var defaultBA = null;
     try {
         billingAccountList = $.parseJSON(BillingJSON);
+
         shippingAddresses = $.parseJSON(shippingAddressesJson);
         CountriesList = $.parseJSON(CountriesListJson);
-        vat = billingAccountList.data.vat;
+
+        billingAccountList = billingAccountList.data;
+        CountriesList = $.parseJSON(CountriesListJson);
+        vat = billingAccountList.vat;
+        delete billingAccountList.discountCode;
+        delete billingAccountList.vat;
+        $.each(billingAccountList, function(i, billingAccount){
+            if (billingAccount.isDefault) {
+                defaultBA = billingAccount;
+            }
+        });
+
     } catch (e) {
         billingAccountList = {};
         shippingAddresses = {};
@@ -29,6 +42,7 @@ define([
         neutralBox : '#neutralBox',
         billingAccouts : billingAccountList,
         shippingAddresses : shippingAddresses.data,
+        defaultBA : defaultBA,
         vat : vat,
         prefix : GlobalPrefix,
         isConnected : isConnected,
@@ -80,6 +94,11 @@ define([
             "postalCodeCitySA" : "Code Postale",
             "CountrySA" : "Pays",
             "CompanySA" : "La livraison se fait chez une entreprise ? Veuillez remplir le nom"
+            "NeutralShippingTitle" : "ENVOI NEUTRE",
+            "NeutralShipping" : "Envoi neutre",
+            "Neutralexplain" : "Voulez-vous votre commande sans mention de Flyer.fr sur la boîte? S'il vous plaît cocher cette case.",
+            "securePaymentBtn" : "Paiement sécurisé",
+            "BAalreadyExisting" : "this billing address is already exist would you want load this address as your default billing address"
         }
         
     };

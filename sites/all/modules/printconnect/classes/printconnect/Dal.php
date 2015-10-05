@@ -13,7 +13,7 @@ namespace printconnect {
 
   use printconnect\Dal\NotFoundException;
 
-  class Dal {
+  class Dal { 
 
     protected static $_cache = array();
     public static $totalCountTemplates ;
@@ -37,7 +37,6 @@ namespace printconnect {
             'method' => $method, 
             'data' => json_encode($data)
         ));
-
         if($response->code == 200 && $method == 'GET') {
             self::SaveCacheData($url, $response->data);
         }

@@ -13,6 +13,7 @@ define([
             this.config = require("config");
             this.model = model;
             this.render();
+            this.model.on("change",this.render, this);
         },
         render : function(){
             this.setElement(this.template({
@@ -21,10 +22,5 @@ define([
 
             $(this.config.billingDetailBox).html(this.$el);
         }
-//        changeShipping : function(orderItemShipping){
-//            this.model.set("orderItemShipping", orderItemShipping);
-//        }
-        
     });
-
 });

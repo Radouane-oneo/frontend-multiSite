@@ -8,7 +8,12 @@ namespace printconnect\Shipping\Types {
 
     public static function SaveOrderShippingAddresses($data)
     {
-        return Dal::SendRequest('order-shipping-address', 'PUT', $data);
+        if (isset($_SESSION['cartid'])) {
+            $data['cartId'] = $_SESSION['cartid'];
+            return Dal::SendRequest('order-shipping-address', 'PUT', $data);
+        }else {
+            return NULL;
+        }
     } 
 
     public static function GetCustomerShippingAddresses()

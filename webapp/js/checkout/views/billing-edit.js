@@ -25,6 +25,28 @@ define([
             }));
             $(this.config.editBox).find(".billingBox").html(this.$el);
         },
+	errors : function() {
+	    me = this;
+	    var result = null;
+ 	    $('.baInputs').each(function(baInputs){
+     		if ($(this).val() == '') {
+		    $(this).css('border-color', 'red');
+	            result = me.config.labels["BaFieldRequired"];
+		    return false;
+	        }
+	    });
+	    if (result) {
+		return result;
+	    }
+	    if (
+		($("#company").val() != "" && $("#vatNumber").val() == "")
+		|| ($("#company").val() == "" && $("#vatNumber").val() != "")
+	    ) {
+		$("#companyInput").css('border-color', 'red');
+		$("#vatNumberBA").css('border-color', 'red');
+		return this.config.labels["fieldCmpVatNumber"];
+	    }
+        },
         showPopUp: function(e){
             var elmTarget = $(e.currentTarget);
             var me = this;
@@ -40,6 +62,12 @@ define([
         },
         saveBA: function(e) {
             var me = this;
+	    var billingError = this.errors();
+            if( billingError) {
+                myCheckout.errorView.render(billingError);
+                $(window).scrollTop($(this.config.containerId).offset().top);
+                return false;
+            }
             ajaxCaller.call("saveBillingAccount",
                 {
                     "id": this.$('#baEditSelect').val(),

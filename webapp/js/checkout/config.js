@@ -104,7 +104,9 @@ define([
             "phone" : "phone",
             "email" : "email",
             "requiredFieldsError" : "Veuillez remplir tout les champs obligatoires",
-            "emailError" : "Adresse email n'est pas valide"
+            "emailError" : "Adresse email n'est pas valide",
+	    "BaFieldRequired" : "Veuillez remplir tout les champs obligatoires",
+	    "fieldCmpVatNumber" : "Sociéte et numero de tva sont requit"
         }
         
     };

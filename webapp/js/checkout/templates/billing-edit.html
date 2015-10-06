@@ -48,7 +48,8 @@
                 </label>
                 <input type="text" id="baName"
                        class="baInputs"
-                       value="<%= model.defaultBA.name %>" size="30" maxlength="128" 
+                       value="<%= model.defaultBA.name %>" size="30" maxlength="128"
+		       name = "name" 
                        class="form-text required" >
             </div>
             <div class="form-item form-type-textfield form-item-invoice-address-current-street">
@@ -58,6 +59,7 @@
                 <input type="text" id="baStreet" 
                        value="<%= model.defaultBA.street %>" 
                        class ="baInputs"
+		       name = "street"
                        size="30" maxlength="128" class="form-text required" >
             </div>
             <div class="form-item form-type-textfield form-item-invoice-address-current-postalCode">
@@ -67,6 +69,7 @@
                 <input placeholder="1000" id="baPostalCode" type="text"
                        value="<%= model.defaultBA.postalCode%>"
                        class="baInputs"
+		       name = "postal code"
                        size="6" maxlength="128" class="form-text required" >
             </div>
             <div class="form-item form-type-textfield form-item-invoice-address-current-city">
@@ -76,6 +79,7 @@
                 <input placeholder="Bruxelles" type="text" id="baCity" 
                        value="<%= model.defaultBA.city%>"
                        class="baInputs"
+		       name = "city"
                        size="30" maxlength="128" class="form-text required" >
             </div>
             <div class="form-item form-type-select form-item-invoice-address-current-country">
@@ -95,16 +99,16 @@
             </div>
             <div class="form-item form-type-textfield form-item-invoice-address-current-company" style="display: block;">
                 <label for="edit-invoice-address-current-company"><%= model.labels['CompanyBA'] %> </label>
-                <input id="companyInput" type="text" value="" size="30" maxlength="128" class="form-text">
+                <input id="companyInput" name="company" type="text" value="" size="30" maxlength="128" class="form-text">
             </div>
             <div id="vatNumber">
                 <div class="form-item form-type-vatfield form-item-invoice-address-current-vatNumber vat-validation-processed" style="display: block;">
                     <label for="vatNumber">
                         <%= model.labels['VatNumberBA']%> 
                     </label>
-                    <input class="country form-text baInputs"  type="text" id="countryIsoBA" readOnly = "readOnly"
+                    <input class="country form-text"  type="text" id="countryIsoBA" readOnly = "readOnly"
                            value="<%= (model.defaultBA) ? model.defaultBA.iso : '' %>" size="2" maxlength="2">
-                    <input class="number form-text" type="text" id="vatNumberBA" 
+                    <input class="number form-text" type="text" id="vatNumberBA" name="vat number" 
                            value="<%= (model.defaultBA) ? model.defaultBA.vatNumber.substring(2, model.defaultBA.vatNumber.length) : '' %>" size="60" maxlength="128">
                 </div>
             </div>

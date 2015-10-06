@@ -16,6 +16,19 @@ class Factory {
       }
   }
 
+  public static function CheckExistingVatNumber($vatNumber)
+  {
+      return Dal::SendRequest('billing-account/vatNumber/'.$vatNumber);
+  }
+  
+  public static function SaveNewBillingAccount($data) 
+  {
+       if (isset($_SESSION['cartid'])) {
+          $data['cart'] = $_SESSION['cartid'];
+      }
+      return Dal::SendRequest('billing-account', 'POST', $data);   
+  }
+
   public static function Current() {
     static $current;
     if (empty($current)) {

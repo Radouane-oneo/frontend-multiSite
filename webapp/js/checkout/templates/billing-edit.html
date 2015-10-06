@@ -48,7 +48,6 @@
                 <input type="text" id="baName"
                        class="baInputs"
                        value="<%= model.defaultBA.name %>" size="30" maxlength="128" 
-                       <%= (model.defaultBA) ? 'readOnly = "readOnly"' : ''%>
                        class="form-text required" >
             </div>
             <div class="form-item form-type-textfield form-item-invoice-address-current-street">
@@ -58,7 +57,6 @@
                 <input type="text" id="baStreet" 
                        value="<%= model.defaultBA.street %>" 
                        class ="baInputs"
-                       <%= (model.defaultBA) ? 'readOnly = "readOnly"' : ''%>
                        size="30" maxlength="128" class="form-text required" >
             </div>
             <div class="form-item form-type-textfield form-item-invoice-address-current-postalCode">
@@ -68,7 +66,6 @@
                 <input placeholder="1000" id="baPostalCode" type="text"
                        value="<%= model.defaultBA.postalCode%>"
                        class="baInputs"
-                       <%= (model.defaultBA) ? 'readOnly = "readOnly"' : ''%>
                        size="6" maxlength="128" class="form-text required" >
             </div>
             <div class="form-item form-type-textfield form-item-invoice-address-current-city">
@@ -78,14 +75,13 @@
                 <input placeholder="Bruxelles" type="text" id="baCity" 
                        value="<%= model.defaultBA.city%>"
                        class="baInputs"
-                       <%= (model.defaultBA) ? 'readOnly = "readOnly"' : ''%>
                        size="30" maxlength="128" class="form-text required" >
             </div>
             <div class="form-item form-type-select form-item-invoice-address-current-country">
                 <label for="edit-invoice-address-current-country">
                     <%= model.labels['CountryBA']%> <span class="form-required" title="BAFieldsRequired">*</span>
                 </label>
-                <select  id="countryList" class="baInputsSelect selectStyle form-select required" <%= (model.defaultBA) ? 'disabled = "true"' : ''%> tabindex="-1" title="Pays *">
+                <select  id="countryList" class="baInputsSelect selectStyle form-select required" tabindex="-1" title="Pays *">
                     <% _.each(model.countries, function(country){ var selected =(country.id == model.defaultBA.country)
                     ? 'selected = "selected"' : "";%>
                     <option <%= selected %> value="<%= country.id %>"><%= country.tag%></option>

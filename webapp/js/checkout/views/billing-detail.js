@@ -7,6 +7,7 @@ define([
     return Backbone.View.extend({
         template: _.template(billingDetailTemplate),
         events: {
+            "click #toggle-invoice-form" :"displayBillingForm"
         },
         initialize: function(model) {
             _this = this;
@@ -20,7 +21,11 @@ define([
                 "model" : this.model.toJSON()
             }));
 
-            $(this.config.billingDetailBox).html(this.$el);
+            $(this.config.detailBox).find(".billingBox").html(this.$el);
+        },
+        displayBillingForm: function(){
+            myCheckout.shippingEditView.$el.hide();
+            myCheckout.billingEditView.$el.show();
         }
     });
 });

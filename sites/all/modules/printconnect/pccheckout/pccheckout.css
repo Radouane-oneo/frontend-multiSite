@@ -417,6 +417,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 .page-checkout #Mapimg{
   float: left!important;
   width: 45%!important;
+  height: 350px;
   margin-right: 65px;
 }
 .page-checkout .storcomande{

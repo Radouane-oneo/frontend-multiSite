@@ -14,7 +14,6 @@ define([
             "blur #vatNumberBA" : "showPopUp"
         },
         initialize: function(model) {
-            _this = this;
             this.config = require("config");
             this.model = model;
             this.render();
@@ -24,7 +23,7 @@ define([
             this.setElement(this.template({
                 "model": this.model.toJSON()
             }));
-            $(this.config.billingEditBox).html(this.$el);
+            $(this.config.editBox).find(".billingBox").html(this.$el);
         },
         showPopUp: function(e){
             var elmTarget = $(e.currentTarget);

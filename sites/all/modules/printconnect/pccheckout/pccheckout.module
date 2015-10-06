@@ -161,6 +161,7 @@ function pccheckout_menu() {
           'page arguments' => array(),
           'access arguments' => array('access content'),
           'type' => MENU_CALLBACK,
+          'title' => t('Invoice and delivery')
       );
 
       $items['checkout/ajax/getshippingaddresses'] = array(
@@ -293,9 +294,6 @@ function new_checkout_and_delivery_loadpage() {
     $labels = array(
       'js_key' => t('drupal_tag'),
     );
-
-    header('Cache-Control: public, max-age=' . 3600);
-
 
     $script = "<script type='text/javascript'>
         var GlobalPrefix = '".$language->prefix."';

@@ -1,0 +1,57 @@
+[
+    {
+        "id": 21,
+        "iso": "BE",
+        "vatPrefix": null,
+        "active": false,
+        "weight": 0,
+        "tag": "Belgique",
+        "name": "Belgique",
+        "resellerShop": null,
+        "code": "660"
+    },
+    {
+        "id": 73,
+        "iso": "FR",
+        "vatPrefix": null,
+        "active": false,
+        "weight": 0,
+        "tag": "France",
+        "name": "France",
+        "resellerShop": null,
+        "code": "070"
+    },
+    {
+        "id": 150,
+        "iso": "NL",
+        "vatPrefix": null,
+        "active": false,
+        "weight": 0,
+        "tag": "Pays-Bas",
+        "name": "Pays-Bas",
+        "resellerShop": null,
+        "code": "208"
+    },
+    {
+        "id": 199,
+        "iso": "ES",
+        "vatPrefix": null,
+        "active": false,
+        "weight": 0,
+        "tag": "Espagne",
+        "name": "Espagne",
+        "resellerShop": null,
+        "code": null
+    },
+    {
+        "id": 124,
+        "iso": "LU",
+        "vatPrefix": null,
+        "active": false,
+        "weight": 0,
+        "tag": "Luxembourg",
+        "name": "Luxembourg",
+        "resellerShop": null,
+        "code": "043"
+    }
+]

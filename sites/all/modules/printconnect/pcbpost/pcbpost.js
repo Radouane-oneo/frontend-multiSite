@@ -8,7 +8,10 @@ function pcbpost_cart_callback(poi, html){
   jQuery('input[name="pcbpost[id]"]').val(poi.Id);  
   jQuery.get(Drupal.settings.basePath + 'index.php?q=pcbpost/set/pickuppoint/' + poi.Id , function(data){
       if(data.code == 200) {
-          myCart.changeShipping(data.data.orderItemShipping);
+          if(typeof myCart != "undefined")
+            myCart.changeShipping(data.data.orderItemShipping);
+          if(typeof myCheckout != "undefined")
+            myCheckout.changeShipping(data.data.orderItemShipping); 
       }
   });
   

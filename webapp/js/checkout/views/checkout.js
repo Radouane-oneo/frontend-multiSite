@@ -21,17 +21,17 @@ define([
             this.render();
 
             //billing detail View
-            //this.billingDetailView = new billingDetailView(this.model);
+            this.billingDetailView = new billingDetailView(this.model);
 
             //billing edit View
-            //this.billingEditView = new billingEditView(this.model);
+            this.billingEditView = new billingEditView(this.model);
 
             //shipping View
             this.shippingDetailView = new shippingDetailView(this.model);
             this.shippingEditView = new shippingEditView(this.model);
 
             //neutral View
-            //this.neutral = new neutralView(this.model);
+            this.neutral = new neutralView(this.model);
 
             //error View
             this.errorView = new errorView(this.model);

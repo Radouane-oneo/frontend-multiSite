@@ -8,7 +8,7 @@
         <div class="address">
             <div class="name"><%= orderItemShippingAddress.name %></div>
             <div class="street"><%= orderItemShippingAddress.street %></div>
-            <div class="place"><%= _.findWhere(model.countries, {id : orderItemShippingAddress.country}).iso %> - <%=
+            <div class="place"><%= isNaN(orderItemShippingAddress.country)? orderItemShippingAddress.country:_.findWhere(model.countries, {id : orderItemShippingAddress.country}).iso %> - <%=
                 orderItemShippingAddress.postalCode %> <%= orderItemShippingAddress.city %>
             </div>
             <div class="phone"><%= orderItemShippingAddress.phone %></div>

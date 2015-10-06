@@ -28,6 +28,8 @@
             </table>
         </div>
         <% } %>
+        <% if($.inArray(orderItemShipping['shippingTypeTag'], ["shippingTypeStoreInAntwerpen","shippingTypePrinter"]) == -1) { %>
         <a class="toggle" href="#shipping-address" id="toggle-shipping-form"><%= model.labels['changeShippingAddress'] %></a>
+        <% } %>
     </div>
 </fieldset>

@@ -8,7 +8,9 @@ define([
     return Backbone.View.extend({
         template: _.template(shippingEditTemplate),
         events: {
-            "click #edit-shipping-detail-pickup-submit" : "saveShippingPickup"
+            "click #edit-shipping-detail-pickup-submit" : "saveShippingPickup",
+            "click #edit-shipping-detail-current-actions-submit" : "saveShipping",
+            "change #edit-shipping-detail-current-select" : "selectAddress"
         },
         initialize: function(model) {
             if (model.get("shippingAddresses").orderItemShipping && $.inArray(model.get("shippingAddresses").orderItemShipping['shippingTypeTag'], ["shippingTypeStoreInAntwerpen","shippingTypePrinter"]) != -1)
@@ -47,6 +49,8 @@ define([
                 });
 
                 marker.setMap(map);
+            } else {
+                this.$("#Mapimg").hide();
             }
         },
         initFancybox: function(){
@@ -64,6 +68,18 @@ define([
                 }
             });
         },
+        selectAddress: function(e){
+            var address = _.findWhere(this.model.get("shippingAddresses").addresses, {id: parseInt($(e.currentTarget).val())});
+            if(!address) address = {};
+            this.$("#edit-shipping-detail-current-name").val(address.name);
+            this.$("#edit-shipping-detail-current-company").val(address.company);
+            this.$("#edit-shipping-detail-current-street").val(address.street);
+            this.$("#edit-shipping-detail-current-postalCode").val(address.postalCode);
+            this.$("#edit-shipping-detail-current-city").val(address.city);
+            this.$("#edit-shipping-detail-current-country").val(address.country);
+            this.$("#edit-shipping-detail-current-phone").val(address.phone);
+            this.$("#edit-shipping-detail-current-email").val(address.email);
+        },
         saveShippingPickup: function(){
             var me = this;
 
@@ -77,7 +93,7 @@ define([
             ajaxCaller.call("saveShipping",{
                 id : this.model.get("shippingAddresses").orderItemShipping.orderShippingAddress.id,
                 name : this.$("input#edit-shipping-detail-contact").val(),
-                type : this.model.get("shippingAddresses").orderItemShipping.deliveryType
+                deliverytype : this.model.get("shippingAddresses").orderItemShipping.deliveryType
             }).done(function(){
                     var shippingAddresses = $.extend(true, {}, me.model.get("shippingAddresses"));
                     shippingAddresses.orderItemShipping.orderShippingAddress.name = me.$("input#edit-shipping-detail-contact").val();
@@ -85,12 +101,68 @@ define([
             });
             return false;
         },
+        saveShipping: function(){
+            var me = this;
+
+            var shippingError = this.errors();
+            if(shippingError) {
+                myCheckout.errorView.render(shippingError);
+                $(window).scrollTop($(this.config.containerId).offset().top);
+                return false;
+            }
+
+            var data = {
+                "name" : this.$("#edit-shipping-detail-current-name").val(),
+                "company" : this.$("#edit-shipping-detail-current-company").val(),
+                "street" : this.$("#edit-shipping-detail-current-street").val(),
+                "postalCode" : this.$("#edit-shipping-detail-current-postalCode").val(),
+                "city" : this.$("#edit-shipping-detail-current-city").val(),
+                "country" : this.$("#edit-shipping-detail-current-country").val(),
+                "phone" : this.$("#edit-shipping-detail-current-phone").val(),
+                "email" : this.$("#edit-shipping-detail-current-email").val(),
+                "deliverytype" : this.model.get("shippingAddresses").orderItemShipping.deliveryType
+            };
+
+            if(this.$("#edit-shipping-detail-current-select").val() != "0")
+                data["id"] = this.$("#edit-shipping-detail-current-select").val();
+
+            ajaxCaller.call("saveShipping",data).done(function(resultData){
+                    if(resultData.code == "200") {
+                        var shippingAddresses = $.extend(true, {}, me.model.get("shippingAddresses"));
+                        shippingAddresses.orderItemShipping = resultData.data.orderItemShipping;
+                        var index = _.findIndex(shippingAddresses.addresses, {id: resultData.data.customerAddress.id});
+                        if(index != -1)
+                            shippingAddresses.addresses[index] = resultData.data.customerAddress;
+                        else
+                            shippingAddresses.addresses.push(resultData.data.customerAddress);
+                        me.model.set("shippingAddresses", shippingAddresses);
+                    }
+            });
+            return false;
+        },
         errors : function(){
-            console.log(this.model.get("shippingAddresses").orderItemShipping.shippingTypeTag);
+            if(this.model.get("shippingAddresses").orderItemShipping['deliveryType'] == "deliveryTypeDeliver")
+                return this.checkFields();
             if(!this.model.get("shippingAddresses").orderItemShipping.orderShippingAddress || !this.model.get("shippingAddresses").orderItemShipping.orderShippingAddress.id)
                 return this.config.labels[this.model.get("shippingAddresses").orderItemShipping.shippingTypeTag + "Error"];
             if(this.$("input#edit-shipping-detail-contact").val() == "")
                 return this.config.labels["nameEmptyError"];
+            return false;
+        },
+        checkFields: function(){
+            var pattern = /^[\w-]+@[a-zA-Z_-]+?\.[a-zA-Z]{2,3}$/;
+            var name = this.$("#edit-shipping-detail-current-name").val(),
+                company = this.$("#edit-shipping-detail-current-company").val(),
+                street = this.$("#edit-shipping-detail-current-street").val(),
+                postalCode = this.$("#edit-shipping-detail-current-postalCode").val(),
+                city = this.$("#edit-shipping-detail-current-city").val(),
+                country = this.$("#edit-shipping-detail-current-country").val(),
+                phone = this.$("#edit-shipping-detail-current-phone").val(),
+                email = this.$("#edit-shipping-detail-current-email").val();
+            if(name == "" || company == "" || street == "" || postalCode == "" || city == "" || country == "" || phone == "" || email == "")
+                return this.config.labels["requiredFieldsError"];
+            if(!pattern.test(email))
+                return this.config.labels["emailError"];
             return false;
         }
 

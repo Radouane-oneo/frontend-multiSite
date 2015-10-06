@@ -31,7 +31,7 @@ define([
             this.shippingEditView = new shippingEditView(this.model);
 
             //neutral View
-            this.neutral = new neutralView(this.model);
+            //this.neutral = new neutralView(this.model);
 
             //error View
             this.errorView = new errorView(this.model);

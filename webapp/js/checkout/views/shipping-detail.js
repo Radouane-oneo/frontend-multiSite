@@ -8,6 +8,7 @@ define([
     return Backbone.View.extend({
         template: _.template(shippingDetailTemplate),
         events: {
+            "click #toggle-shipping-form" : "displayShippingForm"
         },
         initialize: function(model) {
             this.config = require("config");
@@ -24,6 +25,10 @@ define([
 
             $(this.config.detailBox).find(".shippingBox").html(this.$el);
 
+        },
+        displayShippingForm: function(){
+            //myCheckout.billingEditView.$el.hide();
+            myCheckout.shippingEditView.$el.show();
         },
         errors : function(){
             return false;

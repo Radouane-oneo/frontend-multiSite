@@ -100,7 +100,11 @@ define([
             "BAalreadyExisting" : "this billing address is already exist would you want load this address as your default billing address",
             "shippingTypeStoreError" : "shippingTypeStoreError",
             "nameEmptyError" : "nameEmptyError",
-            "shippingTypeBpostPickupPointError" : "shippingTypeBpostPickupPointError"
+            "shippingTypeBpostPickupPointError" : "shippingTypeBpostPickupPointError",
+            "phone" : "phone",
+            "email" : "email",
+            "requiredFieldsError" : "Veuillez remplir tout les champs obligatoires",
+            "emailError" : "Adresse email n'est pas valide"
         }
         
     };

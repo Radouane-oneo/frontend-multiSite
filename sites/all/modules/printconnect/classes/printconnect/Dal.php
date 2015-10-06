@@ -31,7 +31,6 @@ namespace printconnect {
               return $cached;
             }
         }
-
         $response = drupal_http_request($url, array(
             'header' => $header, 
             'method' => $method, 

@@ -53,9 +53,11 @@ define([
                     "vatNumber": this.$('#vatNumberBA').val()
                     
                 }, 'POST').done(function(result) {
-                    var newBillngAccountList = jQuery.extend(true, {}, me.model.get('billingAccouts'));
-                    newBillngAccountList[_.toArray(newBillngAccountList).length] = result;
-                    me.model.set({'billingAccouts': newBillngAccountList, 'defaultBA': result});
+		    if (result.id != $('#baEditSelect').val()) {
+                        var newBillngAccountList = jQuery.extend(true, {}, me.model.get('billingAccouts'));
+                        newBillngAccountList[_.toArray(newBillngAccountList).length] = result;
+                        me.model.set({'billingAccouts': newBillngAccountList, 'defaultBA': result});
+		    }
                 });
             return false;
         },

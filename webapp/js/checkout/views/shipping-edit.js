@@ -140,12 +140,12 @@ define([
             });
             return false;
         },
-        errors : function(){
-            if(this.model.get("shippingAddresses").orderItemShipping['deliveryType'] == "deliveryTypeDeliver")
+        errors : function(isPaymentButton){
+            if(!isPaymentButton && this.model.get("shippingAddresses").orderItemShipping['deliveryType'] == "deliveryTypeDeliver")
                 return this.checkFields();
             if(!this.model.get("shippingAddresses").orderItemShipping.orderShippingAddress || !this.model.get("shippingAddresses").orderItemShipping.orderShippingAddress.id)
                 return this.config.labels[this.model.get("shippingAddresses").orderItemShipping.shippingTypeTag + "Error"];
-            if(this.$("input#edit-shipping-detail-contact").val() == "")
+            if(!isPaymentButton && this.$("input#edit-shipping-detail-contact").val() == "")
                 return this.config.labels["nameEmptyError"];
             return false;
         },

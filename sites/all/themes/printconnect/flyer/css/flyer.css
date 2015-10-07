@@ -353,7 +353,7 @@ body.page-cobranding #header_left img {
 #block-block-3 ul.contact {
 	padding: 0;
 	float: left;
-	margin: -12px 98px 0 0;
+	margin: -12px 15px 0 0;
 }
 #block-block-3 ul.contact p {
  font-weight: 600;
@@ -361,7 +361,6 @@ body.page-cobranding #header_left img {
 #block-block-3 ul.contact li {
 	list-style: none;
 	float: left;
-	margin-right: 22px;
 }
 #block-block-3 ul.contact li a {
 	color: #3c3c3c; /* maincolor */
@@ -467,7 +466,7 @@ body.page-cobranding #header_left img {
 	/*border-left: 1px solid #fff;*/
 	height: 35px;
 	margin-top: -11px;
-	padding-left: 7px;
+	padding-left: 15px;
 	padding-top: 11px;
 	border-left: 1px solid #fff;
 }
@@ -7646,12 +7645,17 @@ div.myoffers table.list thead tr th:nth-child(2){
     width: auto;
 }
 
+.region-header-right{
+	float: right;
+	padding-right: 80px;
+}
 /*########## New Flyer FR ###########*/
 .info-bloc{
 	clear: both;
 	position: relative;
-	padding-right: 115px;
+	padding-right: 100px;
 	padding-top: 18px;
+	margin-right: -80px!important;
 }
 .info-bloc ul{
 	margin: 0;

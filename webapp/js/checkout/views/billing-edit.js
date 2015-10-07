@@ -25,27 +25,31 @@ define([
             }));
             $(this.config.editBox).find(".billingBox").html(this.$el);
         },
-	errors : function() {
-	    me = this;
-	    var result = null;
- 	    $('.baInputs').each(function(baInputs){
-     		if ($(this).val() == '') {
-		    $(this).css('border-color', 'red');
-	            result = me.config.labels["BaFieldRequired"];
-		    return false;
-	        }
-	    });
-	    if (result) {
-		return result;
-	    }
-	    if (
-		($("#company").val() != "" && $("#vatNumber").val() == "")
-		|| ($("#company").val() == "" && $("#vatNumber").val() != "")
-	    ) {
-		$("#companyInput").css('border-color', 'red');
-		$("#vatNumberBA").css('border-color', 'red');
-		return this.config.labels["fieldCmpVatNumber"];
-	    }
+        errors: function (isPaymentButton) {
+            if(isPaymentButton)
+                return false;
+            var me = this;
+            var result = null;
+            this.$('.baInputs').css('border-color', '');
+            this.$("#companyInput").css('border-color', '');
+            this.$("#vatNumberBA").css('border-color', '');
+            $('.baInputs').each(function (baInputs) {
+                if ($(this).val() == '') {
+                    $(this).css('border-color', 'red');
+                    result = me.config.labels["BaFieldRequired"];
+                    return false;
+                }
+            });
+            if (result) {
+                return result;
+            }
+            if (
+                $("#isUserCompany").is(":checked") && ($("#companyInput").val() == "" || $("#vatNumberBA").val() == "")
+                ) {
+                $("#companyInput").css('border-color', 'red');
+                $("#vatNumberBA").css('border-color', 'red');
+                return this.config.labels["fieldCmpVatNumber"];
+            }
         },
         showPopUp: function(e){
             var elmTarget = $(e.currentTarget);

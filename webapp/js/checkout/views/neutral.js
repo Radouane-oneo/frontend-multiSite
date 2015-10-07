@@ -30,6 +30,20 @@ define([
             });
         },
         processPayment : function(e){
+            var billingError = myCheckout.billingEditView.errors(true);
+            var shippingError = myCheckout.shippingEditView.errors(true);
+            if(billingError) {
+                myCheckout.errorView.render(billingError);
+                $(window).scrollTop($(this.config.containerId).offset().top);
+                return false;
+            }
+            if(shippingError) {
+                myCheckout.errorView.render(shippingError);
+                $(window).scrollTop($(this.config.containerId).offset().top);
+                return false;
+            }
+            if(myCheckout.disable) return false;
+
             location.href = "/" + this.config.prefix + "/checkout/payment";
             return false;
         }

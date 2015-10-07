@@ -29,6 +29,7 @@ define([
         displayShippingForm: function(){
             myCheckout.billingEditView.$el.hide();
             myCheckout.shippingEditView.$el.show();
+            myCheckout.shippingEditView.initMap();
         },
         errors : function(){
             return false;

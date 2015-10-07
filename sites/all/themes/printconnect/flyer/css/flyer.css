@@ -102,8 +102,7 @@ select {
 	border-radius: 3px;
 }
 #pccustomers-newaddress-form label,
-#pccustomers-address-form label,
-#pccustomers-changepassword-form label {
+#pccustomers-address-form label  {
 	display: block;
 	float: left;
 	font-weight: 400;
@@ -707,7 +706,7 @@ div#cart{
 #sidebar-first{
 	float: left;
 	margin-right: 10px;
-        display: none;
+    display: block;
 }
 #sidebar-second {
 	float: right;
@@ -5118,7 +5117,8 @@ a.googleconnect {
 	margin: 10px 0;
 	clear: both;
 }
-.page-myprintconnect-profile #pccustomers-profile-form label {
+
+.page-myprintconnect-profile #pccustomers-profile-form label{
 	display: block;
 	margin: 0;
 	font-weight: 400;
@@ -5127,10 +5127,11 @@ a.googleconnect {
 	padding-right: 20px;
 	width: 140px;
 	text-align: right;
-	line-height: 38px;
+	line-height: 38px !important;
 }
 .page-myprintconnect-profile #pccustomers-profile-form select, 
-.page-myprintconnect-profile #pccustomers-profile-form input[type="text"] {
+.page-myprintconnect-profile #pccustomers-profile-form input[type="text"] 
+{
 	background: #fff;
 	border: 1px solid #d7d7d7;
 	border-radius: 4px 4px 4px 4px;
@@ -5557,13 +5558,14 @@ div.error, table tr.error {
 .page-myprintconnect-forgotpassword .region-content .form-actions input[type="submit"], .page-myprintconnect-login .region-content .form-actions input[type="submit"] {
 	float: left;
 }
-.page-myprintconnect-changepassword .region-content .form-actions input[type=submit], .page-myprintconnect-addresses-new .region-content .form-actions input[type=submit], .page-myprintconnect-profile .region-content .form-actions input[type=submit] {
+.page-myprintconnect-addresses-new .region-content .form-actions input[type=submit], .page-myprintconnect-profile .region-content .form-actions input[type=submit] {
 	background-image: url("images/button_continue.png");
 	background-position: left;
 	background-repeat: no-repeat;
 	padding-left: 55px;
 }
-.page-myprintconnect-changepassword .region-content .form-actions input[type=submit]:hover, .page-myprintconnect-addresses-new .region-content .form-actions input[type=submit]:hover, .page-myprintconnect-profile .region-content .form-actions input[type=submit]:hover {
+
+.page-myprintconnect-addresses-new .region-content .form-actions input[type=submit]:hover, .page-myprintconnect-profile .region-content .form-actions input[type=submit]:hover {
 	background-image: url("images/button_continue_hover.png");
 }
  .page-myprintconnect-changepassword .region-content .form-actions input[type=submit]:acitve, .page-myprintconnect-addresses-new .region-content .form-actions input[type=submit]:active, .page-myprintconnect-profile .region-content .form-actions input[type=submit]:active {
@@ -7623,7 +7625,7 @@ float:left;
 .description table .vacations { 
 border-collapse: inherit  !important; 
 }
-#pccustomers-dashboard-form{margin-left: -8px!important; }
+#pccustomers-dashboard-form{/*margin-left: -8px!important;*/ }
 .page-cart #pccart-cart-form .shipping table tbody tr{ 
     font-size: 11px !important;
 }
@@ -10589,7 +10591,7 @@ a.cart.button{
 /* ======= Order week new CSS ======= */ 
 
 /* Page profil */
-.page-myprintconnect-profile #pccustomers-profile-form label {
+.page-myprintconnect-profile #pccustomers-profile-form label{
 	display: block;
 	margin: 0;
 	font-weight: 400;
@@ -10607,27 +10609,31 @@ a.cart.button{
     padding-bottom: 10px;
     border-bottom: 1px solid #d6d6d6;
 }
+
 .page-myprintconnect-profile #pccustomers-profile-form input[type="text"] {
 	width: 428px;
 }
 
-#pccustomers-profile-form > div {
+#pccustomers-profile-form > div ,#pccustomers-changepassword-form > div{
     background-color: #f1f1f1;
     padding-top: 18px;
     margin-top: 10px;
-    border: 1px solid #d6d6d6;
-
+    border: 1px solid #d6d6d6; 
     -webkit-border-radius: 4px 4px 4px 4px;
-       -moz-border-radius: 4px 4px 4px 4px;
-    		border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    border-radius: 4px 4px 4px 4px;
 }
 
+.page-myprintconnect-changepassword #pccustomers-changepassword-form > div > .form-item{
+	margin-top: 0;
+}
 .region-content .form-actions {
 	padding: 0;    
 	margin: -1px;
 }
 
-.page-myprintconnect-profile .region-content .form-actions input[type=submit] {
+.page-myprintconnect-profile .region-content .form-actions input[type=submit],
+.page-myprintconnect-changepassword .region-content .form-actions input[type=submit] {
 	background: #71ad00;
     padding-left: 0;
     text-align: center;
@@ -10646,8 +10652,7 @@ a.cart.button{
 	margin-right: 0;
 	font-weight: normal;
 	text-align: center;
-	border: none;
-
+	border: none; 
 	-webkit-border-radius: 0 0 3px 0;
 	-moz-border-radius: 0 0 3px 0;
 	border-radius: 0 0 3px 0;
@@ -10663,11 +10668,13 @@ p.requieredfields span.form-required {
 }
 
 /* Page factures */
-.page-myprintconnect #edit-invoices div#edit-list {
+.page-myprintconnect #edit-invoices div#edit-list,
+.page-myprintconnect-closedorders  div.orders,
+.page-myprintconnect-addresses #pccustomers-addresses-form,
+.page-myprintconnect-offers .myoffers {
     border: 1px solid #dcdcdc;
     border-top: 0;
     overflow: hidden;
-
     border-radius: 5px 5px 5px 5px;
 	-moz-border-radius: 5px 5px 5px 5px;
 	-webkit-border-radius: 5px 5px 5px 5px;
@@ -10715,11 +10722,10 @@ p.requieredfields span.form-required {
     background-color: #f1f1f1;
     padding-top: 18px;
     margin-top: 10px;
-    border: 1px solid #d6d6d6;
-
-    -webkit-border-radius: 4px 4px 4px 4px;
-    -moz-border-radius: 4px 4px 4px 4px;
-    border-radius: 4px 4px 4px 4px;
+    border: 1px solid #d6d6d6; 
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius:  5px;
 }
 .page-myprintconnect-addresses .region-content .form-actions {
     /*padding-left: 15px;
@@ -11476,15 +11482,59 @@ input.ui-button.payment {
   width: auto;
 }
 .mailing-container .mailpopup{
-  position: fixed;
-  left: 50%;
-  z-index: 501;
-  display: none;
-  top: 50% !important;
-  width: 515px;
-  border: 1px solid #a5a6a7;
-  padding: 20px;
-  background: #fff;
-  margin-left: -273px;
-  margin-top: -157px;
+	position: fixed;
+	left: 50%;
+	z-index: 501;
+	display: none;
+	top: 50% !important;
+	width: 515px;
+	border: 1px solid #a5a6a7;
+	padding: 20px;
+	background: #fff;
+	margin-left: -273px;
+	margin-top: -157px;
 }
+ 
+.page-myprintconnect-offers .myoffers{
+	margin-top: 1em;
+	/*-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	overflow: hidden;
+	border: 1px solid #dcdcdc;
+	border-top: 0;*/
+}
+.page-myprintconnect-closedorders  div.orders,
+.page-myprintconnect-addresses #pccustomers-addresses-form,
+.page-myprintconnect-offers .myoffers
+{
+	/*-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	overflow: hidden;
+	border: 1px solid #dcdcdc;
+	border-top: 0;*/
+}
+
+.page-myprintconnect-addresses #pccustomers-addresses-form table.addresses,
+.page-myprintconnect-closedorders  div.orders table.list.orders,
+.page-myprintconnect-offers .myoffers table.list.offers{
+	/*border-bottom: 1px solid #dcdcdc;
+	overflow: hidden;
+	border-radius: 5px;*/
+}
+
+.page-myprintconnect-offers .myoffers table.list.offers th,.page-myprintconnect-closedorders  div.orders table.list.orders th{
+	font-weight: bold;
+	border-bottom: 1px solid #ff6600;
+} 
+
+.page-myprintconnect-addresses #pccustomers-addresses-form table.addresses tr td,
+.page-myprintconnect-closedorders  div.orders table.list.orders tr td,
+.page-myprintconnect-offers .myoffers table.list.offers tr td
+{
+  vertical-align: middle;
+  border-right: 1px solid #dcdcdc;
+}
+ 
+

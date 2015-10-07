@@ -19,13 +19,15 @@ define([
                 "model" : this.model.toJSON()
             }));
             //$(this.config.billingEditBox).find("#popUpContainer").append(this.$el);
-            console.log(this.$el);
             $.fancybox.open(this.$el,{
                 openEffect  : 'none',
                 closeEffect : 'none',
                 autoSize : false,
                 width    : "40%",
-                height   : "60%"
+                height   : "60%",
+                afterClose : function(){
+                    myCheckout.billingEditView.$("#vatNumberBA").val("");
+                }
             });
         },
         choseVatNumber: function(){

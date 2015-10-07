@@ -9,8 +9,6 @@
     var buttonText = (model.shippingAddresses.orderItemShipping.shippingTypeTag == "shippingTypeStore") ?
     model.labels['chooseFlyerstore'] : model.labels['chooseBpost'];
 
-    var infoTitle = (model.shippingAddresses.orderItemShipping.shippingTypeTag == "shippingTypeStore") ?
-    model.labels['infoTitleFlyerstore'] : model.labels['infoTitleBpost'];
     %>
     <div class="legend legend1"><span class="fieldset-legend"><%= title %></span>
     </div>
@@ -57,14 +55,5 @@
                 </div>
             </div>
         </div>
-        <div class="quivacollecter"><h1><%= infoTitle %></h1></div>
-        <div class="form-item form-type-textfield form-item-shipping-detail-contact">
-            <label for="edit-shipping-detail-contact"><%= model.labels['yourName'] %><span title="<%= model.labels['requiredField'] %>"
-                                                                                class="form-required">*</span></label>
-            <input type="text" class="form-text required" maxlength="128" size="30" value="<%= (shippingAddress)?shippingAddress.name:'' %>"
-                   name="shipping[detail][contact]" id="edit-shipping-detail-contact">
-        </div>
-
-        <input type="submit" class="form-submit ui-button ui-widget ui-state-default ui-corner-all" value="<%= model.labels['save'] %>"
-               name="shipping_address_submit" id="edit-shipping-detail-pickup-submit" role="button"></div>
+    </div>
 </fieldset>

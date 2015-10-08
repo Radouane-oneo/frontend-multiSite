@@ -1,4 +1,4 @@
-<fieldset id="edit-summary-shipping" class="shipping form-wrapper">
+<div id="edit-summary-shipping" class="shipping form-wrapper">
     <legend><span class="fieldset-legend"><%= model.labels['shippingAddress'] %></span></legend>
     <% 
     var firstAddress = (model.shippingAddresses.orderItemShipping &&
@@ -30,4 +30,4 @@
         <% } %>
         <a class="toggle" href="#shipping-address" id="toggle-shipping-form"><%= model.labels['changeShippingAddress'] %></a>
     </div>
-</fieldset>
+</div>

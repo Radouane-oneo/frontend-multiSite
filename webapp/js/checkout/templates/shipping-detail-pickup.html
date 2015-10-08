@@ -9,6 +9,8 @@
                 var shippingAddress = orderItemShipping.orderShippingAddress;
         %>
         <div id="detail">
+            <input type="hidden" name="shipping-detail-id" value="<%= shippingAddress.id %>">
+            <input type="hidden" name="shipping-detail-delivery-type" value="deliveryTypePickup">
             <h6><%= shippingAddress.pickupPointName %></h6>
             <div class="address"><%= shippingAddress.street %> - <%= shippingAddress.postalCode %> <%= shippingAddress.city %></div>
             <div class="phone"><%= shippingAddress.phone %></div>

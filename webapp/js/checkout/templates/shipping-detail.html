@@ -2,13 +2,20 @@
     <legend><span class="fieldset-legend"><%= model.labels['shippingAddress'] %></span></legend>
     <% var orderItemShippingAddress = (model.shippingAddresses.orderItemShipping &&
     model.shippingAddresses.orderItemShipping.orderShippingAddress) ?
-    model.shippingAddresses.orderItemShipping.orderShippingAddress : model.shippingAddresses.addresses[0]; %>
+    model.shippingAddresses.orderItemShipping.orderShippingAddress : model.shippingAddresses.addresses[0]; 
+    var countrySelected = _.findWhere(model.countries, {id : orderItemShippingAddress.country});
+    if(typeof countrySelected == "undefined") {
+        countrySelected = "BE";
+    }else {
+        countrySelected = countrySelected.iso;
+    } 
+    %>
     <div class="fieldset-wrapper">
         <% if(orderItemShippingAddress) { %>
         <div class="address">
             <div class="name"><%= orderItemShippingAddress.name %></div>
             <div class="street"><%= orderItemShippingAddress.street %></div>
-            <div class="place"><%= isNaN(orderItemShippingAddress.country)? orderItemShippingAddress.country:_.findWhere(model.countries, {id : orderItemShippingAddress.country}).iso %> - <%=
+            <div class="place"><%= isNaN(orderItemShippingAddress.country)? orderItemShippingAddress.country:countrySelected %> - <%=
                 orderItemShippingAddress.postalCode %> <%= orderItemShippingAddress.city %>
             </div>
             <div class="phone"><%= orderItemShippingAddress.phone %></div>

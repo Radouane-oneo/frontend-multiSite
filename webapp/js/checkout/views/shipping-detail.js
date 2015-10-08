@@ -31,6 +31,12 @@ define([
             myCheckout.billingEditView.$el.hide();
             myCheckout.shippingEditView.$el.toggle();
             myCheckout.shippingEditView.initMap();
+
+            if(this.model.get("shippingAddresses").orderItemShipping.orderShippingAddress) {
+                var customerAddressId = this.model.get("shippingAddresses").orderItemShipping.orderShippingAddress.shippingAddress;
+                $("#edit-shipping-detail-current-select").val(customerAddressId);
+                $("#edit-shipping-detail-current-select").change();
+            }
         },
         changeName: function(e){
             var shippingAddresses = $.extend(true, {}, this.model.get("shippingAddresses"));

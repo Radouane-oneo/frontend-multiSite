@@ -50,8 +50,7 @@ define([
             }
             if(myCheckout.disable) return false;
 
-            location.href = "/" + this.config.prefix + "/checkout/payment";
-            return false;
+            $("#pccheckout-invoiceanddelivery-form").submit();
         }
     });
 });

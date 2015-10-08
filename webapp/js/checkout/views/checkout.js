@@ -37,7 +37,9 @@ define([
             this.errorView = new errorView(this.model);
         },
         render : function(){
-            this.setElement(this.template());
+            this.setElement(this.template({
+                "model" : this.model.toJSON()
+            }));
             $(this.config.containerId).html(this.$el);
         },
         changeShipping : function(orderItemShipping){

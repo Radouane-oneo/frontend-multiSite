@@ -156,7 +156,7 @@ function pccheckout_menu() {
           'type' => MENU_CALLBACK,
       );
       
-      $items['checkout/newinvoiceanddelivery'] = array(
+      $items['checkout/invoiceanddelivery'] = array(
           'page callback' => 'new_checkout_and_delivery_loadpage',
           'page arguments' => array(),
           'access arguments' => array('access content'),
@@ -185,6 +185,13 @@ function pccheckout_menu() {
           'type' => MENU_CALLBACK,
       );
 
+      $items['checkout/ajax/submitcheckout'] = array(
+          'page callback' => 'new_checkout_submit_all_form',
+          'page arguments' => array(),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+
       // =======================================================================================
 
       $items['checkout'] = array(
@@ -206,14 +213,6 @@ function pccheckout_menu() {
           'title' => 'Personal',
           'page callback' => 'drupal_get_form',
           'page arguments' => array('pccheckout_personal_form'),
-          'access arguments' => array('access content'),
-          'file' => 'pccheckout.forms.inc',
-      );
-
-      $items['checkout/invoiceanddelivery'] = array(
-          'title' => 'Invoice and delivery',
-          'page callback' => 'drupal_get_form',
-          'page arguments' => array('pccheckout_invoiceanddelivery_form'),
           'access arguments' => array('access content'),
           'file' => 'pccheckout.forms.inc',
       );
@@ -346,6 +345,22 @@ function save_neutral_shipping(){
     $neutral = ($_POST['neutral'] == 'true') ? 1: 0;
     $response = \printconnect\Carts\Factory::saveNeutralShipping($neutral);
     Dal::BuildJson(json_decode($response->data, 1));
+}
+
+function new_checkout_submit_all_form()
+{
+    if(isset($_POST['shipping-detail-delivery-type']) && $_POST['shipping-detail-delivery-type'] == "deliveryTypePickup") {
+        $data['name'] = $_POST['shipping-detail-contact'];
+        $data['id'] = $_POST['shipping-detail-id'];
+        $data['deliverytype'] = $_POST['shipping-detail-delivery-type'];
+
+        $response = \printconnect\Shipping\Types\Factory::SaveOrderShippingAddresses($data);
+    }else if(isset($_POST['customer-first-address-id'])) {
+        $data['id'] = $_POST['customer-first-address-id'];
+        $response = \printconnect\Shipping\Types\Factory::SaveOrderShippingAddresses($data);
+    }
+    
+    drupal_goto('checkout/payment');
 }
 // ==============================================================================================
 

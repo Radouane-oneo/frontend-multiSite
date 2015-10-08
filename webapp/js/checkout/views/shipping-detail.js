@@ -43,6 +43,10 @@ define([
                 this.$("input#edit-shipping-detail-contact").css("border-color","red");
                 return this.config.labels["nameEmptyError"];
             }
+            if(this.$("input#edit-shipping-detail-contact").val().length < 3) {
+                this.$("input#edit-shipping-detail-contact").css("border-color","red");
+                return this.config.labels["invalidCharactersLength"];
+            }
 
             return false;
         }

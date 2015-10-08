@@ -162,6 +162,10 @@ define([
                 this.$('input:text:not(#edit-shipping-detail-current-company)').filter(function() { return $(this).val() == ""; }).css("border-color", "red");
                 return this.config.labels["requiredFieldsError"];
             }
+            if(name.length < 3 || street.length < 3 || postalCode.length < 3 || city.length < 3 || phone.length < 3) {
+                this.$('input:text:not(#edit-shipping-detail-current-company, #edit-shipping-detail-current-email)').filter(function() { return $(this).val().length < 3; }).css("border-color", "red");
+                return this.config.labels["invalidCharactersLength"];
+            }
 
             if(!pattern.test(email)) {
                 this.$("#edit-shipping-detail-current-email").css("border-color", "red");

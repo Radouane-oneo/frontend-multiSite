@@ -76,10 +76,13 @@
                             <span class="bold-title"><%= config.labels['openingHours'] %></span><br />
                             <table id="opening-hours">
                             <% _.each(model.orderItemShipping.orderShippingAddress.openingHours, function(openingHour, index){ %>
-                            <% if(openingHour[0] && openingHour[1]) { %>
-                            <tr><td><%= config.labels['day_' + index] %></td><td><%= openingHour[0] %> - <%= openingHour[1] %></td></tr>
+
+                            <tr>
+                                <td><%= config.labels['day_' + index] %></td>
+                                <td><%= openingHour[0] %> - <%= openingHour[1] %> <% if(openingHour[2] && openingHour[3]) print(openingHour[2]+" - "+openingHour[3]) %></td>
+                            </tr>
                             <%
-                                }
+
                                 });
                             %>
                             </table>
@@ -104,10 +107,13 @@
                             <span class="bold-title"><%= config.labels['openingHours'] %></span><br />
                             <table id="opening-hours">
                                 <% _.each(model.orderItemShipping.orderShippingAddress.openingHours, function(openingHour, index){ %>
-                                <% if(openingHour[0] && openingHour[1]) { %>
-                                <tr><td><%= config.labels['day_' + index] %></td><td><%= openingHour[0] %> - <%= openingHour[1] %></td></tr>
+
+                                <tr>
+                                    <td><%= config.labels['day_' + index] %></td>
+                                    <td><%= openingHour[0] %> - <%= openingHour[1] %> <% if(openingHour[2] && openingHour[3]) print(openingHour[2]+" - "+openingHour[3]) %></td>
+                                </tr>
                                 <%
-                                }
+
                                 });
                                 %>
                             </table>

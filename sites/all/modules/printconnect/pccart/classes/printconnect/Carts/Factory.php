@@ -146,6 +146,14 @@ class Factory {
         $_SESSION['cartCount'] = $count;
     }
 
+    public static function RecalculateCart() 
+    {
+        $cartId = isset($_SESSION['cartid']) ? $_SESSION['cartid'] : NULL;
+        return Dal::SendRequest('recalculate-cart', 'POST', array(
+            'id' => $cartId
+        ));
+    }
+
     public static function saveInCache($object, $data) 
     {
         if (!empty($data)) {

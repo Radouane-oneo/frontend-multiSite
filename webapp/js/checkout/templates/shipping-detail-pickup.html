@@ -1,6 +1,7 @@
-<fieldset id="edit-summary-shipping" class="shipping form-wrapper">
+<div id="edit-summary-shipping" class="shipping form-wrapper">
     <legend><span class="fieldset-legend"><%= model.labels['shippingAddress'] %></span></legend>
     <div class="fieldset-wrapper">
+        <div class="pup">
         <%
             var orderItemShipping = model.shippingAddresses.orderItemShipping;
         %>
@@ -20,30 +21,33 @@
             <h6><%= model.labels['openingHours'] %></h6>
             <table>
                 <% _.each(shippingAddress.openingHours, function(openingHour, index){ %>
-                <% if(openingHour[0] && openingHour[1]) { %>
+                
                 <tr><td><%= model.labels['day_' + index] %></td><td><%= openingHour[0] %> - <%= openingHour[1] %>
                 <% if(openingHour[2] && openingHour[3]) print(openingHour[2]+" - "+openingHour[3]) %></td></tr>
                 <%
-                }
+                
                 });
                 %>
             </table>
         </div>
         <% } %>
+
+        </div>
+
         <%
         var infoTitle = model.labels['infoTitle'];
         %>
         <% if(shippingAddress){ %>
-        <div class="form-item form-type-textfield form-item-shipping-detail-contact">
+        <div class="form-type-textfield form-item-shipping-detail-contact">
             <label for="edit-shipping-detail-contact"><%= infoTitle %><span title="<%= model.labels['requiredField'] %>"
                                                                                            class="form-required">*</span></label>
-            <input type="text" class="form-text required" maxlength="128" size="30" value="<%= (shippingAddress)?shippingAddress.name:'' %>"
+            <input type="text" class="cmd-collecte form-text required" maxlength="128" size="30" value="<%= (shippingAddress)?shippingAddress.name:'' %>"
                    name="shipping-detail-contact" id="edit-shipping-detail-contact">
         </div>
         <% } %>
-
         <% if($.inArray(orderItemShipping['shippingTypeTag'], ["shippingTypeStoreInAntwerpen","shippingTypePrinter"]) == -1) { %>
         <a class="toggle" href="#shipping-address" id="toggle-shipping-form"><%= model.labels['changeShippingAddress'] %></a>
         <% } %>
+        
     </div>
-</fieldset>
+</div>

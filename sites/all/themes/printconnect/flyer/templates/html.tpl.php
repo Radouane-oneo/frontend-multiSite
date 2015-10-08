@@ -55,7 +55,7 @@
   <?php print $styles; ?>
   <?php print $scripts; ?>
 </head>
-<body class="page-checkout-invoiceanddelivery <?php print $classes.$node_css_class; ?>" <?php print $attributes;?>>
+<body class="<?php print $classes.$node_css_class; ?>" <?php print $attributes;?>>
   <div id="skip-link">
     <a href="#main-content" class="element-invisible element-focusable"><?php print t('Skip to main content'); ?></a>
   </div>

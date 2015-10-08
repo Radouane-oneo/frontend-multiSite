@@ -97,3 +97,5 @@
 #pcdesigns-saveddesigns-form .button{
     min-width: 120px;
 }
+#pcdesigns-saveddesigns-form .fieldset-wrapper > div.design.last{border-bottom:none !important;}
+#pcdesigns-saveddesigns-form .details .itemsdesign li{ list-style: none; }

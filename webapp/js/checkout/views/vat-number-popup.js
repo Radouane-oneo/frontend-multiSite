@@ -23,8 +23,8 @@ define([
                 openEffect  : 'none',
                 closeEffect : 'none',
                 autoSize : false,
-                width    : "40%",
-                height   : "60%",
+                width    : "330px",
+                height   : "100px",
                 afterClose : function(){
                     myCheckout.billingEditView.$("#vatNumberBA").val("");
                 }

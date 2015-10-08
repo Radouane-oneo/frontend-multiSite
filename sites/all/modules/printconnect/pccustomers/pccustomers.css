@@ -54,22 +54,56 @@ a:visited.googleconnect{
     padding-left: 63px;
 }
 .page-myprintconnect-changepassword #pccustomers-changepassword-form label {
-    white-space: normal;
-    text-align: left;
-    line-height: 19px!important;
-    max-width: 142px!important;
-    width: 160px!important;
+    white-space: normal; 
+    max-width: 188px!important;   
+    display: inline-block;
+    margin: 0;
+    font-weight: 400;
+    text-transform: uppercase; 
+    padding-right: 0;
+    width: 188px;
+    text-align: left; 
+    padding-left: 10px;
+    vertical-align: middle;
+    position: relative;
+}
+
+.page-myprintconnect-changepassword #pccustomers-changepassword-form input[type="password"]{
+  width: 428px; 
+  background: #fff;
+  border: 1px solid #d7d7d7;
+  border-radius: 4px 4px 4px 4px;
+  line-height: 19px;
+  padding: 10px;
+  margin: 0; 
+  vertical-align: middle;
+  position: relative;
+}
+
+.page-myprintconnect-changepassword #pccustomers-changepassword-form div.form-item:after{
+  clear: both;
+  content: '';
+  width: 100%;
+  display: block;
 }
 #pccustomers-address-billingaddresses-form label,
 #pccustomers-newaddress-billingaddresses-form label {
     float: left;
-width: 100px;  
+    width: 100px;  
 }
 
-pccustomers-newaddress-billingaddresses-form .form-item-company, .form-item-vatNumber{
+#pccustomers-newaddress-billingaddresses-form .form-item-company, .form-item-vatNumber{
     display: block;
 }
 
 #edit-vatnumber-number{
    width: 390px;   
 }
+
+.page-myprintconnect-addresses #pccustomers-addresses-form > div{
+   /* -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    overflow: hidden; */
+} 
+

@@ -13,10 +13,10 @@ define([
             "change #edit-shipping-detail-current-select" : "selectAddress"
         },
         initialize: function(model) {
-            if (model.get("shippingAddresses").orderItemShipping && $.inArray(model.get("shippingAddresses").orderItemShipping['shippingTypeTag'], ["shippingTypeStoreInAntwerpen","shippingTypePrinter"]) != -1)
-                return false;
             this.config = require("config");
             this.model = model;
+            if (model.get("shippingAddresses").orderItemShipping && $.inArray(model.get("shippingAddresses").orderItemShipping['shippingTypeTag'], ["shippingTypeStoreInAntwerpen","shippingTypePrinter"]) != -1)
+                return false;
             if (this.model.get("shippingAddresses").orderItemShipping && this.model.get("shippingAddresses").orderItemShipping['deliveryType'] != "deliveryTypeDeliver")
                 this.template = _.template(shippingEditPickupTemplate);
             this.render();
@@ -141,28 +141,33 @@ define([
             return false;
         },
         errors : function(isPaymentButton){
+            console.log(isPaymentButton, this.model.get("shippingAddresses").orderItemShipping);
             if(!isPaymentButton && this.model.get("shippingAddresses").orderItemShipping['deliveryType'] == "deliveryTypeDeliver")
                 return this.checkFields();
             if(!this.model.get("shippingAddresses").orderItemShipping.orderShippingAddress || !this.model.get("shippingAddresses").orderItemShipping.orderShippingAddress.id)
                 return this.config.labels[this.model.get("shippingAddresses").orderItemShipping.shippingTypeTag + "Error"];
-            if(!isPaymentButton && this.$("input#edit-shipping-detail-contact").val() == "")
-                return this.config.labels["nameEmptyError"];
             return false;
         },
         checkFields: function(){
-            var pattern = /^[\w-]+@[a-zA-Z_-]+?\.[a-zA-Z]{2,3}$/;
+            var pattern = /^[\w-\.]+@[a-zA-Z_-]+?\.[a-zA-Z]{2,3}$/;
             var name = this.$("#edit-shipping-detail-current-name").val(),
-                company = this.$("#edit-shipping-detail-current-company").val(),
                 street = this.$("#edit-shipping-detail-current-street").val(),
                 postalCode = this.$("#edit-shipping-detail-current-postalCode").val(),
                 city = this.$("#edit-shipping-detail-current-city").val(),
                 country = this.$("#edit-shipping-detail-current-country").val(),
                 phone = this.$("#edit-shipping-detail-current-phone").val(),
                 email = this.$("#edit-shipping-detail-current-email").val();
-            if(name == "" || company == "" || street == "" || postalCode == "" || city == "" || country == "" || phone == "" || email == "")
+            this.$('input:text').css("border-color", "");
+            if(name == "" || street == "" || postalCode == "" || city == "" || country == "" || phone == "" || email == "") {
+                this.$('input:text:not(#edit-shipping-detail-current-company)').filter(function() { return $(this).val() == ""; }).css("border-color", "red");
                 return this.config.labels["requiredFieldsError"];
-            if(!pattern.test(email))
+            }
+
+            if(!pattern.test(email)) {
+                this.$("#edit-shipping-detail-current-email").css("border-color", "red");
                 return this.config.labels["emailError"];
+            }
+
             return false;
         }
 

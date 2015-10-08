@@ -9,18 +9,18 @@
     var buttonText = (model.shippingAddresses.orderItemShipping.shippingTypeTag == "shippingTypeStore") ?
     model.labels['chooseFlyerstore'] : model.labels['chooseBpost'];
 
-    var infoTitle = (model.shippingAddresses.orderItemShipping.shippingTypeTag == "shippingTypeStore") ?
-    model.labels['infoTitleFlyerstore'] : model.labels['infoTitleBpost'];
     %>
     <div class="legend legend1"><span class="fieldset-legend"><%= title %></span>
     </div>
-    <div class="fieldset-wrapper"><span style="margin-left:100px;" class="storeLink"><a
-            class="button linkflyerstore picker-link fancybox.iframe ui-button"
-            href="/<%= model.prefix + link %>" role="button"><span
-            class="ui-button-text"><%= buttonText %></span></a></span>
-
+    <div class="fieldset-wrapper">
         <div id="allresault" class="store clearfix store clearfix" style="display: block;">
-            <div id="allresault" class="store clearfix">
+            <span class="storeLink">
+                <a class="button linkflyerstore picker-link fancybox.iframe ui-button" href="/<%= model.prefix + link %>" role="button">
+                    <span class="ui-button-text"><%= buttonText %></span>
+                </a>
+            </span>
+
+            <div id="allresault" class="store">
                 <div style="height:48%" id="map-canvas">
                 </div>
                 <div id="Mapimg">
@@ -44,11 +44,11 @@
                         <h6><%= model.labels['openingHours'] %></h6>
                         <table>
                             <% _.each(shippingAddress.openingHours, function(openingHour, index){ %>
-                            <% if(openingHour[0] && openingHour[1]) { %>
+                            
                             <tr><td><%= model.labels['day_' + index] %></td><td><%= openingHour[0] %> - <%= openingHour[1] %>
                                 <% if(openingHour[2] && openingHour[3]) print(openingHour[2]+" - "+openingHour[3]) %></td></tr>
                             <%
-                            }
+                            
                             });
                             %>
                         </table>
@@ -57,14 +57,5 @@
                 </div>
             </div>
         </div>
-        <div class="quivacollecter"><h1><%= infoTitle %></h1></div>
-        <div class="form-item form-type-textfield form-item-shipping-detail-contact">
-            <label for="edit-shipping-detail-contact"><%= model.labels['yourName'] %><span title="<%= model.labels['requiredField'] %>"
-                                                                                class="form-required">*</span></label>
-            <input type="text" class="form-text required" maxlength="128" size="30" value="<%= (shippingAddress)?shippingAddress.name:'' %>"
-                   name="shipping[detail][contact]" id="edit-shipping-detail-contact">
-        </div>
-
-        <input type="submit" class="form-submit ui-button ui-widget ui-state-default ui-corner-all" value="<%= model.labels['save'] %>"
-               name="shipping_address_submit" id="edit-shipping-detail-pickup-submit" role="button"></div>
+    </div>
 </fieldset>

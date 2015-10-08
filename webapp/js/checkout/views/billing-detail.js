@@ -25,7 +25,7 @@ define([
         },
         displayBillingForm: function(){
             myCheckout.shippingEditView.$el.hide();
-            myCheckout.billingEditView.$el.show();
+            myCheckout.billingEditView.$el.toggle();
         }
     });
 });

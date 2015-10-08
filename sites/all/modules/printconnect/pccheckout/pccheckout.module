@@ -358,7 +358,6 @@ function new_checkout_submit_all_form()
     }else if(isset($_POST['customer-first-address-id'])) {
         $data['id'] = $_POST['customer-first-address-id'];
         $response = \printconnect\Shipping\Types\Factory::SaveOrderShippingAddresses($data);
-        var_dump($response);die;
     }
     
     drupal_goto('checkout/payment');

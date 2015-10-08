@@ -15,6 +15,7 @@ define([
             "change #countryList" : "changeCountry"
         },
         initialize: function(model) {
+	    this.enableSave = true;
             this.config = require("config");
             this.model = model;
             this.render();
@@ -54,12 +55,23 @@ define([
             }
         },
         showPopUp: function(e){
+	    this.enableSave = false;
             var elmTarget = $(e.currentTarget);
             var me = this;
             if (elmTarget.val().length > 0) {
                 ajaxCaller.call("getBillingAccountFromVat",
                 {"vatNumber" : this.$('#countryIsoBA').val()+elmTarget.val()},
                 'GET').done(function(result) {
+		    this.enableSave = true;
+                    if(_.isEmpty(result.data) == false) {
+                        var viePoup = new vatView(me.model, result.data);
+                    };
+                });
+
+	        ajaxCaller.call("vatlidateVatNumber",
+                {"vatNumber" : this.$('#countryIsoBA').val()+elmTarget.val()},
+                'GET').done(function(result) {
+                    this.enableSave = true;
                     if(_.isEmpty(result.data) == false) {
                         var viePoup = new vatView(me.model, result.data);
                     };
@@ -67,6 +79,9 @@ define([
             }
         },
         saveBA: function(e) {
+	    if (this.enableSave == false) {
+	        return false;
+	    }
             var me = this;
 	    var billingError = this.errors();
             if( billingError) {

@@ -385,6 +385,8 @@ function new_checkout_submit_all_form()
         $data['id'] = $_POST['customer-first-address-id'];
         $response = \printconnect\Shipping\Types\Factory::SaveOrderShippingAddresses($data);
     }
+
+    \printconnect\Carts\Factory::RecalculateCart();
     
     drupal_goto('checkout/payment');
 }

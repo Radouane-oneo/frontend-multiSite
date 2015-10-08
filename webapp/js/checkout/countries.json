@@ -33,17 +33,6 @@
         "code": "208"
     },
     {
-        "id": 199,
-        "iso": "ES",
-        "vatPrefix": null,
-        "active": false,
-        "weight": 0,
-        "tag": "Espagne",
-        "name": "Espagne",
-        "resellerShop": null,
-        "code": null
-    },
-    {
         "id": 124,
         "iso": "LU",
         "vatPrefix": null,

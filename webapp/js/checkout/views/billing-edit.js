@@ -62,7 +62,7 @@ define([
                 ajaxCaller.call("getBillingAccountFromVat",
                 {"vatNumber" : this.$('#countryIsoBA').val()+elmTarget.val()},
                 'GET').done(function(result) {
-		    this.enableSave = true;
+		    me.enableSave = true;
                     if(_.isEmpty(result.data) == false) {
                         var viePoup = new vatView(me.model, result.data);
                     };
@@ -71,14 +71,24 @@ define([
 	        ajaxCaller.call("vatlidateVatNumber",
                 {"vatNumber" : this.$('#countryIsoBA').val()+elmTarget.val()},
                 'GET').done(function(result) {
-                    this.enableSave = true;
+                    me.enableSave = true;
                     if(_.isEmpty(result.data) == false) {
-                        var viePoup = new vatView(me.model, result.data);
+			switch(result.data.valid.status) {
+			   case 'VALID':
+				elmTarget.css("border-color", "green");
+				$('#countryIsoBA').css("border-color", "green");
+			   break;
+			   default:
+				elmTarget.css("border-color", "red");
+				$('#countryIsoBA').css("border-color", "red");
+			   break;
+			}
                     };
                 });
             }
         },
         saveBA: function(e) {
+	    console.log(this.enableSave);
 	    if (this.enableSave == false) {
 	        return false;
 	    }
@@ -102,6 +112,7 @@ define([
                     
                 }, 'POST').done(function(result) {
 		    if (result.id != $('#baEditSelect').val()) {
+			$("#selectBox option[value='"+$('#baEditSelect').val()+"']").remove();
                         var newBillngAccountList = jQuery.extend(true, {}, me.model.get('billingAccouts'));
                         newBillngAccountList[_.toArray(newBillngAccountList).length] = result;
                         me.model.set({'billingAccouts': newBillngAccountList, 'defaultBA': result});

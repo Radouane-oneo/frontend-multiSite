@@ -149,7 +149,7 @@ define([
             return false;
         },
         checkFields: function(){
-            var pattern = /^[\w-]+@[a-zA-Z_-]+?\.[a-zA-Z]{2,3}$/;
+            var pattern = /^[\w-\.]+@[a-zA-Z_-]+?\.[a-zA-Z]{2,3}$/;
             var name = this.$("#edit-shipping-detail-current-name").val(),
                 street = this.$("#edit-shipping-detail-current-street").val(),
                 postalCode = this.$("#edit-shipping-detail-current-postalCode").val(),

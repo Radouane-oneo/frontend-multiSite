@@ -12,13 +12,15 @@
     %>
     <div class="legend legend1"><span class="fieldset-legend"><%= title %></span>
     </div>
-    <div class="fieldset-wrapper"><span style="margin-left:100px;" class="storeLink"><a
-            class="button linkflyerstore picker-link fancybox.iframe ui-button"
-            href="/<%= model.prefix + link %>" role="button"><span
-            class="ui-button-text"><%= buttonText %></span></a></span>
-
+    <div class="fieldset-wrapper">
         <div id="allresault" class="store clearfix store clearfix" style="display: block;">
-            <div id="allresault" class="store clearfix">
+            <span class="storeLink">
+                <a class="button linkflyerstore picker-link fancybox.iframe ui-button" href="/<%= model.prefix + link %>" role="button">
+                    <span class="ui-button-text"><%= buttonText %></span>
+                </a>
+            </span>
+
+            <div id="allresault" class="store">
                 <div style="height:48%" id="map-canvas">
                 </div>
                 <div id="Mapimg">
@@ -42,11 +44,11 @@
                         <h6><%= model.labels['openingHours'] %></h6>
                         <table>
                             <% _.each(shippingAddress.openingHours, function(openingHour, index){ %>
-                            <% if(openingHour[0] && openingHour[1]) { %>
+                            
                             <tr><td><%= model.labels['day_' + index] %></td><td><%= openingHour[0] %> - <%= openingHour[1] %>
                                 <% if(openingHour[2] && openingHour[3]) print(openingHour[2]+" - "+openingHour[3]) %></td></tr>
                             <%
-                            }
+                            
                             });
                             %>
                         </table>

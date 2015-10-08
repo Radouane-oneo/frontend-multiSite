@@ -1,11 +1,11 @@
 
  
 function pcbpost_cart_callback(poi, html){
-  jQuery('#pccart-cart-form .pup').html(html);
+  /*jQuery('#pccart-cart-form .pup').html(html);
   jQuery('#pccart-cart-form input[name="cart[shipping][pup][id]"]').val(poi.Id);  
   jQuery('.pup').html(html);
   jQuery('input[name="cart[shipping][pup][id]"]').val(poi.Id);  
-  jQuery('input[name="pcbpost[id]"]').val(poi.Id);  
+  jQuery('input[name="pcbpost[id]"]').val(poi.Id);*/  
   jQuery.get(Drupal.settings.basePath + 'index.php?q=pcbpost/set/pickuppoint/' + poi.Id , function(data){
       if(data.code == 200) {
           if(typeof myCart != "undefined")
@@ -18,9 +18,9 @@ function pcbpost_cart_callback(poi, html){
 }
 
 function pcbpost_checkout_callback(poi, html){
-  jQuery('form .pup').html(html);
+  /*jQuery('form .pup').html(html);
   jQuery('form input[name="shipping[pickup][id]"]').val(poi.Id);  
-  jQuery('input[name="pcbpost[id]"]').val(poi.Id); 
+  jQuery('input[name="pcbpost[id]"]').val(poi.Id); */
   jQuery.get(Drupal.settings.basePath + 'index.php?q=pcbpost/set/pickuppoint/' + poi.Id );
 }
 

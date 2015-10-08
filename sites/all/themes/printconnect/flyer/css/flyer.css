@@ -3001,9 +3001,13 @@ a.ui-button.inactivebtn{
 }
 .invoice a#toggle-invoice-form,
 .shipping a#toggle-shipping-form{
-	padding: 7px 15px;
+	padding: 5px 15px;
 	display: inline-block;
 	margin-top: 10px;
+	background-color: #6faa01;
+	color: white;
+	border: 0;
+	border-radius: 3px;
 }
 .page-products #block-system-main #templates .form-item.form-type-item label ,    #pcdesigner-upload-form .templates label{
 	display: inline;
@@ -3839,15 +3843,15 @@ a.googleconnect {
 	position: relative;
 	overflow: hidden;
 }
-#pccheckout-invoiceanddelivery-form fieldset legend {
+#pccheckout-invoiceanddelivery-form legend{
 	display: block;
 	font-size: 14px;
 	color: #666666;
 	font-weight: 700;
 	position: relative;
-	margin: 0;
+	margin: 0 0 15px;
 }
-#pccheckout-invoiceanddelivery-form fieldset.collapsible > legend {
+#pccheckout-invoiceanddelivery-form .collapsible > legend {
 	display: none;
 }
 .page-checkout #pccheckout-personal-form {
@@ -3855,34 +3859,32 @@ a.googleconnect {
 }
 .page-checkout #pccheckout-invoiceanddelivery-form .invoice{
 	float: left;
-	margin-top: 15px;
 	min-height: 182px;
-	padding: 6px 10px 10px 25px;
+	padding: 15px 10px 10px 15px;
 	position: relative;
-	width: 375px;
+	width: 450px;
 }
 .page-checkout #pccheckout-invoiceanddelivery-form .shipping {
 	border-left: 1px solid #e1e1e1;
 	margin-left: 0;
-	margin-top: 16px;
 	min-height: 182px;
-	padding: 7px 9px 10px 32px;
+	padding: 15px 9px 10px 15px;
 	position: relative;
-	width: 385px;
+	width: 450px;
 	float: left;
 }
+
 .page-checkout #pccheckout-invoiceanddelivery-form .invoice > .fieldset-wrapper,
 .page-checkout #pccheckout-invoiceanddelivery-form .shipping > .fieldset-wrapper{
 	padding: 0;
 }
+
 .page-checkout-invoiceanddelivery .invoice h3, 
 .page-checkout-invoiceanddelivery .shipping h3 {
 	font-weight: 600;
 	margin-bottom: 10px;
 }
-.page-checkout-invoiceanddelivery .pup {
-	min-height: 110px;
-}
+
 .page-checkout-invoiceanddelivery #invoice-address input[type="submit"], 
 .page-checkout-invoiceanddelivery #shipping-address input[type="submit"] {
 	margin-left: 493px; 
@@ -3969,10 +3971,38 @@ a.googleconnect {
 .page-checkout-invoiceanddelivery table.openinghours tr td.last-child {
 	text-align: right;
 }
+
+.page-checkout-invoiceanddelivery #pccheckout-invoiceanddelivery-form .pup,
 .page-checkout #pccheckout-invoiceanddelivery-form .address, 
 .page-checkout #pccheckout-invoiceanddelivery-form .store {
-	min-height: 50px;
+	min-height: 85px;
 }
+
+.page-checkout-invoiceanddelivery #pccheckout-invoiceanddelivery-form .pup{
+	overflow: hidden;
+}
+
+.page-checkout-invoiceanddelivery #pccheckout-invoiceanddelivery-form .pup #detail{
+	float: left;
+	width: 47%;
+	padding-right: 3%;
+	border-right: 1px solid #d1d1d1;
+}
+.page-checkout-invoiceanddelivery #pccheckout-invoiceanddelivery-form .pup #hoursDetail{
+	float: left;
+	width: 45%;
+	padding-left: 4.5%;
+}
+
+.page-checkout-invoiceanddelivery #pccheckout-invoiceanddelivery-form .pup h6{
+	font-weight: 600;
+}
+.page-checkout-invoiceanddelivery #pccheckout-invoiceanddelivery-form .pup tbody{
+	background: none;
+	color: #646464;
+}
+
+
 .page-checkout .fieldset-legend {
 	padding-left: 0 !important;
 	background: none !important;
@@ -4631,25 +4661,17 @@ a.googleconnect {
 	clear: both;
 	padding-top: 0;
 }
-.page-checkout-invoiceanddelivery #pccheckout-invoiceanddelivery-form > div > .summary{
+.page-checkout-invoiceanddelivery #pccheckout-invoiceanddelivery-form > .summary{
 	border-color: #e1e1e1;
 	border-style: solid;
 	border-width:1px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
-	padding-bottom: 10px;
+	padding: 0;
+	overflow: hidden;
 }
-#pccheckout-invoiceanddelivery-form > .summary{
-	border-color: #e1e1e1;
-	border-style: solid;
-	border-width:1px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	padding-bottom: 10px;
-        overflow: hidden;
-}
+
 .page-checkout-invoiceanddelivery .shipping {
 	float: left;
 	background: #f1f1f1;
@@ -7597,9 +7619,7 @@ float:left;
 	width: 550px !important;
 	margin-left: 0px !important;
 }
-.address {
-	min-height: 0px !important;
-}
+
 .page-myprintconnect #edit-recentoffers{
 	margin-top: 30px;
 }

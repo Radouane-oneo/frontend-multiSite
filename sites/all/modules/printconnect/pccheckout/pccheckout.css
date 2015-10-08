@@ -18,7 +18,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 #pccheckout-invoiceanddelivery-form .summary .invoice{
     float:right;
     width:50%;
-    padding: 6px 10px 10px 10px !important;
+    padding: 6px 10px 10px 10px;
     margin:0;
     border:none;
 }
@@ -26,7 +26,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 #pccheckout-invoiceanddelivery-form .summary .shipping{
     float:left;
     width:50%;
-    padding: 7px 9px 10px 24px !important;
+    padding: 7px 9px 10px 24px;
     margin:0;
     border:none;
 }
@@ -54,7 +54,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 .page-checkout #pccheckout-invoiceanddelivery-form{
    background:transparent !important;
 }
-.page-checkout-invoiceanddelivery #pccheckout-invoiceanddelivery-form > div > .summary{
+.page-checkout-invoiceanddelivery #pccheckout-invoiceanddelivery-form > .summary{
     margin-bottom: 10px;
     padding: 8px;
     background: #f1f1f1;
@@ -68,9 +68,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 .payment-methods-table tr.last-child td{
     border-bottom: none;
 }
-#pccheckout-invoiceanddelivery-form fieldset legend{
-  display:none;
-}
+
 
 #pccheckout-invoiceanddelivery-form fieldset .legend {
   display: block;

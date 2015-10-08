@@ -1,6 +1,7 @@
-<fieldset id="edit-summary-shipping" class="shipping form-wrapper">
+<div id="edit-summary-shipping" class="shipping form-wrapper">
     <legend><span class="fieldset-legend"><%= model.labels['shippingAddress'] %></span></legend>
     <div class="fieldset-wrapper">
+        <div class="pup">
         <%
             var orderItemShipping = model.shippingAddresses.orderItemShipping;
         %>
@@ -28,8 +29,10 @@
             </table>
         </div>
         <% } %>
+        </div>
         <% if($.inArray(orderItemShipping['shippingTypeTag'], ["shippingTypeStoreInAntwerpen","shippingTypePrinter"]) == -1) { %>
         <a class="toggle" href="#shipping-address" id="toggle-shipping-form"><%= model.labels['changeShippingAddress'] %></a>
         <% } %>
+        
     </div>
-</fieldset>
+</div>

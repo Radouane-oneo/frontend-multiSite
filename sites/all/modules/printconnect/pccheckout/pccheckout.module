@@ -185,6 +185,20 @@ function pccheckout_menu() {
           'type' => MENU_CALLBACK,
       );
 
+      $items['checkout/ajax/getpaymentmethods'] = array(
+          'page callback' => 'new_checkout_ajax_getpaymentmethods',
+          'page arguments' => array(),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+
+      $items['checkout/ajax/savepaymentmethod/%'] = array(
+          'page callback' => 'new_checkout_ajax_savepaymentmethod',
+          'page arguments' => array(3),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+
       $items['checkout/ajax/submitcheckout'] = array(
           'page callback' => 'new_checkout_submit_all_form',
           'page arguments' => array(),
@@ -344,6 +358,18 @@ function new_checkout_check_vatnumber() {
 function save_neutral_shipping(){
     $neutral = ($_POST['neutral'] == 'true') ? 1: 0;
     $response = \printconnect\Carts\Factory::saveNeutralShipping($neutral);
+    Dal::BuildJson(json_decode($response->data, 1));
+}
+
+function new_checkout_ajax_getpaymentmethods()
+{
+    $response = \printconnect\PaymentMethods\Factory::GetPaymentMethods();
+    Dal::BuildJson(json_decode($response->data, 1));
+}
+
+function new_checkout_ajax_savepaymentmethod($paymentmethodId)
+{
+    $response = \printconnect\PaymentMethods\Factory::SavePaymentMethod($paymentmethodId);
     Dal::BuildJson(json_decode($response->data, 1));
 }
 

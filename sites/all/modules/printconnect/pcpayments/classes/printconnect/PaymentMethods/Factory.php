@@ -6,6 +6,20 @@ namespace printconnect\PaymentMethods {
 
   class Factory {
 
+    public static function GetPaymentMethods()
+    {
+        return Dal::SendRequest('payment-method');
+    }    
+
+    public static function SavePaymentMethod($paymentmethodId)
+    {
+        $cartId = isset($_SESSION['cartid']) ? $_SESSION['cartid'] : NULL;
+        return Dal::SendRequest('payment-method', 'POST', array(
+            'cart' => $cartId,
+            'paymentMethodId' => $paymentmethodId
+        ));
+    }
+
     public static function GetAll() {
       $paymentMethods = new PaymentMethods();
 

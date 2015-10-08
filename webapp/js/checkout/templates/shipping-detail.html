@@ -1,6 +1,10 @@
 <fieldset id="edit-summary-shipping" class="shipping form-wrapper">
     <legend><span class="fieldset-legend"><%= model.labels['shippingAddress'] %></span></legend>
-    <% var orderItemShippingAddress = (model.shippingAddresses.orderItemShipping &&
+    <% 
+    var firstAddress = (model.shippingAddresses.orderItemShipping &&
+    model.shippingAddresses.orderItemShipping.orderShippingAddress) ?
+    false : true; 
+    var orderItemShippingAddress = (model.shippingAddresses.orderItemShipping &&
     model.shippingAddresses.orderItemShipping.orderShippingAddress) ?
     model.shippingAddresses.orderItemShipping.orderShippingAddress : model.shippingAddresses.addresses[0]; 
     var countrySelected = _.findWhere(model.countries, {id : orderItemShippingAddress.country});
@@ -13,6 +17,9 @@
     <div class="fieldset-wrapper">
         <% if(orderItemShippingAddress) { %>
         <div class="address">
+            <% if(firstAddress) { %>
+                <input type="hidden" name="customer-first-address-id" value="<%= orderItemShippingAddress.id %>">
+            <% } %>
             <div class="name"><%= orderItemShippingAddress.name %></div>
             <div class="street"><%= orderItemShippingAddress.street %></div>
             <div class="place"><%= isNaN(orderItemShippingAddress.country)? orderItemShippingAddress.country:countrySelected %> - <%=

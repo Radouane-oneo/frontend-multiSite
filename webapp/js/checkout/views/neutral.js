@@ -30,8 +30,27 @@ define([
             });
         },
         processPayment : function(e){
-            location.href = "/" + this.config.prefix + "/checkout/payment";
-            return false;
+            var billingError = myCheckout.billingEditView.errors(true);
+            var shippingError = myCheckout.shippingEditView.errors(true);
+            var shippingDetailError = myCheckout.shippingDetailView.errors();
+            if(billingError) {
+                myCheckout.errorView.render(billingError);
+                $(window).scrollTop($(this.config.containerId).offset().top);
+                return false;
+            }
+            if(shippingError) {
+                myCheckout.errorView.render(shippingError);
+                $(window).scrollTop($(this.config.containerId).offset().top);
+                return false;
+            }
+            if(shippingDetailError) {
+                myCheckout.errorView.render(shippingDetailError);
+                $(window).scrollTop($(this.config.containerId).offset().top);
+                return false;
+            }
+            if(myCheckout.disable) return false;
+
+            $("#pccheckout-invoiceanddelivery-form").submit();
         }
     });
 });

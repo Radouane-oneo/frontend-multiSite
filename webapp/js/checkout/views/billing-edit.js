@@ -11,7 +11,8 @@ define([
         events: {
             "change #baEditSelect": "changeBA",
             "click #saveEditBA": "saveBA",
-            "blur #vatNumberBA" : "showPopUp"
+            "blur #vatNumberBA" : "showPopUp",
+            "change #countryList" : "changeCountry"
         },
         initialize: function(model) {
             this.config = require("config");
@@ -24,35 +25,40 @@ define([
                 "model": this.model.toJSON()
             }));
             $(this.config.editBox).find(".billingBox").html(this.$el);
+            this.displayVatBloc();
         },
-	errors : function() {
-	    me = this;
-	    var result = null;
- 	    $('.baInputs').each(function(baInputs){
-     		if ($(this).val() == '') {
-		    $(this).css('border-color', 'red');
-	            result = me.config.labels["BaFieldRequired"];
-		    return false;
-	        }
-	    });
-	    if (result) {
-		return result;
-	    }
-	    if (
-		($("#company").val() != "" && $("#vatNumber").val() == "")
-		|| ($("#company").val() == "" && $("#vatNumber").val() != "")
-	    ) {
-		$("#companyInput").css('border-color', 'red');
-		$("#vatNumberBA").css('border-color', 'red');
-		return this.config.labels["fieldCmpVatNumber"];
-	    }
+        errors: function (isPaymentButton) {
+            if(isPaymentButton)
+                return false;
+            var me = this;
+            var result = null;
+            this.$('.baInputs').css('border-color', '');
+            this.$("#companyInput").css('border-color', '');
+            this.$("#vatNumberBA").css('border-color', '');
+            $('.baInputs').each(function (baInputs) {
+                if ($(this).val() == '') {
+                    $(this).css('border-color', 'red');
+                    result = me.config.labels["BaFieldRequired"];
+                    return false;
+                }
+            });
+            if (result) {
+                return result;
+            }
+            if (
+                $("#isUserCompany").is(":checked") && ($("#companyInput").val() == "" || $("#vatNumberBA").val() == "")
+                ) {
+                $("#companyInput").css('border-color', 'red');
+                $("#vatNumberBA").css('border-color', 'red');
+                return this.config.labels["fieldCmpVatNumber"];
+            }
         },
         showPopUp: function(e){
             var elmTarget = $(e.currentTarget);
             var me = this;
             if (elmTarget.val().length > 0) {
                 ajaxCaller.call("getBillingAccountFromVat",
-                {"vatNumber" : "BE"+elmTarget.val()},
+                {"vatNumber" : this.$('#countryIsoBA').val()+elmTarget.val()},
                 'GET').done(function(result) {
                     if(_.isEmpty(result.data) == false) {
                         var viePoup = new vatView(me.model, result.data);
@@ -77,7 +83,7 @@ define([
                     "postalCode": this.$('#baPostalCode').val(),
                     "country": this.$('#countryList').val(),
                     "company": this.$('#companyInput').val(),
-                    "vatNumber": this.$('#vatNumberBA').val()
+                    "vatNumber": this.$('#countryIsoBA').val() + this.$('#vatNumberBA').val()
                     
                 }, 'POST').done(function(result) {
 		    if (result.id != $('#baEditSelect').val()) {
@@ -95,11 +101,32 @@ define([
                 return elmTarget.val() == billingAccount.id
             });
             if (targetBA != undefined) {
-                this.model.set("defaultBA",targetBA);
+                this.$('#baName').val(targetBA.name);
+                this.$('#baStreet').val(targetBA.street);
+                this.$('#baCity').val(targetBA.city);
+                this.$('#baPostalCode').val(targetBA.postalCode);
+                this.$('#countryList').val(targetBA.country);
+                this.$('#companyInput').val(targetBA.company);
+                this.$('#vatNumberBA').val(targetBA.vatNumber);
+                this.displayVatBloc();
             } else if (elmTarget.val() == 0) {
                 this.$('.baInputs').val("");
-                this.$('.baInputsSelect').val("");
+                this.$("#companyInput").val("");
+                this.$("#vatNumberBA").val("");
             }
+        },
+        displayVatBloc: function(){
+            document.getElementById("isUserCompany").checked = false;
+            this.$(".form-item-invoice-address-current-company").hide();
+            this.$(".form-item-invoice-address-current-vatNumber").hide();
+            if(this.$('#companyInput').val() != "" && this.$('#vatNumberBA').val()!= "") {
+                document.getElementById("isUserCompany").checked = true;
+                this.$(".form-item-invoice-address-current-company").show();
+                this.$(".form-item-invoice-address-current-vatNumber").show();
+            }
+        },
+        changeCountry: function(e){
+            this.$("#countryIsoBA").val(_.findWhere(this.model.get("countries"), {id : parseInt($(e.currentTarget).val())}).iso);
         }
     });
 });

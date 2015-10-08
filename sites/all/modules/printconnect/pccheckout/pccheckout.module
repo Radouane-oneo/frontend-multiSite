@@ -349,13 +349,16 @@ function save_neutral_shipping(){
 
 function new_checkout_submit_all_form()
 {
-    var_dump($_POST);die;
-    if($_POST['shipping-detail-delivery-type'] == "deliveryTypePickup") {
+    if(isset($_POST['shipping-detail-delivery-type']) && $_POST['shipping-detail-delivery-type'] == "deliveryTypePickup") {
         $data['name'] = $_POST['shipping-detail-contact'];
         $data['id'] = $_POST['shipping-detail-id'];
         $data['deliverytype'] = $_POST['shipping-detail-delivery-type'];
 
         $response = \printconnect\Shipping\Types\Factory::SaveOrderShippingAddresses($data);
+    }else if(isset($_POST['customer-first-address-id'])) {
+        $data['id'] = $_POST['customer-first-address-id'];
+        $response = \printconnect\Shipping\Types\Factory::SaveOrderShippingAddresses($data);
+        var_dump($response);die;
     }
     
     drupal_goto('checkout/payment');

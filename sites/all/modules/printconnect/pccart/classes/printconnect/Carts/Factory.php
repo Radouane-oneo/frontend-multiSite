@@ -116,6 +116,9 @@ class Factory {
 
     public static function GetCartCount()
     {
+        if(!isset($_SESSION['cartid'])) {
+            return 0;
+        }
         if(!isset($_SESSION['cartCount'])) {
             $response = self::GetCartJson();
             $cart = json_decode($response->data);

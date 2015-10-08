@@ -8,7 +8,8 @@ define([
     return Backbone.View.extend({
         template: _.template(shippingDetailTemplate),
         events: {
-            "click #toggle-shipping-form" : "displayShippingForm"
+            "click #toggle-shipping-form" : "displayShippingForm",
+            "blur #edit-shipping-detail-contact" : "changeName"
         },
         initialize: function(model) {
             this.config = require("config");
@@ -28,9 +29,27 @@ define([
         },
         displayShippingForm: function(){
             myCheckout.billingEditView.$el.hide();
-            myCheckout.shippingEditView.$el.show();
+            myCheckout.shippingEditView.$el.toggle();
+            myCheckout.shippingEditView.initMap();
+
+            if(this.model.get("shippingAddresses").orderItemShipping.orderShippingAddress) {
+                var customerAddressId = this.model.get("shippingAddresses").orderItemShipping.orderShippingAddress.shippingAddress;
+                $("#edit-shipping-detail-current-select").val(customerAddressId);
+                $("#edit-shipping-detail-current-select").change();
+            }
+        },
+        changeName: function(e){
+            var shippingAddresses = $.extend(true, {}, this.model.get("shippingAddresses"));
+            shippingAddresses.orderItemShipping.orderShippingAddress.name = $(e.currentTarget).val();
+            this.model.set({"shippingAddresses": shippingAddresses},{silent: true});
         },
         errors : function(){
+            this.$("input#edit-shipping-detail-contact").css("border-color","");
+            if(this.$("input#edit-shipping-detail-contact").val() == "") {
+                this.$("input#edit-shipping-detail-contact").css("border-color","red");
+                return this.config.labels["nameEmptyError"];
+            }
+
             return false;
         }
 

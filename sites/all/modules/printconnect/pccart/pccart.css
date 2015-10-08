@@ -298,6 +298,7 @@ font-size: 14px !important;
 }
 div.myoffers table.list tbody  li{
     margin-left: 14px !important;
+    text-align: left;
 }
 .page-cart #edit-cart-vatexception-description span.price{
 white-space: nowrap;

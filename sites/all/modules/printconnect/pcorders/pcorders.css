@@ -70,8 +70,14 @@
   right:0;
 }
 .page-myprintconnect table {
-    margin-left: -7px!important;
-    margin-top: -5px!important;
+    width: 100%;
+}
+.page-myprintconnect .fieldset-wrapper{
+    padding: 0;
+    overflow: hidden;
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
 }
 .page-myprintconnect #edit-recentinvoices {
     margin-top: 30px;
@@ -92,4 +98,4 @@ padding: 0;
 #pcorders-order-form .recommander{
     float: right;
     margin-bottom: 20px;
-}
+} 

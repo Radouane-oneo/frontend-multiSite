@@ -3905,21 +3905,25 @@ a.googleconnect {
 	margin: 10px;
 	height: 600px;
 	overflow: hidden;
+	padding: 16px 0px 10px;
+}
+.page-pcbpost-picker .whitebox > h1{
+	margin-left: 10px;
 }
 .page-pcbpost-picker #pcbpost-picker-form #result {
-	background: #f1f1f1;
+	background: #fff;
 	border-radius: 4px 4px 4px 4px;
 	height: 520px;
 }
 .page-pcbpost-picker #pcbpost-picker-form #result #map {
 	border-radius: 4px 4px 4px 4px;
 	width: 590px;
-	height: 500px;
+	height: 494px;
 	margin: 10px;
 }
 .page-pcbpost-picker #pcbpost-picker-form #result .pois {
 	height: 500px;
-	margin-top: 10px;
+	padding-top: 10px;
 	margin-left: 10px;
 	background: #fff;
 	border-radius: 4px 4px 4px 4px;
@@ -3951,9 +3955,13 @@ a.googleconnect {
 #pcbpost-picker-form .form-submit {
 	display: inline-block;
 	float: none;
-	margin: 1em;
-	position: absolute;
+	margin: 1em 0 1em 1em;
+	/*position: absolute;*/
 	height: 38px;
+	min-width: 79px;
+}
+#pcbpost-picker-form .leftInput {
+	float: right;
 }
 #pcbpost-picker-form #result .name, 
 #pcbpost-picker-form #result .services {
@@ -4761,7 +4769,7 @@ a.googleconnect {
 .page-myprintconnect table th {
 	color: #fff;
 	text-transform: uppercase;
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: 400;
 }
 .page-myprintconnect table th, 
@@ -4885,6 +4893,9 @@ a.googleconnect {
 }
 #pcorders-order-form .address {
 	margin: 0;
+}
+.address {
+	min-height: 0px !important;
 }
 .page-myprintconnect-orders .order .fieldset-wrapper {
 	padding: 0;
@@ -10038,9 +10049,10 @@ ul.type_product-selectBox-dropdown-menu li .sub-items884 {
 	padding: 10px 0; 
 }
 
-body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintconnect-addresses.page-myprintconnect table,body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintconnect-closedorders table {
-	margin-left: -7px !important;
-	margin-top: 16px !important;
+body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintconnect-addresses.page-myprintconnect table,
+body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintconnect-closedorders table {
+	/*margin-left: -7px !important;
+	margin-top: 16px !important;*/
 }
 body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintconnect-addresses.page-myprintconnect table tr td:first-child {
 width: 203px !important;
@@ -10702,16 +10714,64 @@ p.requieredfields span.form-required {
 }
 
 /* Page factures */
+.page-myprintconnect-offers .myoffers{
+	margin-top: 1em;
+}
+.page-myprintconnect-offers .myoffers table.list.offers th,
+.page-myprintconnect-closedorders  div.orders table.list.orders th,
+.page-myprintconnect-orders .listCommande > table.list.orders tr th,
+.page-myprintconnect-addresses #pccustomers-addresses-form .wrap_addressesLivraison > table.addressesLivraison tr th,
+.page-myprintconnect-addresses #pccustomers-addresses-form  .wrap_addressesFacturation > table.addressesFacturation tr th{
+	font-weight: bold;
+	border-bottom: 1px solid #ff6600;
+	border-top: 1px solid #ff6600;
+} 
+.page-myprintconnect-offers .myoffers table.list.offers th:first-child,
+.page-myprintconnect-closedorders  div.orders table.list.orders th:first-child,
+.page-myprintconnect-orders .listCommande > table.list.orders tr th:first-child,
+.page-myprintconnect-addresses #pccustomers-addresses-form .wrap_addressesLivraison > table.addressesLivraison tr th:first-child,
+.page-myprintconnect-addresses #pccustomers-addresses-form  .wrap_addressesFacturation > table.addressesFacturation tr th:first-child{
+	border-left: 1px solid #b95009; 
+}
+.page-myprintconnect-offers .myoffers table.list.offers th:last-child,
+.page-myprintconnect-closedorders  div.orders table.list.orders th:last-child,
+.page-myprintconnect-orders .listCommande > table.list.orders tr th:last-child,
+.page-myprintconnect-addresses #pccustomers-addresses-form .wrap_addressesLivraison > table.addressesLivraison tr th:last-child,
+.page-myprintconnect-addresses #pccustomers-addresses-form  .wrap_addressesFacturation > table.addressesFacturation tr th:last-child{
+	border-right: 1px solid #b95009;
+}
+.page-myprintconnect-addresses #pccustomers-addresses-form table.addresses tr td,
+.page-myprintconnect-closedorders  div.orders table.list.orders tr td,
+.page-myprintconnect-offers .myoffers table.list.offers tr td,
+.page-myprintconnect-orders .listCommande > table.list.orders tr td,
+.page-myprintconnect-addresses #pccustomers-addresses-form .wrap_addressesLivraison > table.addressesLivraison tr td,
+.page-myprintconnect-addresses #pccustomers-addresses-form  .wrap_addressesFacturation > table.addressesFacturation tr td
+{
+  vertical-align: middle;
+  border-right: 1px solid #dcdcdc;
+}
+
+.page-myprintconnect-addresses #pccustomers-addresses-form table.addresses tr td:last-child,
+.page-myprintconnect-closedorders  div.orders table.list.orders tr td:last-child,
+.page-myprintconnect-offers .myoffers table.list.offers tr td:last-child,
+.page-myprintconnect-orders .listCommande > table.list.orders tr td:last-child,
+.page-myprintconnect-addresses #pccustomers-addresses-form .wrap_addressesLivraison > table.addressesLivraison tr td:last-child,
+.page-myprintconnect-addresses #pccustomers-addresses-form  .wrap_addressesFacturation > table.addressesFacturation tr td:last-child{
+	border-right: none;
+}
 .page-myprintconnect #edit-invoices div#edit-list,
 .page-myprintconnect-closedorders  div.orders,
-.page-myprintconnect-addresses #pccustomers-addresses-form,
-.page-myprintconnect-offers .myoffers {
-    border: 1px solid #dcdcdc;
-    border-top: 0;
-    overflow: hidden;
-    border-radius: 5px 5px 5px 5px;
-	-moz-border-radius: 5px 5px 5px 5px;
-	-webkit-border-radius: 5px 5px 5px 5px;
+.page-myprintconnect-addresses #pccustomers-addresses-form .wrap_addressesLivraison,
+.page-myprintconnect-addresses #pccustomers-addresses-form  .wrap_addressesFacturation,
+.page-myprintconnect-offers .myoffers,
+.page-myprintconnect-orders .listCommande {
+ 	background: #fff;
+	overflow: hidden;
+	border: 1px solid #DCDCDC;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border-top: 1px solid #b95009;
 }
 .page-myprintconnect #edit-invoices table {
 	width: 100%;

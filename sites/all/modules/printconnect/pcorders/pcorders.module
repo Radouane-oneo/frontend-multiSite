@@ -170,10 +170,12 @@ function _pcorders_callback() {
 //      );
       $content['orders'] = array(
           '#theme' => 'table',
+          '#prefix' => '<div class="listCommande">',
           '#rows' => $rows,
           '#header' => array(t('Created'), t('Finished'), t('Expected delivery'), t('Status'), t('Number')),
           '#empty' => t('No orders'),
           '#attributes' => array('class' => array('list', 'orders')),
+          '#suffix' => '</div>',
       );
 
       return $content;

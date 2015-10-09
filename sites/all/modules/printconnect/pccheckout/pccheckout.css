@@ -405,13 +405,13 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 
 .page-checkout #Mapimg{
   float: left!important;
-  width: 45%!important;
-  height: 350px;
-  margin-right: 65px;
+  width: 410px!important;
+  height: 265px;
+  margin-right: 70px;
 }
 .page-checkout .storcomande{
   float: left !important;
-  width: 46%!important;
+  width: 35%!important;
   margin-top: -5px;
 }
 #pccheckout-invoiceanddelivery-form .form-item-shipping-detail-current-company{
@@ -470,7 +470,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 
 .shippingBox .store #allresault{
   float: left;
-  width: 75%;
+  width: 77%;
 }
 
 .page-checkout-invoiceanddelivery input.checkout-submit.payment{

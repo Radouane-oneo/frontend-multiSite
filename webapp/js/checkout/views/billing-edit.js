@@ -77,13 +77,17 @@ define([
                     if(_.isEmpty(result.data) == false) {
 			switch(result.data.valid.status) {
 			   case 'VALID':
-				elmTarget.css("border-color", "green");
-				$('#countryIsoBA').css("border-color", "green");
+				//elmTarget.css("border-color", "green");
+				//$('#countryIsoBA').css("border-color", "green");
 				me.enableSave = true;
 			   break;
 			   default:
 				elmTarget.css("border-color", "red");
 				$('#countryIsoBA').css("border-color", "red");
+				elmTarget.val('');
+				myCheckout.errorView.render(me.config.labels["InvalidVatNumber"]);
+                		$(window).scrollTop($(me.config.containerId).offset().top);
+                		return false;
 			   break;
 			}
                     };
@@ -91,14 +95,11 @@ define([
             }
         },
         saveBA: function(e) {
-	    if (this.enableSave == false) {
-	        return false;
+	    if(this.enableSave == false) {
+		return false;
 	    }
             var me = this;
 	    var billingError = this.errors();
-	    if(!billingError && this.enableSave == false) {
-	        billingError =  this.config.labels["invalidVatNumber"]
-	    }
             if( billingError) {
                 myCheckout.errorView.render(billingError);
                 $(window).scrollTop($(this.config.containerId).offset().top);

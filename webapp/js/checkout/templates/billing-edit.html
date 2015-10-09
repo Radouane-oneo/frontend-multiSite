@@ -93,18 +93,18 @@
                     <% }); %>
                 </select>
             </div>
-            <div class="form-item form-type-checkbox form-item-invoice-address-current-isCompany">
+            <div class="form-item form-type-checkbox form-item-invoice-address-current-isCompany company-box">
                 <label for="edit-invoice-address-current-iscompany">J'ai une numéro de TVA </label>
                 <input id="isUserCompany" type="checkbox" class="form-checkbox">
             </div>
             <div class="form-item form-type-textfield form-item-invoice-address-current-company" style="display: none;">
-                <label for="edit-invoice-address-current-company"><%= model.labels['CompanyBA'] %> </label>
+                <label for="edit-invoice-address-current-company"><%= model.labels['CompanyBA'] %> <span class="form-required" title="BAFieldsRequired">*</span></label>
                 <input id="companyInput" name="company" type="text" value="<%= (model.defaultBA) ? model.defaultBA.company : '' %>" size="30" maxlength="128" class="form-text">
             </div>
             <div id="vatNumber">
                 <div class="form-item form-type-vatfield form-item-invoice-address-current-vatNumber vat-validation-processed" style="display: none;">
                     <label for="vatNumber">
-                        <%= model.labels['VatNumberBA']%> 
+                        <%= model.labels['VatNumberBA']%> <span class="form-required" title="BAFieldsRequired">*</span>
                     </label>
                     <input class="country form-text"  type="text" id="countryIsoBA" readOnly = "readOnly"
                            value="<%= (model.defaultBA) ? model.defaultBA.iso : '' %>" size="2" maxlength="2">

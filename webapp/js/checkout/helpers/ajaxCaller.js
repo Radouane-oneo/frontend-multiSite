@@ -4,7 +4,8 @@ define([], function () {
             "saveBillingAccount" : "/checkout/savenewinvoiceanddelivery",
             "getBillingAccountFromVat" : "/checkout/getBillingAccoutFromVat",
             "saveNeutralShipping" : "/checkout/saveNeutralShipping",
-            "saveShipping" : "/checkout/ajax/saveshippingaddress"
+            "saveShipping" : "/checkout/ajax/saveshippingaddress",
+	    "vatlidateVatNumber" : "/checkout/ajax/vatlidateVatNumber"
         },
         call : function(action, data, method, params){
             $('body').css('cursor','wait');

@@ -20,6 +20,11 @@ class Factory {
   {
       return Dal::SendRequest('billing-account/vatNumber/'.$vatNumber);
   }
+
+  public static function ValidateVatNumber($vatNumber)
+  {
+      return Dal::SendRequest('vat/vatNumber/'.$vatNumber.'/validate/true');
+  }
   
   public static function SaveNewBillingAccount($data) 
   {

@@ -15,6 +15,7 @@ define([
             "change #countryList" : "changeCountry"
         },
         initialize: function(model) {
+	    this.enableSave = true;
             this.config = require("config");
             this.model = model;
             this.render();
@@ -40,7 +41,10 @@ define([
                     $(this).css('border-color', 'red');
                     result = me.config.labels["BaFieldRequired"];
                     return false;
-                }
+                } else if($(this).val().length <= 3) {
+		    $(this).css('border-color', 'red');
+		    result = me.config.labels["invalidCharactersLength"];
+		}
             });
             if (result) {
                 return result;
@@ -54,21 +58,47 @@ define([
             }
         },
         showPopUp: function(e){
+	    this.enableSave = false;
             var elmTarget = $(e.currentTarget);
             var me = this;
             if (elmTarget.val().length > 0) {
                 ajaxCaller.call("getBillingAccountFromVat",
                 {"vatNumber" : this.$('#countryIsoBA').val()+elmTarget.val()},
                 'GET').done(function(result) {
+		    me.enableSave = true;
                     if(_.isEmpty(result.data) == false) {
                         var viePoup = new vatView(me.model, result.data);
+                    };
+                });
+
+	        ajaxCaller.call("vatlidateVatNumber",
+                {"vatNumber" : this.$('#countryIsoBA').val()+elmTarget.val()},
+                'GET').done(function(result) {
+                    if(_.isEmpty(result.data) == false) {
+			switch(result.data.valid.status) {
+			   case 'VALID':
+				elmTarget.css("border-color", "green");
+				$('#countryIsoBA').css("border-color", "green");
+				me.enableSave = true;
+			   break;
+			   default:
+				elmTarget.css("border-color", "red");
+				$('#countryIsoBA').css("border-color", "red");
+			   break;
+			}
                     };
                 });
             }
         },
         saveBA: function(e) {
+	    if (this.enableSave == false) {
+	        return false;
+	    }
             var me = this;
 	    var billingError = this.errors();
+	    if(!billingError && this.enableSave == false) {
+	        billingError =  this.config.labels["invalidVatNumber"]
+	    }
             if( billingError) {
                 myCheckout.errorView.render(billingError);
                 $(window).scrollTop($(this.config.containerId).offset().top);
@@ -86,8 +116,13 @@ define([
                     "vatNumber": this.$('#countryIsoBA').val() + this.$('#vatNumberBA').val()
                     
                 }, 'POST').done(function(result) {
-		    if (result.id != $('#baEditSelect').val()) {
+		    if (result.id != $('#baEditSelect').val() && $('#baEditSelect').val() != 0) {
                         var newBillngAccountList = jQuery.extend(true, {}, me.model.get('billingAccouts'));
+		        newBillngAccountList = _.without(newBillngAccountList, _.findWhere(newBillngAccountList, {id: parseInt($('#baEditSelect').val())}));
+                        newBillngAccountList[_.toArray(newBillngAccountList).length] = result;
+                        me.model.set({'billingAccouts': newBillngAccountList, 'defaultBA': result});
+		    } else if($('#baEditSelect').val() == 0) {
+			var newBillngAccountList = jQuery.extend(true, {}, me.model.get('billingAccouts'));
                         newBillngAccountList[_.toArray(newBillngAccountList).length] = result;
                         me.model.set({'billingAccouts': newBillngAccountList, 'defaultBA': result});
 		    }

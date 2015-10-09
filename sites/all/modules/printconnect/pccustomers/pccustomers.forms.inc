@@ -59,7 +59,7 @@ function pccustomers_addresses_form($form, $form_state) {
   );
   
   $variables['rows'] = $rows;
-  $variables['attributes'] = array('class' => array('list', 'addresses'));
+  $variables['attributes'] = array('class' => array('list', 'addresses','addressesLivraison'));
   $variables['empty'] = t('No addresses');
   $variables['caption'] = NULL;
   $variables['colgroups'] = NULL;
@@ -67,6 +67,8 @@ function pccustomers_addresses_form($form, $form_state) {
 
   $form['addresses']['table'] = array(
       '#markup' => theme_table($variables),
+      '#prefix' => '<div class="wrap_addressesLivraison">',
+      '#suffix' => '</div>', 
   );
 
   $form['addresses']['add'] = array(
@@ -117,7 +119,7 @@ foreach ( $allbellingacounts as $MyBillingaddress) {
       '',
   );
   $variablesBilling['rows'] = $rowsBilling;
-  $variablesBilling['attributes'] = array('class' => array('list', 'addresses'));
+  $variablesBilling['attributes'] = array('class' => array('list', 'addresses','addressesFacturation'));
   $variablesBilling['empty'] = t('No addresses');
   $variablesBilling['caption'] = NULL;
   $variablesBilling['colgroups'] = NULL;
@@ -125,6 +127,8 @@ foreach ( $allbellingacounts as $MyBillingaddress) {
 
   $form['Billingaddresses']['table'] = array(
       '#markup' => theme_table($variablesBilling),
+      '#prefix' => '<div class="wrap_addressesFacturation">',
+      '#suffix' => '</div>', 
   );
 
   $form['Billingaddresses']['add'] = array(

@@ -16,6 +16,15 @@
             <div class="address"><%= shippingAddress.street %> - <%= shippingAddress.postalCode %> <%= shippingAddress.city %></div>
             <div class="phone"><%= shippingAddress.phone %></div>
             <div class="email"><a href="mailto:<%= shippingAddress.email %>"><%= shippingAddress.email %></a></div>
+
+            <% if(shippingAddress){ %>
+                <div class="form-type-textfield form-item-shipping-detail-contact shipping-contact">
+                    <label for="edit-shipping-detail-contact"><%= model.labels['infoTitle'] %><span title="<%= model.labels['requiredField'] %>"
+                                                                                                   class="form-required">*</span></label>
+                    <input type="text" class="cmd-collecte form-text required" maxlength="128" size="30" value="<%= (shippingAddress)?shippingAddress.name:'' %>"
+                           name="shipping-detail-contact" id="edit-shipping-detail-contact">
+                </div>
+            <% } %>
         </div>
         <div id="hoursDetail">
             <h6><%= model.labels['openingHours'] %></h6>
@@ -33,18 +42,7 @@
         <% } %>
 
         </div>
-
-        <%
-        var infoTitle = model.labels['infoTitle'];
-        %>
-        <% if(shippingAddress){ %>
-        <div class="form-type-textfield form-item-shipping-detail-contact">
-            <label for="edit-shipping-detail-contact"><%= infoTitle %><span title="<%= model.labels['requiredField'] %>"
-                                                                                           class="form-required">*</span></label>
-            <input type="text" class="cmd-collecte form-text required" maxlength="128" size="30" value="<%= (shippingAddress)?shippingAddress.name:'' %>"
-                   name="shipping-detail-contact" id="edit-shipping-detail-contact">
-        </div>
-        <% } %>
+        
         <% if($.inArray(orderItemShipping['shippingTypeTag'], ["shippingTypeStoreInAntwerpen","shippingTypePrinter"]) == -1) { %>
         <a class="toggle" href="#shipping-address" id="toggle-shipping-form"><%= model.labels['changeShippingAddress'] %></a>
         <% } %>

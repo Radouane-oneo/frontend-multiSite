@@ -60,9 +60,11 @@
                 <tr>
                     <td class="shipping-flyerStore" colspan="3">
                         <div class="shipping-map">
+                            <% if(model.orderItemShipping.orderShippingAddress.geographical){ %>
                             <iframe  width='311' height='198' frameborder='0' scrolling='no' marginheight='0' marginwidth='0'
                                      src='https://maps.google.com/maps?ie=UTF8&t=roadmap&q=<%= model.orderItemShipping.orderShippingAddress.geographical["latitude"] %>,<%= model.orderItemShipping.orderShippingAddress.geographical["longitude"] %>&z=16&output=embed'>
                                      </iframe>
+                            <% } %>
                             <a class="pcflyerstores-picker-link fancybox.iframe" href="/<%= config.prefix %>/stores/picker/callback/pcflyerstores_callback/?contentonly=1" style="display: inline-block;">
                                 <%= config.labels['chooseOtherFlyerStore'] %>
                             </a>
@@ -75,14 +77,15 @@
                             <%= model.orderItemShipping.orderShippingAddress.email %> <br /><br />
                             <span class="bold-title"><%= config.labels['openingHours'] %></span><br />
                             <table id="opening-hours">
-                            <% _.each(model.orderItemShipping.orderShippingAddress.openingHours, function(openingHour, index){ %>
-
+                            <% _.each(model.orderItemShipping.orderShippingAddress.openingHours, function(openingHour, index){
+                                if(openingHour[0]){
+                            %>
                             <tr>
                                 <td><%= config.labels['day_' + index] %></td>
-                                <td><%= openingHour[0] %> - <%= openingHour[1] %> <% if(openingHour[2] && openingHour[3]) print(openingHour[2]+" - "+openingHour[3]) %></td>
+                                <td><%= openingHour[0] %><%= (openingHour[1])?"-" + openingHour[1]:"" %> <% if(openingHour[2] && openingHour[3]) print(openingHour[2]+"-"+openingHour[3]) %></td>
                             </tr>
                             <%
-
+                                }
                                 });
                             %>
                             </table>
@@ -106,15 +109,17 @@
                         <div class="BPost-hours">
                             <span class="bold-title"><%= config.labels['openingHours'] %></span><br />
                             <table id="opening-hours">
-                                <% _.each(model.orderItemShipping.orderShippingAddress.openingHours, function(openingHour, index){ %>
+                                <% _.each(model.orderItemShipping.orderShippingAddress.openingHours, function(openingHour, index){
+                                    if(openingHour[0]){
+                                %>
 
                                 <tr>
                                     <td><%= config.labels['day_' + index] %></td>
-                                    <td><%= openingHour[0] %> - <%= openingHour[1] %> <% if(openingHour[2] && openingHour[3]) print(openingHour[2]+" - "+openingHour[3]) %></td>
+                                    <td><%= openingHour[0] %><%= (openingHour[1])?"-" + openingHour[1]:"" %> <% if(openingHour[2] && openingHour[3]) print(openingHour[2]+"-"+openingHour[3]) %></td>
                                 </tr>
                                 <%
-
-                                });
+                                    }
+                                    });
                                 %>
                             </table>
                         </div>

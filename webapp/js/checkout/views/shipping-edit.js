@@ -141,7 +141,6 @@ define([
             return false;
         },
         errors : function(isPaymentButton){
-            console.log(isPaymentButton, this.model.get("shippingAddresses").orderItemShipping);
             if(!isPaymentButton && this.model.get("shippingAddresses").orderItemShipping['deliveryType'] == "deliveryTypeDeliver")
                 return this.checkFields();
             if(!this.model.get("shippingAddresses").orderItemShipping.orderShippingAddress || !this.model.get("shippingAddresses").orderItemShipping.orderShippingAddress.id)

@@ -1,7 +1,7 @@
 <p class="lineSeparator"><%= model.labels['NeutralShippingTitle'] %></p>
 <div id="edit-shipping-neutral-text" class="form-item form-type-item">
     <p class="neutralDescritpion">
-        <input type="checkbox" id="neutralRadioClick" class="form-checkbox">
+        <input type="checkbox" id="neutralRadioClick" class="form-checkbox" <% if(model.isNeutral) print ("checked='checked'");%>>
         <label class="option" for="neutralRadioClick"><%= model.labels['Neutralexplain'] %> </label>
     </p>
 </div>

@@ -697,7 +697,7 @@ div#cart{
 	position: relative;
 	top: -11px;
 	margin-bottom: -9px;
-	z-index: 101;
+	z-index: 999;
 }
 /* ---- END - CART ------------------------- */
 

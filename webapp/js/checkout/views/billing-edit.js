@@ -46,7 +46,7 @@ define([
                     $(this).css('border-color', 'red');
                     result = me.config.labels["BaFieldRequired"];
                     return false;
-                } else if($(this).val().length <= 3) {
+                } else if($(this).val().length <= 2 || ($(this).attr('id') == 'baPostalCode' && $(this).val().length <= 3)) {
 		    $(this).css('border-color', 'red');
 		    result = me.config.labels["invalidCharactersLength"];
 		}

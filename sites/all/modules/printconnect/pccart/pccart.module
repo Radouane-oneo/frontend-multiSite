@@ -272,7 +272,8 @@ function new_cart_loadpage() {
         "deleteOrder" => t('Supprimer'),
         "fotoliaImg" =>  t('Fotolia Image'),
         "controleProfessionel" => t('Contrôle professionel de'),
-        "desqigntoolLink" => 'http://designtool.prd.printconcept.com'
+        "desqigntoolLink" => 'http://designtool.prd.printconcept.com',
+        "updateProduct" => t('update product')
     );
 
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");

@@ -44,16 +44,17 @@ define([
             this.model.set({"shippingAddresses": shippingAddresses},{silent: true});
         },
         errors : function(){
-            this.$("input#edit-shipping-detail-contact").css("border-color","");
-            if(this.$("input#edit-shipping-detail-contact").val() == "") {
-                this.$("input#edit-shipping-detail-contact").css("border-color","red");
-                return this.config.labels["nameEmptyError"];
+            if(this.$("input#edit-shipping-detail-contact").length > 0) {
+                this.$("input#edit-shipping-detail-contact").css("border-color","");
+                if(this.$("input#edit-shipping-detail-contact").val() == "") {
+                    this.$("input#edit-shipping-detail-contact").css("border-color","red");
+                    return this.config.labels["nameEmptyError"];
+                }
+                if(this.$("input#edit-shipping-detail-contact").val().length < 3) {
+                    this.$("input#edit-shipping-detail-contact").css("border-color","red");
+                    return this.config.labels["invalidCharactersLength"];
+                }
             }
-            if(this.$("input#edit-shipping-detail-contact").val().length < 3) {
-                this.$("input#edit-shipping-detail-contact").css("border-color","red");
-                return this.config.labels["invalidCharactersLength"];
-            }
-
             return false;
         }
 

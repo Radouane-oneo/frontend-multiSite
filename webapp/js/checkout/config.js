@@ -45,6 +45,7 @@ define([
         vat : vat,
         prefix : GlobalPrefix,
         isConnected : isConnected,
+        isNeutral : neutral,
         countries : CountriesList,
         langId : '10',
         designtoolLink : 'http://designtool.prd.printconcept.com',

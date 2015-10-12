@@ -119,17 +119,13 @@ class Factory {
         if(!isset($_SESSION['cartid'])) {
             return 0;
         }
-        if(!isset($_SESSION['cartCount'])) {
-            $response = self::GetCartJson();
-            $cart = json_decode($response->data);
         
-            $number = count($cart->orderItems);
+        $response = self::GetCartJson();
+        $cart = json_decode($response->data);
+        $number = count($cart->orderItems);
 
-            $_SESSION['cartCount'] = $number;
-        }else {
-            $number = $_SESSION['cartCount'];
-        }
-
+        $_SESSION['cartCount'] = $number;
+        
         return $number;
     }
 

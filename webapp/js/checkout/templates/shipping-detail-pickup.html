@@ -29,12 +29,13 @@
         <div id="hoursDetail">
             <h6><%= model.labels['openingHours'] %></h6>
             <table>
-                <% _.each(shippingAddress.openingHours, function(openingHour, index){ %>
-                
-                <tr><td><%= model.labels['day_' + index] %></td><td><%= openingHour[0] %> - <%= openingHour[1] %>
-                <% if(openingHour[2] && openingHour[3]) print(openingHour[2]+" - "+openingHour[3]) %></td></tr>
+                <% _.each(shippingAddress.openingHours, function(openingHour, index){
+                if(openingHour[0]){
+                %>
+                <tr><td><%= model.labels['day_' + index] %></td><td><%= openingHour[0] %><%= (openingHour[1])?"-" + openingHour[1]:"" %>
+                <% if(openingHour[2] && openingHour[3]) print(openingHour[2]+"-"+openingHour[3]) %></td></tr>
                 <%
-                
+                }
                 });
                 %>
             </table>

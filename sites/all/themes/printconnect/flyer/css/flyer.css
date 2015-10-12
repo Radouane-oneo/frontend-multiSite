@@ -4022,6 +4022,11 @@ a.googleconnect {
 	color: #646464;
 }
 
+
+.page-checkout-invoiceanddelivery #hoursDetail tbody td:first-child{
+    width: 60px;
+    padding-right: 10px;
+}
 .page-checkout-invoiceanddelivery .pup #hoursDetail td{
 	line-height: 18px;
 }

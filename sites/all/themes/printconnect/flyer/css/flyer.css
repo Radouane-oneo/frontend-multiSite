@@ -3906,7 +3906,7 @@ a.googleconnect {
 	margin: 10px;
 	height: 600px;
 	overflow: hidden;
-	padding: 16px 0px 10px;
+	padding: 16px 0px 0px;
 }
 .page-pcbpost-picker .whitebox > h1{
 	margin-left: 10px;
@@ -3923,7 +3923,7 @@ a.googleconnect {
 	margin: 10px;
 }
 .page-pcbpost-picker #pcbpost-picker-form #result .pois {
-	height: 500px;
+	height: 510px;
 	padding-top: 10px;
 	margin-left: 10px;
 	background: #fff;
@@ -3956,7 +3956,7 @@ a.googleconnect {
 #pcbpost-picker-form .form-submit {
 	display: inline-block;
 	float: none;
-	margin: 1em 0 1em 1em;
+	margin: 0.8em 0 1em 1em;
 	/*position: absolute;*/
 	height: 38px;
 	min-width: 79px;

@@ -167,6 +167,7 @@ define([
             }
         },
         changeCountry: function(e){
+	    $('#vatNumberBA').val('');
             this.$("#countryIsoBA").val(_.findWhere(this.model.get("countries"), {id : parseInt($(e.currentTarget).val())}).iso);
         }
     });

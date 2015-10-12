@@ -315,11 +315,13 @@ function new_checkout_and_delivery_loadpage() {
     $labels = array(
       'js_key' => t('drupal_tag'),
     );
-
+     $cart = \printconnect\Carts\Factory::GetCartJson();
+     $result = json_decode($cart->data);
     $script = "<script type='text/javascript'>
         var GlobalPrefix = '".$language->prefix."';
         var GlobalVat = 0.21;
-        var isConnected = " . (isset($_SESSION['customerid']) ? 1 : 0) . ";
+        var isConnected = " . (isset($_SESSION['customerid']) ? 1 : 0) . "
+        var neutral = ".(($result->neutralShipping)?1:0).";
     </script>";
     $script .= "<style>#box-progress{display: block;}</style>";
     $script .= '<link rel="stylesheet" href="/webapp/js/libs/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />';

@@ -102,7 +102,7 @@ select {
 	border-radius: 3px;
 }
 #pccustomers-newaddress-form label,
-#pccustomers-address-form label  {
+#pccustomers-address-form label{
 	display: block;
 	float: left;
 	font-weight: 400;
@@ -10817,7 +10817,9 @@ p.requieredfields span.form-required {
 }
 
 /* Page Adresses */
-.page-myprintconnect-addresses #pccustomers-newaddress-form > div {
+.page-myprintconnect-addresses #pccustomers-newaddress-form > div ,
+.page-myprintconnect-mybillingaddress-new #pccustomers-newaddress-billingaddresses-form > div
+{
     background-color: #f1f1f1;
     padding-top: 18px;
     margin-top: 10px;
@@ -10844,15 +10846,14 @@ p.requieredfields span.form-required {
 	background-image: none;
 }
 
-#pccustomers-newaddress-form input[type="text"]#edit-name, 
+ 
 #pccustomers-newaddress-form input[type="text"]#edit-lastname {
     width: 218px;
 }
 #pccustomers-newaddress-form input[type="text"]#edit-name {
-    border-radius: 3px 0px 0px 3px;
-    -moz-border-radius: 3px 0px 0px 3px;
-    -webkit-border-radius: 3px 0px 0px 3px;
-    border-right: 0;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
 }
 #pccustomers-newaddress-form input[type="text"]#edit-lastname { 
     border-radius: 0px 3px 3px 0px;
@@ -10860,7 +10861,7 @@ p.requieredfields span.form-required {
     -webkit-border-radius: 0px 3px 3px 0px;
 }
 #pccustomers-newaddress-form label, 
-#pccustomers-address-form label {
+#pccustomers-address-form label{
     text-align: left;
     padding-left: 10px;
     padding-right: 0;
@@ -11640,4 +11641,47 @@ input.ui-button.payment {
  	clear: both;
  	padding-top: 10px;
  }
+
+.page-myprintconnect-addresses #pccustomers-addresses-form .wrap_addressesLivraison,
+.page-myprintconnect-orders .listCommande,
+.page-myprintconnect-closedorders div.orders{
+	margin-top: 10px;
+}
+
+.labelAdd_facturation , .labelAdd_adresse{
+	margin-top: 10px;
+	display: block;
+}
+
+.page-myprintconnect-mybillingaddress-new #pccustomers-newaddress-billingaddresses-form label {
+    white-space: normal; 
+    max-width: 188px!important;   
+    display: inline-block;
+    margin: 0;
+    font-weight: 400;
+    text-transform: uppercase; 
+    padding-right: 0;
+    width: 153px;
+    text-align: left; 
+    padding-left: 10px;
+    vertical-align: middle;
+    position: relative;
+    float: none;
+}
+
+#pccustomers-newaddress-billingaddresses-form .form-item-isCompany input{
+	margin-left: 10px;
+    vertical-align: middle;
+    position: relative;
+    float: none !important;
+}
+
+#pccustomers-newaddress-billingaddresses-form .country{
+ 	border-radius: 3px 0 0 3px;
+ 	border-right: none;	
+}
+
+#pccustomers-newaddress-billingaddresses-form .number{
+	    border-radius: 0 3px 3px 0;
+}
 

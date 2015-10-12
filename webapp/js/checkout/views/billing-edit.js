@@ -82,8 +82,8 @@ define([
                     if(_.isEmpty(result.data) == false) {
 			switch(result.data.valid.status) {
 			   case 'VALID':
-				//elmTarget.css("border-color", "green");
-				//$('#countryIsoBA').css("border-color", "green");
+				elmTarget.css("border-color", "");
+				$('#countryIsoBA').css("border-color", "");
 				me.enableSave = true;
 			   break;
 			   default:

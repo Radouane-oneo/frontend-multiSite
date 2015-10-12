@@ -46,7 +46,7 @@ function pcdesigns_saveddesigns_form($form, $form_state) {
         $list[] = '<label>' . $config->groupName . ':</label>  ' . $config->name;
     }
     $list[] = '<label>Couleurs et impression:</label>  Recto/verso';
-     $list[] = '<label>Couleurs et impression:</label>  Recto/verso';
+    $list[] = '<label>Couleurs et impression:</label>  Recto/verso';
     if (count($design->options) > 0) {
         foreach ($design->options as $option) {
             //$itemValue += $option->price;

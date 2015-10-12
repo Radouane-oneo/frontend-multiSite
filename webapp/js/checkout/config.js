@@ -106,7 +106,8 @@ define([
             "emailError" : "Adresse email n'est pas valide",
 	    "BaFieldRequired" : "Veuillez remplir tout les champs obligatoires",
 	    "fieldCmpVatNumber" : "Sociéte et numero de tva sont requit",
-            "invalidCharactersLength" : "invalidCharactersLength"
+            "invalidCharactersLength" : "invalidCharactersLength",
+	    "InvalidVatNumber" : "votre numero de tva est invalid"
         }
         
     };

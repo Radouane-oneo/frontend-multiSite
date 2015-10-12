@@ -12,6 +12,7 @@ define([
             "change #baEditSelect": "changeBA",
             "click #saveEditBA": "saveBA",
             "blur #vatNumberBA" : "showPopUp",
+	    "change #vatNumberBA" : "detectChanges",
             "change #countryList" : "changeCountry"
         },
         initialize: function(model) {
@@ -19,6 +20,7 @@ define([
             this.config = require("config");
             this.model = model;
             this.render();
+	    this.changesVatNumber = false;
             this.model.on("change", this.render, this);
         },
         render: function() {
@@ -28,6 +30,9 @@ define([
             $(this.config.editBox).find(".billingBox").html(this.$el);
             this.displayVatBloc();
         },
+	detectChanges : function() {
+	    this.changesVatNumber = true;
+	},
         errors: function (isPaymentButton) {
             if(isPaymentButton)
                 return false;
@@ -66,7 +71,7 @@ define([
                 {"vatNumber" : this.$('#countryIsoBA').val()+elmTarget.val()},
                 'GET').done(function(result) {
 		    me.enableSave = true;
-                    if(_.isEmpty(result.data) == false) {
+                    if(_.isEmpty(result.data) == false && me.changesVatNumber == true) {
                         var viePoup = new vatView(me.model, result.data);
                     };
                 });

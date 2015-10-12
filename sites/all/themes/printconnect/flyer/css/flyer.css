@@ -3861,6 +3861,7 @@ a.googleconnect {
 	font-weight: 700;
 	position: relative;
 	margin: 0 0 15px;
+	padding: 0;
 }
 #pccheckout-invoiceanddelivery-form .collapsible > legend {
 	display: none;
@@ -3881,7 +3882,7 @@ a.googleconnect {
 	min-height: 182px;
 	padding: 15px 9px 10px 15px;
 	position: relative;
-	width: 450px;
+	width: 500px;
 	float: left;
 }
 
@@ -4014,16 +4015,20 @@ a.googleconnect {
 }
 
 .page-checkout-invoiceanddelivery h6{
-	font-weight: 600;
+	font-weight: 700;
 }
 .page-checkout-invoiceanddelivery #hoursDetail tbody{
 	background: none;
 	color: #646464;
 }
 
+
 .page-checkout-invoiceanddelivery #hoursDetail tbody td:first-child{
     width: 60px;
     padding-right: 10px;
+}
+.page-checkout-invoiceanddelivery .pup #hoursDetail td{
+	line-height: 18px;
 }
 
 
@@ -11636,4 +11641,8 @@ input.ui-button.payment {
   border-right: 1px solid #dcdcdc;
 }
  
+ .shipping-contact{
+ 	clear: both;
+ 	padding-top: 10px;
+ }
 

@@ -162,11 +162,11 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 }
 
 .form-item-invoice-address-current-isCompany input {
-    left: 220px;
+    /*left: 220px;
     position: relative;
-    top: -14px;
+    top: -25px;
     z-index: 99;
-    margin-left: 270px;
+    margin-left: 270px;*/
 }
 
 .form-item-isCompany label {
@@ -181,10 +181,10 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
     font-weight: bold;
 }
 .form-item-invoice-address-current-isCompany label {
-    float: none !important;
+    /*float: none !important;
     position: relative;
-    top: 20px;
-    width: 200px !important;
+    top: 5px;
+    width: 200px !important;*/
 }
 
 .form-item-company{
@@ -476,4 +476,14 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 .page-checkout-invoiceanddelivery input.checkout-submit.payment{
   width: 245px;
   background-position:  20px center;
+}
+
+div.company-box{
+  overflow: hidden;
+  padding-top: 12px;
+}
+
+div.company-box > label{
+  line-height: 20px !important;
+  height: 20px !important;
 }

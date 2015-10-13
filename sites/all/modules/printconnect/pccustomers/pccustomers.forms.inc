@@ -72,7 +72,7 @@ function pccustomers_addresses_form($form, $form_state) {
   );
 
   $form['addresses']['add'] = array(
-      '#markup' => l(t('Add an address'), 'myprintconnect/addresses/new'),
+      '#markup' => l(t('Add an address'), 'myprintconnect/addresses/new', array('attributes' => array('class' => 'labelAdd_adresse')))  
   );
   
 /* Billingaddresses */
@@ -132,7 +132,7 @@ foreach ( $allbellingacounts as $MyBillingaddress) {
   );
 
   $form['Billingaddresses']['add'] = array(
-      '#markup' => l(t('Add an Billing address'), 'myprintconnect/mybillingaddress/new'),
+      '#markup' => l(t('Add an Billing address'), 'myprintconnect/mybillingaddress/new',array('attributes' => array('class' => 'labelAdd_facturation'))),
   );
   
   return $form;

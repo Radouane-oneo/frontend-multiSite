@@ -53,7 +53,7 @@ a:visited.googleconnect{
     background: url(images/calc_btn.png) no-repeat 27px center,-webkit-linear-gradient(top, #77b800 0%, #669c02 100%);
     padding-left: 63px;
 }
-.page-myprintconnect-changepassword #pccustomers-changepassword-form label {
+.page-myprintconnect-changepassword #pccustomers-changepassword-form label{
     white-space: normal; 
     max-width: 188px!important;   
     display: inline-block;

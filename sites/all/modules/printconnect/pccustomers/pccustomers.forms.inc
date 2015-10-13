@@ -72,7 +72,7 @@ function pccustomers_addresses_form($form, $form_state) {
   );
 
   $form['addresses']['add'] = array(
-      '#markup' => l(t('Add an address'), 'myprintconnect/addresses/new'),
+      '#markup' => l(t('Add an address'), 'myprintconnect/addresses/new', array('attributes' => array('class' => 'labelAdd_adresse')))  
   );
   
 /* Billingaddresses */
@@ -132,7 +132,7 @@ foreach ( $allbellingacounts as $MyBillingaddress) {
   );
 
   $form['Billingaddresses']['add'] = array(
-      '#markup' => l(t('Add an Billing address'), 'myprintconnect/mybillingaddress/new'),
+      '#markup' => l(t('Add an Billing address'), 'myprintconnect/mybillingaddress/new',array('attributes' => array('class' => 'labelAdd_facturation'))),
   );
   
   return $form;
@@ -713,11 +713,13 @@ function pccustomers_newaddress_form($form, $form_state) {
       '#attributes' => array('class' => array('city')),
   );
 
-  $options = array();
-  $countries = \printconnect\Countries\Factory::GetAll();
-  foreach ($countries as $country) {
-    $options[$country->id] = $country->tag;
-  }
+  $options = array (
+       "21"=>t('Belgique'),
+       "73"=>t('France'),
+       "150"=>t('Pays-Bas'),
+       "124"=>t('Luxembourg'),
+    );
+  
   natsort($options);
   $form['country'] = array(
       '#type' => 'select',
@@ -782,7 +784,6 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
            "21"=>t('Belgique'),
            "73"=>t('France'),
            "150"=>t('Pays-Bas'),
-           "199"=>t('Espagne'),
            "124"=>t('Luxembourg'),
          );
         

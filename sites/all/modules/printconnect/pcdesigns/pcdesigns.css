@@ -58,6 +58,7 @@
 #pcdesigns-saveddesigns-form legend span {
     font-size: 15px;
     text-transform: none;
+    margin-left: 0 !important;
 }
 #pcdesigns-saveddesigns-form .fieldset-wrapper {
     padding: 0px !important;

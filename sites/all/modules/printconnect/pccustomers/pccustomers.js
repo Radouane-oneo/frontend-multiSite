@@ -1,12 +1,33 @@
 (function ($) {
     $(document).ready(function () {
- if($('#pccustomers-address-billingaddresses-form')[0]){
-     if ($('#edit-vatnumber-number').val()) {
-                $('#isUserCompany').attr('disabled', true);
-            } else {
-                $('#isUserCompany').attr('disabled', false);
+      if($('#pccustomers-address-billingaddresses-form')[0]){
+         if ($('#edit-vatnumber-number').val()) {
+                    $('#isUserCompany').attr('disabled', true);
+                } else {
+                    $('#isUserCompany').attr('disabled', false);
+                }
+      }
+
+      $('.save-button').click(function (e) {
+          $('.messages.error').remove();
+          $('#pccustomers-newaddress-form .required').removeClass("error");
+          var errorMarkup = "<div class='messages error'><ul>";
+          var errorMsgs = new Array();
+          $('#pccustomers-newaddress-form .required').each(function(i, elem) {
+            var _this = $(this);
+            if(_this.val() == "" || (_this.val().length <= 3 && _this.name !="country") ) {
+              var inputName = $(elem).attr('name');
+              _this.addClass('error');
+              errorMsgs[i] = "Le champ "+inputName+" est requis.";
+              errorMarkup += "<li>"+errorMsgs[i]+"</li>";
             }
- }
+          });  
+          errorMarkup += "</ul></div>";
+          $( "#content h1:first" ).after( errorMarkup );
+          if(errorMsgs.length != 0 ) {
+            e.preventDefault();
+          }
+      });
          
     });
     

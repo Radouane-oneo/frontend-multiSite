@@ -292,6 +292,10 @@ function flyer_preprocess_html(&$vars) {
         if($args[0]=="checkout" && $args[1]=="newinvoiceanddelivery") {
             unset($javascript['sites/all/modules/printconnect/pcflyerstores/pcflyerstores_map.js']);
         }
+
+        if($args[0]=="myprintconnect" && $args[1]=="addresses" && $args[2]== "new" ) {
+            unset($javascript['sites/all/modules/printconnect/pcflyerstores/pcflyerstores_map.js']);
+        }
 }
 
 function flyer_css_alter(&$css) {

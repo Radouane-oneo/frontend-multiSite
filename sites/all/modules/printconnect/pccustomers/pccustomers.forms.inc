@@ -766,6 +766,7 @@ function pccustomers_newaddress_form($form, $form_state) {
   $form['actions']['submit'] = array(
       '#type' => 'submit',
       '#value' => t('Save'),
+      '#attributes' => array('class' => array('save-button')),
   );
 
   $form['back'] = array(

@@ -38,15 +38,14 @@ function pccheckout_personal_form($form, &$form_state) {
         }
     }
 
-    foreach (\printconnect\Countries\Factory::GetAll() as $country) {
+    
         $countries = array (
        "21"=>t('Belgique'),
        "73"=>t('France'),
        "150"=>t('Pays-Bas'),
-       "199"=>t('Espagne'),
        "124"=>t('Luxembourg'),
      );
-    }
+    
 
     if ($defaultBillingAddress) {
         $country = \printconnect\Countries\Factory::Get($defaultBillingAddress->country);

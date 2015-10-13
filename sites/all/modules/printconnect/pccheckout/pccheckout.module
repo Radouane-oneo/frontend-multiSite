@@ -313,13 +313,74 @@ function new_checkout_and_delivery_loadpage() {
      global $language;
 
     $labels = array(
-      'js_key' => t('drupal_tag'),
+      "js_key" => t('drupal_tag'),
+      "formatBrut" => t("Format brut"),
+      "BillingAccount" => t("adresse de facturation"),
+      "changeBA" => t("Change invoice address"),
+      "selectBA" => t("Select from addressbook"),
+      "OrCreateBA" => t("Ou créez une nouvelle adresse en remplissant le formulaire ci-dessous."),
+      "addNewBA" => t("Ajouter une adresse"),
+      "BAName" => t("Nom"),
+      "StreetBA" => t("N° et Rue"),
+      "CityBA" => t("Ville"),
+      "postalCodeCityBA" => t("Code Postale"),
+      "CountryBA" => t("Pays"),
+      "HaveVatNumber" => t("J'ai une numéro de TVA"),
+      "CompanyBA" => t("Entreprise"),
+      "VatNumberBA" => t("Numéro de Tva"),
+      "BAFieldsRequired" => t("Ce champ est requis."),
+      "existingBA" => t("this billing address is already exist would you want load this address as your default billing address"),
+      "shippingAddress" => t("Shipping address"),
+      "changeShippingAddress" => t("Change shipping address"),
+      "openingHours" => t("Heures d'ouverture"),
+      "day_1" => t("Lundi"),
+      "day_2" => t("Mardi"),
+      "day_3" => t("Mercredi"),
+      "day_4" => t("Jeudi"),
+      "day_5" => t("Vendredi"),
+      "day_6" => t("Samedi"),
+      "day_7" => t("Dimanche"),
+      "shippingFlyerstore" =>t("Vous avez choisi Enlèvement dans un FlyerStore"),
+      "shippingBpost" =>t("Vous avez choisi Enlèvement dans un point poste"),
+      "chooseFlyerstore" => t("Choisissez votre FlyerStore"),
+      "chooseBpost" => t("Choisissez votre point poste"),
+      "infoTitle" => t("Qui va collecter la commande ?"),
+      "yourName" => t("Votre nom et prénom"),
+      "requiredField" => t("Ce champ est requis."),
+      "save" => t("Enregistrer"),
+      "selectSA" => t("SÉLECTIONNEZ UNE ADRESSE"),
+      "OrCreateSA" => t("Ou créez une nouvelle adresse en remplissant le formulaire ci-dessous."),
+      "addNewSA" => t("Ajouter une adresse"),
+      "SAName" => t("votre nom livraison"),
+      "StreetSA" => t("N° et Rue"),
+      "CitySA" => t("Ville"),
+      "postalCodeCitySA" => t("Code Postale"),
+      "CountrySA" => t("Pays"),
+      "CompanySA" => t("La livraison se fait chez une entreprise ? Veuillez remplir le nom"),
+      "NeutralShippingTitle" => t("ENVOI NEUTRE"),
+      "NeutralShipping" => t("Envoi neutre"),
+      "Neutralexplain" => t("Voulez-vous votre commande sans mention de Flyer.fr sur la boîte? S'il vous plaît cocher cette case."),
+      "securePaymentBtn" => t("Paiement sécurisé"),
+      "BAalreadyExisting" => t("this billing address is already exist would you want load this address as your default billing address"),
+      "shippingTypeStoreError" => t("shippingTypeStoreError"),
+      "nameEmptyError" => t("nameEmptyError"),
+      "shippingTypeBpostPickupPointError" => t("shippingTypeBpostPickupPointError"),
+      "phone" => t("phone"),
+      "email" => t("email"),
+      "requiredFieldsError" => t("Veuillez remplir tout les champs obligatoires"),
+      "emailError" => t("Adresse email n'est pas valide"),
+      "BaFieldRequired" => t("Veuillez remplir tout les champs obligatoires"),
+      "fieldCmpVatNumber" => t("Sociéte et numero de tva sont requit"),
+      "invalidCharactersLength" => t("invalidCharactersLength"),
+      "InvalidVatNumber" => t("votre numero de tva est invalid")
     );
+
      $cart = \printconnect\Carts\Factory::GetCartJson();
      $result = json_decode($cart->data);
     $script = "<script type='text/javascript'>
         var GlobalPrefix = '".$language->prefix."';
         var GlobalVat = 0.21;
+        var ChekoutGlobalLabels = ".json_encode($labels).";
         var isConnected = " . (isset($_SESSION['customerid']) ? 1 : 0) . "
         var neutral = ".(($result->neutralShipping)?1:0).";
     </script>";

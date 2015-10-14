@@ -435,7 +435,12 @@ function save_neutral_shipping(){
 function new_checkout_ajax_getpaymentmethods()
 {
     $response = \printconnect\PaymentMethods\Factory::GetPaymentMethods();
-    Dal::BuildJson(json_decode($response->data, 1));
+    $customer = printconnect\Customers\Factory::Current();
+  
+    Dal::BuildJson(array(
+        'paymentMethods' => json_decode($response->data, 1),
+        'customerName' => $customer->lastName.' '.$customer->firstName
+    ));
 }
 
 function validate_vat_number() {
@@ -465,7 +470,7 @@ function new_checkout_submit_all_form()
 
     \printconnect\Carts\Factory::RecalculateCart();
     
-    drupal_goto('checkout/payment');
+    drupal_goto('payment');
 }
 // ==============================================================================================
 

@@ -3,9 +3,7 @@
         <span class="fieldset-legend"><%= config.labels['orderOverview'] %></span>
     </legend>
     <div class="fieldset-wrapper">
-        <table class="sticky-enabled">
-            
-          
+        <table class="sticky-enabled"> 
             <thead><tr><th class="first-child"><%= config.labels['decription'] %></th><th class="last-child"><%= config.labels['price'] %></th> </tr></thead>
             <tbody>
                 <% _.each(model.orderItems, function(orderItem, i) {%>
@@ -44,7 +42,7 @@
                 <% subtotal = model.subTotalAmount }%>
                
                 <tr class="total-excl-vat odd last-child"><td class="first-child">Total HTVA</td>
-                    <td class="last-child"><%= priceTpl({price:(subtotal)}) %></td>
+                    <td class="last-child txt-orange txt-bold"><%= priceTpl({price:(subtotal)}) %></td>
                 </tr>
             </tbody>
         </table>

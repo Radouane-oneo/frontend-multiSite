@@ -407,7 +407,14 @@ function pccustomers_address_form($form, $form_state, $addressId) {
       '#size' => 71,
       '#default_value' => $address->street,
   );
-  $form['postalCode'] = array(
+
+  $form['postal_codeCity'] = array(
+        '#type' => 'container',
+        '#prefix' => '<div class="wrap_postal_codeCity clear">',
+        '#suffix' => '</div>',
+  );
+
+  $form['postal_codeCity']['postalCode'] = array(
       '#type' => 'textfield',
       '#title' => t('PostalCode'),
       '#required' => TRUE,
@@ -415,14 +422,17 @@ function pccustomers_address_form($form, $form_state, $addressId) {
       '#default_value' => $address->postalCode,
       '#attributes' => array('class' => array('postalCode')),
   );
-  $form['city'] = array(
+  $form['postal_codeCity']['city'] = array(
       '#type' => 'textfield',
-      '#title' => t('City'),
+      //'#title' => t('City'),
       '#required' => TRUE,
       '#size' => 71,
       '#default_value' => $address->city,
-      '#attributes' => array('class' => array('city')),
+      '#attributes' => array('class' => array('city','cc')),
   );
+
+ 
+
   $options = array();
   $countries = printconnect\Countries\Factory::GetAll();
   foreach ($countries as $country) {

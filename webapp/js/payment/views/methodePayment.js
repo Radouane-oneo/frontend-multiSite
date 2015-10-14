@@ -44,7 +44,7 @@ define([
                         "paymentPrice" : $(e.currentTarget).attr("price-id"),
                         "paymentId" : $(e.currentTarget).val()
                     });
-                    $(".textpayment").html($(e.currentTarget).attr("tagdesc-id"));
+                    $(".textpayment").html('<p>'+ $(e.currentTarget).attr("tagdesc-id")+'</p>');
                 }
             });
             

@@ -53,7 +53,24 @@ function _pcpayments_checkout_payment_created($paymentId, $amount, $params) {
 }
 
 function pcpayments_menu() {
-
+    
+    //new hook menu OW
+    $items['payment'] = array(
+          'title' => 'Payment',
+          'page callback' => 'new_payment_loadpage',
+          'page arguments' => array(''),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+    $items['payment/ajax/submitpayment'] = array(
+          'page callback' => 'new_payment_submit',
+          'page arguments' => array(),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+    //end new hook menu OW
+    
+    
   $items['paymentrequest/key/%'] = array(
       'title' => 'Payment request',
       'page callback' => 'drupal_get_form',
@@ -144,6 +161,84 @@ function pcpayments_menu() {
   );
 
   return $items;
+}
+// ================================== ORDER WEEK V3 FUNCTIONS ===================================
+
+// main function to load payment page
+function new_payment_loadpage() {
+    global $language;
+
+    $labels = array(        
+        "orderOverview" => t('Order overview'),
+        "controlPro" => t('Control professional'),
+        "fileCheck" => t('File check'),
+        "totalExcl" => t('Total excl. Vat'),
+        "description" => t('Description'),
+        "fotoliaImg" =>  t('Fotolia Image'),
+        "yourPaymentMethod" =>  t('Choose your payment method'),
+        "controleProfessionel" => t('Contrôle professionel de'),
+        "free" => t('free'),
+        "ex" => t('ex'),
+        "price" => t('Price'),
+        "subTotalWithTVA" => t('Total TTC'),
+        "agree" => t('I agree with the !termsandconditionslink', array('!termsandconditionslink' => theme('generalconditionslink'))),
+        "agreeMessage" => t('The field I agree with the <a href="/benl/node/67" target="_blank">terms and conditions</a> is required'),
+        "paynow" => t('Pay now'),
+        "textPayment" => t('textPayment'),
+        "textImagePayment" => t('textImagePayment'),
+        "methodePaymentNull" => t('methodePaymentNull'),
+        "cher" => t('cher')
+    );
+
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Cache-Control: post-check=0, pre-check=0", false);
+    header("Pragma: no-cache");
+
+    $script = "<script type='text/javascript'>
+        var GlobalLandId = ".$language->id.";
+        var GlobalLabels = ".json_encode($labels).";
+        var GlobalPrefix = '".$language->prefix."';
+        var GlobalVat = 0.21;
+        var isConnected = " . (isset($_SESSION['customerid']) ? 1 : 0) . ";
+    </script>";
+    //$script .= "<style>#box-progress{display: block;}</style>";
+    
+    $script .= '<link rel="stylesheet" href="/webapp/js/libs/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />';
+    $script .= '<script data-main="/webapp/js/payment/main" src="/webapp/js/libs/requirejs/require.js"></script>';
+    $script .= '<div id="myPayment"></div>';
+
+    return $script;
+}
+
+// function to get json cart
+function new_payment_ajax_getpayment() {
+    $response = Factory::GetPaymentJson();
+
+    Dal::BuildJson($response->data);
+}
+
+// function to get json of methods payments
+function new_payment_ajax_getmethodpayments() {
+    $methodsPayments = printconnect\Carts\Shipping\Factory::GetMethodsPayments();
+
+    $methodsPayments = json_decode($methodsPayments->data, 1);
+
+    foreach ($methodsPayments as $key => $type) {
+        //a suivre
+        $label = $type['shippingType']['tag'];
+        if ($type['price'] > 0) {
+            $label .= '(' . t('!value exc. VAT', array('!value' => theme('price', array('value' => $type['price'], 'free' => TRUE)))) . ' / ' . t('!value inc. VAT', array('!value' => theme('price', array('value' => $type['price'] * (1 + $_SESSION['shop_vat']), 'free' => TRUE)))) . ') *';
+        }
+
+        $shippingsTypes[$key]['shippingType']['tag'] = $label;
+    }
+
+    Dal::BuildJson($shippingsTypes);
+}
+function new_payment_ajax_selectmethodpayment($shippingTypeId) {
+    $response = printconnect\Carts\Payments\Factory::SetMethodPayment($shippingTypeId);
+
+    Dal::BuildJson(json_decode($response->data, 1));
 }
 
 function pcpayments_block_info() {

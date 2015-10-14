@@ -8,24 +8,58 @@
                 }
       }
 
+      /* ========== PCCUSTOMER form validation ========== */
       $('.save-button').click(function (e) {
           $('.messages.error').remove();
-          $('#pccustomers-newaddress-form .required').removeClass("error");
+          $('#content form .required').removeClass("error");
           var errorMarkup = "<div class='messages error'><ul>";
           var errorMsgs = new Array();
-          $('#pccustomers-newaddress-form .required').each(function(i, elem) {
+          $('#content form .required').each(function(i, elem) {
             var _this = $(this);
-            if(_this.val() == "" || (_this.val().length <= 3 && _this.name !="country") ) {
-              var inputName = $(elem).attr('name');
+            var inputName;
+            if(_this.val() == "") {
+              inputName = $(elem).attr('name');
               _this.addClass('error');
-              errorMsgs[i] = "Le champ "+inputName+" est requis.";
+              errorMsgs[i] = labels["isRequired"].replace('!name', inputName);
               errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+            } else if (_this.val().length <= 3 && this.name !="country" && this.name !="phone") {
+                inputName = $(elem).attr('name');
+                _this.addClass('error');
+                errorMsgs[i] = inputName+": "+labels["invalidCharactersLength"];
+                errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+            } else if (this.name =="phone" && (isNaN(_this.val()) || _this.val().length != 10)) {
+                inputName = $(elem).attr('name');
+                _this.addClass('error');
+                errorMsgs[i] = labels["phoneNumberError"];
+                errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+            } else if (this.name =="email") {
+                inputName = $(elem).attr('name');
+                var emailReg = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                var emailTest = emailReg.test(_this.val());
+                if (!emailTest) {
+                  _this.addClass('error');
+                  errorMsgs[i] = labels["invaliEmail"];
+                  errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+                }
+            } else if ($(this).parents("form").attr("id") == "pccustomers-changepassword-form") {
+                var password = $("#pccustomers-changepassword-form #edit-password").val();
+                var passwordConfirm = $("#pccustomers-changepassword-form #edit-passwordconfirm").val();
+                if((password != passwordConfirm) && (this.name == "password")) {
+                  $("#pccustomers-changepassword-form #edit-password").addClass('error');
+                  $("#pccustomers-changepassword-form #edit-passwordconfirm").addClass('error');
+                  errorMsgs[i] = labels["passwordMatch"];
+                  errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+                }
             }
+
           });  
           errorMarkup += "</ul></div>";
-          $( "#content h1:first" ).after( errorMarkup );
           if(errorMsgs.length != 0 ) {
             e.preventDefault();
+            $( "#content h1:first" ).after( errorMarkup );
+            $('html, body').animate({
+              scrollTop:$(".messages.error").offset().top
+            }, 'slow');
           }
       });
          

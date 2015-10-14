@@ -229,9 +229,21 @@ function pccustomers_profile_form($form, &$form_state) {
       '#type' => 'actions',
   );
 
+  $labels = array(
+    "isRequired" => t('!name field is required.'),
+    "invalidCharactersLength" => t('invalidCharactersLength'),
+    "phoneNumberError" => t('Please enter your Phone Number as 10 Number.'),
+    "invaliEmail" => t('Email is not valid'),
+  );
+
+  $form['scriptForLabels'] = array(
+    '#markup' => "<script>var labels = ".json_encode($labels).";</script>",
+  );
+
   $form['actions']['submit'] = array(
       '#type' => 'submit',
       '#value' => t('Submit'),
+      '#attributes' => array('class' => array('save-button')),
   );
 
   return $form;
@@ -319,9 +331,21 @@ function pccustomers_changepassword_form($form, &$form_state) {
   $form['actions'] = array(
       '#type' => 'actions',
   );
+
+  $labels = array(
+  "isRequired" => t('!name field is required.'),
+  "invalidCharactersLength" => t('invalidCharactersLength'),
+  "passwordMatch" => t("Your passwords don't match."),
+  );
+
+  $form['scriptForLabels'] = array(
+    '#markup' => "<script>var labels = ".json_encode($labels).";</script>",
+  );
+
   $form['actions']['submit'] = array(
       '#type' => 'submit',
       '#value' => t('Submit'),
+      '#attributes' => array('class' => array('save-button')),
   );
 
   $form_state['storage']['customer'] = $customer;
@@ -460,10 +484,20 @@ function pccustomers_address_form($form, $form_state, $addressId) {
       '#type' => 'actions',
   );
 
+  $labels = array(
+    "isRequired" => t('!name field is required.'),
+    "invalidCharactersLength" => t('invalidCharactersLength'),
+    "phoneNumberError" => t('Please enter your Phone Number as 10 Number.'),
+    );
+
+  $form['scriptForLabels'] = array(
+    '#markup' => "<script>var labels = ".json_encode($labels).";</script>",
+  );
+
   $form['actions']['submit'] = array(
       '#type' => 'submit',
       '#value' => t('Save'),
-      '#attributes' => array('class' => array('button')),
+      '#attributes' => array('class' => array('save-button', 'button')),
   );
 
   $form['back'] = array(
@@ -775,6 +809,16 @@ function pccustomers_newaddress_form($form, $form_state) {
       '#markup' => theme('linkbutton', 'myprintconnect/addresses', t('Back')),
   );
 
+  $labels = array(
+    "isRequired" => t('!name field is required.'),
+    "invalidCharactersLength" => t('invalidCharactersLength'),
+    "phoneNumberError" => t('Please enter your Phone Number as 10 Number.'),
+    );
+
+  $form['scriptForLabels'] = array(
+    '#markup' => "<script>var labels = ".json_encode($labels).";</script>",
+  );
+
   return $form;
 }
 function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
@@ -913,10 +957,21 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
       '#name' => 'Billingaddresses_address_submit',
       '#validate' => array('pccustomers_newaddress_form_Billingaddresses_validate'),
       '#submit' => array('pccustomers_newaddress_form_Billingaddresses_submit'),
+      '#attributes' => array('class' => array('save-button')),
   );
 
   $form['back'] = array(
       '#markup' => theme('linkbutton', 'myprintconnect/addresses', t('Back')),
+  );
+
+  $labels = array(
+    "isRequired" => t('!name field is required.'),
+    "invalidCharactersLength" => t('invalidCharactersLength'),
+    "phoneNumberError" => t('Please enter your Phone Number as 10 Number.'),
+    );
+
+  $form['scriptForLabels'] = array(
+    '#markup' => "<script>var labels = ".json_encode($labels).";</script>",
   );
 
  return $form;

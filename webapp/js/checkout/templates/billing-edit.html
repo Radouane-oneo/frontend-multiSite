@@ -94,7 +94,7 @@
                 </select>
             </div>
             <div class="form-item form-type-checkbox form-item-invoice-address-current-isCompany company-box">
-                <label for="edit-invoice-address-current-iscompany">J'ai une numéro de TVA </label>
+                <label for="edit-invoice-address-current-iscompany"><%= model.labels['TVANumber'] %></label>
                 <input id="isUserCompany" type="checkbox" class="form-checkbox">
             </div>
             <div class="form-item form-type-textfield form-item-invoice-address-current-company" style="display: none;">
@@ -116,7 +116,7 @@
     </fieldset>
     <div id="edit-invoice-address-actions" class="form-wrapper">
         <input type="hidden" name="invoice[address][actions][message]" value="message tva exist">
-        <input type="submit" id="saveEditBA" name="invoice_address_submit" value="Enregistrer" class="form-submit ui-button ui-widget ui-state-default ui-corner-all" role="button">
+        <input type="submit" id="saveEditBA" name="invoice_address_submit" value="<%= model.labels['save'] %>" class="form-submit ui-button ui-widget ui-state-default ui-corner-all" role="button">
     </div>
 </div>
 </fieldset>

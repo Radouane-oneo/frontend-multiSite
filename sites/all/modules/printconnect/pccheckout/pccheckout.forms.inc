@@ -191,7 +191,18 @@ function pccheckout_personal_form($form, &$form_state) {
         '#name' => 'personal-submit',
         '#type' => 'submit',
         '#value' => t('Continue'),
-        '#attributes' => array('class' => array('action', 'button', 'large', 'continue')),
+        '#attributes' => array('class' => array('action', 'button', 'large', 'continue', 'save-button')),
+    );
+
+    $labels = array(
+        "isRequired" => t('!name field is required.'),
+        "invalidCharactersLength" => t('invalidCharactersLength'),
+        "invaliEmail" => t('Email is not valid'),
+        "phoneNumberError" => t('Please enter your Phone Number as 10 Number.'),
+    );
+
+    $form['scriptForLabels'] = array(
+        '#markup' => "<script>var labels = ".json_encode($labels).";</script>",
     );
 
     $form['#id'] = 'pccheckout-personal-form';

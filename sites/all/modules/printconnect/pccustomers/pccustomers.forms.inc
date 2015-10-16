@@ -1160,7 +1160,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
       '#suffix'=>'</div>',
       '#validate' => array('pccustomers_login_form_login_validate'),
       '#submit' => array('pccustomers_login_form_submit'),
-      '#attributes' => array('class' => array('action', 'large', 'login', 'noreplace', 'button')),
+      '#attributes' => array('class' => array('action', 'large', 'login', 'noreplace', 'button', 'login-button')),
       '#limit_validation_errors' => array(
           array('email'),
           array('password'),
@@ -1202,7 +1202,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
       '#weight' => 13,
       '#validate' => array('pccustomers_login_form_register_validate'),
       '#submit' => array('pccustomers_login_form_submit'),
-      '#attributes' => array('class' => array('action', 'large', 'register', 'noreplace', 'button')),
+      '#attributes' => array('class' => array('action', 'large', 'register', 'noreplace', 'button', 'register-button')),
       '#limit_validation_errors' => array(
           array('emailnew'),
           array('newpassword'),
@@ -1250,6 +1250,16 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
     );
 
    */
+  $labels = array(
+  "isRequired" => t('!name field is required.'),
+  "invalidCharactersLength" => t('invalidCharactersLength'),
+  "newpassword" => t('Password not long enough'),
+  "invaliEmail" => t('Email is not valid'),
+  );
+
+  $form['scriptForLabels'] = array(
+    '#markup' => "<script>var labels = ".json_encode($labels).";</script>",
+  );
 
   $form_state['storage']['redirect'] = urldecode($redirect);
 

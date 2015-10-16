@@ -22,7 +22,19 @@ define([
             this.render();
 	    this.changesVatNumber = false;
             this.model.on("change", this.render, this);
+	    this.vatFormats = [
+	        {'BE': 10},
+		{'NL' : 12},
+    		{'LU' : 8},
+		{'FR' : 11}
+	    ]	
         },
+	validateVat : function(){
+	    var trgObject = {};
+	    trgObject[$('#countryIsoBA').val()] = $("#vatNumberBA").val().length;
+	    var result = _.findWhere(this.vatFormats, trgObject);
+	    return (result) ? true : false;
+	},
         render: function() {
             this.setElement(this.template({
                 "model": this.model.toJSON()
@@ -75,8 +87,20 @@ define([
                         var viePoup = new vatView(me.model, result.data);
                     };
                 });
-
-	        ajaxCaller.call("vatlidateVatNumber",
+		var resultValidateVat = this.validateVat();
+		elmTarget.css("border-color", "");
+                $('#countryIsoBA').css("border-color", "");
+	        me.enableSave = true;
+		if (!resultValidateVat) {
+		    elmTarget.css("border-color", "red");
+                    $('#countryIsoBA').css("border-color", "red"); 
+		    elmTarget.val('');
+		    me.enableSave = false;
+		    myCheckout.errorView.render(me.config.labels["InvalidVatNumber"]);
+		    $(window).scrollTop($(me.config.containerId).offset().top);   
+		}
+		return false;
+	        /*ajaxCaller.call("vatlidateVatNumber",
                 {"vatNumber" : this.$('#countryIsoBA').val()+elmTarget.val()},
                 'GET').done(function(result) {
                     if(_.isEmpty(result.data) == false) {
@@ -96,7 +120,7 @@ define([
 			   break;
 			}
                     };
-                });
+                });*/
             }
         },
         saveBA: function(e) {

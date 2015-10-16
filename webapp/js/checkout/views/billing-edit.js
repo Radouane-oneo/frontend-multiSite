@@ -31,7 +31,8 @@ define([
         },
 	validateVat : function(){
 	    var trgObject = {};
-	    var vatNumberBA = $("#vatNumberBA").val().replace(".", "").replace(" ","");
+	    var vatNumberBA = $("#vatNumberBA").val().replace(/\./g, "").replace(/ /g,"");
+	    console.log(vatNumberBA);
 	    trgObject[$('#countryIsoBA').val()] = vatNumberBA.length;
 	    var result = _.findWhere(this.vatFormats, trgObject);
 	    return (result) ? true : false;
@@ -79,9 +80,10 @@ define([
 	    this.enableSave = false;
             var elmTarget = $(e.currentTarget);
             var me = this;
+	    var vatNumberBA = elmTarget.val().replace(/\./g, "").replace(/ /g,"");
             if (elmTarget.val().length > 0) {
                 ajaxCaller.call("getBillingAccountFromVat",
-                {"vatNumber" : this.$('#countryIsoBA').val()+elmTarget.val()},
+                {"vatNumber" : this.$('#countryIsoBA').val()+vatNumberBA},
                 'GET').done(function(result) {
 		    me.enableSave = true;
                     if(_.isEmpty(result.data) == false && me.changesVatNumber == true) {

@@ -180,13 +180,14 @@ function new_payment_loadpage() {
         "free" => t('free'),
         "ex" => t('ex'),
         "price" => t('Price'),
+        "htva" => t('Total HTVA'),
         "subTotalWithTVA" => t('Total TTC'),
         "agree" => t('I agree with the !termsandconditionslink', array('!termsandconditionslink' => theme('generalconditionslink'))),
         "agreeMessage" => t('The field I agree with the <a href="/benl/node/67" target="_blank">terms and conditions</a> is required'),
         "paynow" => t('Pay now'),
         "textPayment" => t('textPayment'),
         "textImagePayment" => t('textImagePayment'),
-        "methodePaymentNull" => t('methodePaymentNull'),
+        "methodePaymentNull" => t('methodePaymentNull'),        
         "cher" => t('cher')
     );
 

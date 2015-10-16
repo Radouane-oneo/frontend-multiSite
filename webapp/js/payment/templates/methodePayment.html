@@ -12,36 +12,28 @@
             <tbody>
                <%  var checked = "";
                var amountWithoutPayment;%>
-               <!--chercher totalWithoutAmount-->
-               <% _.each(config.paymentMethods, function(payment, i){%>
-                <% if (model.subTotalAmount == model.subTotalAmount + payment.cost){
-                       amountWithoutPayment = model.subTotalAmount - payment.cost;
-                       return false;
-                    }
-               }); %>
-               <% console.log(model.subTotalAmount ,amountWithoutPayment);%>
                 <% _.each(config.paymentMethods, function(payment, i){%>
                 <% if (payment.id == model.paymentId)
                      checked = "checked='checked'";                    
                    else checked = '';  
                      %>
+                     <!--% console.log(config.amountWithoutPayment, payment.rate, payment.cost); %-->
+                     <% var paymentPrice = (config.amountWithoutPayment * payment.rate) + payment.cost;%>
                     <tr class="odd first-child" >
                         <td class="first-child">
                             <div class="form-item form-type-radio form-item-payment-method-table">
                                 <input type="radio" value="<%= payment.id %>" name="paymentMethod" 
                                        tag-id="<%= payment.paymentMethod.tag %>" 
                                        tagdesc-id="<%= payment.paymentMethod.descriptionTag %>" 
-                                       price-id="<%= payment.cost %>"
+                                       price-id="<%= paymentPrice %>"
                                        <%= checked %> 
                                        > 
                             </div>
                         </td>
                         <td><%= payment.paymentMethod.tag %></td>
                         <td class="last-child">
-                            <%
-                            var paymentPrice = (amountWithoutPayment * payment.rate) + payment.cost;
                             
-                            %>
+                         
                             <%= (paymentPrice == 0)? config.labels['free'] : priceTpl({price:paymentPrice}) %>
                         </td>
                     </tr>

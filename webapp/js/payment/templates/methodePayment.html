@@ -1,0 +1,55 @@
+<div class='paymentDescription'>
+    <!--h2><%= config.labels['yourPaymentMethod'] %></h2-->
+    <%= config.labels['cher'] %> <%= config.customerName %>
+    <p><%= config.labels['textPayment'] %></p>
+</div>
+<fieldset id="edit-payment-method" class="paymentmethodefond form-wrapper">
+    <div class="fieldset-wrapper">
+    <div class="grid-methods-payment">
+        <h3><%= config.labels['yourPaymentMethod'] %></h3>
+        <table class="grid clearfix rows-6 payment-methods-table sticky-enabled">
+            <thead><tr><th class="first-child"></th><th></th><th class="last-child"></th> </tr></thead>
+            <tbody>
+               <%  var checked = "";
+               var amountWithoutPayment;%>
+                <% _.each(config.paymentMethods, function(payment, i){%>
+                <% if (payment.id == model.paymentId)
+                     checked = "checked='checked'";                    
+                   else checked = '';  
+                     %>
+                     <!--% console.log(config.amountWithoutPayment, payment.rate, payment.cost); %-->
+                     <% var paymentPrice = (config.amountWithoutPayment * payment.rate) + payment.cost;%>
+                    <tr class="odd first-child" >
+                        <td class="first-child">
+                            <div class="form-item form-type-radio form-item-payment-method-table">
+                                <input type="radio" value="<%= payment.id %>" name="paymentMethod" 
+                                       tag-id="<%= payment.paymentMethod.tag %>" 
+                                       tagdesc-id="<%= payment.paymentMethod.descriptionTag %>" 
+                                       price-id="<%= paymentPrice %>"
+                                       <%= checked %> 
+                                       > 
+                            </div>
+                        </td>
+                        <td><%= payment.paymentMethod.tag %></td>
+                        <td class="last-child">
+                            
+                         
+                            <%= (paymentPrice == 0)? config.labels['free'] : priceTpl({price:paymentPrice}) %>
+                        </td>
+                    </tr>
+                <% }); %>
+
+            </tbody>
+        </table>
+    </div>
+
+                </tbody>
+            </table>
+        
+        <div id="edit-payment-method-text" class="imgpayment form-wrapper">
+            <p><%= config.labels['textImagePayment'] %></p>
+        </div>  
+</div>
+    </div>
+    <div class="textpayment"><%= model.descriptionTagPayment %></div> 
+</fieldset>

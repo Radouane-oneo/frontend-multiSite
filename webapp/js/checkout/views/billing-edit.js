@@ -22,7 +22,21 @@ define([
             this.render();
 	    this.changesVatNumber = false;
             this.model.on("change", this.render, this);
+	    this.vatFormats = [
+	        {'BE': 10},
+		{'NL' : 12},
+    		{'LU' : 8},
+		{'FR' : 11}
+	    ]	
         },
+	validateVat : function(){
+	    var trgObject = {};
+	    var vatNumberBA = $("#vatNumberBA").val().replace(/\./g, "").replace(/ /g,"");
+	    console.log(vatNumberBA);
+	    trgObject[$('#countryIsoBA').val()] = vatNumberBA.length;
+	    var result = _.findWhere(this.vatFormats, trgObject);
+	    return (result) ? true : false;
+	},
         render: function() {
             this.setElement(this.template({
                 "model": this.model.toJSON()
@@ -66,37 +80,29 @@ define([
 	    this.enableSave = false;
             var elmTarget = $(e.currentTarget);
             var me = this;
+	    var vatNumberBA = elmTarget.val().replace(/\./g, "").replace(/ /g,"");
             if (elmTarget.val().length > 0) {
                 ajaxCaller.call("getBillingAccountFromVat",
-                {"vatNumber" : this.$('#countryIsoBA').val()+elmTarget.val()},
+                {"vatNumber" : this.$('#countryIsoBA').val()+vatNumberBA},
                 'GET').done(function(result) {
 		    me.enableSave = true;
                     if(_.isEmpty(result.data) == false && me.changesVatNumber == true) {
                         var viePoup = new vatView(me.model, result.data);
                     };
                 });
-
-	        ajaxCaller.call("vatlidateVatNumber",
-                {"vatNumber" : this.$('#countryIsoBA').val()+elmTarget.val()},
-                'GET').done(function(result) {
-                    if(_.isEmpty(result.data) == false) {
-			switch(result.data.valid.status) {
-			   case 'VALID':
-				elmTarget.css("border-color", "");
-				$('#countryIsoBA').css("border-color", "");
-				me.enableSave = true;
-			   break;
-			   default:
-				elmTarget.css("border-color", "red");
-				$('#countryIsoBA').css("border-color", "red");
-				elmTarget.val('');
-				myCheckout.errorView.render(me.config.labels["InvalidVatNumber"]);
-                		$(window).scrollTop($(me.config.containerId).offset().top);
-                		return false;
-			   break;
-			}
-                    };
-                });
+		var resultValidateVat = this.validateVat();
+		elmTarget.css("border-color", "");
+                $('#countryIsoBA').css("border-color", "");
+	        me.enableSave = true;
+		if (!resultValidateVat) {
+		    elmTarget.css("border-color", "red");
+                    $('#countryIsoBA').css("border-color", "red"); 
+		    elmTarget.val('');
+		    me.enableSave = false;
+		    myCheckout.errorView.render(me.config.labels["InvalidVatNumber"]);
+		    $(window).scrollTop($(me.config.containerId).offset().top);   
+		}
+		return false;
             }
         },
         saveBA: function(e) {

@@ -10,7 +10,13 @@
             <tbody>
                 <% _.each(model.orderItems, function(orderItem, i) {%>
                     <tr class="item odd first-child">
-                        <td class="first-child"><%= orderItem.quantity %> <%= orderItem.configuration.name %> - <%= orderItem.configuration.config[0].name %></td>
+                        <td class="first-child"><%= orderItem.quantity %> 
+                            <% if (orderItem.customWidth != 0 && orderItem.customHeight != 0) { %>
+                                <%= orderItem.configuration.name %> - <%= orderItem.customWidth %> X <%= orderItem.customHeight %> mm
+                            <% } else { %>
+                                <%= orderItem.configuration.name %> - <%= orderItem.configuration.config[0].name %>
+                            <% } %>
+                        </td>
                         <td class="last-child">
                            <%= priceTpl({price:orderItem.price,classToAdd:'price'}) %>
                         </td>
@@ -35,6 +41,16 @@
                     <td class="first-child"><%= model.orderItemShipping.shippingTypeTitle %></td>
                     <td class="last-child"><%= priceTpl({price:(model.orderItemShipping.price)}) %></td> 
                 </tr>
+                
+                <% if (model.discountItems.length>0) { %>
+                 <% _.each(model.discountItems, function(discountItem, i){ %>
+                            <tr><td><span><%= discountItem.description %></span></td>
+                                <td class='last-child'><%= priceTpl({price:discountItem.price,classToAdd:'pricepreflight'}) %></td>
+                            </tr>
+                        <% }); %>
+                    <% }  %>
+             
+        
                 <% var subtotal = model.subTotalAmount %>
              <% console.log('pppp');console.log(model); %>
                 <% if( model.paymentTag != '' ) { %>

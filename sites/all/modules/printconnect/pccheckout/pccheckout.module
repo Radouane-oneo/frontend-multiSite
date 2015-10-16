@@ -320,7 +320,7 @@ function new_checkout_and_delivery_loadpage() {
       "OrCreateBA" => t("Ou créez une nouvelle adresse en remplissant le formulaire ci-dessous."),
       "addNewBA" => t("Add an address"),
       "BAName" => t("Name"),
-      "StreetBA" => t("N° et Rue"),
+      "StreetBA" => t("Street"),
       "CityBA" => t("City"),
       "postalCodeCityBA" => t("Postal code"),
       "CountryBA" => t("Country"),
@@ -351,7 +351,7 @@ function new_checkout_and_delivery_loadpage() {
       "OrCreateSA" => t("Ou créez une nouvelle adresse en remplissant le formulaire ci-dessous."),
       "addNewSA" => t("Add an address"),
       "SAName" => t("votre nom livraison"),
-      "StreetSA" => t("N° et Rue"),
+      "StreetSA" => t("Street"),
       "CitySA" => t("City"),
       "postalCodeCitySA" => t("Postal code"),
       "CountrySA" => t("Country"),
@@ -371,7 +371,8 @@ function new_checkout_and_delivery_loadpage() {
       "BaFieldRequired" => t("Veuillez remplir tout les champs obligatoires"),
       "fieldCmpVatNumber" => t("Sociéte et numero de tva sont requit"),
       "invalidCharactersLength" => t("invalidCharactersLength"),
-      "InvalidVatNumber" => t("votre numero de tva est invalid")
+      "InvalidVatNumber" => t("votre numero de tva est invalid"),
+      "TVANumber" => t("Are you a company ?")
     );
 
      $cart = \printconnect\Carts\Factory::GetCartJson();
@@ -435,9 +436,11 @@ function new_checkout_ajax_getpaymentmethods()
 {
     $response = \printconnect\PaymentMethods\Factory::GetPaymentMethods();
     $customer = printconnect\Customers\Factory::Current();
-  
+    $cart = \printconnect\Carts\Factory::GetCartJson();
+    $result = json_decode($cart->data);
     Dal::BuildJson(array(
         'paymentMethods' => json_decode($response->data, 1),
+        'amountWithoutPayment' => $result->subTotalAmount - $result->orderItemsPayment[0]->price,
         'customerName' => $customer->lastName.' '.$customer->firstName
     ));
 }

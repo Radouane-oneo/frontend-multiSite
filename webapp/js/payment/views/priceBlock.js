@@ -26,6 +26,11 @@ define([
             $(this.config.containerId).find("#priceBlock").html(this.$el);
         },
         actionPayment : function(){
+            if(!this.model.get("paymentId")){                
+                myPayment.errorView.render(this.config.labels['methodePaymentNull']);
+                $(window).scrollTop($(this.config.containerId).offset().top);
+                return false;
+            }
             if(!($('#edit-agree').is(':checked'))) {
                 console.log('non');
                 myPayment.errorView.render(this.config.labels['agreeMessage']);
@@ -33,23 +38,10 @@ define([
                 return false;
             }
             else{
-                myPayment.errorView.render();
-               
+                if(myPayment.disable) return false;
+                location.href = "/" + this.config.prefix + "/payment/ajax/submitpayment/"+this.model.get("paymentId")+"/"+this.model.get("id")+"/"+this.model.get("totalAmount");               
             }   
-            console.log(this.model.get("paymentId"));
-            if(!this.model.get("paymentId")){
-                
-                myPayment.errorView.render(this.config.labels['methodePaymentNull']);
-                $(window).scrollTop($(this.config.containerId).offset().top);
-                return false;
-            }
-            return true;
-           
-            if(myPayment.disable) return false;
-            location.href = "/" + this.config.prefix + "/checkout";
-
+            
         }
-
     });
-
 });

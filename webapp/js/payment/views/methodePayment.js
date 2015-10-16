@@ -22,9 +22,8 @@ define([
             this.setElement(this.template({
                 "model" : this.model.toJSON(),
                 "config" : this.config,
-                "priceTpl" : _.template(priceTemplate)
+               "priceTpl" : _.template(priceTemplate)
             }));
-            console.log('ttttt');console.log(this.config.cart);
             $(this.config.containerId).find("#methodePayment").html(this.$el);         
         },
         checkInputMethodPayment : function(e){
@@ -33,18 +32,21 @@ define([
         },
         saveMethodPayment : function(e){
             var me = this;
-            ajaxCaller.call("saveMethodPayment",{},"GET",$(e.currentTarget).val()).done(function(resultData){
-              
-                if(resultData.code == "200"){
-                    me.model.set({
-                        "subTotalAmount" : resultData.data.subTotalAmount,
-                        "totalAmount" : resultData.data.totalAmount,
+             me.model.set({
                         "paymentTag" : $(e.currentTarget).attr("tag-id"),
                         "paymentDescription" : $(e.currentTarget).attr("tagdesc-id"),
                         "paymentPrice" : $(e.currentTarget).attr("price-id"),
                         "paymentId" : $(e.currentTarget).val()
                     });
-                    $(".textpayment").html($(e.currentTarget).attr("tagdesc-id"));
+                    $(".textpayment").html('<p>'+ $(e.currentTarget).attr("tagdesc-id")+'</p>');
+            ajaxCaller.call("saveMethodPayment",{},"GET",$(e.currentTarget).val()).done(function(resultData){
+              
+                if(resultData.code == "200"){
+                    me.model.set({
+                        "subTotalAmount" : resultData.data.subTotalAmount,
+                        "totalAmount" : resultData.data.totalAmount
+                    });
+                    $(".textpayment").html('<p>'+ $(e.currentTarget).attr("tagdesc-id")+'</p>');
                 }
             });
             

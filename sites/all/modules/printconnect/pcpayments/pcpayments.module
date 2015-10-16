@@ -62,9 +62,9 @@ function pcpayments_menu() {
           'access arguments' => array('access content'),
           'type' => MENU_CALLBACK,
       );
-    $items['payment/ajax/submitpayment'] = array(
+    $items['payment/ajax/submitpayment/%/%/%'] = array(
           'page callback' => 'new_payment_submit',
-          'page arguments' => array(),
+          'page arguments' => array(3,4,5),
           'access arguments' => array('access content'),
           'type' => MENU_CALLBACK,
       );
@@ -180,13 +180,14 @@ function new_payment_loadpage() {
         "free" => t('free'),
         "ex" => t('ex'),
         "price" => t('Price'),
+        "htva" => t('Total HTVA'),
         "subTotalWithTVA" => t('Total TTC'),
         "agree" => t('I agree with the !termsandconditionslink', array('!termsandconditionslink' => theme('generalconditionslink'))),
         "agreeMessage" => t('The field I agree with the <a href="/benl/node/67" target="_blank">terms and conditions</a> is required'),
         "paynow" => t('Pay now'),
         "textPayment" => t('textPayment'),
         "textImagePayment" => t('textImagePayment'),
-        "methodePaymentNull" => t('methodePaymentNull'),
+        "methodePaymentNull" => t('methodePaymentNull'),        
         "cher" => t('cher')
     );
 
@@ -201,7 +202,7 @@ function new_payment_loadpage() {
         var GlobalVat = 0.21;
         var isConnected = " . (isset($_SESSION['customerid']) ? 1 : 0) . ";
     </script>";
-    //$script .= "<style>#box-progress{display: block;}</style>";
+    $script .= "<style>#box-progress{display: block;}</style>";
     
     $script .= '<link rel="stylesheet" href="/webapp/js/libs/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />';
     $script .= '<script data-main="/webapp/js/payment/main" src="/webapp/js/libs/requirejs/require.js"></script>';
@@ -239,6 +240,55 @@ function new_payment_ajax_selectmethodpayment($shippingTypeId) {
     $response = printconnect\Carts\Payments\Factory::SetMethodPayment($shippingTypeId);
 
     Dal::BuildJson(json_decode($response->data, 1));
+}
+
+function new_payment_submit($paymentId, $cartId, $totalAmount) {
+    $cart = printconnect\Carts\Factory::Current();
+    if ($totalAmount <= 0) {
+        \printconnect\Carts\Factory::Process($cart, 'invoice');
+        drupal_goto('myprintconnect/orders/' . $id . '/confirmation');
+        drupal_exit();
+    }
+
+     // A VOIR   $cart->storeCredit = 0;
+  
+    $paymentMethod = \printconnect\PaymentMethods\Factory::Get($paymentId);
+    switch (strtolower($paymentMethod->paymentMethod->internalName)) {
+        case 'cod':
+            \printconnect\Carts\Factory::Process($cart, 'cod');
+            drupal_goto('myprintconnect/orders/' . $cartId . '/confirmation');
+            break;
+        case 'invoice' :
+            \printconnect\Carts\Factory::Process($cart, 'invoice');
+            drupal_goto('myprintconnect/orders/' . $cartId . '/confirmation');
+            break;
+        case 'transfer' :
+            \printconnect\Carts\Factory::Process($cart, 'transfer');
+            drupal_goto('myprintconnect/orders/' . $cartId . '/confirmation');
+            break;
+        case 'cheque' :
+            \printconnect\Carts\Factory::Process($cart, 'cheque');
+            drupal_goto('myprintconnect/orders/' . $cartId . '/confirmation');
+            break;
+        default:
+            $paymentgateway = 'pcpayments';
+            if (function_exists(($paymentgateway . '_processpayment'))) {
+
+                $url = call_user_func(
+                        $paymentgateway . '_processpayment', $paymentId, $customer->name, $cartId, $totalAmount, array(
+                    'accept' => 'myprintconnect/orders/' . $cartId . '/confirmation',
+                    'cancel' => 'checkout/payment',
+                        )
+                );
+
+                $_SESSION['agree'][$id] = TRUE;
+                drupal_goto($url);
+            } else {
+                throw new Exception(t('Not implemented.'));
+                form_set_error('method', t('Not implemented.'));
+            }
+            break;
+    }
 }
 
 function pcpayments_block_info() {

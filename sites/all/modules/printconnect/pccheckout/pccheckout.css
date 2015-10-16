@@ -47,6 +47,9 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 .page-checkout #shipping-address .form-item, .page-checkout #invoice-address .form-item{
     margin: 10px 0 0 !important;
 }
+.page-checkout  #processPayment.checkout-submit{
+  font-size: 16px;
+}
  
 #pccheckout-invoiceanddelivery-form .form-required {
     color: #fe6700 !important;
@@ -478,7 +481,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 
 .page-checkout-invoiceanddelivery input.checkout-submit.payment{
   width: 245px;
-  background-position:  20px center;
+  background-position:  14px center;
 }
 
 div.company-box{
@@ -535,11 +538,13 @@ div.company-box > label{
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
-  font-weight: 400;
+  font-weight: bold;
   text-align: left;
   border-right: 1px solid #5a8a02;
   padding-left: 65px;
+  font-size: 16px;
 }
+
 
 .page-payment #edit-actions .button-wrapper-right{
   float: right;

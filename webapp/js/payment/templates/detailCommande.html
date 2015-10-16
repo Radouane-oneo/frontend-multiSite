@@ -50,14 +50,15 @@
              
         
                 <% var subtotal = model.subTotalAmount %>
-             <% console.log('pppp');console.log(model); %>
                 <% if( model.paymentTag != '' ) { %>
                 <tr><td class="first-child"><%= model.paymentTag %></td>
-                    <td class="last-child"><%= priceTpl({price:(model.paymentPrice)}) %></td></tr>
+                  
+                    <td class="last-child"><%= priceTpl({price:(model.paymentPrice)}) %></td>
+                </tr>
                  <% } else {%>
                 <% subtotal = model.subTotalAmount }%>
                
-                <tr class="total-excl-vat odd last-child"><td class="first-child">Total HTVA</td>
+                <tr class="total-excl-vat odd last-child"><td class="first-child"><%= config.labels['htva'] %></td>
                     <td class="last-child txt-orange txt-bold"><%= priceTpl({price:(subtotal)}) %></td>
                 </tr>
             </tbody>

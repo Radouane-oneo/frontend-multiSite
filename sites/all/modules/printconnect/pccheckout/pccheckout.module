@@ -437,9 +437,11 @@ function new_checkout_ajax_getpaymentmethods()
 {
     $response = \printconnect\PaymentMethods\Factory::GetPaymentMethods();
     $customer = printconnect\Customers\Factory::Current();
-  
+    $cart = \printconnect\Carts\Factory::GetCartJson();
+    $result = json_decode($cart->data);
     Dal::BuildJson(array(
         'paymentMethods' => json_decode($response->data, 1),
+        'amountWithoutPayment' => $result->subTotalAmount - $result->orderItemsPayment[0]->price,
         'customerName' => $customer->lastName.' '.$customer->firstName
     ));
 }

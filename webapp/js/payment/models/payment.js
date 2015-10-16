@@ -11,7 +11,7 @@ define([
                 _.each(this.config.cart.orderItemsPayment, function(payment) {
                     paymentTag = payment.description;
                     paymentPrice = payment.price;
-                    paymentId = payment.id;
+                    paymentId = payment.paymentMethodResellerShop;
                 });
             return {
                 "MethodPayment" : 0,

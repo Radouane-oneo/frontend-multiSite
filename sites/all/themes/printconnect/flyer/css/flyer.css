@@ -59,6 +59,10 @@ html, body, .ui-widget {
 .clearfix {
 	clear: both
 }
+.clear{
+	 
+	clear: both;
+}
 /*body {
 	background: #f1f1f1 url(http://d4e7wxbvl20c1.cloudfront.net/d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/xmas/background_without_top.jpg) top center no-repeat;  XMAS BACKGROUND REMOVE AFTER 
 	color: #646464;  maincolor 
@@ -102,7 +106,8 @@ select {
 	border-radius: 3px;
 }
 #pccustomers-newaddress-form label,
-#pccustomers-address-form label{
+#pccustomers-address-form label,
+#pccustomers-address-billingaddresses-form label{
 	display: block;
 	float: left;
 	font-weight: 400;
@@ -139,7 +144,10 @@ select {
 	width: 338px;
 }
 #pccustomers-newaddress-form .form-item-street, 
-#pccustomers-address-form .form-item-street {
+#pccustomers-address-form .form-item-street,
+#pccustomers-address-form .wrap_postal_codeCity .form-item-postalCode,
+#pccustomers-address-form .wrap_postal_codeCity .form-item-city
+{
 	margin-bottom: 0;
 }
 #pccustomers-newaddress-form .form-item-country, 
@@ -2626,8 +2634,7 @@ a.ui-button.inactivebtn{
 	height: 37px;
 	line-height: 27px;
 }
-.page-paymentrequest .demande-paiement .form-actions input[type="submit"], 
-#pccheckout-payment-form .form-actions input, 
+.page-paymentrequest .demande-paiement .form-actions input[type="submit"],
 .page-products #block-system-main .form-wrapper.actions input {
     height: 62px;
     width: 245px;
@@ -3297,7 +3304,7 @@ legend {
 	text-align: right;
 }
 .fieldset-wrapper {
-	border-radius: 4px 4px 4px 4px;
+	border-radius: 4px 4px;
 	margin-bottom: 10px;
 	padding: 10px;
 	position: relative;
@@ -3966,7 +3973,7 @@ a.googleconnect {
 }
 #pcbpost-picker-form #result .name, 
 #pcbpost-picker-form #result .services {
-	color: #f60;
+	color: #646464;
 }
 .page-pcbpost-picker table.openinghours tr, 
 .page-pcbpost-picker table.openinghours tr td {
@@ -4403,39 +4410,28 @@ a.googleconnect {
 }
 
 .page-paymentrequest table.grid,
-#pccheckout-payment-form table.grid {
-
-	width: 328px;
+#pccheckout-payment-form table.grid { 
+	width: 457px;
 	border: 1px solid #e1e1e1;
 	border-collapse: separate;
 	border-radius: 3px;
 	border-spacing: 0;
-	margin: -11px auto 0 -10px;
+	margin: 0px auto 0 -7px;
 	padding: 0;
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
-	border-radius: 0;
-        
+	border-radius: 0; 
 }
-#pccheckout-payment-form table.grid {
-    height: 223px;
-}
-#pccheckout-payment-form .payment-methods-table{
-    float:left;
-       border-right: medium none !important;
-
-}
+  
 .imgpayment{
     background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/paymentmethods/payment.jpg") no-repeat scroll center top #fff;
-    float: left;
-    height: 112px;
+    float: right;
+    height: 78px;
     margin-left: 16px;
-    margin-top: -41px;
     padding-top: 167px;
     position: relative;
     text-align: center;
-    width: 476px;
-    margin-bottom: 10px;
+    width: 442px;
 }
 
 .page-paymentrequest-key table.grid.clearfix:after, 
@@ -4632,7 +4628,7 @@ a.googleconnect {
 }
 .page-checkout-payment .overview table tr:last-child {
 	background: #f1f1f1;
-          border: 1px solid #e1e1e1 !important;
+    border-top: 1px solid #e1e1e1 !important;
 }
 .page-checkout-payment .overview table tr th:last-child {
 	text-align: right;
@@ -5805,13 +5801,13 @@ body.page-stores-picker {
 .region-content .form-actions span.price label {
     font-size: 14px;
     margin-right: 5px;
-    margin-top: 28px;
+    margin-top: 22px;
     text-align: right;
     line-height: 20px;
     float: left;
     clear: right;
     color: #bdbdbd;
-    font-weight: bold;
+    font-weight: 400;
 }
 .store div.email {
 	background-position: left;
@@ -7205,8 +7201,12 @@ margin-bottom:10px;
 
 .payment-methods-table tr td.last-child{
 	margin-top:9px;	
-	font-weight: bold;
+	font-weight: normal;
 	text-align: center;
+}
+
+.payment-methods-table tr td.last-child .value{
+	font-size: 12px;
 }
 
 .fr-FR a{
@@ -7360,13 +7360,13 @@ display: none;
 	position:relative;	
 }
 
-.page-myprintconnect-addresses #pccustomers-address-form input.button.form-submit{
-    margin-left: 0!important;
-background: url(images/button_continue.png) no-repeat 3px center !important;
-background-color:-webkit-linear-gradient(top, #77B800 0%, #669C02 100%) ;
-background-color:-moz-linear-gradient(top, #77B800 0%, #669C02 100%) ;
-padding-left: 61px;
-}
+/*.page-myprintconnect-addresses #pccustomers-address-form input.button.form-submit{
+	margin-left: 0!important;
+	background: url(images/button_continue.png) no-repeat 3px center !important;
+	background-color:-webkit-linear-gradient(top, #77B800 0%, #669C02 100%) ;
+	background-color:-moz-linear-gradient(top, #77B800 0%, #669C02 100%) ;
+	padding-left: 61px;
+}*/
 
 .ie10 .page-myprintconnect-addresses #pccustomers-address-form input[type="submit"]{
     margin-left: 0!important;
@@ -8128,14 +8128,34 @@ form#pccheckout-payment-form fieldset.paymentmethodefond legend{
 #edit-payment-method fieldset{
     /*border: 1px solid #e1e1e1;*/    
 }
+.page-payment #edit-payment-method{
+	 -webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+    border-radius:3px;
+}
+.page-payment #detailCommande .wrap-table-detailcmd{
+	-webkit-border-radius: 4px 4px 0 0;
+	-moz-border-radius: 4px 4px 0 0;
+	border-radius: 4px 4px 0 0;
+}
+
 form#pccheckout-payment-form fieldset{
     -webkit-border-radius: 0 0 3px 3px;
 	-moz-border-radius: 0 0 3px 3px;
-    border-radius: 0 0 3px 3px;
-}
+    border-radius:0 0 3px;
+} 
 
 form#pccheckout-payment-form  .paymentmethodefond{
       background-color: #f1f1f1;
+      border: 1px solid #e1e1e1;
+}
+
+.page-payment .paymentDescription{
+	margin-top: 13px;
+}
+
+.page-payment .paymentDescription >p{
+	margin: 21px 0 18px;
 }
 
 form#pccheckout-payment-form table tr{
@@ -8147,6 +8167,9 @@ form#pccheckout-payment-form .payment-methods-table tr {
    display: table-header-group;
    text-transform: uppercase;
 }
+.page-payment  form#pccheckout-payment-form .payment-methods-table tr:last-child td{
+ 	border-bottom: none;
+}
 form#pccheckout-payment-form table{
   padding-bottom: 13px;
 }
@@ -8154,9 +8177,7 @@ form#pccheckout-payment-form table{
 form#pccheckout-payment-form fieldset.paymentmethodefond .fieldset-wrapper{
 	padding-bottom: 0;
 	margin-bottom: 0;
-         border-left: 1px solid #e1e1e1;
-         border-right: 1px solid #e1e1e1;
-         border-bottom: 1px solid #e1e1e1;
+    padding: 15px;
 }
 form#pccheckout-payment-form .overview table.sticky-enabled th{
 	background-color: #ff6600;
@@ -8180,13 +8201,13 @@ form#pccheckout-payment-form .overview table.sticky-enabled tr{
 }
 form#pccheckout-payment-form .overview table.sticky-enabled td{
 	
-	padding: 3px 20px;
+	padding: 3px 15px;
 	font-size: 13px;
 	color: #666666;
 	line-height: 13px;
 	border-style: solid;
 	border-width: 1px 1px 0 0;
-	border-color: #e1e1e1;
+	border-color:#d9d9d9;
 	height: 30px;
 }
 form#pccheckout-payment-form .overview table.sticky-enabled td.last-child{
@@ -10823,7 +10844,10 @@ p.requieredfields span.form-required {
 
 /* Page Adresses */
 .page-myprintconnect-addresses #pccustomers-newaddress-form > div ,
-.page-myprintconnect-mybillingaddress-new #pccustomers-newaddress-billingaddresses-form > div
+.page-myprintconnect-mybillingaddress-new #pccustomers-newaddress-billingaddresses-form > div,
+.page-myprintconnect-addresses #pccustomers-address-form > div,
+.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form > div
+
 {
     background-color: #f1f1f1;
     padding-top: 18px;
@@ -10839,7 +10863,8 @@ p.requieredfields span.form-required {
     padding: 10px 19px!important;*/
 }
 #pccustomers-newaddress-form input[type="submit"], 
-#pccustomers-address-form input[type="submit"] {
+#pccustomers-address-form input[type="submit"],
+.page-myprintconnect-addresses #pccustomers-address-form input.button.form-submit {
 	background: #71ad00;
     padding-left: 0;
     text-align: center;
@@ -10866,12 +10891,30 @@ p.requieredfields span.form-required {
     -webkit-border-radius: 0px 3px 3px 0px;
 }
 #pccustomers-newaddress-form label, 
-#pccustomers-address-form label{
+#pccustomers-address-form label,
+#pccustomers-address-billingaddresses-form label
+{
     text-align: left;
     padding-left: 10px;
     padding-right: 0;
     width: 158px;
 }
+
+.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form .form-item-isCompany input#isUserCompany{
+  margin-left: 8px;
+    margin-right: 8px;
+}
+
+.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form #vatNumber .form-item-vatNumber .country{
+	border-right: 0px;
+	border-radius: 3px 0 0 3px;
+}
+
+.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form #vatNumber .form-item-vatNumber .number{
+    border-radius: 0 3px 3px 0;
+}
+
+
 #pccustomers-newaddress-form .form-item-name,
 #pccustomers-newaddress-form .form-item-lastname {
     margin-top: 0;
@@ -11245,18 +11288,17 @@ table#opening-hours td {
     font-family: arial;
     padding-left: 10px;
 }
-#edit-actions .button-wrapper {
-    width: 330px;
-    display: inline-block;
-}
 .demande-paiement .form-actions input[type="submit"],
 input.pay-now, 
-input.ui-button.pay-now, input.payment, 
+input.ui-button.pay-now, 
 input.ui-button.payment {
     background: #79b61a url("images/button_payment.png") no-repeat left center;
 }
+.page-payment #edit-actions input.payment{
+    background: #79b61a url("images/button_payment.png") no-repeat 25px  center;
+}
 .page-cart #block-system-main .form-wrapper.actions input{
-    font-size: 16px;
+font-size: 16px;
     height: 50px;
     margin: 0;
     font-weight: bold;
@@ -11264,16 +11306,16 @@ input.ui-button.payment {
     width: auto;
     display: inline-block;
     padding-left: 40px;
-
     -webkit-border-radius: 0;
-       -moz-border-radius: 0;
-    		border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
 }
 #edit-actions .button-wrapper {
     background-color: #79b61a;
     width: 330px;
     display: inline-block;
     text-align: center;
+    float: right;
 }
 #total-price {
     vertical-align: top;
@@ -11281,12 +11323,18 @@ input.ui-button.payment {
     float: left;
     line-height: 50px;
 }
+.page-payment #total-price{
+	width: 752px;
+}
 #total-price .value {
     font-size: 30px;
     font-weight: bold;
     color: #fff;
     float: right;
     margin-right: 15px;
+}
+.page-payment #total-price .value{
+	margin-top: 4px;
 }
 .page-cart .region-content .form-actions span.price label {
     font-size: 14px;

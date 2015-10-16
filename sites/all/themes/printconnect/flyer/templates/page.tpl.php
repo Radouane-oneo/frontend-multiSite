@@ -96,7 +96,11 @@ if (/*@cc_on!@*/false) {
         <div class="whitebox clearfix">
 
           <?php if ($title): ?>
-            <h1><?php print render($title_prefix); ?><?php print $title ?><?php print render($title_suffix); ?></h1>
+            <?php if ($title =='Cart') {
+              $title = t('your cart');
+            }
+          ?>
+            <h1><?php print render($title_prefix); ?><?php print $title; ?><?php print render($title_suffix); ?></h1>
           <?php endif; ?>
 
           <?php if ($tabs): ?>

@@ -8145,6 +8145,14 @@ form#pccheckout-payment-form  .paymentmethodefond{
       border: 1px solid #e1e1e1;
 }
 
+.page-payment .paymentDescription{
+	margin-top: 13px;
+}
+
+.page-payment .paymentDescription >p{
+	margin: 21px 0 18px;
+}
+
 form#pccheckout-payment-form table tr{
     height:34px!important;
 }

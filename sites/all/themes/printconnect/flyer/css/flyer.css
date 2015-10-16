@@ -3304,7 +3304,7 @@ legend {
 	text-align: right;
 }
 .fieldset-wrapper {
-	border-radius: 4px 4px 0px 0px;
+	border-radius: 4px 4px;
 	margin-bottom: 10px;
 	padding: 10px;
 	position: relative;
@@ -4431,7 +4431,7 @@ a.googleconnect {
     padding-top: 167px;
     position: relative;
     text-align: center;
-    width: 476px;
+    width: 442px;
 }
 
 .page-paymentrequest-key table.grid.clearfix:after, 
@@ -8133,6 +8133,11 @@ form#pccheckout-payment-form fieldset.paymentmethodefond legend{
 	-moz-border-radius: 3px;
     border-radius:3px;
 }
+.page-payment #detailCommande .wrap-table-detailcmd{
+	-webkit-border-radius: 4px 4px 0 0;
+	-moz-border-radius: 4px 4px 0 0;
+	border-radius: 4px 4px 0 0;
+}
 
 form#pccheckout-payment-form fieldset{
     -webkit-border-radius: 0 0 3px 3px;
@@ -8162,8 +8167,8 @@ form#pccheckout-payment-form .payment-methods-table tr {
    display: table-header-group;
    text-transform: uppercase;
 }
-form#pccheckout-payment-form .payment-methods-table tr:last-child() td{
- border-bottom: none;
+.page-payment  form#pccheckout-payment-form .payment-methods-table tr:last-child td{
+ 	border-bottom: none;
 }
 form#pccheckout-payment-form table{
   padding-bottom: 13px;
@@ -11293,7 +11298,7 @@ input.ui-button.payment {
     background: #79b61a url("images/button_payment.png") no-repeat 25px  center;
 }
 .page-cart #block-system-main .form-wrapper.actions input{
-    font-size: 16px;
+font-size: 16px;
     height: 50px;
     margin: 0;
     font-weight: bold;
@@ -11301,22 +11306,25 @@ input.ui-button.payment {
     width: auto;
     display: inline-block;
     padding-left: 40px;
-
     -webkit-border-radius: 0;
-       -moz-border-radius: 0;
-    		border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
 }
 #edit-actions .button-wrapper {
     background-color: #79b61a;
     width: 330px;
     display: inline-block;
     text-align: center;
+    float: right;
 }
 #total-price {
     vertical-align: top;
-    width: 752px;
+    width: 328px;
     float: left;
     line-height: 50px;
+}
+.page-payment #total-price{
+	width: 752px;
 }
 #total-price .value {
     font-size: 30px;
@@ -11324,7 +11332,9 @@ input.ui-button.payment {
     color: #fff;
     float: right;
     margin-right: 15px;
-    margin-top: 3px;
+}
+.page-payment #total-price .value{
+	margin-top: 4px;
 }
 .page-cart .region-content .form-actions span.price label {
     font-size: 14px;

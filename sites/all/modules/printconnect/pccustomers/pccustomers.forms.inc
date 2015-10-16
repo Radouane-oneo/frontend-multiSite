@@ -428,7 +428,7 @@ function pccustomers_address_form($form, $form_state, $addressId) {
       '#required' => TRUE,
       '#size' => 71,
       '#default_value' => $address->city,
-      '#attributes' => array('class' => array('city','cc')),
+      '#attributes' => array('class' => array('city')),
   );
 
  

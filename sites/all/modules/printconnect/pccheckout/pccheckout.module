@@ -314,7 +314,6 @@ function new_checkout_and_delivery_loadpage() {
 
     $labels = array(
       "js_key" => t('drupal_tag'),
-      "formatBrut" => t("Format brut"),
       "BillingAccount" => t("adresse de facturation"),
       "changeBA" => t("Change invoice address"),
       "selectBA" => t("Select from addressbook"),
@@ -336,8 +335,8 @@ function new_checkout_and_delivery_loadpage() {
       "day_1" => t("Monday"),
       "day_2" => t("Tuesday"),
       "day_3" => t("Wednesday"),
-      "day_4" => t("Jeudi"),
-      "day_5" => t("Thursday"),
+      "day_4" => t("Thursday"),
+      "day_5" => t("Friday"),
       "day_6" => t("Saturday"),
       "day_7" => t("Sunday"),
       "shippingFlyerstore" =>t("Vous avez choisi Enlèvement dans un FlyerStore"),

@@ -5801,13 +5801,13 @@ body.page-stores-picker {
 .region-content .form-actions span.price label {
     font-size: 14px;
     margin-right: 5px;
-    margin-top: 28px;
+    margin-top: 22px;
     text-align: right;
     line-height: 20px;
     float: left;
     clear: right;
     color: #bdbdbd;
-    font-weight: bold;
+    font-weight: 400;
 }
 .store div.email {
 	background-position: left;
@@ -8154,6 +8154,9 @@ form#pccheckout-payment-form .payment-methods-table tr {
    display: table-header-group;
    text-transform: uppercase;
 }
+form#pccheckout-payment-form .payment-methods-table tr:last-child() td{
+ border-bottom: none;
+}
 form#pccheckout-payment-form table{
   padding-bottom: 13px;
 }
@@ -8185,13 +8188,13 @@ form#pccheckout-payment-form .overview table.sticky-enabled tr{
 }
 form#pccheckout-payment-form .overview table.sticky-enabled td{
 	
-	padding: 3px 20px;
+	padding: 3px 15px;
 	font-size: 13px;
 	color: #666666;
 	line-height: 13px;
 	border-style: solid;
 	border-width: 1px 1px 0 0;
-	border-color: #e1e1e1;
+	border-color:#d9d9d9;
 	height: 30px;
 }
 form#pccheckout-payment-form .overview table.sticky-enabled td.last-child{
@@ -11303,7 +11306,7 @@ input.ui-button.payment {
 }
 #total-price {
     vertical-align: top;
-    width: 328px;
+    width: 752px;
     float: left;
     line-height: 50px;
 }
@@ -11313,6 +11316,7 @@ input.ui-button.payment {
     color: #fff;
     float: right;
     margin-right: 15px;
+    margin-top: 3px;
 }
 .page-cart .region-content .form-actions span.price label {
     font-size: 14px;

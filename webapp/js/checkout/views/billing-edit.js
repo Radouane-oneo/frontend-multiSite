@@ -31,7 +31,8 @@ define([
         },
 	validateVat : function(){
 	    var trgObject = {};
-	    trgObject[$('#countryIsoBA').val()] = $("#vatNumberBA").val().length;
+	    var vatNumberBA = $("#vatNumberBA").val().replace(".", "").replace(" ","");
+	    trgObject[$('#countryIsoBA').val()] = vatNumberBA.length;
 	    var result = _.findWhere(this.vatFormats, trgObject);
 	    return (result) ? true : false;
 	},
@@ -100,27 +101,6 @@ define([
 		    $(window).scrollTop($(me.config.containerId).offset().top);   
 		}
 		return false;
-	        /*ajaxCaller.call("vatlidateVatNumber",
-                {"vatNumber" : this.$('#countryIsoBA').val()+elmTarget.val()},
-                'GET').done(function(result) {
-                    if(_.isEmpty(result.data) == false) {
-			switch(result.data.valid.status) {
-			   case 'VALID':
-				elmTarget.css("border-color", "");
-				$('#countryIsoBA').css("border-color", "");
-				me.enableSave = true;
-			   break;
-			   default:
-				elmTarget.css("border-color", "red");
-				$('#countryIsoBA').css("border-color", "red");
-				elmTarget.val('');
-				myCheckout.errorView.render(me.config.labels["InvalidVatNumber"]);
-                		$(window).scrollTop($(me.config.containerId).offset().top);
-                		return false;
-			   break;
-			}
-                    };
-                });*/
             }
         },
         saveBA: function(e) {

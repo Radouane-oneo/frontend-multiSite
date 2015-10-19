@@ -318,11 +318,11 @@ float: right;
   right: 12px;
   top: 5px;
   color: #f60;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .preview2 .origin-price{
-  right: 35px;
+  right: 29px;
 }
 
 .page-cart #pccart-cart-form .item .description .origin-price + .price{

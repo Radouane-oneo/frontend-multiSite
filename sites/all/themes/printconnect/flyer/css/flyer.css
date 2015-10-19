@@ -11738,3 +11738,9 @@ input.ui-button.payment {
 #pccustomers-newaddress-billingaddresses-form .number{
 	    border-radius: 0 3px 3px 0;
 }
+
+.page-cart #pccart-cart-form .old-price{
+	position: absolute;
+	top: 35px;
+    right: 32px;
+}

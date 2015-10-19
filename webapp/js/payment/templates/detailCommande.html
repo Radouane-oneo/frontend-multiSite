@@ -16,7 +16,15 @@
                             <% } %>
                         </td>
                         <td class="last-child">
-                           <%= priceTpl({price:orderItem.price,classToAdd:'price'}) %>
+                            <% if (orderItem.customWidth != 0 && orderItem.customHeight != 0){%>
+                                <%= priceTpl({price:orderItem.price,classToAdd:'price'}) %>
+                            <% }else{%>
+                                <%  if(orderItem.price < orderItem.originPrice){%>
+                                    <div class="origin-price"><del>&euro; <%=orderItem.originPrice%></del></div>
+                                    <%= priceTpl({price:orderItem.price,classToAdd:'price'}) %>
+                                <%}else{%>
+                                    <%= priceTpl({price:orderItem.price,classToAdd:'price'}) %>
+                                <%}}%>
                         </td>
                     </tr>
                     <!-- fotolia -->

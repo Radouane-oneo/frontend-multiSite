@@ -10727,7 +10727,7 @@ a.cart.button{
 	display: inline-block;
 	float: right;
 	margin-right: 0;
-	font-weight: normal;
+	font-weight: bold;
 	text-align: center;
 	border: none; 
 	-webkit-border-radius: 0 0 3px 0;
@@ -11296,9 +11296,10 @@ input.ui-button.payment {
 }
 .page-payment #edit-actions input.payment{
     background: #79b61a url("images/button_payment.png") no-repeat 25px  center;
+    cursor: pointer;
 }
 .page-cart #block-system-main .form-wrapper.actions input{
-font-size: 16px;
+	font-size: 16px;
     height: 50px;
     margin: 0;
     font-weight: bold;

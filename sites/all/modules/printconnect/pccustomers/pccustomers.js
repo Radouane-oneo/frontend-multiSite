@@ -1,13 +1,149 @@
 (function ($) {
     $(document).ready(function () {
- if($('#pccustomers-address-billingaddresses-form')[0]){
-     if ($('#edit-vatnumber-number').val()) {
-                $('#isUserCompany').attr('disabled', true);
-            } else {
-                $('#isUserCompany').attr('disabled', false);
+      if($('#pccustomers-address-billingaddresses-form')[0]){
+         if ($('#edit-vatnumber-number').val()) {
+                    $('#isUserCompany').attr('disabled', true);
+                } else {
+                    $('#isUserCompany').attr('disabled', false);
+                }
+      }
+
+      /* ========== PCCUSTOMER form validation ========== */
+      $('.save-button').click(function (e) {
+          $('.messages.error').remove();
+          $('#content form .required').removeClass("error");
+          var errorMarkup = "<div class='messages error'><ul>";
+          var errorMsgs = new Array();
+
+          $('#content form .required').each(function(i, elem) {
+            var _this = $(this);
+            var inputName;
+            if(_this.val() == "" || _this.val() == 0) {
+              inputName = $(elem).attr('name');
+              _this.addClass('error');
+              errorMsgs[i] = labels["isRequired"].replace('!name', inputName);
+              errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+            } else if (_this.val().length < 3 && this.name !="country" && this.name !="phone") {
+                inputName = $(elem).attr('name');
+                _this.addClass('error');
+                errorMsgs[i] = inputName+": "+labels["invalidCharactersLength"];
+                errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+            } else if (this.name =="phone" && (isNaN(_this.val()) || _this.val().length != 10)) {
+                inputName = $(elem).attr('name');
+                _this.addClass('error');
+                errorMsgs[i] = labels["phoneNumberError"];
+                errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+            } else if (this.name =="email") {
+                inputName = $(elem).attr('name');
+                var emailReg = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                var emailTest = emailReg.test(_this.val());
+                if (!emailTest) {
+                  _this.addClass('error');
+                  errorMsgs[i] = labels["invaliEmail"];
+                  errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+                }
+            } else if ($(this).parents("form").attr("id") == "pccustomers-changepassword-form") {
+                var password = $("#pccustomers-changepassword-form #edit-password").val();
+                var passwordConfirm = $("#pccustomers-changepassword-form #edit-passwordconfirm").val();
+                if((password != passwordConfirm) && (this.name == "password")) {
+                  $("#pccustomers-changepassword-form #edit-password").addClass('error');
+                  $("#pccustomers-changepassword-form #edit-passwordconfirm").addClass('error');
+                  errorMsgs[i] = labels["passwordMatch"];
+                  errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+                }
+            } 
+
+          });  
+          errorMarkup += "</ul></div>";
+          if(errorMsgs.length != 0 ) {
+            e.preventDefault();
+            $( "#content h1:first" ).after( errorMarkup );
+            $('html, body').animate({
+              scrollTop:$(".messages.error").offset().top
+            }, 'slow');
+          }
+      });
+
+      /* ========== Register form validation ========== */
+      $('.register-button').click(function (e) {
+        $('.messages.error').remove();
+        $('#content form .required').removeClass("error");
+        var errorMarkup = "<div class='messages error'><ul>";
+        var errorMsgs = new Array();
+
+        $('#content form .last-item .required').each(function(i, elem) {
+          var _this = $(this);
+          var inputName;
+          
+          if(_this.val() == "") {
+            inputName = $(elem).attr('name');
+            _this.addClass('error');
+            errorMsgs[i] = labels["isRequired"].replace('!name', inputName);
+            errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+            } else if (this.name == "emailnew") {
+              inputName = $(elem).attr('name');
+              var emailReg = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+              var emailTest = emailReg.test(_this.val());
+              if (!emailTest) {
+                _this.addClass('error');
+                errorMsgs[i] = labels["invaliEmail"];
+                errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+              }
+            } else if ( this.name =="newpassword" && _this.val().length < 5 ) {
+                inputName = $(elem).attr('name');
+                _this.addClass('error');
+                errorMsgs[i] = inputName+": "+labels["newpassword"];
+                errorMarkup += "<li>"+errorMsgs[i]+"</li>";
             }
- }
-         
+        });
+
+        errorMarkup += "</ul></div>";
+        if(errorMsgs.length != 0 ) {
+          e.preventDefault();
+          $( "#content h1:first" ).after( errorMarkup );
+          $('html, body').animate({
+            scrollTop:$(".messages.error").offset().top
+          }, 'slow');
+        }        
+      }); 
+      
+      /* ========== Login form validation ========== */
+      $('.login-button').click(function (e) {
+        $('.messages.error').remove();
+        $('#content form .required').removeClass("error");
+        var errorMarkup = "<div class='messages error'><ul>";
+        var errorMsgs = new Array();
+
+        $('#content form .first-item .required').each(function(i, elem) {
+          var _this = $(this);
+          var inputName;
+          
+          if(_this.val() == "") {
+            inputName = $(elem).attr('name');
+            _this.addClass('error');
+            errorMsgs[i] = labels["isRequired"].replace('!name', inputName);
+            errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+            } else if (this.name =="email") {
+              inputName = $(elem).attr('name');
+              var emailReg = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+              var emailTest = emailReg.test(_this.val());
+              if (!emailTest) {
+                _this.addClass('error');
+                errorMsgs[i] = labels["invaliEmail"];
+                errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+              }
+            }
+        }); 
+
+        errorMarkup += "</ul></div>";
+        if(errorMsgs.length != 0 ) {
+          e.preventDefault();
+          $( "#content h1:first" ).after( errorMarkup );
+          $('html, body').animate({
+            scrollTop:$(".messages.error").offset().top
+          }, 'slow');
+        }        
+      });  
     });
     
   Drupal.behaviors.pccustomers= {

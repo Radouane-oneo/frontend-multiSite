@@ -24,7 +24,15 @@
 
 			<div class="preview1">
 				<div class="description form-wrapper">
-					<h3><%= model.quantity %> <%= config.labels.ex %>. <%= model.configuration.name %> <%= model.configuration.config[0].name %></h3>				
+                                    <% var name=''%>
+                                    <% if (model.customWidth != 0 && model.customHeight != 0){
+                                            name = model.configuration.name + ' ' +model.customWidth+' X '+ model.customHeight+' mm';
+                                        }else
+                                        {
+                                            name = model.configuration.name+' '+model.configuration.config[0].name
+                                        }
+                                    %>
+					<h3><%= model.quantity %> <%= config.labels.ex %>. <%= name %></h3>				
 
 					<div class="item-list">
 						<ul>
@@ -51,7 +59,15 @@
 			</div>
 
 			<div class="jobPrice">
-				<%= priceTpl({price:model.price,classToAdd:'price'}) %>
+				<% if (model.customWidth != 0 && model.customHeight != 0){%>
+                                    <%= priceTpl({price:model.price,classToAdd:'price'}) %>
+                                <% }else{%>
+                                    <%  if(model.price < model.originPrice){%>
+                                        <div class="origin-price"><del>&euro; <%=model.originPrice%></del></div>
+                                        <%= priceTpl({price:model.price,classToAdd:'price'}) %>
+                                    <%}else{%>
+                                        <%= priceTpl({price:model.price,classToAdd:'price'}) %>
+                                    <%}}%>
 			</div>
 
 			<% if(model.fileCheck.hasOwnProperty('price')) { %>

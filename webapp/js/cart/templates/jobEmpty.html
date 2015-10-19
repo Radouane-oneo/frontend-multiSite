@@ -15,6 +15,13 @@
 				<div class="description form-wrapper <%= (model.emailDesigner ==null)?'':'jobDesigner' %>">
 					<h3><%= model.quantity %> <%= config.labels.ex %>. <%= model.configuration.name %> <%= model.configuration.config[0].name %></h3>
 					<%= priceTpl({price:model.price,classToAdd:'price'}) %>
+					<% 
+						originPrice = parseFloat(model.originPrice);
+						price = parseFloat(model.price);
+						if(originPrice>price){
+							print(priceTpl({price:model.originPrice,classToAdd:'old-price'}));
+						}
+					%>
 					<div class="item-list">
 						<ul>
 						<% _.each(model.configuration.config, function(itemConfig, i){ %>

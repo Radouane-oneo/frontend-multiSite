@@ -11739,3 +11739,12 @@ input.ui-button.payment {
 	    border-radius: 0 3px 3px 0;
 }
 
+.page-cart #pccart-cart-form .old-price{
+	font-size: 14px;
+	color: #999999;
+	line-height: 13px;
+	text-decoration: line-through;
+	position: absolute;
+	top: 35px;
+    right: 32px;
+}

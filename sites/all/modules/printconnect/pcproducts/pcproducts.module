@@ -596,7 +596,7 @@ function pcproducts_js_callback() {
 
 function getFromServer($filename) {
     $apikey = variable_get('pc_apikey', '');
-    $rest = 'http://admin.preprd.printconcept.com/rest/';
+    $rest = variable_get('pc_url');
     $url = "{$rest}json/filename/{$filename}?apikey={$apikey}";
     return file_get_contents($url);
 }
@@ -697,7 +697,7 @@ function getLabels($edit = false) {
         "priceNoTVA" => t('Price VAT excl.'),
         "priceWithTVA" => t('Price VAT incl.'),
         "enterQuantity" => t('Enter your amount'),
-        "calculate" => t('CALCULER'),
+        "calculate" => t('Calculer'),
         "totalNoTVA" => t('Total excl. VAT'),
         "addToCart" => $edit ? t('Update') : t('Add to cart'),
         "technicalDetails" => t('Design documents'),

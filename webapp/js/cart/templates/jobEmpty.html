@@ -13,8 +13,24 @@
 			</div>
 			<div class="preview2">
 				<div class="description form-wrapper <%= (model.emailDesigner ==null)?'':'jobDesigner' %>">
-					<h3><%= model.quantity %> <%= config.labels.ex %>. <%= model.configuration.name %> <%= model.configuration.config[0].name %></h3>
-					<%= priceTpl({price:model.price,classToAdd:'price'}) %>
+                                    <% var name=''%>
+                                    <% if (model.customWidth != 0 && model.customHeight != 0){
+                                            name = model.configuration.name + ' ' +model.customWidth+' X '+ model.customHeight+' mm';
+                                        }else
+                                        {
+                                            name = model.configuration.name+' '+model.configuration.config[0].name
+                                        }
+                                    %>
+					<h3><%= model.quantity %> <%= config.labels.ex %>. <%= name %></h3>
+                                        <% if (model.customWidth != 0 && model.customHeight != 0){%>
+                                            <%= priceTpl({price:model.price,classToAdd:'price'}) %>
+                                        <% }else{%>
+                                            <%  if(model.price < model.originPrice){%>
+                                                <div class="origin-price"><del>&euro; <%=model.originPrice%></del></div>
+                                                <%= priceTpl({price:model.price,classToAdd:'price'}) %>
+                                            <%}else{%>
+                                                <%= priceTpl({price:model.price,classToAdd:'price'}) %>
+                                            <%}}%>
 					<div class="item-list">
 						<ul>
 						<% _.each(model.configuration.config, function(itemConfig, i){ %>
@@ -37,9 +53,12 @@
 					<%
 					var directLink = "http://" + document.location.host + "/" + config.prefix + "/products/" + model.configuration['productId'] + "/" + encodeURIComponent(_.map(model.configuration.config, function(conf){ return conf.toolboxItemId; }).join(",")) + "/" + encodeURIComponent(model.options.join(",")) + "/" + model.quantity+"/"+model.id;
             		%>
+                                    <% if (model.customWidth == 0 && model.customHeight == 0){%>
+                                    
 					<div class="edit-job">
 						<a href="<%= directLink %>" class=""><%= config.labels["updateProduct"] %></a>
 					</div>
+                                    <%}%>
 				</div>
 			</div>
 			<!-- end preview -->

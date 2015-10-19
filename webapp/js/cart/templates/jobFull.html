@@ -52,6 +52,13 @@
 
 			<div class="jobPrice">
 				<%= priceTpl({price:model.price,classToAdd:'price'}) %>
+				<% 
+					originPrice = parseFloat(model.originPrice);
+					price = parseFloat(model.price);
+					if(originPrice>price){
+						print(priceTpl({price:model.originPrice,classToAdd:'old-price'}));
+					}
+				%>
 			</div>
 
 			<% if(model.fileCheck.hasOwnProperty('price')) { %>

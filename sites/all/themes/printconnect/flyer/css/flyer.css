@@ -11738,3 +11738,21 @@ input.ui-button.payment {
 #pccustomers-newaddress-billingaddresses-form .number{
 	    border-radius: 0 3px 3px 0;
 }
+
+.page-cart #pccart-cart-form .old-price{
+	position: absolute;
+	top: 35px;
+    right: 32px;
+}
+.page-myprintconnect-orders-confirmation .form-actions{
+  padding: 15px 10px;
+  margin: 0;
+}
+
+.page-myprintconnect-orders-confirmation .form-actions span.price .currency{
+  margin: 0;
+}
+
+.page-myprintconnect-orders-confirmation .fieldset-wrapper{
+	padding: 10px;
+}

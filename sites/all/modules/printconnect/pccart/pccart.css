@@ -318,11 +318,11 @@ float: right;
   right: 12px;
   top: 5px;
   color: #f60;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .preview2 .origin-price{
-  right: 35px;
+  right: 30px;
 }
 
 .page-cart #pccart-cart-form .item .description .origin-price + .price{
@@ -825,4 +825,20 @@ div#edit-linkcart a {
     float: left;
     padding-left: 25px;
     background: url(images/bg_btns.png) no-repeat 0 -26px;
+}
+
+.jobfull .origin-price{
+  top: 32px;
+  right: 10px;
+}
+
+#detailCommande .origin-price{
+  float: right;
+  font-family: Tahoma;
+  font-size: 11px;
+  position: relative;
+  top: 0px;
+  color: #666666;
+  margin: 0 0 0 5px;
+  right: 0;
 }

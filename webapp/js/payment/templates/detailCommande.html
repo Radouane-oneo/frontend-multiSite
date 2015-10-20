@@ -20,7 +20,12 @@
                                 <%= priceTpl({price:orderItem.price,classToAdd:'price'}) %>
                             <% }else{%>
                                 <%  if(orderItem.price < orderItem.originPrice){%>
-                                    <div class="origin-price"><del>&euro; <%=orderItem.originPrice%></del></div>
+                                    <% var prefixsFR = ["befr", "lufr", "frfr"];        
+                                    if ($.inArray(GlobalPrefix, prefixsFR) == 0){%>
+                                    <div class="origin-price"><del><%=orderItem.originPrice%> &euro;</del></div>
+                                    <% }else{%>
+                                        <div class="origin-price"><del>&euro; <%=orderItem.originPrice%></del></div>
+                                    <%}%>
                                     <%= priceTpl({price:orderItem.price,classToAdd:'price'}) %>
                                 <%}else{%>
                                     <%= priceTpl({price:orderItem.price,classToAdd:'price'}) %>

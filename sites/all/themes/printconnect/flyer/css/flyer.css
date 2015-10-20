@@ -11744,3 +11744,15 @@ input.ui-button.payment {
 	top: 35px;
     right: 32px;
 }
+.page-myprintconnect-orders-confirmation .form-actions{
+  padding: 15px 10px;
+  margin: 0;
+}
+
+.page-myprintconnect-orders-confirmation .form-actions span.price .currency{
+  margin: 0;
+}
+
+.page-myprintconnect-orders-confirmation .fieldset-wrapper{
+	padding: 10px;
+}

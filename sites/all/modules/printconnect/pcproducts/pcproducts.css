@@ -106,7 +106,7 @@
   text-decoration: none;
 }
 
-.block-pctemplates ul img,.page-segments .list-segment img,.view-best-sales ul img,#pcproducts-products-form ul img, #pcproducts-productoverview-form ul img , #pcproducts-productconfig-form .other img, #block-pcproducts-other ul li img{
+.page-segments .list-segment img,.view-best-sales ul img,#pcproducts-products-form ul img, #pcproducts-productoverview-form ul img , #pcproducts-productconfig-form .other img, #block-pcproducts-other ul li img{
   height: auto;
   max-width: 100%; 
   margin-bottom: 10px;
@@ -583,3 +583,9 @@ body #footer #block-pcproducts-list ul.menu li{
 .msgErrorCF{ 
 	color: #f00 !important; 
 }
+
+/* New CSS for Flyer migration */
+.block-pctemplates ul img {
+  max-width: 100%; 
+  margin-bottom: 10px;
+} 

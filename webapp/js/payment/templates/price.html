@@ -1,1 +1,19 @@
-<% price = Math.round(price*100)/100; %><span class="value <%= (typeof classToAdd != 'undefined')?classToAdd:'' %>"><% if(typeof label != 'undefined'){ %><label><%= label %></label><% } %><span class="value"><span class="whole"><%= price.toFixed(2).split(".")[0] %></span><span class="decimalpoint">,</span><span class="decimals"><%= price.toFixed(2).split(".")[1] %></span>&nbsp;<span class="currency">€</span></span></span>
+<% price = Math.round(price*100)/100; %>
+<span class="value <%= (typeof classToAdd != 'undefined')?classToAdd:'' %>">    
+    <% if(typeof label != 'undefined'){ %><label><%= label %></label><% } %>
+    <span class="value">
+        <% 
+        var prefixsFR = ["befr", "lufr", "frfr"];        
+        if ($.inArray(GlobalPrefix, prefixsFR) == 0){%>
+            <span class="whole"><%= price.toFixed(2).split(".")[0] %></span>
+            <span class="decimalpoint">,</span>
+            <span class="decimals"><%= price.toFixed(2).split(".")[1] %></span>
+            <span class="currency">€</span>  
+        <% }else{%>
+            <span class="currency">€</span>
+            <span class="whole"><%= price.toFixed(2).split(".")[0] %></span>
+            <span class="decimalpoint">,</span>
+            <span class="decimals"><%= price.toFixed(2).split(".")[1] %></span>           
+        <%}%>
+    </span>        
+</span>

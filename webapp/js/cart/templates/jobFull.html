@@ -70,6 +70,15 @@
                                     <%}}%>
 			</div>
 
+			<!-- Model Payemnt -->
+			<% if (model.designTemplate.price) { %>
+				<div class="file-model">
+					<span class="model-txt"><%= model.designTemplate.description %></span>
+					<%= priceTpl({price:model.designTemplate.price,classToAdd:'model-price'}) %>
+				</div>
+			<% }  %>
+			<!-- END Model Payemnt -->
+			
 			<% if(model.fileCheck.hasOwnProperty('price')) { %>
 				<!-- Controle professionel -->
 				<div class="control-block form-wrapper">
@@ -96,6 +105,7 @@
 				<% }  %>
 				
 			</div>
+
 			<!-- END fotolia -->
 
 		</div>

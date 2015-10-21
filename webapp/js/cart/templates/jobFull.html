@@ -63,7 +63,12 @@
                                     <%= priceTpl({price:model.price,classToAdd:'price'}) %>
                                 <% }else{%>
                                     <%  if(model.price < model.originPrice){%>
-                                        <div class="origin-price"><del>&euro; <%=model.originPrice%></del></div>
+                                        <% var prefixsFR = ["befr", "lufr", "frfr"];        
+                                        if ($.inArray(GlobalPrefix, prefixsFR) == 0){%>
+                                        <div class="origin-price"><del><%=model.originPrice%> &euro;</del></div>
+                                        <% }else{%>
+                                            <div class="origin-price"><del>&euro; <%=model.originPrice%></del></div>
+                                        <%}%>
                                         <%= priceTpl({price:model.price,classToAdd:'price'}) %>
                                     <%}else{%>
                                         <%= priceTpl({price:model.price,classToAdd:'price'}) %>

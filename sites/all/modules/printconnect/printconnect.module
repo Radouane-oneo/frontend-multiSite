@@ -511,9 +511,7 @@ function theme_price($vars) {
 
 
     return drupal_render($build);
-die;    
-    return '<' . $container . drupal_attributes($attributes) . '>' . $title . '<span class="value"><span class="whole">' . $parts[0] . '</span><span class="decimalpoint">,</span><span class="decimals">' . $parts[1] . '</span>&nbsp;<span class="currency">' . $currencySymbol . '</span></span></$container>';
-  }
+    }
 }
 
 function theme_number($vars) {

@@ -5,7 +5,7 @@
             <div class="form-item form-type-item cart-empty">
                 <%= config.labels['cartIsEmpty'] %>
                 <div class="form-item form-type-item continue-shopping">
-                	<a href="/<%= config.prefix  %>/products"><%= config.labels['continue'] %></a>
+                	<a href="/<%= config.prefix  %>/products"><%= config.labels['link product'] %></a>
            		</div>
             </div>            
             <% } else { %>
@@ -28,6 +28,8 @@
 			<div id="technic-details" class="technic-details-container">
 			
 			</div>
+            <a href="/products"><span class="linkproduct"><%= config.labels['linkProduct'] %></span></a>
+            <div id='WeAlsoMake'></div> 
 		</div>
 	</div>
 </form>

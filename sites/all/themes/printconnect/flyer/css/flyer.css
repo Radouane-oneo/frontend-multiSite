@@ -11103,6 +11103,7 @@ p.requieredfields span.form-required {
     padding: 0 10px;
     margin: 0;
     box-sizing: border-box;
+    clear:both;
 }
 .page-cart #pccart-cart-form .item .designer-email {
     background: #dfdfdf;

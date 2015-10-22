@@ -119,19 +119,25 @@ class Factory {
         if(!isset($_SESSION['cartid'])) {
             return 0;
         }
+        if(!isset($_SESSION['cartCount'])) {
+            $response = self::GetCartJson();
+            $cart = json_decode($response->data);
         
-        $response = self::GetCartJson();
-        $cart = json_decode($response->data);
-        $number = count($cart->orderItems);
-
-        $_SESSION['cartCount'] = $number;
-        
+            $number = count($cart->orderItems);
+            $_SESSION['cartCount'] = $number;
+        }else {
+            $number = $_SESSION['cartCount'];
+        }
         return $number;
     }
 
     public static function UpdateCartCount($append = TRUE) 
     {
-        $count = self::GetCartCount();
+        if(isset($_SESSION['cartCount'])) {
+            $count = $_SESSION['cartCount'];
+        }else {
+            $count = 0;
+        }
 
         if($append) {
             $count++;

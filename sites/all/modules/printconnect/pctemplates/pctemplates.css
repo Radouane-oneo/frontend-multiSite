@@ -581,3 +581,15 @@ width: 253px;
 .quanityOptions .custom.last-child>td:nth-child(2) .amount #calculeramount{ 
   vertical-align: middle;
 }
+
+#price-template-block{
+    border: none !important;
+}
+
+#price-template-block label {
+    width: auto !important;
+}
+
+#price-template-block span.price {
+    float: right;
+}

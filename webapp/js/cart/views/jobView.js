@@ -51,6 +51,8 @@ define([
             //set fancybox event
             this.showFancybox();
 
+            this.setJobHeight();
+
 	    },
 
 	    swithcJobEmpty : function(e){
@@ -254,6 +256,14 @@ define([
             $('#technic-details').show();
 	    	e.preventDefault();
 	    },
+	    setJobHeight : function () {
+	    	$("#pccart-cart-form .jobfull").each(function(i, elem) {
+	    		$(elem).find(".image img").load(function(){
+			  		var maxHeight = $(elem).find(".image").height();
+	    			$(elem).find(".preview1").css("height" , maxHeight+"px");
+				});     		
+    		});   	   	
+	    }, 
         errors : function(){
         	var orderItems = this.model.attributes.orderItems;
         	for (var i = 0; i< orderItems.length; i++) {

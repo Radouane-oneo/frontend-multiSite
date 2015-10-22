@@ -319,7 +319,14 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
     $form['order']['details']['item'][$item->id]['description']['price'] = array('#markup' => theme('price', array('value' => $price)));
     if ($item->customWidth == 0 && $item->customHeight == 0){
         if($price < $item->originPrice){
-            $promoPrice = '<del>&euro; '.$item->originPrice.'</del>';
+            global $language;
+            $lg = $language->prefix;
+            $arrayLanguage = array('befr', 'lufr', 'frfr');
+            if (in_array($lg, $arrayLanguage))
+                $promoPrice = '<del>'.$item->originPrice.' &euro;</del>';
+            else
+                $promoPrice = '<del>&euro; '.$item->originPrice.'</del>';
+            
             $form['order']['details']['item'][$item->id]['description']['promoPrice'] = array(
             '#prefix' => '<div class="order-origin-price">',
             '#suffix' => '</div>',

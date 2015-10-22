@@ -49,9 +49,10 @@ define([
                 return false;
             }
             if(myCheckout.disable) return false;
-	     
-	    myCheckout.billingEditView.saveBA();
-            $("#pccheckout-invoiceanddelivery-form").submit();
+	    e.preventDefault();	     
+	    myCheckout.billingEditView.saveBA(e).done(function(){
+		$("#pccheckout-invoiceanddelivery-form").submit();
+	    });
         }
     });
 });

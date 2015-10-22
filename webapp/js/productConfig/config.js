@@ -4,9 +4,11 @@ define([
 ], function (Backbone, JsonFile) {
     var JsonFileGroups = $.parseJSON(JsonFile);
     GlobalLabels['productId'] = JsonFileGroups.id;
+    GlobalLabels['parentId'] = JsonFileGroups.parent;
     GlobalLabels['productName'] = JsonFileGroups.name;
     GlobalLabels['productDescription'] = unescape(JsonFileGroups.shortDescription + JsonFileGroups.longDescription + JsonFileGroups.baselineDescription);
     GlobalLabels['customFormat'] = JsonFileGroups.customFormat;
+    GlobalLabels['productType'] = JsonFileGroups.type;
     GlobalLabels['format'] = JsonFileGroups.format;
     GlobalLabels['minHCF'] = JsonFileGroups.heightMin;
     GlobalLabels['maxHCF'] = JsonFileGroups.heightMax;

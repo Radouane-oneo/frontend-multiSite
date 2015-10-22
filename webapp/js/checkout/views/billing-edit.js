@@ -32,7 +32,6 @@ define([
 	validateVat : function(){
 	    var trgObject = {};
 	    var vatNumberBA = $("#vatNumberBA").val().replace(/\./g, "").replace(/ /g,"");
-	    console.log(vatNumberBA);
 	    trgObject[$('#countryIsoBA').val()] = vatNumberBA.length;
 	    var result = _.findWhere(this.vatFormats, trgObject);
 	    return (result) ? true : false;
@@ -116,7 +115,8 @@ define([
                 $(window).scrollTop($(this.config.containerId).offset().top);
                 return false;
             }
-            ajaxCaller.call("saveBillingAccount",
+	   e.preventDefault();
+           return  ajaxCaller.call("saveBillingAccount",
                 {
                     "id": this.$('#baEditSelect').val(),
                     "name": this.$('#baName').val(),
@@ -139,7 +139,6 @@ define([
                         me.model.set({'billingAccouts': newBillngAccountList, 'defaultBA': result});
 		    }
                 });
-            return false;
         },
         changeBA: function(e) {
             var elmTarget = $(e.currentTarget);

@@ -490,6 +490,23 @@ function _pcorders_order_form_build_overview($order) {
         );
       }
     }
+    
+    if ($order->orderItems) {
+      foreach ($order->orderItems as $oi) {
+        if($oi->designTemplate) {
+            $label = t('Supplément');
+            $rows[] = array(
+                'data' => array(
+                    $label,
+                    $oi->designTemplate->description,
+                    theme('price', array('value' => $oi->designTemplate->price, 'block' => TRUE)),
+                ),
+                'class' => array('discount'),
+            );
+        }
+      }
+    }
+    
     if (isset($order->orderItemShipping)) {
       $type = \printconnect\Shipping\Types\Factory::Get($order->orderItemShipping->shippingTypeResellerShop);
       $rows[] = array(

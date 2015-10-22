@@ -24,6 +24,9 @@ define([
                 });
                 if(orderItem.fileCheck.price)
                     subTotalAmount += parseFloat(orderItem.fileCheck.price);
+                
+                if(orderItem.designTemplate.price)
+                    subTotalAmount += parseFloat(orderItem.designTemplate.price);
             });
             _.each(this.get("discountItems"), function(discountItem){
                 subTotalAmount += parseFloat(discountItem.price);

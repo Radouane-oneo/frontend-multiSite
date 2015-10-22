@@ -534,6 +534,7 @@ float: left;
 
 }
 .page-cart #pccart-cart-form .control-block .price, 
+.file-model .model-price,
 .page-cart .pricepreflight{
   float: right;
   font-size: 14px;
@@ -544,6 +545,7 @@ float: left;
   color: #ff6600;
   padding-top: 10px;
 }
+
 
 #pccart-cart-form .control-block .removecontrol{
   background: url("images/bg_btns.png") no-repeat scroll -3px 0 rgba(0, 0, 0, 0);

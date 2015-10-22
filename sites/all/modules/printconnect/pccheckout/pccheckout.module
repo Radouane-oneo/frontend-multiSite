@@ -396,9 +396,16 @@ function new_checkout_ajax_getshippingaddresses() {
     $shippings = \printconnect\Shipping\Types\Factory::GetCustomerShippingAddresses();
     $selected = \printconnect\Shipping\Types\Factory::GetSelectedShipping();
 
+    $orderItemShipping = json_decode($selected->data, 1);
+
+    $customer = \printconnect\Customers\Factory::Current();
+
+    if($customer && isset($orderItemShipping['orderShippingAddress']) && isset($orderItemShipping['orderShippingAddress']['name'])) {
+        $orderItemShipping['orderShippingAddress']['name'] = $customer->name;
+    }
 
     Dal::BuildJson(array(
-        'orderItemShipping' => json_decode($selected->data, 1),
+        'orderItemShipping' => $orderItemShipping,
         'addresses' => json_decode($shippings->data, 1)
     ));
 }

@@ -636,8 +636,6 @@ function pcproducts_validate_product() {
 }
 
 function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = FALSE, $edit = FALSE) {
-    header('Cache-Control: public, max-age=' . 3600);
-
     pcproducts_validate_product();
 
     global $language;

@@ -43,10 +43,6 @@ define([
                 "customQuantity" : !(this.model.get("toolBoxGroup")["pricing"][this.model.get("quantity")]),
                 "expandedOptions" : this.$("#edit-options").is(":visible")
             }));
-            console.log('lolo');
-            this.$('#WeAlsoMake').html($('.blocWeAlsoMake').parents('.block-block').html());
-            jQuery('#sidebar-second .blocWeAlsoMake').parents('.block-block').remove();
-            
             $(this.config.containerId).html(this.$el);
 
             this.$("#bloc-shipping").load("/" + this.config.prefix + "/getshippingdate #edit-shipping", {

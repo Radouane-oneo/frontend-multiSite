@@ -51,10 +51,9 @@ define([
                 "model" : this.model.toJSON(),
                 "config" : this.config
             }));
-          // if($('#box-progress').css('display') == 'block'){
-                this.$('#WeAlsoMake').html($('.blocWeAlsoMake').parents('.block-block').html());
-                jQuery('#sidebar-second .blocWeAlsoMake').parents('.block-block').remove();
-          //  }
+            this.$('#WeAlsoMake').html($('.blocWeAlsoMake').parents('.block-block').html());
+            jQuery('#sidebar-second .blocWeAlsoMake').parents('.block-block').remove();
+          
             $(this.config.containerId).html(this.$el);
         },
         changeShipping : function(orderItemShipping){

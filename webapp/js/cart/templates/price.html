@@ -5,9 +5,15 @@
         <% 
         var prefixsFR = ["befr", "lufr", "frfr"];        
         if ($.inArray(GlobalPrefix, prefixsFR) == 0){%>
-            <span class="whole"><%= price.toFixed(2).split(".")[0] %></span><span class="decimalpoint">,</span><span class="decimals"><%= price.toFixed(2).split(".")[1] %></span><span class="currency"> €</span>
+            <span class="whole"><%= price.toFixed(2).split(".")[0] %></span>
+            <span class="decimalpoint">,</span>
+            <span class="decimals"><%= price.toFixed(2).split(".")[1] %></span>
+            <span class="currency">€</span>  
         <% }else{%>
-            <span class="currency">€ </span><span class="whole"><%= price.toFixed(2).split(".")[0] %></span><span class="decimalpoint">,</span><span class="decimals"><%= price.toFixed(2).split(".")[1] %></span>           
+            <span class="currency">€</span>
+            <span class="whole"><%= price.toFixed(2).split(".")[0] %></span>
+            <span class="decimalpoint">,</span>
+            <span class="decimals"><%= price.toFixed(2).split(".")[1] %></span>           
         <%}%>
     </span>        
 </span>

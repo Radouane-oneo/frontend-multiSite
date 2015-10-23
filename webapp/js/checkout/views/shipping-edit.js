@@ -10,7 +10,8 @@ define([
         events: {
             "click #edit-shipping-detail-pickup-submit" : "saveShippingPickup",
             "click #edit-shipping-detail-current-actions-submit" : "saveShipping",
-            "change #edit-shipping-detail-current-select" : "selectAddress"
+            "change #edit-shipping-detail-current-select" : "selectAddress",
+            "blur #edit-shipping-detail-contact" : "changeName"
         },
         initialize: function(model) {
             this.config = require("config");
@@ -140,11 +141,27 @@ define([
             });
             return false;
         },
+        changeName: function(e){
+            var shippingAddresses = $.extend(true, {}, this.model.get("shippingAddresses"));
+            shippingAddresses.orderItemShipping.orderShippingAddress.name = $(e.currentTarget).val();
+            this.model.set({"shippingAddresses": shippingAddresses},{silent: true});
+        },
         errors : function(isPaymentButton){
             if(!isPaymentButton && this.model.get("shippingAddresses").orderItemShipping['deliveryType'] == "deliveryTypeDeliver")
                 return this.checkFields();
             if(!this.model.get("shippingAddresses").orderItemShipping.orderShippingAddress || !this.model.get("shippingAddresses").orderItemShipping.orderShippingAddress.id)
                 return this.config.labels[this.model.get("shippingAddresses").orderItemShipping.shippingTypeTag + "Error"];
+            if(this.$("input#edit-shipping-detail-contact").length > 0) {
+                this.$("input#edit-shipping-detail-contact").css("border-color","");
+                if(this.$("input#edit-shipping-detail-contact").val() == "") {
+                    this.$("input#edit-shipping-detail-contact").css("border-color","red");
+                    return this.config.labels["nameEmptyError"];
+                }
+                if(this.$("input#edit-shipping-detail-contact").val().length < 3) {
+                    this.$("input#edit-shipping-detail-contact").css("border-color","red");
+                    return this.config.labels["invalidCharactersLength"];
+                }
+            }
             return false;
         },
         checkFields: function(){

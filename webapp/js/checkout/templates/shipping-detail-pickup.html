@@ -1,7 +1,7 @@
 <div id="edit-summary-shipping" class="shipping form-wrapper">
     <legend><span class="fieldset-legend"><%= model.labels['shippingAddress'] %></span></legend>
-    <div class="fieldset-wrapper">
-        <div class="pup">
+    <div class="fieldset-wrapper fieldset-wrapper-shipping-detail fieldset-sameheight">
+        <div class="pup wrap_detail">
         <%
             var orderItemShipping = model.shippingAddresses.orderItemShipping;
         %>
@@ -19,10 +19,9 @@
 
             <% if(shippingAddress){ %>
                 <div class="form-type-textfield form-item-shipping-detail-contact shipping-contact">
-                    <label for="edit-shipping-detail-contact"><%= model.labels['infoTitle'] %><span title="<%= model.labels['requiredField'] %>"
-                                                                                                   class="form-required">*</span></label>
-                    <input type="text" class="cmd-collecte form-text required" maxlength="128" size="30" value="<%= (shippingAddress)?shippingAddress.name:'' %>"
-                           name="shipping-detail-contact" id="edit-shipping-detail-contact">
+                    <label for="edit-shipping-detail-contact"><%= model.labels['quiVACollecterCommande'] %></label>
+                    <span><%= (shippingAddress)?shippingAddress.name:'' %></span>
+                           
                 </div>
             <% } %>
         </div>

@@ -38,7 +38,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
-    padding: 20px 18px !important;
+    /*padding: 20px 19px !important;*/
 }
 #pccheckout-invoiceanddelivery-form input[type="text"]{
     font-size: 12px;
@@ -48,7 +48,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
     margin: 10px 0 0 !important;
 }
 .page-checkout  #processPayment.checkout-submit{
-  font-size: 16px;
+  font-size: 14px;
 }
  
 #pccheckout-invoiceanddelivery-form .form-required {
@@ -86,7 +86,9 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
   margin-bottom: 22px;
 }
 #pccheckout-invoiceanddelivery-form fieldset .legend2{
-  margin-bottom: 37px;
+  margin-bottom: 23px;
+  padding-left: 19px;
+  padding-right: 19px;
 }
 #pccheckout-invoiceanddelivery-form #Mapimg .map{
  /* widows: 409px !important;
@@ -325,19 +327,23 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 #pccheckout-invoiceanddelivery-form .headerforminvoice{
     margin-left: 0;
     border-bottom: 1px solid #e3e3e3;
-    padding-bottom: 10px;
+    padding-bottom: 17px;
     padding-top: 14px;
+    padding-left: 19px;
+    padding-right: 19px;
 }
 #pccheckout-invoiceanddelivery-form .blocright{
   display: block;
   float: left;
   width: 490px;
 }
-#pccheckout-invoiceanddelivery-form .form-item-invoice-address-current-country{
-     border-bottom: 1px solid #e3e3e3;
+#pccheckout-invoiceanddelivery-form .form-item-invoice-address-current-country{ 
     padding-bottom: 10px;
 }
 #pccheckout-invoiceanddelivery-form #edit-invoice-address-actions,#pccheckout-invoiceanddelivery-form #edit-shipping-detail-current-actions{
+  margin-top: 10px;
+}
+.page-checkout #pccheckout-invoiceanddelivery-form .livraison-adresse-current-actions{
   margin-top: 20px;
 }
 .page-checkout #invoice-address input.country,.form-item-invoice-address-current-postalCode input[type="text"]{
@@ -418,15 +424,37 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
   margin-top: -5px;
 }
 #pccheckout-invoiceanddelivery-form .form-item-shipping-detail-current-company{
-  border-top: 1px solid #e3e3e3;
   display: block;
-  padding-top: 12px;
+  padding-top: 7px;
 }
 #pccheckout-invoiceanddelivery-form .form-item-shipping-detail-current-name{
     padding-top: 7px;
 }
+#pccheckout-invoiceanddelivery-form .livraison-adresse-current-name{
+  padding-top: 0;
+  margin-top: 0;
+}
+#pccheckout-invoiceanddelivery-form .livraison-adresse-country,
+#pccheckout-invoiceanddelivery-form .facturation-adresse-current-country{
+  padding-bottom: 17px;
+}
+#pccheckout-invoiceanddelivery-form  .livraison-adresse-street,
+#pccheckout-invoiceanddelivery-form .facturation-adresse-current-name{
+  padding-top: 7px;
+}
+#pccheckout-invoiceanddelivery-form  .livraison-adresse-email{
+  padding-bottom: 17px;
+}
+.page-checkout #pccheckout-invoiceanddelivery-form .bloctitle{
+  margin-top: 10px;
+}
+.page-checkout #pccheckout-invoiceanddelivery-form .bloctitle > span{
+    font-size: 12px;
+    line-height: 21px;
+    font-weight: 700 ;
+}
 #pccheckout-invoiceanddelivery-form .form-item-shipping-detail-current-country{
-    padding-bottom: 7px;
+    /*padding-bottom: 7px;*/
 }
 
 .page-checkout #pccheckout-invoiceanddelivery-form #allresault  table.vacations {
@@ -538,11 +566,11 @@ div.company-box > label{
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
-  font-weight: bold;
+  font-weight: 400;
   text-align: left;
   border-right: 1px solid #5a8a02;
   padding-left: 65px;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 
@@ -552,4 +580,45 @@ div.company-box > label{
 
 .page-payment #edit-actions .button-wrapper{
   width: auto;
+}
+
+.page-checkout #pccheckout-invoiceanddelivery-form #blocDetail.summary  .shippingBox .shipping-contact input[type='text']{
+  margin-top: 10px;
+}
+
+.page-checkout #pccheckout-invoiceanddelivery-form #blocDetail.summary  .shippingBox .shipping #detail .address,
+.page-checkout #pccheckout-invoiceanddelivery-form #blocDetail.summary  .shippingBox .shipping #detail .phone,
+{
+  margin-bottom: 10px;
+} 
+
+ 
+
+.page-checkout .plr{
+  padding-left: 19px;
+  padding-right: 19px;
+}
+
+.page-checkout .inner_edit_form_adresseFacturation,
+.page-checkout .inner_edit_form_shippingaddress {
+  padding: 20px 0px 10px !important;
+}
+
+.page-checkout .wrap_group_input{
+  position: relative;
+  display: inline-block;
+  margin-bottom: 23px;
+}
+
+.page-checkout .wrap_group_input input[type="text"]{
+  float: left;
+}
+
+.page-checkout .brbotom{
+      border-bottom: 1px solid #e1e1e1
+}
+
+.page-checkout .fieldset-wrapper-billing-detail,
+.page-checkout .fieldset-wrapper-shipping-detail{
+  margin-bottom: 0;
 }

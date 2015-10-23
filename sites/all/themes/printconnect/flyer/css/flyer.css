@@ -726,6 +726,9 @@ div#cart{
     margin: 10px 10px 10px 0;
 	display: none;
 }
+.page-payment .breadcrumb{
+	display: block;
+}
 /* ---- END - BREADCRUMB -------------------- */
 
 .whitebox {
@@ -3019,11 +3022,14 @@ a.ui-button.inactivebtn{
 .shipping a#toggle-shipping-form{
 	padding: 5px 15px;
 	display: inline-block;
-	margin-top: 10px;
+	margin-top: 14px;
 	background-color: #6faa01;
 	color: white;
 	border: 0;
 	border-radius: 3px;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 24px;
 }
 .page-products #block-system-main #templates .form-item.form-type-item label ,    #pcdesigner-upload-form .templates label{
 	display: inline;
@@ -3876,16 +3882,16 @@ a.googleconnect {
 }
 .page-checkout #pccheckout-invoiceanddelivery-form .invoice{
 	float: left;
-	min-height: 182px;
-	padding: 15px 10px 10px 15px;
+	/*min-height: 182px;*/
+	padding: 15px 10px 18px 15px;
 	position: relative;
 	width: 450px;
 }
 .page-checkout #pccheckout-invoiceanddelivery-form .shipping {
 	border-left: 1px solid #e1e1e1;
 	margin-left: 0;
-	min-height: 182px;
-	padding: 15px 9px 10px 15px;
+	/*min-height: 182px;*/
+	padding: 15px 9px 18px 15px;
 	position: relative;
 	width: 500px;
 	float: left;
@@ -3905,7 +3911,7 @@ a.googleconnect {
 .page-checkout-invoiceanddelivery #invoice-address input[type="submit"], 
 .page-checkout-invoiceanddelivery #shipping-address input[type="submit"] {
 	margin-left: 493px; 
-	margin-top: 20px;
+	margin-top: 10px;
 }
 .page-pcbpost-picker .whitebox {
 	margin: 10px;
@@ -4000,7 +4006,7 @@ a.googleconnect {
 .page-checkout-invoiceanddelivery #pccheckout-invoiceanddelivery-form .pup,
 .page-checkout #pccheckout-invoiceanddelivery-form .invoice .address, 
 .page-checkout #pccheckout-invoiceanddelivery-form .store {
-	min-height: 85px;
+	min-height: 85px !important;
 }
 
 .page-checkout-invoiceanddelivery #pccheckout-invoiceanddelivery-form .pup{
@@ -4047,7 +4053,7 @@ a.googleconnect {
 }
 .page-checkout #shipping-address.form-wrapper, 
 .page-checkout #invoice-address.form-wrapper {
-	margin: 20px 0 19px;
+	margin: 12px 0 19px;
 }
 .page-checkout #shipping-address.form-wrapper h3, 
 .page-checkout #invoice-address.form-wrapper h3 {
@@ -10725,7 +10731,7 @@ a.cart.button{
 	display: inline-block;
 	float: right;
 	margin-right: 0;
-	font-weight: bold;
+	font-weight: 400;
 	text-align: center;
 	border: none; 
 	-webkit-border-radius: 0 0 3px 0;

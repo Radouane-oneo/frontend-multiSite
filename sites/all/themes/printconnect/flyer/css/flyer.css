@@ -11055,6 +11055,7 @@ p.requieredfields span.form-required {
     display: block;
     max-width: 150px;
     margin: auto;
+    margin-bottom: 8px;
 
     border-radius: 5px 5px 5px 5px;
     -moz-border-radius: 5px 5px 5px 5px;
@@ -11082,7 +11083,6 @@ p.requieredfields span.form-required {
 #pccart-cart-form .jobFull-img a.previewlink {
     background: none;
     padding: 0;
-    font-size: 11px;
 }
 .fotolia-img-name {
     display: inline-block;
@@ -11381,6 +11381,11 @@ input.ui-button.payment {
 #pccart-cart-form .jobFull-img a {
 	background: none;
 	padding: 0;
+    text-align: center;
+    float: none;
+    display: block;
+    font-size: 13px;
+    line-height: 17px;
 }
 .edit-job {
     float: right;

@@ -14,8 +14,7 @@
 
 #pcdesigns-saveddesigns-form .image{
     margin-right: 0;
-    padding: 10px 8px;
-    border-right: 1px solid #d2d2d2;
+    padding: 10px 8px; 
     height: 214px;
 }
 
@@ -29,7 +28,8 @@
 #pcdesigns-saveddesigns-form .details{
     padding: 10px 8px;
     min-height: 214px;
-    max-width: 473px;
+    max-width: 473px; 
+    border-left: 1px solid #d2d2d2;
 }
 #pcdesigns-saveddesigns-form .details>.form-item{
     margin-bottom: 0;
@@ -80,14 +80,15 @@
     -webkit-border-radius: 4px 4px 4px 4px;
     border-radius: 4px 4px 4px 4px;
     text-decoration: none;
-    position: absolute;
-    bottom: 11px;
+    position: relative;
+    /*bottom: 11px;*/
     -webkit-transition: background 0.5s ease;
     -moz-transition: background 0.5s ease;
     -ms-transition: background 0.5s ease;
     -o-transition: background 0.5s ease;
     transition: background 0.5s ease;
     display: inline-block;
+    margin-top: 26px;
 }
 #pcdesigns-saveddesigns-form a.designtool:hover{
     background-color: #659606;

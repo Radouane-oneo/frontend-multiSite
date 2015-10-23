@@ -2694,14 +2694,12 @@ a.ui-button.inactivebtn{
 	position: relative;
 	height: 43px;
 }
-.page-products #pcproducts-config-form table.grid tbody tr.last-child td:first-child .form-item{
-	display: none;
-	visibility: hidden;
-}
+
 .page-products #pcproducts-config-form tr.last-child .form-item-calcul-qte{
 	text-indent: 0;
 	padding: 10px 0;
 	position: relative;
+        margin-left: 26px;
 }
 .page-products #pcproducts-config-form tr.last-child .form-item-calcul-qte:after{
 	clear: both;
@@ -10953,6 +10951,7 @@ p.requieredfields span.form-required {
 .page-cart #pccart-cart-form .item .description {
 	width: 100%;
     max-width: 100%;
+    margin-bottom: 155px;
 }
 .page-cart #pccart-cart-form .item .preview2 .description {
 	width: 100%;
@@ -11023,7 +11022,7 @@ p.requieredfields span.form-required {
     top: -27px;
 }
 .page-cart #pccart-cart-form .item .image {
-	width: 156px;
+	width: 150px;
 	min-height: 85px;
 	margin: 10px 10px 0;
     border: 0;
@@ -11035,7 +11034,7 @@ p.requieredfields span.form-required {
 #pccart-cart-form .jobPrice {
     position: relative;
     display: inline-block;
-    width: 150px;
+    width: 157px;
     padding-right: 10px;
     vertical-align: top;
     padding-top: 10px;
@@ -11055,7 +11054,6 @@ p.requieredfields span.form-required {
     display: block;
     max-width: 150px;
     margin: auto;
-    margin-bottom: 8px;
 
     border-radius: 5px 5px 5px 5px;
     -moz-border-radius: 5px 5px 5px 5px;
@@ -11077,16 +11075,15 @@ p.requieredfields span.form-required {
     color: #666666;
     float: left;
     padding-left: 25px;
-    position: absolute;
-    bottom: 6px;    
 }
 #pccart-cart-form .jobFull-img a.previewlink {
     background: none;
     padding: 0;
+    font-size: 11px;
 }
 .fotolia-img-name {
     display: inline-block;
-    width: 480px;
+    width: 474px;
     padding: 10px 0;
     border-right: 1px solid #ccc;
 }
@@ -11193,7 +11190,7 @@ span#discountCodeVal {
     font-weight: bold;
     color: #ff6600;
     text-align: right;
-    width: 90px;
+    width: 120px;
     text-transform: uppercase;
 }
 .shipping-map .pcflyerstores-picker-link,
@@ -11381,11 +11378,6 @@ input.ui-button.payment {
 #pccart-cart-form .jobFull-img a {
 	background: none;
 	padding: 0;
-    text-align: center;
-    float: none;
-    display: block;
-    font-size: 13px;
-    line-height: 17px;
 }
 .edit-job {
     float: right;
@@ -11420,14 +11412,6 @@ input.ui-button.payment {
     display: block;
     float: none;
 }
-.page-cart #edit-cart-shipping .shipping-wrapper {
-	padding-bottom: 0;
-}
-.page-cart .edit-cart-discount-text {
-	margin-top: 0;
-}
-
-
 
 /*FancyBox*/
 .fancybox-skin.designtool{

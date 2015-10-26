@@ -180,6 +180,9 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
     top: -10px;
     width: 210px !important;
 }
+.page-myprintconnect-mybillingaddress-new .form-item-isCompany label{
+  top: 0;
+}
 #pccustomers-newaddress-billingaddresses-form .form-item-isCompany label,
 #pccustomers-address-billingaddresses-form .form-item-isCompany label{
    

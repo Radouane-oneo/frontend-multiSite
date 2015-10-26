@@ -3912,8 +3912,8 @@ a.googleconnect {
 
 .page-checkout-invoiceanddelivery #invoice-address input[type="submit"], 
 .page-checkout-invoiceanddelivery #shipping-address input[type="submit"] {
-	margin-left: 493px; 
-	margin-top: 10px;
+	margin-left: 491px; 
+	margin-top: 20px;
 }
 .page-pcbpost-picker .whitebox {
 	margin: 10px;
@@ -4416,7 +4416,7 @@ a.googleconnect {
 }
 
 .page-paymentrequest table.grid,
-#pccheckout-payment-form table.grid { 
+ { 
 	width: 457px;
 	border: 1px solid #e1e1e1;
 	border-collapse: separate;
@@ -4428,6 +4428,21 @@ a.googleconnect {
 	-moz-border-radius: 0;
 	border-radius: 0; 
 }
+
+
+#pccheckout-payment-form table.grid { 
+	width: 493px;
+	border: 1px solid #e1e1e1;
+	border-collapse: separate;
+	border-radius: 3px;
+	border-spacing: 0;
+	margin: 0px auto 0 -7px;
+	padding: 0;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0; 
+}
+
   
 .imgpayment{
     background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/paymentmethods/payment.jpg") no-repeat scroll center top #fff;
@@ -4563,7 +4578,7 @@ a.googleconnect {
 	color: #fff;
 	margin: 0;*/
 	background: #e1e1e1;
-	padding: 10px 20px;
+	padding: 10px 10px;
 	color: #fff;
 	margin: 0;
 	color: #646464;
@@ -4609,7 +4624,7 @@ a.googleconnect {
 	padding: 0 10px;
 }
 .page-checkout-payment .overview table th:last-child {
-	width: 15%;
+	width: 24.7%;
 }
 .page-checkout-payment .overview table tr, .page-checkout-payment .overview table tr.even, .page-checkout-payment .overview table tr.odd {
 	color: #646464; /* maincolor */
@@ -5812,7 +5827,7 @@ body.page-stores-picker {
     line-height: 20px;
     float: left;
     clear: right;
-    color: #bdbdbd;
+    color: #fff;
     font-weight: 400;
 }
 .store div.email {
@@ -8183,7 +8198,7 @@ form#pccheckout-payment-form table{
 form#pccheckout-payment-form fieldset.paymentmethodefond .fieldset-wrapper{
 	padding-bottom: 0;
 	margin-bottom: 0;
-    padding: 15px;
+    padding: 17px 15px 20px;
 }
 form#pccheckout-payment-form .overview table.sticky-enabled th{
 	background-color: #ff6600;
@@ -8221,7 +8236,7 @@ form#pccheckout-payment-form .overview table.sticky-enabled td.last-child{
 }
 form#pccheckout-payment-form .form-actions span.price {
 
-  padding-left: 24px!important;
+  padding-left: 17px!important;
 }
 form#pccheckout-payment-form .overview table.sticky-enabled td:first-child{
 	border-width: 1px 1px 0 1px;

@@ -11806,18 +11806,18 @@ input.ui-button.payment {
 .page-myprintconnect-orders .details .price {
     padding: 18px 10px 0;
 }
-#edit-description h3 {
+.page-myprintconnect-orders .details .description h3 {
     margin-bottom: 7px;
     font-weight: 700;
 }
-#edit-description .item-list ul li {
+.page-myprintconnect-orders .details .description .item-list ul li {
     list-style: none;
     margin: 0 0 3px 0;
     padding: 0;
     font-size: 13px;
     line-height: 15px;
 }
-#edit-description .item-list ul li label {
+.page-myprintconnect-orders .details .description .item-list ul li label {
 	font-size: 12px;
     float: left;
     margin-right: 10px;
@@ -11922,6 +11922,16 @@ input.ui-button.payment {
     border-radius: 0;
 }
 .region-content #pcorders-order-form .form-actions {
-	padding: 15px 10px !important;
-	margin: 0; 	
+	padding: 15px 10px 15px 22px;
+	margin: 0;
+}  
+.page-myprintconnect-orders .priceblock:before {
+    background: #d1d1d1;
+    content: ' ';    
+    position: absolute;  
+    display: block;  
+	height: 100%;
+    width: 1px;
+    right: 165px;
+    top: 0;
 }

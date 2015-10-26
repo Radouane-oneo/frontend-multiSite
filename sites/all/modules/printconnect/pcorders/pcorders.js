@@ -1,8 +1,8 @@
-$(document).ready(function(){
-	$(".details .image").each(function(i, elem) {
-		$(elem).find(".image img").load(function(){
-	  		var maxHeight = $(elem).find(".image").height();
-			$(elem).find(".details .item .description").css("height" , maxHeight+"px");
+jQuery(document).ready(function(){
+	jQuery(".details .image").each(function(i, elem) {
+		jQuery(elem).find(".image img").load(function(){
+	  		var maxHeight = jQuery(elem).find(".image").height();
+			jQuery(elem).find(".details .item .description").css("height" , maxHeight+"px");
 		});     		
 	}); 
 });

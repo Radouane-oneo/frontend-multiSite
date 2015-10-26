@@ -15,6 +15,7 @@ define([
             "change #prices-table input.form-radio" : "changeQuantity",
             "click #prices-table tbody tr:not(.custom)" : "selectInput",
             "click #edit-calculer" : "calculatePrice",
+            "change #prices-table input.form-custom-radio" : "calculatePrice",
             "keypress #edit-custom" : "checkQuantity",
             "click #deadlinestooltip legend" : "toggleCollapse",
             "click #deadlinestooltip legend a" : "preventDefault",

@@ -11022,7 +11022,7 @@ input[type="text"].inputdesigneremail {
 .page-cart .shipping table tr td {
 	border-top: 0;
 }
-.page-cart .discount input[type="submit"] {
+.page-cart .discount input[type="button"] {
     float: right;
     text-align: center;
     width: 120px;

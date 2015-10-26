@@ -1,16 +1,16 @@
-#pcorders-order-form .item > .image {
+/*#pcorders-order-form .item > .image {
   float: left;
   width: 30%;
-}
-#pcorders-order-form .item > .description {
+}*/
+/*#pcorders-order-form .item > .description {
   float: right;
   width: 70%;
-}
-#pcorders-order-form .item > .description > .price {
+}*/
+/*#pcorders-order-form .item > .description > .price {
   float: right;
   width: 100px;
   text-align: right;
-}
+}*/
 #pcorders-order-form .delivery, #pcorders-order-form .invoice {
   box-sizing:border-box;
   -moz-box-sizing:border-box; /* Firefox */
@@ -19,6 +19,8 @@
   float:left;
   margin-left:0;
   margin-right:2%;
+  padding: 18px 0;
+  position: relative;
 }
 #pcorders-order-form .invoice{
   margin-right:0;
@@ -45,10 +47,10 @@
   font-weight: bold;
 
 }
-.labelOrder {
+/*.labelOrder {
     font-weight: bold!important;
     line-height: 2.6em;
-}
+}*/
 #pcorders-order-form .order{
   clear:both;
 }

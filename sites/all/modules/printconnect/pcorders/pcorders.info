@@ -8,6 +8,6 @@ dependencies[] = pccustomers
 
 stylesheets[all][] = pcorders.css
 
-
+scripts[] = pcorders.js
 
 

@@ -133,12 +133,15 @@ select {
 	float: left;
 }
 #pccustomers-newaddress-form .form-item-postalCode input, 
-#pccustomers-address-form .form-item-postalCode input {
+#pccustomers-address-form .form-item-postalCode input ,
+#pccustomers-address-billingaddresses-form .form-item-postalCode input
+{
 	width: 100px;
 	border-radius: 3px 0 0 3px;
 }
 #pccustomers-newaddress-form .form-item-city input, 
-#pccustomers-address-form .form-item-city input {
+#pccustomers-address-form .form-item-city input,
+#pccustomers-address-billingaddresses-form .form-item-city input {
 	border-left: 0 none;
 	border-radius: 0 3px 3px 0;
 	width: 338px;
@@ -151,7 +154,8 @@ select {
 	margin-bottom: 0;
 }
 #pccustomers-newaddress-form .form-item-country, 
-#pccustomers-address-form .form-item-country {
+#pccustomers-address-form .form-item-country ,
+#pccustomers-address-billingaddresses-form  .form-item-country{
 	clear: left;
 }
 #pccustomers-newaddress-form input[type="submit"], 
@@ -10815,10 +10819,13 @@ p.requieredfields span.form-required {
     border-top: 1px solid #d6d6d6;
 }
 #pccustomers-newaddress-form .form-item-postalCode,
- #pccustomers-newaddress-form .form-item-city {
+#pccustomers-newaddress-form .form-item-city,
+#pccustomers-address-billingaddresses-form  .form-item-postalCode,
+#pccustomers-address-billingaddresses-form  .form-item-city{
     float: left;
 }
-#pccustomers-newaddress-form .form-item-postalCode {
+#pccustomers-newaddress-form .form-item-postalCode,
+#pccustomers-address-billingaddresses-form  .form-item-postalCode{
 	clear: both;
 }
 

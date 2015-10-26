@@ -11862,3 +11862,7 @@ input.ui-button.payment {
 .page-myprintconnect-orders #edit-extra .fieldset-wrapper {
     border-radius: 0;
 }
+.region-content #pcorders-order-form .form-actions {
+	padding: 15px 10px !important;
+	margin: 0; 	
+}  

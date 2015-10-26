@@ -38,9 +38,9 @@
   font-weight:bold;
   font-size:larger;
 }
-#pcorders-order-form .item-list ul li {
+/*#pcorders-order-form .item-list ul li {
   margin: 0 0 0 20px;
-}
+}*/
 
 #pcorders-order-form .currentorderstatus{
   font-size:x-large;

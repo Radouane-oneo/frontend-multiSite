@@ -79,7 +79,7 @@ define([
             this.$("#edit-shipping-detail-current-city").val(address.city);
             this.$("#edit-shipping-detail-current-country").val(address.country);
             this.$("#edit-shipping-detail-current-phone").val(address.phone);
-            this.$("#edit-shipping-detail-current-email").val(address.email);
+           // this.$("#edit-shipping-detail-current-email").val(address.email);
         },
         saveShippingPickup: function(){
             var me = this;
@@ -120,7 +120,7 @@ define([
                 "city" : this.$("#edit-shipping-detail-current-city").val(),
                 "country" : this.$("#edit-shipping-detail-current-country").val(),
                 "phone" : this.$("#edit-shipping-detail-current-phone").val(),
-                "email" : this.$("#edit-shipping-detail-current-email").val(),
+                //"email" : this.$("#edit-shipping-detail-current-email").val(),
                 "deliverytype" : this.model.get("shippingAddresses").orderItemShipping.deliveryType
             };
 
@@ -171,22 +171,22 @@ define([
                 postalCode = this.$("#edit-shipping-detail-current-postalCode").val(),
                 city = this.$("#edit-shipping-detail-current-city").val(),
                 country = this.$("#edit-shipping-detail-current-country").val(),
-                phone = this.$("#edit-shipping-detail-current-phone").val(),
-                email = this.$("#edit-shipping-detail-current-email").val();
+                phone = this.$("#edit-shipping-detail-current-phone").val();
+                //email = this.$("#edit-shipping-detail-current-email").val();
             this.$('input:text').css("border-color", "");
-            if(name == "" || street == "" || postalCode == "" || city == "" || country == "" || phone == "" || email == "") {
+            if(name == "" || street == "" || postalCode == "" || city == "" || country == "" || phone == "" /*|| email == ""*/) {
                 this.$('input:text:not(#edit-shipping-detail-current-company)').filter(function() { return $(this).val() == ""; }).css("border-color", "red");
                 return this.config.labels["requiredFieldsError"];
             }
             if(name.length < 3 || street.length < 3 || postalCode.length < 3 || city.length < 3 || phone.length < 3) {
-                this.$('input:text:not(#edit-shipping-detail-current-company, #edit-shipping-detail-current-email)').filter(function() { return $(this).val().length < 3; }).css("border-color", "red");
+                this.$('input:text:not(#edit-shipping-detail-current-company)').filter(function() { return $(this).val().length < 3; }).css("border-color", "red");
                 return this.config.labels["invalidCharactersLength"];
             }
 
-            if(!pattern.test(email)) {
+            /*if(!pattern.test(email)) {
                 this.$("#edit-shipping-detail-current-email").css("border-color", "red");
                 return this.config.labels["emailError"];
-            }
+            }*/
 
             return false;
         }

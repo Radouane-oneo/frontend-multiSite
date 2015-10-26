@@ -1,7 +1,7 @@
 <fieldset class="tohiding styleform form-wrapper inner_edit_form_shippingaddress" id="shipping-address" style="display: none;">
     <div class="fieldset-wrapper">
         <fieldset class="form-wrapper" id="shipping">
-            <div class="fieldset-wrapper">
+            <div class="fieldset-wrapper nombttom">
                 <div class="headerforminvoice">
                     <div class="invoiceaddress"><%= model.labels['shippingAddress'] %></div>
                     <div class="blocright"><span><%= model.labels['selectSA'] %></span><%= model.labels['OrCreateSA'] %>
@@ -57,20 +57,20 @@
                       <input type="text" class="form-text required" maxlength="128" size="30" value=""
                              name="shipping[detail][current][name]" id="edit-shipping-detail-current-name">
                   </div>
-                  <div class="form-item form-type-textfield form-item-shipping-detail-current-phone">
+                  <div class="form-item form-type-textfield form-item-shipping-detail-current-phone livraison-adresse-current-phone">
                       <label for="edit-shipping-detail-current-phone"><%= model.labels['phone'] %><span title="<%= model.labels['requiredField'] %>"
                                                                                                             class="form-required">*</span></label>
                       <input type="text" class="form-text required" maxlength="128" size="30"
                              value="" name="shipping[detail][current][phone]"
                              id="edit-shipping-detail-current-phone">
                   </div>
-                  <div class="form-item form-type-textfield form-item-shipping-detail-current-email livraison-adresse-email">
+                  <!--<div class="form-item form-type-textfield form-item-shipping-detail-current-email livraison-adresse-email">
                       <label for="edit-shipping-detail-current-email"><%= model.labels['email'] %><span title="<%= model.labels['requiredField'] %>"
                                                                                                             class="form-required">*</span></label>
                       <input type="text" class="form-text required" maxlength="128" size="30"
                              value="" name="shipping[detail][current][email]"
                              id="edit-shipping-detail-current-email">
-                  </div>
+                  </div>-->
                 </div>
                 <div class="plr form-item form-type-textfield form-item-shipping-detail-current-company">
                     <label for="edit-shipping-detail-current-company"><%= model.labels['CompanySA'] %>

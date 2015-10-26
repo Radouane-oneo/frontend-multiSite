@@ -442,7 +442,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 #pccheckout-invoiceanddelivery-form .facturation-adresse-current-name{
   padding-top: 7px;
 }
-#pccheckout-invoiceanddelivery-form  .livraison-adresse-email{
+#pccheckout-invoiceanddelivery-form  .livraison-adresse-current-phone{
   padding-bottom: 17px;
 }
 .page-checkout #pccheckout-invoiceanddelivery-form .bloctitle{
@@ -567,8 +567,7 @@ div.company-box > label{
   -moz-border-radius: 0;
   border-radius: 0;
   font-weight: 400;
-  text-align: left;
-  border-right: 1px solid #5a8a02;
+  text-align: left; 
   padding-left: 65px;
   font-size: 14px;
 }
@@ -607,7 +606,6 @@ div.company-box > label{
 .page-checkout .wrap_group_input{
   position: relative;
   display: inline-block;
-  margin-bottom: 23px;
 }
 
 .page-checkout .wrap_group_input input[type="text"]{
@@ -619,6 +617,17 @@ div.company-box > label{
 }
 
 .page-checkout .fieldset-wrapper-billing-detail,
-.page-checkout .fieldset-wrapper-shipping-detail{
+.page-checkout .fieldset-wrapper-shipping-detail {
   margin-bottom: 0;
+}
+
+.page-checkout .nombttom{
+  margin-bottom: 0;
+}
+
+.page-checkout .form-item-shipping-detail-contact.shipping-contact .label-shipping-detail-contact{
+  width: 466px !important;
+}
+.page-checkout .wrap_detail_map{
+  padding-bottom: 19px;
 }

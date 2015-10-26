@@ -266,7 +266,7 @@ h1, h2, h3, h4, h5, h6 {
 	color: #646464; /* maincolor */
 }
 h1, #content h1 {
-	font-size: 16px; /* font-size: 20px; */
+	font-size: 16px;
 	text-transform: uppercase;
 	font-weight: 700;
 }
@@ -275,7 +275,7 @@ h2, #center h1 {
 	font-weight: 600;
 }
 h3 {
-	font-size: 14px; /* font-size: 16px; */
+	font-size: 14px;
 	text-transform: uppercase;
 	font-weight: 400;
 }
@@ -4753,7 +4753,7 @@ a.googleconnect {
 	margin-right: 10px;
 }
 #pcorders-order-form .delivery {
-	border-right: 1px solid #fff;
+	border-right: 1px solid #d1d1d1;
 }
 .page-myprintconnect #content .block-pccustomers {
 	float: none;
@@ -4804,19 +4804,10 @@ a.googleconnect {
 	background: #f1f1f1;
 	border-radius: 4px 4px 4px 4px;
 }
-.page-myprintconnect-orders #pcorders-order-form .delivery .fieldset-wrapper, 
-.page-myprintconnect-orders #pcorders-order-form .invoice .fieldset-wrapper {
-	min-height: 160px;
-}
 .page-myprintconnect-orders #pcorders-order-form .smaller {
 	display: none;
 }
-.page-myprintconnect-orders #pcorders-order-form .delivery {
-	border-radius: 4px 0 0 4px;
-}
-.page-myprintconnect-orders #pcorders-order-form .invoice {
-	border-radius: 0 4px 4px 0;
-}
+
 #pcorders-order-form .delivery h2, 
 #pcorders-order-form .invoice h2, 
 #pcorders-order-form .details h2,
@@ -4825,14 +4816,15 @@ a.googleconnect {
 	font-size: 16px;
 }
 .page-myprintconnect-orders #edit-thanks {
-	background: #f1f1f1;
-	border-radius: 4px 4px 4px 4px;
-	padding: 10px;
+	background: none;
+	padding: 0;
 	margin-bottom: 10px;
 }
 .page-myprintconnect-orders #edit-thanks h2 {
-	font-size: 28px;
-	line-height: 28px;
+	font-weight: bold;
+    font-size: 12px;
+    line-height: 20px;
+    text-transform: capitalize;
 }
 .page-myprintconnect-orders .current {
 }
@@ -4901,17 +4893,6 @@ a.googleconnect {
 	color: #646464; /* maincolor */
 	font-size: 12px;
 }
-#pcorders-order-form .address {
-	margin: 0;
-}
-.address {
-	min-height: 0px !important;
-}
-.page-myprintconnect-orders .order .fieldset-wrapper {
-	padding: 0;
-	margin-bottom: 0;
-	background: #fff;
-}
 .page-myprintconnect-orders .details, 
 .page-myprintconnect-orders .overview, 
 .page-myprintconnect-orders .extra {
@@ -4932,35 +4913,9 @@ a.googleconnect {
 	background: #f1f1f1;
 	color: #646464; /* maincolor */
 }
-.page-myprintconnect-orders .details {
-	padding: 10px;
-	border-radius: 4px 4px 0 0;
-}
 .page-myprintconnect-orders .details .item {
 	margin-left: 0 !important;
 	position: relative;
-}
-.page-myprintconnect-orders .details .item .image {
-	margin-right: 10px;
-	width: 138px !important;
-}
-.page-myprintconnect-orders .details .item .image img {
-	border: 5px solid #fff;
-	border-radius: 4px 4px 4px 4px;
-	max-width: 128px !important;
-	min-width: 128px !important;
-}
-.page-myprintconnect-orders .details .item .image a {
-	display: block;
-	background: rgba(255, 255, 255, 0.25);
-	text-align: center;
-	padding: 5px 0;
-	position: relative;
-	bottom: 63px;
-	margin-bottom: -58px;
-}
-.page-myprintconnect-orders .details .item .description {
-	width: 490px !important;
 }
 .page-myprintconnect-orders .details .item .description h4 {
 	font-family: 'Open Sans', sans-serif;
@@ -4982,102 +4937,7 @@ a.googleconnect {
 .page-myprintconnect-orders .extra table tbody tr {
 	border-bottom: 1px solid #fff;
 }
-.page-myprintconnect-orders .overview table tbody td, 
-.page-myprintconnect-orders .extra table tbody td {
-	padding: 5px 10px;
-}
-.page-myprintconnect-orders .description .price, 
-.page-myprintconnect-orders .overview table tbody td .price, 
-.page-myprintconnect-orders .extra table tbody td .price {
-	color: #f60;
-	font-size: 30px;
-	font-weight: 600;
-	line-height: 30px;
-	margin-right: 0 !important;
-	float: right;
-	width: auto !important;
-}
-.page-myprintconnect-orders .description .price .currency, 
-.page-myprintconnect-orders .description .price .decimals, 
-.page-myprintconnect-orders .description .price .decimalpoint, 
-.page-myprintconnect-orders .overview table tbody td .price .currency, 
-.page-myprintconnect-orders .extra table tbody td .price .currency, 
-.page-myprintconnect-orders .overview table tbody td .price .decimals, 
-.page-myprintconnect-orders .extra table tbody td .price .decimals, 
-.page-myprintconnect-orders .overview table tbody td .price .decimalpoint, 
-.page-myprintconnect-orders .extra table tbody td .price .decimalpoint {
-	font-size: 0.5em;
-	line-height: 1.25em;
-	vertical-align: top;
-}
-.page-myprintconnect-orders .priceblock {
-	background: none !important;
-	padding: 0 !important;
-	border: none !important;
-	margin-top: 0 !important;
-	font-weight: 600;
-	font-size: 14px;
-	line-height: 30px;
-}
-.page-myprintconnect-orders .priceblock .subtotal,
-.page-myprintconnect-orders .priceblock .vat {
-	background: #f1f1f1;
-	padding: 10px;
-	margin-bottom: 1px;
-}
-.page-myprintconnect-orders .priceblock .subtotal .value, 
-.page-myprintconnect-orders .priceblock .vat .value {
-	font-size: 30px;
-	line-height: 30px;
-	font-weight: 600;
-}
-.page-myprintconnect-orders .priceblock .subtotal .currency, 
-.page-myprintconnect-orders .priceblock .subtotal .decimals, 
-.page-myprintconnect-orders .priceblock .vat .currency, 
-.page-myprintconnect-orders .priceblock .vat .decimals {
-	font-size: 0.5em;
-	line-height: 1.25em;
-	vertical-align: top;
-}
-.page-myprintconnect-orders .priceblock .total {
-	background: #3c3c3b;
-	padding: 10px;
-	border-radius: 0 0 4px 4px;
-	color: #fff;
-}
-.page-myprintconnect-orders .priceblock .price label {
-	font-size: 14px;
-}
-.page-myprintconnect-orders .priceblock .total {
-	display: none;
-}
-.page-myprintconnect-orders .priceblock .subtotal span.price, 
-.page-myprintconnect-orders .priceblock .vat span.price, 
-.page-myprintconnect-orders .priceblock .total span.price {
-	margin-right: 0 !important;
-	font-size: 30px;
-	line-height: 30px;
-}
-.page-myprintconnect-orders .priceblock .total span.price {
-	font-size: 60px;
-	line-height: 60px;
-}
-.page-myprintconnect-orders .text-right span.price .currency, 
-.page-myprintconnect-orders .text-right span.price .decimalpoint, 
-.page-myprintconnect-orders .text-right span.price .decimals, 
-.page-myprintconnect-orders .priceblock .subtotal span.price .currency, 
-.page-myprintconnect-orders .priceblock .vat span.price .currency, 
-.page-myprintconnect-orders .priceblock .total span.price .currency, 
-.page-myprintconnect-orders .priceblock .subtotal span.price .decimalpoint, 
-.page-myprintconnect-orders .priceblock .vat span.price .decimalpoint, 
-.page-myprintconnect-orders .priceblock .total span.price .decimalpoint, 
-.page-myprintconnect-orders .priceblock .subtotal span.price .decimals, 
-.page-myprintconnect-orders .priceblock .vat span.price .decimals, 
-.page-myprintconnect-orders .priceblock .total span.price .decimals {
-	font-size: 0.5em;
-	vertical-align: top;
-	line-height: 1.25em;
-}
+
 /* ---- END - CHECKOUT --- */
 
 .page-news #main #content table tbody {
@@ -5643,7 +5503,7 @@ div.error, table tr.error {
 	padding-left : 90px;
 	line-height: normal\9; /* IE HACK */
 }
-.region-content .form-actions span.price .currency {
+/*.region-content .form-actions span.price .currency {
 	font-size: 30px;
 	line-height: 30px;
 	margin-right: -10px;
@@ -5653,7 +5513,7 @@ div.error, table tr.error {
 	font-size: 0.5em;
 	vertical-align: top;
 	line-height: 30px;
-}
+}*/
 /* end edw */
 
 .search-results {
@@ -7667,9 +7527,7 @@ float:left;
    padding-right: 30px;
 }
 
-.page-myprintconnect table th, .page-myprintconnect table tr td {
-    vertical-align: top;
-}
+
 .page-myprintconnect .region-content {
   /*margin-left: 5px;*/
 } 
@@ -11763,8 +11621,8 @@ input.ui-button.payment {
     right: 32px;
 }
 .page-myprintconnect-orders-confirmation .form-actions{
-  padding: 15px 10px;
-  margin: 0;
+  	padding: 15px 20px;
+    margin: 0;
 }
 
 .page-myprintconnect-orders-confirmation .form-actions span.price .currency{
@@ -11782,4 +11640,225 @@ input.ui-button.payment {
     line-height: 0;
     margin-top: -9px;
     text-decoration: underline;
+}
+
+/* Page confirmation */
+#delivery-invoice {
+    background: #f1f1f1;
+    overflow: hidden;
+    border: 1px solid #d1d1d1;
+    padding: 0 10px;
+    margin-bottom: 20px;
+    border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+}
+#pcorders-order-form .delivery legend,
+#pcorders-order-form .invoice legend {
+    font-size: 14px;
+    font-weight: bold;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    line-height: 14px;
+}
+#pcorders-order-form .address {
+	margin: 0;
+    line-height: 20px;
+}
+.address {
+	min-height: 0px !important;
+}
+.page-myprintconnect-orders #pcorders-order-form .delivery .fieldset-wrapper, 
+.page-myprintconnect-orders #pcorders-order-form .invoice .fieldset-wrapper {
+	/*min-height: 160px;*/
+    padding: 18px 0 0 0;
+    margin-bottom: 0;
+}
+#edit-order legend {
+    display: none;
+}
+.page-myprintconnect-orders .details {
+	padding: 0;
+	border-radius: 4px 4px 0 0;
+}
+.page-myprintconnect-orders .details .item .image {
+    width: 156px;
+    min-height: 85px;
+    margin: 10px 10px 0;
+    border: 0;
+    float: left;
+
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+}
+.page-myprintconnect-orders .details .item .image img {
+	border: 5px solid #fff;
+	border-radius: 4px 4px 4px 4px;
+	max-width: 128px !important;
+	min-width: 128px !important;
+}
+.page-myprintconnect-orders .details .item .image a {
+	display: block;
+	background: rgba(255, 255, 255, 0.25);
+	text-align: center;
+	padding: 5px 0;
+	position: relative;
+	bottom: 63px;
+	margin-bottom: -58px;
+}
+#edit-order {
+    background: #f1f1f1;
+    border: 1px solid #d1d1d1;
+    padding: 0;
+    margin-bottom: 0;
+    
+    border-radius: 3px 3px 0px 0px;
+    -moz-border-radius: 3px 3px 0px 0px;
+    -webkit-border-radius: 3px 3px 0px 0px;
+}
+.page-myprintconnect-orders .order .fieldset-wrapper {
+	background: none;
+	padding: 0;
+	margin-bottom: 0;
+}
+.page-myprintconnect-orders .details .price, 
+.page-myprintconnect-orders .overview table tbody td .price, 
+.page-myprintconnect-orders .extra table tbody td .price {
+    color: #f60;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 14px;
+    float: right;
+}
+.page-myprintconnect-orders .details .item .description {
+    border-left: 1px solid #d1d1d1;
+    border-right: 1px solid #d1d1d1;
+    position: relative;
+    padding: 18px 0 5px 10px;
+    overflow: hidden;
+    min-height: 200px;
+    width: 303px;
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 0;
+}
+.page-myprintconnect-orders .details .price {
+    padding: 18px 10px 0;
+}
+#edit-description h3 {
+    margin-bottom: 7px;
+    font-weight: 700;
+}
+#edit-description .item-list ul li {
+    list-style: none;
+    margin: 0 0 3px 0;
+    padding: 0;
+    font-size: 13px;
+    line-height: 15px;
+}
+#edit-description .item-list ul li label {
+	font-size: 12px;
+    float: left;
+    margin-right: 10px;
+    font-weight: 700;
+}
+.page-myprintconnect-orders .overview table tbody tr {
+    background: #fff;
+    border-radius: 0;
+    border-bottom: 1px solid #d1d1d1;
+}
+.page-myprintconnect-orders .overview table tbody tr.first-child {
+    border-top: 1px solid #d1d1d1;
+}
+.page-myprintconnect-orders .overview table tbody td, 
+.page-myprintconnect-orders .extra table tbody td {
+    padding: 5px 10px;
+    line-height: 12px;
+}
+.page-myprintconnect-orders .overview table tbody td.first-child {
+    width: 156px;
+}
+.page-myprintconnect-orders .overview table tbody td.last-child {
+    border-left: 1px solid #d1d1d1;
+    width: 145px;
+}
+.page-myprintconnect table th, .page-myprintconnect table tr td {
+    vertical-align: middle;
+}
+.page-myprintconnect-orders .priceblock .price label {
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 22px;
+}
+.page-myprintconnect-orders .priceblock .subtotal .value, 
+.page-myprintconnect-orders .priceblock .vat .value {
+    color: #f60;
+	font-size: 14px;
+    font-weight: bold;
+    line-height: 14px;
+}
+.page-myprintconnect-orders .priceblock {
+    background: none !important;
+    border: none !important;
+    margin-top: 0 !important;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 30px;
+    padding: 10px 0;
+}
+.page-myprintconnect-orders .priceblock .subtotal,
+.page-myprintconnect-orders .priceblock .vat {
+    background: #f1f1f1;
+    padding: 0 10px;
+    line-height: 20px;
+}
+.page-myprintconnect-orders .priceblock .total {
+	background: #3c3c3b;
+	padding: 10px;
+	border-radius: 0 0 4px 4px;
+	color: #fff;
+}
+.page-myprintconnect-orders .priceblock .total {
+	display: none;
+}
+.page-myprintconnect-orders .priceblock .subtotal span.price, 
+.page-myprintconnect-orders .priceblock .vat span.price, 
+.page-myprintconnect-orders .priceblock .total span.price {
+	margin-right: 0 !important;
+	font-size: 30px;
+	line-height: 30px;
+}
+.page-myprintconnect-orders .priceblock .total span.price {
+	font-size: 60px;
+	line-height: 60px;
+}
+.page-myprintconnect-orders-confirmation #edit-actions span.price {
+    float: none;
+    color: #fff;
+    font-size: 30px;
+    overflow: hidden;
+    display: block;
+    position: relative;
+    line-height: 30px;
+    padding: 0;
+}
+.page-myprintconnect-orders-confirmation #edit-actions span.price label {
+    font-size: 16px;
+    margin: 0;
+    text-align: left;
+    line-height: 30px;
+    float: left;
+    clear: right;
+    color: #fff;
+    font-weight: 400;
+}
+.page-myprintconnect-orders-confirmation #edit-actions span.price .value {
+    font-weight: bold;
+    float: right;
+    line-height: 30px;
+}
+.page-myprintconnect-orders #edit-extra .fieldset-wrapper {
+    border-radius: 0;
 }

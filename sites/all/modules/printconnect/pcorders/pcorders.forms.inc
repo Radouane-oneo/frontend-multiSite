@@ -6,7 +6,7 @@ $order = \printconnect\Orders\Factory::Get($orderId, false);
 $customer = \printconnect\Customers\Factory::Get($order->customer);
 $cart = \printconnect\Carts\Factory::Current(FALSE);
   drupal_set_title(t('Details of your order @number : @status', array('@number' => $order->number, '@status' => $order->status)));
-      $inline_script ="<!-- Facebook Conversion Code for Commande Flyer.fr -->
+      /*$inline_script ="<!-- Facebook Conversion Code for Commande Flyer.fr -->
                         <script>(function() {
                         var _fbq = window._fbq || (window._fbq = []);
                         if (!_fbq.loaded) {
@@ -29,7 +29,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
                         '#weight' => 5
                     );
 
-    drupal_add_html_head($element_fcb, 'script_tag_fcb');
+    drupal_add_html_head($element_fcb, 'script_tag_fcb');*/
 
 
   // drupal_set_title(t('Order confirmation - @number - ', array('@number' => $order->number)));
@@ -133,7 +133,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
             '#markup' => t('Congratulations on your order. From now on, it`s our task to provide you with the best prints possible.'),
         ),
     );
-    if (variable_get('pc_flow', '') == 'flyer') {
+    /*if (variable_get('pc_flow', '') == 'flyer') {
       $form['thanks']['social'] = array(
           '#type' => 'container',
           '#attributes' => array('class' => array('social')),
@@ -153,7 +153,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>'
           ),
       );
-    }
+    }*/
   }
 //
 //  $form['addressing'] = array(
@@ -165,6 +165,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         '#type' => 'fieldset',
         '#attributes' => array('class' => array('delivery')),
         '#title' => t('This orders delivery'),
+        '#prefix' => "<div id='delivery-invoice'>",
     );
 
 //    $form['addressing']['delivery']['title'] = array(
@@ -193,6 +194,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
       '#type' => 'fieldset',
       '#attributes' => array('class' => array('invoice')),
       '#title' => t('Invoice address'),
+      '#suffix' => "</div>",
   );
 //
 //  $form['addressing']['invoice']['title'] = array(
@@ -307,6 +309,11 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         '#attributes' => array('class' => array('description')),
     );
 
+    $form['order']['details']['item'][$item->id]['description']['name'] = array(
+        '#prefix' => '<h3>',
+        '#markup' => $item->quantity . ' ' . $item->configuration->name,
+        '#suffix' => '</h3>',
+    );
 
     $price = $item->convertedPrice;
 
@@ -316,7 +323,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
 
     $price *= (1-$item->discount);
 
-    $form['order']['details']['item'][$item->id]['description']['price'] = array('#markup' => theme('price', array('value' => $price)));
+    $form['order']['details']['item'][$item->id]['price'] = array('#markup' => theme('price', array('value' => $price)));
     if ($item->customWidth == 0 && $item->customHeight == 0){
         if($price < $item->originPrice){
             global $language;
@@ -334,11 +341,6 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
             );
         }
     }
-    $form['order']['details']['item'][$item->id]['description']['name'] = array(
-        '#prefix' => '<h3>',
-        '#markup' => $item->quantity . ' ' . $item->configuration->name,
-        '#suffix' => '</h3>',
-    );
 
     $totalPrice += $price; // total product price for tracking vente
 
@@ -385,7 +387,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         );
       }
     }
-    $form['order']['details']['item'][$item->id]['description']['recommander'] = array(
+    /*$form['order']['details']['item'][$item->id]['description']['recommander'] = array(
         '#type' => 'submit',
         '#value' => t('Recommander'),
         '#name' => $item->id,
@@ -393,7 +395,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         '#attributes' => array('class' => array('recommander')),
 //        '#validate' => array('pcorders_order_form_recommander_validate'),
         '#submit' => array('pcorders_order_form_reorder'),
-    );
+    );*/
     $form_state['storage']['itemid'][$item->id] = $item->id;
     $idproducts .= $item->configuration->productId.','; // ids product for tracking
   }

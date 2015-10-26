@@ -1,6 +1,6 @@
 <fieldset id="edit-cart-shipping" class="shipping clearfix form-wrapper">
     <legend><span class="fieldset-legend"><%= config.labels['shipping'] %></span></legend>
-    <div class="fieldset-wrapper">
+    <div class="fieldset-wrapper shipping-wrapper">
         <table class="grid targetPrice sticky-enabled">
             <tbody>
             <% _.each(config.shipping, function(shipping, i){ %>
@@ -48,7 +48,7 @@
                         <% } %>
                     </td>
                     <td class="last-child">
-                        <span class="price" style="<%= style %>">
+                        <span class="price">
                             <span class="value" style="display: inline;">
                                 <%= (shipping.price == 0)? config.labels['free'] : priceTpl({price:shipping.price}) %>
                             </span>

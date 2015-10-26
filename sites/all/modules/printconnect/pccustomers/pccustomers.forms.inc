@@ -538,6 +538,13 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#size' => 61,
       '#default_value' => $Billingaddresses->street,
   );
+
+  /*$form['postal_codeCity'] = array(
+        '#type' => 'container',
+        '#prefix' => '<div class="wrap_edit_postal_codeCity clear">',
+        '#suffix' => '</div>',
+  );*/
+
   $form['postalCode'] = array(
       '#type' => 'textfield',
       '#title' => t('PostalCode'),
@@ -546,9 +553,10 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#default_value' => $Billingaddresses->postalCode,
       '#attributes' => array('class' => array('postalCode')),
   );
+
   $form['city'] = array(
       '#type' => 'textfield',
-      '#title' => t('City'),
+      //'#title' => t('City'),
       '#required' => TRUE,
       '#size' => 61,
       '#default_value' => $Billingaddresses->city,

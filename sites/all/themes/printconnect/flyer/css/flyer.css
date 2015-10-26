@@ -2697,14 +2697,12 @@ a.ui-button.inactivebtn{
 	position: relative;
 	height: 43px;
 }
-.page-products #pcproducts-config-form table.grid tbody tr.last-child td:first-child .form-item{
-	display: none;
-	visibility: hidden;
-}
+        
 .page-products #pcproducts-config-form tr.last-child .form-item-calcul-qte{
 	text-indent: 0;
 	padding: 10px 0;
 	position: relative;
+        margin-left: 26px;
 }
 .page-products #pcproducts-config-form tr.last-child .form-item-calcul-qte:after{
 	clear: both;

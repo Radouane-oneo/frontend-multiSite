@@ -11886,6 +11886,6 @@ input.ui-button.payment {
     border-radius: 0;
 }
 .region-content #pcorders-order-form .form-actions {
-	padding: 15px 10px !important;
+	padding: 15px 10px 15px 22px;
 	margin: 0; 	
 }  

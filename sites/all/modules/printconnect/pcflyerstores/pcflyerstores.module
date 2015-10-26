@@ -319,7 +319,7 @@ function theme_pcflyerstores_store_summary($vars) {
 
     $html = '';
     if ($store) {
-        $url = 'stores/' . $store->id;
+        $url = 'flyerstores/' . $store->id;
         $html .= '<span id="store_id_'.$store->id.'"  class="place" city="'.$store->city.'" postalCode="'.$store->postalCode.'"  po="'.$store->po.'" position="'.$store->latitude.'_'.$store->longitude.'">' . $store->city . ' </span><br/><span class="name">' . $store->name . '</span> <br/>' . $store->postalCode;
     }
     return l($html, $url, array('attributes' => $attributes, 'html' => TRUE));

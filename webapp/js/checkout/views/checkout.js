@@ -46,11 +46,37 @@ define([
                 "model" : this.model.toJSON()
             }));
             $(this.config.containerId).html(this.$el);
+            this.HeightSame('wrap_detail');
+            this.HeightSame('fieldset-sameheight');
         },
         changeShipping : function(orderItemShipping){
             var shippingAddresses = $.extend(true, {}, this.model.get("shippingAddresses"));
             shippingAddresses.orderItemShipping = orderItemShipping;
             this.model.set("shippingAddresses", shippingAddresses);
+        },
+        HeightSame: function(className){
+            setTimeout(function(){
+                var liMaxHeight1 = -1;             
+                $("div."+className).each(function(index) {
+                    if ($(this).outerHeight() > liMaxHeight1) {
+                        liMaxHeight1 = $(this).outerHeight(); 
+                    }
+                });
+                $("div."+className).css("height",liMaxHeight1);
+            }, 2000);
+            
+   
+
         }
+
+
+
+
+
+
+
+
+
+
     });
 });

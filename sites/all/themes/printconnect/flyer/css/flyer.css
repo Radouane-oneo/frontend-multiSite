@@ -10813,6 +10813,11 @@ p.requieredfields span.form-required {
     padding-top: 10px;
     border-top: 1px solid #d6d6d6;
 }
+#pccustomers-address-form .form-item-company {
+    display: block;
+    padding-top: 10px;
+    border-top: 1px solid #d6d6d6;
+}
 #pccustomers-newaddress-form .form-item-postalCode,
 #pccustomers-newaddress-form .form-item-city,
 #pccustomers-address-billingaddresses-form  .form-item-postalCode,

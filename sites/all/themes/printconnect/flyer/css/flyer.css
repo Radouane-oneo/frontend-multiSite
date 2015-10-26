@@ -776,10 +776,12 @@ input.cmd-collecte{
   overflow: hidden;
   padding: 0;
 }
-/*body.two-sidebars #content {
+
+body.two-sidebars #content {
 	width: 680px;
 	margin-bottom: 10px;
-}*/
+}
+
 body.two-sidebars #content .whitebox{
 	margin-bottom: 0;
 }
@@ -11764,7 +11766,7 @@ input.ui-button.payment {
 	bottom: 63px;
 	margin-bottom: -58px;
 }
-#edit-order {
+.page-myprintconnect-orders #edit-order {
     background: #f1f1f1;
     border: 1px solid #d1d1d1;
     padding: 0;
@@ -11774,6 +11776,7 @@ input.ui-button.payment {
     -moz-border-radius: 3px 3px 0px 0px;
     -webkit-border-radius: 3px 3px 0px 0px;
 }
+
 .page-myprintconnect-orders .order .fieldset-wrapper {
 	background: none;
 	padding: 0;

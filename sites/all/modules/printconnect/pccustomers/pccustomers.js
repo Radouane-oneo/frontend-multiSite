@@ -46,7 +46,12 @@
                   errorMsgs[i] = labels["passwordMatch"];
                   errorMarkup += "<li>"+errorMsgs[i]+"</li>";
                 }
-            } 
+            } else if (this.name =="vatNumber[number]" && isNaN(_this.val())) {
+                inputName = $(elem).attr('name');
+                _this.addClass('error');
+                errorMsgs[i] = labels["vatNotNumber"];
+                errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+            }
 
           });  
           errorMarkup += "</ul></div>";

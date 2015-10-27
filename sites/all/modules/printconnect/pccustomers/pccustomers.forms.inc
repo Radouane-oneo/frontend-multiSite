@@ -996,6 +996,7 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
     "isRequired" => t('!name field is required.'),
     "invalidCharactersLength" => t('invalidCharactersLength'),
     "phoneNumberError" => t('Please enter your Phone Number as 10 Number.'),
+    "vatNotNumber" => t('Please enter your VAT Number as Number value.'),
     );
 
   $form['scriptForLabels'] = array(

@@ -7941,9 +7941,9 @@ div.myoffers table.list thead tr th:nth-child(2){
 	float: left;
 	font-size: 14px;
 	color: #ffffff;
-	line-height: 25px;
+	line-height: 24px;
 	height: 40px;
-	font-weight: bold;
+	font-weight: 400;
 	background: url(images/flesh-button-seul.png) no-repeat 17px center #6faa01 !important;
 	padding: 8px 20px 8px 45px;
 	border: 0;
@@ -11191,21 +11191,24 @@ input.ui-button.payment {
 .page-payment #edit-actions input.payment{
     background: #79b61a url("images/button_payment.png") no-repeat 25px  center;
     cursor: pointer;
-    font-weight: 500 !important;
+    font-weight: 400 !important;
 }
 
 .page-cart #block-system-main .form-wrapper.actions input{
 	font-size: 16px;
     height: 50px;
     margin: 0;
-    font-weight: bold;
+    font-weight: 400;
     text-align: center;
-    width: auto;
+    width: 100%;
     display: inline-block;
     padding-left: 40px;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
+}
+.page-cart #block-system-main .form-wrapper.actions input{
+	background: #79b61a url("images/button_payment.png") no-repeat 75px center;
 }
 #edit-actions .button-wrapper {
     background-color: #79b61a;

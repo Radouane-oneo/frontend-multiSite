@@ -612,7 +612,16 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
   $form['actions']['submit'] = array(
       '#type' => 'submit',
       '#value' => t('Save'),
-      '#attributes' => array('class' => array('button')),
+      '#attributes' => array('class' => array('save-button' , 'button')),
+  );
+
+  $labels = array(
+    "isRequired" => t('!name field is required.'),
+    "invalidCharactersLength" => t('invalidCharactersLength'),
+    );
+
+  $form['scriptForLabels'] = array(
+    '#markup' => "<script>var labels = ".json_encode($labels).";</script>",
   );
 
   $form['back'] = array(
@@ -987,6 +996,7 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
     "isRequired" => t('!name field is required.'),
     "invalidCharactersLength" => t('invalidCharactersLength'),
     "phoneNumberError" => t('Please enter your Phone Number as 10 Number.'),
+    "vatNotNumber" => t('Please enter your VAT Number as Number value.'),
     );
 
   $form['scriptForLabels'] = array(

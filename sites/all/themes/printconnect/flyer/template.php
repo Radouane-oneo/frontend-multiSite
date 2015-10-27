@@ -312,6 +312,14 @@ function flyer_preprocess_html(&$vars) {
         if($args[0]=="checkout" && $args[1]=="personal" ) { 
             unset($javascript['sites/all/modules/printconnect/pcflyerstores/pcflyerstores_map.js']);
         }
+
+        if($args[0]=="myprintconnect" && $args[1]=="editBillingaddresses" ) { 
+            unset($javascript['sites/all/modules/printconnect/pcflyerstores/pcflyerstores_map.js']);
+        }
+
+        if($args[0]=="myprintconnect" && $args[1]=="editBillingaddresses" ) { 
+            unset($javascript['sites/all/modules/printconnect/pcvat/pcvat.js']);
+        }
 }
 
 function flyer_css_alter(&$css) {

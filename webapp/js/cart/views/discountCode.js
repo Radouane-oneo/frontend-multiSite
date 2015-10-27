@@ -48,6 +48,10 @@ define([
                 $(window).scrollTop($(this.config.containerId).offset().top);
                 return false;
             }
+            if(this.$("#edit-cart-discount-code").val()==""){
+                this.$("#edit-cart-discount-code").css("border-color", "red");
+                return false;
+            }
             var me = this;
             ajaxCaller.call("addDiscount",{
                 code : this.$("#edit-cart-discount-code").val()

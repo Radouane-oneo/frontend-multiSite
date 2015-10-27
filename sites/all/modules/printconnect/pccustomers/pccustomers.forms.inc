@@ -411,19 +411,13 @@ function pccustomers_address_form($form, $form_state, $addressId) {
       '#size' => 71,
       '#default_value' => $address->name,
   );
-  $form['company'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Company'),
-      '#size' => 71,
-      '#default_value' => $address->company,
-  );
-  $form['phone'] = array(
+  /*$form['phone'] = array(
       '#type' => 'textfield',
       '#title' => t('Phone'),
       '#size' => 71,
        '#required' => TRUE,
       '#default_value' => $address->phone,
-  );
+  );*/
   $form['street'] = array(
       '#type' => 'textfield',
       '#title' => t('Street'),
@@ -457,11 +451,12 @@ function pccustomers_address_form($form, $form_state, $addressId) {
 
  
 
-  $options = array();
-  $countries = printconnect\Countries\Factory::GetAll();
-  foreach ($countries as $country) {
-    $options[$country->id] = $country->tag; 
-  }
+  $options = array (
+       "21"=>t('Belgique'),
+       "73"=>t('France'),
+       "150"=>t('Pays-Bas'),
+       "124"=>t('Luxembourg'),
+  );
   natsort($options);
   $form['country'] = array(
       '#type' => 'select',
@@ -489,6 +484,13 @@ function pccustomers_address_form($form, $form_state, $addressId) {
 //      '#title' => t('This is the default shipping address'),
 //      '#default_value' => $address->defaultShipping,
 //  );
+  
+  $form['company'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Company'),
+      '#size' => 71,
+      '#default_value' => $address->company,
+  );
 
   $form['actions'] = array(
       '#type' => 'actions',
@@ -538,6 +540,13 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#size' => 61,
       '#default_value' => $Billingaddresses->street,
   );
+
+  /*$form['postal_codeCity'] = array(
+        '#type' => 'container',
+        '#prefix' => '<div class="wrap_edit_postal_codeCity clear">',
+        '#suffix' => '</div>',
+  );*/
+
   $form['postalCode'] = array(
       '#type' => 'textfield',
       '#title' => t('PostalCode'),
@@ -546,25 +555,26 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#default_value' => $Billingaddresses->postalCode,
       '#attributes' => array('class' => array('postalCode')),
   );
+
   $form['city'] = array(
       '#type' => 'textfield',
-      '#title' => t('City'),
+      //'#title' => t('City'),
       '#required' => TRUE,
       '#size' => 61,
       '#default_value' => $Billingaddresses->city,
       '#attributes' => array('class' => array('city')),
   );
-  $options = array();
-  $countries = printconnect\Countries\Factory::GetAll();
-  foreach ($countries as $country) {
-    $options[$country->id] = $country->tag; 
-  }
+  $options = array (
+       "21"=>t('Belgique'),
+       "73"=>t('France'),
+       "150"=>t('Pays-Bas'),
+       "124"=>t('Luxembourg'),
+  );
   natsort($options);
   $form['country'] = array(
       '#type' => 'select',
       '#title' => t('Country'),
       '#required' => TRUE,
-      '#disabled' => TRUE,
       '#options' => $options,
       '#default_value' => $Billingaddresses->country,
   );
@@ -594,7 +604,6 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#attributes' => array('class' => array('vat')),
          '#default_value' => $Billingaddresses->vatNumber,
 
-      '#disabled' => TRUE,
   );
   $form['actions'] = array(
       '#type' => 'actions',
@@ -618,12 +627,12 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
 function pccustomers_address_form_validate($form, &$form_state) {
  $tva = substr($form_state['values']['vatNumber'], 2, 2);
  
-  if (!is_numeric($form_state['values']['phone'])) {
+  /*if (!is_numeric($form_state['values']['phone'])) {
      form_set_error('phone',t('Please enter your Phone Number as Number value.'));
   }
   if (is_numeric($form_state['values']['phone']) && strlen($form_state['values']['phone'])!= 10) {
       form_set_error('phone',t('Please enter your Phone Number as 10 Number.'));
-  }
+  }*/
   if(!empty($tva)){
  if (!is_numeric($tva)) {
     form_set_error('vatNumber',t('Please enter your VAT Number as Number value.'));
@@ -727,12 +736,12 @@ function pccustomers_newaddress_form($form, $form_state) {
       '#size' => 71,
   );
 
-  $form['phone'] = array(
+  /*$form['phone'] = array(
       '#type' => 'textfield',
       '#title' => t('Phone'),
       '#size' => 71,
       '#required' => TRUE,
-  );
+  );*/
 
   $form['street'] = array(
       '#type' => 'textfield',
@@ -993,12 +1002,12 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
  */
 function pccustomers_newaddress_form_validate($form, &$form_state) {
     
-  if (!is_numeric($form_state['values']['phone'])) {
+  /*if (!is_numeric($form_state['values']['phone'])) {
      form_set_error('phone',t('Please enter your Phone Number as Number value.'));
   }
   if (is_numeric($form_state['values']['phone']) && strlen($form_state['values']['phone'])!= 10) {
       form_set_error('phone',t('Please enter your Phone Number as 10 Number.'));
-  }
+  }*/
     $tva = substr($form_state['values']['vatNumber'], 2, 2);
      if(!empty($tva)){
  if (!is_numeric($tva)) {

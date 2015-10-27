@@ -11,7 +11,7 @@ namespace printconnect\Segments {
       global $language;
       $fileName = null;
       switch($language->language) {
-        case 'fr-BE':
+        case 'fr-Be':
             $fileName = 'flyerBe-fr-all.json';
         break;
         case 'nl-BE':
@@ -28,7 +28,7 @@ namespace printconnect\Segments {
         break;
       }
       $check = file_exists('/home/transfer/segments/all/'.$fileName);
-      if (!$check) {
+      if (!$check || filesize('/home/transfer/segments/all/'.$fileName) <= 0) {
         $response = Dal::SendRequest('segment');
         $data = $response->data;
         file_put_contents('/home/transfer/segments/all/'.$fileName, $data);
@@ -54,7 +54,7 @@ namespace printconnect\Segments {
       global $language;
       $fileName = null;
       switch($language->language) {
-        case 'fr-BE':
+        case 'fr-Be':
             $fileName = 'flyerBe-fr-'.$id.'.json';
         break;
         case 'nl-BE':

@@ -193,7 +193,7 @@
             });
     }
   }
-
+   $('#edit-vatnumber-country').val('');
 })(jQuery);
 
 function pccustomers_login_form_submit(form,triggeringElement) {

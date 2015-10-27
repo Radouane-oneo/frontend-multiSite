@@ -36,13 +36,15 @@ define([
 	    var result = _.findWhere(this.vatFormats, trgObject);
 	    return (result) ? true : false;
 	},
-        render: function() {
-            this.setElement(this.template({
-                "model": this.model.toJSON()
-            }));
-            $(this.config.editBox).find(".billingBox").html(this.$el);
-            this.displayVatBloc();
-        },
+    render: function() {
+        this.setElement(this.template({
+            "model": this.model.toJSON()
+        }));
+        $(this.config.editBox).find(".billingBox").html(this.$el);
+        this.displayVatBloc();
+
+        this.$('select').select2();
+    },
 	detectChanges : function() {
 	    this.changesVatNumber = true;
 	},

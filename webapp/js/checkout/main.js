@@ -4,7 +4,8 @@ require.config({
         "underscore": "../libs/underscore/underscore-min",
         "backbone": "../libs/backbone/backbone",
         "text": "../libs/requirejs-text/text",
-        "fancybox": "../libs/fancybox/jquery.fancybox.pack"
+        "fancybox": "../libs/fancybox/jquery.fancybox.pack",
+        "select2": "../libs/select2/select2.min"
     },
     shim: {
         "backbone": {
@@ -14,8 +15,11 @@ require.config({
         "fancybox":{
             deps: ["jquery"]
         },
+        "select2":{
+            deps: ["jquery"]
+        },
         "views/checkout":{
-            deps: ["config","fancybox"]
+            deps: ["config","fancybox","select2"]
         }
     },
     waitSeconds: 0,

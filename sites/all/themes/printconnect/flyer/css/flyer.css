@@ -3044,15 +3044,14 @@ a.ui-button.inactivebtn{
 }
 .page-products #block-system-main #templates .form-item.form-type-item label ,    #pcdesigner-upload-form .templates label{
 	display: inline;
-	width: inherit;
 	margin-right: 5px;
 	font-weight: 400;
 	font-size: 12px;
 	background-position: left;
 	background-repeat: no-repeat;
 	padding-left: 10px;
-	width: 30%;
-        background: url("images/calc_dot.png") no-repeat left;
+	width: auto;
+    background: url("images/calc_dot.png") no-repeat left;
 }
 #pcproducts-config-form .description .text {
 	overflow: hidden;

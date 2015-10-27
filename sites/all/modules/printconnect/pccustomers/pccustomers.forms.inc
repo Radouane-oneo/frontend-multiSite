@@ -612,7 +612,16 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
   $form['actions']['submit'] = array(
       '#type' => 'submit',
       '#value' => t('Save'),
-      '#attributes' => array('class' => array('button')),
+      '#attributes' => array('class' => array('save-button' , 'button')),
+  );
+
+  $labels = array(
+    "isRequired" => t('!name field is required.'),
+    "invalidCharactersLength" => t('invalidCharactersLength'),
+    );
+
+  $form['scriptForLabels'] = array(
+    '#markup' => "<script>var labels = ".json_encode($labels).";</script>",
   );
 
   $form['back'] = array(
@@ -842,48 +851,14 @@ function pccustomers_newaddress_form($form, $form_state) {
 }
 function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
  _pccustomers_ensureloggedin();
- 
-        $countries = array (
-           "21"=>t('Belgique'),
-           "73"=>t('France'),
-           "150"=>t('Pays-Bas'),
-           "124"=>t('Luxembourg'),
-         );
-        
-       $form['company'] = array(
-           '#type' => 'fieldset',
-       );
-    
-    $form['company']['isCompany'] = array(
-        '#type' => 'checkbox',
-        '#title' => t('Are you a company ?'),
-        '#attributes' => array(
-            'id' => 'isUserCompany',
-            'checked'=> 'false'
-        )
-    );
 
-    $form['company']['company'] = array(
-        '#type' => 'textfield',
-        '#title' => t('Company'),
-        '#required' => FALSE,
-        '#size' => 61,
-        '#attributes' => array(
-            'id' => 'companyInput'
-        )
-    );
-
-    $form['company']['vatNumber'] = array(
-        '#attributes' => array('id' => 'vatNumber'),
-        '#id' => 'vatNumber',
-        '#prefix' => '<div id="vatNumber">',
-        '#suffix' => '</div>',
-        '#type' => 'vatfield',
-        '#title' => t('Vat number'),
-        '#required' => FALSE,
-        '#default_value' => 'FR',
-    );
-  
+    $countries = array (
+       "0" => t('select'),
+       "21"=>t('Belgique'),
+       "73"=>t('France'),
+       "150"=>t('Pays-Bas'),
+       "124"=>t('Luxembourg'),
+    ); 
     $form['summary'] = array(
         '#type' => 'fieldset',
         '#title' => t('Billing addresses'),
@@ -955,7 +930,7 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
         '#title' => t('Country'),
         '#required' => TRUE,
         '#options' => $countries,
-      '#default_value' => 73
+        '#default_value' => 0
     );
 
   
@@ -965,7 +940,39 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
       '#size' => 71,
 
   );
-    
+   $form['company'] = array(
+           '#type' => 'fieldset',
+       );
+
+    $form['company']['isCompany'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Are you a company ?'),
+        '#attributes' => array(
+            'id' => 'isUserCompany',
+            'checked'=> 'false'
+        )
+    );
+
+    $form['company']['company'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Company'),
+        '#required' => FALSE,
+        '#size' => 61,
+        '#attributes' => array(
+            'id' => 'companyInput'
+        )
+    );
+
+    $form['company']['vatNumber'] = array(
+        '#attributes' => array('id' => 'vatNumber'),
+        '#id' => 'vatNumber',
+        '#prefix' => '<div id="vatNumber">',
+        '#suffix' => '</div>',
+        '#type' => 'vatfield',
+        '#title' => t('Vat number'),
+        '#required' => FALSE,
+        '#default_value' => 'FR',
+    ); 
   $form['actions'] = array(
       '#type' => 'actions',
   );
@@ -987,6 +994,7 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
     "isRequired" => t('!name field is required.'),
     "invalidCharactersLength" => t('invalidCharactersLength'),
     "phoneNumberError" => t('Please enter your Phone Number as 10 Number.'),
+    "vatNotNumber" => t('Please enter your VAT Number as Number value.'),
     );
 
   $form['scriptForLabels'] = array(

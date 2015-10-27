@@ -46,7 +46,12 @@
                   errorMsgs[i] = labels["passwordMatch"];
                   errorMarkup += "<li>"+errorMsgs[i]+"</li>";
                 }
-            } 
+            } else if (this.name =="vatNumber[number]" && isNaN(_this.val())) {
+                inputName = $(elem).attr('name');
+                _this.addClass('error');
+                errorMsgs[i] = labels["vatNotNumber"];
+                errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+            }
 
           });  
           errorMarkup += "</ul></div>";
@@ -139,7 +144,17 @@
           }, 'slow');
         }        
       });  
+      
+      /* ========== PCCUSTOMER isUserCompany ========== */
+      jQuery("#isUserCompany").click(function(e) {
+        if(jQuery(this).is(':checked'))  {
+          jQuery('#companyInput , #edit-vatnumber-number').addClass('required');
+        } else {
+          jQuery('#companyInput , #edit-vatnumber-number').removeClass('required');
+        }
+      }); 
     });
+
     
   Drupal.behaviors.pccustomers= {
     detach: function (context) {
@@ -178,7 +193,7 @@
             });
     }
   }
-
+   $('#edit-vatnumber-country').val('');
 })(jQuery);
 
 function pccustomers_login_form_submit(form,triggeringElement) {

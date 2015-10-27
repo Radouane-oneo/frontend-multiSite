@@ -29,12 +29,12 @@
                 <div class="form-item form-type-select form-item-invoice-address-current-select">
                     <select id="baEditSelect" class="selectBilling2 form-select"  
                             name="invoice[address][current][select]" title="">
-                        <option value="0"><%= model.labels['addNewBA'] %></option>
+                        <option value="0" class="addNewSA"><%= model.labels['addNewBA'] %></option>
                         <% _.each(model.billingAccouts, function(billingAccout){ 
                         var selected =(billingAccout.id == model.defaultBA.id)
                         ? 'selected = "selected"' : "";%>
                         <option <%=selected%> value="<%= billingAccout.id %>">
-                            <%= billingAccout.company%>&nbsp 
+                            <%= (billingAccout.company)?(billingAccout.company):(billingAccout.name) %>&nbsp
                             - <%= billingAccout.street%>, 
                             <%= billingAccout.postalCode%>&nbsp;<%= billingAccout.city%>
                         </option>

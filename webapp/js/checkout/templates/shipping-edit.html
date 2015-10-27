@@ -6,10 +6,10 @@
                     <div class="invoiceaddress"><%= model.labels['shippingAddress'] %></div>
                     <div class="blocright"><span><%= model.labels['selectSA'] %></span><%= model.labels['OrCreateSA'] %>
                     </div> 
-                    <div class="form-item form-type-select form-item-shipping-detail-current-select">
+                    <div class="form-item form-type-select form-item-shipping-detail-current-select  shipping-detail-current-select2">
                         <select name="shipping[detail][current][select]" id="edit-shipping-detail-current-select"
                                 class="form-select" title="">
-                                <option value="0"><%= model.labels['addNewSA'] %></option>
+                                <option value="0" class="addNewSA"><%= model.labels['addNewSA'] %></option>
                             <% _.each(model.shippingAddresses.addresses, function(shippingAddress){
                                var name = (shippingAddress.company)?shippingAddress.company:shippingAddress.name;
                             %>

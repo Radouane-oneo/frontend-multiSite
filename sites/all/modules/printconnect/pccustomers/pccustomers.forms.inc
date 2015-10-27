@@ -575,7 +575,6 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#type' => 'select',
       '#title' => t('Country'),
       '#required' => TRUE,
-      '#disabled' => TRUE,
       '#options' => $options,
       '#default_value' => $Billingaddresses->country,
   );
@@ -605,7 +604,6 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#attributes' => array('class' => array('vat')),
          '#default_value' => $Billingaddresses->vatNumber,
 
-      '#disabled' => TRUE,
   );
   $form['actions'] = array(
       '#type' => 'actions',

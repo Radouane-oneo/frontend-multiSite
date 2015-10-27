@@ -180,6 +180,7 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
     top: -10px;
     width: 210px !important;
 }
+
 .page-myprintconnect-mybillingaddress-new .form-item-isCompany label{
   top: 0;
 }
@@ -654,4 +655,29 @@ form#pcpayments-request-form fieldset.payment .fieldset-wrapper{
 }
 .page-checkout .wrap_detail_map{
   padding-bottom: 19px;
+}
+
+.page-checkout-personal #pccheckout-personal-form .form-item-isCompany label{
+  text-align: left;
+  width: 100% !important;
+}
+
+.page-checkout-personal #pccheckout-personal-form input.number{
+  width: 405px !important;
+}
+
+.page-checkout-personal .step-page-payment .item-list > ul{
+    width: 675px;
+    margin: 0 auto !important;
+}
+
+.page-checkout ul li.addNewSA{
+  color: #ff6600 !important;
+}
+
+.page-checkout ul li.addNewSA.select2-highlighted{
+  color: #fff !important;
+}
+.page-checkout ul li.addNewSA.select2-highlighted:hover{
+  color: #fff !important;
 }

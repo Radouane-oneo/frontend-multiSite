@@ -758,13 +758,10 @@ body.one-sidebar #content {
 	width: 855px;
 }
 
-body.page-checkout-invoiceanddelivery  #content{
-	width: 100%;
-}
-
 .page-checkout-invoiceanddelivery  #sidebar-first{
 	display: none;
 }
+
 input.cmd-collecte{
 	width: 190px;
 }
@@ -781,6 +778,12 @@ body.two-sidebars #content {
 	width: 680px;
 	margin-bottom: 10px;
 }
+
+body.page-paymentrequest  #content,
+body.page-checkout-invoiceanddelivery  #content{
+	width: 100%;
+}
+
 
 body.two-sidebars #content .whitebox{
 	margin-bottom: 0;
@@ -7938,9 +7941,9 @@ div.myoffers table.list thead tr th:nth-child(2){
 	float: left;
 	font-size: 14px;
 	color: #ffffff;
-	line-height: 25px;
+	line-height: 24px;
 	height: 40px;
-	font-weight: bold;
+	font-weight: 400;
 	background: url(images/flesh-button-seul.png) no-repeat 17px center #6faa01 !important;
 	padding: 8px 20px 8px 45px;
 	border: 0;
@@ -11188,21 +11191,24 @@ input.ui-button.payment {
 .page-payment #edit-actions input.payment{
     background: #79b61a url("images/button_payment.png") no-repeat 25px  center;
     cursor: pointer;
-    font-weight: 500 !important;
+    font-weight: 400 !important;
 }
 
 .page-cart #block-system-main .form-wrapper.actions input{
 	font-size: 16px;
     height: 50px;
     margin: 0;
-    font-weight: bold;
+    font-weight: 400;
     text-align: center;
-    width: auto;
+    width: 100%;
     display: inline-block;
     padding-left: 40px;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
+}
+.page-cart #block-system-main .form-wrapper.actions input{
+	background: #79b61a url("images/button_payment.png") no-repeat 75px center;
 }
 #edit-actions .button-wrapper {
     background-color: #79b61a;
@@ -11679,7 +11685,7 @@ input.ui-button.payment {
 }
 
 .boxShippingDate .sticky-enabled td:first-child{
-	width: 55%;
+	width: 51%;
 	background: url(images/flesh.png) no-repeat right center;
 }
 .boxShippingDate .sticky-enabled tbody{
@@ -11922,6 +11928,7 @@ input.ui-button.payment {
     border-radius: 0;
 }
 .region-content #pcorders-order-form .form-actions {
+
 	padding: 15px 10px 15px 22px;
 	margin: 0;
 }  
@@ -11934,4 +11941,8 @@ input.ui-button.payment {
     width: 1px;
     right: 165px;
     top: 0;
+}
+
+#trQuantitePersonalisee{
+    display:none;
 }

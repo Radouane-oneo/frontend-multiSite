@@ -62,4 +62,5 @@ regions[content] = Content
 regions[fronttabs] = Front Tabs
 regions[contentbottom] = Content bottom
 regions[footer] = Footer
+regions[footer_second] = Second Footer
 regions[closure] = Closure

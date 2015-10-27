@@ -40,14 +40,15 @@ define([
             $("#save-progress-bar").find("div").stop(true).animate({width: 100 + '%'},1000, function(){
                 $('#box-progress').hide();
             });
+            this.model.on("change",this.setcalculheight,this);
         },
         render : function(){
             this.setElement(this.template({
                 "model" : this.model.toJSON()
             }));
             $(this.config.containerId).html(this.$el);
-            this.HeightSame('wrap_detail');
-            this.HeightSame('fieldset-sameheight');
+            
+            this.setcalculheight();
         },
         changeShipping : function(orderItemShipping){
             var shippingAddresses = $.extend(true, {}, this.model.get("shippingAddresses"));
@@ -63,10 +64,11 @@ define([
                     }
                 });
                 $("div."+className).css("height",liMaxHeight1);
-            }, 2000);
-            
-   
-
+            }, 2000); 
+        },
+        setcalculheight : function(){ 
+            this.HeightSame('wrap_detail');
+            this.HeightSame('fieldset-sameheight');
         }
 
 

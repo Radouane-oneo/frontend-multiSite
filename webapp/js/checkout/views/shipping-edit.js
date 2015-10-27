@@ -31,6 +31,8 @@ define([
             $(this.config.editBox).find(".shippingBox").html(this.$el);
             this.initMap();
             this.initFancybox();
+
+            this.$('select').select2();
         },
         initMap: function(){
             var orderItemShipping = this.model.get("shippingAddresses").orderItemShipping;

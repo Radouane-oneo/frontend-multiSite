@@ -11866,3 +11866,6 @@ input.ui-button.payment {
 	padding: 15px 10px !important;
 	margin: 0; 	
 }  
+#trQuantitePersonalisee{
+    display:none;
+}

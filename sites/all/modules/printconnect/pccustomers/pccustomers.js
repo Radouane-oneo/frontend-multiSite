@@ -144,7 +144,17 @@
           }, 'slow');
         }        
       });  
+      
+      /* ========== PCCUSTOMER isUserCompany ========== */
+      jQuery("#isUserCompany").click(function(e) {
+        if(jQuery(this).is(':checked'))  {
+          jQuery('#companyInput , #edit-vatnumber-number').addClass('required');
+        } else {
+          jQuery('#companyInput , #edit-vatnumber-number').removeClass('required');
+        }
+      }); 
     });
+
     
   Drupal.behaviors.pccustomers= {
     detach: function (context) {

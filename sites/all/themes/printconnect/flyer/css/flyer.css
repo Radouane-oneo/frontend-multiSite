@@ -758,13 +758,10 @@ body.one-sidebar #content {
 	width: 855px;
 }
 
-body.page-checkout-invoiceanddelivery  #content{
-	width: 100%;
-}
-
 .page-checkout-invoiceanddelivery  #sidebar-first{
 	display: none;
 }
+
 input.cmd-collecte{
 	width: 190px;
 }
@@ -781,6 +778,12 @@ body.two-sidebars #content {
 	width: 680px;
 	margin-bottom: 10px;
 }
+
+body.page-paymentrequest  #content,
+body.page-checkout-invoiceanddelivery  #content{
+	width: 100%;
+}
+
 
 body.two-sidebars #content .whitebox{
 	margin-bottom: 0;

@@ -94,12 +94,6 @@
 
     <div id="main">
 
-      <?php if ($page['sidebar_first']): ?>
-        <div id="sidebar-first" style="height: 150px">
-          <?php // print render($page['sidebar_first']); ?>
-        </div>
-      <?php endif; ?>
-
       <div id="content">
         <?php if ($page['highlightedFlyer']): ?>
           <div id="highlightedFlyer">
@@ -171,12 +165,6 @@
 
 
       </div>
-
-      <?php if ($page['sidebar_second']): ?>
-        <div id="sidebar-second" style="height: 150px">
-          <?php // print render($page['sidebar_second']); ?>
-        </div>
-      <?php endif; ?>
 
       <div id="footer">
         <?php print render($page['footer']); ?>

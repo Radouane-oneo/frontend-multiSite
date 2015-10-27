@@ -11682,7 +11682,7 @@ input.ui-button.payment {
 }
 
 .boxShippingDate .sticky-enabled td:first-child{
-	width: 55%;
+	width: 51%;
 	background: url(images/flesh.png) no-repeat right center;
 }
 .boxShippingDate .sticky-enabled tbody{

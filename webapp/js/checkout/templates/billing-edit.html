@@ -34,7 +34,7 @@
                         var selected =(billingAccout.id == model.defaultBA.id)
                         ? 'selected = "selected"' : "";%>
                         <option <%=selected%> value="<%= billingAccout.id %>">
-                            <%= billingAccout.company%>&nbsp 
+                            <%= (billingAccout.company)?(billingAccout.company):(billingAccout.name) %>&nbsp
                             - <%= billingAccout.street%>, 
                             <%= billingAccout.postalCode%>&nbsp;<%= billingAccout.city%>
                         </option>

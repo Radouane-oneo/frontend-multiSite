@@ -145,10 +145,14 @@ if (/*@cc_on!@*/false) {
           <?php print render($page['sidebar_second']); ?>
         </div>
       <?php endif; ?>
+      
+      <?php if (arg(0) !='payment'): ?>
 
-      <div id="footer">
-        <?php print render($page['footer']); ?>
-      </div>
+        <div id="footer">
+            <?php print render($page['footer']); ?>
+        </div>
+        
+      <?php endif; ?>
 
       <div class="clearfix"></div>
 

@@ -1,11 +1,6 @@
 (function ($) {
     $(document).ready(function () {
       if($('#pccustomers-address-billingaddresses-form')[0]){
-         if ($('#edit-vatnumber-number').val()) {
-                    $('#isUserCompany').attr('disabled', true);
-                } else {
-                    $('#isUserCompany').attr('disabled', false);
-                }
       }
 
       /* ========== PCCUSTOMER form validation ========== */

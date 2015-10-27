@@ -467,9 +467,20 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
 #pccheckout-payment-form .textpayment{
   bottom: 54px;
 }
+
+#textpaymentRequest{
+  margin: 0;
+  clear: both;
+  padding-top: 5px;
+  background: #F1F1F1;
+  border-radius: 0 0 5px 5px;
+  border: 1px solid #e1e1e1;
+  border-top: 0;
+}
+#textpaymentRequest > p,
 #pccheckout-payment-form .textpayment >p{
   text-align: left;
-  padding: 17px 26px 17px;
+  padding: 17px 26px;
   margin: 0;
   line-height: normal;
   border-top: 1px solid #e1e1e1;
@@ -525,6 +536,7 @@ div.company-box > label{
   height: 20px !important;
 }
 
+form#pcpayments-request-form .grid-methods-payment,
 #pccheckout-payment-form .grid-methods-payment{
     float:left;
     border-right: medium none !important; 
@@ -540,6 +552,7 @@ div.company-box > label{
   margin-left: 7px;
 }
 
+#pcpayments-request-form .order >legend,
 .page-payment #detailCommande >legend{
   padding: 10px 0 14px;
   margin-bottom: 0;
@@ -562,6 +575,7 @@ div.company-box > label{
   font-size: 16px !important;
 }
 
+.page-paymentrequest #edit-actions input.button,
 .page-payment #pccheckout-payment-form .form-actions input{
   height: 62px;
   width: 246px;
@@ -583,6 +597,13 @@ div.company-box > label{
 
 .page-payment #edit-actions .button-wrapper{
   width: auto;
+}
+
+
+form#pcpayments-request-form fieldset.payment .fieldset-wrapper{
+  padding-bottom: 0!important;
+  border: 1px solid #e1e1e1;
+  border-bottom: 0;
 }
 
 .page-checkout #pccheckout-invoiceanddelivery-form #blocDetail.summary  .shippingBox .shipping-contact input[type='text']{

@@ -659,7 +659,7 @@ form#pcpayments-request-form fieldset.payment .fieldset-wrapper{
 
 .page-checkout-personal #pccheckout-personal-form .form-item-isCompany label{
   text-align: left;
-  width: 100% !important;
+  width: auto !important;
 }
 
 .page-checkout-personal #pccheckout-personal-form input.number{
@@ -680,4 +680,8 @@ form#pcpayments-request-form fieldset.payment .fieldset-wrapper{
 }
 .page-checkout ul li.addNewSA.select2-highlighted:hover{
   color: #fff !important;
+}
+
+.select-country-personal >a.select2-choice{
+  width: 455px !important;
 }

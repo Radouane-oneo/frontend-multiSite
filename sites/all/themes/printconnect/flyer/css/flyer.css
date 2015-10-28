@@ -11930,7 +11930,45 @@ input.ui-button.payment {
 
 	padding: 15px 10px 15px 22px;
 	margin: 0;
-}  
+}
+
+.region-footer-second .block h2{
+	display: none;
+}
+
+.region-footer-second ul{
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	list-style: none;
+}
+
+.region-footer-second ul li{
+	float: left;
+	margin: 0 8px;
+	list-style: none;
+	color: #646464;
+	position: relative;
+}
+
+.region-footer-second ul li:after{
+	content: ' ';
+    position: absolute;
+    top: 48%;
+    right: -10px;
+    width: 5px;
+    background: #646464;
+    display: block;
+    height: 1px;
+}
+.region-footer-second ul li:last-child:after{
+	display: none;
+}
+
+.region-footer-second ul li a{
+	color: #646464;
+}
+
 .page-myprintconnect-orders .priceblock:before {
     background: #d1d1d1;
     content: ' ';    

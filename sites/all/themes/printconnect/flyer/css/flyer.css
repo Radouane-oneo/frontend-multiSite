@@ -3883,6 +3883,10 @@ a.googleconnect {
 	padding: 10px 0 0 0;
 	position: relative;
 	overflow: hidden;
+	
+}
+
+.page-checkout #pccheckout-personal-form{
 	border-color: #e1e1e1;
     border-style: solid;
     border-width: 1px;
@@ -11952,7 +11956,45 @@ input.ui-button.payment {
 
 	padding: 15px 10px 15px 22px;
 	margin: 0;
-}  
+}
+
+.region-footer-second .block h2{
+	display: none;
+}
+
+.region-footer-second ul{
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	list-style: none;
+}
+
+.region-footer-second ul li{
+	float: left;
+	margin: 0 6px;
+	list-style: none;
+	color: #646464;
+	position: relative;
+}
+
+.region-footer-second ul li:after{
+	content: ' ';
+    position: absolute;
+    top: 48%;
+    right: -8px;
+    width: 4px;
+    background: #646464;
+    display: block;
+    height: 1px;
+}
+.region-footer-second ul li:last-child:after{
+	display: none;
+}
+
+.region-footer-second ul li a{
+	color: #646464;
+}
+
 .page-myprintconnect-orders .priceblock:before {
     background: #d1d1d1;
     content: ' ';    
@@ -11968,9 +12010,19 @@ input.ui-button.payment {
     display:none;
 }
 
+ 
 
 .select-city-adress > a.select2-choice,
 .select-country-adress >a.select2-choice {
 	width: 468px !important;
 }
 
+ 
+form#pccheckout-payment-form fieldset legend{
+	font-size: 16px;
+}
+
+#pcproducts-config-form .templates .text {
+	margin-bottom: 0;
+}
+ 

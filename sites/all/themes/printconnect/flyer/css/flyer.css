@@ -11945,7 +11945,7 @@ input.ui-button.payment {
 
 .region-footer-second ul li{
 	float: left;
-	margin: 0 8px;
+	margin: 0 6px;
 	list-style: none;
 	color: #646464;
 	position: relative;
@@ -11955,8 +11955,8 @@ input.ui-button.payment {
 	content: ' ';
     position: absolute;
     top: 48%;
-    right: -10px;
-    width: 5px;
+    right: -8px;
+    width: 4px;
     background: #646464;
     display: block;
     height: 1px;

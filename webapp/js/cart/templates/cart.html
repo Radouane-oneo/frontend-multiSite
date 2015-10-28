@@ -28,7 +28,9 @@
 			<div id="technic-details" class="technic-details-container">
 			
 			</div>
-            <a href="/products"><span class="linkproduct"><%= config.labels['linkProduct'] %></span></a>
+            <% if(model.id && model.orderItems.length != 0) {%>
+                <a href="/products"><span class="linkproduct"><%= config.labels['linkProduct'] %></span></a>            
+            <% } %>
             <div id='WeAlsoMake'></div> 
 		</div>
 	</div>

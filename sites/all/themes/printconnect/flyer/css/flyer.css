@@ -12028,12 +12028,9 @@ form#pccheckout-payment-form fieldset legend{
 }
 
 .page-products #pcproducts-config-form .dropdown li.selectedItem {
-    background: #f60;
+    background: #F1F1F1;
     margin: 0;
     padding: 10px 5px;
 }
 
-.selectedItem div {
-    color: #fff;
-}
 

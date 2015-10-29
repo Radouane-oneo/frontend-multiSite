@@ -257,13 +257,57 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         '#type' => 'container',
         '#attributes' => array('class' => array('image')),
     );
-
+    $form['order']['details']['item'][$item->id]['description'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('description')),
+    );
     if (count($item->files)) {
+        if(isset($fotolia[$item->id])){
+            $form['order']['details']['item'][$item->id]['description']['blocrightdesc']['fotolia']= array(
+                    '#type' => 'container',
+                    '#attributes' => array('class' => array('fotolia-box')),
+                    );
+            foreach ($fotolia[$item->id] as  $fotoliaitem){
+                    $form['order']['details']['item'][$item->id]['description']['blocrightdesc']['fotolia'][] = array(
+                            'description' => array(
+                                    '#prefix' => '<div class="fotolia-items fotolia-items-'.$item->id.'">',
+                                    '#markup' => '<span class="fotolia-icon"></span>' . $fotoliaitem['content'],
+                                    ),
+                            'price' => array(
+                                    '#theme' => 'price',
+                                    '#value' => intval($fotoliaitem['price']),
+                                    '#attributes' => array('class' => array('pricepreflight')),
+                                    '#suffix' => '</div>',
+                                    ),
+                            );
+                    $totalprice+=intval($fotoliaitem['price']);
+            }
+        }
+        if( $item->fileCheck ){
+            $priceControl = $item->fileCheck->price;
+            $form['order']['details']['item'][$item->id]['description']['blocrightdesc']['control'] = array(
+                    '#type' => 'container',
+                    '#attributes' => array('class' => array('controlpro')),
+                    );
+            $form['order']['details']['item'][$item->id]['description']['blocrightdesc']['control']['control_prof'] = array(
+                    '#type' => 'link',
+                    '#title' => '',
+                    '#attributes' => array('class' => array('removecontrol', 'noreplace'),'rel'=>$item->id),
+                    '#href' => '#',
+                    );
+            $form['order']['details']['item'][$item->id]['description']['blocrightdesc']['control']['text'] = array(
+                    '#markup' => '<h3>'.t('Control professional').'</h3>',
+                    );
+            $form['order']['details']['item'][$item->id]['description']['blocrightdesc']['control']['price'] = array(
+                    'price' => array(
+                            '#theme' => 'price',
+                            '#value' => $priceControl,
+                            '#attributes' => array('class' => array('priceControl')),
+                            ));
+            $totalprice+=$priceControl;
+        }
       foreach ($item->files as $file) {
-
-
-
-        if (isset($file->thumbnail)) {
+          if (isset($file->thumbnail)) {
           $form['order']['details']['item'][$item->id]['image']['thumb'] = array(
               '#theme' => 'pcfilesthumb',
               '#file' => $file->thumbnail,
@@ -304,17 +348,18 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
           '#path' => printconnect_getimage('products', $item->configuration->productId),
       );
     }
-    $form['order']['details']['item'][$item->id]['description'] = array(
-        '#type' => 'container',
-        '#attributes' => array('class' => array('description')),
-    );
+    
 
     $form['order']['details']['item'][$item->id]['description']['name'] = array(
         '#prefix' => '<h3>',
         '#markup' => $item->quantity . ' ' . $item->configuration->name,
         '#suffix' => '</h3>',
     );
-
+    //if($item->refJob){
+        $form['order']['details']['item'][$item->id]['description']['refJob'] = array(
+              '#markup' => '<label class="labelOrder">' . t('Reference product') .' : <span ="refJob">'. $item->refJob.'</span></label>',
+        );
+   // }
     $price = $item->convertedPrice;
 
     foreach ($item->options as $option) {
@@ -375,11 +420,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         '#items' => $rows,
             //'#markup' => theme('item_list', array('items' => $rows)),
     );
-    if($item->refJob){
-        $form['order']['details']['item'][$item->id]['description']['refJob'] = array(
-              '#markup' => '<label class="labelOrder">' . t('Reference product') .' : '. $item->refJob.'</label>',
-        );
-    }
+    
     if (isset($item->tracking)) {
       foreach ($item->tracking as $box) {
         $form['order']['details']['item'][$item->id]['description']['tracking'] = array(

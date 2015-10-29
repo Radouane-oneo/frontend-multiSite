@@ -6,7 +6,7 @@ list($prix1, $prix2) = split('[,.]', $fields['field_prix']->content);
         <?php if(!empty($fields['field_image_link']->content)):?>
             <img src="<?php print $fields['field_image_link']->content; ?>" />
         <?php endif;?>
-        <h2><?php print $fields['title']->content; ?></h2> 
+        <h2>coco<?php print $fields['title']->content; ?></h2> 
     </a> 
 </div>
 

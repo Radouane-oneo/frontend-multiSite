@@ -12032,5 +12032,8 @@ form#pccheckout-payment-form fieldset legend{
     margin: 0;
     padding: 10px 5px;
 }
+#block-block-95{
+    display: none;
+}
 
 

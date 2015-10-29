@@ -2,7 +2,9 @@
 
   var validate;
   $.fn.vatfieldValidate = function(change){
-    $('#edit-vatnumber-country').val('');
+    if ($('#edit-country').val() == '') {
+        $('#edit-vatnumber-country').val('');
+    }
     var vatFormats = [{'BE': 10},{'NL' : 12},{'LU' : 8},{'FR' : 11}];
     if ($(this).length){
       var control = $(this);
@@ -25,7 +27,15 @@
 	    number.addClass('error');
             number.val('');
             var vatplaceholder = Drupal.t('insert a valid vat number please');
-            number.attr("placeholder", vatplaceholder);
+	    $('.customErrors').remove();
+	    if ($('.messages').length == 0){
+	        $('.region-content').before('<div class="messages error"><ul><li class="customErrors">'+vatplaceholder+'</li></ul></div>');
+	    } else {
+		$('.messages ul').append('<li class="customErrors">'+vatplaceholder+'</li>');
+	    }
+	    $('html, body').animate({
+              scrollTop:$(".messages.error").offset().top
+            }, 'slow');
 	 } else {
 	    $.ajax({ 
     		type: 'GET', 
@@ -37,7 +47,16 @@
 			number.addClass('error');
             		number.val('');
 			var vatplaceholder = Drupal.t('Vat already used.. please contact customer service');
-            		number.attr("placeholder", vatplaceholder);
+			$('.customErrors').remove();
+			if ($('.messages').length == 0){
+			    $('.region-content').before('<div class="messages error"><ul><li class="customErrors">'+vatplaceholder+'</li></ul></div>');
+			} else {
+			    $('.messages ul').append('<li class="customErrors">'+vatplaceholder+'</li>');
+			}
+			$('html, body').animate({
+              		    scrollTop:$(".messages.error").offset().top
+            		    }, 'slow'
+			);
 		    }
     		}
 		});

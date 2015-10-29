@@ -42,8 +42,8 @@ function flyer_form_pccheckout_personal_form_alter(&$form, &$form_state) {
 }
 
 function flyer_form_pccustomers_address_form_alter(&$form, &$form_state) {
-	$form['postalCode']['#title'] = t('PC and city');
-	$form['city']['#title_display'] = 'invisible';
+	$form['postal_codeCity']['postalCode']['#title'] = t('PC and city');
+	$form['postal_codeCity']['city']['#title_display'] = 'invisible';
 }
 
 function flyer_form_pccustomers_newaddress_form_alter(&$form, &$form_state) {
@@ -289,7 +289,7 @@ function flyer_preprocess_html(&$vars) {
             unset($javascript['sites/all/libraries/fancybox/fancybox/jquery.fancybox-1.3.4.js']);
             unset($javascript['sites/all/modules/contrib/fancybox/js/fancybox.js']);
         }
-        if($args[0]=="checkout" && $args[1]=="newinvoiceanddelivery") {
+        if($args[0]=="checkout" && $args[1]=="invoiceanddelivery") {
             unset($javascript['sites/all/modules/printconnect/pcflyerstores/pcflyerstores_map.js']);
         }
 
@@ -311,6 +311,14 @@ function flyer_preprocess_html(&$vars) {
 
         if($args[0]=="checkout" && $args[1]=="personal" ) { 
             unset($javascript['sites/all/modules/printconnect/pcflyerstores/pcflyerstores_map.js']);
+        }
+
+        if($args[0]=="myprintconnect" && $args[1]=="editBillingaddresses" ) { 
+            unset($javascript['sites/all/modules/printconnect/pcflyerstores/pcflyerstores_map.js']);
+        }
+
+        if($args[0]=="myprintconnect" && $args[1]=="editBillingaddresses" ) { 
+            unset($javascript['sites/all/modules/printconnect/pcvat/pcvat.js']);
         }
 }
 

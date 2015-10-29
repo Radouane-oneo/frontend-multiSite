@@ -58,7 +58,7 @@
                 <% } %>
                 <ul>
                     <% _.each(toolBoxItem.data,function(item){ %>
-                     <li class='<%= item.code %>'>
+                     <li class='<%= item.code %> <% if(selected && (item.id == selected.id)){ print("selectedItem"); } %> '>
                         <a id="<%= item.id %>" href=""><img width="154" height="154" alt="" src="<%= config.imagesUrl %>items/<%= item.id %>.png">
 
                         <div class="text"><%= item.name %></div>
@@ -120,6 +120,7 @@
             <tbody>
             <%
             var i = 0;
+           
             _.each(model.toolBoxGroup.pricing, function(price){
             i = i+ 1;
             var checked = (price['quantity']==model.quantity && !customQuantity)?"checked='checked'":"";
@@ -162,11 +163,26 @@
             <%
             var checked = (customQuantity)?"checked='checked'":"";
             %>
+            <tr class="<%= (i%2==0)?'even':'odd' %>" id="trQuantitePersonalisee">
+                <td class="first-child">
+                    <div class="form-item form-type-radio form-item-quantity">
+                        <input type="radio" value="<%= model.quantity %>" name="quantity"
+                               id="edit-quantity-<%= model.quantity %>" class="grid clearfix form-radio" <%= checked %>>
+                    </div>
+                </td>
+                <td><%= model.quantity %> ex.</td>
+                <td></td>
+                <td><% print(priceTpl({price:model.price})); %></td>
+                <td class="last-child"><%
+                    var priceWithTVA = model.price * ( 1 + config.TVA );
+                    print(priceTpl({price:Math.round(priceWithTVA*100)/100}));
+                %></td>
+            </tr>
             <tr class="custom even last-child child-item-calcul-qte">
                 <td class="first-child">
                     <div class="form-item form-type-radio form-item-quantity">
-                        <input type="radio" value="custom" name="quantity" id="edit-quantity-custom"
-                               class="grid clearfix form-radio" <%= checked %>>
+                        <input type="radio" value="custom" name="customQte" id="edit-quantity-custom"
+                               class="grid clearfix form-radio">
                     </div>
                 </td>
                 <td colspan="4" class="last-child">
@@ -180,6 +196,7 @@
                 </td>
             </tr>
             </tbody>
+            
         </table>
         </div>
 
@@ -195,7 +212,7 @@
         <!-- End addToCart -->
 
         <!-- shippingDetail -->
-        <div id="bloc-shipping"><%= shippingHTML %></div>
+        <div id="bloc-shipping" class="boxShippingDate"><%= shippingHTML %></div>
         <!-- End shippingDetail -->
         <% if(model.widthCF == null && model.heightCF == null)  {%> 
         <!-- templateDetail -->

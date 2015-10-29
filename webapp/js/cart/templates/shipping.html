@@ -1,6 +1,6 @@
 <fieldset id="edit-cart-shipping" class="shipping clearfix form-wrapper">
     <legend><span class="fieldset-legend"><%= config.labels['shipping'] %></span></legend>
-    <div class="fieldset-wrapper">
+    <div class="fieldset-wrapper shipping-wrapper">
         <table class="grid targetPrice sticky-enabled">
             <tbody>
             <% _.each(config.shipping, function(shipping, i){ %>
@@ -32,14 +32,14 @@
                     </td>
                     <td>
                         <span><%= shipping.shippingType.tag %></span>
-                        <% if(shipping.id == 134){ %>
+                        <% if(shipping.shippingType.type == "shippingTypeStore"){ %>
                             <span style="margin-left:100px;<%= styleLink %>" class="storeLink">
                                 <a class="pcflyerstores-picker-link fancybox.iframe" href="/<%= config.prefix %>/stores/picker/callback/pcflyerstores_callback/?contentonly=1" style="display: inline;">
                                     <%= config.labels['chooseFlyerStore'] %>
                                 </a>
                             </span>
                         <% } %>
-                        <% if(shipping.id == 123){ %>
+                        <% if(shipping.shippingType.type == "shippingTypeBpostPickupPoint"){ %>
                             <span style="margin-left:100px;<%= styleLink %>" class="storeLink">
                                 <a class="pcbpost-picker-link fancybox.iframe" href="/<%= config.prefix %>/pcbpost/picker/pcbpost_cart_callback?contentonly=1" style="display: inline;">
                                     <%= config.labels['chooseBpostPickupPoint'] %>
@@ -48,7 +48,7 @@
                         <% } %>
                     </td>
                     <td class="last-child">
-                        <span class="price" style="<%= style %>">
+                        <span class="price">
                             <span class="value" style="display: inline;">
                                 <%= (shipping.price == 0)? config.labels['free'] : priceTpl({price:shipping.price}) %>
                             </span>
@@ -56,7 +56,7 @@
                     </td>
                 </tr>
                 <%
-                if(shipping.id == 134 && model.orderItemShipping.shippingTypeResellerShop == 134 && model.orderItemShipping.orderShippingAddress) { %>
+                if(shipping.shippingType.type == "shippingTypeStore" && model.orderItemShipping.shippingTypeTag == "shippingTypeStore" && model.orderItemShipping.orderShippingAddress) { %>
                 <tr>
                     <td class="shipping-flyerStore" colspan="3">
                         <div class="shipping-map">
@@ -93,7 +93,7 @@
                     </td>
                 </tr>
                 <% } %>
-                <% if(shipping.id == 123 && model.orderItemShipping.shippingTypeResellerShop == 123 && model.orderItemShipping.orderShippingAddress) { %>
+                <% if(shipping.shippingType.type == "shippingTypeBpostPickupPoint" && model.orderItemShipping.shippingTypeTag == "shippingTypeBpostPickupPoint" && model.orderItemShipping.orderShippingAddress) { %>
                 <tr>
                     <td class="shipping-BPost" colspan="3">
                         <div class="BPost-info">

@@ -158,9 +158,7 @@
 
 .view-best-sales .from .price .decimals,
 #pcproducts-products-form .from .price .decimals{
-  font-size: small;
   vertical-align: top;
-  font-weight: normal;
 }
 
 .view-best-sales .from .price .decimalpoint,

@@ -146,6 +146,7 @@ function pccheckout_personal_form($form, &$form_state) {
         '#required' => TRUE,
         '#empty_value' => 0,
         '#options' => $countries,
+        '#attributes' => array('class' => array('select-country-personal')),
     );
 
     

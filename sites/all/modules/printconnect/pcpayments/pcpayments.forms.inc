@@ -37,7 +37,7 @@ function pcpayments_request_form($form, &$form_state, $key) {
       $cost = $value->CalculateCost($amount);
 
       $methods[$value->id] = array(
-          'image' => theme('image', array('path' => printconnect_getimage('paymentmethods', $value->paymentMethod->internalName))),
+          //'image' => theme('image', array('path' => printconnect_getimage('paymentmethods', $value->paymentMethod->internalName))),
           'name' => $value->paymentMethod->tag,
           'cost' => theme('price', array('value' => $cost, 'free' => TRUE)),
           'description' => $value->paymentMethod->descriptionTag,
@@ -84,7 +84,7 @@ function pcpayments_request_form($form, &$form_state, $key) {
   );
   $form['wrapper']['description'] = array(
       '#type' => 'item',
-      '#title' => strtoupper(t('Description')),
+      '#title' => strtoupper(t('Description')) . ' : ',
       '#markup' => "<div class ='textDescription'>$request->description</div>",
   );
   $form['wrapperPayement_Price'] = array(
@@ -94,7 +94,6 @@ function pcpayments_request_form($form, &$form_state, $key) {
   );
   $form['wrapperPayement_Price']['payment'] = array(
       '#type' => 'fieldset',
-      '#title' => t('Concernant le paiement en ligne'),
       '#attributes' => array('class' => array('payment')),
   );
 
@@ -102,7 +101,7 @@ function pcpayments_request_form($form, &$form_state, $key) {
       '#type' => 'tableselect',
       '#multiple' => FALSE,
       '#options' => $methods,
-      '#header' => array('image' => t('Image'), 'name' => t('Name'), 'cost' => t('Cost'), 'description' => t('Description')),
+      '#header' => array('name' => t('Name'), 'cost' => t('Cost'), 'description' => t('Description')),
 //      '#header' => array('image' => '', 'name' => '', 'cost' => ''/* , 'description' => '' */),
       //'#default_value' => $defaultOption,
       '#ajax' => $ajax,
@@ -113,8 +112,15 @@ function pcpayments_request_form($form, &$form_state, $key) {
     $form['wrapperPayement_Price']['payment']["aboutMethode"] = array(
       '#type' => 'item',
       '#id' => 'edit-aboutmethode',
-      '#markup' => " ",
+      '#markup' => t('textImagePayment'),
     );
+    
+     $form['wrapperPayement_Price']["textpayment"] = array(
+      '#type' => 'item',
+      '#id' => 'textpaymentRequest',
+      '#markup' => "<p></p>",
+    );
+
     $form['actions'] = array(
         '#type' => 'container',
         '#attributes' => array('class' => array('actions', 'form-actions')),
@@ -218,6 +224,6 @@ function pcpayments_request_form_callback(&$form, &$form_state) {
   $form['order']['list'] = array(
       '#markup' => theme('table', array('rows' => $rows)),
   );
-  $form['wrapperPayement_Price']['payment']["aboutMethode"]["#markup"]=$methodePayement[$form_state['values']['method']]['description'];
+  $form['wrapperPayement_Price']["textpayment"]["#markup"]='<p>' . $methodePayement[$form_state['values']['method']]['description'] .'</p>';
   return $form;
 }

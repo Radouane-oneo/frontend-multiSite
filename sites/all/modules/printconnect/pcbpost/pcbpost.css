@@ -67,8 +67,9 @@
   margin:0;
   padding-left:40px;
   background: url(postpoint.png) no-repeat top left;
-  height: 50px;  
+  /*min-height: 50px;  */
   line-height: 1em;
+  margin-bottom: 10px;
 }
 
 #pcbpost-picker-form #result .name {

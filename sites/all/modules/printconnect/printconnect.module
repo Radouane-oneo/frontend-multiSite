@@ -435,7 +435,7 @@ function theme_price($vars) {
                 'currency' => array(
                     '#prefix' => '<span class="currency">',
                     '#suffix' => '</span>',
-                    '#markup' => $currencySymbol,
+                    '#markup' => '&nbsp;' . $currencySymbol,
                     '#weight' => 5,
                 ),
                 'space' => array(
@@ -485,7 +485,7 @@ function theme_price($vars) {
                 'whole' => array(
                     '#prefix' => '<span class="whole">',
                     '#suffix' => '</span>',
-                    '#markup' => $currencySymbol.$parts[0],
+                    '#markup' => $currencySymbol.'&nbsp;'.$parts[0],
                     '#weight' => 2,
                 ),
                 'decimalpoint' => array(

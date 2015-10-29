@@ -15,6 +15,7 @@ define([
             "change #prices-table input.form-radio" : "changeQuantity",
             "click #prices-table tbody tr:not(.custom)" : "selectInput",
             "click #edit-calculer" : "calculatePrice",
+          //  "change #prices-table input.form-custom-radio" : "calculatePrice",
             "keypress #edit-custom" : "checkQuantity",
             "click #deadlinestooltip legend" : "toggleCollapse",
             "click #deadlinestooltip legend a" : "preventDefault",
@@ -42,9 +43,27 @@ define([
                 "shippingHTML" : this.$("#bloc-shipping").html(),
                 "customQuantity" : !(this.model.get("toolBoxGroup")["pricing"][this.model.get("quantity")]),
                 "expandedOptions" : this.$("#edit-options").is(":visible")
+                        // "pricing" : this.model.toolBoxGroup.pricing
             }));
             $(this.config.containerId).html(this.$el);
+        
+            var existQuantity = '';
+            if($("#edit-custom").val()){
+                _.each(this.model.get("toolBoxGroup")["pricing"], function(price, i){
+                    console.log(i);
+                    console.log(parseInt($("#edit-custom").val()));
+                    if(parseInt($("#edit-custom").val()) == i) {
+                        existQuantity = i;
+                        return true
+                    }
+                });
 
+
+                console.log('lolo'+existQuantity);
+                if (existQuantity == ''){console.log('lolo'+existQuantity);
+                    $('#trQuantitePersonalisee').show();
+                }
+            }
             this.$("#bloc-shipping").load("/" + this.config.prefix + "/getshippingdate #edit-shipping", {
                 "productId" : this.config.labels['productId'],
                 "items" : this.model.get("toolBoxGroup")["toolboxItems"],
@@ -139,8 +158,17 @@ define([
             $(e.currentTarget).find("input.form-radio").change();
         },
         calculatePrice: function(){
+            
             var quantity = parseInt(this.$("#edit-custom").val());
             if(isNaN(quantity)) return false;
+            
+            if(isNaN(quantity)){
+                $('#trQuantitePersonalisee').hide();
+            }
+            else{
+               $('#trQuantitePersonalisee').show();     
+            }
+            
             var pricing = this.model.get("toolBoxGroup")["pricing"][quantity];
             var price = null;
             var customHeight = this.model.get('heightCF');

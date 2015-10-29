@@ -3833,7 +3833,7 @@ a.googleconnect {
     margin: 0 10px 6px 0;
     overflow: hidden;
     text-transform: uppercase;
-    width: 479px;
+    width: 477px;
 }
 .page-checkout #pccheckout-personal-form select, 
 .page-checkout #pccheckout-personal-form input[type="text"] {
@@ -3941,7 +3941,8 @@ a.googleconnect {
 }
 .page-pcbpost-picker .whitebox {
 	margin: 10px;
-	height: 600px;
+	/*height: 558px;
+	height: 519px;*/
 	overflow: hidden;
 	padding: 16px 0px 0px;
 }
@@ -3951,16 +3952,18 @@ a.googleconnect {
 .page-pcbpost-picker #pcbpost-picker-form #result {
 	background: #fff;
 	border-radius: 4px 4px 4px 4px;
-	height: 520px;
+	/*height: 520px;
+	height: 457px;*/
 }
 .page-pcbpost-picker #pcbpost-picker-form #result #map {
 	border-radius: 4px 4px 4px 4px;
-	width: 590px;
-	height: 494px;
-	margin: 10px;
+	width: 600px; 
+	height: 416px;
+	margin: 10px 0px 10px 10px;
 }
 .page-pcbpost-picker #pcbpost-picker-form #result .pois {
-	height: 510px;
+	/*height: 510px;*/
+	height: 426px;
 	padding-top: 10px;
 	margin-left: 10px;
 	background: #fff;
@@ -4004,6 +4007,9 @@ a.googleconnect {
 #pcbpost-picker-form #result .name, 
 #pcbpost-picker-form #result .services {
 	color: #646464;
+}
+#pcbpost-picker-form #result .name.name_popup_map{
+	color: #ff6600;
 }
 .page-pcbpost-picker table.openinghours tr, 
 .page-pcbpost-picker table.openinghours tr td {
@@ -12062,4 +12068,8 @@ form#pccheckout-payment-form fieldset legend{
     display: none;
 }
 
-
+ 
+.page-payment #menu_top_header.menu,
+.page-checkout #menu_top_header.menu{
+	display: none;
+}

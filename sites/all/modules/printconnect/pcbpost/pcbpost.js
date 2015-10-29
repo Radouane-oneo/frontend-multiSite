@@ -42,7 +42,7 @@ function pcbpost_checkout_invoiceanddelivery_callback(poi, html){
       if ($.fancybox){
         $('.pcbpost-picker-link', context).fancybox({
           width:980,
-          height:660,
+          height:660, 
           padding: 0,
           margin: 0,
           scrolling: false,

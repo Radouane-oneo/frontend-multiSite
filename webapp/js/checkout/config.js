@@ -24,6 +24,9 @@ define([
                 defaultBA = billingAccount;
             }
         });
+	if (!defaultBA) {
+	    defaultBA = billingAccountList[0];
+	}
 
     } catch (e) {
         billingAccountList = {};

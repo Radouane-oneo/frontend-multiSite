@@ -2092,7 +2092,7 @@ body.front #block-block-13:after {
 .page-templates #pctemplates-config-form2 .dropdown li:nth-child(4n+5) {
 	clear: left !important;
 }
-.page-products #pcproducts-config-form .dropdown li:nth-child(4n+5):before, 
+/*.page-products #pcproducts-config-form .dropdown li:nth-child(4n+5):before, 
 .page-templates #pctemplates-config-form2 .dropdown li:nth-child(4n+5):before {
 	content: '';
 	display: block;
@@ -2100,7 +2100,7 @@ body.front #block-block-13:after {
 	height: 1px;
 	background: #f1f1f1;
 	position: absolute;
-}
+}*/
 .page-products #pcproducts-config-form .dropdown li .form-type-item, 
 .page-templates #pctemplates-config-form2 .dropdown li .form-type-item {
 	text-align: left;
@@ -3791,11 +3791,24 @@ a.googleconnect {
 	margin-bottom: 10px;
 }
 .page-checkout #pccheckout-personal-form fieldset#edit-personal, 
-.page-checkout #pccheckout-personal-form fieldset#edit-address {
-	border-bottom: solid 1px #fff;
-	margin: 0 -10px 10px;
-	padding: 0 10px 10px;
+.page-checkout #pccheckout-personal-form fieldset#edit-address{
+	border-bottom: 1px solid #e3e3e3;
+	margin: 0;
+	padding: 10px 10px 10px;
 }
+
+.page-checkout #pccheckout-personal-form fieldset#edit-company{ 
+	margin: 0;
+	padding: 10px 10px 10px;
+}
+
+.page-checkout #pccheckout-personal-form fieldset#edit-personal .fieldset-wrapper,
+.page-checkout #pccheckout-personal-form fieldset#edit-address  .fieldset-wrapper,
+.page-checkout #pccheckout-personal-form fieldset#edit-company  .fieldset-wrapper{
+	margin-bottom: 0;
+	padding: 0 10px;
+} 
+
 .page-checkout #pccheckout-personal-form fieldset legend {
 	display: none;
 }
@@ -3813,18 +3826,14 @@ a.googleconnect {
 	overflow: hidden;
 }
 .page-checkout #pccheckout-personal-form label {
-
 	display: block;
-	margin: 0;
-	font-weight: 400;
-	text-transform: uppercase;
-	float: left;
-	padding-right: 20px;
-	width: 150px;
-	text-align: right;
-	line-height: 19px;
-	padding-top: 10px;
-	padding-bottom: 10px;
+    float: left;
+    font-weight: 400; 
+    line-height: 34px;
+    margin: 0 10px 6px 0;
+    overflow: hidden;
+    text-transform: uppercase;
+    width: 479px;
 }
 .page-checkout #pccheckout-personal-form select, 
 .page-checkout #pccheckout-personal-form input[type="text"] {
@@ -3874,6 +3883,13 @@ a.googleconnect {
 	padding: 10px 0 0 0;
 	position: relative;
 	overflow: hidden;
+	
+}
+
+.page-checkout #pccheckout-personal-form{
+	border-color: #e1e1e1;
+    border-style: solid;
+    border-width: 1px;
 }
 #pccheckout-invoiceanddelivery-form legend{
 	display: block;
@@ -11186,6 +11202,16 @@ input.ui-button.payment {
     background: #79b61a url("images/button_payment.png") no-repeat left center;
 }
 
+.page-checkout-personal .continue.save-button{
+	background: #79b61a;
+	padding-left: 15px;
+}
+
+.page-checkout-personal .continue.save-button:hover{
+	background: #79b61a;
+	cursor: pointer;
+}
+
 .page-paymentrequest .form-actions input.button,
 .page-payment #edit-actions input.payment{
     background: #79b61a url("images/button_payment.png") no-repeat 25px  center;
@@ -11930,7 +11956,45 @@ input.ui-button.payment {
 
 	padding: 15px 10px 15px 22px;
 	margin: 0;
-}  
+}
+
+.region-footer-second .block h2{
+	display: none;
+}
+
+.region-footer-second ul{
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	list-style: none;
+}
+
+.region-footer-second ul li{
+	float: left;
+	margin: 0 6px;
+	list-style: none;
+	color: #646464;
+	position: relative;
+}
+
+.region-footer-second ul li:after{
+	content: ' ';
+    position: absolute;
+    top: 48%;
+    right: -8px;
+    width: 4px;
+    background: #646464;
+    display: block;
+    height: 1px;
+}
+.region-footer-second ul li:last-child:after{
+	display: none;
+}
+
+.region-footer-second ul li a{
+	color: #646464;
+}
+
 .page-myprintconnect-orders .priceblock:before {
     background: #d1d1d1;
     content: ' ';    
@@ -11945,3 +12009,27 @@ input.ui-button.payment {
 #trQuantitePersonalisee{
     display:none;
 }
+
+ 
+
+.select-city-adress > a.select2-choice,
+.select-country-adress >a.select2-choice {
+	width: 468px !important;
+}
+
+ 
+form#pccheckout-payment-form fieldset legend{
+	font-size: 16px;
+}
+
+#pcproducts-config-form .templates .text {
+	margin-bottom: 0;
+}
+
+.page-products #pcproducts-config-form .dropdown li.selectedItem {
+    background: #F1F1F1;
+    margin: 0;
+    padding: 10px 5px;
+}
+
+

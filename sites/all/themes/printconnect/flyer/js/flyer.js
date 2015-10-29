@@ -1,6 +1,7 @@
 jQuery(document).ready(function(e) {
     
-      
+    jQuery('select:not(#pcproducts-calculator-form select)').select2(); 
+
     if (jQuery('#homeSlider').length) {
         jQuery('#homeSlider ul').cycle({
             pager:'#pagerSliderHolder',
@@ -156,7 +157,7 @@ jQuery(document).ready(function(e) {
             });
        
             $(".button,input[type=submit]").button();
-            $('#pcproducts-calculator-form select').selectBox(); 
+            $('#pcproducts-calculator-form select').selectBox();             
             $('table tr td input:checked').each(function () {
                 $(this).parents('tr').addClass('checked');
             });

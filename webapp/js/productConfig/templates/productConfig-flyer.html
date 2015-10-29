@@ -58,7 +58,7 @@
                 <% } %>
                 <ul>
                     <% _.each(toolBoxItem.data,function(item){ %>
-                     <li class='<%= item.code %>'>
+                     <li class='<%= item.code %> <% if(selected && (item.id == selected.id)){ print("selectedItem"); } %> '>
                         <a id="<%= item.id %>" href=""><img width="154" height="154" alt="" src="<%= config.imagesUrl %>items/<%= item.id %>.png">
 
                         <div class="text"><%= item.name %></div>

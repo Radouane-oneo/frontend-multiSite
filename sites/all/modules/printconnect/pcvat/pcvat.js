@@ -46,17 +46,14 @@
 		    if (data.code == 200 && $.isEmptyObject(data.data) == false) {
 			number.addClass('error');
             		number.val('');
-			var vatplaceholder = Drupal.t('Vat already used.. please contact customer service');
-			$('.customErrors').remove();
-			if ($('.messages').length == 0){
-			    $('.region-content').before('<div class="messages error"><ul><li class="customErrors">'+vatplaceholder+'</li></ul></div>');
-			} else {
-			    $('.messages ul').append('<li class="customErrors">'+vatplaceholder+'</li>');
-			}
-			$('html, body').animate({
-              		    scrollTop:$(".messages.error").offset().top
-            		    }, 'slow'
-			);
+			$.fancybox({content : $('#popUpContainer').html(),
+                		openEffect  : 'none',
+                		closeEffect : 'none',
+                		width    : 330,
+                		height   : 100,
+                		afterClose : function(){
+                		}
+            		});
 		    }
     		}
 		});

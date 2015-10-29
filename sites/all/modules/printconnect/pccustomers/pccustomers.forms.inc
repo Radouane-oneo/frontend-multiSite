@@ -464,6 +464,7 @@ function pccustomers_address_form($form, $form_state, $addressId) {
       '#required' => TRUE,
       '#options' => $options,
       '#default_value' => $address->country,
+      '#attributes' => array('class' => array('select-city-adress')),
   );
 
 //  $form['vatNumber'] = array(
@@ -577,6 +578,7 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#required' => TRUE,
       '#options' => $options,
       '#default_value' => $Billingaddresses->country,
+      '#attributes' => array('class' => array('select-country-adress')),
   );
   
   $form['isCompany'] = array(
@@ -798,6 +800,7 @@ function pccustomers_newaddress_form($form, $form_state) {
               'type' => NULL,
           ),
       ),
+      '#attributes' => array('class' => array('select-country-adress')),
   );
   
   $form['company'] = array(
@@ -930,7 +933,8 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
         '#title' => t('Country'),
         '#required' => TRUE,
         '#options' => $countries,
-        '#default_value' => 0
+        '#default_value' => 0,
+        '#attributes' => array('class' => array('select-country-adress')),
     );
 
   
@@ -1126,7 +1130,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
   if (variable_get('pc_fbappid', FALSE) || variable_get('pc_googleappid', FALSE)) {
 
     $form['login']['intro'] = array(
-        '#markup' => '<h3 class="login-title">Connectez-vous via votre réseau social.</h3>',
+        '#markup' => '<h3 class="login-title">' . t('Connectez-vous via votre réseau social') .'</h3>',
     );
 
     $form['login']['openauth'] = array(
@@ -1153,7 +1157,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
   }
    $form['login']['decription'] = array(
       '#prefix'=> '<div class="login-form-item first-item"><p>',
-      '#markup'=>"Déja client? ", //l('Connectez-vous.','#',array('attributes' => array('class' => 'logbl')))
+      '#markup'=>t('Déja client? '), //l('Connectez-vous.','#',array('attributes' => array('class' => 'logbl')))
       '#weight' => 6,
       '#suffix'=>'</p>',
    );
@@ -1202,7 +1206,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
   
    $form['login']['decriptionnew'] = array(
       '#prefix'=> '<div class="login-form-item last-item"><p>',
-      '#markup'=>"Nouveau client? ", // .l('Créer votre compte.','#',array('attributes' => array('class' => 'logbl')))
+      '#markup'=>t("Nouveau client? "), // .l('Créer votre compte.','#',array('attributes' => array('class' => 'logbl')))
       '#weight' => 10,
       '#suffix'=>'</p>',
    );
@@ -1235,6 +1239,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
           array('newpassword'),
       ),
     );
+    
   /* End second form */
     
     

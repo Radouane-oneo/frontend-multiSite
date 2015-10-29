@@ -10,7 +10,7 @@
           var errorMarkup = "<div class='messages error'><ul>";
           var errorMsgs = new Array();
 
-          $('#content form .required').each(function(i, elem) {
+          $('#content form input.required, #content form select.required').each(function(i, elem) {
             var _this = $(this);
             var inputName;
             if(_this.val() == "" || _this.val() == 0) {
@@ -194,6 +194,13 @@
     }
   }
    $('#edit-vatnumber-country').val('');
+   console.log('herer');
+   if ($('#edit-country').val() != 0) {
+       var url = Drupal.settings.basePath + '?q=js/country/' + $(this).val();
+           $.getJSON(url, null, function (data) {
+               $('#edit-vatnumber-country').val(data.vatPrefix).trigger('change');
+       });
+   }
 })(jQuery);
 
 function pccustomers_login_form_submit(form,triggeringElement) {

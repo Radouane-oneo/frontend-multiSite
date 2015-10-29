@@ -411,7 +411,7 @@ function new_checkout_ajax_getshippingaddresses() {
 
     $customer = \printconnect\Customers\Factory::Current();
 
-    if($customer && isset($orderItemShipping['orderShippingAddress']) && isset($orderItemShipping['orderShippingAddress']['name'])) {
+    if($customer && isset($orderItemShipping['orderShippingAddress']) && isset($orderItemShipping['orderShippingAddress']['name']) && empty($orderItemShipping['orderShippingAddress']['name'])) {
         $orderItemShipping['orderShippingAddress']['name'] = $customer->name;
     }
 

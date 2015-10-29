@@ -40,8 +40,6 @@ define([
                 this.priceBlockView = new priceBlockView(this.model);
                 
             }
-            this.$('#WeAlsoMake').html($('.blocWeAlsoMake').parents('.block-block').html());
-            jQuery('#sidebar-second .blocWeAlsoMake').parents('.block-block').remove();
             clearInterval(timerSaveP);
             $("#save-progress-bar").find("div").stop(true).animate({width: 100 + '%'},1000, function(){
                 $('#box-progress').hide();
@@ -54,7 +52,7 @@ define([
                 "config" : this.config
             }));
             this.$('#WeAlsoMake').html($('.blocWeAlsoMake').parents('.block-block').html());
-            jQuery('#sidebar-second .blocWeAlsoMake').parents('.block-block').remove();
+           // jQuery('#sidebar-second .blocWeAlsoMake').parents('.block-block').remove();
           
             $(this.config.containerId).html(this.$el);
         },

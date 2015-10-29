@@ -63,7 +63,7 @@ function theme_pcbpost_poi($vars) {
     if ($vars['format'] == 'infowindow') {
       $html .= '
           <div>
-          <div class="name">' . htmlentities($poi->Name) . '</div>
+          <div class="name name_popup_map">' . htmlentities($poi->Name) . '</div>
           <div class="address">' . $poi->Street . ' ' . $poi->Number . '<br/>' . $poi->Zip . ' ' . $poi->City . '</div>
           </div>';
 

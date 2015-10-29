@@ -10,7 +10,7 @@
           var errorMarkup = "<div class='messages error'><ul>";
           var errorMsgs = new Array();
 
-          $('#content form .required').each(function(i, elem) {
+          $('#content form input.required, #content form select.required').each(function(i, elem) {
             var _this = $(this);
             var inputName;
             if(_this.val() == "" || _this.val() == 0) {

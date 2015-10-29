@@ -25,7 +25,7 @@ define([
             }
         });
 	if (!defaultBA) {
-	    $defaultBA = billingAccountList[0];
+	    defaultBA = billingAccountList[0];
 	}
 
     } catch (e) {

@@ -128,10 +128,10 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         '#attributes' => array('class' => array('headerleft'))
     );
   $form['header']['left']['send'] = array(
-        '#markup' => "<span class='send'>".t('delivery date').": ".format_date(strtotime($order->expectedDeliveryDate), 'medium', 'd-m-y')."</span>"
+        '#markup' => "<div class='deliverydate'><span class='send'>".t('delivery date').":</span><span class='senddate'>".format_date(strtotime($order->expectedDeliveryDate), 'medium', 'd-m-y')."</span></div>"
     );
   $form['header']['left'] ['livraison'] = array(
-        '#markup' => "<span class='livraison'>".t('shipping date').": ".format_date(strtotime($order->expectedShippingDate), 'medium', 'd-m-y')."</span>"
+        '#markup' => "<div class='shippingdate'><span class='livraison'>".t('shipping date').":</span><span class='senddate'> ".format_date(strtotime($order->expectedShippingDate), 'medium', 'd-m-y')."</span></div>"
     );
   if ($order->orderShippingAddress) {
     $form['delivery'] = array(

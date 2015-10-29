@@ -11739,9 +11739,9 @@ input.ui-button.payment {
     border: 1px solid #d1d1d1;
     padding: 0 10px;
     margin-bottom: 20px;
-    border-radius: 3px 3px 3px 3px;
-    -moz-border-radius: 3px 3px 3px 3px;
-    -webkit-border-radius: 3px 3px 3px 3px;
+    border-radius: 0px 0px 3px 3px;
+    -moz-border-radius: 0px 0px 3px 3px;
+    -webkit-border-radius: 0px 0px 3px 3px;
 }
 #pcorders-order-form .delivery legend,
 #pcorders-order-form .invoice legend {
@@ -11953,23 +11953,70 @@ input.ui-button.payment {
 .page-myprintconnect-orders #edit-extra .fieldset-wrapper {
     border-radius: 0;
 }
-.region-content #pcorders-order-form .form-actions {
+.page-myprintconnect-orders .priceblock:before {
+    background: #d1d1d1;
+    content: ' ';    
+    position: absolute;  
+    display: block;  
+	height: 100%;
+    width: 1px;
+    right: 165px;
+    top: 0;
+}
+.headerorder {
+    background: #f1f1f1;
+    overflow: hidden;
+    border: 1px solid #d1d1d1;
+    border-bottom: 0;
+    padding: 17px 20px 15px 10px;
+    border-radius: 3px 3px 0px 0px;
+    -moz-border-radius: 3px 3px 0px 0px;
+    -webkit-border-radius: 3px 3px 0px 0px;
+}
+.headerright, .headerleft {
+    width: 50%;
+    float: left;
+    line-height: 12px;
+}
+.headerright span.title {
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 20px;
+    text-transform: uppercase;
+    color: #646464;
+    display: block;
+}
+.headerright span.status {
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #f60;
+    line-height: 20px;
+}
+.deliverydate {
+    font-size: 12px;
+    line-height: 20px;
+    color: #646464;
+}
+.deliverydate span.senddate {
+    float: right;
+}
 
+/* End page confirmation */
+
+.region-content #pcorders-order-form .form-actions {
 	padding: 15px 10px 15px 22px;
 	margin: 0;
 }
-
 .region-footer-second .block h2{
 	display: none;
 }
-
 .region-footer-second ul{
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
 	list-style: none;
 }
-
 .region-footer-second ul li{
 	float: left;
 	margin: 0 6px;
@@ -11977,7 +12024,6 @@ input.ui-button.payment {
 	color: #646464;
 	position: relative;
 }
-
 .region-footer-second ul li:after{
 	content: ' ';
     position: absolute;
@@ -11991,42 +12037,22 @@ input.ui-button.payment {
 .region-footer-second ul li:last-child:after{
 	display: none;
 }
-
 .region-footer-second ul li a{
 	color: #646464;
 }
-
-.page-myprintconnect-orders .priceblock:before {
-    background: #d1d1d1;
-    content: ' ';    
-    position: absolute;  
-    display: block;  
-	height: 100%;
-    width: 1px;
-    right: 165px;
-    top: 0;
-}
-
 #trQuantitePersonalisee{
     display:none;
 }
-
- 
-
 .select-city-adress > a.select2-choice,
 .select-country-adress >a.select2-choice {
 	width: 468px !important;
 }
-
- 
 form#pccheckout-payment-form fieldset legend{
 	font-size: 16px;
 }
-
 #pcproducts-config-form .templates .text {
 	margin-bottom: 0;
 }
-
 .page-products #pcproducts-config-form .dropdown li.selectedItem {
     background: #F1F1F1;
     margin: 0;

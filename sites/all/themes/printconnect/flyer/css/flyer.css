@@ -11727,9 +11727,10 @@ input.ui-button.payment {
 	padding-bottom: 30px;
 }
 
-#sidebar-second .blocWeAlsoMake{
+#block-block-93{
     display: none;
 }
+
 .linkproduct {
   float: right;
     line-height: 0;
@@ -12033,15 +12034,15 @@ form#pccheckout-payment-form fieldset legend{
 }
 
 .page-products #pcproducts-config-form .dropdown li.selectedItem {
-    background: #f60;
+    background: #F1F1F1;
     margin: 0;
     padding: 10px 5px;
 }
-
-.selectedItem div {
-    color: #fff;
+#block-block-95{
+    display: none;
 }
 
+ 
 .page-payment #menu_top_header.menu,
 .page-checkout #menu_top_header.menu{
 	display: none;

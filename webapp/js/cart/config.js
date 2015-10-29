@@ -21,7 +21,7 @@ define([
         prefix : GlobalPrefix,
         isConnected : isConnected,
         langId : GlobalLandId,
-        designtoolLink : 'http://designtool.prd.printconcept.com',
+        designtoolLink : GlobalDesigntoolLink,
         labels : GlobalLabels
     };
 

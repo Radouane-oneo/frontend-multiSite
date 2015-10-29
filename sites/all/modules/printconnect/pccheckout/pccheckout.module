@@ -169,7 +169,7 @@ function pccheckout_menu() {
           'page arguments' => array(),
           'access arguments' => array('access content'),
           'type' => MENU_CALLBACK,
-          'title' => t('Invoice and delivery')
+          'title' => 'Invoice and delivery'
       );
 
       $items['checkout/ajax/getshippingaddresses'] = array(
@@ -374,7 +374,16 @@ function new_checkout_and_delivery_loadpage() {
       "fieldCmpVatNumber" => t("Sociéte et numero de tva sont requit"),
       "invalidCharactersLength" => t("invalidCharactersLength"),
       "InvalidVatNumber" => t("votre numero de tva est invalid"),
-      "TVANumber" => t("Are you a company ?")
+      "TVANumber" => t("Are you a company ?"),
+      "shippingTypeStore" => t("shippingTypeStore"),
+      "shippingTypeBpostPickupPoint" => t("shippingTypeBpostPickupPoint"),
+      "shippingTypeStoreInAntwerpen" => t("Shipping address"),
+      "shippingTypePrinter" => t("Shipping address"),
+      "shippingTypeStoreAdd" => t("shippingTypeStoreAdd"),
+      "shippingTypeStoreChange" => t("shippingTypeStoreChange"),
+      "shippingTypeBpostPickupPointAdd" => t("shippingTypeBpostPickupPointAdd"),
+      "shippingTypeBpostPickupPointChange" => t("shippingTypeBpostPickupPointChange"),
+      "changeName" => t("changeName")
     );
 
      $cart = \printconnect\Carts\Factory::GetCartJson();
@@ -402,7 +411,7 @@ function new_checkout_ajax_getshippingaddresses() {
 
     $customer = \printconnect\Customers\Factory::Current();
 
-    if($customer && isset($orderItemShipping['orderShippingAddress']) && isset($orderItemShipping['orderShippingAddress']['name'])) {
+    if($customer && isset($orderItemShipping['orderShippingAddress']) && isset($orderItemShipping['orderShippingAddress']['name']) && empty($orderItemShipping['orderShippingAddress']['name'])) {
         $orderItemShipping['orderShippingAddress']['name'] = $customer->name;
     }
 

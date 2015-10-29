@@ -1,5 +1,8 @@
 <div id="edit-summary-shipping" class="shipping form-wrapper">
-    <legend><span class="fieldset-legend"><%= model.labels['shippingAddress'] %></span></legend>
+    <%
+    var suffixButton = "Add";
+    %>
+    <legend><span class="fieldset-legend"><%= model.labels[model.shippingAddresses.orderItemShipping.shippingTypeTag] %></span></legend>
     <div class="fieldset-wrapper fieldset-wrapper-shipping-detail fieldset-sameheight">
         <div class="pup wrap_detail">
         <%
@@ -8,6 +11,7 @@
         <%
             if(orderItemShipping && orderItemShipping.orderShippingAddress) {
                 var shippingAddress = orderItemShipping.orderShippingAddress;
+                suffixButton = "Change";
         %>
         <div id="detail">
             <input type="hidden" name="shipping-detail-id" value="<%= shippingAddress.id %>">
@@ -44,7 +48,9 @@
         </div>
         
         <% if($.inArray(orderItemShipping['shippingTypeTag'], ["shippingTypeStoreInAntwerpen","shippingTypePrinter"]) == -1) { %>
-        <a class="toggle" href="#shipping-address" id="toggle-shipping-form"><%= model.labels['changeShippingAddress'] %></a>
+        <a class="toggle" href="#shipping-address" id="toggle-shipping-form"><%= model.labels[model.shippingAddresses.orderItemShipping.shippingTypeTag + suffixButton] %></a>
+        <% } else { %>
+        <a class="toggle" href="#shipping-address" id="toggle-shipping-form"><%= model.labels["changeName"] %></a>
         <% } %>
         
     </div>

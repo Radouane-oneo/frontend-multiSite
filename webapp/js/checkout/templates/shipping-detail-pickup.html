@@ -43,8 +43,9 @@
                 %>
             </table>
         </div>
+        <% } else { %>
+            <span><%= model.labels[model.shippingAddresses.orderItemShipping.shippingTypeTag + "Message"] %></span>
         <% } %>
-
         </div>
         
         <% if($.inArray(orderItemShipping['shippingTypeTag'], ["shippingTypeStoreInAntwerpen","shippingTypePrinter"]) == -1) { %>

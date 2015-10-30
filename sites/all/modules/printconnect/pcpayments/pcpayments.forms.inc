@@ -73,6 +73,12 @@ function pcpayments_request_form($form, &$form_state, $key) {
           'type' => NULL,
       ),
   );
+
+  $form['deer'] = array(
+      '#markup' => t('Deer') . ' ' . $request->customerName .', <br>',
+      '#weight'=> 0,
+      );
+
   $form['info'] = array(
       '#markup' => t('Payment request intro'),
       '#weight'=> 0,
@@ -82,11 +88,19 @@ function pcpayments_request_form($form, &$form_state, $key) {
       '#type' => 'container',
       '#weight'=> 1,
   );
+
   $form['wrapper']['description'] = array(
       '#type' => 'item',
-      '#title' => strtoupper(t('Description')) . ' : ',
+      '#title' => t('Description') . ' : ',
       '#markup' => "<div class ='textDescription'>$request->description</div>",
   );
+  
+  $form['wrapper']['amount'] = array(
+      '#type' => 'item',
+      '#title' => t('Montant à payer') . ' : ',
+      '#markup' => "<div class ='textDescription'>" . theme('price', array('value' => $request->amountPaid)) ."</div>",
+  );
+
   $form['wrapperPayement_Price'] = array(
       '#type' => 'container',
       '#attributes' => array('id' => 'wrapperPayement_Price'),
@@ -99,6 +113,7 @@ function pcpayments_request_form($form, &$form_state, $key) {
 
   $form['wrapperPayement_Price']['payment']['method'] = array(
       '#type' => 'tableselect',
+      '#prefix' => '<h3 class="request-title">' . t('Choisissez une mèthode de paiement') .'</h3>',
       '#multiple' => FALSE,
       '#options' => $methods,
       '#header' => array('name' => t('Name'), 'cost' => t('Cost'), 'description' => t('Description')),
@@ -106,7 +121,7 @@ function pcpayments_request_form($form, &$form_state, $key) {
       //'#default_value' => $defaultOption,
       '#ajax' => $ajax,
       '#required' => TRUE,
-      '#attributes' => array('class' => array('grid', 'clearfix','methodePayement','rows-6')),
+      '#attributes' => array('class' => array('grid','methodePayement','rows-6')),
       '#default_value' => $default,
   );
     $form['wrapperPayement_Price']['payment']["aboutMethode"] = array(
@@ -118,7 +133,15 @@ function pcpayments_request_form($form, &$form_state, $key) {
      $form['wrapperPayement_Price']["textpayment"] = array(
       '#type' => 'item',
       '#id' => 'textpaymentRequest',
-      '#markup' => "<p></p>",
+    );
+
+    $form['agree'] = array(
+      '#type' => 'checkbox',
+      '#prefix' =>'<div class="condition-general">',
+      '#suffix' =>'</div>',
+      '#title' => t('I agree with the !termsandconditionslink', array('!termsandconditionslink' => theme('generalconditionslink'))),
+      '#required' => TRUE,
+      '#weight' => 9,
     );
 
     $form['actions'] = array(
@@ -141,6 +164,7 @@ function pcpayments_request_form($form, &$form_state, $key) {
   $form['#id'] ="pcpayments-request-form";
   $form_state['storage']['totalExclVat'] = $amount;
   $form_state['storage']['total'] = $total;
+  $form_state['storage']['amountPaid'] = $request->amountPaid;
   $form_state['storage']['request'] = $request;
   $form_state['storage']['order'] = $request->order;
   $form_state['cache'] = TRUE;
@@ -214,9 +238,9 @@ function pcpayments_request_form_callback(&$form, &$form_state) {
   $rows[] = array(
         'no_striping' => TRUE,
         'data' => array(
-            t('VAT'),
+            t('Total HTVA déjà payé'),
             array(
-                'data' => theme('price', array('value' =>$vatAmount, 'free' => TRUE)),
+                'data' => theme('price', array('value' =>$request->amountPaid)),
                 'class' => array('text-right'),
             ),
         ),
@@ -224,6 +248,7 @@ function pcpayments_request_form_callback(&$form, &$form_state) {
   $form['order']['list'] = array(
       '#markup' => theme('table', array('rows' => $rows)),
   );
+
   $form['wrapperPayement_Price']["textpayment"]["#markup"]='<p>' . $methodePayement[$form_state['values']['method']]['description'] .'</p>';
   return $form;
 }

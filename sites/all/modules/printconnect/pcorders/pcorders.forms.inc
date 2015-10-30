@@ -254,7 +254,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
     );
     if($item->refJob){
         $form['order']['details']['item'][$item->id]['description']['refJob'] = array(
-              '#markup' => '<label class="labelOrder">' . t('Reference product') .' : <span class="refJob">'. $item->refJob.'</span></label>',
+              '#markup' => '<label class="labelOrder">' . t('Reference product') .' <span class="refJob">'. $item->refJob.'</span></label>',
         );
     }
     $price = $item->convertedPrice;
@@ -321,7 +321,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         );
       }
     }
-    if(count($item->fotoliaItems)||$item->fileCheck){
+    if(count($item->fotoliaItems)|| $item->fileCheck){
         $form['order']['details']['item'][$item->id]['blocfotoliacontrol']= array(
                     '#type' => 'container',
                     '#attributes' => array('class' => array('clearfix' , 'blocfotoliacontrol')),
@@ -344,15 +344,16 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
             $totalprice+=$priceControl;
         }
         if(count($item->fotoliaItems)){
-                $form['order']['details']['item'][$item->id]['blocfotoliacontrol']['fotolia']= array(
-                    '#type' => 'container',
-                    '#attributes' => array('class' => array('blocfotolia')),
-                    );
+                
                 foreach ($item->fotoliaItems as  $fotoliaitem){
-                    $form['order']['details']['item'][$item->id]['blocfotoliacontrol']['fotolia']['libelle']= array(
+                    $form['order']['details']['item'][$item->id]['blocfotoliacontrol']['fotolia'][$fotoliaitem->id]= array(
+                      '#type' => 'container',
+                      '#attributes' => array('class' => array('blocfotolia')),
+                    );
+                    $form['order']['details']['item'][$item->id]['blocfotoliacontrol']['fotolia'][$fotoliaitem->id]['libelle']= array(
                             '#markup' => '<span class="fotoliaLabele">'.t("Fotolia image").' "'.$fotoliaitem->id.'"</span>'                             
                             );
-                     $form['order']['details']['item'][$item->id]['blocfotoliacontrol']['fotolia']['price'] = array(
+                     $form['order']['details']['item'][$item->id]['blocfotoliacontrol']['fotolia'][$fotoliaitem->id]['price'] = array(
                     'price' => array(
                             '#theme' => 'price',
                             '#value' => intval($fotoliaitem->price)
@@ -435,21 +436,21 @@ function _pcorders_order_form_build_overview($order) {
         );
       }
     }
-
-//    if ($order->discountItems) {
-//      foreach ($order->discountItems as $discount) {
-//        $label = t('Discount');
-//        
-//        $rows[] = array(
-//            'data' => array(
-//                $label,
-//                $discount->productName,
-//                theme('price', array('value' => $discount->price, 'block' => TRUE)),
-//            ),
-//            'class' => array('discount'),
-//        );
-//      }
-//    }
+   if ($order->discountItems) {
+     foreach ($order->discountItems as $discount) {
+      if($discount->productName != "Fotolia Image"){
+        $label = t('Discount');
+         $rows[] = array(
+             'data' => array(
+                 $label,
+                 $discount->productName,
+                 theme('price', array('value' => $discount->price, 'block' => TRUE)),
+             ),
+             'class' => array('discount'),
+         );
+      }       
+     }
+   }
     if (isset($order->orderItemShipping)) {
       $type = \printconnect\Shipping\Types\Factory::Get($order->orderItemShipping->shippingTypeResellerShop);
       $rows[] = array(

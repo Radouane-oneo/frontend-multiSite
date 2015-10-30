@@ -69,7 +69,7 @@ define([
                 helpers   : {
                     overlay : {closeClick: false} // prevents closing when clicking OUTSIDE fancybox
                 }
-            });
+            }); 
         },
         selectAddress: function(e){
             var address = _.findWhere(this.model.get("shippingAddresses").addresses, {id: parseInt($(e.currentTarget).val())});

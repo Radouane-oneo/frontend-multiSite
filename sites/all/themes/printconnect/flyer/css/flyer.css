@@ -4787,7 +4787,9 @@ form#pcpayments-request-form table tr,.page-checkout-payment .overview table tr,
 	margin-right: 10px;
 }
 #pcorders-order-form .delivery {
-	border-right: 1px solid #d1d1d1;
+	margin-right: 0;
+    padding-left: 2%;
+    border-left: 1px solid #d1d1d1;
 }
 .page-myprintconnect #content .block-pccustomers {
 	float: none;
@@ -4837,9 +4839,6 @@ form#pcpayments-request-form table tr,.page-checkout-payment .overview table tr,
 .page-myprintconnect-orders #pcorders-order-form #edit-addressing {
 	background: #f1f1f1;
 	border-radius: 4px 4px 4px 4px;
-}
-.page-myprintconnect-orders #pcorders-order-form .smaller {
-	display: none;
 }
 
 #pcorders-order-form .delivery h2, 
@@ -11745,9 +11744,9 @@ input.ui-button.payment {
     border: 1px solid #d1d1d1;
     padding: 0 10px;
     margin-bottom: 20px;
-    border-radius: 3px 3px 3px 3px;
-    -moz-border-radius: 3px 3px 3px 3px;
-    -webkit-border-radius: 3px 3px 3px 3px;
+    border-radius: 0px 0px 3px 3px;
+    -moz-border-radius: 0px 0px 3px 3px;
+    -webkit-border-radius: 0px 0px 3px 3px;
 }
 #pcorders-order-form .delivery legend,
 #pcorders-order-form .invoice legend {
@@ -11781,7 +11780,7 @@ input.ui-button.payment {
 .page-myprintconnect-orders .details .item .image {
     width: 156px;
     min-height: 85px;
-    margin: 10px 10px 0;
+    margin: 10px 10px;
     border: 0;
     float: left;
 
@@ -11845,7 +11844,7 @@ input.ui-button.payment {
     padding: 18px 10px 0;
 }
 .page-myprintconnect-orders .details .description h3 {
-    margin-bottom: 7px;
+	line-height: 20px;
     font-weight: 700;
 }
 .page-myprintconnect-orders .details .description .item-list ul li {
@@ -11865,9 +11864,6 @@ input.ui-button.payment {
     background: #fff;
     border-radius: 0;
     border-bottom: 1px solid #d1d1d1;
-}
-.page-myprintconnect-orders .overview table tbody tr.first-child {
-    border-top: 1px solid #d1d1d1;
 }
 .page-myprintconnect-orders .overview table tbody td, 
 .page-myprintconnect-orders .extra table tbody td {
@@ -11959,23 +11955,115 @@ input.ui-button.payment {
 .page-myprintconnect-orders #edit-extra .fieldset-wrapper {
     border-radius: 0;
 }
-.region-content #pcorders-order-form .form-actions {
+.page-myprintconnect-orders .priceblock:before {
+    background: #d1d1d1;
+    content: ' ';    
+    position: absolute;  
+    display: block;  
+	height: 100%;
+    width: 1px;
+    right: 165px;
+    top: 0;
+}
+.headerorder {
+    background: #f1f1f1;
+    overflow: hidden;
+    border: 1px solid #d1d1d1;
+    border-bottom: 0;
+    padding: 17px 20px 15px 10px;
+    border-radius: 3px 3px 0px 0px;
+    -moz-border-radius: 3px 3px 0px 0px;
+    -webkit-border-radius: 3px 3px 0px 0px;
+}
+.headerright, .headerleft {
+    width: 50%;
+    float: left;
+    line-height: 12px;
+}
+.headerright span.title {
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 20px;
+    text-transform: uppercase;
+    color: #646464;
+    display: block;
+}
+.headerright span.status {
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #f60;
+    line-height: 20px;
+}
+.deliverydate {
+    font-size: 12px;
+    line-height: 20px;
+    color: #646464;
+}
+span.senddate {
+    float: right;
+}
+body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintconnect-orders-confirmation span.fieldset-legend {
+    margin: 0 !important;
+}
+.page-myprintconnect-orders #pcorders-order-form .smaller {
+	margin-top: 50px;
+}
+#pcorders-order-form #edit-order #edit-details .description >.labelOrder{
+    font-size: 12px;
+    font-weight: normal;
+    margin: 0 0 25px;
+}
+#pcorders-order-form #edit-order #edit-details .description >.labelOrder span.refJob {
+    color: #f60;
+    text-transform: none;
+}
+.blocfotoliacontrol {
+    background: #e1e1e1;
+    padding: 10px 0;
+    border: 1px solid #d1d1d1;
+    border-style: solid none solid none;
+}
+.bloccontrol h3 {
+    font-size: 12px;
+    text-transform: none;
+    float: left;
+}
+.page-myprintconnect-orders .bloccontrol .price, .page-myprintconnect-orders .blocfotolia .price  {
+    padding: 0;
+    line-height: 20px;
+}
+.bloccontrol, 
+.blocfotolia {
+    padding: 0 10px;
+}
+.bloccontrol {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d1d1d1;
+}
+.blocfotolia {
+    padding-top: 10px;
+}
+.page-myprintconnect-orders .overview table {
+	margin: 0 !important;
+}
 
+
+/* End page confirmation */
+
+.region-content #pcorders-order-form .form-actions {
 	padding: 15px 10px 15px 22px;
 	margin: 0;
 }
-
 .region-footer-second .block h2{
 	display: none;
 }
-
 .region-footer-second ul{
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
 	list-style: none;
 }
-
 .region-footer-second ul li{
 	float: left;
 	margin: 0 6px;
@@ -11983,7 +12071,6 @@ input.ui-button.payment {
 	color: #646464;
 	position: relative;
 }
-
 .region-footer-second ul li:after{
 	content: ' ';
     position: absolute;
@@ -11997,42 +12084,22 @@ input.ui-button.payment {
 .region-footer-second ul li:last-child:after{
 	display: none;
 }
-
 .region-footer-second ul li a{
 	color: #646464;
 }
-
-.page-myprintconnect-orders .priceblock:before {
-    background: #d1d1d1;
-    content: ' ';    
-    position: absolute;  
-    display: block;  
-	height: 100%;
-    width: 1px;
-    right: 165px;
-    top: 0;
-}
-
 #trQuantitePersonalisee{
     display:none;
 }
-
- 
-
 .select-city-adress > a.select2-choice,
 .select-country-adress >a.select2-choice {
 	width: 468px !important;
 }
-
- 
 form#pccheckout-payment-form fieldset legend{
 	font-size: 16px;
 }
-
 #pcproducts-config-form .templates .text {
 	margin-bottom: 0;
 }
-
 .page-products #pcproducts-config-form .dropdown li.selectedItem {
     background: #F1F1F1;
     margin: 0;

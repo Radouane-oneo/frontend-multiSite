@@ -166,19 +166,23 @@
 
       </div>
 
-      <div id="footer">
-        <?php print render($page['footer']); ?>
-      </div>
+      <?php if ($page['footer_second']): ?>
+
+        <div id="footer">
+            <?php print render($page['footer_second']); ?>
+        </div>
+        
+      <?php endif; ?>
 
       <div class="clearfix"></div>
-      <div id="footerWapper">
-        <svg id="footerPoly" height="200" xmlns="http://www.w3.org/2000/svg">
-            <polygon  points="0,0 680,0 680,115  0,130" fill="#FF6600" />
-        </svg>
+        <div id="footerWapper" style="display:none;">
+          <svg id="footerPoly" height="200" xmlns="http://www.w3.org/2000/svg">
+              <polygon  points="0,0 680,0 680,115  0,130" fill="#FF6600" />
+          </svg>
 
-        <img id="imgFooter" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/logo_inversed_flyer_be_nl.png"/>
-        <div id="footerText">(C) <?php echo date("Y");?>  <a href="/">Flyer.fr</a> - Vie privée - Désistement </div>
-      </div>
+          <img id="imgFooter" src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/logo_inversed_flyer_be_nl.png"/>
+          <div id="footerText">(C) <?php echo date("Y");?>  <a href="/">Flyer.fr</a> - Vie privée - Désistement </div>
+        </div>
     </div>
 
   </div>

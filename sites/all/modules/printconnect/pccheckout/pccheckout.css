@@ -468,14 +468,16 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
   bottom: 54px;
 }
 
+.page-payment #pccheckout-payment-form .textpayment{
+  display: none;
+}
+
 #textpaymentRequest{
   margin: 0;
   clear: both;
-  padding-top: 5px;
   background: #F1F1F1;
   border-radius: 0 0 5px 5px;
-  border: 1px solid #e1e1e1;
-  border-top: 0;
+  overflow: hidden;
 }
 #textpaymentRequest > p,
 #pccheckout-payment-form .textpayment >p{
@@ -484,6 +486,10 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
   margin: 0;
   line-height: normal;
   border-top: 1px solid #e1e1e1;
+}
+#textpaymentRequest > p{
+  border: 1px solid #e1e1e1;
+  border-top: 0;
 }
 
 .page-checkout-payment .whitebox h1{
@@ -564,6 +570,10 @@ form#pcpayments-request-form .grid-methods-payment,
 
 .page-payment #conditionGeneral{
   border: 1px solid #bfbfbf;
+}
+.page-paymentrequest .condition-general{
+  border: 1px solid #bfbfbf;
+  border-top: 0;
 }
 
 .page-payment .txt-orange{

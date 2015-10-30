@@ -368,10 +368,9 @@ function pcorders_form_pcpayments_request_form_alter(&$form, &$form_state) {
     if (isset($form_state['storage']['order'])) {
     $orderId = $form_state['storage']['order'];
     $order = Factory::Get($orderId);
-
     $form['order'] = array(
         '#type' => 'fieldset',
-        '#title' => t('Details of your order @number', array('@number' => $order->number)),
+        '#title' => t('Montant à payer'),
         '#attributes' => array('class' => array('order')),
         '#weight'=> 5,
     );
@@ -401,17 +400,108 @@ function pcorders_form_pcpayments_request_form_alter(&$form, &$form_state) {
     $rows[] = array(
         'no_striping' => TRUE,
         'data' => array(
-            t('VAT'),
+            t('Total HTVA déjà payé'),
             array(
-                'data' => theme('price', array('value' => ($form_state['storage']['total']-$form_state['storage']['totalExclVat']), 'free' => TRUE)),
+                'data' => theme('price', array('value' => $form_state['storage']['amountPaid'])),
                 'class' => array('text-right'),
             ),
         ),
     );
+    
     $form['order']['list'] = array(
         '#markup' => theme('table', array('rows' => $rows)),
     );
     variable_set("items", $rows);
+    
+    $rowsOrders[] = array(
+        'data' => array(
+            t('Description'),
+            array(
+                'data' =>  t('Price'),
+                'class' => array('text-right'),
+            ),
+        ),
+    );
+    
+
+    //get order items
+    foreach ($order->orderItems as $key) {
+      $case1 = $key->quantity . ' ' . t('ex') . '. ' . $key->productName;
+
+      $rowsOrders[] = array(
+         'class' => array('productItem'),
+          'data' => array(
+              $case1,
+              array(
+                  'data' => theme('price', array('value' => $key->price, 'free' => TRUE)),
+                  'class' => array('text-right'),
+              ),
+          ),
+      );
+
+    }
+
+    //get methode de livraison
+    $shippingPrice = ($order->orderItemShipping->price >0)? $order->orderItemShipping->price : t('Free');
+    $rowsOrders[] = array(
+        'class' => array('productItem'),
+        'data' => array(
+            $order->orderItemShipping->shippingTypeTitle,
+            array(
+                'data' => theme('price', array('value' => $shippingPrice, 'free' => TRUE)),
+                'class' => array('text-right'),
+            ),
+        ),
+    );
+
+
+    //get methode de paiement
+    $paymentPrice = ($order->orderItemsPayment[0]->price >0)? $order->orderItemsPayment[0]->price : t('Free');
+    $rowsOrders[] = array(
+        'class' => array('productItem'),
+        'data' => array(
+            $order->orderItemsPayment[0]->description,
+            array(
+                'data' => theme('price', array('value' => $paymentPrice, 'free' => TRUE)),
+                'class' => array('text-right'),
+            ),
+        ),
+    );
+
+    //get subTotalAmount
+    $rowsOrders[] = array(
+        'class' => array('productItem','before-last'),
+        'data' => array(
+            t('Total HTVA déjà payé'),
+            array(
+                'data' => theme('price', array('value' => $order->subTotalAmount, 'free' => TRUE)),
+                'class' => array('text-right'),
+            ),
+        ),
+    );
+
+    //get totalAmount
+    $rowsOrders[] = array(
+        'data' => array(
+            t('Total TTC déjà payé'),
+            array(
+                'data' => theme('price', array('value' => $order->totalAmount, 'free' => TRUE)),
+                'class' => array('text-right'),
+            ),
+        ),
+    );
+    
+    $form['orderPaid'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Montant déjà payé'),
+        '#attributes' => array('class' => array('order-paid', 'order')),
+        '#weight'=> 4,
+    );
+    
+    $form['orderPaid']['list'] = array(
+        '#markup' => theme('table', array('rows' => $rowsOrders)),
+    );
+    
   }
 }
 

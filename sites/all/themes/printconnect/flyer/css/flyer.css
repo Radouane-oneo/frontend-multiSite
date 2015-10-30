@@ -10259,7 +10259,7 @@ border: none;
 		}
  		
  		tr:nth-child(1) td.first-child {
-			border-radius: 5px 0px 0px 0px;
+			border-radius: 0;
 		}
    			
    		input[type="radio"]{
@@ -12016,9 +12016,9 @@ body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintc
 }
 .blocfotoliacontrol {
     background: #e1e1e1;
-    padding: 10px 0;
+    padding: 0;
     border: 1px solid #d1d1d1;
-    border-style: solid none solid none;
+    border-style: solid none none none;
 }
 .bloccontrol h3 {
     font-size: 12px;
@@ -12033,9 +12033,6 @@ body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintc
 .blocfotolia {
     padding: 0 10px;
 }
-.blocfotolia {
-    padding-top: 10px;
-}
 .page-myprintconnect-orders .overview table {
 	margin: 0 !important;
 }
@@ -12046,17 +12043,18 @@ body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintc
     border-bottom: 0;
 }
 .blocfotoliacontrol > div {
-    padding-bottom: 10px;
+    padding: 10px;
     border-bottom: 1px solid #d1d1d1;
 }
 .blocfotoliacontrol > div:last-child {
-    padding-bottom: 0;
     border-bottom: 0;
 }
 .page-myprintconnect-orders .description .item-list {
     margin-top: 25px;
 }
-
+.page-myprintconnect-orders .overview {
+	border-top: 1px solid #d1d1d1;
+}
 
 /* End page confirmation */
 

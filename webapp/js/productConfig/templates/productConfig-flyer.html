@@ -218,7 +218,7 @@
         <!-- templateDetail -->
         <fieldset id="templates" class="templates form-wrappersss">
             <legend><span class="fieldset-legend"><%= config.labels['technicalDetails'] %></span></legend>
-            <div class="fieldset-wrapper detailtechnique-wrapper">
+            <div class="fieldset-wrapper detailtechnique-wrapper je suis la">
                 <div id="edit-templates-text" class="text form-wrapper">
                     <%= config.labels['technicalDescription'] %>
                 </div>
@@ -239,26 +239,41 @@
                     </div>
 
                     <div class="form-item form-type-item" id="edit-templates-desciption-brut">
-                        <label for="edit-templates-desciption-brut"><%= config.labels['Format'] %> <%= config.labels['rawFormat'] %> : </label>
-                        <% print( v1 +" x "+v2 +" mm"); %>
+                        <span class="edit-templates-desciption" style="margin-right:24px;"><%= config.labels['Format'] %> <%= config.labels['rawFormat'] %> :</span>
+                        <span class="infobul">
+                            <span class="datainfobul"><%=  config.labels['infobrut'] %></span>
+                        </span>
+                        <span class="datatemplate"><% print( v1 +" x "+v2 +" mm"); %></span>
                     </div>
 
-                    <div class="form-item form-type-item" id="edit-templates-desciption-size">
-                        <label for="edit-templates-desciption-size"><%= config.labels['Format'] %> <%= config.labels['finishedFormat'] %> : </label>
-                        <%= model.toolBoxGroup.template.size %>
+                    <div class="form-item form-type-item" id="edit-templates-desciption-size">                         
+                        <span class="edit-templates-desciption" style="margin-right:24px;"><%= config.labels['Format'] %> <%= config.labels['finishedFormat'] %> :</span>
+                        <span class="infobul">
+                            <span class="datainfobul"><%=  config.labels['infosize'] %></span>
+                        </span>
+                        <span class="datatemplate"><%= model.toolBoxGroup.template.size %></span>
                     </div>
 
-                    <div class="form-item form-type-item" id="edit-templates-desciption-bleed">
-                        <label for="edit-templates-desciption-bleed"><%= config.labels['bleed'] %> : </label>
-                        <%= model.toolBoxGroup.template.bleed %>
+                    <div class="form-item form-type-item" id="edit-templates-desciption-bleed"> 
+                        <span class="edit-templates-desciption" style="margin-right:24px;"><%= config.labels['bleed'] %> :</span>
+                        <span class="infobul">
+                            <span class="datainfobul"><%=  config.labels['infobleed'] %></span>
+                        </span>
+                        <span class="datatemplate"> <%= model.toolBoxGroup.template.bleed %></span>
                     </div>
-                    <div class="form-item form-type-item" id="edit-templates-desciption-color">
-                        <label for="edit-templates-desciption-color"><%= config.labels['color'] %> : </label>
-                        <%= model.toolBoxGroup.template.colorMode %>
+                    <div class="form-item form-type-item" id="edit-templates-desciption-color"> 
+                        <span class="edit-templates-desciption" style="margin-right:24px;"><%= config.labels['color'] %> :</span>
+                        <span class="infobul">
+                            <span class="datainfobul"><%=  config.labels['infocolor'] %></span>
+                        </span>
+                        <span class="datatemplate"><%= model.toolBoxGroup.template.colorMode %></span>
                     </div>
                     <div class="form-item form-type-item" id="edit-templates-desciption-resolution">
-                        <label for="edit-templates-desciption-resolution"><%= config.labels['resolution'] %> : </label>
-                        <%= model.toolBoxGroup.template.resolution %>
+                        <span class="edit-templates-desciption" style="margin-right:24px;"><%= config.labels['resolution'] %> :</span>
+                        <span class="infobul">
+                            <span class="datainfobul"><%=  config.labels['inforesolution'] %></span>
+                        </span>
+                        <span class="datatemplate"><%= model.toolBoxGroup.template.resolution %></span>
                     </div>
                 </div>
                 <div id="edit-templates-linktodownload" class="link form-wrapper">

@@ -42,7 +42,7 @@
                       <select name="shipping[detail][current][country]" class="selectStyle form-select required"
                               id="edit-shipping-detail-current-country" title="">
                           <% _.each(model.countries, function(country){ %>
-                              <option value="<%= country.id %>"><%= country.name %></option>
+                              <option value="<%= country.id %>"><%= country.tag %></option>
                           <% }); %>
                       </select>
                   </div>

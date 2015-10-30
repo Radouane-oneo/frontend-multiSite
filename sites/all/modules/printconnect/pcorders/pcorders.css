@@ -94,9 +94,6 @@
 margin: 0;
 padding: 0;
 }
-#pcorders-order-form #edit-order #edit-details .description >.labelOrder{
-	margin-left: 21px;
-}
 #pcorders-order-form .recommander{
     float: right;
     margin-bottom: 20px;

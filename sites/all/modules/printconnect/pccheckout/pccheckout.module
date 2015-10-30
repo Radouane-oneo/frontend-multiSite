@@ -445,6 +445,17 @@ function new_checkout_and_delivery_counties(){
     });
     
     $countries = array_values($countries);
+    
+    $translates = array(
+        "BE" => t("Belgique"),
+        "FR" => t("France"),
+        "NL" => t("Pays-Bas"),
+        "LU" => t("Luxembourg")
+    );
+    
+    foreach($countries as $index => $country) {
+        $countries[$index]['tag'] = $translates[$country["iso"]];
+    }
     echo json_encode($countries);
     exit();
 }

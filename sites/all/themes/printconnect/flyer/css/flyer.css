@@ -4567,6 +4567,7 @@ a.googleconnect {
 .page-checkout-payment .agree-and-pay input[type="submit"] {
 	margin-left: 10px;
 }
+.page-paymentrequest .condition-general .form-item-agree, 
 .page-checkout-payment .form-item-agree {
 	/*background: #f60;
 	padding: 5px 10px;
@@ -4582,8 +4583,10 @@ a.googleconnect {
 .page-checkout-payment .form-item-actions-agree input {
 	height: inherit !important;
 }
+.page-paymentrequest .condition-general a,
 .page-checkout-payment .form-item-agree a {
 	color: #646464;
+	text-decoration: underline;
 }
 .page-checkout-payment .overview h2 {
 	margin-top: 30px;
@@ -7968,7 +7971,6 @@ div.myoffers table.list thead tr th:nth-child(2){
 	margin-bottom: 10px;
 }
 
-#pcpayments-request-form fieldset legend,
 form#pccheckout-payment-form fieldset legend{
 	font-size: 12px;
 	color: #666666;
@@ -8083,9 +8085,9 @@ form#pcpayments-request-form .order table tr.last-child td,
 form#pcpayments-request-form .order table tr.productItem td,
 form#pccheckout-payment-form .overview table.sticky-enabled td{
 	padding: 3px 15px;
-	font-size: 13px;
+	font-size: 12px;
 	color: #666666;
-	line-height: 13px;
+	line-height: 16px;
 	border-style: solid;
 	border-width: 1px 1px 0 0;
 	border-color:#d9d9d9;

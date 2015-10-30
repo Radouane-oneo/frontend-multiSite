@@ -238,9 +238,9 @@ function pcpayments_request_form_callback(&$form, &$form_state) {
   $rows[] = array(
         'no_striping' => TRUE,
         'data' => array(
-            t('VAT'),
+            t('Total HTVA déjà payé'),
             array(
-                'data' => theme('price', array('value' =>$vatAmount, 'free' => TRUE)),
+                'data' => theme('price', array('value' =>$request->amountPaid)),
                 'class' => array('text-right'),
             ),
         ),

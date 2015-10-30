@@ -2,7 +2,71 @@
     $(document).ready(function () {
       if($('#pccustomers-address-billingaddresses-form')[0]){
       }
-
+      var vatFormats = [{'BE': 10},{'NL' : 12},{'LU' : 8},{'FR' : 11}];
+      $('#pccustomers-address-billingaddresses-form #edit-vatnumber-number').blur(function(){
+            if ($('#edit-vatnumber-number').val() !='' && $('.country').val() != '') {
+                var vatNumberBA = $("#edit-vatnumber-number").val().replace(/\./g, "").replace(/ /g,"");
+                var decision = false;
+                $.each(vatFormats, function(c, obj){
+                    $.each(obj, function(t, dt){
+                        if (t == $('#edit-vatnumber-country').val() && $("#edit-vatnumber-number").val().length == dt) {
+                            decision = true;
+                        }
+                    });
+                });
+                if (decision == false) {
+                    number.addClass('error');
+                    number.val('');
+                    var vatplaceholder = Drupal.t('insert a valid vat number please');
+                    $('.customErrors').remove();
+                    if ($('.messages').length == 0){
+                        $('.region-content').before('<div class="messages error"><ul><li class="customErrors">'+vatplaceholder+'</li></ul></div>');
+                    } else {
+                        $('.messages ul').append('<li class="customErrors">'+vatplaceholder+'</li>');
+                    }
+                    $('html, body').animate({
+                        scrollTop:$(".messages.error").offset().top
+                    }, 'slow');
+                } else {
+                    $.ajax({
+                        type: 'GET',
+                        url: Drupal.settings.basePath +'checkout/getBillingAccoutFromVat',
+                        data: { 'vatNumber': $('#edit-vatnumber-country').val()+vatNumberBA },
+                        dataType: 'json',
+                        success: function (data){
+                            if (data.code == 200 && $.isEmptyObject(data.data) == false) {
+                                $('#edit-vatnumber-number').addClass('error');
+                                $('#edit-vatnumber-number').val('');
+                                $.fancybox({content : $('#popUpContainer').html(),
+                                    openEffect  : 'none',
+                                    closeEffect : 'none',
+                                    width    : 330,
+                                    height   : 100,
+                                    afterClose : function(){
+                                    }
+                                });
+                            }
+                        }
+                    });
+                 }
+            } else if (number.val() !='' && $('#companyInput').val() != ''){
+                $('.country').addClass('error');
+                $('.country').parents('form').find('select').addClass('error');
+                $('#edit-vatnumber-number').val('');
+                $('#countryDropDown').addClass('error');
+            } else if (number.val() !='' && $('#companyInput').val() == '') {
+                var vatplaceholder = Drupal.t('company name is required');
+		$('.customErrors').remove();
+                if ($('.messages').length == 0){
+                    $('.region-content').before('<div class="messages error"><ul><li class="customErrors">'+vatplaceholder+'</li></ul></div>');
+                } else {
+                    $('.messages ul').append('<li class="customErrors">'+vatplaceholder+'</li>');
+                }
+                $('html, body').animate({
+                    scrollTop:$(".messages.error").offset().top
+                }, 'slow');
+            }
+        });
       /* ========== PCCUSTOMER form validation ========== */
       $('.save-button').click(function (e) {
           $('.messages.error').remove();

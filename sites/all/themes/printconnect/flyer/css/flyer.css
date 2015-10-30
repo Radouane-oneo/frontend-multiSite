@@ -11835,6 +11835,7 @@ input.ui-button.payment {
     position: relative;
     padding: 18px 10px 5px 10px;
     overflow: hidden;
+    min-height: 140px;
     width: 303px;
     display: inline-block;
     vertical-align: top;

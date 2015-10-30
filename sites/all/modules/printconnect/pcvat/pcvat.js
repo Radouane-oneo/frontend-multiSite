@@ -65,7 +65,15 @@
 	$('#countryDropDown').addClass('error');
       } else if (number.val() !='' && $('#companyInput').val() == '') {
 	var vatplaceholder = Drupal.t('company name is required');
-	$('#companyInput').attr("placeholder", vatplaceholder);
+	$('.customErrors').remove();
+        if ($('.messages').length == 0){
+            $('.region-content').before('<div class="messages error"><ul><li class="customErrors">'+vatplaceholder+'</li></ul></div>');
+        } else {
+            $('.messages ul').append('<li class="customErrors">'+vatplaceholder+'</li>');
+        }
+        $('html, body').animate({
+          scrollTop:$(".messages.error").offset().top
+        }, 'slow');
       }
     }
   }

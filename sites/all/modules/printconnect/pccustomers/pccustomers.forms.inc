@@ -630,6 +630,15 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#markup' => theme('linkbutton', 'myprintconnect/addresses', t('Back')),
   );
 
+  $form['popup'] = array(
+      '#markup' => '<div id="popUpContainer" style="display: none;">
+        <div id="light" class="white_content">
+            <div id="edit-invoice-address-current-popup-message" class="form-wrapper">
+                <p>'.t('vat number already exist').'</p>
+            </div>
+        </div>
+       </div>',
+    );
   return $form;
 }
 /**

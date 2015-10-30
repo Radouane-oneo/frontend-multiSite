@@ -272,7 +272,6 @@ function new_cart_loadpage() {
         "deleteOrder" => t('Supprimer'),
         "fotoliaImg" =>  t('Fotolia Image'),
         "controleProfessionel" => t('Contrôle professionel de'),
-        "desqigntoolLink" => 'http://designtool.prd.printconcept.com',
         "updateProduct" => t('update product'),
         "continue" => t('Continue shopping'),
         "linkProduct" => t('link product')
@@ -288,6 +287,7 @@ function new_cart_loadpage() {
         var GlobalPrefix = '".$language->prefix."';
         var GlobalVat = 0.21;
         var isConnected = " . (isset($_SESSION['customerid']) ? 1 : 0) . ";
+        var GlobalDesigntoolLink = '".variable_get('pc_designtoolurl')."';
     </script>";
     $script .= "<style>#box-progress{display: block;}</style>";
     
@@ -310,15 +310,6 @@ function new_cart_ajax_getshippingtypes() {
     $shippingsTypes = printconnect\Carts\Shipping\Factory::GetShippingTypes();
 
     $shippingsTypes = json_decode($shippingsTypes->data, 1);
-
-    foreach ($shippingsTypes as $key => $type) {
-        $label = $type['shippingType']['tag'];
-        if ($type['price'] > 0) {
-            $label .= '(' . t('!value exc. VAT', array('!value' => theme('price', array('value' => $type['price'], 'free' => TRUE)))) . ' / ' . t('!value inc. VAT', array('!value' => theme('price', array('value' => $type['price'] * (1 + $_SESSION['shop_vat']), 'free' => TRUE)))) . ') *';
-        }
-
-        $shippingsTypes[$key]['shippingType']['tag'] = $label;
-    }
 
     Dal::BuildJson($shippingsTypes);
 }

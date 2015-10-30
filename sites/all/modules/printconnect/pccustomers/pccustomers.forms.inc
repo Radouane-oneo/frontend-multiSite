@@ -464,6 +464,7 @@ function pccustomers_address_form($form, $form_state, $addressId) {
       '#required' => TRUE,
       '#options' => $options,
       '#default_value' => $address->country,
+      '#attributes' => array('class' => array('select-city-adress')),
   );
 
 //  $form['vatNumber'] = array(
@@ -577,6 +578,7 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#required' => TRUE,
       '#options' => $options,
       '#default_value' => $Billingaddresses->country,
+      '#attributes' => array('class' => array('select-country-adress')),
   );
   
   $form['isCompany'] = array(
@@ -628,6 +630,15 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#markup' => theme('linkbutton', 'myprintconnect/addresses', t('Back')),
   );
 
+  $form['popup'] = array(
+      '#markup' => '<div id="popUpContainer" style="display: none;">
+        <div id="light" class="white_content">
+            <div id="edit-invoice-address-current-popup-message" class="form-wrapper">
+                <p>'.t('vat number already exist').'</p>
+            </div>
+        </div>
+       </div>',
+    );
   return $form;
 }
 /**
@@ -798,6 +809,7 @@ function pccustomers_newaddress_form($form, $form_state) {
               'type' => NULL,
           ),
       ),
+      '#attributes' => array('class' => array('select-country-adress')),
   );
   
   $form['company'] = array(
@@ -930,7 +942,8 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
         '#title' => t('Country'),
         '#required' => TRUE,
         '#options' => $countries,
-        '#default_value' => 0
+        '#default_value' => 0,
+        '#attributes' => array('class' => array('select-country-adress')),
     );
 
   

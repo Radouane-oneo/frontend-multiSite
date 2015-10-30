@@ -1,7 +1,7 @@
 define([
     'backbone',
     'text!/' + GlobalPrefix + '/checkout/ajax/getbillingaccounts',
-    'text!countries.json',
+    'text!/' + GlobalPrefix + '/checkout/countriesList',
     'text!/' + GlobalPrefix + '/checkout/ajax/getshippingaddresses'
 ], function (Backbone, BillingJSON, CountriesListJson, shippingAddressesJson) {
     var billingAccountList = "";
@@ -24,6 +24,9 @@ define([
                 defaultBA = billingAccount;
             }
         });
+	if (!defaultBA) {
+	    defaultBA = billingAccountList[0];
+	}
 
     } catch (e) {
         billingAccountList = {};

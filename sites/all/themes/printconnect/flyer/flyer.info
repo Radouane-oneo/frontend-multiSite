@@ -42,11 +42,11 @@ scripts[] = js/selectivizr-min.js
 #scripts[] = libraries/mjslider2/jquery.themepunch.revolution.min470f.js
 
 
-scripts[] = js/flyer.js
+
 scripts[] = js/flyerstrap.js
 #scripts[] = js/sldr.js
 scripts[] = js/select2.min.js
-
+scripts[] = js/flyer.js
 
 regions[announcements] = Announcements
 regions[top] = Top

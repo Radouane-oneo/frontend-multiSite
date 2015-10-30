@@ -37,7 +37,7 @@
 #pcbpost-picker-form #result #map{
   width:640px;
   height:540px;
-  float:right;
+  float:left;
 }
 
 #pcbpost-picker-form #result .pois{

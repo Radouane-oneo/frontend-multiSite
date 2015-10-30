@@ -48,7 +48,7 @@ if (/*@cc_on!@*/false) {
       </div>
 
 </div>
- <div class="menu">
+ <div class="menu" id="menu_top_header">
       <?php print theme('links__system_main_menu', array('links' => $main_menu, 'attributes' => array('id' => 'menu-main'))); ?>
 </div>
     <?php if ($page['cart']): ?>

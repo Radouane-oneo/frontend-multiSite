@@ -11832,11 +11832,9 @@ input.ui-button.payment {
 }
 .page-myprintconnect-orders .details .item .description {
     border-left: 1px solid #d1d1d1;
-    border-right: 1px solid #d1d1d1;
     position: relative;
-    padding: 18px 0 5px 10px;
+    padding: 18px 10px 5px 10px;
     overflow: hidden;
-    min-height: 200px;
     width: 303px;
     display: inline-block;
     vertical-align: top;
@@ -11874,10 +11872,6 @@ input.ui-button.payment {
 }
 .page-myprintconnect-orders .overview table tbody td.first-child {
     width: 156px;
-}
-.page-myprintconnect-orders .overview table tbody td.last-child {
-    border-left: 1px solid #d1d1d1;
-    width: 145px;
 }
 .page-myprintconnect table th, .page-myprintconnect table tr td {
     vertical-align: middle;
@@ -11964,7 +11958,7 @@ input.ui-button.payment {
     display: block;  
 	height: 100%;
     width: 1px;
-    right: 165px;
+    right: 155px;
     top: 0;
 }
 .headerorder {
@@ -12011,10 +12005,10 @@ body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintc
 .page-myprintconnect-orders #pcorders-order-form .smaller {
 	margin-top: 50px;
 }
-#pcorders-order-form #edit-order #edit-details .description >.labelOrder{
+#pcorders-order-form #edit-order #edit-details .description >.labelOrder {
     font-size: 12px;
     font-weight: normal;
-    margin: 0 0 25px;
+    margin: 0;
 }
 #pcorders-order-form #edit-order #edit-details .description >.labelOrder span.refJob {
     color: #f60;
@@ -12039,15 +12033,28 @@ body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintc
 .blocfotolia {
     padding: 0 10px;
 }
-.bloccontrol {
-    padding-bottom: 10px;
-    border-bottom: 1px solid #d1d1d1;
-}
 .blocfotolia {
     padding-top: 10px;
 }
 .page-myprintconnect-orders .overview table {
 	margin: 0 !important;
+}
+.blocJob {
+    border-bottom: 1px solid #d1d1d1;
+}
+.blocJob:last-child {
+    border-bottom: 0;
+}
+.blocfotoliacontrol > div {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d1d1d1;
+}
+.blocfotoliacontrol > div:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+.page-myprintconnect-orders .description .item-list {
+    margin-top: 25px;
 }
 
 

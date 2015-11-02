@@ -400,9 +400,9 @@ function pcorders_form_pcpayments_request_form_alter(&$form, &$form_state) {
     $rows[] = array(
         'no_striping' => TRUE,
         'data' => array(
-            t('Total HTVA déjà payé'),
+            t('Total HTVA à payer'),
             array(
-                'data' => theme('price', array('value' => $form_state['storage']['amountPaid'])),
+                'data' => theme('price', array('value' => ($form_state['storage']['totalExclVat'] + $order->orderItemsPayment[0]->price))),
                 'class' => array('text-right'),
             ),
         ),
@@ -469,7 +469,7 @@ function pcorders_form_pcpayments_request_form_alter(&$form, &$form_state) {
     );
 
     //get subTotalAmount
-    $rowsOrders[] = array(
+    /*$rowsOrders[] = array(
         'class' => array('productItem','before-last'),
         'data' => array(
             t('Total HTVA déjà payé'),
@@ -478,14 +478,14 @@ function pcorders_form_pcpayments_request_form_alter(&$form, &$form_state) {
                 'class' => array('text-right'),
             ),
         ),
-    );
+    );*/
 
     //get totalAmount
     $rowsOrders[] = array(
         'data' => array(
             t('Total TTC déjà payé'),
             array(
-                'data' => theme('price', array('value' => $order->totalAmount, 'free' => TRUE)),
+                'data' => theme('price', array('value' => $form_state['storage']['amountPaid'])),
                 'class' => array('text-right'),
             ),
         ),

@@ -252,6 +252,8 @@ function pcpayments_request_form_callback(&$form, &$form_state) {
       '#markup' => theme('table', array('rows' => $rows)),
   );
 
+   $form['wrapper']['amount']["#markup"] = theme('price', array('value' => $amount));
   $form['wrapperPayement_Price']["textpayment"]["#markup"]='<p>' . $methodePayement[$form_state['values']['method']]['description'] .'</p>';
+
   return $form;
 }

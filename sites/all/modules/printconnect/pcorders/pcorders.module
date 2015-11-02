@@ -402,7 +402,7 @@ function pcorders_form_pcpayments_request_form_alter(&$form, &$form_state) {
         'data' => array(
             t('Total HTVA à payer'),
             array(
-                'data' => theme('price', array('value' => ($form_state['storage']['totalExclVat'] + $order->orderItemsPayment[0]->price))),
+                'data' => theme('price', array('value' => ($form_state['storage']['totalExclVat']))),
                 'class' => array('text-right'),
             ),
         ),

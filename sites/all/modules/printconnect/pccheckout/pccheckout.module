@@ -383,7 +383,9 @@ function new_checkout_and_delivery_loadpage() {
       "shippingTypeStoreChange" => t("shippingTypeStoreChange"),
       "shippingTypeBpostPickupPointAdd" => t("shippingTypeBpostPickupPointAdd"),
       "shippingTypeBpostPickupPointChange" => t("shippingTypeBpostPickupPointChange"),
-      "changeName" => t("changeName")
+      "changeName" => t("changeName"),
+      "shippingTypeStoreMessage" => t("shippingTypeStoreMessage"),
+      "shippingTypeBpostPickupPointMessage" => t("shippingTypeBpostPickupPointMessage"),
     );
 
      $cart = \printconnect\Carts\Factory::GetCartJson();
@@ -434,8 +436,28 @@ function new_checkout_ajax_getbillingaccounts() {
 }
 
 function new_checkout_and_delivery_counties(){
+    header('Content-Type: application/json');
     $response = \printconnect\Countries\Factory::GetCountriesList();
-    Dal::BuildJson(json_decode($response->data, 1));
+    $countries = json_decode($response->data, 1);
+    
+    $countries = array_filter($countries, function($country){
+        return in_array($country["iso"], array("BE", "FR", "NL", "LU"));
+    });
+    
+    $countries = array_values($countries);
+    
+    $translates = array(
+        "BE" => t("Belgique"),
+        "FR" => t("France"),
+        "NL" => t("Pays-Bas"),
+        "LU" => t("Luxembourg")
+    );
+    
+    foreach($countries as $index => $country) {
+        $countries[$index]['tag'] = $translates[$country["iso"]];
+    }
+    echo json_encode($countries);
+    exit();
 }
 
 function new_checkout_check_vatnumber() {

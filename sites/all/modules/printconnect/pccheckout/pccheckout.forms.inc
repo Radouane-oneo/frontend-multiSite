@@ -205,7 +205,15 @@ function pccheckout_personal_form($form, &$form_state) {
     $form['scriptForLabels'] = array(
         '#markup' => "<script>var labels = ".json_encode($labels).";</script>",
     );
-
+    $form['popup'] = array(
+      '#markup' => '<div id="popUpContainer" style="display: none;">
+      	<div id="light" class="white_content">
+            <div id="edit-invoice-address-current-popup-message" class="form-wrapper">
+                <p>'.t('vat number already exist').'</p>
+            </div>
+    	</div>
+       </div>',
+    );
     $form['#id'] = 'pccheckout-personal-form';
 
     $form_state['storage']['customer'] = $customer;

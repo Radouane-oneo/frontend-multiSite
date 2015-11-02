@@ -118,7 +118,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         '#attributes' => array('class' => array('headerright'))
     );
   $form['header']['right']['title'] = array(
-        '#markup' => "<span class='title'>".t('etat de votre commande')."</span>"
+        '#markup' => "<span class='title'>".t('etat de votre commande').":</span>"
     );
   $form['header']['right']['status'] = array(
         '#markup' => "<span class='status'>".$order->status."</span>"
@@ -128,72 +128,68 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         '#attributes' => array('class' => array('headerleft'))
     );
   $form['header']['left']['send'] = array(
-        '#markup' => "<span class='send'>".t('delivery date').": ".format_date(strtotime($order->expectedDeliveryDate), 'medium', 'd-m-y')."</span>"
+        '#markup' => "<div class='deliverydate'><span class='send'>".t('delivery date').":</span><span class='senddate'>".format_date(strtotime($order->expectedDeliveryDate), 'medium', 'd-m-y')."</span></div>"
     );
   $form['header']['left'] ['livraison'] = array(
-        '#markup' => "<span class='livraison'>".t('shipping date').": ".format_date(strtotime($order->expectedShippingDate), 'medium', 'd-m-y')."</span>"
+        '#markup' => "<div class='shippingdate'><span class='livraison'>".t('shipping date').":</span><span class='senddate'> ".format_date(strtotime($order->expectedShippingDate), 'medium', 'd-m-y')."</span></div>"
     );
-  if ($order->orderShippingAddress) {
-    $form['delivery'] = array(
-        '#type' => 'fieldset',
-        '#attributes' => array('class' => array('delivery')),
-        '#title' => t('This orders delivery'),
-        '#prefix' => "<div id='delivery-invoice'>",
-    );
-//$order->status
-//    $form['addressing']['delivery']['title'] = array(
-//        '#prefix' => '<h2>',
-//        '#markup' => t('This orders delivery'),
-//        '#suffix' => '</h2>'
-//    );
-    /*
-      if ($order->expectedShippingDate) {
-      $form['order']['addressing']['delivery']['date'] = array(
-      '#prefix' => '<div class="shippingdate">',
-      '#markup' => t('This order will be shipped on %date', array('%date' => format_date(strtotime($order->expectedShippingDate), 'short'))),
-      '#suffix' => '</div>'
-      );
-      }
-     */
-    $form['delivery']['address'] = array('#markup' => theme('address', array('address' => $order->orderShippingAddress)));
-
-    $form['delivery']['info'] = array(
-        '#prefix' => '<div class="smaller">',
-        '#markup' => t('Your order will by delivered at the given address, at last 24 hours after shipping.'),
-        '#suffix' => '</div>',
-    );
-  }
-  $form['invoice'] = array(
+  
+  $form['deliveryinvoice'] = array(
+      '#type' => 'container',
+      '#attributes' => array('id' => array('delivery-invoice'))
+   );
+  
+  $form['deliveryinvoice']['invoice'] = array(
       '#type' => 'fieldset',
       '#attributes' => array('class' => array('invoice')),
-      '#title' => t('Invoice address'),
-      '#suffix' => "</div>",
+      '#title' => t('Invoice address')
   );
 
 
   if ($order->customerReference) {
-    $form['invoice']['reference'] = array(
+    $form['deliveryinvoice']['invoice']['reference'] = array(
         '#markup' => $order->customerReference,
     );
   }
 
   if ($order->billingAccount) {
         $Billingaddresses = \printconnect\Customers\BillingAccounts\Factory::Get($order->billingAccount);
-    $form['invoice']['address'] = array('#markup' => theme('address', array('address' => $Billingaddresses)));
+    $form['deliveryinvoice']['invoice']['address'] = array('#markup' => theme('address', array('address' => $Billingaddresses)));
   } else {
     $a = new stdClass();
     $a->name = $customer->name;
 
-    $form['invoice']['address'] = array('#markup' => theme('address', array('address' => $a)));
+    $form['deliveryinvoice']['invoice']['address'] = array('#markup' => theme('address', array('address' => $a)));
   }
   if ($order->neutralShipping) {
-    $form['invoice']['info'] = array(
+    $form['deliveryinvoice']['invoice']['info'] = array(
         '#prefix' => '<div class="smaller">',
         '#markup' => t('Your order is shipped neutral'),
         '#suffix' => '</div>',
     );
   }
 
+  if ($order->orderShippingAddress) {
+    $form['deliveryinvoice']['delivery'] = array(
+        '#type' => 'fieldset',
+        '#attributes' => array('class' => array('delivery')),
+        '#title' => t('This orders delivery'),
+    );
+    $form['deliveryinvoice']['delivery']['address'] = array('#markup' => theme('address', array('address' => $order->orderShippingAddress)));
+
+    $form['deliveryinvoice']['delivery']['info'] = array(
+        '#prefix' => '<div class="smaller">',
+        '#markup' => t('Your order will by delivered at the given address, at last 24 hours after shipping.'),
+        '#suffix' => '</div>',
+    );
+  }
+
+  $form['deliveryinvoice']['delivery']['info'] = array(
+        '#prefix' => '<div class="smaller">',
+        '#markup' => t('Your order will by delivered at the given address, at last 24 hours after shipping.'),
+        '#suffix' => '</div>',
+    );
+  
   $form['order'] = array(
       '#prefix' => '<div class="clearfix"></div>',
       '#type' => 'fieldset',
@@ -233,11 +229,11 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
               '#file' => $file->thumbnail,
           );
         }
-        $form['order']['details']['item'][$item->id]['image']['download'] = array(
+        /*$form['order']['details']['item'][$item->id]['image']['download'] = array(
             '#theme' => 'pcfilesdownloadlink',
             '#file' => pcdesigntool_preview_url($file->designToolJobId),
             '#title' => t('Download preview'),
-        );
+        );*/
       }
     } else {
       $form['order']['details']['item'][$item->id]['image']['product'] = array(
@@ -258,7 +254,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
     );
     if($item->refJob){
         $form['order']['details']['item'][$item->id]['description']['refJob'] = array(
-              '#markup' => '<label class="labelOrder">' . t('Reference product') .' : <span ="refJob">'. $item->refJob.'</span></label>',
+              '#markup' => '<label class="labelOrder">' . t('Reference product') .' <span class="refJob">'. $item->refJob.'</span></label>',
         );
     }
     $price = $item->convertedPrice;
@@ -325,15 +321,16 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         );
       }
     }
-    if(count($item->fotoliaItems)||$item->fileCheck){
+    if(count($item->fotoliaItems)|| $item->fileCheck){
         $form['order']['details']['item'][$item->id]['blocfotoliacontrol']= array(
-                    '#type' => 'container'
+                    '#type' => 'container',
+                    '#attributes' => array('class' => array('clearfix' , 'blocfotoliacontrol')),
                     );
           if( $item->fileCheck ){
             $priceControl = $item->fileCheck->price;
             $form['order']['details']['item'][$item->id]['blocfotoliacontrol']['control']= array(
                     '#type' => 'container',
-                    '#attributes' => array('class' => array('blocfotoliacontrol')),
+                    '#attributes' => array('class' => array('bloccontrol' , 'clearfix')),
                     );
             $form['order']['details']['item'][$item->id]['blocfotoliacontrol']['control']['text'] = array(
                     '#markup' => '<h3>'.t('Control professional').'</h3>',
@@ -347,15 +344,16 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
             $totalprice+=$priceControl;
         }
         if(count($item->fotoliaItems)){
-                $form['order']['details']['item'][$item->id]['blocfotoliacontrol']['fotolia']= array(
-                    '#type' => 'container',
-                    '#attributes' => array('class' => array('blocfotoliacontrol')),
-                    );
+                
                 foreach ($item->fotoliaItems as  $fotoliaitem){
-                    $form['order']['details']['item'][$item->id]['blocfotoliacontrol']['fotolia']['libelle']= array(
+                    $form['order']['details']['item'][$item->id]['blocfotoliacontrol']['fotolia'][$fotoliaitem->id]= array(
+                      '#type' => 'container',
+                      '#attributes' => array('class' => array('blocfotolia')),
+                    );
+                    $form['order']['details']['item'][$item->id]['blocfotoliacontrol']['fotolia'][$fotoliaitem->id]['libelle']= array(
                             '#markup' => '<span class="fotoliaLabele">'.t("Fotolia image").' "'.$fotoliaitem->id.'"</span>'                             
                             );
-                     $form['order']['details']['item'][$item->id]['blocfotoliacontrol']['fotolia']['price'] = array(
+                     $form['order']['details']['item'][$item->id]['blocfotoliacontrol']['fotolia'][$fotoliaitem->id]['price'] = array(
                     'price' => array(
                             '#theme' => 'price',
                             '#value' => intval($fotoliaitem->price)
@@ -438,21 +436,21 @@ function _pcorders_order_form_build_overview($order) {
         );
       }
     }
-
-//    if ($order->discountItems) {
-//      foreach ($order->discountItems as $discount) {
-//        $label = t('Discount');
-//        
-//        $rows[] = array(
-//            'data' => array(
-//                $label,
-//                $discount->productName,
-//                theme('price', array('value' => $discount->price, 'block' => TRUE)),
-//            ),
-//            'class' => array('discount'),
-//        );
-//      }
-//    }
+   if ($order->discountItems) {
+     foreach ($order->discountItems as $discount) {
+      if($discount->productName != "Fotolia Image"){
+        $label = t('Discount');
+         $rows[] = array(
+             'data' => array(
+                 $label,
+                 $discount->productName,
+                 theme('price', array('value' => $discount->price, 'block' => TRUE)),
+             ),
+             'class' => array('discount'),
+         );
+      }       
+     }
+   }
     if (isset($order->orderItemShipping)) {
       $type = \printconnect\Shipping\Types\Factory::Get($order->orderItemShipping->shippingTypeResellerShop);
       $rows[] = array(

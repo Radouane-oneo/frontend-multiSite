@@ -36,25 +36,28 @@
 	    $('html, body').animate({
               scrollTop:$(".messages.error").offset().top
             }, 'slow');
-	 } else {
+	 } else { 
 	    $.ajax({ 
     		type: 'GET', 
     		url: Drupal.settings.basePath +'checkout/getBillingAccoutFromVat', 
     		data: { 'vatNumber': $('#edit-vatnumber-country').val()+vatNumberBA }, 
     		dataType: 'json',
     		success: function (data){
-		    if (data.code == 200 && $.isEmptyObject(data.data) == false) {
-			number.addClass('error');
-            		number.val('');
-			$.fancybox({content : $('#popUpContainer').html(),
-                		openEffect  : 'none',
-                		closeEffect : 'none',
-                		width    : 330,
-                		height   : 100,
-                		afterClose : function(){
-                		}
-            		});
-		    }
+  		    if (data.code == 200 && $.isEmptyObject(data.data) == false) {
+    			  number.addClass('error');
+            number.val('');
+
+      			$.fancybox({
+                content : $('#popUpContainer').html(),
+            		openEffect  : 'none',
+            		closeEffect : 'none',
+            		width    : '100%',
+            		height   : 100,
+                autoSize : false,
+            		afterClose : function(){
+            		} 
+          	});
+  		    }
     		}
 		});
 	 }

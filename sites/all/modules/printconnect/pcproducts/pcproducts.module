@@ -726,6 +726,11 @@ function getLabels($edit = false) {
         "et"=> t('et'),
         "textTolNotValid"=> t('textTolNotValid'),
         "msgErrorCFNotFloat"=> t('msgErrorCFNotFloat'),
+        "infobrut"=> t('infobrut'),
+        "infosize"=> t('infosize'),
+        "infobleed"=> t('infobleed'),
+        "infocolor"=> t('infocolor'),
+        "inforesolution"=> t('inforesolution'),
         
     );
 

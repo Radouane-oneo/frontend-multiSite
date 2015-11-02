@@ -18,10 +18,11 @@ function pcpayments_request_form($form, &$form_state, $key) {
     $form['info'] = array('#markup' => t('This payment request does not exists (anymore)...'));
     return $form;
   }
-  $amount = $request->amount;
+  $amount = $request->amountLeft;
 
   $paymentMethods = PaymentMethods\Factory::GetAll();
-
+  /*echo '<pre>';
+  var_dump($paymentMethods);die;*/
   $options = array();
   $methods = array();
 
@@ -53,7 +54,7 @@ function pcpayments_request_form($form, &$form_state, $key) {
     $default = $value->id;
   }
 
-  $amount = $request->amount;
+  //$amount = $request->amountLeft;
   $paymentMethod = PaymentMethods\Factory::Get($default);
 
   $cost = $paymentMethod->CalculateCost($amount);
@@ -94,11 +95,10 @@ function pcpayments_request_form($form, &$form_state, $key) {
       '#title' => t('Description') . ' : ',
       '#markup' => "<div class ='textDescription'>$request->description</div>",
   );
-  
   $form['wrapper']['amount'] = array(
       '#type' => 'item',
       '#title' => t('Montant à payer') . ' : ',
-      '#markup' => "<div class ='textDescription'>" . theme('price', array('value' => $request->amountPaid)) ."</div>",
+      '#markup' => "<div class ='textDescription'>" . theme('price', array('value' => $amount)) ."</div>",
   );
 
   $form['wrapperPayement_Price'] = array(
@@ -201,10 +201,9 @@ function pcpayments_request_form_submit($form, &$form_state) {
 
 function pcpayments_request_form_callback(&$form, &$form_state) {
   $request = $form_state['storage']['request'];
-  $amount = $request->amount;
+  $amount = $request->amountLeft;
   $paymentMethodId = $form_state['values']['method'];
   $paymentMethod = PaymentMethods\Factory::Get($paymentMethodId);
-
   $cost = $paymentMethod->CalculateCost($amount);
   $amount += $cost;
   $vat = $request->vat;
@@ -242,9 +241,9 @@ function pcpayments_request_form_callback(&$form, &$form_state) {
   $rows[] = array(
         'no_striping' => TRUE,
         'data' => array(
-            t('Total HTVA déjà payé'),
+            t('Total HTVA à payer'),
             array(
-                'data' => theme('price', array('value' =>$request->amountPaid)),
+                'data' => theme('price', array('value' =>($amount))),
                 'class' => array('text-right'),
             ),
         ),

@@ -8,3 +8,45 @@
       width: 239px;
   float: left;
 }
+span.infobul {
+    background: rgba(0, 0, 0, 0) url("images/icon_question.png") no-repeat scroll 20px center;
+    border-radius: 0 0 4px 4px;
+    border-top: 0 none;
+    margin-left: -40px;
+    min-height: inherit;
+    padding: 5px 10px 5px 45px;
+    position: relative;
+}
+span.datatemplate {
+    float: right;
+    margin-right: 40px;
+}
+span.datainfobul {
+    background: #a5a5a5 none repeat scroll 0 0;
+    border-radius: 3px;
+    color: white;
+    display: none;
+    left: 100%;
+    opacity: 0.9;
+    padding: 7px;
+    position: absolute;
+    top: -5px;
+    width: 200px;
+    z-index: 9;
+}
+ span.infobul:hover .datainfobul {
+    display: block;
+}
+span.datainfobul::after {
+    border-bottom: 5px solid transparent;
+    border-right: 10px solid #a5a5a5;
+    border-top: 5px solid transparent;
+    content: "";
+    display: block;
+    height: 0;
+    left: -9px;
+    margin-top: -4px;
+    position: absolute;
+    top: 18px;
+    width: 0;
+}

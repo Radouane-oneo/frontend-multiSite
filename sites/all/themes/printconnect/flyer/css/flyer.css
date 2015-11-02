@@ -4589,6 +4589,7 @@ a.googleconnect {
 .page-checkout-payment .agree-and-pay input[type="submit"] {
 	margin-left: 10px;
 }
+.page-paymentrequest .condition-general .form-item-agree, 
 .page-checkout-payment .form-item-agree {
 	/*background: #f60;
 	padding: 5px 10px;
@@ -4604,8 +4605,10 @@ a.googleconnect {
 .page-checkout-payment .form-item-actions-agree input {
 	height: inherit !important;
 }
+.page-paymentrequest .condition-general a,
 .page-checkout-payment .form-item-agree a {
 	color: #646464;
+	text-decoration: underline;
 }
 .page-checkout-payment .overview h2 {
 	margin-top: 30px;
@@ -7989,7 +7992,6 @@ div.myoffers table.list thead tr th:nth-child(2){
 	margin-bottom: 10px;
 }
 
-#pcpayments-request-form fieldset legend,
 form#pccheckout-payment-form fieldset legend{
 	font-size: 12px;
 	color: #666666;
@@ -8104,9 +8106,9 @@ form#pcpayments-request-form .order table tr.last-child td,
 form#pcpayments-request-form .order table tr.productItem td,
 form#pccheckout-payment-form .overview table.sticky-enabled td{
 	padding: 3px 15px;
-	font-size: 13px;
+	font-size: 12px;
 	color: #666666;
-	line-height: 13px;
+	line-height: 16px;
 	border-style: solid;
 	border-width: 1px 1px 0 0;
 	border-color:#d9d9d9;
@@ -10257,7 +10259,7 @@ border: none;
 		}
  		
  		tr:nth-child(1) td.first-child {
-			border-radius: 5px 0px 0px 0px;
+			border-radius: 0;
 		}
    			
    		input[type="radio"]{
@@ -11830,11 +11832,10 @@ input.ui-button.payment {
 }
 .page-myprintconnect-orders .details .item .description {
     border-left: 1px solid #d1d1d1;
-    border-right: 1px solid #d1d1d1;
     position: relative;
-    padding: 18px 0 5px 10px;
+    padding: 18px 10px 5px 10px;
     overflow: hidden;
-    min-height: 200px;
+    min-height: 140px;
     width: 303px;
     display: inline-block;
     vertical-align: top;
@@ -11872,10 +11873,6 @@ input.ui-button.payment {
 }
 .page-myprintconnect-orders .overview table tbody td.first-child {
     width: 156px;
-}
-.page-myprintconnect-orders .overview table tbody td.last-child {
-    border-left: 1px solid #d1d1d1;
-    width: 145px;
 }
 .page-myprintconnect table th, .page-myprintconnect table tr td {
     vertical-align: middle;
@@ -11962,7 +11959,7 @@ input.ui-button.payment {
     display: block;  
 	height: 100%;
     width: 1px;
-    right: 165px;
+    right: 155px;
     top: 0;
 }
 .headerorder {
@@ -12009,10 +12006,10 @@ body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintc
 .page-myprintconnect-orders #pcorders-order-form .smaller {
 	margin-top: 50px;
 }
-#pcorders-order-form #edit-order #edit-details .description >.labelOrder{
+#pcorders-order-form #edit-order #edit-details .description >.labelOrder {
     font-size: 12px;
     font-weight: normal;
-    margin: 0 0 25px;
+    margin: 0;
 }
 #pcorders-order-form #edit-order #edit-details .description >.labelOrder span.refJob {
     color: #f60;
@@ -12020,9 +12017,9 @@ body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintc
 }
 .blocfotoliacontrol {
     background: #e1e1e1;
-    padding: 10px 0;
+    padding: 0;
     border: 1px solid #d1d1d1;
-    border-style: solid none solid none;
+    border-style: solid none none none;
 }
 .bloccontrol h3 {
     font-size: 12px;
@@ -12037,17 +12034,28 @@ body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintc
 .blocfotolia {
     padding: 0 10px;
 }
-.bloccontrol {
-    padding-bottom: 10px;
-    border-bottom: 1px solid #d1d1d1;
-}
-.blocfotolia {
-    padding-top: 10px;
-}
 .page-myprintconnect-orders .overview table {
 	margin: 0 !important;
 }
-
+.blocJob {
+    border-bottom: 1px solid #d1d1d1;
+}
+.blocJob:last-child {
+    border-bottom: 0;
+}
+.blocfotoliacontrol > div {
+    padding: 10px;
+    border-bottom: 1px solid #d1d1d1;
+}
+.blocfotoliacontrol > div:last-child {
+    border-bottom: 0;
+}
+.page-myprintconnect-orders .description .item-list {
+    margin-top: 25px;
+}
+.page-myprintconnect-orders .overview {
+	border-top: 1px solid #d1d1d1;
+}
 
 /* End page confirmation */
 

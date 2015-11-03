@@ -45,6 +45,19 @@ namespace printconnect\PaymentMethods {
       };
     }
 
+    public static function Save($paymentMethodId, $order = null)
+    {
+        if (null == $order) {
+            $cart = \printconnect\Carts\Factory::Current();
+        } else {
+            $cart = $order;
+        }
+        $cart->payment_method = $paymentMethodId;
+        if ($cart->id) {
+            Dal::Save($cart, 'payment-method', array());
+        };
+    }
+
   }
 
 }

@@ -221,6 +221,10 @@ function pcpayments_request_form_callback(&$form, &$form_state) {
   $form['priceblock']['#vatAmount'] = $vatAmount;
   //return $form['payment']['footer']['price']['block'];
   $form['actions']['price']['#value']=$total;
+  $orderId = $form_state['storage']['order'];
+  $order = \printconnect\Orders\Factory::Get($orderId);
+  \printconnect\Orders\Factory::LoadOrder($order);
+  \printconnect\PaymentMethods\Factory::Save($paymentMethodId, $order);
   $rows = variable_get("items");
   array_pop($rows);
   $rows[] = array(
@@ -248,6 +252,8 @@ function pcpayments_request_form_callback(&$form, &$form_state) {
       '#markup' => theme('table', array('rows' => $rows)),
   );
 
+   $form['wrapper']['amount']["#markup"] = theme('price', array('value' => $amount));
   $form['wrapperPayement_Price']["textpayment"]["#markup"]='<p>' . $methodePayement[$form_state['values']['method']]['description'] .'</p>';
+
   return $form;
 }

@@ -163,7 +163,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
   }
   if ($order->neutralShipping) {
     $form['deliveryinvoice']['invoice']['info'] = array(
-        '#prefix' => '<div class="smaller">',
+        '#prefix' => '<div class="smaller neutral">',
         '#markup' => t('Your order is shipped neutral'),
         '#suffix' => '</div>',
     );

@@ -26,7 +26,8 @@ define([
         labels : GlobalLabels,
         isAdmin : GlobalIsAdmin,
         prefix : GlobalPrefix,
-        jobId : GlobalJobId
+        jobId : GlobalJobId,
+        bannerUrl : GlobalBannerUrl
     };
 
 });

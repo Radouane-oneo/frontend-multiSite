@@ -1426,7 +1426,7 @@ a.button.cart .ui-button-text {
 	background-position:-436px -444px;
 	display: block;
 	width: 159px;
-	padding: 0 0 0 20px;
+	padding: 0 0 0 19px;
 	color: #fff;
 	position: relative;
 	height: 350px; /* before: 317px; before before: 297px; */
@@ -1446,6 +1446,7 @@ a.button.cart .ui-button-text {
 #block-pccustomers-profile .item-list ul li {
 	list-style: none !important;
 	margin-left: 0 !important;
+	margin-bottom: 0;
 }
 #block-pccustomers-profile h2 {
 	color: #fff;
@@ -11833,7 +11834,7 @@ input.ui-button.payment {
 .page-myprintconnect-orders .details .item .description {
     border-left: 1px solid #d1d1d1;
     position: relative;
-    padding: 18px 10px 5px 10px;
+    padding: 18px 10px 18px 10px;
     overflow: hidden;
     min-height: 140px;
     width: 303px;
@@ -12005,6 +12006,9 @@ body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintc
 }
 .page-myprintconnect-orders #pcorders-order-form .smaller {
 	margin-top: 50px;
+}
+.page-myprintconnect-orders #pcorders-order-form .smaller.neutral {
+    margin-top: 90px;
 }
 #pcorders-order-form #edit-order #edit-details .description >.labelOrder {
     font-size: 12px;

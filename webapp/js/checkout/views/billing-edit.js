@@ -13,7 +13,8 @@ define([
             "click #saveEditBA": "saveBA",
             "blur #vatNumberBA" : "showPopUp",
 	    "change #vatNumberBA" : "detectChanges",
-            "change #countryList" : "changeCountry"
+            "change #countryList" : "changeCountry",
+	    "click #isUserCompany" : "enableSaving"
         },
         initialize: function(model) {
 	    this.enableSave = true;
@@ -36,6 +37,11 @@ define([
 	    var result = _.findWhere(this.vatFormats, trgObject);
 	    return (result) ? true : false;
 	},
+	enableSaving : function() {
+            if (!$("#isUserCompany").is(":checked")) {
+                this.enableSave = true;
+            }
+        },
     render: function() {
         this.setElement(this.template({
             "model": this.model.toJSON()

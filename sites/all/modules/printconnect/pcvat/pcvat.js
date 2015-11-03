@@ -16,13 +16,18 @@
       if (number.val() !='' && country.val() != '' && $('#companyInput').val() != '') {
 	var vatNumberBA = $("#edit-vatnumber-number").val().replace(/\./g, "").replace(/ /g,"");
 	var decision = false;
-	$.each(vatFormats, function(c, obj){
-	    $.each(obj, function(t, dt){
-	        if (t == $('#edit-vatnumber-country').val() && $("#edit-vatnumber-number").val().length == dt) {
-		    decision = true;
-	        }
-	    });
-	});
+	switch($('#edit-vatnumber-country').val()) {
+            case 'BE':
+                decision = (vatNumberBA.charAt(0) == 0) ? true : false;
+            break;
+            case 'NL':
+            case 'LU':
+                decision = ($.isNumeric(vatNumberBA)) ? true : false;
+            break
+            default:
+            decision = true;
+            break;
+         }
 	if (decision == false) {
 	    number.addClass('error');
             number.val('');
@@ -92,6 +97,9 @@
         $('.number, .country', this).blur(function (){
           $(control).vatfieldValidate(true);
         });
+      });
+      $('#edit-country').change(function(){
+        $('#edit-vatnumber-number').val('');
       });
     }
   }

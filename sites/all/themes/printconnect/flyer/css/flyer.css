@@ -5528,7 +5528,7 @@ div.error, table tr.error {
 	min-width: 220px;
 	line-height: 35px;
 	display: inline-block;
-	margin-right: 10px;
+	margin-right: 0px;
 }
 .page-myprintconnect-orders- .region-content .form-actions a.button {
 	max-width: 220px;
@@ -10506,6 +10506,9 @@ a.cart.button{
 	height: 44px;
 	bottom: 0;
 }
+.i18n-nl-NL #footer .search-footer.block a.button{
+	background-position:21px -453px
+}
 #footer .search-footer.block a.button .ui-button-text{
 	line-height: 46px;
 }
@@ -10670,14 +10673,16 @@ p.requieredfields span.form-required {
 .page-myprintconnect-closedorders  div.orders table.list.orders th:first-child,
 .page-myprintconnect-orders .listCommande > table.list.orders tr th:first-child,
 .page-myprintconnect-addresses #pccustomers-addresses-form .wrap_addressesLivraison > table.addressesLivraison tr th:first-child,
-.page-myprintconnect-addresses #pccustomers-addresses-form  .wrap_addressesFacturation > table.addressesFacturation tr th:first-child{
+.page-myprintconnect-addresses #pccustomers-addresses-form  .wrap_addressesFacturation > table.addressesFacturation tr th:first-child,
+.page-myprintconnect-invoices #pcinvoices-list-form  table.list  tr th:first-child{
 	border-left: 1px solid #b95009; 
 }
 .page-myprintconnect-offers .myoffers table.list.offers th:last-child,
 .page-myprintconnect-closedorders  div.orders table.list.orders th:last-child,
 .page-myprintconnect-orders .listCommande > table.list.orders tr th:last-child,
 .page-myprintconnect-addresses #pccustomers-addresses-form .wrap_addressesLivraison > table.addressesLivraison tr th:last-child,
-.page-myprintconnect-addresses #pccustomers-addresses-form  .wrap_addressesFacturation > table.addressesFacturation tr th:last-child{
+.page-myprintconnect-addresses #pccustomers-addresses-form  .wrap_addressesFacturation > table.addressesFacturation tr th:last-child,
+.page-myprintconnect-invoices #pcinvoices-list-form  table.list  tr th:last-child{
 	border-right: 1px solid #b95009;
 }
 .page-myprintconnect-addresses #pccustomers-addresses-form table.addresses tr td,
@@ -10720,11 +10725,11 @@ p.requieredfields span.form-required {
 }
 .page-myprintconnect table thead {
 	background: #ff6600;
-	line-height: 35px;
+	line-height: 39px;
 	color: #fff;
 }
 .page-myprintconnect #edit-invoices table th {
-    font-size: 11px !important;
+    font-size: 12px !important;
     font-weight: bold;
     border-top: 0;
     border-bottom: 1px solid #dcdcdc;
@@ -10739,11 +10744,12 @@ p.requieredfields span.form-required {
     border: 0;
 }
 .page-myprintconnect #edit-invoices table tr td.last-child a {
-	background: url('http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/order_week/icon_pdf.png') no-repeat;
-    width: 32px;
-    height: 32px;
+	background: url('http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/order_week/icon__pdf.png') no-repeat;
+    width: 18px;
+    height: 23px;
     display: block;
     text-indent: 2000px;
+    margin: 0 auto;
 }
 
 .page-myprintconnect #edit-invoices .price {
@@ -11249,7 +11255,7 @@ input.ui-button.payment {
 .page-cart #block-system-main .form-wrapper.actions input{
 	background: #79b61a url("images/button_payment.png") no-repeat 75px center;
 }
-#edit-actions .button-wrapper {
+.page-cart #edit-actions .button-wrapper {
     background-color: #79b61a;
     width: 330px;
     display: inline-block;
@@ -12164,4 +12170,12 @@ form#pccheckout-payment-form fieldset legend{
 .page-payment #menu_top_header.menu,
 .page-checkout #menu_top_header.menu{
 	display: none;
+}
+
+
+.page-templates-product .region-content .form-actions{
+	    padding: 15px 10px;
+}
+.page-templates-product .region-content .form-actions span.price{
+	padding-left: 0;
 }

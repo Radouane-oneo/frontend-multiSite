@@ -62,6 +62,11 @@ span.datainfobul::after {
 .page-upload-design #pcdesigner-upload-form .templates{
     margin-top: 0px;
 }
+
+.page-upload-design #pcdesigner-upload-form .templates.templates_product,
+.page-upload-design #pcdesigner-upload-form .templates.templates_withfile{
+    margin-top: 33px;
+}
  
 .page-upload-design .templates .fieldset-wrapper .productDetail  #edit-product{
    margin: 0;
@@ -222,7 +227,7 @@ span.datainfobul::after {
     float: left;
     display: inline-block;
     width: 68%;
-    padding: 19px 8px;
+    padding: 16px 8px;
 }
 
 .page-upload-design #pcdesigner-upload-form  .templates_withfile .productDetailWithFile .form-item{
@@ -232,16 +237,17 @@ span.datainfobul::after {
 .page-upload-design #pcdesigner-upload-form  .templates_withfile .productDetailWithFile h2{
     font-size: 14px;
     font-weight: 700;
+    margin-bottom: 6px;
 }
 
-.page-upload-design #pcdesigner-upload-form  .templates_withfile .productDetailWithFile .item-list .itemsdesign li{
-    list-style: none;
-    margin: 0;
-}
 
 .page-upload-design #pcdesigner-upload-form  .templates_withfile .productDetailWithFile .item-list .itemsdesign li{
     padding-left: 0;
     background: none;
+    margin: 0;
+    margin-bottom: 6px;
+    list-style: none;
+   
 }
 
 .page-upload-design #pcdesigner-upload-form  .templates_withfile .productDetailWithFile .item-list .itemsdesign li label{

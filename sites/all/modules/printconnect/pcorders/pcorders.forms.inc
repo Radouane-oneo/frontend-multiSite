@@ -6,7 +6,7 @@ $order = \printconnect\Orders\Factory::Get($orderId, false);
 
 $customer = \printconnect\Customers\Factory::Get($order->customer);
 $cart = \printconnect\Carts\Factory::Current(FALSE);
-
+  
   drupal_set_title(t('Details of your order @number : @status', array('@number' => $order->number, '@status' => $order->status)));
  
   $form['status'] = array(
@@ -286,7 +286,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
     }
     if (count($item->files) == 0) { 
       $form['order']['details']['item'][$item->id]['blocDesigner'] = array(
-          '#markup' => '<div id="designerWarning"><p>'.t('WarningDesigner').'</p><p>'.t('DesignerEmail').'<span>NAME@DOMAIN.COM</span></p></div>',
+          '#markup' => '<div id="designerWarning"><p>'.t('WarningDesigner').'</p><p>'.t('DesignerEmail').'<span>'.$item->emailDesigner.'</span></p></div>',
           );
     }
 

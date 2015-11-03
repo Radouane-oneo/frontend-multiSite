@@ -224,7 +224,7 @@ function pcpayments_request_form_callback(&$form, &$form_state) {
   $orderId = $form_state['storage']['order'];
   $order = \printconnect\Orders\Factory::Get($orderId);
   \printconnect\Orders\Factory::LoadOrder($order);
-  \printconnect\PaymentMethods\Factory::Save($paymentMethodId, $order);
+  \printconnect\PaymentMethods\Factory::Save($paymentMethodId, $order, true);
   $rows = variable_get("items");
   array_pop($rows);
   $rows[] = array(

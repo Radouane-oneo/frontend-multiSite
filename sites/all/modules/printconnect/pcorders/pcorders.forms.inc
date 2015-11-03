@@ -221,7 +221,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         '#type' => 'container',
         '#attributes' => array('class' => array('image')),
     );
-    if (count($item->files)) {          
+    if (count($item->files)) {        
       foreach ($item->files as $file) {
           if (isset($file->thumbnail)) {
           $form['order']['details']['item'][$item->id]['image']['thumb'] = array(
@@ -240,6 +240,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
           '#theme' => 'image',
           '#path' => printconnect_getimage('products', $item->configuration->productId),
       );
+
     }
     
     $form['order']['details']['item'][$item->id]['description'] = array(
@@ -282,6 +283,11 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
             '#markup' => $promoPrice,
             );
         }
+    }
+    if (count($item->files) == 0) { 
+      $form['order']['details']['item'][$item->id]['blocDesigner'] = array(
+          '#markup' => '<div id="designerWarning"><p>'.t('WarningDesigner').'</p><p>'.t('DesignerEmail').'<span>NAME@DOMAIN.COM</span></p></div>',
+          );
     }
 
     $totalPrice += $price; // total product price for tracking vente

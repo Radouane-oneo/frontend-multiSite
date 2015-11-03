@@ -11,6 +11,12 @@
                 <%= $('<div/>').html(config.labels["productDescription"]).text() %>
             </div>
 
+            <% if(config.bannerUrl != '') { %>
+                <div class="banner form-wrapper" id="edit-description-banner--3">
+                    <img src="<%= config.bannerUrl %>" alt="">
+                </div>
+            <% } %>
+
         </div>
 
         <!-- toolBoxItems -->

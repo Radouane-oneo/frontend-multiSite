@@ -2208,7 +2208,7 @@ body.front #block-block-13:after {
 }
 #pcproducts-config-form .templates .description{
 	float: left;
-	width: 50%;
+	width: 52%;
 }
 #pcproducts-config-form .templates #edit-templates-linktodownload{
 	float: left;
@@ -2969,7 +2969,7 @@ a.ui-button.inactivebtn{
     margin-right: 45px;
     min-height: 135px;
 }
-#pcproducts-config-form .templates > .fieldset-wrapper, #pcdesigner-upload-form .templates > .fieldset-wrapper {
+#pcproducts-config-form .templates > .fieldset-wrapper {
 	border-radius: 3px;
 	background: #f1f1f1;
 	margin: 0;
@@ -3278,14 +3278,17 @@ legend {
 	margin: 0;
 	padding: 0;
 }
-.page-cart #pccart-cart-form .item .description ul li {
+.page-cart #pccart-cart-form .item .description ul li ,
+.page-upload-design #pcdesigner-upload-form  ul.itemsdesign li {
 	list-style: none;
 	margin: 0 0 3px 0;
 	padding: 0;
-	font-size: 13px;
+	font-size: 12px;
 	line-height: 15px;
 }
-.page-cart #pccart-cart-form .item .description ul li label {
+.page-cart #pccart-cart-form .item .description ul li label,
+.page-upload-design #pcdesigner-upload-form  ul.itemsdesign li label
+ {
 	float: left;
 	margin-right: 10px;
 	font-weight: 700;
@@ -3596,7 +3599,8 @@ legend {
 .page-cart form .discount .fieldset-wrapper {
 	height: 40px\9; /* IE HACK */
 }
-.page-cart .items .fieldset-wrapper {
+.page-cart .items .fieldset-wrapper,
+.page-upload-design .templates .fieldset-wrapper {
 	background: transparent;
 	padding: 0;
 	border: 0;
@@ -10859,7 +10863,8 @@ p.requieredfields span.form-required {
 	right: 29px;
 	font-weight: bold;
 }
-.page-cart #pccart-cart-form .item .description h3 {
+.page-cart #pccart-cart-form .item .description h3 ,
+.page-upload-design .templates .fieldset-wrapper .productDetail  #edit-product h2{
 	margin-bottom: 7px;
 	font-weight: 700;
 }
@@ -10871,22 +10876,24 @@ p.requieredfields span.form-required {
 	width: 100%;
 	margin-bottom: 0;
 }
-.page-cart #pccart-cart-form .item {
+.page-cart #pccart-cart-form .item,
+.page-upload-design .templates .fieldset-wrapper{
 	background: #f1f1f1;
 	padding: 10px 0 0;
-	margin-bottom: 10px;
+	margin-bottom: 13px;
 	position: relative;
-	border: 1px solid #d1d1d1;
-
+	border: 1px solid #d1d1d1; 
 	border-radius: 5px 5px 5px 5px;
 	-moz-border-radius: 5px 5px 5px 5px;
 	-webkit-border-radius: 5px 5px 5px 5px;
 }
 .page-cart #pccart-cart-form .item .preview2,
-.page-cart #pccart-cart-form .item .prodactTemplates {
-	padding: 0 10px;
+.page-cart #pccart-cart-form .item .prodactTemplates,
+.page-upload-design .templates .fieldset-wrapper .productDetail  {
+	padding: 0 13px;
 }
-.page-cart #pccart-cart-form .item .preview2 {
+.page-cart #pccart-cart-form .item .preview2,
+.page-upload-design .templates .fieldset-wrapper .productDetail {
     border-bottom: 1px solid #d1d1d1;
     padding-bottom: 5px;
 }

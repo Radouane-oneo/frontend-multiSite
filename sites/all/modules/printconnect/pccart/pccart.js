@@ -21,6 +21,7 @@
 				$('.item-hide-'+$(this).attr('itemFileId')).fadeIn("slow");
 				$(this).parents('.job').fadeOut("slow");
 				$.post('/cart/ajax/removedesign/'+$(this).attr('itemFileId'),{},function(){
+                                    location.href=location.href;
 //					$(this).parents('.job').remove();
 //					updateDiscounts();
 				});

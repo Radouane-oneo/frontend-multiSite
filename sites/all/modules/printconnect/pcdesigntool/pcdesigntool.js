@@ -48,8 +48,8 @@
                         $("#fancybox-wrap").find("#fancybox-frame").css({"width": "1024px", "margin": "0px auto"});
                         jQuery("#fancybox-outer").find("#dt_preloader").remove();
                         $("#fancybox-wrap").css("width", "1024px");
-                        var vague = jQuery("#canvas").Vague({intensity: 9});
-                        vague.blur();
+//                        var vague = jQuery("#canvas").Vague({intensity: 9});
+//                        vague.blur();
 		    },
 		    onClosed: function() {
                         $("#canvas").attr("style","");

@@ -27,7 +27,22 @@ define([
 
             $(this.config.bottomBox).html(this.$el);
 
-            $('.pcflyerstores-picker-link, .pcbpost-picker-link').fancybox({
+            $('.pcbpost-picker-link').fancybox({
+                width: 993,
+                height: 556,
+                padding: 0,
+                margin: 0,
+                scrolling: false,
+                autoScale: false,
+                hideOnOverlayClick: false,
+                autoDimensions: false,
+                autoSize : false,
+                helpers   : { 
+                    overlay : {closeClick: false} // prevents closing when clicking OUTSIDE fancybox 
+                },
+            });
+
+            $('.pcflyerstores-picker-link').fancybox({
                 width: 993,
                 height: '100%',
                 padding: 0,
@@ -35,7 +50,7 @@ define([
                 scrolling: false,
                 autoScale: false,
                 hideOnOverlayClick: false,
-                autoDimensions: false,
+                autoDimensions: false, 
                 helpers   : { 
                     overlay : {closeClick: false} // prevents closing when clicking OUTSIDE fancybox 
                 },

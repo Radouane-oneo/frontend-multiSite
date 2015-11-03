@@ -16,8 +16,8 @@ define([
         initialize: function(model) {
             this.config = require("config");
             this.model = model;
-            if (model.get("shippingAddresses").orderItemShipping && $.inArray(model.get("shippingAddresses").orderItemShipping['shippingTypeTag'], ["shippingTypeStoreInAntwerpen","shippingTypePrinter"]) != -1)
-                return false;
+            /*if (model.get("shippingAddresses").orderItemShipping && $.inArray(model.get("shippingAddresses").orderItemShipping['shippingTypeTag'], ["shippingTypeStoreInAntwerpen","shippingTypePrinter"]) != -1)
+                return false;*/
             if (this.model.get("shippingAddresses").orderItemShipping && this.model.get("shippingAddresses").orderItemShipping['deliveryType'] != "deliveryTypeDeliver")
                 this.template = _.template(shippingEditPickupTemplate);
             this.render();
@@ -69,7 +69,7 @@ define([
                 helpers   : {
                     overlay : {closeClick: false} // prevents closing when clicking OUTSIDE fancybox
                 }
-            });
+            }); 
         },
         selectAddress: function(e){
             var address = _.findWhere(this.model.get("shippingAddresses").addresses, {id: parseInt($(e.currentTarget).val())});

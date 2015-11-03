@@ -169,7 +169,7 @@ function pccheckout_menu() {
           'page arguments' => array(),
           'access arguments' => array('access content'),
           'type' => MENU_CALLBACK,
-          'title' => t('Invoice and delivery')
+          'title' => 'Invoice and delivery'
       );
 
       $items['checkout/ajax/getshippingaddresses'] = array(
@@ -374,7 +374,18 @@ function new_checkout_and_delivery_loadpage() {
       "fieldCmpVatNumber" => t("Sociéte et numero de tva sont requit"),
       "invalidCharactersLength" => t("invalidCharactersLength"),
       "InvalidVatNumber" => t("votre numero de tva est invalid"),
-      "TVANumber" => t("Are you a company ?")
+      "TVANumber" => t("Are you a company ?"),
+      "shippingTypeStore" => t("shippingTypeStore"),
+      "shippingTypeBpostPickupPoint" => t("shippingTypeBpostPickupPoint"),
+      "shippingTypeStoreInAntwerpen" => t("Shipping address"),
+      "shippingTypePrinter" => t("Shipping address"),
+      "shippingTypeStoreAdd" => t("shippingTypeStoreAdd"),
+      "shippingTypeStoreChange" => t("shippingTypeStoreChange"),
+      "shippingTypeBpostPickupPointAdd" => t("shippingTypeBpostPickupPointAdd"),
+      "shippingTypeBpostPickupPointChange" => t("shippingTypeBpostPickupPointChange"),
+      "changeName" => t("changeName"),
+      "shippingTypeStoreMessage" => t("shippingTypeStoreMessage"),
+      "shippingTypeBpostPickupPointMessage" => t("shippingTypeBpostPickupPointMessage"),
     );
 
      $cart = \printconnect\Carts\Factory::GetCartJson();
@@ -402,7 +413,7 @@ function new_checkout_ajax_getshippingaddresses() {
 
     $customer = \printconnect\Customers\Factory::Current();
 
-    if($customer && isset($orderItemShipping['orderShippingAddress']) && isset($orderItemShipping['orderShippingAddress']['name'])) {
+    if($customer && isset($orderItemShipping['orderShippingAddress']) && isset($orderItemShipping['orderShippingAddress']['name']) && empty($orderItemShipping['orderShippingAddress']['name'])) {
         $orderItemShipping['orderShippingAddress']['name'] = $customer->name;
     }
 
@@ -425,8 +436,28 @@ function new_checkout_ajax_getbillingaccounts() {
 }
 
 function new_checkout_and_delivery_counties(){
+    header('Content-Type: application/json');
     $response = \printconnect\Countries\Factory::GetCountriesList();
-    Dal::BuildJson(json_decode($response->data, 1));
+    $countries = json_decode($response->data, 1);
+    
+    $countries = array_filter($countries, function($country){
+        return in_array($country["iso"], array("BE", "FR", "NL", "LU"));
+    });
+    
+    $countries = array_values($countries);
+    
+    $translates = array(
+        "BE" => t("Belgique"),
+        "FR" => t("France"),
+        "NL" => t("Pays-Bas"),
+        "LU" => t("Luxembourg")
+    );
+    
+    foreach($countries as $index => $country) {
+        $countries[$index]['tag'] = $translates[$country["iso"]];
+    }
+    echo json_encode($countries);
+    exit();
 }
 
 function new_checkout_check_vatnumber() {

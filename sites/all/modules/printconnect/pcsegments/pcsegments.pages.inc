@@ -103,9 +103,9 @@ $build['text'] = array(
         '#items' => $products,
         '#attributes' => array('class' => array('clearfix', 'list-segment')),
     );
-    /*$build['products']['all'] = array(
+    $build['products']['all'] = array(
         '#markup' => l(t('All products'), 'products'),
-    );*/
+    );
   }
   
   $build['content'] = array(
@@ -146,7 +146,7 @@ $build['text'] = array(
                 //$build['content']['productName'.$i] = array('#markup' =>'<div class="from"><span class="txt">'.$valueItems["name"].'</span></div>');
                 $build['content']['link'.$i] = array('#markup' =>'<a class="btn-cmd" href="'.$GLOBALS['base_url'].'/templates/'.$valueItems["id"].'"><span class="flesh"></span>'.t("use this modele").'</a>');
                 $build['content']['contentitem2'.$i]= array('#markup' => "</li>"); $i++; } 
-                $build['content']['endul']= array('#markup' => "</ul></div></div>");
+                $build['content']['endul']= array('#markup' => "</ul></div>". l(t('All products'), 'products') ."</div>");
   }
   return $build;
 }

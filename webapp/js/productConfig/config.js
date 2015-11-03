@@ -24,11 +24,12 @@ define([
         defaultItems : GlobalDefaultItems,
         defaultOptions : GlobalDefaultOptions,
         defaultQuantity : GlobalDefaultQuantity,
-        imagesUrl : JsonFileGroups["imagesUrl"],
+        imagesUrl : 'https://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/',
         labels : GlobalLabels,
         isAdmin : GlobalIsAdmin,
         prefix : GlobalPrefix,
-        jobId : GlobalJobId
+        jobId : GlobalJobId,
+        bannerUrl : GlobalBannerUrl
     };
 
 });

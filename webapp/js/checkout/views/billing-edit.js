@@ -13,7 +13,8 @@ define([
             "click #saveEditBA": "saveBA",
             "blur #vatNumberBA" : "showPopUp",
 	    "change #vatNumberBA" : "detectChanges",
-            "change #countryList" : "changeCountry"
+            "change #countryList" : "changeCountry",
+	    "click #isUserCompany" : "enableSaving"
         },
         initialize: function(model) {
 	    this.enableSave = true;
@@ -36,6 +37,11 @@ define([
 	    var result = _.findWhere(this.vatFormats, trgObject);
 	    return (result) ? true : false;
 	},
+	enableSaving : function() {
+            if (!$("#isUserCompany").is(":checked")) {
+                this.enableSave = true;
+            }
+        },
     render: function() {
         this.setElement(this.template({
             "model": this.model.toJSON()
@@ -82,39 +88,40 @@ define([
             var elmTarget = $(e.currentTarget);
             var me = this;
 	    var vatNumberBA = elmTarget.val().replace(/\./g, "").replace(/ /g,"");
-            if (elmTarget.val().length > 0) {
-                ajaxCaller.call("getBillingAccountFromVat",
-                {"vatNumber" : this.$('#countryIsoBA').val()+vatNumberBA},
-                'GET').done(function(result) {
-		    me.enableSave = true;
-                    if(_.isEmpty(result.data) == false && me.changesVatNumber == true) {
-                        var viePoup = new vatView(me.model, result.data);
-                    };
-                });
-		var resultValidateVat = this.validateVat();
-		elmTarget.css("border-color", "");
-                $('#countryIsoBA').css("border-color", "");
-	        me.enableSave = true;
-		if (!resultValidateVat) {
-		    elmTarget.css("border-color", "red");
-                    $('#countryIsoBA').css("border-color", "red"); 
-		    elmTarget.val('');
-		    me.enableSave = false;
-		    myCheckout.errorView.render(me.config.labels["InvalidVatNumber"]);
-		    $(window).scrollTop($(me.config.containerId).offset().top);   
-		}
+	    var resultValidateVat = this.validateVat();
+	    elmTarget.css("border-color", "");
+            $('#countryIsoBA').css("border-color", "");
+            if (!resultValidateVat && elmTarget.val().length > 0) {
+                elmTarget.css("border-color", "red");
+                $('#countryIsoBA').css("border-color", "red");
+                elmTarget.val('');
+                me.enableSave = false;
+                myCheckout.errorView.render(me.config.labels["InvalidVatNumber"]);
+                $(window).scrollTop($(me.config.containerId).offset().top);
+            } else {
+                if (elmTarget.val().length > 0) {
+                    ajaxCaller.call("getBillingAccountFromVat",
+                        {"vatNumber" : this.$('#countryIsoBA').val()+vatNumberBA},
+                    'GET').done(function(result) {
+                        if(_.isEmpty(result.data) == false && me.changesVatNumber == true) {
+                            var viePoup = new vatView(me.model, result.data);
+                        } else {
+			    me.enableSave = true;    
+			}
+                    });
 		return false;
-            }
+                }
+	    }
         },
         saveBA: function(e) {
-	    if(this.enableSave == false) {
-		return false;
-	    }
             var me = this;
 	    var billingError = this.errors();
             if( billingError) {
                 myCheckout.errorView.render(billingError);
                 $(window).scrollTop($(this.config.containerId).offset().top);
+                return false;
+            }
+	    if(this.enableSave == false) {
                 return false;
             }
 	   e.preventDefault();

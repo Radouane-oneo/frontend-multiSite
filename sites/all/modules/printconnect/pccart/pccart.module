@@ -321,6 +321,7 @@ function new_cart_ajax_removeitem($itemId) {
 }
 
 function new_cart_ajax_removedesign($itemId) {
+
     $response = Factory::DeleteDesign($itemId);
 
     Dal::BuildJson(json_decode($response->data, 1));

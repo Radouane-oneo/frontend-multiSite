@@ -50,3 +50,207 @@ span.datainfobul::after {
     top: 18px;
     width: 0;
 }
+
+.page-upload-design .whitebox  >h1{
+    font-size: 20px !important;
+}
+
+.page-upload-design .descriptionDesigner{
+    margin-top: 19px;
+}
+
+.page-upload-design #pcdesigner-upload-form .templates{
+    margin-top: 0px;
+}
+
+.page-upload-design #pcdesigner-upload-form .templates.templates_product,
+.page-upload-design #pcdesigner-upload-form .templates.templates_withfile{
+    margin-top: 33px;
+}
+ 
+.page-upload-design .templates .fieldset-wrapper .productDetail  #edit-product{
+   margin: 0;
+}
+
+.page-upload-design .templates .fieldset-wrapper .productDetail  #edit-product h2{
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.page-upload-design #pcdesigner-upload-form  ul.itemsdesign li label{
+    background:none;
+    padding-left: 0;
+}
+
+.page-upload-design #pcdesigner-upload-form .templates_product .poll-form{
+    text-align: center;
+    display: inline-block;
+    float: left; 
+    border-right: 1px solid #d1d1d1;  
+    background-color: transparent;
+}
+.page-upload-design #pcdesigner-upload-form .templates_product .poll-form.designToolOnly {
+    border: none;
+    margin: 0 auto;
+    display: block;
+    float: none;
+}
+.page-upload-design #pcdesigner-upload-form .templates_product .poll-form1{
+    border-left: none !important;
+    width: 300px;
+    padding-left: 19px;
+}
+.page-upload-design #pcdesigner-upload-form .templates_product .poll-form2 {
+    border-right: none !important;
+    padding-left: 5px;
+    width: 331px;
+}
+
+.page-upload-design #pcdesigner-upload-form .templates_product .poll-form ul.options-file-impression {
+    margin: 0;
+    padding: 0;
+    max-width: 300px;
+}
+.page-upload-design #pcdesigner-upload-form .templates_product .poll-form1 ul.options-file-impression {
+    max-width: 300px;
+}
+.page-upload-design #pcdesigner-upload-form .templates_product .poll-form2 ul.options-file-impression {
+    max-width: 331px;
+}
+.page-upload-design #pcdesigner-upload-form .templates_product .poll-form ul.options-file-impression li {
+    list-style: none;
+    margin: 0 0 5px 0;
+    padding: 0;
+}
+
+.page-upload-design #pcdesigner-upload-form .templates_product .poll-form a.model-form,
+.page-upload-design #pcdesigner-upload-form .templates_product .poll-form1 ul.options-file-impression li a{
+    display: inline;
+    padding: 0;
+    background-color: transparent;
+    color: inherit!important;
+    border: none;
+    max-width: none;
+    width: auto;
+    line-height: inherit;
+    text-align: left;
+    height: auto;
+    font-size: inherit!important;
+    text-decoration: underline;
+    font-weight: normal;
+}
+
+.page-upload-design #pcdesigner-upload-form .templates_detail_technique .txt_detail{
+    padding: 0 6px;
+}
+
+.page-upload-design #pcdesigner-upload-form .templates_detail_technique .description .titleProduct{
+    margin-bottom: 20px;
+    font-size: 14px;
+    font-weight: bold
+}
+
+.page-upload-design #pcdesigner-upload-form .templates_detail_technique .description .form-type-item{
+    margin: 0;
+}
+
+.page-upload-design #pcdesigner-upload-form .templates_detail_technique .description .linkToDownload{
+    margin-top: 18px;
+    display: inline-block;
+    background-color: #6fa900;
+    border-radius: 3px;
+    text-align: center;
+    width: 267px;
+    height: 40px;
+    line-height: 40px;
+    box-sizing: border-box;
+    font-weight: normal;
+    text-transform: none;
+    color: #fff;
+}
+
+.page-upload-design #pcdesigner-upload-form .templates_detail_technique .image{
+    margin-left: 4px;
+}
+
+.page-upload-design #pcdesigner-upload-form .templates_product .poll-form{
+    padding-bottom: 33px;
+}
+
+.page-upload-design #pcdesigner-upload-form  .templates_withfile .fieldset-wrapper{
+    background: #f1f1f1;
+    padding:0;
+    margin-bottom: 10px;
+    position: relative;
+    border: 1px solid #d1d1d1;
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+}
+
+.page-upload-design #pcdesigner-upload-form  .templates_withfile .productDetailFile{
+    float: left;
+    padding: 9px;
+    position: relative;
+    display: inline-block;
+    border-right: 1px solid #d1d1d1;
+    width: 151px;
+}
+
+.page-upload-design #pcdesigner-upload-form  .templates_withfile .productDetailFile >img{
+    height: 214px;
+    width: 150px;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    border-radius: 4px 4px 4px 4px;
+}
+.page-upload-design #pcdesigner-upload-form  .templates_withfile .productDetailFile .removefile{
+    position: absolute;
+    top: 12px;
+    right: 11px;
+}
+.page-upload-design #pcdesigner-upload-form  .templates_withfile .productDetailFile .removefile input[type=submit]{ 
+    background-image: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/Develop/Delete.png") !important;
+    width: 17px;
+    height: 17px;
+    background-repeat: no-repeat;
+}
+.page-upload-design #pcdesigner-upload-form  .templates_withfile .productDetailFile .linkDownloadpreview{
+    font-size: 11px;
+    color: #646464;
+    text-align: center;
+    display: block;
+    line-height: normal;
+}
+
+.page-upload-design #pcdesigner-upload-form  .templates_withfile .productDetailWithFile{
+    float: left;
+    display: inline-block;
+    width: 68%;
+    padding: 16px 8px;
+}
+
+.page-upload-design #pcdesigner-upload-form  .templates_withfile .productDetailWithFile .form-item{
+    margin: 0;
+}
+
+.page-upload-design #pcdesigner-upload-form  .templates_withfile .productDetailWithFile h2{
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+
+.page-upload-design #pcdesigner-upload-form  .templates_withfile .productDetailWithFile .item-list .itemsdesign li{
+    padding-left: 0;
+    background: none;
+    margin: 0;
+    margin-bottom: 6px;
+    list-style: none;
+   
+}
+
+.page-upload-design #pcdesigner-upload-form  .templates_withfile .productDetailWithFile .item-list .itemsdesign li label{
+    font-size: 12px;
+    font-weight: 700;
+}

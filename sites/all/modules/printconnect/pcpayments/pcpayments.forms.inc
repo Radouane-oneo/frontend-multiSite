@@ -213,18 +213,13 @@ function pcpayments_request_form_callback(&$form, &$form_state) {
   $form_state['storage']['vatAmount'] = $vatAmount;
   $form_state['storage']['total'] = $total;
   $methodePayement=  variable_get("methodePayement");
-
-  //$amount = $form_state['storage']['amount'];
-  //$vatAmount = $form_state['storage']['vatAmount'];
-  //$form['payment']['footer']['price']['block']['#markup'] = theme('priceblock', array('subtotal' => $amount, 'vatAmount' => $vatAmount));
   $form['priceblock']['#subtotal'] = $amount;
   $form['priceblock']['#vatAmount'] = $vatAmount;
-  //return $form['payment']['footer']['price']['block'];
   $form['actions']['price']['#value']=$total;
   $orderId = $form_state['storage']['order'];
   $order = \printconnect\Orders\Factory::Get($orderId);
   \printconnect\Orders\Factory::LoadOrder($order);
-  \printconnect\PaymentMethods\Factory::Save($paymentMethodId, $order);
+  \printconnect\PaymentMethods\Factory::Save($paymentMethodId, $order, true, $request->requestKey);
   $rows = variable_get("items");
   array_pop($rows);
   $rows[] = array(

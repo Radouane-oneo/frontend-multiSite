@@ -91,13 +91,14 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
         $li_model = '';
         $model_list_index=4;
     }
-    $form['item']['upload'] = array(
-          '#type' => 'fieldset',
-          '#title' => t('Product Config'),
-          '#attributes' => array('class' => array('templates')),
-      );
+   
   
   if (count($upload->files)) {  
+   $form['item']['upload'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Product Config'),
+        '#attributes' => array('class' => array('templates','templates_withfile')),
+    );
     foreach ($upload->files as $file) {
       $key = $file->id;
       $jobId = $file->designToolJobId;
@@ -127,7 +128,7 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
       $form['item']['upload']['files'][$file->id]['preview'] = array(
         
           '#suffix'=>'</div>',
-          '#markup' => l(t('Download preview'), pcdesigntool_preview_url($jobId), array('attributes' => array('target' => 'blank', 'class' => array('clearfix')))),
+          '#markup' => l(t('Download preview'), pcdesigntool_preview_url($jobId), array('attributes' => array('target' => 'blank', 'class' => array('clearfix','linkDownloadpreview')))),
       );
     }
     $form['item']['upload']['files'][$file->id]['productDetail'] = array(
@@ -144,8 +145,13 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
              )
            );
   } else {
+      $form['item']['upload'] = array(
+          '#type' => 'fieldset',
+          '#title' => t('Product Config'),
+          '#attributes' => array('class' => array('templates','templates_product')),
+      );
        $form['item']['upload']['productDetail'] = array(
-       '#prefix'=>'<div class="productDetail">',
+       '#prefix'=>'<div class="productDetail clear">',
        '#suffix'=>'</div>',
         'product' => array(
             '#type' => 'item',              
@@ -175,15 +181,15 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
                                                       '.$li_model.'
                                                       <li>'. t('Contrôle du fichier optionnel (€ 4,99 hors TVA)') .'</li>
                                                   </ul>',
-                          '#suffix' => '</div> ',
-                          '#content'=> array('#markup' => '<span class="buttonlayout btnupfile"><span class="txtgras">'.t("COMMENCER").'</span>',),
+                '#suffix' => '</div> ',
+                '#content'=> array('#markup' => '<span class="buttonlayout btnupfile"><span class="txtgras">'.t("COMMENCER").'</span>',),
                 '#params' => array(
                     'id' => $id,
                     'cartid' => $upload->order,
                 ),
                 '#callback' => 'upload-design/callback/',
-                '#versioning' => FALSE,
-                '#attributes' => array('class' => array( 'iframe')),
+                '#versioning' => FALSE, 
+                '#attributes' => array('class' => array('upload', 'designtool', 'iframe'))
             );
 
             $form['item']['upload']['proflink'] = array(
@@ -206,7 +212,8 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
               '#params' => array(
                   'id' => $id,
                   'cartid' => $upload->order,
-              ),
+              ), 
+              '#html' => true,
               '#attributes' => array('class' => array( 'iframe')),
             );
      }else{
@@ -232,7 +239,10 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
           ),
           '#callback' => 'upload-design/callback/',
           '#versioning' => FALSE,
-          '#attributes' => array('class' => array( 'iframe')),
+          '#custom' => $custom,
+          '#title' => $title,
+          '#html' => true,
+          '#attributes' => array('class' => array('upload', 'designtool', 'iframe'))
       );
      }
     }
@@ -258,11 +268,11 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
           '#id' => 'templates',
           '#type' => 'fieldset',
           '#title' => t('Design documents'),
-          '#attributes' => array('class' => array('templates')),
+          '#attributes' => array('class' => array('templates','templates_detail_technique')),
       );
     $form['templates']['text'] = array(
             '#type' => 'container',
-            '#attributes' => array('class' => array('text')),
+            '#attributes' => array('class' => array('text','txt_detail')),
             'content' => array(
                 '#markup' => t('Finalizing your design? Take into account these requirements:') . 
                 '<p>'.l(t('Link text'), t('linkToConftemplate'), array('attributes' => array('target' =>'_blank'))).'</p>',
@@ -343,7 +353,7 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
         $linkTemplate = '/'.$language->prefix.'/file/template_'.$template->id.'__'.$language->id.'.zip';
         $form['templates']['desciption']['linkToDownload'] = array(
             '#type' => 'item',
-            '#markup'=> "<a href='$linkTemplate'>".t('Download all design document')."</a>"
+            '#markup'=> "<a class='linkToDownload' href='$linkTemplate'>".t('Download all design document')."</a>",
         );
       
 //       $text = t("info for ".$productId);

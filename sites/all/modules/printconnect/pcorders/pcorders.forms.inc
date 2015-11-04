@@ -6,7 +6,7 @@ $order = \printconnect\Orders\Factory::Get($orderId, false);
 
 $customer = \printconnect\Customers\Factory::Get($order->customer);
 $cart = \printconnect\Carts\Factory::Current(FALSE);
-
+  
   drupal_set_title(t('Details of your order @number : @status', array('@number' => $order->number, '@status' => $order->status)));
  
   $form['status'] = array(
@@ -163,7 +163,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
   }
   if ($order->neutralShipping) {
     $form['deliveryinvoice']['invoice']['info'] = array(
-        '#prefix' => '<div class="smaller">',
+        '#prefix' => '<div class="smaller neutral">',
         '#markup' => t('Your order is shipped neutral'),
         '#suffix' => '</div>',
     );
@@ -221,7 +221,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         '#type' => 'container',
         '#attributes' => array('class' => array('image')),
     );
-    if (count($item->files)) {          
+    if (count($item->files)) {        
       foreach ($item->files as $file) {
           if (isset($file->thumbnail)) {
           $form['order']['details']['item'][$item->id]['image']['thumb'] = array(
@@ -240,6 +240,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
           '#theme' => 'image',
           '#path' => printconnect_getimage('products', $item->configuration->productId),
       );
+
     }
     
     $form['order']['details']['item'][$item->id]['description'] = array(
@@ -282,6 +283,11 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
             '#markup' => $promoPrice,
             );
         }
+    }
+    if (count($item->files) == 0) { 
+      $form['order']['details']['item'][$item->id]['blocDesigner'] = array(
+          '#markup' => '<div id="designerWarning"><p>'.t('WarningDesigner').'</p><p>'.t('DesignerEmail').'<span>'.$item->emailDesigner.'</span></p></div>',
+          );
     }
 
     $totalPrice += $price; // total product price for tracking vente

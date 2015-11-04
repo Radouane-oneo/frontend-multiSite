@@ -121,7 +121,7 @@ define([
                         {"vatNumber" : this.$('#countryIsoBA').val()+vatNumberBA},
                     'GET').done(function(result) {
                         if(_.isEmpty(result.data) == false && me.changesVatNumber == true) {
-				$('.vatAlreadyUsed').parent().show();
+			    $('.vatAlreadyUsed').parent().show();
                         } else {
 			    me.enableSave = true;    
 			}

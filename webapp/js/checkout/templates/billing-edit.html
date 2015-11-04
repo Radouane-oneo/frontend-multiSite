@@ -86,6 +86,13 @@
             <div class="form-item form-type-checkbox form-item-invoice-address-current-isCompany company-box plr">
                 <label for="edit-invoice-address-current-iscompany"><%= model.labels['TVANumber'] %></label>
                 <input id="isUserCompany" type="checkbox" class="form-checkbox">
+		<div class="" style="display:none;">
+                    <div class="messages error vatAlreadyUsed">
+                        <ul>
+                            <li><%= model.labels['VatAlreadyUsed'] %></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div class="form-item form-type-textfield form-item-invoice-address-current-company plr" style="display: none;">
                 <label for="edit-invoice-address-current-company"><%= model.labels['CompanyBA'] %> <span class="form-required" title="BAFieldsRequired">*</span></label>

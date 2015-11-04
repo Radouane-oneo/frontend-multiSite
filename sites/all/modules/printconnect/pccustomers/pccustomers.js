@@ -2,10 +2,14 @@
     $(document).ready(function () {
       if($('#pccustomers-address-billingaddresses-form')[0]){
       }
+      if ($('#isUserCompany:checked').length > 0) {
+	$('#edit-vatnumber-number').addClass('required');
+	}
       var vatFormats = [{'BE': 10},{'NL' : 12},{'LU' : 8},{'FR' : 11}];
       $('#pccustomers-address-billingaddresses-form #edit-vatnumber-number').blur(function(){
             if ($('#edit-vatnumber-number').val() !='' && $('.country').val() != '') {
-		$('.messages').remove();
+		$('.vatAlreadyUsed').parent().hide();
+		$('.messages').hide();
                 var vatNumberBA = $("#edit-vatnumber-number").val().replace(/\./g, "").replace(/ /g,"");
                 var decision = false;
                 $.each(vatFormats, function(c, obj){
@@ -49,16 +53,14 @@
                         dataType: 'json',
                         success: function (data){
                             if (data.code == 200 && $.isEmptyObject(data.data) == false) {
-                                $('#edit-vatnumber-number').addClass('error');
-                                $('#edit-vatnumber-number').val('');
-                                $.fancybox({content : $('#popUpContainer').html(),
-                                    openEffect  : 'none',
-                                    closeEffect : 'none',
-                                    width    : 330,
-                                    height   : 100,
-                                    afterClose : function(){
-                                    }
-                                });
+				console.log('wsel hna');
+				var path = window.location.href.split('/'); path[path.length -1]
+				if (data.data.id != path[path.length -1]) {
+                                    $('#edit-vatnumber-number').addClass('error');
+                                    $('#edit-vatnumber-number').val('');
+				    $('.vatAlreadyUsed').parent().show();
+				    $('.vatAlreadyUsed').show();
+				}
                             }
                         }
                     });
@@ -83,6 +85,7 @@
         });
       /* ========== PCCUSTOMER form validation ========== */
       $('.save-button').click(function (e) {
+	  $('.vatAlreadyUsed').parent().hide();
           $('.messages.error').remove();
           $('#content form .required').removeClass("error");
           var errorMarkup = "<div class='messages error'><ul>";

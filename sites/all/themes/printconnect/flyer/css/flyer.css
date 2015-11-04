@@ -12193,14 +12193,14 @@ form#pccheckout-payment-form fieldset legend{
 }
 
 
-.page-templates-product .region-content .form-actions{
-	    padding: 15px 10px;
+.page-templates .region-content .form-actions{
+	padding: 15px 10px;
 }
-.page-templates-product .region-content .form-actions span.price{
+.page-templates .region-content .form-actions span.price{
 	padding-left: 0;
 }
 
-.page-templates-product .region-content .form-actions a.button.action > .ui-button-text{
+.page-templates .region-content .form-actions a.button.action > .ui-button-text{
 	background: url(/sites/all/themes/printconnect/flyer/css/images/button_order.png) no-repeat left;
     padding-left: 25px;
     display: inline-block;

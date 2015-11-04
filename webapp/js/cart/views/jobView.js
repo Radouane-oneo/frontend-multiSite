@@ -260,7 +260,14 @@ define([
 	    	$("#pccart-cart-form .jobfull").each(function(i, elem) {
 	    		$(elem).find(".image img").load(function(){
 			  		var maxHeight = $(elem).find(".image").height();
-	    			$(elem).find(".preview1").css("height" , maxHeight+"px");
+			  		var previewHeight = $(elem).find(".preview1").height();
+
+			  		if ( maxHeight > previewHeight ) {
+			  			$(elem).find(".preview1").css("height" , maxHeight+"px"); 
+			  		} else {
+			  			previewHeight += 40;
+			  			$(elem).find(".preview1").css("height" , previewHeight+"px"); 
+			  		}	
 				});     		
     		});   	   	
 	    }, 

@@ -35,14 +35,16 @@ function _pcdesigner_designtool_callback() {
   $thumbnail = $_GET['thumbid'];
   $id = $_GET['id'];
   $jobId = $_GET['jobid'];
-
+  $controlpro = isset($_GET['controlpro']) ? $_GET['controlpro'] : 0;
+  $quickupload = isset($_GET['quickupload']) ? $_GET['quickupload'] : 0;
   $upload = \printconnect\Designer\Upload\Factory::Get($id);
 
   $upload->EnsureLoaded();
   $upload->file = $file;
   $upload->thumbnail = $thumbnail;
   $upload->design_tool_job_id = $jobId;
-
+  $upload->controlpro = $controlpro;
+  $upload->quickupload = $quickupload;
   \printconnect\Designer\Upload\Factory::Save($upload);
   print update_domain();
   print '<script type="text/javascript">top.location = top.location;</script>';

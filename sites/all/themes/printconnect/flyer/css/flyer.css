@@ -12085,10 +12085,10 @@ body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintc
     content: ' ';
     background: #f60;
     display: block;
-    height: 102%;
-    width: 16px;
+    height: 101%;
+    width: 2px;
     position: absolute;
-    right: 148px;
+    right: 154px;
     top: -1px;
     z-index: 1;
 }

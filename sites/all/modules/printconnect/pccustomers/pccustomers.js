@@ -5,6 +5,7 @@
       var vatFormats = [{'BE': 10},{'NL' : 12},{'LU' : 8},{'FR' : 11}];
       $('#pccustomers-address-billingaddresses-form #edit-vatnumber-number').blur(function(){
             if ($('#edit-vatnumber-number').val() !='' && $('.country').val() != '') {
+		$('.messages').remove();
                 var vatNumberBA = $("#edit-vatnumber-number").val().replace(/\./g, "").replace(/ /g,"");
                 var decision = false;
                 $.each(vatFormats, function(c, obj){
@@ -14,9 +15,21 @@
                         }
                     });
                 });
+		switch($('#edit-vatnumber-country').val()) {
+            	    case 'BE':
+                        decision = (vatNumberBA.charAt(0) == 0) ? true : false;
+            	    break;
+            	    case 'NL':
+            	    case 'LU':
+                        decision = ($.isNumeric(vatNumberBA)) ? true : false;
+            	    break
+            	    default:
+            	        decision = true;
+            	    break;
+         	}
                 if (decision == false) {
-                    number.addClass('error');
-                    number.val('');
+                    $("#edit-vatnumber-number").addClass('error');
+                    $("#edit-vatnumber-number").val('');
                     var vatplaceholder = Drupal.t('insert a valid vat number please');
                     $('.customErrors').remove();
                     if ($('.messages').length == 0){
@@ -28,6 +41,7 @@
                         scrollTop:$(".messages.error").offset().top
                     }, 'slow');
                 } else {
+		    $("#edit-vatnumber-number").removeClass('error');
                     $.ajax({
                         type: 'GET',
                         url: Drupal.settings.basePath +'checkout/getBillingAccoutFromVat',

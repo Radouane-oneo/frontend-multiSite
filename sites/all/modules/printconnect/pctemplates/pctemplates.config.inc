@@ -1150,7 +1150,19 @@ $product = Products\Factory::Get($productId);
   } else {
     $price = 0;
   }
-  $subtotal += $price + $optionsPrice;
+  
+  $priceTemplate = (float)$template->designTemplates->price;
+  $priceTemplateDesc = $template->designTemplates->description;
+  if($priceTemplate){
+      $form['priceTemplate'] = array(
+        '#id' => 'price-template-block',
+        '#type' => 'item',
+        '#title' => $priceTemplateDesc,
+        '#markup' => theme('price', array('value' => $priceTemplate)),
+      );
+  }
+  
+  $subtotal += $price + $optionsPrice + $priceTemplate;
   $total = $subtotal * (1 + $_SESSION['shop_vat']);
   $form['priceblock'] = array(
       '#id' => 'priceblock',

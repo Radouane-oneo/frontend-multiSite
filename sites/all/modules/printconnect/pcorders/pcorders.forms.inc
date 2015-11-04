@@ -476,17 +476,38 @@ function _pcorders_order_form_build_overview($order) {
      foreach ($order->discountItems as $discount) {
       if($discount->productName != "Fotolia Image"){
         $label = t('Discount');
-         $rows[] = array(
-             'data' => array(
-                 $label,
-                 $discount->productName,
-                 theme('price', array('value' => $discount->price, 'block' => TRUE)),
-             ),
-             'class' => array('discount'),
-         );
-      }       
-     }
+
+        if($discount->productName == 'Fotolia Image') {
+          $label = t('Supplément');
+        }
+        $rows[] = array(
+            'data' => array(
+                $label,
+                $discount->productName,
+                theme('price', array('value' => $discount->price, 'block' => TRUE)),
+            ),
+            'class' => array('discount'),
+        );
+      }
+    }
    }
+    
+    if ($order->orderItems) {
+      foreach ($order->orderItems as $oi) {
+        if($oi->designTemplate) {
+            $label = t('Supplément');
+            $rows[] = array(
+                'data' => array(
+                    $label,
+                    $oi->designTemplate->description,
+                    theme('price', array('value' => $oi->designTemplate->price, 'block' => TRUE)),
+                ),
+                'class' => array('discount'),
+            );
+        }
+      }
+    }
+    
     if (isset($order->orderItemShipping)) {
       $type = \printconnect\Shipping\Types\Factory::Get($order->orderItemShipping->shippingTypeResellerShop);
       $rows[] = array(

@@ -145,8 +145,6 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
       '#attributes' => array('class' => array('invoice')),
       '#title' => t('Invoice address')
   );
-  var_dump($order->invoices);
-echo count($order->invoices);
 
   if ($order->customerReference) {
     $form['deliveryinvoice']['invoice']['reference'] = array(

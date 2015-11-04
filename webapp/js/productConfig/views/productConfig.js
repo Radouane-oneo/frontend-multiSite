@@ -21,7 +21,11 @@ define([
             "click #deadlinestooltip legend a" : "preventDefault",
             "focus #edit-custom" : "editCustomQuantity",
             "click .calculCF " : "calculCF",
-            "click #edit-actions-addtocart" : "calculCFOrder"            
+            "click #edit-actions-addtocart" : "calculCFOrder",
+            "click .banner-link" : "bannerClick",
+            "click .banner-link-visite" : "bannerClickVisite",
+            "click #mailpopup .close" : "bannerClose",
+            "click .send-popin" : "formControl"
         },
         initialize: function() {
             this.config = require("config");
@@ -45,6 +49,8 @@ define([
                 "expandedOptions" : this.$("#edit-options").is(":visible")
                         // "pricing" : this.model.toolBoxGroup.pricing
             }));
+             this.$('#popupbox').html($('.mailing-container').parents('.block-block').html());
+            jQuery('#sidebar-second .mailing-container').parents('.block-block').remove();
             $(this.config.containerId).html(this.$el);
         
             var existQuantity = '';
@@ -377,6 +383,87 @@ define([
         },
         editCustomQuantity: function(){
             $("#edit-quantity-custom").attr("checked", "checked");
+        },
+        bannerClick: function(e){
+            e.preventDefault();
+            //_gaq.push(['_trackEvent', jQuery("#trackEvent2").attr('value'), 'click', jQuery("#trackEvent4").attr('value')]);
+            _gaq.push(['_trackEvent', 'PDFdownloads', 'click', 'affichegids']);
+            $('#mailpopup').fadeIn();
+            $("#popupFormId").attr("action","/downloadaffiche.php");
+           // $("<div class='grey-bg-popup'></div>").insertAfter("#canvas");
+            $('#remerciement').attr('style','display:none');
+           // $('.grey-bg-popup').fadeIn();   
+           $('#divpopup').fadeIn();
+           $('#hideshow').attr('style','display:block');			
+        },
+        bannerClickVisite: function(e){  
+             e.preventDefault();
+            _gaq.push(['_trackEvent', jQuery("#trackEvent2").attr('value'), 'click', jQuery("#trackEvent4").attr('value')]);
+            $('#mailpopup').fadeIn();
+            $("#popupFormId").attr("action","/downloadvisite.php");
+           // $("<div class='grey-bg-popup'></div>").insertAfter("#canvas");
+            $('#remerciement').attr('style','display:none');
+           // $('.grey-bg-popup').fadeIn();   
+           $('#divpopup').fadeIn();
+           $('#hideshow').attr('style','display:block');			
+        },
+        bannerClose: function(){
+           $('#mailpopup').fadeOut();
+          //  $('.grey-bg-popup').fadeOut();
+           // $("<div class='grey-bg-popup'></div>").remove();
+            $('#divpopup').fadeOut();
+        },
+        divpopup: function(e){
+            e.preventDefault();
+            $('#mailpopup').fadeOut();
+            $('#divpopup').fadeOut();
+        },
+        formControl: function(){
+            var emailAddressValue = $('#EMAIL_FIELD').val();//.trim;            
+            if(emailAddressValue == ''|| $('#EMAIL_FIELD') == null){
+                $('#EMAIL_FIELD').css({ "border":"1px solid red", "color":"red"});
+                $('#EMAIL_FIELD').val('');
+                $('#EMAIL_FIELD').attr('placeholder','email is verplicht.');
+                $('#EMAIL_FIELD').focus();                
+            }else{
+                var emailAddressRegex = /^[^@\s]+@[^\.@\s]+(\.[^@\s^\.]+)+$/;
+                if (!emailAddressRegex.test(emailAddressValue)){               
+                    $('#EMAIL_FIELD').css({ "border":"1px solid red", "color":"red"});
+                    $('#EMAIL_FIELD').val('');
+                    $('#EMAIL_FIELD').attr('placeholder','Het emailadres klopt niet, controleer of er een @ in staat.');  
+                }
+                else{
+                    $('#EMAIL_FIELD').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                     
+                    var formData = {}; 
+                    jQuery("#mailpopup input[type='hidden']").each(function(){ 
+                        formData[jQuery(this).attr('name')] =  jQuery(this).attr('value');
+                    });
+                    formData["EMAIL_FIELD"] = jQuery("#EMAIL_FIELD").val();
+                    formData["FIRSTNAME_FIELD"] = jQuery("#FIRSTNAME_FIELD").val();
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: formData, 
+                        success: function(data){
+                          // $(location).attr('href',goto);
+                          console.log('lolo'); 
+                          $('#hideshow').attr('style','display:none');
+                          $('#remerciement').attr('style','display:block');
+                            $('#mailpopup').fadeIn();
+                          $("#popupFormId").attr("action",goto);
+                          $("#popupFormId").submit();
+                        },
+                        error: function(jqXHR, textStatus, ex) { 
+                          $('#hideshow').attr('style','display:none');
+                          $('#remerciement').attr('style','display:block');
+                          $('#mailpopup').fadeIn();
+                          $("#popupFormId").attr("action",goto);
+                          $("#popupFormId").submit();
+                        }  
+                    });
+                }
+            }
         },
     });
 

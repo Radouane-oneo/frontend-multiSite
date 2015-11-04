@@ -13,6 +13,7 @@
 
       number.removeClass('error');
       number.removeClass('validated');
+	$('.vatAlreadyUsed').parent().hide();
       if (number.val() !='' && country.val() != '' && $('#companyInput').val() != '') {
 	var vatNumberBA = $("#edit-vatnumber-number").val().replace(/\./g, "").replace(/ /g,"");
 	var decision = false;
@@ -50,18 +51,8 @@
     		success: function (data){
   		    if (data.code == 200 && $.isEmptyObject(data.data) == false) {
     			  number.addClass('error');
-            number.val('');
-
-      			$.fancybox({
-                content : $('#popUpContainer').html(),
-            		openEffect  : 'none',
-            		closeEffect : 'none',
-            		width    : '100%',
-            		height   : 100,
-                autoSize : false,
-            		afterClose : function(){
-            		} 
-          	});
+            	     	  number.val('');
+			  $('.vatAlreadyUsed').parent().show();
   		    }
     		}
 		});

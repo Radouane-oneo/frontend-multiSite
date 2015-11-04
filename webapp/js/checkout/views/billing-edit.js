@@ -35,7 +35,23 @@ define([
 	    var vatNumberBA = $("#vatNumberBA").val().replace(/\./g, "").replace(/ /g,"");
 	    trgObject[$('#countryIsoBA').val()] = vatNumberBA.length;
 	    var result = _.findWhere(this.vatFormats, trgObject);
-	    return (result) ? true : false;
+	    switch($('#countryIsoBA').val()) {
+                case 'BE':
+                    decision = (vatNumberBA.charAt(0) == 0) ? true : false;
+                break;
+                case 'NL':
+                case 'LU':
+                    decision = ($.isNumeric(vatNumberBA)) ? true : false;
+                break
+                default:
+                    decision = true;
+                break;
+            }
+            if (!result) {
+                decision = false;
+            }
+            
+	    return decision;
 	},
 	enableSaving : function() {
             if (!$("#isUserCompany").is(":checked")) {
@@ -91,6 +107,7 @@ define([
 	    var resultValidateVat = this.validateVat();
 	    elmTarget.css("border-color", "");
             $('#countryIsoBA').css("border-color", "");
+	    $('.vatAlreadyUsed').parent().hide();
             if (!resultValidateVat && elmTarget.val().length > 0) {
                 elmTarget.css("border-color", "red");
                 $('#countryIsoBA').css("border-color", "red");
@@ -103,8 +120,8 @@ define([
                     ajaxCaller.call("getBillingAccountFromVat",
                         {"vatNumber" : this.$('#countryIsoBA').val()+vatNumberBA},
                     'GET').done(function(result) {
-                        if(_.isEmpty(result.data) == false && me.changesVatNumber == true) {
-                            var viePoup = new vatView(me.model, result.data);
+                        if(_.isEmpty(result.data) == false && me.changesVatNumber == true && $('#baEditSelect').val() != result.data.id) {
+			        $('.vatAlreadyUsed').parent().show();
                         } else {
 			    me.enableSave = true;    
 			}

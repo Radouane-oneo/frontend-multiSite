@@ -6,7 +6,7 @@ $order = \printconnect\Orders\Factory::Get($orderId, false);
 
 $customer = \printconnect\Customers\Factory::Get($order->customer);
 $cart = \printconnect\Carts\Factory::Current(FALSE);
-
+  
   drupal_set_title(t('Details of your order @number : @status', array('@number' => $order->number, '@status' => $order->status)));
  
   $form['status'] = array(
@@ -286,7 +286,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
     }
     if (count($item->files) == 0) { 
       $form['order']['details']['item'][$item->id]['blocDesigner'] = array(
-          '#markup' => '<div id="designerWarning"><p>'.t('WarningDesigner').'</p><p>'.t('DesignerEmail').'<span>NAME@DOMAIN.COM</span></p></div>',
+          '#markup' => '<div id="designerWarning"><p>'.t('WarningDesigner').'</p><p>'.t('DesignerEmail').'<span>'.$item->emailDesigner.'</span></p></div>',
           );
     }
 
@@ -446,17 +446,38 @@ function _pcorders_order_form_build_overview($order) {
      foreach ($order->discountItems as $discount) {
       if($discount->productName != "Fotolia Image"){
         $label = t('Discount');
-         $rows[] = array(
-             'data' => array(
-                 $label,
-                 $discount->productName,
-                 theme('price', array('value' => $discount->price, 'block' => TRUE)),
-             ),
-             'class' => array('discount'),
-         );
-      }       
-     }
+
+        if($discount->productName == 'Fotolia Image') {
+          $label = t('Supplément');
+        }
+        $rows[] = array(
+            'data' => array(
+                $label,
+                $discount->productName,
+                theme('price', array('value' => $discount->price, 'block' => TRUE)),
+            ),
+            'class' => array('discount'),
+        );
+      }
+    }
    }
+    
+    if ($order->orderItems) {
+      foreach ($order->orderItems as $oi) {
+        if($oi->designTemplate) {
+            $label = t('Supplément');
+            $rows[] = array(
+                'data' => array(
+                    $label,
+                    $oi->designTemplate->description,
+                    theme('price', array('value' => $oi->designTemplate->price, 'block' => TRUE)),
+                ),
+                'class' => array('discount'),
+            );
+        }
+      }
+    }
+    
     if (isset($order->orderItemShipping)) {
       $type = \printconnect\Shipping\Types\Factory::Get($order->orderItemShipping->shippingTypeResellerShop);
       $rows[] = array(

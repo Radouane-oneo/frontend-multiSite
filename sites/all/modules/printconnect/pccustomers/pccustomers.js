@@ -2,9 +2,14 @@
     $(document).ready(function () {
       if($('#pccustomers-address-billingaddresses-form')[0]){
       }
+      if ($('#isUserCompany:checked').length > 0) {
+	$('#edit-vatnumber-number').addClass('required');
+	}
       var vatFormats = [{'BE': 10},{'NL' : 12},{'LU' : 8},{'FR' : 11}];
       $('#pccustomers-address-billingaddresses-form #edit-vatnumber-number').blur(function(){
             if ($('#edit-vatnumber-number').val() !='' && $('.country').val() != '') {
+		$('.vatAlreadyUsed').parent().hide();
+		$('.messages').hide();
                 var vatNumberBA = $("#edit-vatnumber-number").val().replace(/\./g, "").replace(/ /g,"");
                 var decision = false;
                 $.each(vatFormats, function(c, obj){
@@ -14,9 +19,21 @@
                         }
                     });
                 });
+		switch($('#edit-vatnumber-country').val()) {
+            	    case 'BE':
+                        decision = (vatNumberBA.charAt(0) == 0) ? true : false;
+            	    break;
+            	    case 'NL':
+            	    case 'LU':
+                        decision = ($.isNumeric(vatNumberBA)) ? true : false;
+            	    break
+            	    default:
+            	        decision = true;
+            	    break;
+         	}
                 if (decision == false) {
-                    number.addClass('error');
-                    number.val('');
+                    $("#edit-vatnumber-number").addClass('error');
+                    $("#edit-vatnumber-number").val('');
                     var vatplaceholder = Drupal.t('insert a valid vat number please');
                     $('.customErrors').remove();
                     if ($('.messages').length == 0){
@@ -28,6 +45,7 @@
                         scrollTop:$(".messages.error").offset().top
                     }, 'slow');
                 } else {
+		    $("#edit-vatnumber-number").removeClass('error');
                     $.ajax({
                         type: 'GET',
                         url: Drupal.settings.basePath +'checkout/getBillingAccoutFromVat',
@@ -35,16 +53,14 @@
                         dataType: 'json',
                         success: function (data){
                             if (data.code == 200 && $.isEmptyObject(data.data) == false) {
-                                $('#edit-vatnumber-number').addClass('error');
-                                $('#edit-vatnumber-number').val('');
-                                $.fancybox({content : $('#popUpContainer').html(),
-                                    openEffect  : 'none',
-                                    closeEffect : 'none',
-                                    width    : 330,
-                                    height   : 100,
-                                    afterClose : function(){
-                                    }
-                                });
+				console.log('wsel hna');
+				var path = window.location.href.split('/'); path[path.length -1]
+				if (data.data.id != path[path.length -1]) {
+                                    $('#edit-vatnumber-number').addClass('error');
+                                    $('#edit-vatnumber-number').val('');
+				    $('.vatAlreadyUsed').parent().show();
+				    $('.vatAlreadyUsed').show();
+				}
                             }
                         }
                     });
@@ -68,7 +84,9 @@
             }
         });
       /* ========== PCCUSTOMER form validation ========== */
+
       $('.save-button').click(function (e) {
+      	  $('.vatAlreadyUsed').parent().hide(); 
           $('.messages.error').remove();
           $('#content form .required').removeClass("error");
           var errorMarkup = "<div class='messages error'><ul>";
@@ -87,7 +105,7 @@
                 _this.addClass('error');
                 errorMsgs[i] = inputName+": "+labels["invalidCharactersLength"];
                 errorMarkup += "<li>"+errorMsgs[i]+"</li>";
-            } else if (this.name =="phone" && (isNaN(_this.val()) || _this.val().length != 10)) {
+            } else if (this.name =="phone" && (isNaN(_this.val()) || _this.val().length != 9)) {
                 inputName = $(elem).attr('name');
                 _this.addClass('error');
                 errorMsgs[i] = labels["phoneNumberError"];

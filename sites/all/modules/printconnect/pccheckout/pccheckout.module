@@ -386,6 +386,7 @@ function new_checkout_and_delivery_loadpage() {
       "changeName" => t("changeName"),
       "shippingTypeStoreMessage" => t("shippingTypeStoreMessage"),
       "shippingTypeBpostPickupPointMessage" => t("shippingTypeBpostPickupPointMessage"),
+      "VatAlreadyUsed" => "VatAlreadyUsed"
     );
 
      $cart = \printconnect\Carts\Factory::GetCartJson();
@@ -501,7 +502,8 @@ function new_checkout_ajax_getpaymentmethods()
     Dal::BuildJson(array(
         'paymentMethods' => json_decode($response->data, 1),
         'amountWithoutPayment' => $result->subTotalAmount - $result->orderItemsPayment[0]->price,
-        'customerName' => $customer->lastName.' '.$customer->firstName
+        'customerName' => $customer->lastName.' '.$customer->firstName,
+	'customerFcp' => $customer->freeOfCashPayment
     ));
 }
 

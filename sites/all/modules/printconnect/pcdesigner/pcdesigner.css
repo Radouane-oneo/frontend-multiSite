@@ -62,6 +62,11 @@ span.datainfobul::after {
 .page-upload-design #pcdesigner-upload-form .templates{
     margin-top: 0px;
 }
+
+.page-upload-design #pcdesigner-upload-form .templates.templates_product,
+.page-upload-design #pcdesigner-upload-form .templates.templates_withfile{
+    margin-top: 33px;
+}
  
 .page-upload-design .templates .fieldset-wrapper .productDetail  #edit-product{
    margin: 0;
@@ -93,13 +98,12 @@ span.datainfobul::after {
 }
 .page-upload-design #pcdesigner-upload-form .templates_product .poll-form1{
     border-left: none !important;
-    width: 300px;
-    padding-left: 19px;
+    width: 327px; 
 }
 .page-upload-design #pcdesigner-upload-form .templates_product .poll-form2 {
     border-right: none !important;
-    padding-left: 5px;
-    width: 331px;
+    padding-left: 0;
+    width: 328px;
 }
 
 .page-upload-design #pcdesigner-upload-form .templates_product .poll-form ul.options-file-impression {
@@ -108,10 +112,12 @@ span.datainfobul::after {
     max-width: 300px;
 }
 .page-upload-design #pcdesigner-upload-form .templates_product .poll-form1 ul.options-file-impression {
-    max-width: 300px;
+    max-width: 296px;
+    margin-left: 19px;
 }
 .page-upload-design #pcdesigner-upload-form .templates_product .poll-form2 ul.options-file-impression {
     max-width: 331px;
+    margin-left: 5px;
 }
 .page-upload-design #pcdesigner-upload-form .templates_product .poll-form ul.options-file-impression li {
     list-style: none;
@@ -222,7 +228,7 @@ span.datainfobul::after {
     float: left;
     display: inline-block;
     width: 68%;
-    padding: 19px 8px;
+    padding: 16px 8px;
 }
 
 .page-upload-design #pcdesigner-upload-form  .templates_withfile .productDetailWithFile .form-item{
@@ -232,16 +238,17 @@ span.datainfobul::after {
 .page-upload-design #pcdesigner-upload-form  .templates_withfile .productDetailWithFile h2{
     font-size: 14px;
     font-weight: 700;
+    margin-bottom: 6px;
 }
 
-.page-upload-design #pcdesigner-upload-form  .templates_withfile .productDetailWithFile .item-list .itemsdesign li{
-    list-style: none;
-    margin: 0;
-}
 
 .page-upload-design #pcdesigner-upload-form  .templates_withfile .productDetailWithFile .item-list .itemsdesign li{
     padding-left: 0;
     background: none;
+    margin: 0;
+    margin-bottom: 6px;
+    list-style: none;
+   
 }
 
 .page-upload-design #pcdesigner-upload-form  .templates_withfile .productDetailWithFile .item-list .itemsdesign li label{

@@ -1187,7 +1187,7 @@ a.button.request:active {
 }
 .ui-button .ui-button-text {
 	display: inline;
-	line-height: 17px;
+	line-height: 18px;
 }
 .form-submit, .ui-button a.button, a:visited.button, a.ui-button, a:visited.ui-button{
 	color: #fff;
@@ -12179,3 +12179,10 @@ form#pccheckout-payment-form fieldset legend{
 .page-templates-product .region-content .form-actions span.price{
 	padding-left: 0;
 }
+
+.page-templates-product .region-content .form-actions a.button.action > .ui-button-text{
+	background: url(/sites/all/themes/printconnect/flyer/css/images/button_order.png) no-repeat left;
+    padding-left: 25px;
+    display: inline-block;
+}
+

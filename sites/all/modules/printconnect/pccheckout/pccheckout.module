@@ -408,6 +408,7 @@ function new_checkout_and_delivery_loadpage() {
 
 function new_checkout_ajax_getshippingaddresses() {
     $shippings = \printconnect\Shipping\Types\Factory::GetCustomerShippingAddresses();
+    $billings = \printconnect\Customers\BillingAccounts\Factory::GetCustomerBillingAccounts();
     $selected = \printconnect\Shipping\Types\Factory::GetSelectedShipping();
 
     $orderItemShipping = json_decode($selected->data, 1);
@@ -418,9 +419,28 @@ function new_checkout_ajax_getshippingaddresses() {
         $orderItemShipping['orderShippingAddress']['name'] = $customer->name;
     }
 
+    $data = array();
+
+    $shippings = json_decode($shippings->data, 1);
+
+    foreach ($shippings as $key => $item) {
+        $item['isShipping'] = 1;
+        $data[] = $item;
+    }
+
+    $billings = json_decode($billings->data, 1);
+
+    foreach ($billings as $key => $item) {
+        if(!isset($item['id'])){
+           continue;
+        }
+        $item['isShipping'] = 0;
+        $data[] = $item;
+    }
+
     Dal::BuildJson(array(
         'orderItemShipping' => $orderItemShipping,
-        'addresses' => json_decode($shippings->data, 1)
+        'addresses' => $data
     ));
 }
 

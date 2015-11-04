@@ -281,7 +281,7 @@ use printconnect\Dal\ForbiddenException;
     }
 //--------------file cache-------------------
         public function fromCache($urlFinal, $fromCache = true) {
-            $urls = array('cart', 'customer', 'shipping-date', 'billing-account');
+            $urls = array('cart', 'customer', 'shipping-date', 'billing-account', 'upload-design');
             $dontCache = false ;
             foreach ($urls as $item) {
                 if (preg_match("@$item@", $urlFinal)) {

@@ -72,9 +72,8 @@ define([
             }); 
         },
         selectAddress: function(e){
-            console.log($(e.currentTarget));
             var address = _.findWhere(this.model.get("shippingAddresses").addresses, {id: parseInt($(e.currentTarget).val()), isShipping:parseInt($(e.currentTarget).find('option:selected').attr('is-shipping'))});
-            console.log(address);
+
             if(!address) address = {};
             this.$("#edit-shipping-detail-current-name").val(address.name);
             this.$("#edit-shipping-detail-current-company").val(address.company);
@@ -129,7 +128,7 @@ define([
             };
 
             var address = _.findWhere(this.model.get("shippingAddresses").addresses, {id: parseInt($("#edit-shipping-detail-current-select").val()), isShipping:parseInt($("#edit-shipping-detail-current-select").find('option:selected').attr('is-shipping'))});
-            console.log(address);
+
             if(this.$("#edit-shipping-detail-current-select").val() != "0" && address.isShipping)
                 data["id"] = this.$("#edit-shipping-detail-current-select").val();
 

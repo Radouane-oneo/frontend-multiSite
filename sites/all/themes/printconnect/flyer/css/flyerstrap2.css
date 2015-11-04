@@ -47,7 +47,7 @@ b { font-weight: 600; }
 	left: -2810px;
 	height: 250px;
 	position: absolute;
-	top: -37px;
+	top: -36px;
 	/*z-index: 7;*/
 }
 
@@ -65,7 +65,7 @@ b { font-weight: 600; }
 	height: 250px;
 	max-height: 250px;
 	position: absolute;
-	top: -37px;
+	top: -36px;
 	right: -50px;
 	/*z-index: 8;*/
 }

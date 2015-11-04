@@ -5453,7 +5453,7 @@ div.error, table tr.error {
 }
 .page-myprintconnect-forgotpassword #pccustomers-forgotpassword-form .form-actions {
 	margin: 0 -10px -10px -10px;
-	padding: 10px;
+	padding: 0;
 }
 .page-myprintconnect-forgotpassword .fieldset-wrapper input[type="submit"] {
 	margin-left: 30%;
@@ -5507,9 +5507,26 @@ div.error, table tr.error {
 	border-top: 1px solid #5a8a02;
 	border-right: 1px solid #5a8a02;
 }
-.page-myprintconnect-forgotpassword .region-content .form-actions input[type="submit"], .page-myprintconnect-login .region-content .form-actions input[type="submit"] {
+
+.page-myprintconnect-login .region-content .form-actions input[type="submit"] {
 	float: left;
 }
+
+.page-myprintconnect-forgotpassword .region-content .form-actions input[type="submit"]{
+	float: right;
+    height: 50px;
+}
+
+.page-myprintconnect-forgotpassword .region-content .form-actions a.link{
+	float: left;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: arial;
+    margin-left: 10px;
+    line-height: 50px;
+}
+
 .page-myprintconnect-addresses-new .region-content .form-actions input[type=submit], .page-myprintconnect-profile .region-content .form-actions input[type=submit] {
 	background-image: url("images/button_continue.png");
 	background-position: left;
@@ -11010,6 +11027,7 @@ p.requieredfields span.form-required {
     background: none;
     padding: 0;
 }
+.cartItemsContainer .file-model .model-txt,
 .fotolia-img-name {
     display: inline-block;
     width: 480px;
@@ -11020,6 +11038,7 @@ p.requieredfields span.form-required {
     clear: both;
     overflow: hidden;
 }
+.cartItemsContainer .file-model,
 .cart-fotolias .fotolia-items{
 	background-color: #e1e1e1;
     position: relative;
@@ -11028,6 +11047,7 @@ p.requieredfields span.form-required {
     padding: 0 10px;
     margin: 0;
     box-sizing: border-box;
+    clear:both;
 }
 .page-cart #pccart-cart-form .item .designer-email {
     background: #dfdfdf;

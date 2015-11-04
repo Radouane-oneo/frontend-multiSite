@@ -582,6 +582,20 @@ width: 253px;
   vertical-align: middle;
 }
 
+
+#price-template-block{
+    border: none !important;
+}
+
+#price-template-block label {
+    width: auto !important;
+}
+
+#price-template-block span.price {
+    float: right;
+}
+
 #pctemplates-selection-form .filters .select2-container .select2-choice{
 	width: 233px;
 }
+

@@ -384,11 +384,11 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         );
     }
     
-    $form['order']['actions'] = array(
+    $form['actions'] = array(
         '#type' => 'actions',
     );
     if ($_SESSION['shop_vat'] != 0) {
-        $form['order']['actions']['price'] = array(
+        $form['actions']['price'] = array(
             '#theme' => 'price',
             '#value' => $order->totalAmount,
             '#title' => t('Total incl. VAT'),
@@ -419,15 +419,18 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
                 array(
                     'data' => theme('price', array('value' => $balance)),
                 ),
-                l($invoice->order, 'myprintconnect/orders/' . $invoice->order),
+             //   l($invoice->order, 'myprintconnect/orders/' . $invoice->order),
         //          array('data' => l($invoice->number, printconnect\Files\Factory::getFileUrl($invoice->pdf), array('attributes' => array('class' => 'pdf', 'target' => '_blank')))),
                 array('data' => theme('pcfilesdownloadlink', array('file' => $invoice->pdf, 'title' => $invoice->number, 'attributes' => array('class' => array('pdf'))))),
             );
           }
 
-          $form['invoices']['list'] = array(
+          $form['list'] = array(
               '#type' => 'item',
-              '#markup' => theme('table', array('rows' => array_reverse($rows), 'header' => array(/*'', */t('Date'), /*t('Method'), */t('Amount'), t('Outstanding'), t('Order'), ''/*t('Invoice')*/), 'empty' => t('No invoices found'), 'attributes' => array('class' => array('list'))))
+              '#weight' => 200,
+              '#markup' => theme('table', 
+                      array('rows' => array_reverse($rows), 
+                          'header' => array(/*'', */t('Date'), /*t('Method'), */t('Amount'), t('Outstanding'), t('Invoice')), 'attributes' => array('class' => array('list'))))
           );
     }
     

@@ -68,7 +68,7 @@
             }
         });
       /* ========== PCCUSTOMER form validation ========== */
-      $('.save-button').click(function (e) {
+      $('.save-button').click(function (e) { 
           $('.messages.error').remove();
           $('#content form .required').removeClass("error");
           var errorMarkup = "<div class='messages error'><ul>";

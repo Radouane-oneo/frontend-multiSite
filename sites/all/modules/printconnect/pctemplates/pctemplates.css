@@ -530,7 +530,7 @@ margin: 0 16px -10px 0px !important;
 #pctemplates-selection-form .form-actions{
 	float: right;
 	clear: none;
-	margin-top: -50px;
+	margin-top: -33px;
 }
 
 #calculeramount{
@@ -582,6 +582,7 @@ width: 253px;
   vertical-align: middle;
 }
 
+
 #price-template-block{
     border: none !important;
 }
@@ -593,3 +594,8 @@ width: 253px;
 #price-template-block span.price {
     float: right;
 }
+
+#pctemplates-selection-form .filters .select2-container .select2-choice{
+	width: 233px;
+}
+

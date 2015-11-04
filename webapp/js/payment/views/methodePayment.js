@@ -46,7 +46,7 @@ define([
                         "subTotalAmount" : resultData.data.subTotalAmount,
                         "totalAmount" : resultData.data.totalAmount
                     });
-                    $(".textpayment").html('<p>'+ $(e.currentTarget).attr("tagdesc-id")+'</p>');
+                    $(".textpayment").html('<p>'+ $(e.currentTarget).attr("tagdesc-id")+'</p>').show();
                 }
             });
             

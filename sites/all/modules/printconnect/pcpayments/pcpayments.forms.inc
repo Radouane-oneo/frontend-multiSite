@@ -18,10 +18,11 @@ function pcpayments_request_form($form, &$form_state, $key) {
     $form['info'] = array('#markup' => t('This payment request does not exists (anymore)...'));
     return $form;
   }
-  $amount = $request->amount;
+  $amount = $request->amountLeft;
 
   $paymentMethods = PaymentMethods\Factory::GetAll();
-
+  /*echo '<pre>';
+  var_dump($paymentMethods);die;*/
   $options = array();
   $methods = array();
 
@@ -37,7 +38,7 @@ function pcpayments_request_form($form, &$form_state, $key) {
       $cost = $value->CalculateCost($amount);
 
       $methods[$value->id] = array(
-          'image' => theme('image', array('path' => printconnect_getimage('paymentmethods', $value->paymentMethod->internalName))),
+          //'image' => theme('image', array('path' => printconnect_getimage('paymentmethods', $value->paymentMethod->internalName))),
           'name' => $value->paymentMethod->tag,
           'cost' => theme('price', array('value' => $cost, 'free' => TRUE)),
           'description' => $value->paymentMethod->descriptionTag,
@@ -53,7 +54,7 @@ function pcpayments_request_form($form, &$form_state, $key) {
     $default = $value->id;
   }
 
-  $amount = $request->amount;
+  //$amount = $request->amountLeft;
   $paymentMethod = PaymentMethods\Factory::Get($default);
 
   $cost = $paymentMethod->CalculateCost($amount);
@@ -73,6 +74,12 @@ function pcpayments_request_form($form, &$form_state, $key) {
           'type' => NULL,
       ),
   );
+
+  $form['deer'] = array(
+      '#markup' => t('Deer') . ' ' . $request->customerName .', <br>',
+      '#weight'=> 0,
+      );
+
   $form['info'] = array(
       '#markup' => t('Payment request intro'),
       '#weight'=> 0,
@@ -82,11 +89,18 @@ function pcpayments_request_form($form, &$form_state, $key) {
       '#type' => 'container',
       '#weight'=> 1,
   );
+
   $form['wrapper']['description'] = array(
       '#type' => 'item',
-      '#title' => strtoupper(t('Description')),
+      '#title' => t('Description') . ' : ',
       '#markup' => "<div class ='textDescription'>$request->description</div>",
   );
+  $form['wrapper']['amount'] = array(
+      '#type' => 'item',
+      '#title' => t('Montant à payer') . ' : ',
+      '#markup' => "<div class ='textDescription'>" . theme('price', array('value' => $amount)) ."</div>",
+  );
+
   $form['wrapperPayement_Price'] = array(
       '#type' => 'container',
       '#attributes' => array('id' => 'wrapperPayement_Price'),
@@ -94,27 +108,42 @@ function pcpayments_request_form($form, &$form_state, $key) {
   );
   $form['wrapperPayement_Price']['payment'] = array(
       '#type' => 'fieldset',
-      '#title' => t('Concernant le paiement en ligne'),
       '#attributes' => array('class' => array('payment')),
   );
 
   $form['wrapperPayement_Price']['payment']['method'] = array(
       '#type' => 'tableselect',
+      '#prefix' => '<h3 class="request-title">' . t('Choisissez une mèthode de paiement') .'</h3>',
       '#multiple' => FALSE,
       '#options' => $methods,
-      '#header' => array('image' => t('Image'), 'name' => t('Name'), 'cost' => t('Cost'), 'description' => t('Description')),
+      '#header' => array('name' => t('Name'), 'cost' => t('Cost'), 'description' => t('Description')),
 //      '#header' => array('image' => '', 'name' => '', 'cost' => ''/* , 'description' => '' */),
       //'#default_value' => $defaultOption,
       '#ajax' => $ajax,
       '#required' => TRUE,
-      '#attributes' => array('class' => array('grid', 'clearfix','methodePayement','rows-6')),
+      '#attributes' => array('class' => array('grid','methodePayement','rows-6')),
       '#default_value' => $default,
   );
     $form['wrapperPayement_Price']['payment']["aboutMethode"] = array(
       '#type' => 'item',
       '#id' => 'edit-aboutmethode',
-      '#markup' => " ",
+      '#markup' => t('textImagePayment'),
     );
+    
+     $form['wrapperPayement_Price']["textpayment"] = array(
+      '#type' => 'item',
+      '#id' => 'textpaymentRequest',
+    );
+
+    $form['agree'] = array(
+      '#type' => 'checkbox',
+      '#prefix' =>'<div class="condition-general">',
+      '#suffix' =>'</div>',
+      '#title' => t('I agree with the !termsandconditionslink', array('!termsandconditionslink' => theme('generalconditionslink'))),
+      '#required' => TRUE,
+      '#weight' => 9,
+    );
+
     $form['actions'] = array(
         '#type' => 'container',
         '#attributes' => array('class' => array('actions', 'form-actions')),
@@ -135,6 +164,7 @@ function pcpayments_request_form($form, &$form_state, $key) {
   $form['#id'] ="pcpayments-request-form";
   $form_state['storage']['totalExclVat'] = $amount;
   $form_state['storage']['total'] = $total;
+  $form_state['storage']['amountPaid'] = $request->amountPaid;
   $form_state['storage']['request'] = $request;
   $form_state['storage']['order'] = $request->order;
   $form_state['cache'] = TRUE;
@@ -171,10 +201,9 @@ function pcpayments_request_form_submit($form, &$form_state) {
 
 function pcpayments_request_form_callback(&$form, &$form_state) {
   $request = $form_state['storage']['request'];
-  $amount = $request->amount;
+  $amount = $request->amountLeft;
   $paymentMethodId = $form_state['values']['method'];
   $paymentMethod = PaymentMethods\Factory::Get($paymentMethodId);
-
   $cost = $paymentMethod->CalculateCost($amount);
   $amount += $cost;
   $vat = $request->vat;
@@ -184,14 +213,13 @@ function pcpayments_request_form_callback(&$form, &$form_state) {
   $form_state['storage']['vatAmount'] = $vatAmount;
   $form_state['storage']['total'] = $total;
   $methodePayement=  variable_get("methodePayement");
-
-  //$amount = $form_state['storage']['amount'];
-  //$vatAmount = $form_state['storage']['vatAmount'];
-  //$form['payment']['footer']['price']['block']['#markup'] = theme('priceblock', array('subtotal' => $amount, 'vatAmount' => $vatAmount));
   $form['priceblock']['#subtotal'] = $amount;
   $form['priceblock']['#vatAmount'] = $vatAmount;
-  //return $form['payment']['footer']['price']['block'];
   $form['actions']['price']['#value']=$total;
+  $orderId = $form_state['storage']['order'];
+  $order = \printconnect\Orders\Factory::Get($orderId);
+  \printconnect\Orders\Factory::LoadOrder($order);
+  \printconnect\PaymentMethods\Factory::Save($paymentMethodId, $order, true, $request->requestKey);
   $rows = variable_get("items");
   array_pop($rows);
   $rows[] = array(
@@ -208,9 +236,9 @@ function pcpayments_request_form_callback(&$form, &$form_state) {
   $rows[] = array(
         'no_striping' => TRUE,
         'data' => array(
-            t('VAT'),
+            t('Total HTVA à payer'),
             array(
-                'data' => theme('price', array('value' =>$vatAmount, 'free' => TRUE)),
+                'data' => theme('price', array('value' =>($amount))),
                 'class' => array('text-right'),
             ),
         ),
@@ -218,6 +246,9 @@ function pcpayments_request_form_callback(&$form, &$form_state) {
   $form['order']['list'] = array(
       '#markup' => theme('table', array('rows' => $rows)),
   );
-  $form['wrapperPayement_Price']['payment']["aboutMethode"]["#markup"]=$methodePayement[$form_state['values']['method']]['description'];
+
+   $form['wrapper']['amount']["#markup"] = theme('price', array('value' => $amount));
+  $form['wrapperPayement_Price']["textpayment"]["#markup"]='<p>' . $methodePayement[$form_state['values']['method']]['description'] .'</p>';
+
   return $form;
 }

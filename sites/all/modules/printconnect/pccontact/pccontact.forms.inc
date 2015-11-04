@@ -113,12 +113,15 @@ function pccontact_general_form($form, &$form_state, $key = 'general') {
   $customer = \printconnect\Customers\Factory::Current();
   global $language;
   $path=base_path()."sites/all/themes/printconnect/flyer/css/images/translogo/$language->prefix.png";
+  $prefix = strtolower($language->language);
+  $img = base_path().drupal_get_path('module', 'pccontact') . '/img/logo-'. $prefix.'.png';
+
   if($form_state['build_info']['args'][0] == 'stores') {
       $match=split('//',theme_get_setting('logo_path'));
       $imageName=str_replace("logo", "logo_inversed", $match[1]);
       $path='/sites/default/files/'.$imageName;
   }
-  $language->prefix = "frfr";
+  /*$language->prefix = "frfr";*/
   $emails = array(
       'benl' => 'info@flyer.be',
       'befr' => 'info@flyer.be',
@@ -130,14 +133,14 @@ function pccontact_general_form($form, &$form_state, $key = 'general') {
   $phones = array(
       'benl' => '070 222 309',
       'befr' => '070 222 309',
-      'nlnl' => '+32 50 79 97 70',
+      'nlnl' => '08 58 887 689',
       'frfr' => '03 20 38 24 53',
       'lufr' => '27 86 01 39'
   );
   
   $form['container']['image'] = array(
       '#markup' => '<div class="head">
-          <img src="/sites/all/modules/printconnect/pccontact/img/logo.png"></div>',
+          <img src="' . $img . '"></div>',
   );
   
   $form['container']['title'] = array(

@@ -10,6 +10,12 @@
             <div id="edit-description-text" class="text form-wrapper">
                 <%= $('<div/>').html(config.labels["productDescription"]).text() %>
             </div>
+            <div id='popupbox'></div>
+            <% if(config.bannerUrl != '') { %>
+                <div class="banner form-wrapper" id="edit-description-banner--3">
+                    <img src="<%= config.bannerUrl %>" alt="">
+                </div>
+            <% } %>
 
         </div>
 
@@ -58,7 +64,7 @@
                 <% } %>
                 <ul>
                     <% _.each(toolBoxItem.data,function(item){ %>
-                     <li class='<%= item.code %>'>
+                     <li class='<%= item.code %> <% if(selected && (item.id == selected.id)){ print("selectedItem"); } %> '>
                         <a id="<%= item.id %>" href=""><img width="154" height="154" alt="" src="<%= config.imagesUrl %>items/<%= item.id %>.png">
 
                         <div class="text"><%= item.name %></div>
@@ -120,6 +126,7 @@
             <tbody>
             <%
             var i = 0;
+           
             _.each(model.toolBoxGroup.pricing, function(price){
             i = i+ 1;
             var checked = (price['quantity']==model.quantity && !customQuantity)?"checked='checked'":"";
@@ -162,11 +169,26 @@
             <%
             var checked = (customQuantity)?"checked='checked'":"";
             %>
+            <tr class="<%= (i%2==0)?'even':'odd' %>" id="trQuantitePersonalisee">
+                <td class="first-child">
+                    <div class="form-item form-type-radio form-item-quantity">
+                        <input type="radio" value="<%= model.quantity %>" name="quantity"
+                               id="edit-quantity-<%= model.quantity %>" class="grid clearfix form-radio" <%= checked %>>
+                    </div>
+                </td>
+                <td><%= model.quantity %> ex.</td>
+                <td></td>
+                <td><% print(priceTpl({price:model.price})); %></td>
+                <td class="last-child"><%
+                    var priceWithTVA = model.price * ( 1 + config.TVA );
+                    print(priceTpl({price:Math.round(priceWithTVA*100)/100}));
+                %></td>
+            </tr>
             <tr class="custom even last-child child-item-calcul-qte">
                 <td class="first-child">
                     <div class="form-item form-type-radio form-item-quantity">
-                        <input type="radio" value="custom" name="quantity" id="edit-quantity-custom"
-                               class="grid clearfix form-radio" <%= checked %>>
+                        <input type="radio" value="custom" name="customQte" id="edit-quantity-custom"
+                               class="grid clearfix form-radio">
                     </div>
                 </td>
                 <td colspan="4" class="last-child">
@@ -180,6 +202,7 @@
                 </td>
             </tr>
             </tbody>
+            
         </table>
         </div>
 
@@ -195,13 +218,13 @@
         <!-- End addToCart -->
 
         <!-- shippingDetail -->
-        <div id="bloc-shipping"><%= shippingHTML %></div>
+        <div id="bloc-shipping" class="boxShippingDate"><%= shippingHTML %></div>
         <!-- End shippingDetail -->
         <% if(model.widthCF == null && model.heightCF == null)  {%> 
         <!-- templateDetail -->
         <fieldset id="templates" class="templates form-wrappersss">
             <legend><span class="fieldset-legend"><%= config.labels['technicalDetails'] %></span></legend>
-            <div class="fieldset-wrapper detailtechnique-wrapper">
+            <div class="fieldset-wrapper detailtechnique-wrapper je suis la">
                 <div id="edit-templates-text" class="text form-wrapper">
                     <%= config.labels['technicalDescription'] %>
                 </div>
@@ -222,26 +245,41 @@
                     </div>
 
                     <div class="form-item form-type-item" id="edit-templates-desciption-brut">
-                        <label for="edit-templates-desciption-brut"><%= config.labels['Format'] %> <%= config.labels['rawFormat'] %> : </label>
-                        <% print( v1 +" x "+v2 +" mm"); %>
+                        <span class="edit-templates-desciption" style="margin-right:24px;"><%= config.labels['Format'] %> <%= config.labels['rawFormat'] %> :</span>
+                        <span class="infobul">
+                            <span class="datainfobul"><%=  config.labels['infobrut'] %></span>
+                        </span>
+                        <span class="datatemplate"><% print( v1 +" x "+v2 +" mm"); %></span>
                     </div>
 
-                    <div class="form-item form-type-item" id="edit-templates-desciption-size">
-                        <label for="edit-templates-desciption-size"><%= config.labels['Format'] %> <%= config.labels['finishedFormat'] %> : </label>
-                        <%= model.toolBoxGroup.template.size %>
+                    <div class="form-item form-type-item" id="edit-templates-desciption-size">                         
+                        <span class="edit-templates-desciption" style="margin-right:24px;"><%= config.labels['Format'] %> <%= config.labels['finishedFormat'] %> :</span>
+                        <span class="infobul">
+                            <span class="datainfobul"><%=  config.labels['infosize'] %></span>
+                        </span>
+                        <span class="datatemplate"><%= model.toolBoxGroup.template.size %></span>
                     </div>
 
-                    <div class="form-item form-type-item" id="edit-templates-desciption-bleed">
-                        <label for="edit-templates-desciption-bleed"><%= config.labels['bleed'] %> : </label>
-                        <%= model.toolBoxGroup.template.bleed %>
+                    <div class="form-item form-type-item" id="edit-templates-desciption-bleed"> 
+                        <span class="edit-templates-desciption" style="margin-right:24px;"><%= config.labels['bleed'] %> :</span>
+                        <span class="infobul">
+                            <span class="datainfobul"><%=  config.labels['infobleed'] %></span>
+                        </span>
+                        <span class="datatemplate"> <%= model.toolBoxGroup.template.bleed %></span>
                     </div>
-                    <div class="form-item form-type-item" id="edit-templates-desciption-color">
-                        <label for="edit-templates-desciption-color"><%= config.labels['color'] %> : </label>
-                        <%= model.toolBoxGroup.template.colorMode %>
+                    <div class="form-item form-type-item" id="edit-templates-desciption-color"> 
+                        <span class="edit-templates-desciption" style="margin-right:24px;"><%= config.labels['color'] %> :</span>
+                        <span class="infobul">
+                            <span class="datainfobul"><%=  config.labels['infocolor'] %></span>
+                        </span>
+                        <span class="datatemplate"><%= model.toolBoxGroup.template.colorMode %></span>
                     </div>
                     <div class="form-item form-type-item" id="edit-templates-desciption-resolution">
-                        <label for="edit-templates-desciption-resolution"><%= config.labels['resolution'] %> : </label>
-                        <%= model.toolBoxGroup.template.resolution %>
+                        <span class="edit-templates-desciption" style="margin-right:24px;"><%= config.labels['resolution'] %> :</span>
+                        <span class="infobul">
+                            <span class="datainfobul"><%=  config.labels['inforesolution'] %></span>
+                        </span>
+                        <span class="datatemplate"><%= model.toolBoxGroup.template.resolution %></span>
                     </div>
                 </div>
                 <div id="edit-templates-linktodownload" class="link form-wrapper">

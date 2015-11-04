@@ -335,7 +335,25 @@ function theme_helplink($vars) {
 }
 
 function theme_generalconditionslink($vars) {
-  return l(t($vars['title']), variable_get('site_generalconditions', 'generalconditions'),array('attributes'=>array('target'=>'_blank')));
+  global $language;
+  switch ($language->prefix) {
+        case 'benl':
+            return l(t($vars['title']), 'node/841',array('attributes'=>array('target'=>'_blank')));
+            break;
+        case 'nlnl':
+            return l(t($vars['title']), 'node/842',array('attributes'=>array('target'=>'_blank')));
+            break;
+        case 'befr':
+            return l(t($vars['title']), 'node/843',array('attributes'=>array('target'=>'_blank')));
+            break;
+        case 'frfr':
+            return l(t($vars['title']), 'node/7',array('attributes'=>array('target'=>'_blank')));
+            break;
+        case 'lufr':
+           return l(t($vars['title']), 'node/844',array('attributes'=>array('target'=>'_blank')));
+            break;
+    }
+  
 }
 
 function theme_privacypolicylink($vars) {
@@ -435,7 +453,7 @@ function theme_price($vars) {
                 'currency' => array(
                     '#prefix' => '<span class="currency">',
                     '#suffix' => '</span>',
-                    '#markup' => $currencySymbol,
+                    '#markup' => '&nbsp;' . $currencySymbol,
                     '#weight' => 5,
                 ),
                 'space' => array(
@@ -485,7 +503,7 @@ function theme_price($vars) {
                 'whole' => array(
                     '#prefix' => '<span class="whole">',
                     '#suffix' => '</span>',
-                    '#markup' => $currencySymbol.$parts[0],
+                    '#markup' => $currencySymbol.'&nbsp;'.$parts[0],
                     '#weight' => 2,
                 ),
                 'decimalpoint' => array(

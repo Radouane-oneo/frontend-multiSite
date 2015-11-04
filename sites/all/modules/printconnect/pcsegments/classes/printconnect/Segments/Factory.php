@@ -7,11 +7,12 @@ namespace printconnect\Segments {
   class Factory {
 
     public static function GetAll($language = FALSE, $dal = FALSE, $all = FALSE, $cache = TRUE) {
+      $basedPath = variable_get('pc_segment_json_path');
       $object = new Segments(array(), array(), FALSE, $language);
       global $language;
       $fileName = null;
       switch($language->language) {
-        case 'fr-BE':
+        case 'fr-Be':
             $fileName = 'flyerBe-fr-all.json';
         break;
         case 'nl-BE':
@@ -27,15 +28,15 @@ namespace printconnect\Segments {
             $fileName = 'flyerNl-nl-all.json';
         break;
       }
-      $check = file_exists('/home/transfer/segments/all/'.$fileName);
-      if (!$check) {
+      $check = file_exists($basedPath.$fileName);
+      if (!$check || filesize($basedPath.$fileName) <= 0) {
         $response = Dal::SendRequest('segment');
         $data = $response->data;
-        file_put_contents('/home/transfer/segments/all/'.$fileName, $data);
+        file_put_contents($basedPath.$fileName, $data);
         $data = json_decode($data);
       } else {
 
-      $data = file_get_contents('/home/transfer/segments/all/'.$fileName);
+      $data = file_get_contents($basedPath.$fileName);
       if (0 === strpos(bin2hex($data), 'efbbbf')) {
           $data = $obj = json_decode(substr($data,3));
       } else {
@@ -53,8 +54,9 @@ namespace printconnect\Segments {
       $segment = new Segment(array('id' => $id), TRUE, $language);
       global $language;
       $fileName = null;
+      $basedPath = variable_get('pc_segment_json_detail_path');
       switch($language->language) {
-        case 'fr-BE':
+        case 'fr-Be':
             $fileName = 'flyerBe-fr-'.$id.'.json';
         break;
         case 'nl-BE':
@@ -70,14 +72,14 @@ namespace printconnect\Segments {
             $fileName = 'flyerNl-nl-'.$id.'.json';
         break;
       }
-      $check = file_exists('/home/transfer/segments/details/'.$fileName);
+      $check = file_exists($basedPath.$fileName);
       if (!$check) {
 	$response = Dal::SendRequest('segment/segment/'. $id);
 	$data = $response->data;
-	file_put_contents('/home/transfer/segments/details/'.$fileName, $data);
+	file_put_contents($basedPath.$fileName, $data);
 	$data = json_decode($data);
       } else {
-          $data = file_get_contents('/home/transfer/segments/details/'.$fileName);
+          $data = file_get_contents($basedPath.$fileName);
           if (0 === strpos(bin2hex($data), 'efbbbf')) {
               $data = $obj = json_decode(substr($data,3));
           } else {

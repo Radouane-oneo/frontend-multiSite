@@ -24,7 +24,6 @@
 }
 #pcorders-order-form .invoice{
   margin-right:0;
-  margin-left:2%;
 }
 
 #pcorders-order-form .current .status {
@@ -38,9 +37,9 @@
   font-weight:bold;
   font-size:larger;
 }
-#pcorders-order-form .item-list ul li {
+/*#pcorders-order-form .item-list ul li {
   margin: 0 0 0 20px;
-}
+}*/
 
 #pcorders-order-form .currentorderstatus{
   font-size:x-large;
@@ -93,9 +92,6 @@
 #pcorders-order-form #edit-order #edit-details .description .item-list ul {
 margin: 0;
 padding: 0;
-}
-#pcorders-order-form #edit-order #edit-details .description >.labelOrder{
-	margin-left: 21px;
 }
 #pcorders-order-form .recommander{
     float: right;

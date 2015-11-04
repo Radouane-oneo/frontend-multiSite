@@ -7,13 +7,7 @@
   float:left;
 }
 #pcpayments-request-form #wrapperDescription {
-    background-color: #F1F1F1;
-    padding: 4px;
-    border-radius: 4px;
-    margin-bottom: 40px;
-    margin-top: 10px;
-     float: left;
-     width: 99%;
+  padding: 20px 0;
 }
 #edit-aboutmethode {
         background-color: #F1F1F1;
@@ -26,21 +20,23 @@
     padding-left: 5px;
     float: left;
 }
-#pcpayments-request-form .textDescription{
-    margin-left: 85px;
 
+.page-paymentrequest #pcpayments-request-form .condition-general label{
+  font-weight: normal;
+  padding: 0;
+  float: none;
 }
+
 #pcpayments-request-form #wrapperPayement_Price fieldset{
   clear: both;
-
+  border-bottom: 1px solid #e1e1e1;
 }
+
 #pcpayments-request-form .payment .fieldset-wrapper{
-    border-radius: 5px;
+    border-radius: 5px 5px 0 0;
     background-color: #F1F1F1;
 }
-#pcpayments-request-form .methodePayement{
-  width: 100%;
-}
+
 .methodePayement td.last-child{
   display: none !important;
 }
@@ -60,7 +56,7 @@
 
 
 #pcpayments-request-form .order td.last-child {
-    width: 100px;
+    width: 204px;
     border-left: 1px solid #F1F1F1;
     text-align: center;
 }
@@ -71,7 +67,7 @@
     font-weight: bold;
 }
 #pcpayments-request-form .order table tr:first-child ,#pcpayments-request-form .order table{
-    border: 1px #F1F1F1 solid;
+    border: 1px #cdcdcd solid;
 }
 #pcpayments-request-form .order table tr:first-child ,#pcpayments-request-form .order table tr.last-child {
     background-color: #F1F1F1;
@@ -84,33 +80,29 @@
 padding-left: 10px;
 padding-right:  10px;
 }
+
 #pcpayments-request-form .order .fieldset-wrapper {
   padding: 0px;
-  margin-bottom: 0px !important ;
-  border-radius: 3px;
+  margin: 0px !important ;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
 }
-#pcpayments-request-form .order table  .productItem td.first-child {
-  padding-left: 28px;
-}
-#pcpayments-request-form .order table tr.last-child td.last-child span {
-    color: #646464;
+
+#pcpayments-request-form .order-paid .fieldset-wrapper{
+  border-radius: 5px;
 }
 
 .page-paymentrequest .methodePayement #edit-aboutmethode{
   background: none;
 }
 
-.page-paymentrequest table.grid.methodePayement{
-  margin: 0;
-}
 
 .page-paymentrequest #pcpayments-request-form .methodePayement tr{
   margin-top: 0;
 }
 
-.page-paymentrequest #wrapperPayement_Price .payment .fieldset-wrapper{
-  padding: 0;
-  background:none; 
+.page-paymentrequest #pcpayments-request-form .methodePayement tr:last-child td{
+  border: 0;
 }
 
 .page-paymentrequest-key table.grid.rows-6.methodePayement tr{
@@ -122,4 +114,155 @@ padding-right:  10px;
 
 .page-paymentrequest #edit-aboutmethode{
   background: none;
+  top: -17px;
+  margin-bottom: 0;
+}
+
+form#pcpayments-request-form .order table tr td:first-child{
+  text-align: left !important;
+}
+form#pcpayments-request-form .order table tr td:last-child{
+  text-align: right !important;
+}
+
+form#pcpayments-request-form .order table tr:last-child{
+    background: #f1f1f1;
+    border-top: 1px solid #e1e1e1 !important;
+}
+
+form#pcpayments-request-form .order table tr:last-child td.last-child .price{
+    color: #ff6600;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.page-paymentrequest .demande-paiement .form-actions span.price label{
+    font-size: 14px;
+    margin-right: 5px;
+    margin-top: 22px;
+    text-align: right;
+    line-height: 20px;
+    float: left;
+    clear: right;
+    color: #fff;
+    font-weight: 400!important;
+}
+
+.page-paymentrequest .demande-paiement .form-actions span.price{
+  padding-left: 10px!important;
+  width: 700px;
+}
+
+.page-paymentrequest .demande-paiement .form-actions span.price .value{
+    font-size: 30px;
+    font-weight: bold;
+    color: #fff;
+    float: right;
+    margin-right: 15px;
+    float: right;
+}
+.page-paymentrequest .demande-paiement .form-actions span.price .value > span{
+  font-size: inherit;
+  vertical-align: inherit;
+  line-height: inherit;
+}
+
+.page-paymentrequest table.grid{
+  float: left;
+}
+
+.page-paymentrequest table.grid tbody{
+  background: #f1f1f1;
+}
+
+.page-paymentrequest table.grid tr {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    text-align: left !important;
+    display: table-header-group;
+    text-transform: uppercase;
+    height: 34px;
+}
+
+.page-paymentrequest table.grid tr td{
+  height: 29px;
+  border-bottom: 1px solid #e1e1e1;
+  width: 130px;
+}
+
+.page-paymentrequest table.grid tr td:first-child{
+  border-bottom: none;
+  width: 49px;
+}
+
+.page-paymentrequest table.grid td.last-child {
+    margin-top: 9px;
+    font-weight: normal;
+    text-align: center;
+}
+
+.page-paymentrequest table.grid td.last-child .value{
+    font-size: 12px;
+}
+
+.page-paymentrequest table.grid{
+  border: 0!important;
+}
+
+.page-paymentrequest table.grid tr td:nth-child(2){
+  width: 300px;
+}
+
+.page-paymentrequest table.grid tr.checked,
+.page-paymentrequest table.grid tr:hover{
+  background: none!important;
+}
+
+#pcpayments-request-form #wrapperDescription .form-item{
+  margin: 0;
+}
+
+#pcpayments-request-form #wrapperDescription label{
+  padding: 0 5px 0 0;
+}
+
+form#pcpayments-request-form .order-paid table tr.before-last td,
+form#pcpayments-request-form .order-paid table tr.before-last{
+  background: #f1f1f1;
+}
+
+form#pcpayments-request-form .order-paid table tr.before-last td.last-child .price,
+form#pcpayments-request-form .order-paid table tr:last-child td.last-child .price{
+  font-size: 16px;
+  color: #646464;
+  font-weight: 700;
+}
+
+#pcpayments-request-form fieldset legend{
+  font-size: 16px;
+  color: #646464;
+  font-weight: 700;
+  display: block;
+  padding: 18px 0 14px;
+}
+
+.payment .request-title{
+  font-size: 12px;
+  font-weight: 700;
+  color: #646464;
+  float: left;
+  width: 477px;
+}
+
+.payment table.methodePayement{
+  clear: left;
+}
+
+form#pcpayments-request-form .order table tr.last-child td,
+form#pcpayments-request-form .order table tr.productItem td{
+  padding: 6px 15px!important;
+  height: 20px !important;
+}
+
+.page-paymentrequest table.grid{
+  padding-top: 15px;
 }

@@ -31,16 +31,16 @@
                         </div>
                     </td>
                     <td>
-                        <span><%= shipping.shippingType.tag %></span>
-                        <% if(shipping.id == 134){ %>
-                            <span style="margin-left:100px;<%= styleLink %>" class="storeLink">
+                        <span><%= shipping.shippingType.tag %></span><br>
+                        <% if(shipping.shippingType.type == "shippingTypeStore"){ %>
+                            <span style="<%= styleLink %>" class="storeLink">
                                 <a class="pcflyerstores-picker-link fancybox.iframe" href="/<%= config.prefix %>/stores/picker/callback/pcflyerstores_callback/?contentonly=1" style="display: inline;">
                                     <%= config.labels['chooseFlyerStore'] %>
                                 </a>
                             </span>
                         <% } %>
-                        <% if(shipping.id == 123){ %>
-                            <span style="margin-left:100px;<%= styleLink %>" class="storeLink">
+                        <% if(shipping.shippingType.type == "shippingTypeBpostPickupPoint"){ %>
+                            <span style="<%= styleLink %>" class="storeLink">
                                 <a class="pcbpost-picker-link fancybox.iframe" href="/<%= config.prefix %>/pcbpost/picker/pcbpost_cart_callback?contentonly=1" style="display: inline;">
                                     <%= config.labels['chooseBpostPickupPoint'] %>
                                 </a>
@@ -56,7 +56,7 @@
                     </td>
                 </tr>
                 <%
-                if(shipping.id == 134 && model.orderItemShipping.shippingTypeResellerShop == 134 && model.orderItemShipping.orderShippingAddress) { %>
+                if(shipping.shippingType.type == "shippingTypeStore" && model.orderItemShipping.shippingTypeTag == "shippingTypeStore" && model.orderItemShipping.orderShippingAddress) { %>
                 <tr>
                     <td class="shipping-flyerStore" colspan="3">
                         <div class="shipping-map">
@@ -71,7 +71,8 @@
                         </div>
                         <div class="shipping-info">
                             <span class="bold-title"><%= model.orderItemShipping.orderShippingAddress.pickupPointName %></span><br />
-                            <%= model.orderItemShipping.orderShippingAddress.postalCode %> , <%= model.orderItemShipping.orderShippingAddress.street %>
+                            <%= model.orderItemShipping.orderShippingAddress.street %> , 
+                            <%= model.orderItemShipping.orderShippingAddress.postalCode %> 
                             <%= model.orderItemShipping.orderShippingAddress.city %> <br />
                             <%= model.orderItemShipping.orderShippingAddress.phone %> <br />
                             <%= model.orderItemShipping.orderShippingAddress.email %> <br /><br />
@@ -93,12 +94,12 @@
                     </td>
                 </tr>
                 <% } %>
-                <% if(shipping.id == 123 && model.orderItemShipping.shippingTypeResellerShop == 123 && model.orderItemShipping.orderShippingAddress) { %>
+                <% if(shipping.shippingType.type == "shippingTypeBpostPickupPoint" && model.orderItemShipping.shippingTypeTag == "shippingTypeBpostPickupPoint" && model.orderItemShipping.orderShippingAddress) { %>
                 <tr>
                     <td class="shipping-BPost" colspan="3">
                         <div class="BPost-info">
                             <span class="bold-title"><%= model.orderItemShipping.orderShippingAddress.pickupPointName %></span><br />
-                            <%= model.orderItemShipping.orderShippingAddress.postalCode %> , <%= model.orderItemShipping.orderShippingAddress.street %>
+                            <%= model.orderItemShipping.orderShippingAddress.street %>,<%= model.orderItemShipping.orderShippingAddress.postalCode %> 
                             <%= model.orderItemShipping.orderShippingAddress.city %> <br />
                             <%= model.orderItemShipping.orderShippingAddress.phone %> <br />
                             <%= model.orderItemShipping.orderShippingAddress.email %> <br />

@@ -2,6 +2,12 @@
     <% var title = (model.shippingAddresses.orderItemShipping.shippingTypeTag == "shippingTypeStore") ?
     model.labels['shippingFlyerstore'] : model.labels['shippingBpost'];
 
+    var styleLink = "";
+    if($.inArray(model.shippingAddresses.orderItemShipping.shippingTypeTag, ["shippingTypeStoreInAntwerpen","shippingTypePrinter"]) != -1) {
+        title = model.labels['shippingAddress'];
+        styleLink = "display:none;";
+    }
+
     var link = (model.shippingAddresses.orderItemShipping.shippingTypeTag == "shippingTypeStore") ?
     "/stores/picker/callback/pcflyerstores_callback?contentonly=1" :
     "/pcbpost/picker/pcbpost_cart_callback?contentonly=1";
@@ -15,7 +21,7 @@
     <div class="fieldset-wrapper plr">
         <div id="allresault" class="brbotom store clearfix store clearfix plr" style="display: block;">
             <span class="storeLink">
-                <a class="button linkflyerstore picker-link fancybox.iframe ui-button" href="/<%= model.prefix + link %>" role="button">
+                <a class="button linkflyerstore picker-link fancybox.iframe ui-button" href="/<%= model.prefix + link %>" role="button" style="<%= styleLink %>">
                     <span class="ui-button-text"><%= buttonText %></span>
                 </a>
             </span>
@@ -62,7 +68,7 @@
         </div>        
 
         <div class="plr form-type-textfield form-item-shipping-detail-contact shipping-contact">
-            <label for="edit-shipping-detail-contact"><%= model.labels['infoTitle'] %><span title="<%= model.labels['requiredField'] %>"
+            <label for="edit-shipping-detail-contact" class="label-shipping-detail-contact"><%= model.labels['infoTitle'] %><span title="<%= model.labels['requiredField'] %>"
                                                                                            class="form-required">*</span></label>
             <input type="text" class="cmd-collecte form-text required" maxlength="128" size="30" value="<%= (shippingAddress)?shippingAddress.name:'' %>"
                    name="shipping-detail-contact" id="edit-shipping-detail-contact">

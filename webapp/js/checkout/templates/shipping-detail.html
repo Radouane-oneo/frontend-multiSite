@@ -14,9 +14,9 @@
         countrySelected = countrySelected.iso;
     } 
     %>
-    <div class="fieldset-wrapper">
+    <div class="fieldset-wrapper fieldset-wrapper-shipping-detail">
         <% if(orderItemShippingAddress) { %>
-        <div class="address">
+        <div class="address wrap_detail">
             <% if(firstAddress) { %>
                 <input type="hidden" name="customer-first-address-id" value="<%= orderItemShippingAddress.id %>">
             <% } %>

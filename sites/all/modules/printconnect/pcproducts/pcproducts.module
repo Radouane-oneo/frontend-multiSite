@@ -663,6 +663,7 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
     }
 
     //drupal_set_breadcrumb(array(l(t('Home'), '<front>'), l(t('Products'), 'products')));
+    $bannerUrl = getBannerIfExists($productId);
 
     $labels = getLabels($edit);
 
@@ -677,6 +678,7 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
         var GlobalDefaultQuantity = ".(!$qty ? 'null' : $qty).";
         var GlobalJobId = ".(!$edit ? 'null' : $edit).";
         var GlobalPrefix = '".$language->prefix."';
+        var GlobalBannerUrl = '".$bannerUrl."';
     </script>";
     $script .= "<style>#box-progress{display: block;}</style>";
     $script .= '<script data-main="/webapp/js/productConfig/main" src="/webapp/js/libs/requirejs/require.js"></script>';
@@ -726,6 +728,11 @@ function getLabels($edit = false) {
         "et"=> t('et'),
         "textTolNotValid"=> t('textTolNotValid'),
         "msgErrorCFNotFloat"=> t('msgErrorCFNotFloat'),
+        "infobrut"=> t('infobrut'),
+        "infosize"=> t('infosize'),
+        "infobleed"=> t('infobleed'),
+        "infocolor"=> t('infocolor'),
+        "inforesolution"=> t('inforesolution'),
         
     );
 
@@ -1209,4 +1216,45 @@ function pcproducts_pcmenumain() {
         );
     }
   return $menuItems;
+}
+
+
+function getBannerIfExists($productId)
+{
+    global $language;
+    switch ($language->prefix) {
+        case 'befr':
+        case 'frfr':
+            $prefix = 'fr';
+            break;
+        case 'lufr':
+            $prefix = 'lufr';
+            break;
+        case 'benl':
+            $prefix = 'nl';
+            break;
+        case 'nlnl':
+            $prefix = 'nlnl';
+            break;
+        case 'lunl':
+            $prefix = 'nl';
+            break;
+        case 'en':
+            $prefix = 'en';
+            break;
+
+        default:
+            break;
+    }
+
+    $bannerUrl = variable_get('pc_images') . '/productpage_banners/banner_'.$prefix.'_'.$productId.'.jpg';
+    $bannerUrl2 = variable_get('pc_images') . '/productpage_banners/banner_'.$prefix.'_'.$productId.'.png';
+
+    if (getimagesize($bannerUrl) != FALSE || getimagesize($bannerUrl2) != FALSE){
+        $bannerUrl = (getimagesize($bannerUrl)) ? $bannerUrl : $bannerUrl2;
+
+        return $bannerUrl;
+    }
+
+    return '';
 }

@@ -20,9 +20,10 @@
 			$('.deletedesign').click(function(e){
 				$('.item-hide-'+$(this).attr('itemFileId')).fadeIn("slow");
 				$(this).parents('.job').fadeOut("slow");
-				$.post('cart/deletedesign/'+$(this).attr('itemFileId'),{},function(){
-					$(this).parents('.job').remove();
-					updateDiscounts();
+				$.post('/cart/ajax/removedesign/'+$(this).attr('itemFileId'),{},function(){
+                                    location.href=location.href;
+//					$(this).parents('.job').remove();
+//					updateDiscounts();
 				});
 				if ($('.fotolia-items-'+$(this).attr('itemFileId')).length < $('.fotolia-items').length) {
 					$('.fotolia-items-'+$(this).attr('itemFileId')).parent().remove();

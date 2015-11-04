@@ -430,7 +430,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
               '#weight' => 200,
               '#markup' => theme('table', 
                       array('rows' => array_reverse($rows), 
-                          'header' => array(/*'', */t('Date'), /*t('Method'), */t('Amount'), t('Outstanding'), t('Invoice'), ''/*t('Invoice')*/), 'attributes' => array('class' => array('list'))))
+                          'header' => array(/*'', */t('Date'), /*t('Method'), */t('Amount'), t('Outstanding'), t('Invoice')), 'attributes' => array('class' => array('list'))))
           );
     }
     

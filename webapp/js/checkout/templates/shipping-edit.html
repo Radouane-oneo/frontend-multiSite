@@ -13,7 +13,7 @@
                             <% _.each(model.shippingAddresses.addresses, function(shippingAddress){
                                var name = (shippingAddress.company)?shippingAddress.company:shippingAddress.name;
                             %>
-                                <option value="<%= shippingAddress.id %>"><%= name  %> - <%= shippingAddress.street  %> , <%= shippingAddress.postalCode  %> <%= shippingAddress.city %></option>
+                                <option is-shipping="<%= shippingAddress.isShipping %>" value="<%= shippingAddress.id %>"><%= name  %> - <%= shippingAddress.street  %> , <%= shippingAddress.postalCode  %> <%= shippingAddress.city %></option>
                             <% }) %>
                         </select>
                     </div>

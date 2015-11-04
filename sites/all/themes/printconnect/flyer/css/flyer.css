@@ -11027,6 +11027,7 @@ p.requieredfields span.form-required {
     background: none;
     padding: 0;
 }
+.cartItemsContainer .file-model .model-txt,
 .fotolia-img-name {
     display: inline-block;
     width: 480px;
@@ -11037,6 +11038,7 @@ p.requieredfields span.form-required {
     clear: both;
     overflow: hidden;
 }
+.cartItemsContainer .file-model,
 .cart-fotolias .fotolia-items{
 	background-color: #e1e1e1;
     position: relative;
@@ -11045,6 +11047,7 @@ p.requieredfields span.form-required {
     padding: 0 10px;
     margin: 0;
     box-sizing: border-box;
+    clear:both;
 }
 .page-cart #pccart-cart-form .item .designer-email {
     background: #dfdfdf;

@@ -120,8 +120,8 @@ define([
                     ajaxCaller.call("getBillingAccountFromVat",
                         {"vatNumber" : this.$('#countryIsoBA').val()+vatNumberBA},
                     'GET').done(function(result) {
-                        if(_.isEmpty(result.data) == false && me.changesVatNumber == true) {
-			    $('.vatAlreadyUsed').parent().show();
+                        if(_.isEmpty(result.data) == false && me.changesVatNumber == true && $('#baEditSelect').val() != result.data.id) {
+			        $('.vatAlreadyUsed').parent().show();
                         } else {
 			    me.enableSave = true;    
 			}

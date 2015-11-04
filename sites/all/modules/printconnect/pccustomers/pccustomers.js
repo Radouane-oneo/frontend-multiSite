@@ -84,8 +84,9 @@
             }
         });
       /* ========== PCCUSTOMER form validation ========== */
+
       $('.save-button').click(function (e) {
-	  $('.vatAlreadyUsed').parent().hide();
+      	  $('.vatAlreadyUsed').parent().hide(); 
           $('.messages.error').remove();
           $('#content form .required').removeClass("error");
           var errorMarkup = "<div class='messages error'><ul>";
@@ -104,7 +105,7 @@
                 _this.addClass('error');
                 errorMsgs[i] = inputName+": "+labels["invalidCharactersLength"];
                 errorMarkup += "<li>"+errorMsgs[i]+"</li>";
-            } else if (this.name =="phone" && (isNaN(_this.val()) || _this.val().length != 10)) {
+            } else if (this.name =="phone" && (isNaN(_this.val()) || _this.val().length != 9)) {
                 inputName = $(elem).attr('name');
                 _this.addClass('error');
                 errorMsgs[i] = labels["phoneNumberError"];

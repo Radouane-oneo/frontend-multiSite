@@ -340,7 +340,7 @@ function pctemplates_selection_form2($form, &$form_state) {
             $form['filters']['products'] = array(
                 '#type' => 'select',
                 '#title' => t('product'),
-                '#options' => $items,
+                '#options' => $items, 
             );
         }
     }
@@ -360,7 +360,7 @@ function pctemplates_selection_form2($form, &$form_state) {
                 '#type' => 'select',
                 '#title' => '',
                 '#options' => $items,
-                 '#attributes' => array('style' => 'display:none'),  
+                '#attributes' => array('style' => 'display:none'),  
             );
         }
          $form['filters']['inputsegments'] = array(

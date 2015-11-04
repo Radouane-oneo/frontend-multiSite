@@ -5453,7 +5453,7 @@ div.error, table tr.error {
 }
 .page-myprintconnect-forgotpassword #pccustomers-forgotpassword-form .form-actions {
 	margin: 0 -10px -10px -10px;
-	padding: 10px;
+	padding: 0;
 }
 .page-myprintconnect-forgotpassword .fieldset-wrapper input[type="submit"] {
 	margin-left: 30%;
@@ -5507,9 +5507,26 @@ div.error, table tr.error {
 	border-top: 1px solid #5a8a02;
 	border-right: 1px solid #5a8a02;
 }
-.page-myprintconnect-forgotpassword .region-content .form-actions input[type="submit"], .page-myprintconnect-login .region-content .form-actions input[type="submit"] {
+
+.page-myprintconnect-login .region-content .form-actions input[type="submit"] {
 	float: left;
 }
+
+.page-myprintconnect-forgotpassword .region-content .form-actions input[type="submit"]{
+	float: right;
+    height: 50px;
+}
+
+.page-myprintconnect-forgotpassword .region-content .form-actions a.link{
+	float: left;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: arial;
+    margin-left: 10px;
+    line-height: 50px;
+}
+
 .page-myprintconnect-addresses-new .region-content .form-actions input[type=submit], .page-myprintconnect-profile .region-content .form-actions input[type=submit] {
 	background-image: url("images/button_continue.png");
 	background-position: left;

@@ -107,6 +107,7 @@ define([
 	    var resultValidateVat = this.validateVat();
 	    elmTarget.css("border-color", "");
             $('#countryIsoBA').css("border-color", "");
+	    $('.vatAlreadyUsed').parent().hide();
             if (!resultValidateVat && elmTarget.val().length > 0) {
                 elmTarget.css("border-color", "red");
                 $('#countryIsoBA').css("border-color", "red");
@@ -120,7 +121,7 @@ define([
                         {"vatNumber" : this.$('#countryIsoBA').val()+vatNumberBA},
                     'GET').done(function(result) {
                         if(_.isEmpty(result.data) == false && me.changesVatNumber == true) {
-                            var viePoup = new vatView(me.model, result.data);
+				$('.vatAlreadyUsed').parent().show();
                         } else {
 			    me.enableSave = true;    
 			}

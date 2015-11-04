@@ -587,7 +587,14 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
         '#attributes' => array(
             'id' => 'isUserCompany',
             'checked'=> false
-        )
+        ),
+	'#suffix' => '<div class="" style="display:none;">
+            <div class="messages error vatAlreadyUsed">
+                <ul>
+                    <li>'.t('vat Already used').'</li>
+                </ul>
+            </div>
+        </div>'
   );
   
   $form['company'] = array(
@@ -963,7 +970,14 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
         '#attributes' => array(
             'id' => 'isUserCompany',
             'checked'=> 'false'
-        )
+        ),
+	'#suffix' => '<div class="" style="display:none;">
+            <div class="messages error vatAlreadyUsed">
+                <ul>
+                    <li>'.t('vat Already used').'</li>
+                </ul>
+            </div>
+        </div>'
     );
 
     $form['company']['company'] = array(

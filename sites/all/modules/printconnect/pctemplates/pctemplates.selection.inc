@@ -279,7 +279,7 @@ function pctemplates_selection_form2($form, &$form_state) {
            $build['flesh'] = array(
                 '#markup' => '<a class="btn-cmd" href="'.$templateUrl.'">
                                     <span class="flesh"></span>
-                                    Utiliser ce modèle
+                                    '.t("Utiliser ce modèle").'
                                 </a>'
             );
        
@@ -323,7 +323,7 @@ function pctemplates_selection_form2($form, &$form_state) {
     
 //  
     $form['filters']['description'] = array(
-                '#markup' => "<div class='intro'><h2>Personnaliser un modèle en ligne</h2><p>Des milliers de modèles classés par secteur d'activité, prêts à être personnalisés en ligne.</p></div>", 
+                '#markup' => "<div class='intro'><h2>".t('Personnaliser un modèle en ligne')."</h2><p>".t('Des milliers de modèles classés par secteur d\'activité, prêts à être personnalisés en ligne.')."</p></div>", 
          );
 
   if (count($availableProducts) > 0) {
@@ -367,13 +367,13 @@ function pctemplates_selection_form2($form, &$form_state) {
                 '#type' => 'textfield',
                 '#title' => '',
                 '#size'=>'20',
-                '#attributes' => array('placeholder' => 'Rechercher'), 
+                '#attributes' => array('placeholder' => t("Search")), 
              
          ); 
     }
   
 //     // filters by autres filters commenté le 06082014 flyer fr
-     /*
+     
     foreach ($availableFilters as $filterId => $filter) {
         $items = array();
         $inputType = 'select';
@@ -428,7 +428,7 @@ function pctemplates_selection_form2($form, &$form_state) {
             }
         }
     }
-*/
+
     $form['filters']['submit']= array(
         '#type' => 'submit',
         '#value' => t("search"),

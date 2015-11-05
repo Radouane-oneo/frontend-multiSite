@@ -427,6 +427,8 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
 
           $form['list'] = array(
               '#type' => 'item',
+              '#prefix' => '<div class="blocInvoice">',
+              '#suffix' => '</div>',
               '#weight' => 200,
               '#markup' => theme('table', 
                       array('rows' => array_reverse($rows), 

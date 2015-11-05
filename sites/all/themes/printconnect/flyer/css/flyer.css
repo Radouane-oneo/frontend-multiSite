@@ -1489,7 +1489,7 @@ a.button.cart .ui-button-text {
 	margin-left: 33px;
 	padding-top: 25px;
 	margin-bottom: 30px;
-	font-size: 14px;
+	font-size: 16px;
  	font-weight: 700;
 }
 .type-selectBox-dropdown-menu {
@@ -2403,6 +2403,7 @@ body.front #block-block-13:after {
 	border-width: 0 1px 1px 1px;
 	margin: 0;
 	color: #666666;
+	position: relative;
 }
 .page-products #block-system-main .form-type-select.expanded,
 .page-products #block-system-main .form-type-checkboxes.expanded,
@@ -3018,9 +3019,24 @@ a.ui-button.inactivebtn{
 	font-size: 12px;
     border: 0;
 }
+.page-products #block-system-main #templates .form-item.form-type-item a{ 
+    display: block;  
+    cursor: pointer;
+    float: right;
+    color: #fff;
+    display: block;
+    font-weight: 400;
+    font-size: 12px;
+    padding: 8px 8px 8px 35px;
+    border-radius: 4px 4px 4px 4px;
+    width: auto; 
+    /*background: -webkit-linear-gradient(top,#77b800 0%,#669c02 100%);
+    background: -moz-linear-gradient(top,#77b800 0%,#669c02 100%);
+    background: -o-linear-gradient(top,#77b800 0%,#669c02 100%);*/
+    background: url(http://www.flyer.be/sites/all/modules/printconnect/pcproducts/images/downlode.png) no-repeat 6px center #77b800;
+}
 .invoice a#toggle-invoice-form,
-.shipping a#toggle-shipping-form,
-.page-products #block-system-main #templates .form-item.form-type-item a {
+.shipping a#toggle-shipping-form {
 	display: block;
 	padding: 10px 15px;
 	border: 1px solid #dadada;

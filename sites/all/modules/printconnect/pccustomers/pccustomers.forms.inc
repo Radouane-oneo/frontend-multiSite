@@ -1579,11 +1579,12 @@ function pccustomers_forgotpassword_form($form, $form_state) {
       '#type' => 'actions',
   );
 
-  if ($redirect) {
+  //if ($redirect) {
     $form['forgot']['actions']['back'] = array(
-        '#markup' => l(t('Login or register'), 'myprintconnect/login', array('query' => array('return' => $redirect), 'attributes' => array('class' => array('link')))),
+        '#markup' => l(t('Login or register'), 'myprintconnect/login', array('query' => array('return' => 'myprintconnect'), 'attributes' => array('class' => array('link')))),
     );
-  }
+  //}
+
   $form['forgot']['actions']['submit'] = array(
       '#type' => 'submit',
       '#value' => t('Continue'),

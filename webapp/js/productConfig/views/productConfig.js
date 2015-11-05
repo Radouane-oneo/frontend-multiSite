@@ -24,6 +24,7 @@ define([
             "click #edit-actions-addtocart" : "calculCFOrder",
             "click .banner-link" : "bannerClick",
             "click .banner-link-visite" : "bannerClickVisite",
+            "click .banner-link-folder" : "bannerClickFolder",
             "click #mailpopup .close" : "bannerClose",
             "click .send-popin" : "formControl"
         },
@@ -386,10 +387,20 @@ define([
         },
         bannerClick: function(e){
             e.preventDefault();
-            //_gaq.push(['_trackEvent', jQuery("#trackEvent2").attr('value'), 'click', jQuery("#trackEvent4").attr('value')]);
-            _gaq.push(['_trackEvent', 'PDFdownloads', 'click', 'affichegids']);
+             _gaq.push(['_trackEvent', 'PDFdownloads', 'click', 'affichegids']);
             $('#mailpopup').fadeIn();
             $("#popupFormId").attr("action","/downloadaffiche.php");
+           // $("<div class='grey-bg-popup'></div>").insertAfter("#canvas");
+            $('#remerciement').attr('style','display:none');
+           // $('.grey-bg-popup').fadeIn();   
+           $('#divpopup').fadeIn();
+           $('#hideshow').attr('style','display:block');			
+        },
+        bannerClickFolder: function(e){
+            e.preventDefault();
+             _gaq.push(['_trackEvent', 'PDFdownloads', 'click', 'leadgen-folder']);
+            $('#mailpopup').fadeIn();
+            $("#popupFormId").attr("action","/downloadfolder.php");
            // $("<div class='grey-bg-popup'></div>").insertAfter("#canvas");
             $('#remerciement').attr('style','display:none');
            // $('.grey-bg-popup').fadeIn();   

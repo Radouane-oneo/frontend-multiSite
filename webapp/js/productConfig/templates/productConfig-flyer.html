@@ -22,6 +22,7 @@
         <!-- toolBoxItems -->
         <% _.each(model.toolBoxGroup.tree,function(toolBoxItem, i){ %>
         <div class="form-item <%= (_.toArray(toolBoxItem.data).length==1)?'form-type-item':'form-type-select' %>">
+            <%= (_.toArray(toolBoxItem.data).length==1)?'':'<div class="dropdownopen">'+ config.labels["ouvrir"] +'</div>' %>
             <label><%= toolBoxItem.name %></label>
             <% var selected = _.find(toolBoxItem.data, function(item){ return $.inArray(item.id, model.toolBoxGroup.toolboxItems)!=-1 }); %>
             <div class="text selected-item" href="#" data-id="<%= selected.id %>"><%= selected.name %></div>
@@ -82,7 +83,7 @@
         <% if(model.toolBoxGroup.options.length!=0){ %>
         <div class="form-item form-type-checkboxes form-item-options <%= (expandedOptions)?'expanded':'' %>">
             <label for="edit-options"><%= config.labels["options"] %></label>
-
+            <div class="dropdownopen"><%= config.labels["ouvrir"] %></div>
             <div class="text" href="#">
                 <% if(model.options.length==0){ %>
                 <%= config.labels["noOptions"] %>

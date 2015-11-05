@@ -733,6 +733,7 @@ function getLabels($edit = false) {
         "infobleed"=> t('infobleed'),
         "infocolor"=> t('infocolor'),
         "inforesolution"=> t('inforesolution'),
+        "ouvrir" =>t('ouvrir'),
         
     );
 

@@ -12249,5 +12249,5 @@ form#pccheckout-payment-form fieldset legend{
 }
 
 .page-templates #price-template-block{
-	padding-left: 10px;
+	padding-left: 10px!important;
 }

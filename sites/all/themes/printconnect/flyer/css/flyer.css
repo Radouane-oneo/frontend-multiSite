@@ -12248,3 +12248,6 @@ form#pccheckout-payment-form fieldset legend{
     display: inline-block;
 }
 
+.page-templates #price-template-block{
+	padding-left: 10px;
+}

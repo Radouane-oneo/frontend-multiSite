@@ -22,7 +22,14 @@ function pcsamplepacks_request_form($form, $form_state) {
       }
     }
 
- 
+    if($lng == "befr/samplepack" || $lng == "lufr/samplepack" || $lng == "frfr/samplepack" ){
+        $img = "http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/flippage/bann_fr.png";   
+    }else if($lng == "nlnl/samplepack"){
+          $img = "http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/flippage/nlnl_banner_SampleFlip_request_OK.jpg";
+    }else{
+         $img = "http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/flippage/bann_nl.png";
+    }
+
   $form['description'] = array(
       '#type' => 'container',
       '#attributes' => array('class' => array('samplepacks')),
@@ -31,7 +38,7 @@ function pcsamplepacks_request_form($form, $form_state) {
 
 
   $form['description']['image'] = array(
-      '#markup' => '<img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/samplepacks/frfr_bann.png" style="width: 680px; margin-left: -10px;  margin-top: -18px;" alt="flyer" title="flyer" />', 
+      '#markup' => '<img src="'.$img.'" style="width: 680px; margin-left: -10px;  margin-top: -18px;" alt="flyer" title="flyer" />', 
   );
  $form['description']['contspan'] = array(
       '#type' => 'container',
@@ -292,14 +299,22 @@ function pcsamplepacks_requested_form($form, $form_state) {
         $place = $country->iso . ' - ';
       }
     }
-   
+    
+    if($lng == "befr/samplepack" || $lng == "lufr/samplepack" || $lng == "frfr/samplepack" ){
+        $img = "http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/flippage/bann_fr.png";   
+    }else if($lng == "nlnl/samplepack"){
+          $img = "http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/flippage/nlnl_banner_SampleFlip_request_OK.jpg";
+    }else{
+         $img = "http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/flippage/bann_nl.png";
+    }
+    
   $form['description'] = array(
       '#type' => 'container',
       '#attributes' => array('class' => array('samplepacks')),
   );
 
   $form['description']['image'] = array(
-      '#markup' => '<img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/flippage/bann_fr_2.png" style="width: 680px; margin-left: -10px;  margin-top: -24px;" alt="flyer" title="flyer" />', 
+      '#markup' => '<img src="'.$img.'" style="width: 680px; margin-left: -10px;  margin-top: -24px;" alt="flyer" title="flyer" />', 
   );
  $form['description']['contspan'] = array(
       '#type' => 'container',

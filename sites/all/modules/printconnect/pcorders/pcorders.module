@@ -423,8 +423,7 @@ function pcorders_form_pcpayments_request_form_alter(&$form, &$form_state) {
         ),
     );
     
-    /*echo '<pre>';
-    var_dump($order->orderItems);die;*/
+    
     //get order items
     foreach ($order->orderItems as $key) {
       if ($key->productName == 'Fotolia Image') {

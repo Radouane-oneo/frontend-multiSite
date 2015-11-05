@@ -786,7 +786,7 @@ function theme_designtoollinkBtt($vars) {
   }
 
   $attributes = $vars['attributes'];
-//  $attributes['class'][] = 'designtool';
+  $attributes['class'][] = 'designtool';
   $attributes['class'][] = 'iframe';
 
   if (is_array($vars['content'])) {

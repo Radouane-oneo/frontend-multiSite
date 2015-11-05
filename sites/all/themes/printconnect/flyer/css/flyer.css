@@ -12141,7 +12141,49 @@ body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintc
     font-weight: bold;
     text-transform: uppercase;
 }
-
+.page-myprintconnect-orders .blocInvoice {
+    border: 1px solid #d1d1d1;
+    margin-top: 20px;
+    overflow: hidden;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+}
+.page-myprintconnect-orders .blocInvoice .form-item,
+.page-myprintconnect-orders .blocInvoice .form-item table {
+    margin: 0;
+}
+.page-myprintconnect-orders .blocInvoice table thead th {
+    font-weight: bold;
+    border : 0;
+    border-right: 1px solid #d15400;
+}
+.page-myprintconnect-orders .blocInvoice table thead th.last-child {
+    border: 0;
+}
+.page-myprintconnect-orders .blocInvoice table tr td {
+    border: 1px solid #d1d1d1;
+    border-style: solid solid none none;
+}
+.page-myprintconnect-orders .blocInvoice tr.even {
+    background: #fff;
+}
+.page-myprintconnect-orders .blocInvoice table tr td.last-child a {
+    background: url('http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/order_week/icon__pdf.png') no-repeat;
+    width: 18px;
+    height: 23px;
+    display: block;
+    padding-left: 30px;
+    color: #646464;
+}
+.page-myprintconnect-orders .blocInvoice table tr td.last-child {
+    width: 170px;
+    box-sizing: border-box;
+}
+.page-myprintconnect-orders .blocInvoice .price {
+    color: #f60;
+    font-weight: bold;
+}
 /* End page confirmation */
 
 .region-content #pcorders-order-form .form-actions {

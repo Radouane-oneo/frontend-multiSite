@@ -61,7 +61,9 @@
   width: 1032px;
   padding-top: 17px;
 }
-
+#block-pcmenu-main .dropdown .content .products  .item-list > ul li a.active{
+  color: #fff;
+}
 #block-pcmenu-main > .content > ul > li:hover > .dropdown{
   display: block;
 }

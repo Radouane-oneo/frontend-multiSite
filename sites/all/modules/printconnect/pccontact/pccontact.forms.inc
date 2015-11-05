@@ -101,7 +101,7 @@ Vous avez reçu un email de confirmation</p></div>'
   $form['#attributes'] = array('data-globalError' => t('fields are required'));
   return $form;
 }
-function pccontact_popup_form_validate($form, &$form_state) {die('ffff');
+function pccontact_popup_form_validate($form, &$form_state) {
   if (!valid_email_address($form_state['values']['email'])) {
     form_set_error('email', t('E-mail address is not valid'));
   }

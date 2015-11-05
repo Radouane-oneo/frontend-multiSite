@@ -101,14 +101,14 @@ Vous avez reçu un email de confirmation</p></div>'
   $form['#attributes'] = array('data-globalError' => t('fields are required'));
   return $form;
 }
-function pccontact_popup_form_validate($form, &$form_state) {
+function pccontact_popup_form_validate($form, &$form_state) {die('ffff');
   if (!valid_email_address($form_state['values']['email'])) {
     form_set_error('email', t('E-mail address is not valid'));
   }
 }
 
 // general form 
-
+/*
 function pccontact_general_form($form, &$form_state, $key = 'general') {
   $customer = \printconnect\Customers\Factory::Current();
   global $language;
@@ -121,7 +121,6 @@ function pccontact_general_form($form, &$form_state, $key = 'general') {
       $imageName=str_replace("logo", "logo_inversed", $match[1]);
       $path='/sites/default/files/'.$imageName;
   }
-  /*$language->prefix = "frfr";*/
   $emails = array(
       'benl' => 'info@flyer.be',
       'befr' => 'info@flyer.be',
@@ -149,7 +148,7 @@ function pccontact_general_form($form, &$form_state, $key = 'general') {
           <strong> '.t('HEB JE EEN VRAAG').' ?</strong>
           </p><p id ="sub1"> '.t('Zinnetje over customer service').'</p>',
   );
-  
+  echo 'lolo';
   $form['container']['imageCallIcon'] = array(
       '#markup' => 
       '<div id ="imgsContacts">
@@ -231,32 +230,30 @@ function pccontact_general_form_submit($form, &$form_state) {
    switch ($language->prefix) {
         case 'benl':
             $result = drupal_mail('pccontact', $key, 
-                    variable_get('pccontact_email', 'info@flyer.be'),
-                    '', $form_state['values'],
-                    NULL, $send);
+                    variable_get('pccontact_general', 'info@flyer.be'),'', $form_state['values'],NULL, $send);
             break;
         case 'befr':
             $result = drupal_mail('pccontact', $key,
-                    variable_get('pccontact_email', 'info@flyer.be'),
+                    variable_get('pccontact_general', 'info@flyer.be'),
                     '', $form_state['values'], NULL, $send);
             break;
         case 'nlnl':
             $result = drupal_mail('pccontact', $key,
-                    variable_get('pccontact_email', 'info@flyer.nl'),
+                    variable_get('pccontact_general', 'info@flyer.nl'),
                     '', $form_state['values'], NULL, $send);
             break;
         case 'frfr':
             $result = drupal_mail('pccontact', $key,
-                    variable_get('pccontact_email', 'info@flyer.fr'),
+                    variable_get('pccontact_general', 'info@flyer.fr'),
                     '', $form_state['values'], NULL, $send);
             break;
         case 'lufr':
             $result = drupal_mail('pccontact', $key,
-                    variable_get('pccontact_email', 'info@flyer.lu'),
+                    variable_get('pccontact_general', 'info@flyer.lu'),
                     '', $form_state['values'], NULL, $send);
             break;
     }
-    
+    die($result);
     $sendMeail = FALSE;
     if ($result['result'] == TRUE) {
         $sendMeail = TRUE;
@@ -362,4 +359,4 @@ function pccontact_stors_form_submit($form, &$form_state) {
     } else {
         drupal_set_message(t('Your message has  not been sent'), 'error');
     }
-}
+}*/

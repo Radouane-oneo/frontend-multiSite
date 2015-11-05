@@ -427,7 +427,12 @@ function pcorders_form_pcpayments_request_form_alter(&$form, &$form_state) {
     var_dump($order->orderItems);die;*/
     //get order items
     foreach ($order->orderItems as $key) {
-      $case1 = $key->quantity . ' ' . t('ex') . '. ' . $key->productName;
+      if ($key->productName == 'Fotolia Image') {
+        $case1 = $key->productName;
+      }else{
+        $case1 = $key->quantity . ' ' . t('ex') . '. ' . $key->productName;
+      }
+      
 
       $rowsOrders[] = array(
          'class' => array('productItem'),
@@ -439,6 +444,35 @@ function pcorders_form_pcpayments_request_form_alter(&$form, &$form_state) {
               ),
           ),
       );
+
+      // file check
+      if ($key->fileCheck->price) {
+          $rowsOrders[] = array(
+           'class' => array('productItem'),
+            'data' => array(
+                t('Contrôle professionel de'),
+                array(
+                    'data' => theme('price', array('value' => $key->fileCheck->price, 'free' => TRUE)),
+                    'class' => array('text-right'),
+                ),
+            ),
+          );
+      }
+
+
+      // designTemplate
+      if ($key->designTemplate->price) {
+          $rowsOrders[] = array(
+           'class' => array('productItem'),
+            'data' => array(
+               $key->designTemplate->description,
+                array(
+                    'data' => theme('price', array('value' => $key->designTemplate->price, 'free' => TRUE)),
+                    'class' => array('text-right'),
+                ),
+            ),
+          );
+      }
 
     }
 

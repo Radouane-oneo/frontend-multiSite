@@ -1,5 +1,6 @@
 <?php
-
+use printconnect\Invoices\Invoice;
+use printconnect\Invoices\Factory;
 function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALSE) {
 \printconnect\Carts\Factory::Clear();
 $order = \printconnect\Orders\Factory::Get($orderId, false);
@@ -144,7 +145,6 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
       '#attributes' => array('class' => array('invoice')),
       '#title' => t('Invoice address')
   );
-
 
   if ($order->customerReference) {
     $form['deliveryinvoice']['invoice']['reference'] = array(
@@ -383,26 +383,60 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
                 'attributes' => array('class' => array('clearfix')))),
         );
     }
-
+    
     $form['actions'] = array(
         '#type' => 'actions',
     );
-
-        if (variable_get('pc_flow', '') == 'flyer') {
-            if ($_SESSION['shop_vat'] != 0) {
-                $form['actions']['price'] = array(
-                    '#theme' => 'price',
-                    '#value' => $order->totalAmount,
-                    '#title' => t('Total incl. VAT'),
-                );
+    if ($_SESSION['shop_vat'] != 0) {
+        $form['actions']['price'] = array(
+            '#theme' => 'price',
+            '#value' => $order->totalAmount,
+            '#title' => t('Total incl. VAT'),
+        );
+    }
+    if (count($order->invoices) != 0){
+            $invoices = $order->invoices;
+        
+          $rows = array();
+          foreach ($invoices as $invoice) {
+            if (Factory::GetBalance($invoice) > 1) {
+              $flag = '<div class="flag">&nbsp</div>';
+              $class = 'topay';
+              $balance = Factory::GetBalance($invoice);
             } else {
-                $form['actions']['price'] = array(
-                    '#theme' => 'price',
-                    '#value' => $order->totalAmount,
-                    '#title' => t('Total excl. Vat'),
-                );
+              $flag = '<div>&nbsp</div>';
+              $class = '';
+              $balance = 0;
             }
-        }
+
+            $rows[] = array(
+                /*array('data' => $flag),*/
+                array('data' => format_date(strtotime($invoice->creationDate), 'custom', 'd/m/Y')),
+                /*array('data' => ''),*/
+                array(
+                    'data' => theme('price', array('value' => $invoice->totalAmount, 'attributes' => array('class' => array($class)))),
+                ),
+                array(
+                    'data' => theme('price', array('value' => $balance)),
+                ),
+             //   l($invoice->order, 'myprintconnect/orders/' . $invoice->order),
+        //          array('data' => l($invoice->number, printconnect\Files\Factory::getFileUrl($invoice->pdf), array('attributes' => array('class' => 'pdf', 'target' => '_blank')))),
+                array('data' => theme('pcfilesdownloadlink', array('file' => $invoice->pdf, 'title' => $invoice->number, 'attributes' => array('class' => array('pdf'))))),
+            );
+          }
+
+          $form['list'] = array(
+              '#type' => 'item',
+              '#prefix' => '<div class="blocInvoice">',
+              '#suffix' => '</div>',
+              '#weight' => 200,
+              '#markup' => theme('table', 
+                      array('rows' => array_reverse($rows), 
+                          'header' => array(/*'', */t('Date'), /*t('Method'), */t('Amount'), t('Outstanding'), t('Invoice')), 'attributes' => array('class' => array('list'))))
+          );
+    }
+    
+    
     $form_state['storage']['cartId'] = $cart->id;
     $form_state['storage']['order'] = $order;
     $form_state['storage']['customer'] = $customer;
@@ -418,6 +452,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
             '#markup' => '<script type="text/javascript" src="http://img.metaffiliation.com/u/15/p44459.js?zone=fincommande&montant='.$totalPrice.'&listeids='.$idproducts.'&idtransaction='.$orderId.'"></script>',
           );
     }
+    
 //$form['order']['#value'] = $order;
 //$form['customer']['#value'] = $customer;
 //$form['confirmation']['#value'] = $confirmation;
@@ -446,17 +481,38 @@ function _pcorders_order_form_build_overview($order) {
      foreach ($order->discountItems as $discount) {
       if($discount->productName != "Fotolia Image"){
         $label = t('Discount');
-         $rows[] = array(
-             'data' => array(
-                 $label,
-                 $discount->productName,
-                 theme('price', array('value' => $discount->price, 'block' => TRUE)),
-             ),
-             'class' => array('discount'),
-         );
-      }       
-     }
+
+        if($discount->productName == 'Fotolia Image') {
+          $label = t('Supplément');
+        }
+        $rows[] = array(
+            'data' => array(
+                $label,
+                $discount->productName,
+                theme('price', array('value' => $discount->price, 'block' => TRUE)),
+            ),
+            'class' => array('discount'),
+        );
+      }
+    }
    }
+    
+    if ($order->orderItems) {
+      foreach ($order->orderItems as $oi) {
+        if($oi->designTemplate) {
+            $label = t('Supplément');
+            $rows[] = array(
+                'data' => array(
+                    $label,
+                    $oi->designTemplate->description,
+                    theme('price', array('value' => $oi->designTemplate->price, 'block' => TRUE)),
+                ),
+                'class' => array('discount'),
+            );
+        }
+      }
+    }
+    
     if (isset($order->orderItemShipping)) {
       $type = \printconnect\Shipping\Types\Factory::Get($order->orderItemShipping->shippingTypeResellerShop);
       $rows[] = array(

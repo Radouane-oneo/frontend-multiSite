@@ -46,6 +46,12 @@
                             <td class='last-child'><%= priceTpl({price:orderItem.fileCheck.price,classToAdd:'price'}) %></td>
                         </tr>
                     <% }  %>
+                    <!-- modele payant -->
+                    <% if(orderItem.designTemplate && orderItem.designTemplate.price) { %>
+                    <tr><td><%= orderItem.designTemplate.description %></td>
+                        <td class='last-child'><%= priceTpl({price:orderItem.designTemplate.price,classToAdd:'price'}) %></td>
+                    </tr>
+                    <% }  %>
                 <%});%>
                  
                 <tr class="even">

@@ -1187,7 +1187,7 @@ a.button.request:active {
 }
 .ui-button .ui-button-text {
 	display: inline;
-	line-height: 17px;
+	line-height: 18px;
 }
 .form-submit, .ui-button a.button, a:visited.button, a.ui-button, a:visited.ui-button{
 	color: #fff;
@@ -11015,18 +11015,19 @@ p.requieredfields span.form-required {
     right: 3px;
 }
 #pccart-cart-form .preview1 a.updateProduct {	
-    background: url(images/bg_btns.png) no-repeat 0 -125px;
+    background: url(images/bg_btns.png) no-repeat -3px -124px;
     font-size: 11px;
     color: #666666;
     float: left;
-    padding-left: 25px;
+    padding-left: 20px;
     position: absolute;
-    bottom: 6px;    
+    bottom: 6px;
 }
 #pccart-cart-form .jobFull-img a.previewlink {
     background: none;
     padding: 0;
 }
+.cartItemsContainer .file-model .model-txt,
 .fotolia-img-name {
     display: inline-block;
     width: 480px;
@@ -11037,6 +11038,7 @@ p.requieredfields span.form-required {
     clear: both;
     overflow: hidden;
 }
+.cartItemsContainer .file-model,
 .cart-fotolias .fotolia-items{
 	background-color: #e1e1e1;
     position: relative;
@@ -11045,6 +11047,7 @@ p.requieredfields span.form-required {
     padding: 0 10px;
     margin: 0;
     box-sizing: border-box;
+    clear:both;
 }
 .page-cart #pccart-cart-form .item .designer-email {
     background: #dfdfdf;
@@ -12122,7 +12125,49 @@ body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintc
     font-weight: bold;
     text-transform: uppercase;
 }
-
+.page-myprintconnect-orders .blocInvoice {
+    border: 1px solid #d1d1d1;
+    margin-top: 20px;
+    overflow: hidden;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+}
+.page-myprintconnect-orders .blocInvoice .form-item,
+.page-myprintconnect-orders .blocInvoice .form-item table {
+    margin: 0;
+}
+.page-myprintconnect-orders .blocInvoice table thead th {
+    font-weight: bold;
+    border : 0;
+    border-right: 1px solid #d15400;
+}
+.page-myprintconnect-orders .blocInvoice table thead th.last-child {
+    border: 0;
+}
+.page-myprintconnect-orders .blocInvoice table tr td {
+    border: 1px solid #d1d1d1;
+    border-style: solid solid none none;
+}
+.page-myprintconnect-orders .blocInvoice tr.even {
+    background: #fff;
+}
+.page-myprintconnect-orders .blocInvoice table tr td.last-child a {
+    background: url('http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/order_week/icon__pdf.png') no-repeat;
+    width: 18px;
+    height: 23px;
+    display: block;
+    padding-left: 30px;
+    color: #646464;
+}
+.page-myprintconnect-orders .blocInvoice table tr td.last-child {
+    width: 170px;
+    box-sizing: border-box;
+}
+.page-myprintconnect-orders .blocInvoice .price {
+    color: #f60;
+    font-weight: bold;
+}
 /* End page confirmation */
 
 .region-content #pcorders-order-form .form-actions {
@@ -12190,9 +12235,16 @@ form#pccheckout-payment-form fieldset legend{
 }
 
 
-.page-templates-product .region-content .form-actions{
-	    padding: 15px 10px;
+.page-templates .region-content .form-actions{
+	padding: 15px 10px;
 }
-.page-templates-product .region-content .form-actions span.price{
+.page-templates .region-content .form-actions span.price{
 	padding-left: 0;
 }
+
+.page-templates .region-content .form-actions a.button.action > .ui-button-text{
+	background: url(/sites/all/themes/printconnect/flyer/css/images/button_order.png) no-repeat left;
+    padding-left: 25px;
+    display: inline-block;
+}
+

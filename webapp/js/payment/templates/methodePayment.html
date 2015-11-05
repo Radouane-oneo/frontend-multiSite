@@ -12,7 +12,7 @@
             <tbody>
                <%  var checked = "", descriptionTag = "";
                var amountWithoutPayment;%>
-                <% _.each(config.paymentMethods, function(payment, i){%>
+                <% _.each(config.paymentMethods, function(payment, i){if(!config.customerFcp && payment.paymentMethod.internalName == 'invoice') {return true;}%>
                 <% if (payment.id == model.paymentId){
                      checked = "checked='checked'"; 
                      descriptionTag = payment.paymentMethod.descriptionTag;

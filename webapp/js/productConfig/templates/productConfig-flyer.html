@@ -4,13 +4,13 @@
         <div id="edit-description" class="description clearfix form-wrapper">
 
             <div id="edit-description-image" class="image form-wrapper">
-                <img width="178" height="172" alt="" src="<%= config.imagesUrl %>products/<%= config.labels['productId'] %>.png">
+                <img width="178" height="172" alt="" src="<%= config.imagesUrl %>products/<%= (config.labels['productType']=='synonym') ? config.labels['parentId'] : config.labels['productId'] %>.png">
                 <h3><%= config.labels["productName"] %></h3>
             </div>
             <div id="edit-description-text" class="text form-wrapper">
                 <%= $('<div/>').html(config.labels["productDescription"]).text() %>
             </div>
-
+            <div id='popupbox'></div>
             <% if(config.bannerUrl != '') { %>
                 <div class="banner form-wrapper" id="edit-description-banner--3">
                     <img src="<%= config.bannerUrl %>" alt="">

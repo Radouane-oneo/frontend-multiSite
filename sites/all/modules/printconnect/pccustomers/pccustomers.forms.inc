@@ -1030,6 +1030,8 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
     "invalidCharactersLength" => t('invalidCharactersLength'),
     "phoneNumberError" => t('Please enter your Phone Number as 10 Number.'),
     "vatNotNumber" => t('Please enter your VAT Number as Number value.'),
+    "invalidPostalCode" => t('Le champ Code postal doit être numérique.'),
+    "invalidPostalCodeLenght" => t('Le champ Code postal doit être supérieur à 3 chiffres.'),
     );
 
   $form['scriptForLabels'] = array(

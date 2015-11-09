@@ -1,7 +1,11 @@
 (function ($) {
     $(document).ready(function () {
+      $("#pccustomers-newaddress-form").submit(function() {
+          $("#pccustomers-newaddress-form #edit-submit").prop('disabled', true);
+      });
       if($('#pccustomers-address-billingaddresses-form')[0]){
       }
+      
       if ($('#isUserCompany:checked').length > 0) {
 	$('#edit-vatnumber-number').addClass('required');
 	}

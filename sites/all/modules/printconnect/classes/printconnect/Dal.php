@@ -77,7 +77,7 @@ namespace printconnect {
 
     public static function SaveCacheData($key, $data) 
     {
-        $urls = array('cart', 'customer', 'shipping-date', 'billing-account', 'upload-design');
+        $urls = array('cart', 'customer', 'shipping-date', 'billing-account', 'upload-design','order');
         foreach ($urls as $item) {
             if (preg_match("@$item@", $key)) {
                 return FALSE;

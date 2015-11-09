@@ -208,17 +208,17 @@ function chooseMarker(id) {
 				console.log('endDate is :'+endDate);
 				console.log('cu is '+currentDate);
 				if (currentDate.getTime() >= startDate.getTime() && endDate.getTime() >= currentDate.getTime()) {
-				    txtBtn =  '<p style="text-align: right;  margin: 10px 0 0; width: 231px;"><img style="height: 34px; float:left; margin-right:10px; width:auto;" src="/sites/all/modules/printconnect/pcflyerstores/images/logo.png"><a href="/flyerstores/'+id+'" ><span class="Slink">'+$('#storeLink').html()+'</span></a></p>';
+				    txtBtn =  '<p style="text-align: right;  margin: 10px 0 0; width: 231px;"><img style="height: 34px; float:left; margin-right:10px; width:auto;" src="/sites/all/modules/printconnect/pcflyerstores/images/logo.png"><a class="flyerstore-btn" href="/flyerstores/'+id+'" ><span class="Slink">'+$('#storeLink').html()+'</span></a></p>';
 				} else {
-	     			    txtBtn =  '<p style="text-align: right;  margin: 10px 0 0; width: 231px;"><img style="height: 34px; float:left; width:auto; margin-right:10px;" src="/sites/all/modules/printconnect/pcflyerstores/images/logo.png"><a href="/flyerstores/'+id+'" target="blank"><span class="Slink">'+$('#storeLink').html()+'</span></a></p>'+
+	     			    txtBtn =  '<p style="text-align: right;  margin: 10px 0 0; width: 231px;"><img style="height: 34px; float:left; width:auto; margin-right:10px;" src="/sites/all/modules/printconnect/pcflyerstores/images/logo.png"><a class="flyerstore-btn" href="/flyerstores/'+id+'" target="blank"><span class="Slink">'+$('#storeLink').html()+'</span></a></p>'+
                                 '<p><a href="/stores/'+id+'" onClick="chooseMarker('+id+');return false" class="pcstores-store-link button jquery-once-1-processed ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="'+id+'" role="button"><span class="ui-button-text">'+$('#selectStore').html()+'</span></a></p>';
 				}
 			    } else {
-				txtBtn =  '<p style="text-align: right; width:auto; margin: 10px 0 0; wwidth: 231px;"><img style="height: 34px; float:left; width:auto;  margin-right:10px;" src="/sites/all/modules/printconnect/pcflyerstores/images/logo.png"><a href="/flyerstores/'+id+'" target="blank"><span class="Slink">'+$('#storeLink').html()+'</span></a></p>'+
+				txtBtn =  '<p style="text-align: right; width:auto; margin: 10px 0 0; wwidth: 231px;"><img style="height: 34px; float:left; width:auto;  margin-right:10px;" src="/sites/all/modules/printconnect/pcflyerstores/images/logo.png"><a class="flyerstore-btn" href="/flyerstores/'+id+'" target="blank"><span class="Slink">'+$('#storeLink').html()+'</span></a></p>'+
                                 '<p><a href="/stores/'+id+'" onClick="chooseMarker('+id+');return false" class="pcstores-store-link button jquery-once-1-processed ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="'+id+'" role="button"><span class="ui-button-text">'+$('#selectStore').html()+'</span></a></p>';
 			    }
 			} else {
-			   txtBtn =  '<p style="text-align: right; width:auto; margin: 10px 0 0; width: 231px;"><img style="height: 34px;width:auto; float:left; margin-right:10px" src="/sites/all/modules/printconnect/pcflyerstores/images/logo.png"><a href="/flyerstores/'+id+'" ><span class="Slink">'+$('#storeLink').html()+'</span></a></p>';
+			   txtBtn =  '<p style="text-align: right; width:auto; margin: 10px 0 0; width: 231px;"><img style="height: 34px;width:auto; float:left; margin-right:10px" src="/sites/all/modules/printconnect/pcflyerstores/images/logo.png"><a class="flyerstore-btn" href="/flyerstores/'+id+'" ><span class="Slink">'+$('#storeLink').html()+'</span></a></p>';
 			}
 			var pr = '<table style="width:100%; font-size: 10px;"><tbody style="background-color:transparent">';
 			var faxtext = "";

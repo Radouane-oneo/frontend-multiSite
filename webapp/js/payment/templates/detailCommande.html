@@ -20,7 +20,7 @@
                                 <%= priceTpl({price:orderItem.price,classToAdd:'price'}) %>
                             <% }else{%>
                                 <%  if(orderItem.price < orderItem.originPrice){%>
-                                    <% var prefixsFR = ["befr", "lufr", "frfr"];        
+                                    <% var prefixsFR = ["frfr"];        
                                     if ($.inArray(GlobalPrefix, prefixsFR) == 0){%>
                                     <div class="origin-price"><del><%=orderItem.originPrice%> &euro;</del></div>
                                     <% }else{%>

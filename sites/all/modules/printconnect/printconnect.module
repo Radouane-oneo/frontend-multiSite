@@ -439,7 +439,7 @@ function theme_price($vars) {
 
    global $language;
    $lg = $language->prefix;
-   $arrayLanguage = array('befr', 'lufr', 'frfr');
+   $arrayLanguage = array('frfr');
    if (in_array($lg, $arrayLanguage)){
         $build = array(
             '#prefix' => '<' . $container . drupal_attributes($attributes) . '>',

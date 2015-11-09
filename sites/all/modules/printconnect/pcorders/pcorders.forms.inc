@@ -271,7 +271,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         if($price < $item->originPrice){
             global $language;
             $lg = $language->prefix;
-            $arrayLanguage = array('befr', 'lufr', 'frfr');
+            $arrayLanguage = array('frfr');
             if (in_array($lg, $arrayLanguage))
                 $promoPrice = '<del>'.$item->originPrice.' &euro;</del>';
             else

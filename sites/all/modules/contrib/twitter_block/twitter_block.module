@@ -253,7 +253,8 @@ function twitter_block_preprocess_twitter_block_tweet(&$variables) {
  */
 function theme_twitter_block($variables) {
   $twitter_result = $variables['twitter_result'];
-  foreach($twitter_result as $tweet) {  
+  foreach($twitter_result as $i=>$tweet) { 
+    if ($i == 2) break;
     $tweets[] = theme('twitter_block_tweet', array('tweet' => $tweet, 'api' => $variables['api'])); 
   }
 

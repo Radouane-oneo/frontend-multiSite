@@ -1,7 +1,11 @@
 (function ($) {
     $(document).ready(function () {
+      $("#pccustomers-newaddress-form").submit(function() {
+          $("#pccustomers-newaddress-form #edit-submit").prop('disabled', true);
+      });
       if($('#pccustomers-address-billingaddresses-form')[0]){
       }
+      
       if ($('#isUserCompany:checked').length > 0) {
 	$('#edit-vatnumber-number').addClass('required');
 	}
@@ -91,7 +95,14 @@
           $('#content form .required').removeClass("error");
           var errorMarkup = "<div class='messages error'><ul>";
           var errorMsgs = new Array();
-         
+ 
+          var isoList = {
+            21 : "BE",
+            73 : "FR",
+            150 : "NL",
+            124 : "LU"
+          };
+ 
           $('#content form input.required, #content form select.required').each(function(i, elem) {
             var _this = $(this); 
             var inputName;
@@ -133,7 +144,26 @@
                 _this.addClass('error');
                 errorMsgs[i] = labels["vatNotNumber"];
                 errorMarkup += "<li>"+errorMsgs[i]+"</li>";
-            }
+            } else if (this.name == "postalCode") { 
+                var country = $('#edit-country option:selected').val();
+                var iso = isoList[country];
+                value = $(this).val();
+                inputName = $(elem).attr('name');
+
+                if (value < 4) {
+                  _this.addClass('error');
+                  errorMsgs[i] = labels["invalidPostalCodeLenght"];
+                  errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+                }
+                if (!!value.length && country != 0) {
+                  result = ValidatePostalCode(iso, value);
+                  if(result == -1){
+                    _this.addClass('error');
+                    errorMsgs[i] = labels["invalidPostalCode"];
+                    errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+                  }
+                }
+            } 
 
           });  
           errorMarkup += "</ul></div>";
@@ -237,6 +267,21 @@
       }); 
     });
 
+/* ========== Validate PostalCode ========== */  
+function ValidatePostalCode(iso,value) {
+    switch (iso){
+      case 'NL' : valid = value.search(/^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/);
+      break;
+      case 'FR' : valid = value.search(/^(F-)?((2[A|B])|[0-9]{2})[0-9]{3}$/);
+      break;
+      case 'LU' : valid = value.search(/^[1-9]{1}[0-9]{3}$/);
+      break;
+      case 'BE' : valid = value.search(/^[1-9]{1}[0-9]{3}$/);
+      break;
+      default : valid = 'x';
+    }
+    return valid;
+  }
     
   Drupal.behaviors.pccustomers= {
     detach: function (context) {

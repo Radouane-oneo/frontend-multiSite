@@ -179,7 +179,8 @@ define([
                 this.$('#baPostalCode').val(targetBA.postalCode);
                 this.$('#countryList').val(targetBA.country);
                 this.$('#companyInput').val(targetBA.company);
-                this.$('#vatNumberBA').val(targetBA.vatNumber);
+                this.$('#countryIsoBA').val(targetBA.vatNumber.substr(0,2));
+                this.$('#vatNumberBA').val(targetBA.vatNumber.substr(2));
                 this.displayVatBloc();
             } else if (elmTarget.val() == 0) {
                 this.$('.baInputs').val("");

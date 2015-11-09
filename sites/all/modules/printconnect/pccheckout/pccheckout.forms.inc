@@ -206,7 +206,9 @@ function pccheckout_personal_form($form, &$form_state) {
         "isRequired" => t('!name field is required.'),
         "invalidCharactersLength" => t('invalidCharactersLength'),
         "invaliEmail" => t('Email is not valid'),
-        "phoneNumberError" => t('Please enter your Phone Number as 10 Number.'),
+        "phoneNumberError" => t('Please enter your Phone Number as 10 Number.'),        
+        "invalidPostalCode" => t('Le champ Code postal doit être numérique.'),
+        "invalidPostalCodeLenght" => t('Le champ Code postal doit être supérieur à 3 chiffres.'),
     );
 
     $form['scriptForLabels'] = array(

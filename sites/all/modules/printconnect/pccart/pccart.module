@@ -24,7 +24,7 @@ $items['cart'] = array(
     'page arguments' => array(),
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
-    'title' => t('your cart')
+    'title' => 'your cart'
 );
 
 $items['cart/ajax/getcart'] = array(

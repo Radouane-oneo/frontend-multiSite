@@ -26,7 +26,8 @@ define([
             "click .banner-link-visite" : "bannerClickVisite",
             "click .banner-link-folder" : "bannerClickFolder",
             "click #mailpopup .close" : "bannerClose",
-            "click .send-popin" : "formControl"
+            "click .send-popin" : "formControl",
+            "click #divpopup" : "divpopup"
         },
         initialize: function() {
             this.config = require("config");
@@ -426,6 +427,7 @@ define([
         },
         divpopup: function(e){
             e.preventDefault();
+            console.log('lolo');
             $('#mailpopup').fadeOut();
             $('#divpopup').fadeOut();
         },
@@ -462,14 +464,14 @@ define([
                           $('#hideshow').attr('style','display:none');
                           $('#remerciement').attr('style','display:block');
                             $('#mailpopup').fadeIn();
-                          $("#popupFormId").attr("action",goto);
+                          //$("#popupFormId").attr("action",goto);
                           $("#popupFormId").submit();
                         },
                         error: function(jqXHR, textStatus, ex) { 
                           $('#hideshow').attr('style','display:none');
                           $('#remerciement').attr('style','display:block');
                           $('#mailpopup').fadeIn();
-                          $("#popupFormId").attr("action",goto);
+                         // $("#popupFormId").attr("action",goto);
                           $("#popupFormId").submit();
                         }  
                     });

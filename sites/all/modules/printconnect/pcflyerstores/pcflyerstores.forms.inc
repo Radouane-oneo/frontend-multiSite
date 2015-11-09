@@ -242,7 +242,8 @@ $form['searchZone']['search'] = array(
         
     }
     
-    ksort($itemliste);
+    //ksort($itemliste);
+    uasort($itemliste, 'my_sort_function');
 
     foreach ($itemliste as $key => $value) {
 
@@ -268,3 +269,10 @@ $form['searchZone']['search'] = array(
     return $form;
 }
 
+function my_sort_function($a, $b) {
+    if ((count($a) == count($b))) {
+        return 0;
+    }
+
+    return ((count($a) - count($b)) > 0) ? -1 : 1;
+}

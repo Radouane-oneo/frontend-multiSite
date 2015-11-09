@@ -63,7 +63,7 @@
                                     <%= priceTpl({price:model.price,classToAdd:'price'}) %>
                                 <% }else{%>
                                     <%  if(model.price < model.originPrice){%>
-                                        <% var prefixsFR = ["befr", "lufr", "frfr"];        
+                                        <% var prefixsFR = ["frfr"];        
                                         if ($.inArray(GlobalPrefix, prefixsFR) == 0){%>
                                         <div class="origin-price"><del><%=model.originPrice%> &euro;</del></div>
                                         <% }else{%>

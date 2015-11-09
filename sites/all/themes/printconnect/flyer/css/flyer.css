@@ -12266,3 +12266,13 @@ form#pccheckout-payment-form fieldset legend{
 .page-templates #price-template-block{
 	padding-left: 10px!important;
 }
+#divpopup {
+    border: 1px solid;
+    display: none;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}

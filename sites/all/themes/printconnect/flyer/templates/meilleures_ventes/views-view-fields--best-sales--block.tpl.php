@@ -17,7 +17,7 @@ list($prix1, $prix2) = split('[,.]', $fields['field_prix']->content);
         <span class="value">
             <?php
                 global $language;
-                $arrayLanguage = array('befr', 'lufr', 'frfr');
+                $arrayLanguage = array('frfr');
                 if (in_array($language->prefix, $arrayLanguage)): ?>
                     <span class="whole"><?php print $prix1; ?></span><span class="decimalpoint">,</span><span class="decimals"><?php print $prix2; ?></span>&nbsp;<span class="currency">€</span>
                 <?php else: ?>

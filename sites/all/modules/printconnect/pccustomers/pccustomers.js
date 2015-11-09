@@ -88,22 +88,23 @@
             }
         });
       /* ========== PCCUSTOMER form validation ========== */
-
-      $('.save-button').click(function (e) {
+ 
+      $('.save-button').click(function (e) { 
       	  $('.vatAlreadyUsed').parent().hide(); 
           $('.messages.error').remove();
           $('#content form .required').removeClass("error");
           var errorMarkup = "<div class='messages error'><ul>";
           var errorMsgs = new Array();
+ 
           var isoList = {
             21 : "BE",
             73 : "FR",
             150 : "NL",
             124 : "LU"
           };
-
+ 
           $('#content form input.required, #content form select.required').each(function(i, elem) {
-            var _this = $(this);
+            var _this = $(this); 
             var inputName;
             if(_this.val() == "" || _this.val() == 0) {
               inputName = $(elem).attr('name');
@@ -115,7 +116,7 @@
                 _this.addClass('error');
                 errorMsgs[i] = inputName+": "+labels["invalidCharactersLength"];
                 errorMarkup += "<li>"+errorMsgs[i]+"</li>";
-            } else if (this.name =="phone" && (isNaN(_this.val()) || _this.val().length != 9)) {
+            } else if (this.name =="phone" && (isNaN(_this.val()) || _this.val().length != 9 && _this.val().length != 10)) {
                 inputName = $(elem).attr('name');
                 _this.addClass('error');
                 errorMsgs[i] = labels["phoneNumberError"];

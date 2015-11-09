@@ -641,10 +641,9 @@ span.datainfobul:after {
     font-weight: 400;
     font-size: 12px;
     background-position: left;
-    background-repeat: no-repeat;
-    padding-left: 10px;
+    background-repeat: no-repeat; 
     width: auto;
-    background: url("images/calc_dot.png") no-repeat left;
+    /*background: url("images/calc_dot.png") no-repeat left;*/
 }
 .box-gris{
   padding: 13px 13px 13px 54px;

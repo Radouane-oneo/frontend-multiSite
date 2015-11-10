@@ -25,7 +25,7 @@
 			<div class="preview1">
 				<div class="description form-wrapper">
                                     <% var name=''%>
-                                    <% if (model.customWidth != 0 && model.customHeight != 0){
+                                    <% if (model.customWidth > 0 && model.customHeight > 0){
                                             name = model.configuration.name + ' ' +model.customWidth+' X '+ model.customHeight+' mm';
                                         }else
                                         {

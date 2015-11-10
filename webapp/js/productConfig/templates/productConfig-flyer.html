@@ -25,7 +25,9 @@
             <%= (_.toArray(toolBoxItem.data).length==1)?'':'<div class="dropdownopen">'+ config.labels["ouvrir"] +'</div>' %>
             <label><%= toolBoxItem.name %></label>
             <% var selected = _.find(toolBoxItem.data, function(item){ return $.inArray(item.id, model.toolBoxGroup.toolboxItems)!=-1 }); %>
-            <div class="text selected-item" href="#" data-id="<%= selected.id %>"><%= selected.name %></div>
+            <div class="text selected-item" href="#" data-id="<%= selected.id %>">
+                <%= $('<div/>').html(selected.name).text() %>
+            </div>
         </div>
         <div class="dropdown clearfix form-wrapper" style="display: none;"  data-id="<%= toolBoxItem.id %>">
             <div class="description form-wrapper">

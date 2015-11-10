@@ -33,7 +33,7 @@ jQuery(document).ready(function (e) {
          }
         
         //else if (!phoneReg.test( phone ) ) {
-		else if (isNaN(phone.val()) || phone.val().length != 9 && phone.val().length != 10) {
+		else if (isNaN(phone) || phone.length < 9 || phone.length > 10) {
 			var PhoneError = jQuery('#pccontact_general_form').find('#edit-phone').attr('data-PhoneError');
 			jQuery(document).find('.errorForms').remove();
 			jQuery(document).find('#pccontact_general_form #edit-actions')

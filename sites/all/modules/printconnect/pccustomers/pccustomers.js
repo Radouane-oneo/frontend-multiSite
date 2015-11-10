@@ -1,8 +1,9 @@
 (function ($) {
     $(document).ready(function () {
-      $("#pccustomers-newaddress-form").submit(function() {
-          $("#pccustomers-newaddress-form #edit-submit").prop('disabled', true);
+      $("#pccustomers-newaddress-form, #pccustomers-newaddress-billingaddresses-form").submit(function() {
+          $("#pccustomers-newaddress-form #edit-submit, #pccustomers-newaddress-billingaddresses-form #edit-submit").prop('disabled', true);
       });
+
       if($('#pccustomers-address-billingaddresses-form')[0]){
       }
       

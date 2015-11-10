@@ -413,7 +413,7 @@
 
 .page-segments .editedItemList .from .txt{
   line-height: normal;
-  /*text-indent: 0px;*/
+  text-indent: 0px;
   color: #999999;
   font-size: 12px; 
   padding: 10px 0px 10px 8px;

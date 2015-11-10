@@ -402,23 +402,6 @@
 	font-weight: bold;
 }
 
-#pctemplates-selection-form .ui-helper-reset input[type="submit"]:hover{
-	margin: 10px 0 0 10px;
-}
-
-#pctemplates-selection-form .filtersWrap input[type="submit"]:hover{
-	margin: 0;
-}
-
-#pctemplates-selection-form input[type="submit"]:hover{
-	margin: 0;
-	background: #77b800;
-	background: -moz-linear-gradient(top, #77b800 25%, #669c02 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(25%, #77b800), color-stop(100%, #669c02));
-	background: -webkit-linear-gradient(top, #77b800 25%, #669c02 100%);
-	background: -o-linear-gradient(top, #77b800 25%, #669c02 100%);
-	background: linear-gradient(to bottom, #77b800 25%, #669c02 100%);
-}
 
 #pctemplates-selection-form .form-actions {
 	background: none;

@@ -360,15 +360,14 @@ function pctemplates_selection_form2($form, &$form_state) {
             $items[$segmentId] = str_replace('&amp;', '&', $name);
         }
 
-        /*if (count($items) > 1) {
+        if (count($items) > 1) {
              
             $form['filters']['filtersWrap']['segments'] = array(
                 '#type' => 'select',
-                '#title' => '',
-                '#options' => $items,
-                '#attributes' => array('style' => 'display:none'),  
+                '#title' => t('segment'),
+                '#options' => $items
             );
-        }*/
+        }
          /*$form['filters']['inputsegments'] = array(
                 '#type' => 'textfield',
                 '#title' => '',
@@ -417,11 +416,13 @@ function pctemplates_selection_form2($form, &$form_state) {
             }
             
             if ($inputType == 'select') {
-                $form['filters']['filtersWrap'][$filterId] = array(
-                    '#type' => 'select',
-                    '#title' => $filter['name'],
-                    '#options' => $items,
-                );
+                if($filter['name'] != "Orientation " && $filter['name'] != "Orientatie") {                    
+                    $form['filters']['filtersWrap'][$filterId] = array(
+                        '#type' => 'select',
+                        '#title' => $filter['name'],
+                        '#options' => $items,
+                    );
+                }
             } else {
                 $form['filters'][$filterId] = array(
                     '#type' => 'fieldset',

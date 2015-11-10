@@ -359,9 +359,6 @@
     border: none !important;
     float: right;
 }
-#pctemplates-selection-form .form-type-select.form-item-segments{
-	display: none;
-}
 #pctemplates-selection-form .form-item-inputsegments{
 	float: left;
 	width: 235px;

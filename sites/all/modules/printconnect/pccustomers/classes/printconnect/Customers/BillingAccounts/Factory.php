@@ -126,13 +126,6 @@ return $object;
       Dal::Save($object, 'billing-account', array());
     }
     $_SESSION['billingAccountId'] = $object->id;
-    if(!$_SESSION['newaddress']){
-        \printconnect\Carts\Factory::saveInCache($cart, array(
-        'billingAccount' => $object->id,
-	'shipping_address' => ($object->shippingAddressId) ? $object->shippingAddressId : null
-    )); 
-    }
-   
   }
   
   public static function Validate(BillingAccount $object) {

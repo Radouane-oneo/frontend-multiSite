@@ -21,7 +21,6 @@
             case 'BE':
                 decision = (vatNumberBA.charAt(0) == 0) ? true : false;
             break;
-            case 'NL':
             case 'LU':
                 decision = ($.isNumeric(vatNumberBA)) ? true : false;
             break
@@ -29,11 +28,22 @@
             decision = true;
             break;
          }
+	$.each(vatFormats, function(i, format){
+	    $.each(format,function(j, leng){
+		if (j == $('#edit-vatnumber-country').val() && leng != vatNumberBA.length) {
+		    decision = false;
+		}
+	    })
+	});
 	if (decision == false) {
 	    number.addClass('error');
+	    //$('.messages.error').remove();
             number.val('');
             var vatplaceholder = Drupal.t('insert a valid vat number please');
 	    $('.customErrors').remove();
+	    if ($('.messages.error ul li').length == 0) {
+		$('.messages.error').remove();
+	    }
 	    if ($('.messages').length == 0){
 	        $('.region-content').before('<div class="messages error"><ul><li class="customErrors">'+vatplaceholder+'</li></ul></div>');
 	    } else {
@@ -43,6 +53,14 @@
               scrollTop:$(".messages.error").offset().top
             }, 'slow');
 	 } else { 
+	    $('.messages.error').each(function(){
+	      if(!$(this).hasClass('vatAlreadyUsed') && $(this).hasClass('customErrors')) {
+	          $(this).remove();
+	      }
+	    });
+	    if ($('.messages.error ul li').length == 0) {
+                $('.messages.error').remove();
+            }
 	    $.ajax({ 
     		type: 'GET', 
     		url: Drupal.settings.basePath +'checkout/getBillingAccoutFromVat', 

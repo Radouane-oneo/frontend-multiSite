@@ -1,8 +1,9 @@
 (function ($) {
     $(document).ready(function () {
-      $("#pccustomers-newaddress-form").submit(function() {
-          $("#pccustomers-newaddress-form #edit-submit").prop('disabled', true);
+      $("#pccustomers-newaddress-form, #pccustomers-newaddress-billingaddresses-form").submit(function() {
+          $("#pccustomers-newaddress-form #edit-submit, #pccustomers-newaddress-billingaddresses-form #edit-submit").prop('disabled', true);
       });
+
       if($('#pccustomers-address-billingaddresses-form')[0]){
       }
       
@@ -91,7 +92,11 @@
  
       $('.save-button').click(function (e) { 
       	  $('.vatAlreadyUsed').parent().hide(); 
-          $('.messages.error').remove();
+	  $('.messages.error').each(function(){
+              if(!$(this).hasClass('vatAlreadyUsed')) {
+                  $(this).remove();
+              }
+          });
           $('#content form .required').removeClass("error");
           var errorMarkup = "<div class='messages error'><ul>";
           var errorMsgs = new Array();

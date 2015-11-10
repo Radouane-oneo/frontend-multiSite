@@ -332,20 +332,6 @@
 	color: #f60;
 }
 
-
-#pctemplates-selection-form {
-	/*background:#f1f1f1;
-	padding:15px;
-	margin-top:10px;
-	float:left;*/
-}
-
-#pctemplates-selection-form .form-item {
-	/*width:48%;
-	float:left;
-	margin: 5px 0px;*/
-}
-
 #pctemplates-selection-form .form-item select{
 	width:200px;
 	height:37px;
@@ -354,26 +340,24 @@
 }
 
 #pctemplates-selection-form .form-item label {
-	/*display:inline-block;
-	vertical-align:middle;
-	text-transform:uppercase;
-	color:#787878;
-	float:left;
-	font-size:11px;
-	line-height: 38px;*/
-	display: none;
+    display: inline-block;
+    vertical-align: middle;
+    text-transform: uppercase;
+    color: #787878;
+    float: left;
+    font-size: 11px;
+    line-height: 38px;
 }
 #pctemplates-selection-form .form-type-select{
-	/*display: none;*/
-	float: left;
-	width: 245px;
-	padding-right: 10px;
-	border-right: 1px solid #e6e6e6;
-	margin: 10px 10px 0;
+    width: 48%;
+    float: left;
+    margin: 5px 0px;
 }
 #pctemplates-selection-form .form-type-select select {
-	width:245px;
-	height: 42px;
+    width: 200px;
+    height: 37px;
+    border: none !important;
+    float: right;
 }
 #pctemplates-selection-form .form-type-select.form-item-segments{
 	display: none;
@@ -408,7 +392,7 @@
 	padding: 11px 20px;
 	border-radius: 5px;
 	border: none;
-	margin: 10px 0 0 10px;
+	margin: 10px 0 0;
 	text-align: left;
 	background:#77b800;
 	background: -webkit-linear-gradient(top, #77b800 0%, #669c02 100%);
@@ -420,6 +404,10 @@
 
 #pctemplates-selection-form .ui-helper-reset input[type="submit"]:hover{
 	margin: 10px 0 0 10px;
+}
+
+#pctemplates-selection-form .filtersWrap input[type="submit"]:hover{
+	margin: 0;
 }
 
 #pctemplates-selection-form input[type="submit"]:hover{
@@ -596,6 +584,26 @@ width: 253px;
 }
 
 #pctemplates-selection-form .filters .select2-container .select2-choice{
-	width: 233px;
+    width: 189px;
+    height: 37px;
 }
 
+#pctemplates-selection-form .form-item.form-type-select.form-item-4 {
+    display: none;
+}
+
+#pctemplates-selection-form .form-item:nth-child(odd) {
+    margin-right: 20px;
+}
+
+#pctemplates-selection-form .select2-container {
+    width: 200px;
+    height: 37px;
+    border: none !important;
+    float: right;
+}
+
+#pctemplates-selection-form .filtersWrap {
+    overflow: hidden;
+    padding: 10px 15px;
+}

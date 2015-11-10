@@ -22,7 +22,7 @@
                     .wrap('<a href="#"></a>');
                 $('.page-templates .filters').find('legend a')
                     .unwrap().wrap('<h3></h3>');
-                $('.page-templates .filters').find('h3 , div.fieldset-wrapper').wrapAll('<div id="accordion"></div>');
+                /*$('.page-templates .filters').find('h3 , div.fieldset-wrapper').wrapAll('<div id="accordion"></div>');*/
                 var bloc = $('#pctemplates-selection-form').find('ul.selected').parent().clone();
                 $('#pctemplates-selection-form').find('ul.selected').parent().remove();
                 $('#edit-colors').after(bloc);
@@ -213,3 +213,14 @@
             }
         }
     })(jQuery);
+
+function wrapFiledest () {
+    var colorsDiv = jQuery("#edit-colors");
+
+    jQuery('.filtersWrap').append(colorsDiv);
+    jQuery('#pctemplates-selection-form > #edit-colors').remove(); 
+}
+
+jQuery(document).ready(function() {
+    wrapFiledest();
+});

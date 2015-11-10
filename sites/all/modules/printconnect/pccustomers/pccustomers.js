@@ -92,7 +92,11 @@
  
       $('.save-button').click(function (e) { 
       	  $('.vatAlreadyUsed').parent().hide(); 
-          $('.messages.error').remove();
+	  $('.messages.error').each(function(){
+              if(!$(this).hasClass('vatAlreadyUsed')) {
+                  $(this).remove();
+              }
+          });
           $('#content form .required').removeClass("error");
           var errorMarkup = "<div class='messages error'><ul>";
           var errorMsgs = new Array();

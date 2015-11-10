@@ -23,9 +23,17 @@
             break;
             case 'LU':
                 decision = ($.isNumeric(vatNumberBA)) ? true : false;
-            break
+            break;
+	    case 'NL':
+                var re = /^[0-9]{9}B[0-9]{2}$/;
+                decision = re.test(vatNumberBA);
+            break;
+	    case 'FR':
+                var re = /^[0-9A-Z]{2}[0-9]{9}$/;
+                decision = re.test(vatNumberBA);
+            break;
             default:
-            decision = true;
+                decision = true;
             break;
          }
 	$.each(vatFormats, function(i, format){

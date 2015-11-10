@@ -3,7 +3,9 @@
       $("#pccustomers-newaddress-form, #pccustomers-newaddress-billingaddresses-form").submit(function() {
           $("#pccustomers-newaddress-form #edit-submit, #pccustomers-newaddress-billingaddresses-form #edit-submit").prop('disabled', true);
       });
-
+      $('#pccustomers-address-billingaddresses-form #edit-country').change(function() {
+	$('#pccustomers-address-billingaddresses-form #edit-vatnumber-number').val('');
+      });
       if($('#pccustomers-address-billingaddresses-form')[0]){
       }
       
@@ -14,7 +16,6 @@
       $('#pccustomers-address-billingaddresses-form #edit-vatnumber-number').blur(function(){
             if ($('#edit-vatnumber-number').val() !='' && $('.country').val() != '') {
 		$('.vatAlreadyUsed').parent().hide();
-		$('.messages').hide();
                 var vatNumberBA = $("#edit-vatnumber-number").val().replace(/\./g, "").replace(/ /g,"");
                 var decision = false;
                 $.each(vatFormats, function(c, obj){
@@ -26,14 +27,21 @@
                 });
 		switch($('#edit-vatnumber-country').val()) {
             	    case 'BE':
-                        decision = (vatNumberBA.charAt(0) == 0) ? true : false;
+                        decision = (vatNumberBA.charAt(0) == 0) ? decision : false;
             	    break;
-            	    case 'NL':
             	    case 'LU':
-                        decision = ($.isNumeric(vatNumberBA)) ? true : false;
+                        decision = ($.isNumeric(vatNumberBA)) ? decision : false;
+		    case 'NL':
+			var re = /^[0-9]{9}B[0-9]{2}$/;
+    			decision = re.test(vatNumberBA);
+		    break;
+		    case 'FR':
+                        var re = /^[0-9A-Z]{2}[0-9]{9}$/;
+                        decision = re.test(vatNumberBA);
+                    break;
             	    break
             	    default:
-            	        decision = true;
+            	        decision = decision;
             	    break;
          	}
                 if (decision == false) {
@@ -41,7 +49,7 @@
                     $("#edit-vatnumber-number").val('');
                     var vatplaceholder = Drupal.t('insert a valid vat number please');
                     $('.customErrors').remove();
-                    if ($('.messages').length == 0){
+                    if ($('.messages').length == 1){
                         $('.region-content').before('<div class="messages error"><ul><li class="customErrors">'+vatplaceholder+'</li></ul></div>');
                     } else {
                         $('.messages ul').append('<li class="customErrors">'+vatplaceholder+'</li>');

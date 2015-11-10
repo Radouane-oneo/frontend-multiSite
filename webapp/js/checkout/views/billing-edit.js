@@ -35,15 +35,25 @@ define([
 	    var vatNumberBA = $("#vatNumberBA").val().replace(/\./g, "").replace(/ /g,"");
 	    trgObject[$('#countryIsoBA').val()] = vatNumberBA.length;
 	    var result = _.findWhere(this.vatFormats, trgObject);
+	    var decision = true;
 	    switch($('#countryIsoBA').val()) {
                 case 'BE':
-                    decision = (vatNumberBA.charAt(0) == 0) ? true : false;
+                    decision = (vatNumberBA.charAt(0) == 0) ? decision : false;
                 break;
                 case 'LU':
-                    decision = ($.isNumeric(vatNumberBA)) ? true : false;
-                break
+		    var re = /^[0-9]{8}$/;
+                    decision = re.test(vatNumberBA);
+		break;
+                case 'NL':
+                    var re = /^[0-9]{9}B[0-9]{2}$/;
+                    decision = re.test(vatNumberBA);
+                break;
+                case 'FR':
+                    var re = /^[0-9A-Z]{2}[0-9]{9}$/;
+                    decision = re.test(vatNumberBA);
+                break;
                 default:
-                    decision = true;
+                    decision = decision;
                 break;
             }
             if (!result) {

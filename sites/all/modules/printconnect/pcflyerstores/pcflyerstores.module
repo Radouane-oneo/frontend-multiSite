@@ -516,12 +516,15 @@ function _pcflyerstores_formitems() {
             '#attributes' => array('class' => array('default')),
             'html' => array(
                 '#markup' => '<div id="map-canvas" style= "height:100%;"></div>
-                 <p id="jsonContainer" style="display:none;">'.json_encode($storepwithPositions).'</p>
-                 <p id="zipcod" style="display:none;">'.json_encode($zipcod).'</p>
-                 <p id="location" style="display:none;">'.json_encode($location).'</p>
-		 <p id="storeLink" style="display:none;">'.t('storeLink').'</p>
-		 <p id="selectStore" style="display:none;">'.t('selectStore').'</p>
-		 <p id="cartDate" style="display:none;">'.$cart->expectedShippingDate.'</p>'
+                <p id="jsonContainer" style="display:none;">'.json_encode($storepwithPositions).'</p>
+                <p id="zipcod" style="display:none;">'.json_encode($zipcod).'</p>
+                <p id="location" style="display:none;">'.json_encode($location).'</p>
+                <p id="storeLink" style="display:none;">'.t('storeLink').'</p>
+                <p id="selectStore" style="display:none;">'.t('selectStore').'</p>
+                <p id="cartDate" style="display:none;">'.$cart->expectedShippingDate.'</p>
+                <p id="storeMsg" style="display:none;">'.t('storeMsgLine1').'</p>
+                <p id="storeMsgEnd" style="display:none;">'.t('storeMsgEnd').'</p>
+                <p id="storeMsgInclus" style="display:none;">'.t('storeMsgInclus').'</p>'
             ),
         ),
     );

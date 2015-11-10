@@ -3,7 +3,9 @@
       $("#pccustomers-newaddress-form, #pccustomers-newaddress-billingaddresses-form").submit(function() {
           $("#pccustomers-newaddress-form #edit-submit, #pccustomers-newaddress-billingaddresses-form #edit-submit").prop('disabled', true);
       });
-
+      $('#pccustomers-address-billingaddresses-form #edit-country').change(function() {
+	$('#pccustomers-address-billingaddresses-form #edit-vatnumber-number').val('');
+      });
       if($('#pccustomers-address-billingaddresses-form')[0]){
       }
       

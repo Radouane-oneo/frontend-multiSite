@@ -2893,9 +2893,11 @@ a.ui-button.inactivebtn{
 	margin-top: 20px;
 }
 #pcdesigner-upload-form .templates  .image img {
-  max-height: 350px;
+  
+  max-width: 328px;
+  /*max-height: 350px;
   width: 100%;
-  height: auto;
+  height: auto;*/
 }
 
 
@@ -3033,7 +3035,7 @@ a.ui-button.inactivebtn{
     /*background: -webkit-linear-gradient(top,#77b800 0%,#669c02 100%);
     background: -moz-linear-gradient(top,#77b800 0%,#669c02 100%);
     background: -o-linear-gradient(top,#77b800 0%,#669c02 100%);*/
-    background: url(http://www.flyer.be/sites/all/modules/printconnect/pcproducts/images/downlode.png) no-repeat 6px center #77b800;
+    background: url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/Develop/downlode.png) no-repeat 6px center #77b800;
 }
 .invoice a#toggle-invoice-form,
 .shipping a#toggle-shipping-form {

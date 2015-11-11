@@ -158,8 +158,8 @@ span.datainfobul::after {
 
 .page-upload-design #pcdesigner-upload-form .templates_detail_technique .description .linkToDownload{
     margin-top: 18px;
-    display: inline-block;
-    background-color: #6fa900;
+    display: inline-block; 
+    background: url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/Develop/downlode.png) no-repeat 10px center #6fa900; 
     border-radius: 3px;
     text-align: center;
     width: 267px;
@@ -169,6 +169,7 @@ span.datainfobul::after {
     font-weight: normal;
     text-transform: none;
     color: #fff;
+    padding-left: 35px;
 }
 
 .page-upload-design #pcdesigner-upload-form .templates_detail_technique .image{

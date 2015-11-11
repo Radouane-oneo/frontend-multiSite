@@ -107,7 +107,8 @@ select {
 }
 #pccustomers-newaddress-form label,
 #pccustomers-address-form label,
-#pccustomers-address-billingaddresses-form label{
+#pccustomers-address-billingaddresses-form label, 
+#pccustomers-newaddress-billingaddresses-form label {
 	display: block;
 	float: left;
 	font-weight: 400;
@@ -134,14 +135,16 @@ select {
 }
 #pccustomers-newaddress-form .form-item-postalCode input, 
 #pccustomers-address-form .form-item-postalCode input ,
-#pccustomers-address-billingaddresses-form .form-item-postalCode input
+#pccustomers-address-billingaddresses-form .form-item-postalCode input,
+#pccustomers-newaddress-billingaddresses-form .form-item-postalCode input 
 {
 	width: 100px;
 	border-radius: 3px 0 0 3px;
 }
 #pccustomers-newaddress-form .form-item-city input, 
 #pccustomers-address-form .form-item-city input,
-#pccustomers-address-billingaddresses-form .form-item-city input {
+#pccustomers-address-billingaddresses-form .form-item-city input,
+#pccustomers-newaddress-billingaddresses-form .form-item-city input {
 	border-left: 0 none;
 	border-radius: 0 3px 3px 0;
 	width: 338px;
@@ -155,7 +158,8 @@ select {
 }
 #pccustomers-newaddress-form .form-item-country, 
 #pccustomers-address-form .form-item-country ,
-#pccustomers-address-billingaddresses-form  .form-item-country{
+#pccustomers-address-billingaddresses-form .form-item-country,
+#pccustomers-newaddress-billingaddresses-form .form-item-country {
 	clear: left;
 }
 #pccustomers-newaddress-form input[type="submit"], 
@@ -188,7 +192,8 @@ select {
 #pccustomers-newaddress-form select,
 #pccustomers-address-form select,
 #pccustomers-newaddress-billingaddresses-form select,
-#pccustomers-address-billingaddresses-form select{
+#pccustomers-address-billingaddresses-form select,
+#pccustomers-newaddress-billingaddresses-form select {
 	width: 480px;
 }
 #pccustomers-newaddress-form input.country, 
@@ -2893,9 +2898,11 @@ a.ui-button.inactivebtn{
 	margin-top: 20px;
 }
 #pcdesigner-upload-form .templates  .image img {
-  max-height: 350px;
+  
+  max-width: 328px;
+  /*max-height: 350px;
   width: 100%;
-  height: auto;
+  height: auto;*/
 }
 
 
@@ -3033,7 +3040,7 @@ a.ui-button.inactivebtn{
     /*background: -webkit-linear-gradient(top,#77b800 0%,#669c02 100%);
     background: -moz-linear-gradient(top,#77b800 0%,#669c02 100%);
     background: -o-linear-gradient(top,#77b800 0%,#669c02 100%);*/
-    background: url(http://www.flyer.be/sites/all/modules/printconnect/pcproducts/images/downlode.png) no-repeat 6px center #77b800;
+    background: url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/Develop/downlode.png) no-repeat 6px center #77b800;
 }
 .invoice a#toggle-invoice-form,
 .shipping a#toggle-shipping-form {
@@ -5212,8 +5219,7 @@ form#pcpayments-request-form table tr,.page-checkout-payment .overview table tr,
 	border-radius: 4px 4px 4px 4px;
 }
 #pctemplates-selection-form #edit-colors {
-	margin-bottom: 10px;
-	margin-top: 10px;
+	margin-top: 18px;
 }
 #pctemplates-selection-form #edit-colors legend {
 	float: left;
@@ -6836,15 +6842,6 @@ a.disabled {
 	position: relative;
 	top: 34px;
 }*/
-#pctemplates-selection-form #edit-submit {
-	/*background: url(images/designSearchButton.png) no-repeat;
-	width: 143px;
-	height: 32px;
-	padding-left: 35px;
-	font-size: 14px;
-	float: left;
-	margin-top: 6px;*/
-}
 .button.owndesigntop > .ui-button-text {
 	background: url("images/button_owndesign.png") no-repeat left;
 	padding-left: 25px;
@@ -8548,11 +8545,6 @@ a.seemore{
 	font-size: 13px;
 	padding-left: 10px;
 	background: url(images/plus.png) no-repeat 0 center;
-}
-.lp-container h2.title{
-	background: url(images/icone_title.png) no-repeat 0 center;
-	padding-left: 20px;
-
 }
 
 #popup_overlay.popin_overlay{
@@ -10793,7 +10785,8 @@ p.requieredfields span.form-required {
 .page-myprintconnect-addresses #pccustomers-newaddress-form > div ,
 .page-myprintconnect-mybillingaddress-new #pccustomers-newaddress-billingaddresses-form > div,
 .page-myprintconnect-addresses #pccustomers-address-form > div,
-.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form > div
+.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form > div,
+.page-myprintconnect-editbillingaddresses #pccustomers-newaddress-billingaddresses-form > div
 
 {
     background-color: #f1f1f1;
@@ -10839,7 +10832,8 @@ p.requieredfields span.form-required {
 }
 #pccustomers-newaddress-form label, 
 #pccustomers-address-form label,
-#pccustomers-address-billingaddresses-form label
+#pccustomers-address-billingaddresses-form label,
+#pccustomers-newaddress-billingaddresses-form label
 {
     text-align: left;
     padding-left: 10px;
@@ -10847,17 +10841,20 @@ p.requieredfields span.form-required {
     width: 158px;
 }
 
-.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form .form-item-isCompany input#isUserCompany{
+.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form .form-item-isCompany input#isUserCompany,
+.page-myprintconnect-editbillingaddresses #pccustomers-newaddress-billingaddresses-form .form-item-isCompany input#isUserCompany{
   margin-left: 8px;
     margin-right: 8px;
 }
 
-.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form #vatNumber .form-item-vatNumber .country{
+.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form #vatNumber .form-item-vatNumber .country,
+.page-myprintconnect-editbillingaddresses #pccustomers-newaddress-billingaddresses-form #vatNumber .form-item-vatNumber .country{
 	border-right: 0px;
 	border-radius: 3px 0 0 3px;
 }
 
-.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form #vatNumber .form-item-vatNumber .number{
+.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form #vatNumber .form-item-vatNumber .number,
+.page-myprintconnect-editbillingaddresses #pccustomers-newaddress-billingaddresses-form  #vatNumber .form-item-vatNumber .number {
     border-radius: 0 3px 3px 0;
 }
 
@@ -10883,12 +10880,15 @@ p.requieredfields span.form-required {
 }
 #pccustomers-newaddress-form .form-item-postalCode,
 #pccustomers-newaddress-form .form-item-city,
-#pccustomers-address-billingaddresses-form  .form-item-postalCode,
-#pccustomers-address-billingaddresses-form  .form-item-city{
+#pccustomers-address-billingaddresses-form .form-item-postalCode,
+#pccustomers-address-billingaddresses-form .form-item-city,
+#pccustomers-newaddress-billingaddresses-form .form-item-postalCode, 
+#pccustomers-newaddress-billingaddresses-form .form-item-city {
     float: left;
 }
 #pccustomers-newaddress-form .form-item-postalCode,
-#pccustomers-address-billingaddresses-form  .form-item-postalCode{
+#pccustomers-address-billingaddresses-form .form-item-postalCode, 
+#pccustomers-newaddress-billingaddresses-form .form-item-postalCode {
 	clear: both;
 }
 
@@ -11697,22 +11697,6 @@ input.ui-button.payment {
 .labelAdd_facturation , .labelAdd_adresse{
 	margin-top: 10px;
 	display: block;
-}
-
-.page-myprintconnect-mybillingaddress-new #pccustomers-newaddress-billingaddresses-form label {
-    white-space: normal; 
-    max-width: 188px!important;   
-    display: inline-block;
-    margin: 0;
-    font-weight: 400;
-    text-transform: uppercase; 
-    padding-right: 0;
-    width: 153px;
-    text-align: left; 
-    padding-left: 10px;
-    vertical-align: middle;
-    position: relative;
-    float: none;
 }
 
 #pccustomers-newaddress-billingaddresses-form .form-item-isCompany input{

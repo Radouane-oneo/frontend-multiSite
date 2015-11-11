@@ -24,7 +24,8 @@ define([
                 "config" : this.config,
                "priceTpl" : _.template(priceTemplate)
             }));
-            $(this.config.containerId).find("#methodePayment").html(this.$el);         
+            $(this.config.containerId).find("#methodePayment").html(this.$el); 
+            this.changePayementMethodImg();        
         },
         checkInputMethodPayment : function(e){
             $(e.currentTarget).find('input').attr('checked','checked');
@@ -55,6 +56,22 @@ define([
         },
         stopPropagation : function(e){
             e.stopPropagation();
+        },
+
+        changePayementMethodImg : function () {
+            var lang = this.config.prefix;
+
+            switch (lang) {
+                case "benl": $('#edit-payment-method-text.imgpayment').css('background-image' , "url('https://s3-eu-west-1.amazonaws.com/pc-images/images.flyer.eu/payment_be.jpg')");
+                break;
+                case "befr" : $('#edit-payment-method-text.imgpayment').css('background-image' , "url('https://s3-eu-west-1.amazonaws.com/pc-images/images.flyer.eu/payment_be.jpg')");
+                break;
+                case "nlnl" : $('#edit-payment-method-text.imgpayment').css('background-image' , "url('https://s3-eu-west-1.amazonaws.com/pc-images/images.flyer.eu/payment_nl.jpg')");
+                break;
+                case "frfr" : $('#edit-payment-method-text.imgpayment').css('background-image' , "url('https://s3-eu-west-1.amazonaws.com/pc-images/images.flyer.eu/payment_fr.jpg')");
+                break;
+                case "lufr" : $('#edit-payment-method-text.imgpayment').css('background-image' , "url('https://s3-eu-west-1.amazonaws.com/pc-images/images.flyer.eu/payment_lu.jpg')");
+            }
         }
     });
 

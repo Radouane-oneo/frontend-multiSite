@@ -185,9 +185,10 @@ html.js #pccheckout-checkout-form fieldset.collapsed{
   top: 0;
 }
 #pccustomers-newaddress-billingaddresses-form .form-item-isCompany label,
-#pccustomers-address-billingaddresses-form .form-item-isCompany label{
+#pccustomers-address-billingaddresses-form .form-item-isCompany label, 
+#pccustomers-newaddress-billingaddresses-form .form-item-isCompany label {
    
-    font-weight: bold;
+    font-weight: bold !important;
 }
 .form-item-invoice-address-current-isCompany label {
     /*float: none !important;

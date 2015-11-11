@@ -22,7 +22,7 @@ jQuery(document).ready(function(e) {
             
         /****Template / Segement => Pages PopUps************/
 
-		$('.templates').find('li a').each(function() {
+		$('.templates').find('li .blocprd a').each(function() {
 			$(this).qtip({
 				content: "<img src='" + $(this).find("img").attr("src") + "' />",
 				position: {

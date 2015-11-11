@@ -240,7 +240,7 @@ function flyer_preprocess_html(&$vars) {
 
  function flyer_js_alter(&$javascript) {
 	$node = node_load(arg(1));
-	if($node->type == "webform"){
+	if($node && $node->type == "webform"){
 		unset($javascript['sites/all/themes/printconnect/flyer/libraries/jquery.selectBox/jquery.selectBox.js']);
 	}
 
@@ -320,12 +320,7 @@ function flyer_preprocess_html(&$vars) {
         if($args[0]=="myprintconnect" && $args[1]=="editBillingaddresses" ) { 
             unset($javascript['sites/all/modules/printconnect/pcvat/pcvat.js']);
         }
-
-        if($args[0]=="myprintconnect" && $args[1]=="orders" && $args[3]=="confirmation" ) { 
-            unset($javascript['sites/all/modules/printconnect/pcflyerstores/pcflyerstores_map.js']);
-        }
 }
-
 
 function flyer_css_alter(&$css) {
 	if ($_SESSION['isfront'] == 1) {

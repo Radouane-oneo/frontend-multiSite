@@ -1,15 +1,33 @@
+var registerClicked = false;
 (function ($) {
     $(document).ready(function () {
+      $("#pccustomers-newaddress-form, #pccustomers-newaddress-billingaddresses-form").submit(function() {
+          $("#pccustomers-newaddress-form #edit-submit, #pccustomers-newaddress-billingaddresses-form #edit-submit").prop('disabled', true);
+      });
+        $('#pccustomers-address-billingaddresses-form #edit-country').trigger('change');
+      $("#pccustomers-login-form .register-button").click(function(ev) {
+          if(registerClicked) {
+              return false;
+          }
+
+          registerClicked = true;
+          //$(".register-button, .login-button").prop('disabled', true);
+      });
+
+      $('#pccustomers-address-billingaddresses-form #edit-country').change(function() {
+	$('#pccustomers-address-billingaddresses-form #edit-vatnumber-number').val('');
+      });
       if($('#pccustomers-address-billingaddresses-form')[0]){
       }
+      
       if ($('#isUserCompany:checked').length > 0) {
 	$('#edit-vatnumber-number').addClass('required');
 	}
+      var globalEroorVat = false;
       var vatFormats = [{'BE': 10},{'NL' : 12},{'LU' : 8},{'FR' : 11}];
       $('#pccustomers-address-billingaddresses-form #edit-vatnumber-number').blur(function(){
             if ($('#edit-vatnumber-number').val() !='' && $('.country').val() != '') {
 		$('.vatAlreadyUsed').parent().hide();
-		$('.messages').hide();
                 var vatNumberBA = $("#edit-vatnumber-number").val().replace(/\./g, "").replace(/ /g,"");
                 var decision = false;
                 $.each(vatFormats, function(c, obj){
@@ -21,22 +39,32 @@
                 });
 		switch($('#edit-vatnumber-country').val()) {
             	    case 'BE':
-                        decision = (vatNumberBA.charAt(0) == 0) ? true : false;
+                        decision = (vatNumberBA.charAt(0) == 0) ? decision : false;
             	    break;
-            	    case 'NL':
             	    case 'LU':
-                        decision = ($.isNumeric(vatNumberBA)) ? true : false;
+                        decision = ($.isNumeric(vatNumberBA)) ? decision : false;
+	            break;
+		    case 'NL':
+			var re = /^[0-9]{9}B[0-9]{2}$/;
+    			decision = re.test(vatNumberBA);
+		    break;
+		    case 'FR':
+                        var re = /^[0-9A-Z]{2}[0-9]{9}$/;
+                        decision = re.test(vatNumberBA);
+                    break;
             	    break
             	    default:
-            	        decision = true;
+            	        decision = decision;
             	    break;
          	}
                 if (decision == false) {
+		    globalEroorVat = true;
                     $("#edit-vatnumber-number").addClass('error');
                     $("#edit-vatnumber-number").val('');
                     var vatplaceholder = Drupal.t('insert a valid vat number please');
+		    labels["vatNotNumber"] = vatplaceholder;
                     $('.customErrors').remove();
-                    if ($('.messages').length == 0){
+                    if ($('.messages').length == 1){
                         $('.region-content').before('<div class="messages error"><ul><li class="customErrors">'+vatplaceholder+'</li></ul></div>');
                     } else {
                         $('.messages ul').append('<li class="customErrors">'+vatplaceholder+'</li>');
@@ -45,6 +73,7 @@
                         scrollTop:$(".messages.error").offset().top
                     }, 'slow');
                 } else {
+		    globalEroorVat = false;
 		    $("#edit-vatnumber-number").removeClass('error');
                     $.ajax({
                         type: 'GET',
@@ -84,28 +113,44 @@
             }
         });
       /* ========== PCCUSTOMER form validation ========== */
-
-      $('.save-button').click(function (e) {
+ 
+      $('.save-button').click(function (e) { 
       	  $('.vatAlreadyUsed').parent().hide(); 
-          $('.messages.error').remove();
+	  $('.messages.error').each(function(){
+              if(!$(this).hasClass('vatAlreadyUsed')) {
+                  $(this).remove();
+              }
+          });
           $('#content form .required').removeClass("error");
           var errorMarkup = "<div class='messages error'><ul>";
           var errorMsgs = new Array();
-
+ 
+          var isoList = {
+            21 : "BE",
+            73 : "FR",
+            150 : "NL",
+            124 : "LU"
+          };
+ 	  var isoLengths = {
+	    21 : 4,
+            73 : 5,
+            150 : 7,
+            124 : 4
+	  }
           $('#content form input.required, #content form select.required').each(function(i, elem) {
-            var _this = $(this);
+            var _this = $(this); 
             var inputName;
             if(_this.val() == "" || _this.val() == 0) {
               inputName = $(elem).attr('name');
               _this.addClass('error');
               errorMsgs[i] = labels["isRequired"].replace('!name', inputName);
               errorMarkup += "<li>"+errorMsgs[i]+"</li>";
-            } else if (_this.val().length < 3 && this.name !="country" && this.name !="phone") {
+            } else if (_this.val().length < 3 && this.name !="postalCode" && this.name !="country" && this.name !="phone") {
                 inputName = $(elem).attr('name');
                 _this.addClass('error');
                 errorMsgs[i] = inputName+": "+labels["invalidCharactersLength"];
                 errorMarkup += "<li>"+errorMsgs[i]+"</li>";
-            } else if (this.name =="phone" && (isNaN(_this.val()) || _this.val().length != 9)) {
+            } else if (this.name =="phone" && (isNaN(_this.val()) || _this.val().length != 9 && _this.val().length != 10)) {
                 inputName = $(elem).attr('name');
                 _this.addClass('error');
                 errorMsgs[i] = labels["phoneNumberError"];
@@ -128,12 +173,37 @@
                   errorMsgs[i] = labels["passwordMatch"];
                   errorMarkup += "<li>"+errorMsgs[i]+"</li>";
                 }
-            } else if (this.name =="vatNumber[number]" && isNaN(_this.val())) {
+            } else if (this.name =="vatNumber[number]") {
+		if (globalEroorVat) {
+                    inputName = $(elem).attr('name');
+                    _this.addClass('error');
+                    errorMsgs[i] = labels["vatNotNumber"];
+                    errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+		}
+            } else if (this.name == "postalCode") { 
+                var country = $('#edit-country option:selected').val();
+                var iso = isoList[country];
+                value = $(this).val();
                 inputName = $(elem).attr('name');
-                _this.addClass('error');
-                errorMsgs[i] = labels["vatNotNumber"];
-                errorMarkup += "<li>"+errorMsgs[i]+"</li>";
-            }
+		var re = /^[0-9]+$/;
+		if ((country != 0 && value.length != isoLengths[country] && iso != 'NL') || (iso == 'NL' && value.length > 7)) {
+                    _this.addClass('error');
+                    errorMsgs[i] = labels["invalidPostalCodeLenght"+iso];
+                    errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+		} else if(country != 0 && iso != 'NL' && !re.test(value)) {
+		    _this.addClass('error');
+                    errorMsgs[i] = labels["invalidPostalCodeContent"+iso];
+                    errorMarkup += "<li>"+errorMsgs[i]+"</li>"; 
+		} 
+                if (country != 0 && !value.length && country != 0) {
+                  result = ValidatePostalCode(iso, value);
+                  if(result == -1){
+                    _this.addClass('error');
+                    errorMsgs[i] = labels["invalidPostalCode"];
+                    errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+                  }
+                }
+            } 
 
           });  
           errorMarkup += "</ul></div>";
@@ -237,6 +307,21 @@
       }); 
     });
 
+/* ========== Validate PostalCode ========== */  
+function ValidatePostalCode(iso,value) {
+    switch (iso){
+      case 'NL' : valid = value.search(/^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/);
+      break;
+      case 'FR' : valid = value.search(/^(F-)?((2[A|B])|[0-9]{2})[0-9]{3}$/);
+      break;
+      case 'LU' : valid = value.search(/^[1-9]{1}[0-9]{3}$/);
+      break;
+      case 'BE' : valid = value.search(/^[1-9]{1}[0-9]{3}$/);
+      break;
+      default : valid = 'x';
+    }
+    return valid;
+  }
     
   Drupal.behaviors.pccustomers= {
     detach: function (context) {

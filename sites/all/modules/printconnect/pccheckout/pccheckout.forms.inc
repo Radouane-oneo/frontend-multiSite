@@ -206,7 +206,16 @@ function pccheckout_personal_form($form, &$form_state) {
         "isRequired" => t('!name field is required.'),
         "invalidCharactersLength" => t('invalidCharactersLength'),
         "invaliEmail" => t('Email is not valid'),
-        "phoneNumberError" => t('Please enter your Phone Number as 10 Number.'),
+        "phoneNumberError" => t('Please enter your Phone Number as 10 Number.'),        
+        "invalidPostalCode" => t('Le champ Code postal doit être numérique.'),
+	"invalidPostalCodeLenghtBE" => t('Le champ Code postal doit contenir 4 chiffres.'),
+    	"invalidPostalCodeLenghtFR" => t('Le champ Code postal doit contenir 5 chiffres.'),
+    	"invalidPostalCodeLenghtNL" => t('Le champ Code postal doit contenir maximum 7 caractéres.'),
+    	"invalidPostalCodeLenghtLU" => t('Le champ Code postal doit contenir 4 chiffres.'),
+
+    	"invalidPostalCodeContentBE" => t('Le champ Code postal doit contenir seulement des chiffres.'),
+    	"invalidPostalCodeContentFR" => t('Le champ Code postal doit contenir seulement des chiffres.'),
+    	"invalidPostalCodeContentLU" => t('Le champ Code postal doit contenir seulement des chiffres.'),
     );
 
     $form['scriptForLabels'] = array(

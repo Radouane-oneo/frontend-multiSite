@@ -30,6 +30,31 @@ define([
 		{'FR' : 11}
 	    ]	
         },
+	validatePostalCode : function () {
+	    var country = $('#countryList').val();
+	    var isoList = {
+            21 : "BE",
+            73 : "FR",
+            150 : "NL",
+            124 : "LU"
+          };
+          var isoLengths = {
+            21 : 4,
+            73 : 5,
+            150 : 7,
+            124 : 4
+          }	
+	  var iso = isoList[country];
+	  var value = $('#baPostalCode').val();
+	  var re = /^[0-9]+$/;
+	  var targetMsg = null;
+          if ((country != 0 && value.length != isoLengths[country] && iso != 'NL') || (iso == 'NL' && value.length > 7)) {
+                targetMsg = this.config.labels["invalidPostalCodeLenght"+iso];
+          } else if(country != 0 && iso != 'NL' && !re.test(value)) {
+                targetMsg = this.config.labels["invalidPostalCodeContent"+iso];
+          }
+	  return targetMsg;
+	},
 	validateVat : function(){
 	    var trgObject = {};
 	    var vatNumberBA = $("#vatNumberBA").val().replace(/\./g, "").replace(/ /g,"");
@@ -87,14 +112,17 @@ define([
             this.$('.baInputs').css('border-color', '');
             this.$("#companyInput").css('border-color', '');
             this.$("#vatNumberBA").css('border-color', '');
+	    var me = this;
             $('.baInputs').each(function (baInputs) {
                 if ($(this).val() == '') {
                     $(this).css('border-color', 'red');
                     result = me.config.labels["BaFieldRequired"];
                     return false;
-                } else if($(this).val().length <= 2 || ($(this).attr('id') == 'baPostalCode' && $(this).val().length <= 3)) {
+                } else if($(this).val().length <= 2 && $(this).attr('id') != 'baPostalCode') {
 		    $(this).css('border-color', 'red');
 		    result = me.config.labels["invalidCharactersLength"];
+		} else if($(this).attr('id') == 'baPostalCode'){
+		    result = me.validatePostalCode();
 		}
             });
             if (result) {

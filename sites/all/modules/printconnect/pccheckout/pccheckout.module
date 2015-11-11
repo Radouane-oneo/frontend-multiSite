@@ -313,6 +313,14 @@ function new_checkout_and_delivery_loadpage() {
      global $language;
 
     $labels = array(
+      "invalidPostalCodeLenghtBE" => t('invalidPostalCodeLenghtBE'),
+      "invalidPostalCodeLenghtFR" => t('invalidPostalCodeLenghtFR'),
+      "invalidPostalCodeLenghtLU" => t('invalidPostalCodeLenghtLU'),
+      "invalidPostalCodeLenghtNL" => t('invalidPostalCodeLenghtNL'),
+      "invalidPostalCodeContentBE" => t('invalidPostalCodeContentBE'),
+      "invalidPostalCodeContentFR" => t('invalidPostalCodeContentFR'),
+      "invalidPostalCodeContentLU" => t('invalidPostalCodeContentLU'),
+      "invalidPostalCodeContentNL" => t('invalidPostalCodeContentNL'),
       "js_key" => t('drupal_tag'),
       "BillingAccount" => t("adresse de facturation"),
       "changeBA" => t("Change invoice address"),

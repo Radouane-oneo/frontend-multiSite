@@ -107,7 +107,8 @@ select {
 }
 #pccustomers-newaddress-form label,
 #pccustomers-address-form label,
-#pccustomers-address-billingaddresses-form label{
+#pccustomers-address-billingaddresses-form label, 
+#pccustomers-newaddress-billingaddresses-form label {
 	display: block;
 	float: left;
 	font-weight: 400;
@@ -134,14 +135,16 @@ select {
 }
 #pccustomers-newaddress-form .form-item-postalCode input, 
 #pccustomers-address-form .form-item-postalCode input ,
-#pccustomers-address-billingaddresses-form .form-item-postalCode input
+#pccustomers-address-billingaddresses-form .form-item-postalCode input,
+#pccustomers-newaddress-billingaddresses-form .form-item-postalCode input 
 {
 	width: 100px;
 	border-radius: 3px 0 0 3px;
 }
 #pccustomers-newaddress-form .form-item-city input, 
 #pccustomers-address-form .form-item-city input,
-#pccustomers-address-billingaddresses-form .form-item-city input {
+#pccustomers-address-billingaddresses-form .form-item-city input,
+#pccustomers-newaddress-billingaddresses-form .form-item-city input {
 	border-left: 0 none;
 	border-radius: 0 3px 3px 0;
 	width: 338px;
@@ -155,7 +158,8 @@ select {
 }
 #pccustomers-newaddress-form .form-item-country, 
 #pccustomers-address-form .form-item-country ,
-#pccustomers-address-billingaddresses-form  .form-item-country{
+#pccustomers-address-billingaddresses-form .form-item-country,
+#pccustomers-newaddress-billingaddresses-form .form-item-country {
 	clear: left;
 }
 #pccustomers-newaddress-form input[type="submit"], 
@@ -188,7 +192,8 @@ select {
 #pccustomers-newaddress-form select,
 #pccustomers-address-form select,
 #pccustomers-newaddress-billingaddresses-form select,
-#pccustomers-address-billingaddresses-form select{
+#pccustomers-address-billingaddresses-form select,
+#pccustomers-newaddress-billingaddresses-form select {
 	width: 480px;
 }
 #pccustomers-newaddress-form input.country, 
@@ -10780,7 +10785,8 @@ p.requieredfields span.form-required {
 .page-myprintconnect-addresses #pccustomers-newaddress-form > div ,
 .page-myprintconnect-mybillingaddress-new #pccustomers-newaddress-billingaddresses-form > div,
 .page-myprintconnect-addresses #pccustomers-address-form > div,
-.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form > div
+.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form > div,
+.page-myprintconnect-editbillingaddresses #pccustomers-newaddress-billingaddresses-form > div
 
 {
     background-color: #f1f1f1;
@@ -10826,7 +10832,8 @@ p.requieredfields span.form-required {
 }
 #pccustomers-newaddress-form label, 
 #pccustomers-address-form label,
-#pccustomers-address-billingaddresses-form label
+#pccustomers-address-billingaddresses-form label,
+#pccustomers-newaddress-billingaddresses-form label
 {
     text-align: left;
     padding-left: 10px;
@@ -10834,17 +10841,20 @@ p.requieredfields span.form-required {
     width: 158px;
 }
 
-.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form .form-item-isCompany input#isUserCompany{
+.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form .form-item-isCompany input#isUserCompany,
+.page-myprintconnect-editbillingaddresses #pccustomers-newaddress-billingaddresses-form .form-item-isCompany input#isUserCompany{
   margin-left: 8px;
     margin-right: 8px;
 }
 
-.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form #vatNumber .form-item-vatNumber .country{
+.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form #vatNumber .form-item-vatNumber .country,
+.page-myprintconnect-editbillingaddresses #pccustomers-newaddress-billingaddresses-form #vatNumber .form-item-vatNumber .country{
 	border-right: 0px;
 	border-radius: 3px 0 0 3px;
 }
 
-.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form #vatNumber .form-item-vatNumber .number{
+.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form #vatNumber .form-item-vatNumber .number,
+.page-myprintconnect-editbillingaddresses #pccustomers-newaddress-billingaddresses-form  #vatNumber .form-item-vatNumber .number {
     border-radius: 0 3px 3px 0;
 }
 
@@ -10870,12 +10880,15 @@ p.requieredfields span.form-required {
 }
 #pccustomers-newaddress-form .form-item-postalCode,
 #pccustomers-newaddress-form .form-item-city,
-#pccustomers-address-billingaddresses-form  .form-item-postalCode,
-#pccustomers-address-billingaddresses-form  .form-item-city{
+#pccustomers-address-billingaddresses-form .form-item-postalCode,
+#pccustomers-address-billingaddresses-form .form-item-city,
+#pccustomers-newaddress-billingaddresses-form .form-item-postalCode, 
+#pccustomers-newaddress-billingaddresses-form .form-item-city {
     float: left;
 }
 #pccustomers-newaddress-form .form-item-postalCode,
-#pccustomers-address-billingaddresses-form  .form-item-postalCode{
+#pccustomers-address-billingaddresses-form .form-item-postalCode, 
+#pccustomers-newaddress-billingaddresses-form .form-item-postalCode {
 	clear: both;
 }
 

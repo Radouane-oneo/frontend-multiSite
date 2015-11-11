@@ -523,7 +523,7 @@ function pctemplates_callback($type) {
 	$cart->productId = isset($_SESSION['templateProductId'])
 	    ? $_SESSION['templateProductId']
 	    : null;
-        $item = Carts\Factory::CreateItem($cart, $priceGroupId, $qty, NULL, NULL, $options, $vatPercentage);
+        $item = Carts\Factory::CreateItem($cart, $priceGroupId, $qty, NULL, NULL, $options, $vatPercentage, '', '', '');
         $item = Carts\Factory::GetItem($cart, $item->id);
 	$item = Carts\Factory::LoadItem($item);
 	$item->file = $file;

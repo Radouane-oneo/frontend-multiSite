@@ -1481,3 +1481,21 @@ box-shadow: 0 0 2px #999;
     display: inline-block;
     text-decoration: none;
 }
+
+.store-vacance{
+    background-color: #7bbb07;
+    padding: 7px 3%;
+    color: #fff;
+    line-height: 15px;
+    font-size: 12px;
+    font-family: 'Open Sans',sans-serif;
+    clear: both;
+    text-align: center;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    margin-right: 9px;
+    clear: both;
+    float: left;
+    width: 94%;
+}

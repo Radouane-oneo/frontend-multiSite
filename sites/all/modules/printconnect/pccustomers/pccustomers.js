@@ -1,9 +1,19 @@
+var registerClicked = false;
 (function ($) {
     $(document).ready(function () {
       $("#pccustomers-newaddress-form, #pccustomers-newaddress-billingaddresses-form").submit(function() {
           $("#pccustomers-newaddress-form #edit-submit, #pccustomers-newaddress-billingaddresses-form #edit-submit").prop('disabled', true);
       });
         $('#pccustomers-address-billingaddresses-form #edit-country').trigger('change');
+      $("#pccustomers-login-form .register-button").click(function(ev) {
+          if(registerClicked) {
+              return false;
+          }
+
+          registerClicked = true;
+          //$(".register-button, .login-button").prop('disabled', true);
+      });
+
       $('#pccustomers-address-billingaddresses-form #edit-country').change(function() {
 	$('#pccustomers-address-billingaddresses-form #edit-vatnumber-number').val('');
       });

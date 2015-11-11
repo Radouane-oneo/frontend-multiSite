@@ -430,10 +430,11 @@ function new_checkout_ajax_getshippingaddresses() {
     $data = array();
 
     $shippings = json_decode($shippings->data, 1);
-
+    $md5Shppings = array();
     foreach ($shippings as $key => $item) {
         $item['isShipping'] = 1;
         $data[] = $item;
+        $md5Shppings[] = md5($item['street'] . $item['postalCode']);
     }
 
     $billings = json_decode($billings->data, 1);
@@ -442,6 +443,11 @@ function new_checkout_ajax_getshippingaddresses() {
         if(!isset($item['id'])){
            continue;
         }
+        // test if the same address exists on the sa list
+        if(in_array(md5($item['street'] . $item['postalCode']), $md5Shppings)) {
+            continue;
+        }
+
         $item['isShipping'] = 0;
         $data[] = $item;
     }

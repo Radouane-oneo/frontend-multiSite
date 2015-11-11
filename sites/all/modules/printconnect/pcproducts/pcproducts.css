@@ -498,6 +498,12 @@ a.btn-cmd:hover span.flesh{
 #pcproducts-config-form .banner {
     clear: both;
     margin-bottom: 17px;
+    overflow: hidden;
+}
+
+#pcproducts-config-form .banner > img{
+  /*max-width: 100%;*/
+  height: auto;
 }
 
 body #footer #block-pcproducts-list ul.menu{

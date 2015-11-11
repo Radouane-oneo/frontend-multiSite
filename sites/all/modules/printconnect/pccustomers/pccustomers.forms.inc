@@ -235,7 +235,14 @@ function pccustomers_profile_form($form, &$form_state) {
     "phoneNumberError" => t('Please enter your Phone Number as 10 Number.'),
     "invaliEmail" => t('Email is not valid'),
     "invalidPostalCode" => t('Le champ Code postal doit être numérique.'),
-    "invalidPostalCodeLenght" => t('Le champ Code postal doit être supérieur à 3 chiffres.'),
+    "invalidPostalCodeLenghtBE" => t('Le champ Code postal doit contenir 4 chiffres.'),
+    "invalidPostalCodeLenghtFR" => t('Le champ Code postal doit contenir 5 chiffres.'),
+    "invalidPostalCodeLenghtNL" => t('Le champ Code postal doit contenir maximum 7 caractéres.'),
+    "invalidPostalCodeLenghtLU" => t('Le champ Code postal doit contenir 4 chiffres.'),
+    
+    "invalidPostalCodeContentBE" => t('Le champ Code postal doit contenir seulement des chiffres.'),
+    "invalidPostalCodeContentFR" => t('Le champ Code postal doit contenir seulement des chiffres.'),
+    "invalidPostalCodeContentLU" => t('Le champ Code postal doit contenir seulement des chiffres.'),
   );
 
   $form['scriptForLabels'] = array(
@@ -247,7 +254,6 @@ function pccustomers_profile_form($form, &$form_state) {
       '#value' => t('Submit'),
       '#attributes' => array('class' => array('save-button')),
   );
-
   return $form;
 }
 
@@ -504,7 +510,14 @@ function pccustomers_address_form($form, $form_state, $addressId) {
     "invalidCharactersLength" => t('invalidCharactersLength'),
     "phoneNumberError" => t('Please enter your Phone Number as 10 Number.'),
     "invalidPostalCode" => t('Le champ Code postal doit être numérique.'),
-    "invalidPostalCodeLenght" => t('Le champ Code postal doit être supérieur à 3 chiffres.'),
+    "invalidPostalCodeLenghtBE" => t('Le champ Code postal doit contenir 4 chiffres.'),
+    "invalidPostalCodeLenghtFR" => t('Le champ Code postal doit contenir 5 chiffres.'),
+    "invalidPostalCodeLenghtNL" => t('Le champ Code postal doit contenir 7 caractéres.'),
+    "invalidPostalCodeLenghtLU" => t('Le champ Code postal doit contenir 4 chiffres.'),
+
+    "invalidPostalCodeContentBE" => t('Le champ Code postal doit contenir seulement des chiffres.'),
+    "invalidPostalCodeContentFR" => t('Le champ Code postal doit contenir seulement des chiffres.'),
+    "invalidPostalCodeContentLU" => t('Le champ Code postal doit contenir seulement des chiffres.'),
     );
 
   $form['scriptForLabels'] = array(
@@ -632,7 +645,14 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
     "isRequired" => t('!name field is required.'),
     "invalidCharactersLength" => t('invalidCharactersLength'),
     "invalidPostalCode" => t('Le champ Code postal doit être numérique.'),
-    "invalidPostalCodeLenght" => t('Le champ Code postal doit être supérieur à 3 chiffres.'),
+    "invalidPostalCodeLenghtBE" => t('Le champ Code postal doit contenir 4 chiffres.'),
+    "invalidPostalCodeLenghtFR" => t('Le champ Code postal doit contenir 5 chiffres.'),
+    "invalidPostalCodeLenghtNL" => t('Le champ Code postal doit contenir 7 caractéres.'),
+    "invalidPostalCodeLenghtLU" => t('Le champ Code postal doit contenir 4 chiffres.'),
+
+    "invalidPostalCodeContentBE" => t('Le champ Code postal doit contenir seulement des chiffres.'),
+    "invalidPostalCodeContentFR" => t('Le champ Code postal doit contenir seulement des chiffres.'),
+    "invalidPostalCodeContentLU" => t('Le champ Code postal doit contenir seulement des chiffres.'),
     );
 
   $form['scriptForLabels'] = array(
@@ -867,7 +887,14 @@ function pccustomers_newaddress_form($form, $form_state) {
     "invalidCharactersLength" => t('invalidCharactersLength'),
     "phoneNumberError" => t('Please enter your Phone Number as 10 Number.'),
     "invalidPostalCode" => t('Le champ Code postal doit être numérique.'),
-    "invalidPostalCodeLenght" => t('Le champ Code postal doit être supérieur à 3 chiffres.')
+    "invalidPostalCodeLenghtBE" => t('Le champ Code postal doit contenir 4 chiffres.'),
+    "invalidPostalCodeLenghtFR" => t('Le champ Code postal doit contenir 5 chiffres.'),
+    "invalidPostalCodeLenghtNL" => t('Le champ Code postal doit contenir 7 caractéres.'),
+    "invalidPostalCodeLenghtLU" => t('Le champ Code postal doit contenir 4 chiffres.'),
+
+    "invalidPostalCodeContentBE" => t('Le champ Code postal doit contenir seulement des chiffres.'),
+    "invalidPostalCodeContentFR" => t('Le champ Code postal doit contenir seulement des chiffres.'),
+    "invalidPostalCodeContentLU" => t('Le champ Code postal doit contenir seulement des chiffres.'),
     );
 
   $form['scriptForLabels'] = array(
@@ -1031,7 +1058,14 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
     "phoneNumberError" => t('Please enter your Phone Number as 10 Number.'),
     "vatNotNumber" => t('Please enter your VAT Number as Number value.'),
     "invalidPostalCode" => t('Le champ Code postal doit être numérique.'),
-    "invalidPostalCodeLenght" => t('Le champ Code postal doit être supérieur à 3 chiffres.'),
+    "invalidPostalCodeLenghtBE" => t('Le champ Code postal doit contenir 4 chiffres.'),
+    "invalidPostalCodeLenghtFR" => t('Le champ Code postal doit contenir 5 chiffres.'),
+    "invalidPostalCodeLenghtNL" => t('Le champ Code postal doit contenir 7 caractéres.'),
+    "invalidPostalCodeLenghtLU" => t('Le champ Code postal doit contenir 4 chiffres.'),
+
+    "invalidPostalCodeContentBE" => t('Le champ Code postal doit contenir seulement des chiffres.'),
+    "invalidPostalCodeContentFR" => t('Le champ Code postal doit contenir seulement des chiffres.'),
+    "invalidPostalCodeContentLU" => t('Le champ Code postal doit contenir seulement des chiffres.'),
     );
 
   $form['scriptForLabels'] = array(

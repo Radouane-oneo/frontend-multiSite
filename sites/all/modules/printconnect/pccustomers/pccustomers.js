@@ -3,6 +3,7 @@
       $("#pccustomers-newaddress-form, #pccustomers-newaddress-billingaddresses-form").submit(function() {
           $("#pccustomers-newaddress-form #edit-submit, #pccustomers-newaddress-billingaddresses-form #edit-submit").prop('disabled', true);
       });
+        $('#pccustomers-address-billingaddresses-form #edit-country').trigger('change');
       $('#pccustomers-address-billingaddresses-form #edit-country').change(function() {
 	$('#pccustomers-address-billingaddresses-form #edit-vatnumber-number').val('');
       });
@@ -12,6 +13,7 @@
       if ($('#isUserCompany:checked').length > 0) {
 	$('#edit-vatnumber-number').addClass('required');
 	}
+      var globalEroorVat = false;
       var vatFormats = [{'BE': 10},{'NL' : 12},{'LU' : 8},{'FR' : 11}];
       $('#pccustomers-address-billingaddresses-form #edit-vatnumber-number').blur(function(){
             if ($('#edit-vatnumber-number').val() !='' && $('.country').val() != '') {
@@ -31,6 +33,7 @@
             	    break;
             	    case 'LU':
                         decision = ($.isNumeric(vatNumberBA)) ? decision : false;
+	            break;
 		    case 'NL':
 			var re = /^[0-9]{9}B[0-9]{2}$/;
     			decision = re.test(vatNumberBA);
@@ -45,9 +48,11 @@
             	    break;
          	}
                 if (decision == false) {
+		    globalEroorVat = true;
                     $("#edit-vatnumber-number").addClass('error');
                     $("#edit-vatnumber-number").val('');
                     var vatplaceholder = Drupal.t('insert a valid vat number please');
+		    labels["vatNotNumber"] = vatplaceholder;
                     $('.customErrors').remove();
                     if ($('.messages').length == 1){
                         $('.region-content').before('<div class="messages error"><ul><li class="customErrors">'+vatplaceholder+'</li></ul></div>');
@@ -58,6 +63,7 @@
                         scrollTop:$(".messages.error").offset().top
                     }, 'slow');
                 } else {
+		    globalEroorVat = false;
 		    $("#edit-vatnumber-number").removeClass('error');
                     $.ajax({
                         type: 'GET',
@@ -115,7 +121,12 @@
             150 : "NL",
             124 : "LU"
           };
- 
+ 	  var isoLengths = {
+	    21 : 4,
+            73 : 5,
+            150 : 7,
+            124 : 4
+	  }
           $('#content form input.required, #content form select.required').each(function(i, elem) {
             var _this = $(this); 
             var inputName;
@@ -124,7 +135,7 @@
               _this.addClass('error');
               errorMsgs[i] = labels["isRequired"].replace('!name', inputName);
               errorMarkup += "<li>"+errorMsgs[i]+"</li>";
-            } else if (_this.val().length < 3 && this.name !="country" && this.name !="phone") {
+            } else if (_this.val().length < 3 && this.name !="postalCode" && this.name !="country" && this.name !="phone") {
                 inputName = $(elem).attr('name');
                 _this.addClass('error');
                 errorMsgs[i] = inputName+": "+labels["invalidCharactersLength"];
@@ -152,23 +163,29 @@
                   errorMsgs[i] = labels["passwordMatch"];
                   errorMarkup += "<li>"+errorMsgs[i]+"</li>";
                 }
-            } else if (this.name =="vatNumber[number]" && isNaN(_this.val())) {
-                inputName = $(elem).attr('name');
-                _this.addClass('error');
-                errorMsgs[i] = labels["vatNotNumber"];
-                errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+            } else if (this.name =="vatNumber[number]") {
+		if (globalEroorVat) {
+                    inputName = $(elem).attr('name');
+                    _this.addClass('error');
+                    errorMsgs[i] = labels["vatNotNumber"];
+                    errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+		}
             } else if (this.name == "postalCode") { 
                 var country = $('#edit-country option:selected').val();
                 var iso = isoList[country];
                 value = $(this).val();
                 inputName = $(elem).attr('name');
-
-                if (value < 4) {
-                  _this.addClass('error');
-                  errorMsgs[i] = labels["invalidPostalCodeLenght"];
-                  errorMarkup += "<li>"+errorMsgs[i]+"</li>";
-                }
-                if (!!value.length && country != 0) {
+		var re = /^[0-9]+$/;
+		if ((country != 0 && value.length != isoLengths[country] && iso != 'NL') || (iso == 'NL' && value.length > 7)) {
+                    _this.addClass('error');
+                    errorMsgs[i] = labels["invalidPostalCodeLenght"+iso];
+                    errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+		} else if(country != 0 && iso != 'NL' && !re.test(value)) {
+		    _this.addClass('error');
+                    errorMsgs[i] = labels["invalidPostalCodeContent"+iso];
+                    errorMarkup += "<li>"+errorMsgs[i]+"</li>"; 
+		} 
+                if (country != 0 && !value.length && country != 0) {
                   result = ValidatePostalCode(iso, value);
                   if(result == -1){
                     _this.addClass('error');

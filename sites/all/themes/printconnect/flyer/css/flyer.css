@@ -11699,22 +11699,6 @@ input.ui-button.payment {
 	display: block;
 }
 
-.page-myprintconnect-mybillingaddress-new #pccustomers-newaddress-billingaddresses-form label {
-    white-space: normal; 
-    max-width: 188px!important;   
-    display: inline-block;
-    margin: 0;
-    font-weight: 400;
-    text-transform: uppercase; 
-    padding-right: 0;
-    width: 153px;
-    text-align: left; 
-    padding-left: 10px;
-    vertical-align: middle;
-    position: relative;
-    float: none;
-}
-
 #pccustomers-newaddress-billingaddresses-form .form-item-isCompany input{
 	margin-left: 10px;
     vertical-align: middle;

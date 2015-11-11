@@ -813,7 +813,7 @@ function pccustomers_newaddress_form($form, $form_state) {
 
   $form['city'] = array(
       '#type' => 'textfield',
-      '#title' => t('City'),
+      /*'#title' => t('City'),*/
       '#required' => TRUE,
       '#size' => 71,
       '#attributes' => array('class' => array('city')),
@@ -971,7 +971,7 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
 
   $form['summary']['city'] = array(
       '#type' => 'textfield',
-      '#title' => t('City'),
+      /*'#title' => t('City'),*/
       '#size' => 61,
       '#required' => TRUE,
       '#attributes' => array('class' => array('city')),

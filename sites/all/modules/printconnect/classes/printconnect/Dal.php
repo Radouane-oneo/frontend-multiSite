@@ -42,7 +42,7 @@ namespace printconnect {
         }
 
         if($response->code != 200 && variable_get('pc_env', 'production') != 'production') {
-          var_dump("ERROR BACKEND", $url, json_encode($data));die;
+          //var_dump("ERROR BACKEND", $url, json_encode($data), $response->data);die;
         }
 
         return $response;  

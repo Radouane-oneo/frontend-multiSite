@@ -34,7 +34,7 @@ define([
 
             if(this.model.get("shippingAddresses").orderItemShipping.orderShippingAddress) {
                 var customerAddressId = this.model.get("shippingAddresses").orderItemShipping.orderShippingAddress.shippingAddress;
-                $("#edit-shipping-detail-current-select").val(customerAddressId);
+                $("#edit-shipping-detail-current-select").select2("val",customerAddressId);
                 $("#edit-shipping-detail-current-select").change();
             }
         },

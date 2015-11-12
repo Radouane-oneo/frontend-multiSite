@@ -287,7 +287,7 @@ function flyer_preprocess_html(&$vars) {
 	unset($javascript['sites/all/modules/printconnect/pccart/pccart.js']);
         $args = arg();
 
-        if($args[0]=="cart" || ($args[0]=="checkout" && $args[1]=="invoiceanddelivery")) {
+        if($args[0]=="cart" || $args[0]=="products" || $args[0]=="payment" || ($args[0]=="checkout" && $args[1]=="invoiceanddelivery")) {
             unset($javascript['sites/all/libraries/fancybox/fancybox/jquery.fancybox-1.3.4.js']);
             unset($javascript['sites/all/modules/contrib/fancybox/js/fancybox.js']);
             unset($javascript['sites/all/themes/printconnect/flyer/libraries/scrollBarPlugin/jquery.mCustomScrollbar.min.js']);
@@ -311,7 +311,7 @@ function flyer_preprocess_html(&$vars) {
             unset($javascript['sites/all/modules/printconnect/pcdesigner/pcdesigner.js']);
             unset($javascript['sites/all/modules/printconnect/pcdesigns/pcdesigns.js']);
             unset($javascript['sites/all/modules/printconnect/pcdesigntool/pcdesigntool.js']);
-            unset($javascript['sites/all/modules/printconnect/pcflyerstores/pcflyerstores_map.js']);
+            
             unset($javascript['sites/all/modules/printconnect/pcflyerstores/pcflyerstores.js']);
             unset($javascript['sites/all/modules/printconnect/pcflyerstores/lib/isotope.pkgd.min.js']);
             unset($javascript['sites/all/modules/printconnect/pcflyerstores/lib/jquery.jcarousel.js']);
@@ -324,8 +324,10 @@ function flyer_preprocess_html(&$vars) {
             unset($javascript['sites/all/modules/printconnect/pctemplates/jquery.ui.autocomplete.min.js']);
             unset($javascript['sites/all/modules/printconnect/pctemplates/pctemplates.js']);
             unset($javascript['sites/all/modules/printconnect/pcvat/pcvat.js']);
-            unset($javascript['sites/all/modules/printconnect/pcvat/pcvat.js']);
-            //$javascript = array();
+        }
+
+        if($args[0]=="products" || $args[0]=="payment") {
+        	unset($javascript['sites/all/modules/printconnect/pcflyerstores/pcflyerstores_map.js']);
         }
 
         if($args[0]=="myprintconnect" && $args[1]=="addresses" && $args[2]== "new" ) {

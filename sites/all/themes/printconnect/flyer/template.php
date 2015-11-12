@@ -284,7 +284,9 @@ function flyer_preprocess_html(&$vars) {
 
 	//Then we remove the Drupal core version
 	unset($javascript['misc/jquery.js']);
+	unset($javascript['sites/all/modules/printconnect/pccart/pccart.js']);
         $args = arg();
+
         if($args[0]=="cart" || ($args[0]=="checkout" && $args[1]=="invoiceanddelivery")) {
             unset($javascript['sites/all/libraries/fancybox/fancybox/jquery.fancybox-1.3.4.js']);
             unset($javascript['sites/all/modules/contrib/fancybox/js/fancybox.js']);
@@ -303,7 +305,6 @@ function flyer_preprocess_html(&$vars) {
             //unset($javascript['misc/ui/jquery.ui.tabs.min.js']);
             //unset($javascript['sites/all/libraries/jquery.masonry/jquery.masonry.min.js']);
             unset($javascript['sites/all/modules/printconnect/pcbpost/pcbpost.js']);
-            unset($javascript['sites/all/modules/printconnect/pccart/pccart.js']);
             unset($javascript['sites/all/modules/printconnect/pccheckout/pccheckout.js']);
             unset($javascript['sites/all/modules/printconnect/pccontact/pccontact.js']);
             unset($javascript['sites/all/modules/printconnect/pccustomers/pccustomers.js']);

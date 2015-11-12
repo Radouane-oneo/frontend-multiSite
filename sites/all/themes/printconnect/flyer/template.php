@@ -293,7 +293,6 @@ function flyer_preprocess_html(&$vars) {
             unset($javascript['sites/all/themes/printconnect/flyer/libraries/scrollBarPlugin/jquery.mCustomScrollbar.min.js']);
             unset($javascript['sites/all/themes/printconnect/flyer/libraries/scrollBarPlugin/jquery.mCustomScrollbar.concat.min.js']);
             unset($javascript['sites/all/themes/printconnect/flyer/libraries/homeSlider/homeslider.js']);
-            unset($javascript['sites/all/themes/printconnect/flyer/libraries/jcarousellite/jcarousellite.js']);
             unset($javascript['sites/all/themes/printconnect/flyer/js/html5shiv.js']);
             unset($javascript['sites/all/themes/printconnect/flyer/js/selectivizr-min.js']);
             unset($javascript['sites/all/themes/printconnect/flyer/js/flyerstrap.js']);

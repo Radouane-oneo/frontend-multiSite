@@ -36,8 +36,13 @@ namespace printconnect {
             'method' => $method, 
             'data' => json_encode($data)
         ));
+
         if($response->code == 200 && $method == 'GET') {
             self::SaveCacheData($url, $response->data);
+        }
+
+        if($response->code != 200 && variable_get('pc_env', 'production') != 'production') {
+          //var_dump("ERROR BACKEND", $url, json_encode($data), $response->data);die;
         }
 
         return $response;  

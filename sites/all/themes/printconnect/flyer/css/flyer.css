@@ -12260,3 +12260,6 @@ form#pccheckout-payment-form fieldset legend{
     width: 100%;
     z-index: 100;
 }
+.lireSuite {
+    margin-top: 35px;
+}

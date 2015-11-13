@@ -299,13 +299,11 @@ function flyer_preprocess_html(&$vars) {
             unset($javascript['sites/all/modules/printconnect/pcrotator/jquery.rotate.js']);
             unset($javascript['sites/all/modules/printconnect/pcrotator/pcrotator.js']);
             unset($javascript['sites/all/modules/printconnect/pcbpost/pcbpost.js']);
-            unset($javascript['sites/all/modules/printconnect/pccheckout/pccheckout.js']);
             unset($javascript['sites/all/modules/printconnect/pccontact/pccontact.js']);
             unset($javascript['sites/all/modules/printconnect/pccustomers/pccustomers.js']);
             unset($javascript['sites/all/modules/printconnect/pcdesigner/pcdesigner.js']);
             unset($javascript['sites/all/modules/printconnect/pcdesigns/pcdesigns.js']);
             unset($javascript['sites/all/modules/printconnect/pcdesigntool/pcdesigntool.js']);
-            unset($javascript['sites/all/modules/printconnect/pcflyerstores/lib/jquery.jcarousel.js']);
             unset($javascript['sites/all/modules/printconnect/pcorders/pcorders.js']);
             unset($javascript['sites/all/modules/printconnect/pcpayments/pcpayments.js']);
             unset($javascript['sites/all/modules/printconnect/pcproducts/pcproducts.js']);

@@ -38,7 +38,8 @@
 						<ul>
 						<% _.each(model.configuration.config, function(itemConfig, i){ %>
 							<% if(i!=0) { %>
-								<li class="<%= (i == 1)?'first':'' %> <%= (i == model.configuration.config.length-1)?'last':'' %>"><label><%= model.configuration.config[i].groupName %>:</label>  <%= model.configuration.config[i].name %> </li>
+								<li class="<%= (i == 1)?'first':'' %> <%= (i == model.configuration.config.length-1)?'last':'' %>"><label><%= model.configuration.config[i].groupName %>:</label>  <%= $('<div/>').html(model.configuration.config[i].name).text() %></li>
+								
 							<% } %>
 						<% }); %>
 

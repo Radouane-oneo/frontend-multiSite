@@ -800,7 +800,7 @@ body.two-sidebars #content .whitebox{
 
 .region-sidebar-first .block, 
 .region-sidebar-second .block {
-	margin-bottom: 10px;
+	margin-bottom: 12px;
 	padding: 16px 10px 10px;
 	border-radius: 3px;
 	background: #fff;
@@ -10905,6 +10905,7 @@ p.requieredfields span.form-required {
 .page-upload-design .templates .fieldset-wrapper .productDetail  #edit-product h2{
 	margin-bottom: 7px;
 	font-weight: 700;
+	max-width: 520px;
 }
 .page-cart #pccart-cart-form .item .description {
 	width: 100%;

@@ -771,3 +771,13 @@ span.datainfobul:after {
   height: 20px !important;
   font-size: 12px;
 }
+
+
+.page-products #block-system-main .form-wrapper.actions span.price{
+  padding-left: 10px;
+  width: 403px;
+}
+
+.page-products #block-system-main .form-wrapper.actions span.price span.value{
+  margin-right: 15px;
+}

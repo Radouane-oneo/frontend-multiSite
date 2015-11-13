@@ -7,6 +7,21 @@ namespace printconnect\Segments {
   class Factory {
 
     public static function GetAll($language = FALSE, $dal = FALSE, $all = FALSE, $cache = TRUE) {
+      $host = $_SERVER['HTTP_HOST'];
+      $parts = explode('.', $host);
+      $subdomain = $parts[0];
+      global $conf;
+      if (isset($conf['cobrandedshops']) && array_key_exists($subdomain, $conf['cobrandedshops'])) {
+	$object = new Segments(array(), array(), FALSE, $language);
+	$params = array();
+	Dal::LoadCollection($object, 'segment', $params, function ($value) {
+	    $object = new Segment($value);
+	    $object->loaded = TRUE;
+	    return $object;
+        }, $cache, $dal);
+        $object->loaded = true;
+        return $object;
+      }
       $basedPath = variable_get('pc_segment_json_path');
       $object = new Segments(array(), array(), FALSE, $language);
       global $language;

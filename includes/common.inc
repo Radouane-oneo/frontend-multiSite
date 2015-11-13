@@ -3145,7 +3145,8 @@ function drupal_get_css($css = NULL, $skip_alter = FALSE) {
   if (!empty($setting)) {
     $styles['#attached']['js'][] = array('type' => 'setting', 'data' => $setting);
   }
-
+//  echo '<pre>';
+//  var_dump($styles);die;
   return drupal_render($styles);
 }
 

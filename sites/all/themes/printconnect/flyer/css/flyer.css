@@ -2402,7 +2402,7 @@ body.front #block-block-13:after {
 	background-repeat: no-repeat;
 	padding: 8px 8px 10px 15px;
 	clear: left;
-	font-size: 13px;
+	font-size: 12px;
 	border-style: solid;
 	border-color:#e1e1e1;
 	border-width: 0 1px 1px 1px;
@@ -12259,4 +12259,7 @@ form#pccheckout-payment-form fieldset legend{
     top: 0;
     width: 100%;
     z-index: 100;
+}
+.lireSuite {
+    margin-top: 35px;
 }

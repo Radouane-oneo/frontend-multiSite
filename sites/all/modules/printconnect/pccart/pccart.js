@@ -2,6 +2,8 @@
 	Drupal.behaviors.pccart = {
 		detach: function (context) { },
 		attach: function (context, settings) {
+                        $('#edit-calculer').removeClass('ui-state-disabled');
+                        $('#edit-actions-addtocart').removeClass('ui-state-disabled');
 			try{document.domain = 'flyer.fr';}
 			catch(e){console.log(e);}
 			updateDomain();

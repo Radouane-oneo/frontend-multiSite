@@ -394,7 +394,7 @@ function new_checkout_and_delivery_loadpage() {
       "changeName" => t("changeName"),
       "shippingTypeStoreMessage" => t("shippingTypeStoreMessage"),
       "shippingTypeBpostPickupPointMessage" => t("shippingTypeBpostPickupPointMessage"),
-      "VatAlreadyUsed" => "VatAlreadyUsed"
+      "VatAlreadyUsed" => t("VatAlreadyUsed")
     );
 
      $cart = \printconnect\Carts\Factory::GetCartJson();

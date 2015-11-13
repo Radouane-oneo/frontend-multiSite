@@ -145,15 +145,34 @@ function pcanalytics_page_alter(&$page) {
         $lastprodact = end($productname);
         $googleoptionTracking = '<script type="text/javascript">
               var ttConversionOptions = {';
+        global $language;
+        $lg = $language->prefix;
+        $campaignID = '';
+        $productID = '';
+        switch ($lg) {
+            case 'befr':
+            case 'benl':
+                $campaignID = 18217;
+                $productID = 27112;
+                break;
+            case 'frfr':
+                $campaignID = 20542;
+                $productID = 30255;                    
+                break;        
+            default:
+                break;
+        }
         $googleoptionTracking .= "
                             type: 'sales',
-                            campaignID: '20542',
-                            productID: '30255',
+                            campaignID: '".$campaignID."',
+                            productID: '".$productID."',
                             transactionID: '".$order->id."',
                             transactionAmount: '".$total."',
                             quantity: '1',
                             email: '".$address."',
                             descrMerchant: '";
+        
+        
         foreach($productname as $value){
             ereg_replace("<[^>]*>", "", $value);
             $htmlcaracter = array("<strong>", "</strong>", "<p>", "</p>", "<br>", ", ", " ", ":", "/", "___", "_-_", "__", "m²");
@@ -177,7 +196,7 @@ function pcanalytics_page_alter(&$page) {
                         })(ttConversionOptions);
                     </script>
             <noscript>
-             <img src='//ts.tradetracker.net/?cid=20542&amp;pid=30255&amp;tid=".$order->id."&amp;tam=".$total."&amp;data=&amp;qty=1&amp;eml=email&amp;descrMerchant=";
+             <img src='//ts.tradetracker.net/?cid=".$campaignID."&amp;pid=".$productID."&amp;tid=".$order->id."&amp;tam=".$total."&amp;data=&amp;qty=1&amp;eml=email&amp;descrMerchant=";
         foreach($productname as $value){
             ereg_replace("<[^>]*>", "", $value);
             $htmlcaracter = array("<strong>", "</strong>", "<p>", "</p>", "<br>", ", ", " ", ":", "/", "___", "_-_", "__", "m²");

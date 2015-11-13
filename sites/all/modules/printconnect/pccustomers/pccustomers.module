@@ -97,6 +97,7 @@ function pccustomers_preprocess_page(&$vars) {
  */
 function pccustomers_block_view($delta = '') {
   global $user;
+
   $block = FALSE;
   switch ($delta) {
     case 'login':
@@ -156,14 +157,14 @@ function pccustomers_block_view($delta = '') {
       return $block;
       break;
     case 'manage':
-      // $customer = Factory::Current();
+      $customer = Factory::Current();
       // if ($customer) {
       $block['content'][] = array(
           'image' => array(
               '#theme' => 'pccustomers_avatar',
           ),
           'link' => array(
-              '#markup' => l(t('Manage your account'), 'myprintconnect'),
+              '#markup' => l(t('Manage your account') . ' - ' . $customer->firstName, 'myprintconnect'),
           ),
       );
       return $block;

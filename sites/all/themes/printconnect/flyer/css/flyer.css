@@ -11363,7 +11363,6 @@ input.ui-button.payment {
     text-align: center;
     float: none;
     display: block;
-    font-size: 13px;
     line-height: 17px;
 }
 .edit-job {
@@ -11902,10 +11901,13 @@ input.ui-button.payment {
 .page-myprintconnect-orders .overview table tbody td, 
 .page-myprintconnect-orders .extra table tbody td {
     padding: 5px 10px;
-    line-height: 12px;
+    line-height: 16px;
 }
 .page-myprintconnect-orders .overview table tbody td.first-child {
     width: 156px;
+}
+.page-myprintconnect-orders .overview table tbody td.last-child {
+    width: 135px;
 }
 .page-myprintconnect table th, .page-myprintconnect table tr td {
     vertical-align: middle;

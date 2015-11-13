@@ -264,7 +264,7 @@ function pccontact_general_form_submit($form, &$form_state) {
 }
 
 
-
+*/
 function pccontact_stors_form($form, &$form_state) {
   $customer = \printconnect\Customers\Factory::Current();
 
@@ -359,4 +359,4 @@ function pccontact_stors_form_submit($form, &$form_state) {
     } else {
         drupal_set_message(t('Your message has  not been sent'), 'error');
     }
-}*/
+}

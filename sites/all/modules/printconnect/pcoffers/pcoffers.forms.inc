@@ -6,7 +6,7 @@ use printconnect\Customers\Factory as CustomersFactory;
 
 function pcoffers_offer_form($form, &$form_state, $hash) {
   $offer = Factory::GetById($hash);
-  drupal_set_title(t('Offer') . " $offer->number");
+  drupal_set_title(t('Offer translate') . " $offer->number");
 
   $items = $offer->offerItems;
   $offerItemsAdditional = $offer->offerItemsAdditional;

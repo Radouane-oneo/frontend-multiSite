@@ -298,7 +298,7 @@ function flyer_preprocess_html(&$vars) {
             unset($javascript['sites/all/themes/printconnect/flyer/js/flyerstrap.js']);
             unset($javascript['sites/all/modules/printconnect/pcrotator/jquery.rotate.js']);
             unset($javascript['sites/all/modules/printconnect/pcrotator/pcrotator.js']);
-            unset($javascript['sites/all/modules/printconnect/pcbpost/pcbpost.js']);
+            //unset($javascript['sites/all/modules/printconnect/pcbpost/pcbpost.js']);
             unset($javascript['sites/all/modules/printconnect/pccontact/pccontact.js']);
             unset($javascript['sites/all/modules/printconnect/pccustomers/pccustomers.js']);
             unset($javascript['sites/all/modules/printconnect/pcdesigner/pcdesigner.js']);

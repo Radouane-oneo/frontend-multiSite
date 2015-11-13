@@ -8,19 +8,44 @@ namespace printconnect\Products {
 
     public static function GetAll($language = FALSE, $dal = FALSE, $all = FALSE) {
       $products = new Products(array(), array(), FALSE, $language);
-
-      $params = array();
-      if (!$all) {
-        $params['shopSpecific'] = 'true';
+      $basedPath = variable_get('pc_products_json_path');
+      global $language;
+      $fileName = null;
+      switch($language->language) {
+        case 'fr-Be':
+            $fileName = 'flyerBe-fr-products.json';
+        break;
+        case 'nl-BE':
+            $fileName = 'flyerBe-nl-products.json';
+        break;
+        case 'fr-FR':
+            $fileName = 'flyerFr-fr-products.json';
+        break;
+        case 'lu-FR':
+            $fileName = 'flyerLu-fr-products.json';
+        break;
+        case 'nl-NL':
+            $fileName = 'flyerNl-nl-products.json';
+        break;
       }
-      Dal::LoadCollection($products, 'product-list', $params, function ($value) {
-                $product = new Product($value);
-                $product->loaded = TRUE;
-                return $product;
-              }, TRUE, $dal);
-      $products->loaded = true;
-
-
+      $check = file_exists($basedPath.$fileName);
+      if (!$check || filesize($basedPath.$fileName) <= 0) {
+        $response = Dal::SendRequest('product-list');
+        $data = $response->data;
+        file_put_contents($basedPath.$fileName, $data);
+        $data = json_decode($data);
+      } else {
+        $data = file_get_contents($basedPath.$fileName);
+        if (0 === strpos(bin2hex($data), 'efbbbf')) {
+          $data = $obj = json_decode(substr($data,3));
+        } else {
+          $data = json_decode($data);
+        }
+      }
+      foreach ($data as $product) {
+        $seg = new Product($product);
+        $products->add($seg);
+      }
       return $products;
     }
 

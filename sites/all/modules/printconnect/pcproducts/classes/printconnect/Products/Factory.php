@@ -7,6 +7,25 @@ namespace printconnect\Products {
   class Factory {
 
     public static function GetAll($language = FALSE, $dal = FALSE, $all = FALSE) {
+      $host = $_SERVER['HTTP_HOST'];
+      $parts = explode('.', $host);
+      $subdomain = $parts[0];
+      global $conf;
+      if (isset($conf['cobrandedshops']) && array_key_exists($subdomain, $conf['cobrandedshops'])) {
+	  $products = new Products(array(), array(), FALSE, $language);
+          $params = array();
+          if (!$all) {
+              $params['shopSpecific'] = 'true';
+          }
+          Dal::LoadCollection($products, 'product-list', $params, function ($value) {
+              $product = new Product($value);
+              $product->loaded = TRUE;
+              return $product;
+              }, TRUE, $dal
+          );
+          $products->loaded = true;
+          return $products;
+      }
       $products = new Products(array(), array(), FALSE, $language);
       $basedPath = variable_get('pc_products_json_path');
       global $language;

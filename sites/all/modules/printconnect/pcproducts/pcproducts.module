@@ -1082,6 +1082,7 @@ function _pcproducts_getproductname($id) {
   if (is_numeric($id)) {
     printconnect_ensureinitialized();
     $product = \printconnect\Products\Factory::Get($id);
+	\printconnect\Products\Factory::LoadProduct($product);
     return $product->name;
   }
 }

@@ -57,7 +57,14 @@ class Factory {
   }
 
   public static function GetBillingAccounts(Customer $customer, $cache = TRUE) {
-          return new BillingAccounts(array(), array('customer' => $customer), $cache);
+        $response = Dal::SendRequest('billing-account/customer/'.$customer->id);
+        $billingAccounts = new BillingAccounts(array(), array(),FALSE);
+	$data = json_decode($response->data);
+	foreach($data as $ba) {
+	    $newBa = new BillingAccount($ba);
+	    $billingAccounts->add($newBa);
+	}
+	return $billingAccounts;
   }
 
   public static function LoadBillingAccounts(BillingAccounts $object) {

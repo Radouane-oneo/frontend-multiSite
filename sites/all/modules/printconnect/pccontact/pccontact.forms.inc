@@ -338,8 +338,6 @@ function pccontact_stors_form($form, &$form_state) {
   );
   $form['#id'] = 'pccontact_stors_form';
   $form['#attributes'] = array('data-globalError' => t('this fields are required'));
-  global $language;
-  var_dump($language->prefix);die;
   return $form;
 }
 

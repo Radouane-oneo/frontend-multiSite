@@ -345,11 +345,13 @@ function pccontact_stors_form_submit($form, &$form_state) {
     global $language;
     $send = TRUE;
     if ($language->prefix == 'befr' || $language->prefix == 'benl') {
-      $mailto = 'info@flyer.be, m.mouhsni@gmail.com';
+      $mailto = 'info@flyer.be';
     }else if ($language->prefix == 'frfr') {
-      $mailto = 'info@flyer.fr, m.mouhsni@gmail.com';
+      $mailto = 'info@flyer.fr';
     }else if ($language->prefix == 'nlnl') {
-      $mailto = 'info@Flyer.nl, m.mouhsni@gmail.com';
+      $mailto = 'info@flyer.nl';
+    }elseif ($language->prefix == 'lufr') {
+      $mailto = 'info@flyer.lu';
     }
 
     $result = drupal_mail('pccontact',

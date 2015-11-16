@@ -3111,6 +3111,66 @@ a.ui-button.inactivebtn{
 #pcproducts-config-formImage2 li {
 	display: none;
 }
+.page-products #block-system-main .edit-actions-product{
+ 	margin-bottom: 0;
+}
+.page-products #block-system-main .edit-actions-product span.price .currency,
+.page-products #block-system-main .edit-actions-product span.price .currency {
+	 font-size: 33px;
+}
+.page-products #block-system-main .edit-actions-product span.price .decimalpoint, 
+.page-products #block-system-main .edit-actions-product span.price .decimals {
+	font-size: 25px;
+	border-bottom: 0;
+}
+.page-products #block-system-main .edit-actions-product {
+	background: #3c3c3c;
+ 	padding: 0;
+ 	-moz-border-radius: 0 0 5px 5px;
+}
+.page-products #block-system-main .edit-actions-product span.price {
+ 	float: left;
+ 	color: #fff;
+}
+
+.page-products #block-system-main .edit-actions-product input{
+	font-size: 16px;
+ 	height: 50px;
+ 	border-radius: 0;
+}
+.page-products #block-system-main #edit-actions input {
+    background: #79b61a url("images/button_payment.png") no-repeat 75px center;
+    font-size: 16px;
+    height: 50px;
+    margin: 0;
+    font-weight: 400;
+    text-align: center;
+    width: 100%;
+    display: inline-block;
+    padding-left: 40px;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    border: none;
+}
+.page-products #edit-actions .button-wrapper {
+    background-color: #79b61a;
+    width: 330px;
+    display: inline-block;
+    text-align: center;
+    float: right;
+}
+.page-products #block-system-main .edit-actions-product span.price label {
+    font-size: 14px;
+    margin-right: 5px;
+    text-align: right;
+    line-height: 50px;
+    float: left;
+    clear: right;
+    color: #fff;
+    font-weight: normal;
+    margin: 0;
+}
 /* ---- END - PRODUCT PAGE */
 
 /* ---- PAGE Segments ---- */
@@ -4208,8 +4268,17 @@ a.googleconnect {
 .page-checkout-personal .actions {
 	margin-top: 0 !important;
 }
- #pcproducts-config-form #edit-actions.edit-actions-product{
-  margin-top: -15px;	
+ #pcproducts-config-form #edit-actions.edit-actions-product {
+    background: #3c3c3c;
+    padding: 0;
+    overflow: hidden;
+    height: 50px;
+    margin: -15px 0 20px;
+    box-shadow: none;
+
+    border-radius: 0 0 5px 5px;
+    -webkit-border-radius: 0 0 5px 5px;
+    -moz-border-radius: 0 0 5px 5px;
 } 
 
 .detailtechnique-wrapper{

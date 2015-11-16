@@ -87,9 +87,11 @@ function pccustomers_addresses_form($form, $form_state) {
     $Billingcustomer =  \printconnect\Customers\Factory::Current();
     $rowsBilling = array();
     $allbellingacounts = \printconnect\Customers\BillingAccounts\Factory::GetBillingAccounts($Billingcustomer, false);
-    
-foreach ( $allbellingacounts as $MyBillingaddress) {
- if (!is_null($MyBillingaddress->id)){
+    \printconnect\Customers\BillingAccounts\Factory::LoadBillingAccounts($allbellingacounts);
+    $listId = array();
+foreach ($allbellingacounts as $MyBillingaddress) {
+ if (!is_null($MyBillingaddress->id) && array_search($MyBillingaddress->id, $listId) === false){
+    $listId[] = $MyBillingaddress->id;
     $form['Billingaddresses'][$MyBillingaddress->id]['edit'] = array(
         '#markup' => l(t('edit'), 'myprintconnect/editBillingaddresses/' . $MyBillingaddress->id, array('attributes' => array('class' => 'edit'))),
     );

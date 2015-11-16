@@ -161,7 +161,7 @@ function pccustomers_block_view($delta = '') {
       $link = l(t('Manage your account'), 'myprintconnect');
 
       if ($customer->firstName!='' || $customer->firstName!= null) {
-        $link = l(t('Hello') . ' - ' . $customer->firstName, 'myprintconnect');
+        $link = l(t('Hello') . ' ' . $customer->firstName, 'myprintconnect');
       }
       // if ($customer) {
       $block['content'][] = array(

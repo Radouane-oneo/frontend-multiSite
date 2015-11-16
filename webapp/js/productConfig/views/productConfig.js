@@ -2,8 +2,9 @@ define([
     'backbone',
     'text!../templates/' + require("config").themeFile,
     '../models/productConfig',
-    'text!../templates/price.html'
-], function (Backbone, productConfigTemplate, productConfigModel, priceTemplate) {
+    'text!../templates/price.html',
+    'text!../templates/footerPrice.html'
+], function (Backbone, productConfigTemplate, productConfigModel, priceTemplate, footerPriceTemplate) {
 
     return Backbone.View.extend({
         template: _.template(productConfigTemplate),
@@ -46,6 +47,7 @@ define([
                 "priceOption" : this.model.priceOption,
                 "totalPrice" : this.model.totalPrice,
                 "priceTpl" : _.template(priceTemplate),
+                "footerPriceTpl" : _.template(footerPriceTemplate),
                 "shippingHTML" : this.$("#bloc-shipping").html(),
                 "customQuantity" : !(this.model.get("toolBoxGroup")["pricing"][this.model.get("quantity")]),
                 "expandedOptions" : this.$("#edit-options").is(":visible")

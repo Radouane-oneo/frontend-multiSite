@@ -344,9 +344,17 @@ function pccontact_stors_form($form, &$form_state) {
 function pccontact_stors_form_submit($form, &$form_state) {
     global $language;
     $send = TRUE;
+    if ($language->prefix == 'befr' || $language->prefix == 'benl') {
+      $mailto = 'info@flyer.be, m.mouhsni@gmail.com';
+    }else if ($language->prefix == 'frfr') {
+      $mailto = 'info@flyer.fr, m.mouhsni@gmail.com';
+    }else if ($language->prefix == 'nlnl') {
+      $mailto = 'info@Flyer.nl, m.mouhsni@gmail.com';
+    }
+
     $result = drupal_mail('pccontact',
             'stores',
-            variable_get('pccontact_stores', 'bik8yg@gmail.com, aaltje.vanderzee@flyer.be'),
+            $mailto,
             language_default(),
             $form_state['values'],
             NULL,

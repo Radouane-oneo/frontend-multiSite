@@ -213,11 +213,21 @@
 
         <!-- addToCart -->
         <div id="edit-actions" class="edit-actions-product actions form-actions form-wrapper">
-                <%= priceTpl({price:totalPrice(),label:config.labels["totalNoTVA"]}) %>
+            <div id="total-price">
+                <span class="price" id="price">
+                    <label>
+                        <%= config.labels['totalNoTVA'] %>
+                    </label>                 
+                </span>
+                <%= footerPriceTpl({price:totalPrice()}) %>
+            </div>
+            <div class="button-wrapper">    
                 <input
                 type="submit" value="<%= config.labels['addToCart'] %>" name="op" id="edit-actions-addtocart"
                 class="cart  form-submit ui-button"
-                role="button"></div>
+                role="button">
+            </div>
+        </div>
         <!-- End addToCart -->
 
         <!-- shippingDetail -->

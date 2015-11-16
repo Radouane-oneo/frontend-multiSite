@@ -186,6 +186,9 @@ namespace printconnect {
     }
 
     public static function LoadCollection(Collection &$object, $entity, $params, $callback, $cache = TRUE, $dal = FALSE) {
+      if ($entity  == 'billing-account') {
+	    $cache = false;
+      }
       if (!$object->contentlanguage) {
         global $language;
       } else {

@@ -315,8 +315,9 @@ function pcproducts_block_view($delta = '') {
         $i=0;
         $data = null;
         $total = count($products);
+        
         foreach ($products as $product) {
-            if( ($i % intval($total/3))  == 0 && $i <> 0 && $i <> $total-1 ) $data .= '</ul><ul class="menu">';
+            if( ($i % (intval($total/3)+1))  == 0 && $i <> 0 && $i <> $total ) $data .= '</ul><ul class="menu">';
             $data .= '<li>'.l($product->name, 'products/' . $product->id).'</li>';
             $i++;
         }
@@ -1082,6 +1083,7 @@ function _pcproducts_getproductname($id) {
   if (is_numeric($id)) {
     printconnect_ensureinitialized();
     $product = \printconnect\Products\Factory::Get($id);
+	\printconnect\Products\Factory::LoadProduct($product);
     return $product->name;
   }
 }

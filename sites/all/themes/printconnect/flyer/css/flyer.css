@@ -7984,7 +7984,8 @@ div.myoffers table.list thead tr th:nth-child(2){
 }
 
 .block-pctemplates .nosmodel > a,
-.view-best-sales .headproduct > a{
+.view-best-sales .headproduct > a,
+.page-segments .headerTitleProduct .allProduct > a{
 	font-family: 'Open Sans', sans-serif;
 	float: right;
 	font-size: 12px;
@@ -7996,7 +7997,8 @@ div.myoffers table.list thead tr th:nth-child(2){
 	text-decoration: none;
 }
 .block-pctemplates .nosmodel > a:hover,
-.view-best-sales .headproduct > a:hover{
+.view-best-sales .headproduct > a:hover,
+.page-segments .headerTitleProduct .allProduct > a:hover{
 	background-position: -7px -503px;
 	color: #333333;
 }

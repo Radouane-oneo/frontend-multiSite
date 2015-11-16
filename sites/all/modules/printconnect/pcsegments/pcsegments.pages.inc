@@ -55,11 +55,11 @@ function pcsegments_segment($id) {
         '#path' => $banner,
  );
     
-$build['text'] = array(
-    '#prefix' => '<p>',
-    '#suffix' => '</p>',
-    '#markup' => $segment->name->longDescription,
-);
+  $build['text'] = array(
+      '#prefix' => '<p>',
+      '#suffix' => '</p>',
+      '#markup' => $segment->name->longDescription,
+  );
   if ($segment->products && count($segment->products)) {
     $products = array();
     $i = 0;
@@ -94,24 +94,29 @@ $build['text'] = array(
       );
    
     }
+
     $build['products'] = array(
-        '#type' => 'fieldset',
-        '#title' => t('Choose a product'),
+        '#type' => 'container'
     );
+
+    
+    
+    $build['products']['headerTitleProduct'] = array(
+        '#markup' =>'<div class="headerTitleProduct"><div class="titleProduct"><span>'.t('Choose a product').'</span></div><div class="allProduct">'.l(t('All products'), 'products').'</div></div>', 
+    );
+
     $build['products']['items'] = array(
         '#theme' => 'item_list',
         '#items' => $products,
         '#attributes' => array('class' => array('clearfix', 'list-segment')),
     );
-    $build['products']['all'] = array(
-        '#markup' => l(t('All products'), 'products'),
-    );
+    
   }
   
-  $build['content'] = array(
-              '#prefix' => '<p class ="contenttemplates">',
-              '#suffix' => '</p>',
-          );
+    $build['content'] = array(
+        '#prefix' => '<p class ="contenttemplates">',
+        '#suffix' => '</p>',
+    );
 
   $i = 0;
 
@@ -146,7 +151,7 @@ $build['text'] = array(
                 //$build['content']['productName'.$i] = array('#markup' =>'<div class="from"><span class="txt">'.$valueItems["name"].'</span></div>');
                 $build['content']['link'.$i] = array('#markup' =>'<a class="btn-cmd" href="'.$GLOBALS['base_url'].'/templates/'.$valueItems["id"].'"><span class="flesh"></span>'.t("use this modele").'</a>');
                 $build['content']['contentitem2'.$i]= array('#markup' => "</li>"); $i++; } 
-                $build['content']['endul']= array('#markup' => "</ul></div>". l(t('All products'), 'products') ."</div>");
+                $build['content']['endul']= array('#markup' => "</ul></div></div>");
   }
   return $build;
 }
@@ -165,7 +170,7 @@ function pcsegments_segment_products($id) {
 
   $build['products'] = array(
       '#type' => 'fieldset',
-      '#title' => t('Choose a product'),
+      '#title' => t('Choose a product'), 
   );
 
   foreach ($segment->products as $product) {

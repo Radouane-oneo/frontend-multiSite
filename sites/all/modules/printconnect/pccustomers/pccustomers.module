@@ -158,9 +158,10 @@ function pccustomers_block_view($delta = '') {
       break;
     case 'manage':
       $customer = Factory::Current();
-      $customerName;
+      $link = l(t('Manage your account'), 'myprintconnect');
+
       if ($customer->firstName!='' || $customer->firstName!= null) {
-        $customerName = ' - ' . $customer->firstName;
+        $link = l(t('Hello') . ' - ' . $customer->firstName, 'myprintconnect');
       }
       // if ($customer) {
       $block['content'][] = array(
@@ -168,7 +169,7 @@ function pccustomers_block_view($delta = '') {
               '#theme' => 'pccustomers_avatar',
           ),
           'link' => array(
-              '#markup' => l(t('Manage your account') . $customerName, 'myprintconnect'),
+              '#markup' => $link,
           ),
       );
       return $block;

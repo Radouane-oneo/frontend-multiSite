@@ -12522,11 +12522,17 @@ form#pccheckout-payment-form fieldset legend{
     clear: right;
     color: #fff;
     font-weight: normal;
-    margin: 0 75px 0 0;
+    margin: 0 60px 0 0;
 }
 .page-templates .region-content .form-actions span.price .value {
     font-size: 30px;
     font-weight: bold;
     color: #fff;
     float: right;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 #price-template-block {
+    background: none repeat scroll 0 0 #F1F1F1;
+    border: 1px solid #d1d1d1 !important;
+    border-top: none !important;
+    margin-top: -15px;
 }

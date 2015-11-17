@@ -562,6 +562,7 @@ margin: 0 16px -10px 0px !important;
 
 #price-template-block span.price {
     float: right;
+    font-size: 14px;
 }
 
 #pctemplates-selection-form .filters .select2-container .select2-choice{

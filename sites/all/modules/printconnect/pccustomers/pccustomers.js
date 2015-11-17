@@ -146,6 +146,23 @@ var registerClicked = false;
                 if(inputName == "vatNumber[number]"){
                    errorMsgs[i] = Drupal.t('Le champ N° de TVA est requis.');
                 }
+                else if(inputName == "firstName"){
+                   errorMsgs[i] = Drupal.t('firstName message error');
+                }else if(inputName == "lastName"){
+                   errorMsgs[i] = Drupal.t('lastName message error');
+                }else if(inputName == "phone"){
+                   errorMsgs[i] = Drupal.t('phone message error');
+                }else if(inputName == "street"){
+                   errorMsgs[i] = Drupal.t('street message error');
+                }else if(inputName == "postalCode"){
+                   errorMsgs[i] = Drupal.t('postalCode message error');
+                }else if(inputName == "city"){
+                   errorMsgs[i] = Drupal.t('city message error');
+                }else if(inputName == "country"){
+                   errorMsgs[i] = Drupal.t('country message error');
+                }else if(inputName == "company"){
+                   errorMsgs[i] = Drupal.t('company message error');
+                }
                 else
                     errorMsgs[i] = labels["isRequired"].replace('!name', inputName);
                 errorMarkup += "<li>"+errorMsgs[i]+"</li>";

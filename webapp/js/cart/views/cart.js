@@ -13,6 +13,7 @@ define([
     return Backbone.View.extend({
         template: _.template(cartTemplate),
         events: {
+            'click .close-tdc' : 'hideDetailTechnics'
         },
         initialize: function() {
             _this = this;
@@ -58,6 +59,11 @@ define([
         },
         changeShipping : function(orderItemShipping){
             this.model.set("orderItemShipping", orderItemShipping);
+        },
+        hideDetailTechnics : function(e){
+            $('#technic-details').hide('fade',function(){
+                $(this).html('<i class="close-tdc"></i>');
+            })
         }
         
     });

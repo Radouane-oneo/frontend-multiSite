@@ -461,7 +461,7 @@ function _pcogone_cancel($args) {
     $params = unserialize($result['params']);
     $callback = $params['cancel'];
   } else {
-    $callback = 'checkout/payment';
+    $callback = 'payment';
   }
   
   drupal_goto($callback);

@@ -3139,7 +3139,7 @@ a.ui-button.inactivebtn{
  	border-radius: 0;
 }
 .page-products #block-system-main #edit-actions input {
-    background: #79b61a url("images/button_payment.png") no-repeat 75px center;
+    background: #79b61a url("images/button_payment.png") no-repeat 65px center;
     font-size: 16px;
     height: 50px;
     margin: 0;
@@ -5378,8 +5378,8 @@ form#pcpayments-request-form table tr,.page-checkout-payment .overview table tr,
 .page-templates- #block-system-main #pctemplates-config-form2 > div > .form-type-select, 
 .page-templates- #block-system-main #pctemplates-config-form2 > div > .form-type-item, 
 .page-templates- #block-system-main #pctemplates-config-form2 > div > .form-type-checkboxes {
-	background-color: #f1f1f1;
-	margin: 1px 0 !important;
+	background-color: #fbfbfb;
+	margin: 0 !important;
 }
 .page-templates- #block-system-main #pctemplates-config-form2 > div > .form-type-select label, .page-templates- #block-system-main #pctemplates-config-form2 > div > .form-type-item label, 
 .page-templates- #block-system-main #pctemplates-config-form2 > div > .form-type-checkboxes label {
@@ -5449,12 +5449,14 @@ form#pcpayments-request-form table tr,.page-checkout-payment .overview table tr,
 	background: #f8f8f8;
 }
 .page-templates- #block-system-main table.grid tbody tr td .price {
-	float: right;
 	min-width: 60px;
 	text-align: right;
 }
 .page-templates- #block-system-main table.grid tbody tr:hover {
 	background: #f1f1f1 !important;
+}
+.page-templates- #block-system-main table.grid tbody tr.custom:hover {
+	background: #fbfbfb !important;
 }
 .page-templates- #block-system-main table.grid tbody tr:last-child {
 	background: #f8f8f8;
@@ -7300,9 +7302,12 @@ top: -1px;
 	text-align: center;
 }
 
-.page-templates .button-wrapper a.designtool.button/*,
-.page-cart .button-wrapper input.payment.button*/
-{position: absolute;}
+.page-templates .button-wrapper a.designtool.button {
+    background: #79b61a;
+    font-size: 16px;
+    width: 330px;
+    border-radius: 0;
+}
 
 div div#edit-info.detail div.store div.description table.vacations { 
 border-collapse: inherit !important;
@@ -12310,15 +12315,18 @@ form#pccheckout-payment-form fieldset legend{
 
 .page-templates .region-content .form-actions{
 	padding: 15px 10px;
+    margin: 0;
 }
 .page-templates .region-content .form-actions span.price{
-	padding-left: 0;
+    float: left;
+    padding-left: 10px;
 }
 
 .page-templates .region-content .form-actions a.button.action > .ui-button-text{
-	background: url(/sites/all/themes/printconnect/flyer/css/images/button_order.png) no-repeat left;
-    padding-left: 25px;
+	background: #79b61a url("images/button_payment.png") no-repeat left;
+    padding-left: 39px;
     display: inline-block;
+    line-height: 26px;
 }
 
 .page-templates #price-template-block{
@@ -12336,4 +12344,190 @@ form#pccheckout-payment-form fieldset legend{
 }
 .lireSuite {
     margin-top: 35px;
+}
+
+/* Product template single page CSS */
+.page-templates- #block-system-main #pctemplates-config-form2 .form-type-select, 
+.page-templates- #block-system-main #pctemplates-config-form2 .form-type-checkboxes {
+    background: #fbfbfb url("images/arrow_down4.png") right center no-repeat;
+    padding: 8px 8px 10px 15px;
+    clear: left;
+    font-size: 12px;
+    border-style: solid;
+    border-color: #e1e1e1;
+    border-width: 0 1px 1px 1px;
+    margin: 0;
+    color: #666666;
+    position: relative;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 .form-type-select.expanded, 
+.page-templates- #block-system-main #pctemplates-config-form2 .form-type-checkboxes.expanded {
+    background: #fbfbfb url("images/arrow_down5.png") right center no-repeat;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 .details-header + div {
+    border-top-width: 1px;
+    -webkit-border-radius: 3px 3px 0 0;
+    -moz-border-radius: 3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 .form-type-item label,
+.page-templates- #block-system-main #pctemplates-config-form2 .form-type-select label,
+.page-templates- #block-system-main #pctemplates-config-form2 .form-type-checkboxes label {
+    display: inline-block;
+    float: left;
+    font-weight: bold;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 .form-item .text {
+    width: 59%;
+    padding-right: 10%;
+    float: right;
+    display: block;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 .form-item-options {
+    -webkit-border-radius: 0 0 3px 3px;
+    -moz-border-radius: 0 0 3px 3px;
+    border-radius: 0 0 3px 3px;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid tr th.first-child {
+    padding: 0;
+    border-right: 0;
+    border-left-width: 1px;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid thead th {
+    padding: 6px 20px;
+    font-size: 13px;
+    font-weight: bold;
+    border-style: solid;
+    border-width: 1px 1px 1px 0;
+    border-color: #e95e01;
+    background: #f60;
+    text-align: center;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid tr th:nth-child(2) {
+    padding-left: 0;
+    text-align: left;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid td:nth-child(3), 
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid th:nth-child(3){
+    border-right: 0;
+    padding: 0;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid tbody {
+    background: #fff;
+    color: #646464;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid tbody tr.odd, 
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid tbody tr.even {
+    height: 25px;
+    line-height: 25px;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #e1e1e1 !important;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid tbody tr {
+    background: #fbfbfb;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid tr td.first-child {
+    padding: 0;
+    border-right: 0;
+    border-left-width: 1px;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid tr td:first-child {
+    width: 20px;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid tr td {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-style: solid;
+    border-color: #e1e1e1;
+    border-width: 0 1px 0 0;
+    text-align: center;
+    font-size: 14px;
+    color: #666666;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid tr td:nth-child(2) {
+    padding-left: 25px;
+    text-align: left;
+    width: 275px;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid tbody tr td.last-child {
+    border-right: 1px solid #e1e1e1 !important;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid tr td.last-child {
+    padding-right: 15px;
+    font-size: 14px;
+    color: #f60;
+    font-weight: 600;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 .wrap-tableqte {
+	-webkit-border-radius: 5px 5px 0 0;
+	-moz-border-radius: 5px 5px 0 0;
+	border-radius: 5px 5px 0 0;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid tr td:first-child input {
+    position: relative;
+    left: 15px;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid tbody tr.last-child {
+    background-color: white !important;
+    position: relative;
+    height: 43px;
+    border: 0;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid tbody tr.last-child td:first-child .form-item {
+    display: none;
+    visibility: hidden;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid tr.custom td:nth-child(2) {
+    padding-left: 0;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 .wrap-input-calcul {
+    position: absolute;
+    right: -9px;
+    top: 7px;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 .wrap-input-calcul input[type="text"],
+.page-templates- #block-system-main #pctemplates-config-form2 .wrap-input-calcul #calculeramount {
+    font-family: 'Open Sans', sans-serif;
+    height: 32px;
+    margin-left: 11px;
+    box-sizing: border-box;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 .priceblock {
+    border: 1px solid #d1d1d1;
+    border-style: none solid solid;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 .actions {
+	background: #3c3c3c;
+    padding: 0;
+    overflow: hidden;
+    height: 50px;
+    margin: 0 0 20px;
+    box-shadow: none;
+
+    border-radius: 0 0 5px 5px;
+    -webkit-border-radius: 0 0 5px 5px;
+    -moz-border-radius: 0 0 5px 5px;
+}
+.page-templates- #block-system-main #pctemplates-config-form2 .button-wrapper {
+    float: right;
+}
+.page-templates .region-content .form-actions span.price label {
+    font-size: 14px;
+    margin-right: 5px;
+    text-align: right;
+    line-height: 50px;
+    float: left;
+    clear: right;
+    color: #fff;
+    font-weight: normal;
+    margin: 0;
+    margin-right: 82px;
+}
+.page-templates .region-content .form-actions span.price .value {
+    font-size: 30px;
+    font-weight: bold;
+    color: #fff;
+    float: right;
+    margin-right: 15px;
 }

@@ -711,6 +711,7 @@ $product = Products\Factory::Get($productId);
     drupal_set_title(t('step') . ' 2 : ' . t('configure your') . ' ' . strtolower($product->name));
     $form['details'] = array(
         '#type' => 'container',
+        '#attributes' => array('class' => array('details-header')),
     );
     $form['details']['pages'] = array(
         '#type' => 'container',
@@ -921,7 +922,7 @@ $product = Products\Factory::Get($productId);
         $form['items'][$parent->groupId]['select'] = array(
             '#type'   => 'item',
             '#title'  => $parent->type,
-            '#markup' => sprintf('<div class="text">%s</div>', $parent->itemName),
+            '#markup' => sprintf('<div class="text">%s</div>', $parent->itemName),  
         );
       }
   }

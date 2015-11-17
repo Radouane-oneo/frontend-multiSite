@@ -1051,7 +1051,7 @@ $cart = \printconnect\Carts\Factory::Current();
         AttacheBillingAccount($cart, $billingAccount->id , $form_state);
   }
  
-  drupal_goto('checkout/payment');
+  drupal_goto('payment');
 
 }
 function getFotolia($jobId) {
@@ -1349,7 +1349,7 @@ function pccheckout_upload_form_validate($form, &$form_state) {
 }
 
 function pccheckout_upload_form_submit($form, &$form_state) {
-    drupal_goto('checkout/payment');
+    drupal_goto('payment');
 }
 
 function CalculateCostamount($amount,$rate,$cost) {
@@ -1783,7 +1783,7 @@ function pccheckout_payment_form_submit($form, &$form_state) {
             drupal_goto('myprintconnect/orders/' . $id . '/confirmation');
             drupal_exit();
         }else {
-            drupal_goto('checkout/payment');
+            drupal_goto('payment');
             drupal_exit();
         }
     } else {
@@ -1820,7 +1820,7 @@ function pccheckout_payment_form_submit($form, &$form_state) {
                 $url = call_user_func(
                         $paymentgateway . '_processpayment', $cart->payment_method, $customer->name, $cart->id, $cart->totalAmount, array(
                     'accept' => 'myprintconnect/orders/' . $cart->id . '/confirmation',
-                    'cancel' => 'checkout/payment',
+                    'cancel' => 'payment',
                         )
                 );
 

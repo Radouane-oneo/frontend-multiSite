@@ -33,6 +33,7 @@ function pccustomers_block_info() {
   );
   $blocks['manage'] = array(
       'info' => t('Customer `Manage your account` (TO BE REMOVED'),
+      'cache' => DRUPAL_NO_CACHE,
   );
   $blocks['profile'] = array(
       'info' => t('Customer profile links'),
@@ -97,7 +98,6 @@ function pccustomers_preprocess_page(&$vars) {
  */
 function pccustomers_block_view($delta = '') {
   global $user;
-
   $block = FALSE;
   switch ($delta) {
     case 'login':

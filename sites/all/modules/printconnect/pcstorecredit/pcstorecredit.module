@@ -146,7 +146,7 @@ function pcstorecredit_form_pccheckout_checkout_form_alter(&$form, $form_state, 
               }
 
               CartsFactory::Save($cart);
-              drupal_goto('checkout/payment');
+              drupal_goto('payment');
             } else {
               $defaultAmount = -$defaultAmount;
             }

@@ -2,7 +2,6 @@
         Drupal.behaviors.pctemplates = {
             detach: function (context) {},
             attach: function (context, settings) {
-                wrapFiledest();
                 wrapElements();
                  $(".custom.last-child > td:nth-child(2)").attr('colspan','4');
                 $("input[name='custom']").click(function(){
@@ -236,7 +235,6 @@ function addDropdownOpen () {
     
 }
 
-/*jQuery(document).ready(function() {
+jQuery(document).ready(function() {
     wrapFiledest();
-    wrapElements();
-}); */
+}); 

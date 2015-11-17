@@ -12531,3 +12531,7 @@ form#pccheckout-payment-form fieldset legend{
     color: #fff;
     float: right;
 }
+
+.page-myprintconnect h1{
+	margin-bottom: 10px;
+}

@@ -110,7 +110,7 @@
 				PriceCallback();
 			});*/
 			/* ----- technic-details -----*/
-			$('.technic-details').click(function(e){
+			/*$('.technic-details').click(function(e){
 				e.preventDefault();
 				var	prod_url = $(this).parents('ul').attr('data-link'),
 					iframe = '<iframe id="iframed-content" src="'+prod_url+'"></iframe>';
@@ -127,7 +127,7 @@
 						}
 					}, 100);
 				})
-			});
+			});*/
 			$('.close-tdc').live('click',function(){
 				$('.technic-details-container').hide('fade',function(){$('.technic-details-container').html('<i class="close-tdc"></i>');});
 			});

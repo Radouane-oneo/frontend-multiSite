@@ -5379,7 +5379,6 @@ form#pcpayments-request-form table tr,.page-checkout-payment .overview table tr,
 .page-templates- #block-system-main #pctemplates-config-form2 > div > .form-type-item, 
 .page-templates- #block-system-main #pctemplates-config-form2 > div > .form-type-checkboxes {
 	background-color: #fbfbfb;
-	margin: 0 !important;
 }
 .page-templates- #block-system-main #pctemplates-config-form2 > div > .form-type-select label, .page-templates- #block-system-main #pctemplates-config-form2 > div > .form-type-item label, 
 .page-templates- #block-system-main #pctemplates-config-form2 > div > .form-type-checkboxes label {
@@ -5409,7 +5408,7 @@ form#pcpayments-request-form table tr,.page-checkout-payment .overview table tr,
 	padding: 10px;
 }
 .page-templates- .priceblock > div.subtotal {
-	border-radius: 4px 4px 0 0;
+	border-radius: 0;
 	padding-bottom: 0;
 }
 .page-templates- .priceblock > div.total {
@@ -12366,6 +12365,8 @@ form#pccheckout-payment-form fieldset legend{
 }
 .page-templates- #block-system-main #pctemplates-config-form2 .details-header + div {
     border-top-width: 1px;
+    margin-top: 10px;
+
     -webkit-border-radius: 3px 3px 0 0;
     -moz-border-radius: 3px 3px 0 0;
     border-radius: 3px 3px 0 0;
@@ -12496,6 +12497,7 @@ form#pccheckout-payment-form fieldset legend{
 .page-templates- #block-system-main #pctemplates-config-form2 .priceblock {
     border: 1px solid #d1d1d1;
     border-style: none solid solid;
+    margin-top: -15px;
 }
 .page-templates- #block-system-main #pctemplates-config-form2 .actions {
 	background: #3c3c3c;
@@ -12514,7 +12516,7 @@ form#pccheckout-payment-form fieldset legend{
 }
 .page-templates .region-content .form-actions span.price label {
     font-size: 14px;
-    margin-right: 5px;
+    margin-right: 75px;
     text-align: right;
     line-height: 50px;
     float: left;
@@ -12522,12 +12524,10 @@ form#pccheckout-payment-form fieldset legend{
     color: #fff;
     font-weight: normal;
     margin: 0;
-    margin-right: 82px;
 }
 .page-templates .region-content .form-actions span.price .value {
     font-size: 30px;
     font-weight: bold;
     color: #fff;
     float: right;
-    margin-right: 15px;
 }

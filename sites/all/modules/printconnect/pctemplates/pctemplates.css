@@ -587,3 +587,11 @@ width: 253px;
     overflow: hidden;
     padding: 10px 15px;
 }
+.logoPlanB{
+    left: 550px;
+    position: absolute;
+    top: -29px;
+}
+.logoPlanB img{
+    width: auto !important;
+}

@@ -2,6 +2,8 @@
         Drupal.behaviors.pctemplates = {
             detach: function (context) {},
             attach: function (context, settings) {
+                wrapFiledest();
+                wrapElements();
                  $(".custom.last-child > td:nth-child(2)").attr('colspan','4');
                 $("input[name='custom']").click(function(){
                     $("input[name='quantity'][value='custom']").attr("checked","checked");
@@ -221,6 +223,20 @@ function wrapFiledest () {
     jQuery('#pctemplates-selection-form > #edit-colors').remove(); 
 }
 
-jQuery(document).ready(function() {
+function wrapElements () {
+    if (jQuery('.wrap-tableqte').length == 0 ) {
+        jQuery("#pctemplates-config-form2 table.grid").wrap("<div class='wrap-tableqte'></div>");
+    }   
+    if (jQuery('.wrap-input-calcul').length == 0) {
+        jQuery("#pctemplates-config-form2 .custom .form-item-custom, #calculeramount").wrapAll("<div class='wrap-input-calcul'></div>");
+    }   
+}
+
+function addDropdownOpen () {
+    
+}
+
+/*jQuery(document).ready(function() {
     wrapFiledest();
-});
+    wrapElements();
+}); */

@@ -706,18 +706,31 @@ function pctemplates_config_form2($form, &$form_state, $templateId, $productId =
   );
 
   $pages = 0;
-$product = Products\Factory::Get($productId);
-   
+  $product = Products\Factory::Get($productId);
+  $priceTemplate = (float)$template->designTemplates->price;
+  $priceTemplateDesc = $template->designTemplates->description;
+  
     drupal_set_title(t('step') . ' 2 : ' . t('configure your') . ' ' . strtolower($product->name));
     $form['details'] = array(
         '#type' => 'container',
+        '#attributes' => array('class' => array('details-header')),
     );
     $form['details']['pages'] = array(
         '#type' => 'container',
         '#attributes' => array('class' => array('pages')),
     );
     $pages = 0;
-    
+    if($priceTemplate){
+        if($language->prefix == 'befr'){
+            $form['details']['pages']['logoPlanB'] = array(
+            '#markup' => '<div class="logoPlanB"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/planBefr.png"></div>'
+            );  
+        }elseif($language->prefix == 'benl'){
+            $form['details']['pages']['logoPlanB'] = array(
+            '#markup' => '<div class="logoPlanB"><img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/planBenl.png"></div>'
+            ); 
+        }
+    }
     foreach ($dtTemplate->thumbnails as $thumbnail) {
 
         $page = $thumbnail->page;
@@ -921,7 +934,7 @@ $product = Products\Factory::Get($productId);
         $form['items'][$parent->groupId]['select'] = array(
             '#type'   => 'item',
             '#title'  => $parent->type,
-            '#markup' => sprintf('<div class="text">%s</div>', $parent->itemName),
+            '#markup' => sprintf('<div class="text">%s</div>', $parent->itemName),  
         );
       }
   }
@@ -1151,8 +1164,6 @@ $product = Products\Factory::Get($productId);
     $price = 0;
   }
   
-  $priceTemplate = (float)$template->designTemplates->price;
-  $priceTemplateDesc = $template->designTemplates->description;
   if($priceTemplate){
       $form['priceTemplate'] = array(
         '#id' => 'price-template-block',

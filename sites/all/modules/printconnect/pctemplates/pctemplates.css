@@ -523,7 +523,7 @@ margin: 0 16px -10px 0px !important;
   padding-right: 15px;
   font-size: 16px;
 }
-.quanityOptions .custom.last-child>td:nth-child(2) .amount{position: relative;padding: 15px 0;}
+.quanityOptions .custom.last-child>td:nth-child(2) .amount{position: relative;padding: 10px 0;}
 .quanityOptions .custom.last-child>td:nth-child(2) .amount:after{
   clear: both;
   width: 100%;
@@ -532,11 +532,12 @@ margin: 0 16px -10px 0px !important;
   content: '';
 }
 .quanityOptions .custom.last-child>td:nth-child(2) .amount .label{
-color: #999999;
-display: inline-block;
-font-size: 13px;
-font-weight: 700;
-width: 253px;
+    text-indent: 0;
+    font-size: 13px;
+    color: #999999;
+    line-height: 16px;
+    display: inline-block;
+    vertical-align: middle;
 }
 .quanityOptions .custom.last-child>td:nth-child(2) .amount .form-item{  
   display: inline-block;

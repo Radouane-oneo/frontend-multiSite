@@ -1,0 +1,122 @@
+<fieldset id="invoice-address" class="inner_edit_form_adresseFacturation tohiding styleform form-wrapper" style="display: none;">
+<div class="legend legend2">
+    <span class="fieldset-legend">
+        <div class="invoiceaddress"><%= model.labels['BillingAccount'] %> </div>
+    </span>  
+</div>
+<div class="fieldset-wrapper">
+    <fieldset id="invoice" class="form-wrapper">
+        <div class="fieldset-wrapper nombttom">
+            <span id="fademe" class="black_overlay">
+                <fieldset class="form-wrapper" id="edit-invoice-address-current-popup">
+                    <div class="fieldset-wrapper">
+                        <div id="light" class="white_content">
+                            <div id="edit-invoice-address-current-popup-message" class="form-wrapper">
+                                <p><%= model.labels['existingBA'] %>
+                                </p>
+                                <input type="button" name="valid-button" value="Valider" class="valid-button-btt">
+                                <input type="button" id="null-address-vat" name="null_address_vat" value="Annuler" class="button_null_address_vat">
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </span>
+            <div class="headerforminvoice forminvoiceheader">
+                <div class="blocright">
+                    <span><%= model.labels['selectBA'] %></span>
+                    <%= model.labels['OrCreateBA'] %>
+                </div>
+                <div class="form-item form-type-select form-item-invoice-address-current-select">
+                    <select id="baEditSelect" class="selectBilling2 form-select"  
+                            name="invoice[address][current][select]" title="">
+                        <option value="0" class="addNewSA"><%= model.labels['addNewBA'] %></option>
+                        <% _.each(model.billingAccouts, function(billingAccout){ 
+                        var selected =(billingAccout.id == model.defaultBA.id)
+                        ? 'selected = "selected"' : "";%>
+                        <option <%=selected%> value="<%= billingAccout.id %>">
+                            <%= (billingAccout.company)?(billingAccout.company):(billingAccout.name) %>&nbsp
+                            - <%= billingAccout.street%>, 
+                            <%= billingAccout.postalCode%>&nbsp;<%= billingAccout.city%>
+                        </option>
+                        <%}); %>
+                    </select>
+                </div>
+            </div>
+            <div class="wrap_Form_invoice_iteam plr brbotom">
+                <div class="form-item form-type-textfield form-item-invoice-address-current-name facturation-adresse-current-name">
+                    <label for="edit-invoice-address-current-name">
+                        <%= model.labels['BAName'] %> <span class="form-required" title="BAFieldsRequired">*</span>
+                    </label>
+                    <input type="text" id="baName" class="baInputs" value="<%= model.defaultBA.name %>" size="30" maxlength="128"
+                   name = "name" class="form-text required" >
+                </div>
+                <div class="form-item form-type-textfield form-item-invoice-address-current-street">
+                    <label for="edit-invoice-address-current-street">
+                        <%= model.labels['StreetBA'] %> <span class="form-required" title="BAFieldsRequired">*</span>
+                    </label>
+                    <input type="text" id="baStreet" value="<%= model.defaultBA.street %>" class ="baInputs" name = "street" size="30" maxlength="128" class="form-text required" >
+                </div>
+                <div class="form-item form-type-textfield form-item-invoice-address-current-postalCode">
+                    <label for="edit-invoice-address-current-postalcode">
+                        <%= model.labels['postalCodeCityBA']%> <span class="form-required" title="BAFieldsRequired">*</span>
+                    </label>
+                    <input placeholder="1000" id="baPostalCode" type="text"
+                           value="<%= model.defaultBA.postalCode%>" class="baInputs"  name = "postal code" size="6" maxlength="128" class="form-text required" >
+                </div>
+                <div class="form-item form-type-textfield form-item-invoice-address-current-city">
+                    <label class="element-invisible" for="edit-invoice-address-current-city">
+                        <%= model.labels['CityBA']%><span class="form-required" title="BAFieldsRequired">*</span>
+                    </label>
+                    <input placeholder="Bruxelles" type="text" id="baCity" value="<%= model.defaultBA.city%>" class="baInputs" name = "city"
+                           size="30" maxlength="128" class="form-text required" >
+                </div>
+                <div class="form-item form-type-select form-item-invoice-address-current-country facturation-adresse-current-country">
+                    <label for="edit-invoice-address-current-country">
+                        <%= model.labels['CountryBA']%> <span class="form-required" title="BAFieldsRequired">*</span>
+                    </label>
+                    <select  id="countryList" class="baInputsSelect selectStyle form-select required" tabindex="-1" title="Pays *">
+                        <% _.each(model.countries, function(country){ var selected =(country.id == model.defaultBA.country)
+                        ? 'selected = "selected"' : "";%>
+                        <option <%= selected %> value="<%= country.id %>"><%= country.tag%></option>
+                        <% }); %>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-item form-type-checkbox form-item-invoice-address-current-isCompany company-box plr">
+                <label for="edit-invoice-address-current-iscompany"><%= model.labels['TVANumber'] %></label>
+                <input id="isUserCompany" type="checkbox" class="form-checkbox">
+		<div class="" style="display:none;">
+                    <div class="messages error vatAlreadyUsed">
+                        <ul>
+                            <li><%= model.labels['VatAlreadyUsed'] %></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="form-item form-type-textfield form-item-invoice-address-current-company plr" style="display: none;">
+                <label for="edit-invoice-address-current-company"><%= model.labels['CompanyBA'] %> <span class="form-required" title="BAFieldsRequired">*</span></label>
+                <input id="companyInput" name="company" type="text" value="<%= (model.defaultBA) ? model.defaultBA.company : '' %>" size="30" maxlength="128" class="form-text">
+            </div>
+            <div id="vatNumber">
+                <div class="plr form-item form-type-vatfield form-item-invoice-address-current-vatNumber vat-validation-processed" style="display: none;">
+                    <label for="vatNumber">
+                        <%= model.labels['VatNumberBA']%> <span class="form-required" title="BAFieldsRequired">*</span>
+                    </label>
+                    <div class="wrap_group_input clear">
+                        <input class="country form-text"  type="text" id="countryIsoBA" readOnly = "readOnly"
+                           value="<%= (model.defaultBA) ? model.defaultBA.iso : '' %>" size="2" maxlength="2">
+                        <input class="number form-text" type="text" id="vatNumberBA" name="vat number" 
+                           value="<%= (model.defaultBA) ? model.defaultBA.vatNumber.substring(2, model.defaultBA.vatNumber.length) : '' %>" size="60" maxlength="128">
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <div id="edit-invoice-address-actions" class="form-wrapper plr">
+        <input type="hidden" name="invoice[address][actions][message]" value="message tva exist">
+        <input type="submit" id="saveEditBA" name="invoice_address_submit" value="<%= model.labels['save'] %>" class="form-submit ui-button ui-widget ui-state-default ui-corner-all" role="button">
+    </div>
+</div>
+</fieldset>

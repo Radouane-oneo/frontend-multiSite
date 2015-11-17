@@ -2,6 +2,8 @@
         Drupal.behaviors.pctemplates = {
             detach: function (context) {},
             attach: function (context, settings) {
+                wrapFiledest();
+                wrapElements();
                  $(".custom.last-child > td:nth-child(2)").attr('colspan','4');
                 $("input[name='custom']").click(function(){
                     $("input[name='quantity'][value='custom']").attr("checked","checked");
@@ -22,7 +24,7 @@
                     .wrap('<a href="#"></a>');
                 $('.page-templates .filters').find('legend a')
                     .unwrap().wrap('<h3></h3>');
-                $('.page-templates .filters').find('h3 , div.fieldset-wrapper').wrapAll('<div id="accordion"></div>');
+                /*$('.page-templates .filters').find('h3 , div.fieldset-wrapper').wrapAll('<div id="accordion"></div>');*/
                 var bloc = $('#pctemplates-selection-form').find('ul.selected').parent().clone();
                 $('#pctemplates-selection-form').find('ul.selected').parent().remove();
                 $('#edit-colors').after(bloc);
@@ -213,3 +215,28 @@
             }
         }
     })(jQuery);
+
+function wrapFiledest () {
+    var colorsDiv = jQuery("#edit-colors");
+
+    jQuery('.filtersWrap').append(colorsDiv);
+    jQuery('#pctemplates-selection-form > #edit-colors').remove(); 
+}
+
+function wrapElements () {
+    if (jQuery('.wrap-tableqte').length == 0 ) {
+        jQuery("#pctemplates-config-form2 table.grid").wrap("<div class='wrap-tableqte'></div>");
+    }   
+    if (jQuery('.wrap-input-calcul').length == 0) {
+        jQuery("#pctemplates-config-form2 .custom .form-item-custom, #calculeramount").wrapAll("<div class='wrap-input-calcul'></div>");
+    }   
+}
+
+function addDropdownOpen () {
+    
+}
+
+/*jQuery(document).ready(function() {
+    wrapFiledest();
+    wrapElements();
+}); */

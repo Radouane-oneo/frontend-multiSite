@@ -422,9 +422,9 @@ function pccheckout_forgotpassword_callback() {
 
 function pccheckout_picker_callback(pup) {
 
-    jQuery('#pccheckout-checkout-form .pup').replaceWith(pup.html);
+/*    jQuery('#pccheckout-checkout-form .pup').replaceWith(pup.html);
     jQuery('#pccheckout-checkout-form input[name="shipping[pickup][id]"]').val(pup.id);
-    jQuery('#pccheckout-checkout-form input[name="shipping[pickup][country]"]').val(pup.countryCode);
+    jQuery('#pccheckout-checkout-form input[name="shipping[pickup][country]"]').val(pup.countryCode);*/
 
 
     jQuery.fancybox.close();

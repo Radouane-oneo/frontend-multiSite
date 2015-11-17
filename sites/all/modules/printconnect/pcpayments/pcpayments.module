@@ -53,7 +53,24 @@ function _pcpayments_checkout_payment_created($paymentId, $amount, $params) {
 }
 
 function pcpayments_menu() {
-
+    
+    //new hook menu OW
+    $items['payment'] = array(
+          'title' => 'Payment',
+          'page callback' => 'new_payment_loadpage',
+          'page arguments' => array(''),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+    $items['payment/ajax/submitpayment/%/%/%'] = array(
+          'page callback' => 'new_payment_submit',
+          'page arguments' => array(3,4,5),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+    //end new hook menu OW
+    
+    
   $items['paymentrequest/key/%'] = array(
       'title' => 'Payment request',
       'page callback' => 'drupal_get_form',
@@ -145,6 +162,134 @@ function pcpayments_menu() {
 
   return $items;
 }
+// ================================== ORDER WEEK V3 FUNCTIONS ===================================
+
+// main function to load payment page
+function new_payment_loadpage() {
+    global $language;
+
+    $labels = array(        
+        "orderOverview" => t('Order overview'),
+        "controlPro" => t('Control professional'),
+        "fileCheck" => t('File check'),
+        "totalExcl" => t('Total excl. Vat'),
+        "description" => t('Description'),
+        "fotoliaImg" =>  t('Fotolia Image'),
+        "yourPaymentMethod" =>  t('Choose your payment method'),
+        "controleProfessionel" => t('Contrôle professionel de'),
+        "free" => t('free'),
+        "ex" => t('ex'),
+        "price" => t('Price'),
+        "htva" => t('Total HTVA'),
+        "subTotalWithTVA" => t('Total TTC'),
+        "agree" => t('I agree with the !termsandconditionslink', array('!termsandconditionslink' => theme('generalconditionslink'))),
+        "agreeMessage" => t('The field I agree with the <a href="/benl/node/67" target="_blank">terms and conditions</a> is required'),
+        "paynow" => t('Pay now'),
+        "textPayment" => t('textPayment'),
+        "textImagePayment" => t('textImagePayment'),
+        "methodePaymentNull" => t('methodePaymentNull'),        
+        "cher" => t('cher')
+    );
+
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Cache-Control: post-check=0, pre-check=0", false);
+    header("Pragma: no-cache");
+
+    $script = "<script type='text/javascript'>
+        var GlobalLandId = ".$language->id.";
+        var GlobalLabels = ".json_encode($labels).";
+        var GlobalPrefix = '".$language->prefix."';
+        var GlobalVat = 0.21;
+        var isConnected = " . (isset($_SESSION['customerid']) ? 1 : 0) . ";
+    </script>";
+    $script .= "<style>#box-progress{display: block;}</style>";
+    
+    $script .= '<link rel="stylesheet" href="/webapp/js/libs/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />';
+    $script .= '<script data-main="/webapp/js/payment/main" src="/webapp/js/libs/requirejs/require.js"></script>';
+    $script .= '<div id="myPayment"></div>';
+
+    return $script;
+}
+
+// function to get json cart
+function new_payment_ajax_getpayment() {
+    $response = Factory::GetPaymentJson();
+
+    Dal::BuildJson($response->data);
+}
+
+// function to get json of methods payments
+function new_payment_ajax_getmethodpayments() {
+    $methodsPayments = printconnect\Carts\Shipping\Factory::GetMethodsPayments();
+
+    $methodsPayments = json_decode($methodsPayments->data, 1);
+
+    foreach ($methodsPayments as $key => $type) {
+        //a suivre
+        $label = $type['shippingType']['tag'];
+        if ($type['price'] > 0) {
+            $label .= '(' . t('!value exc. VAT', array('!value' => theme('price', array('value' => $type['price'], 'free' => TRUE)))) . ' / ' . t('!value inc. VAT', array('!value' => theme('price', array('value' => $type['price'] * (1 + $_SESSION['shop_vat']), 'free' => TRUE)))) . ') *';
+        }
+
+        $shippingsTypes[$key]['shippingType']['tag'] = $label;
+    }
+
+    Dal::BuildJson($shippingsTypes);
+}
+function new_payment_ajax_selectmethodpayment($shippingTypeId) {
+    $response = printconnect\Carts\Payments\Factory::SetMethodPayment($shippingTypeId);
+
+    Dal::BuildJson(json_decode($response->data, 1));
+}
+
+function new_payment_submit($paymentId, $cartId, $totalAmount) {
+    $cart = printconnect\Carts\Factory::Current();
+    if ($totalAmount <= 0) {
+        \printconnect\Carts\Factory::Process($cart, 'invoice');
+        drupal_goto('myprintconnect/orders/' . $id . '/confirmation');
+        drupal_exit();
+    }
+
+     // A VOIR   $cart->storeCredit = 0;
+  
+    $paymentMethod = \printconnect\PaymentMethods\Factory::Get($paymentId);
+    switch (strtolower($paymentMethod->paymentMethod->internalName)) {
+        case 'cod':
+            \printconnect\Carts\Factory::Process($cart, 'cod');
+            drupal_goto('myprintconnect/orders/' . $cartId . '/confirmation');
+            break;
+        case 'invoice' :
+            \printconnect\Carts\Factory::Process($cart, 'invoice');
+            drupal_goto('myprintconnect/orders/' . $cartId . '/confirmation');
+            break;
+        case 'transfer' :
+            \printconnect\Carts\Factory::Process($cart, 'transfer');
+            drupal_goto('myprintconnect/orders/' . $cartId . '/confirmation');
+            break;
+        case 'cheque' :
+            \printconnect\Carts\Factory::Process($cart, 'cheque');
+            drupal_goto('myprintconnect/orders/' . $cartId . '/confirmation');
+            break;
+        default:
+            $paymentgateway = 'pcpayments';
+            if (function_exists(($paymentgateway . '_processpayment'))) {
+
+                $url = call_user_func(
+                        $paymentgateway . '_processpayment', $paymentId, $customer->name, $cartId, $totalAmount, array(
+                    'accept' => 'myprintconnect/orders/' . $cartId . '/confirmation',
+                    'cancel' => 'payment',
+                        )
+                );
+
+                $_SESSION['agree'][$id] = TRUE;
+                drupal_goto($url);
+            } else {
+                throw new Exception(t('Not implemented.'));
+                form_set_error('method', t('Not implemented.'));
+            }
+            break;
+    }
+}
 
 function pcpayments_block_info() {
   $blocks['methods'] = array(
@@ -192,7 +337,7 @@ function pcpayments_processpayment($paymentMethodId, $customerName, $orderId, $a
     // $rid = $request->orderid;
     $rid = $requestInfo->orderid;
     // $rid = $orderId;
-    $requestInfo->back = 'checkout/payment';
+    $requestInfo->back = 'payment';
   }
 
   //var_dump($request);
@@ -338,7 +483,7 @@ function _pcpayments_callback() {
 }
 
 function _pcpayments_cancel($args) {
-  drupal_goto('checkout/payment');
+  drupal_goto('payment');
 }
 
 function _pcpayments_accept($args) {

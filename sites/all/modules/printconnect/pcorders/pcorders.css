@@ -1,16 +1,16 @@
-#pcorders-order-form .item > .image {
+/*#pcorders-order-form .item > .image {
   float: left;
   width: 30%;
-}
-#pcorders-order-form .item > .description {
+}*/
+/*#pcorders-order-form .item > .description {
   float: right;
   width: 70%;
-}
-#pcorders-order-form .item > .description > .price {
+}*/
+/*#pcorders-order-form .item > .description > .price {
   float: right;
   width: 100px;
   text-align: right;
-}
+}*/
 #pcorders-order-form .delivery, #pcorders-order-form .invoice {
   box-sizing:border-box;
   -moz-box-sizing:border-box; /* Firefox */
@@ -19,10 +19,11 @@
   float:left;
   margin-left:0;
   margin-right:2%;
+  padding: 18px 0;
+  position: relative;
 }
 #pcorders-order-form .invoice{
   margin-right:0;
-  margin-left:2%;
 }
 
 #pcorders-order-form .current .status {
@@ -36,19 +37,19 @@
   font-weight:bold;
   font-size:larger;
 }
-#pcorders-order-form .item-list ul li {
+/*#pcorders-order-form .item-list ul li {
   margin: 0 0 0 20px;
-}
+}*/
 
 #pcorders-order-form .currentorderstatus{
   font-size:x-large;
   font-weight: bold;
 
 }
-.labelOrder {
+/*.labelOrder {
     font-weight: bold!important;
     line-height: 2.6em;
-}
+}*/
 #pcorders-order-form .order{
   clear:both;
 }
@@ -70,8 +71,14 @@
   right:0;
 }
 .page-myprintconnect table {
-    margin-left: -7px!important;
-    margin-top: -5px!important;
+    width: 100%;
+}
+.page-myprintconnect .fieldset-wrapper{
+    padding: 0;
+    overflow: hidden;
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
 }
 .page-myprintconnect #edit-recentinvoices {
     margin-top: 30px;
@@ -86,10 +93,7 @@
 margin: 0;
 padding: 0;
 }
-#pcorders-order-form #edit-order #edit-details .description >.labelOrder{
-	margin-left: 21px;
-}
 #pcorders-order-form .recommander{
     float: right;
     margin-bottom: 20px;
-}
+} 

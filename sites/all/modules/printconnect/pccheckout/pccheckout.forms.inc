@@ -38,15 +38,14 @@ function pccheckout_personal_form($form, &$form_state) {
         }
     }
 
-    foreach (\printconnect\Countries\Factory::GetAll() as $country) {
+    
         $countries = array (
        "21"=>t('Belgique'),
        "73"=>t('France'),
        "150"=>t('Pays-Bas'),
-       "199"=>t('Espagne'),
        "124"=>t('Luxembourg'),
      );
-    }
+    
 
     if ($defaultBillingAddress) {
         $country = \printconnect\Countries\Factory::Get($defaultBillingAddress->country);
@@ -147,6 +146,7 @@ function pccheckout_personal_form($form, &$form_state) {
         '#required' => TRUE,
         '#empty_value' => 0,
         '#options' => $countries,
+        '#attributes' => array('class' => array('select-country-personal')),
     );
 
     
@@ -161,7 +161,14 @@ function pccheckout_personal_form($form, &$form_state) {
         '#attributes' => array(
             'id' => 'isUserCompany',
             'checked'=> 'false'
-        )
+        ),
+	'#suffix' => '<div class="" style="display:none;">
+	    <div class="messages error vatAlreadyUsed">
+  	        <ul>
+		    <li>'.t('vat Already used').'</li>
+  	        </ul>
+	    </div>
+	</div>'
     );
 
     $form['company']['company'] = array(
@@ -192,9 +199,37 @@ function pccheckout_personal_form($form, &$form_state) {
         '#name' => 'personal-submit',
         '#type' => 'submit',
         '#value' => t('Continue'),
-        '#attributes' => array('class' => array('action', 'button', 'large', 'continue')),
+        '#attributes' => array('class' => array('action', 'button', 'large', 'continue', 'save-button')),
     );
 
+    $labels = array(
+        "isRequired" => t('!name field is required.'),
+        "invalidCharactersLength" => t('invalidCharactersLength'),
+        "invaliEmail" => t('Email is not valid'),
+        "phoneNumberError" => t('Please enter your Phone Number as 10 Number.'),        
+        "invalidPostalCode" => t('Le champ Code postal doit être numérique.'),
+	"invalidPostalCodeLenghtBE" => t('Le champ Code postal doit contenir 4 chiffres.'),
+    	"invalidPostalCodeLenghtFR" => t('Le champ Code postal doit contenir 5 chiffres.'),
+    	"invalidPostalCodeLenghtNL" => t('Le champ Code postal doit contenir maximum 7 caractéres.'),
+    	"invalidPostalCodeLenghtLU" => t('Le champ Code postal doit contenir 4 chiffres.'),
+
+    	"invalidPostalCodeContentBE" => t('Le champ Code postal doit contenir seulement des chiffres.'),
+    	"invalidPostalCodeContentFR" => t('Le champ Code postal doit contenir seulement des chiffres.'),
+    	"invalidPostalCodeContentLU" => t('Le champ Code postal doit contenir seulement des chiffres.'),
+    );
+
+    $form['scriptForLabels'] = array(
+        '#markup' => "<script>var labels = ".json_encode($labels).";</script>",
+    );
+    $form['popup'] = array(
+      '#markup' => '<div id="popUpContainer" style="display: none;">
+      	<div id="light" class="white_content">
+            <div id="edit-invoice-address-current-popup-message" class="form-wrapper">
+                <p>'.t('vat number already exist').'</p>
+            </div>
+    	</div>
+       </div>',
+    );
     $form['#id'] = 'pccheckout-personal-form';
 
     $form_state['storage']['customer'] = $customer;
@@ -1016,7 +1051,7 @@ $cart = \printconnect\Carts\Factory::Current();
         AttacheBillingAccount($cart, $billingAccount->id , $form_state);
   }
  
-  drupal_goto('checkout/payment');
+  drupal_goto('payment');
 
 }
 function getFotolia($jobId) {
@@ -1314,7 +1349,7 @@ function pccheckout_upload_form_validate($form, &$form_state) {
 }
 
 function pccheckout_upload_form_submit($form, &$form_state) {
-    drupal_goto('checkout/payment');
+    drupal_goto('payment');
 }
 
 function CalculateCostamount($amount,$rate,$cost) {
@@ -1343,10 +1378,10 @@ function pccheckout_payment_form($form, &$form_state) {
     }
     drupal_add_js(array('pccheckout' => array('VatCart' => $VatCart)), array('type' => 'setting'));
 
-    if(!isset($cart->billingAccount) or empty($cart->billingAccount)){
+    /*if(!isset($cart->billingAccount) or empty($cart->billingAccount)){
     drupal_goto('checkout/invoiceanddelivery');
     drupal_set_message(t('Please check your order because no invoice address related with it'), 'error');
-    }    
+    } */   
     $paymentMethods = \printconnect\PaymentMethods\Factory::GetAll();
     $form['payment']['hidden'] = array(
         '#prefix' => '<div id="hiddenPricesPayment">',
@@ -1748,7 +1783,7 @@ function pccheckout_payment_form_submit($form, &$form_state) {
             drupal_goto('myprintconnect/orders/' . $id . '/confirmation');
             drupal_exit();
         }else {
-            drupal_goto('checkout/payment');
+            drupal_goto('payment');
             drupal_exit();
         }
     } else {
@@ -1785,7 +1820,7 @@ function pccheckout_payment_form_submit($form, &$form_state) {
                 $url = call_user_func(
                         $paymentgateway . '_processpayment', $cart->payment_method, $customer->name, $cart->id, $cart->totalAmount, array(
                     'accept' => 'myprintconnect/orders/' . $cart->id . '/confirmation',
-                    'cancel' => 'checkout/payment',
+                    'cancel' => 'payment',
                         )
                 );
 

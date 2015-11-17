@@ -1103,7 +1103,6 @@ and (max-device-width : 1024px) {
     top: -50px;
 }
 #result{
-    margin-top: 77px;
     clear: both;
 }
 
@@ -1386,7 +1385,7 @@ padding-bottom: 10px;
 
 #pcflyerstores-search-form .stores-form{
     float: left;
-    width: 110px;
+    width: 109px;
 }
 #pcflyerstores-search-form #edit-stores ul{
 padding-left: 0;
@@ -1461,9 +1460,42 @@ box-shadow: 0 0 2px #999;
 }*/
 
 #pcflyerstores-search-form span.Slink {
-margin-right: 15px;
+    font-size: 12px;
+    background: rgb(255,125,26);
+    background: -webkit-linear-gradient(top,rgb(255,145,50) 0%,rgb(255,125,26) 100%);
+    background: -moz-linear-gradient(center top,rgb(255,145,50) 0%,rgb(255,125,26) 100%) repeat scroll 0% 0% transparent;
+    color: rgb(255,255,255);
+    border-radius: 3px;
+    display: block;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
 }
 
 #pcflyerstores-search-form #edit-results ul li{
     list-style: none ;
+}
+
+#pcflyerstores-search-form a.flyerstore-btn{
+    overflow: hidden;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.store-vacance{
+    background-color: #7bbb07;
+    padding: 7px 3%;
+    color: #fff;
+    line-height: 15px;
+    font-size: 12px;
+    font-family: 'Open Sans',sans-serif;
+    clear: both;
+    text-align: center;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    margin-right: 9px;
+    clear: both;
+    float: left;
+    width: 94%;
 }

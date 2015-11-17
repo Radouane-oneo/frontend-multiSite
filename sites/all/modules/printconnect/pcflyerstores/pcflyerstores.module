@@ -319,7 +319,7 @@ function theme_pcflyerstores_store_summary($vars) {
 
     $html = '';
     if ($store) {
-        $url = 'stores/' . $store->id;
+        $url = 'flyerstores/' . $store->id;
         $html .= '<span id="store_id_'.$store->id.'"  class="place" city="'.$store->city.'" postalCode="'.$store->postalCode.'"  po="'.$store->po.'" position="'.$store->latitude.'_'.$store->longitude.'">' . $store->city . ' </span><br/><span class="name">' . $store->name . '</span> <br/>' . $store->postalCode;
     }
     return l($html, $url, array('attributes' => $attributes, 'html' => TRUE));
@@ -516,12 +516,15 @@ function _pcflyerstores_formitems() {
             '#attributes' => array('class' => array('default')),
             'html' => array(
                 '#markup' => '<div id="map-canvas" style= "height:100%;"></div>
-                 <p id="jsonContainer" style="display:none;">'.json_encode($storepwithPositions).'</p>
-                 <p id="zipcod" style="display:none;">'.json_encode($zipcod).'</p>
-                 <p id="location" style="display:none;">'.json_encode($location).'</p>
-		 <p id="storeLink" style="display:none;">'.t('storeLink').'</p>
-		 <p id="selectStore" style="display:none;">'.t('selectStore').'</p>
-		 <p id="cartDate" style="display:none;">'.$cart->expectedShippingDate.'</p>'
+                <p id="jsonContainer" style="display:none;">'.json_encode($storepwithPositions).'</p>
+                <p id="zipcod" style="display:none;">'.json_encode($zipcod).'</p>
+                <p id="location" style="display:none;">'.json_encode($location).'</p>
+                <p id="storeLink" style="display:none;">'.t('storeLink').'</p>
+                <p id="selectStore" style="display:none;">'.t('selectStore').'</p>
+                <p id="cartDate" style="display:none;">'.$cart->expectedShippingDate.'</p>
+                <p id="storeMsg" style="display:none;">'.t('storeMsgLine1').'</p>
+                <p id="storeMsgEnd" style="display:none;">'.t('storeMsgEnd').'</p>
+                <p id="storeMsgInclus" style="display:none;">'.t('storeMsgInclus').'</p>'
             ),
         ),
     );
@@ -854,31 +857,9 @@ function pcflyerstores_invoiceanddelivery_form_shipping_submit($form, &$form_sta
 
 
 function pcflyerstores_picker_callback($id) {
-    $cart = \printconnect\Carts\Factory::Current();
-    if ($cart) {
-        $store = \printconnect\Stores\Factory::Get($id);
-        \printconnect\Stores\Factory::LoadStore($store);
-	    $cart->pickuppoint = $store;
-        \printconnect\Carts\Factory::SaveStore($cart);
-    }
+    $store = \printconnect\Stores\Factory::Get($id);
+    \printconnect\Stores\Factory::LoadStore($store);
+    $response = \printconnect\Carts\Factory::SetPickupPoint($store);
 
-    $link = array(
-        '#theme' => 'pcflyerstores_store_link',
-        '#store' => $store,
-    );
-
-    $info = array(
-        '#theme' => 'pcflyerstores_store_info',
-        '#store' => $store,
-    );
-
-
-
-    drupal_json_output(array(
-        'id' => $id,
-        'countryCode' => $store->country,
-        'link' => drupal_render($link),
-        'info' => drupal_render($info),
-    ));
-    exit;
+    \printconnect\Dal::BuildJson(json_decode($response->data, 1));
 }

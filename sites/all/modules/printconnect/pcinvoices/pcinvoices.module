@@ -104,9 +104,9 @@ function pcinvoices_list_form($form, $form_state) {
     }
 
     $rows[] = array(
-        array('data' => $flag),
-        array('data' => format_date(strtotime($invoice->creationDate), 'short')),
-        array('data' => ''),
+        /*array('data' => $flag),*/
+        array('data' => format_date(strtotime($invoice->creationDate), 'custom', 'd/m/Y')),
+        /*array('data' => ''),*/
         array(
             'data' => theme('price', array('value' => $invoice->totalAmount, 'attributes' => array('class' => array($class)))),
         ),
@@ -121,7 +121,7 @@ function pcinvoices_list_form($form, $form_state) {
 
   $form['invoices']['list'] = array(
       '#type' => 'item',
-      '#markup' => theme('table', array('rows' => array_reverse($rows), 'header' => array('', t('Date'), t('Method'), t('Amount'), t('Outstanding'), t('Order'), t('Invoice')), 'empty' => t('No invoices found'), 'attributes' => array('class' => array('list'))))
+      '#markup' => theme('table', array('rows' => array_reverse($rows), 'header' => array(/*'', */t('Date'), /*t('Method'), */t('Amount'), t('Outstanding'), t('Order'), ''/*t('Invoice')*/), 'empty' => t('No invoices found'), 'attributes' => array('class' => array('list'))))
   );
 
 

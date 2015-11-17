@@ -22,7 +22,7 @@ stylesheets-conditional[IE][all][] = css/ie.css
 #stylesheets[all][] = css/stylelsdr2.css
 #stylesheets[all][] = css/style470f.css
 #stylesheets[all][] = css/preview470f.css
-stylesheets[all][] = css/select2.css
+stylesheets[all][] = css/select2.css 
 
 scripts[] = libraries/jQueryui/jQueryui.js
 scripts[] = libraries/Jcookies/cookies.js
@@ -31,6 +31,7 @@ scripts[] = libraries/scrollBarPlugin/jquery.mCustomScrollbar.concat.min.js
 scripts[] = libraries/homeSlider/homeslider.js
 scripts[] = libraries/jcarousellite/jcarousellite.js
 scripts[] = libraries/jquery.selectBox/jquery.selectBox.js
+
 
 #scripts[] = libraries/mjslider/jquery.themepunch.plugins.min00ad.js
 #scripts[] = libraries/mjslider/jquery.themepunch.revolution.min00ad.js
@@ -41,11 +42,11 @@ scripts[] = js/selectivizr-min.js
 #scripts[] = libraries/mjslider2/jquery.themepunch.revolution.min470f.js
 
 
-scripts[] = js/flyer.js
+
 scripts[] = js/flyerstrap.js
 #scripts[] = js/sldr.js
 scripts[] = js/select2.min.js
-
+scripts[] = js/flyer.js
 
 regions[announcements] = Announcements
 regions[top] = Top
@@ -62,4 +63,5 @@ regions[content] = Content
 regions[fronttabs] = Front Tabs
 regions[contentbottom] = Content bottom
 regions[footer] = Footer
+regions[footer_second] = Second Footer
 regions[closure] = Closure

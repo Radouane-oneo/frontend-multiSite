@@ -1,0 +1,37 @@
+<form action="/panier" method="post" id="pccart-cart-form" accept-charset="UTF-8">
+	<div>
+		<div class="cart clearfix form-wrapper" id="edit-cart">
+            <% if(!model.id || model.orderItems.length == 0) { %>
+            <div class="form-item form-type-item cart-empty">
+                <%= config.labels['cartIsEmpty'] %>
+                <div class="form-item form-type-item continue-shopping">
+                	<a href="/<%= config.prefix  %>/products"><%= config.labels['continue'] %></a>
+           		</div>
+            </div>            
+            <% } else { %>
+            	<a href="/<%= config.prefix  %>/cart/offer" class="download" target="_blank" title="<%= config.labels['downloadDevis'] %>"><%= config.labels["downloadDevis"] %></a>
+
+            <% } %>
+            <div id="errorBox">
+
+            </div>
+
+            <div id="jobBox">
+				
+			</div>
+
+			<div id="bottomBox">
+				
+			</div>
+
+			<!-- Show detail technic of a job-->
+			<div id="technic-details" class="technic-details-container">
+			
+			</div>
+            <% if(model.id && model.orderItems.length != 0) {%>
+                <a href="/products"><span class="linkproduct"><%= config.labels['linkProduct'] %></span></a>            
+            <% } %>
+            <div id='WeAlsoMake'></div> 
+		</div>
+	</div>
+</form>

@@ -1,0 +1,119 @@
+<fieldset class="jobfull items cartItemsContainer form-wrapper orderBox" data-orderItem="<%= model.id %>">
+	<div class="fieldset-wrapper">
+		<div class="item job clearfix form-wrapper">
+			<div class="refJob-code">
+				<div class="form-item">
+					<label for=""><%= config.labels["refjob"] %></label>
+					<input class="refjobTxt" type="text" id="edit-cart-items-1572303-files-description-refjob" name="cart[items][1572303][files][description][refJob]" value="<%= model.refJob %>" size="20" maxlength="25">
+				</div>
+
+				<div class="items_actions">
+					<span data-orderItem="<%= model.id %>" class="removecart"></span>
+				</div>
+			</div>
+			<div class="jobFull-img image form-wrapper">
+				<img src="https://dt-printconcept-production.s3.amazonaws.com/<%= model.files[0].thumbnail %>">
+				<a href="<%= config.designtoolLink %><%= model.configuration.designtoolPreviewLink %>" target="blank" class="previewlink"><%= config.labels["previsualis"] %></a>
+				<%
+				var urlCallback = encodeURIComponent("http://" + document.location.host + "/" + config.prefix + "/cart/callback");
+    			var designtoolLink = model.configuration.designtoolLink.replace(/(dcb=).*?(&)/,'$1' + urlCallback + '$2');
+				%>			
+				<a href="<%= config.designtoolLink %><%= designtoolLink %>" class="designtool iframe fancybox.iframe"><%= config.labels["updatePage"] %></a>	
+				<span data-orderItem="<%= model.id %>" class="delete_item deletedesign"><%= config.labels["deleteOrder"] %></span>
+			</div>
+
+			<div class="preview1">
+				<div class="description form-wrapper">
+                                    <% var name=''%>
+                                    <% if (model.customWidth > 0 && model.customHeight > 0){
+                                            name = model.configuration.name + ' ' +model.customWidth+' X '+ model.customHeight+' mm';
+                                        }else
+                                        {
+                                            name = model.configuration.name+' '+model.configuration.config[0].name
+                                        }
+                                    %>
+					<h3><%= model.quantity %> <%= config.labels.ex %>. <%= name %></h3>				
+
+					<div class="item-list">
+						<ul>
+						<% _.each(model.configuration.config, function(itemConfig, i){ %>
+							<% if(i!=0) { %>
+								<li class="<%= (i == 1)?'first':'' %> <%= (i == model.configuration.config.length-1)?'last':'' %>"><label><%= model.configuration.config[i].groupName %>:</label>  <%= $('<div/>').html(model.configuration.config[i].name).text() %></li>
+								
+							<% } %>
+						<% }); %>
+
+						<% if(model.options.length>0) { %>
+							<% _.each(model.options, function(option, i){ %>
+								<li class="<%= (i == model.options.length-1)?'last':'' %>"> <%= option.optionName %> </li>
+							<% }); %>
+						<% } %>
+
+						</ul>
+					</div>
+
+				</div>
+				<%
+                var directLink = "http://" + document.location.host + "/" + config.prefix + "/products/" + model.configuration['productId'] + "/" + encodeURIComponent(_.map(model.configuration.config, function(conf){ return conf.toolboxItemId; }).join(",")) + "/" + encodeURIComponent(model.options.join(",")) + "/" + model.quantity+"/"+model.id;
+            	%>
+				<a href="<%= directLink %>" class="updateProduct"><%= config.labels["updateProduct"] %></a>				
+			</div>
+
+			<div class="jobPrice">
+				<% if (model.customWidth != 0 && model.customHeight != 0){%>
+                                    <%= priceTpl({price:model.price,classToAdd:'price'}) %>
+                                <% }else{%>
+                                    <%  if(model.price < model.originPrice){%>
+                                        <% var prefixsFR = ["frfr"];        
+                                        if ($.inArray(GlobalPrefix, prefixsFR) == 0){%>
+                                        <div class="origin-price"><del><%=model.originPrice%> &euro;</del></div>
+                                        <% }else{%>
+                                            <div class="origin-price"><del>&euro; <%=model.originPrice%></del></div>
+                                        <%}%>
+                                        <%= priceTpl({price:model.price,classToAdd:'price'}) %>
+                                    <%}else{%>
+                                        <%= priceTpl({price:model.price,classToAdd:'price'}) %>
+                                    <%}}%>
+			</div>
+
+			<!-- Model Payemnt -->
+			<% if (model.designTemplate.price) { %>
+				<div class="file-model">
+					<span class="model-txt"><%= model.designTemplate.description %></span>
+					<%= priceTpl({price:model.designTemplate.price,classToAdd:'model-price'}) %>
+				</div>
+			<% }  %>
+			<!-- END Model Payemnt -->
+			
+			<% if(model.fileCheck.hasOwnProperty('price')) { %>
+				<!-- Controle professionel -->
+				<div class="control-block form-wrapper">
+					<div class="text">
+						<span data-orderItem="<%= model.id %>" class="removecontrol" ></span>
+							<h3><%= config.labels.controleProfessionel %> </h3>
+					</div>					
+					<%= priceTpl({price:model.fileCheck.price,classToAdd:'price'}) %>
+				</div>
+				<!-- END Controle professionel -->
+			<% } %>
+		
+			<!-- fotolia -->
+			<div class="file-check cart-fotolias">
+				<% if (model.fotoliaItems.length>0) { %>
+					<% _.each(model.fotoliaItems, function(fotolia, i){ %>
+						<div class="fotolia-items">
+							<div class="fotolia-img-name">
+								<span><%= config.labels.fotoliaImg %> &nbsp;"<%= fotolia.fotoliaId %>"</span>
+							</div>
+							<%= priceTpl({price:fotolia.price,classToAdd:'pricepreflight'}) %>
+						</div>
+					<% }) %>
+				<% }  %>
+				
+			</div>
+
+			<!-- END fotolia -->
+
+		</div>
+	</div>
+</fieldset>

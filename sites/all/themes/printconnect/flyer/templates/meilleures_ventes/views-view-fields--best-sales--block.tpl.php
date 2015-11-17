@@ -15,13 +15,14 @@ list($prix1, $prix2) = split('[,.]', $fields['field_prix']->content);
     <span class="txt"><?php print t('À partir de'); ?> </span> 
     <span class="price">
         <span class="value">
-
-            
-            <span class="whole"><?php print $prix1; ?></span>
-            <span class="decimalpoint">,</span>
-            <span class="decimals"><?php print $prix2; ?></span>&nbsp;
-            <span class="currency">€</span>
-
+            <?php
+                global $language;
+                $arrayLanguage = array('frfr');
+                if (in_array($language->prefix, $arrayLanguage)): ?>
+                    <span class="whole"><?php print $prix1; ?></span><span class="decimalpoint">,</span><span class="decimals"><?php print $prix2; ?></span>&nbsp;<span class="currency">€</span>
+                <?php else: ?>
+                    <span class="currency">€&nbsp;</span><span class="whole"><?php print $prix1; ?></span><span class="decimalpoint">,</span><span class="decimals"><?php print $prix2; ?></span>
+                <?php endif; ?>
         </span>
 
     </span>

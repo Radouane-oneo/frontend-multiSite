@@ -7,7 +7,34 @@ use printconnect\Customers\Customer;
 
 class Factory {
 
- public static function Current() {
+  public static function GetCustomerBillingAccounts()
+  {
+      if (isset($_SESSION['customerid'])) {
+          return Dal::SendRequest('billing-account/customer/'. $_SESSION['customerid']);
+      }else {
+          return NULL;
+      }
+  }
+
+  public static function CheckExistingVatNumber($vatNumber)
+  {
+      return Dal::SendRequest('billing-account/vatNumber/'.$vatNumber);
+  }
+
+  public static function ValidateVatNumber($vatNumber)
+  {
+      return Dal::SendRequest('vat/vatNumber/'.$vatNumber.'/validate/true');
+  }
+  
+  public static function SaveNewBillingAccount($data) 
+  {
+       if (isset($_SESSION['cartid'])) {
+          $data['cart'] = $_SESSION['cartid'];
+      }
+      return Dal::SendRequest('billing-account', 'POST', $data);   
+  }
+
+  public static function Current() {
     static $current;
     if (empty($current)) {
       try {
@@ -30,7 +57,14 @@ class Factory {
   }
 
   public static function GetBillingAccounts(Customer $customer, $cache = TRUE) {
-          return new BillingAccounts(array(), array('customer' => $customer), $cache);
+        $response = Dal::SendRequest('billing-account/customer/'.$customer->id);
+        $billingAccounts = new BillingAccounts(array(), array(),FALSE);
+	$data = json_decode($response->data);
+	foreach($data as $ba) {
+	    $newBa = new BillingAccount($ba);
+	    $billingAccounts->add($newBa);
+	}
+	return $billingAccounts;
   }
 
   public static function LoadBillingAccounts(BillingAccounts $object) {
@@ -99,13 +133,6 @@ return $object;
       Dal::Save($object, 'billing-account', array());
     }
     $_SESSION['billingAccountId'] = $object->id;
-    if(!$_SESSION['newaddress']){
-        \printconnect\Carts\Factory::saveInCache($cart, array(
-        'billingAccount' => $object->id,
-	'shipping_address' => ($object->shippingAddressId) ? $object->shippingAddressId : null
-    )); 
-    }
-   
   }
   
   public static function Validate(BillingAccount $object) {

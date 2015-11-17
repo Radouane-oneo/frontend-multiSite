@@ -1,0 +1,41 @@
+<div>
+<% if(model.discountItems.length < 2){ %>
+<fieldset id="edit-cart-discount" class="discount form-wrapper">
+    <legend><span class="fieldset-legend"><%= config.labels['discountCode'] %></span></legend>
+    <div class="fieldset-wrapper">
+        <div class="form-item form-type-item" id="edit-cart-discount-text">
+            <%= config.labels['discountText'] %>
+        </div>
+        <div class="form-item form-type-textfield form-item-cart-discount-code">
+            <input type="text" maxlength="128" size="10" value="" name="discount-code"
+                   id="edit-cart-discount-code" class="hint form-item-discount-code form-text">
+        </div>
+        <input type="button" value="<%= config.labels['apply'] %>" name="add_discount" id="edit-cart-discount-add"
+               class="large add-discount ok button form-submit ui-button ui-widget ui-state-default ui-corner-all"
+               role="button"></div>
+</fieldset>
+<% } %>
+<% if(model.discountItems.length > 0){ %>
+    <div class="jsDiscount">
+        <div id="fieldsetjsDiscount">
+            <fieldset id="edit-cart-discounts" class="discounts form-wrappers">
+                <legend><span class="fieldset-legend"><%= config.labels['discountsCode'] %></span></legend>
+                <div class="fieldset-wrapper">
+                    <% _.each(model.discountItems, function(discountsData){ %>
+                        <div class="form-wrapper discount-code-wrapper">
+                            <div class="description form-wrapper">
+                                <%= priceTpl({price:discountsData.price,classToAdd:'price'}) %>
+                                <a href="#" id="delete-discount" data-code="<%= discountsData.code %>"></a>
+                                <div class="form-wrapper discounTop"><%= config.labels['useCode'] %> : <span id="discountCodeVal"><%= discountsData.code %></span></div>
+                                <div class="form-wrapper discounBottom">
+                                    <%= discountsData.description %>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+<% } %>
+</div>

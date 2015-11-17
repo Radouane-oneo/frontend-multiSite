@@ -1,5 +1,6 @@
 <?php
 
+use \printconnect\Dal;
 use printconnect\Carts\Factory as CartsFactory;
 use printconnect\Diagnostics\Debug;
 use printconnect\Drupal\Forms;
@@ -109,7 +110,7 @@ function pccheckout_progress() {
       ),
       array(
           'title' => t('Payment'),
-          'paths' => array('checkout/payment'),
+          'paths' => array('payment'),
           'weight' => 60,
       ),
   );
@@ -125,6 +126,96 @@ function pccheckout_access() {
 }
 
 function pccheckout_menu() {
+
+      // ===== ORDER WEEK HOOKS ================================================================
+
+     $items['checkout/ajax/vatlidateVatNumber'] = array(
+          'page callback' => 'validate_vat_number',
+          'page arguments' => array(),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+
+     $items['checkout/saveNeutralShipping'] = array(
+          'page callback' => 'save_neutral_shipping',
+          'page arguments' => array(),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+     
+     $items['checkout/getBillingAccoutFromVat'] = array(
+          'page callback' => 'new_checkout_check_vatnumber',
+          'page arguments' => array(),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+      
+      $items['checkout/countriesList'] = array(
+          'page callback' => 'new_checkout_and_delivery_counties',
+          'page arguments' => array(),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+      
+      $items['checkout/savenewinvoiceanddelivery'] = array(
+          'page callback' => 'save_new_checkout_and_delivery_loadpage',
+          'page arguments' => array(),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+      
+      $items['checkout/invoiceanddelivery'] = array(
+          'page callback' => 'new_checkout_and_delivery_loadpage',
+          'page arguments' => array(),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+          'title' => 'Invoice and delivery'
+      );
+
+      $items['checkout/ajax/getshippingaddresses'] = array(
+          'page callback' => 'new_checkout_ajax_getshippingaddresses',
+          'page arguments' => array(),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+
+      $items['checkout/ajax/getbillingaccounts'] = array(
+          'page callback' => 'new_checkout_ajax_getbillingaccounts',
+          'page arguments' => array(),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+
+      $items['checkout/ajax/saveshippingaddress'] = array(
+          'page callback' => 'new_checkout_ajax_saveshippingaddress',
+          'page arguments' => array(),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+
+      $items['checkout/ajax/getpaymentmethods'] = array(
+          'page callback' => 'new_checkout_ajax_getpaymentmethods',
+          'page arguments' => array(),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+
+      $items['checkout/ajax/savepaymentmethod/%'] = array(
+          'page callback' => 'new_checkout_ajax_savepaymentmethod',
+          'page arguments' => array(3),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+
+      $items['checkout/ajax/submitcheckout'] = array(
+          'page callback' => 'new_checkout_submit_all_form',
+          'page arguments' => array(),
+          'access arguments' => array('access content'),
+          'type' => MENU_CALLBACK,
+      );
+
+      // =======================================================================================
+
       $items['checkout'] = array(
           'title' => 'Checkout',
           'page callback' => 'pccheckout_redirect',
@@ -147,16 +238,7 @@ function pccheckout_menu() {
           'access arguments' => array('access content'),
           'file' => 'pccheckout.forms.inc',
       );
-
-
-      $items['checkout/invoiceanddelivery'] = array(
-          'title' => 'Invoice and delivery',
-          'page callback' => 'drupal_get_form',
-          'page arguments' => array('pccheckout_invoiceanddelivery_form'),
-          'access arguments' => array('access content'),
-          'file' => 'pccheckout.forms.inc',
-      );
-
+      
       $items['checkout/upload'] = array(
           'title' => 'Upload',
           'page callback' => 'drupal_get_form',
@@ -196,6 +278,285 @@ function pccheckout_menu() {
   return $items;
 }
 
+// ================================== ORDER WEEK V3 FUNCTIONS ===================================
+function save_new_checkout_and_delivery_loadpage() {
+    $data = array(
+        'name' => $_POST['name'],
+        'street' => $_POST['street'],
+        'postalCode' => $_POST['postalCode'],
+        'city' => $_POST['city'],
+        'country' => $_POST['country']
+    );
+    
+    $customer = printconnect\Customers\Factory::Current();
+    if ($customer) {
+        $data['customer'] = $customer->id;
+    }
+    
+    if (isset($_POST['vatNumber']) && !empty($_POST['vatNumber'])) {
+        $data['vatNumber'] = $_POST['vatNumber'];
+        $data['company'] = $_POST['company'];
+    }
+    
+    if (isset($_POST['id']) && $_POST['id'] != 0) {
+        $data['id'] = $_POST['id'];
+    }
+     $response = \printconnect\Customers\BillingAccounts\Factory::SaveNewBillingAccount($data);
+    if($response) {
+        Dal::BuildJson($response->data);
+    }else {
+        Dal::BuildJson(array(), 500);
+    }
+}
+
+function new_checkout_and_delivery_loadpage() {
+     global $language;
+
+    $labels = array(
+      "invalidPostalCodeLenghtBE" => t('invalidPostalCodeLenghtBE'),
+      "invalidPostalCodeLenghtFR" => t('invalidPostalCodeLenghtFR'),
+      "invalidPostalCodeLenghtLU" => t('invalidPostalCodeLenghtLU'),
+      "invalidPostalCodeLenghtNL" => t('invalidPostalCodeLenghtNL'),
+      "invalidPostalCodeContentBE" => t('invalidPostalCodeContentBE'),
+      "invalidPostalCodeContentFR" => t('invalidPostalCodeContentFR'),
+      "invalidPostalCodeContentLU" => t('invalidPostalCodeContentLU'),
+      "invalidPostalCodeContentNL" => t('invalidPostalCodeContentNL'),
+      "js_key" => t('drupal_tag'),
+      "BillingAccount" => t("adresse de facturation"),
+      "changeBA" => t("Change invoice address"),
+      "selectBA" => t("Select from addressbook"),
+      "OrCreateBA" => t("Ou créez une nouvelle adresse en remplissant le formulaire ci-dessous."),
+      "addNewBA" => t("Add an address"),
+      "BAName" => t("Name"),
+      "StreetBA" => t("Street"),
+      "CityBA" => t("City"),
+      "postalCodeCityBA" => t("Postal code"),
+      "CountryBA" => t("Country"),
+      "HaveVatNumber" => t("Are you a company ?"),
+      "CompanyBA" => t("Entreprise"),
+      "VatNumberBA" => t("Numéro de Tva"),
+      "BAFieldsRequired" => t("This field is required."),
+      "existingBA" => t("this billing address is already exist would you want load this address as your default billing address"),
+      "shippingAddress" => t("Shipping address"),
+      "changeShippingAddress" => t("Change shipping address"),
+      "openingHours" => t("Opening hours"),
+      "day_1" => t("Monday"),
+      "day_2" => t("Tuesday"),
+      "day_3" => t("Wednesday"),
+      "day_4" => t("Thursday"),
+      "day_5" => t("Friday"),
+      "day_6" => t("Saturday"),
+      "day_7" => t("Sunday"),
+      "shippingFlyerstore" =>t("Vous avez choisi Enlèvement dans un FlyerStore"),
+      "shippingBpost" =>t("Vous avez choisi Enlèvement dans un point poste"),
+      "chooseFlyerstore" => t("Choose your store"),
+      "chooseBpost" => t("Select your pickup point"),
+      "infoTitle" => t("Qui va collecter la commande ?"),
+      "quiVACollecterCommande" => t("Qui va collecter la commande :"),
+      "yourName" => t("Votre nom et prénom"),
+      "requiredField" => t("This field is required."),
+      "save" => t("Save"),
+      "selectSA" => t("Select from addressbook"),
+      "quiVACollecterlesimpressions" => t("Qui va collecter les impressions"),
+      "OrCreateSA" => t("Ou créez une nouvelle adresse en remplissant le formulaire ci-dessous."),
+      "addNewSA" => t("Add an address"),
+      "SAName" => t("votre nom livraison"),
+      "StreetSA" => t("Street"),
+      "CitySA" => t("City"),
+      "postalCodeCitySA" => t("Postal code"),
+      "CountrySA" => t("Country"),
+      "CompanySA" => t("La livraison se fait chez une entreprise ? Veuillez remplir le nom"),
+      "NeutralShippingTitle" => t("Neutral shipping"),
+      "NeutralShipping" => t("Neutral shipping"),
+      "Neutralexplain" => t("More about neutral shipping"),
+      "securePaymentBtn" => t("Paiement sécurisé"),
+      "BAalreadyExisting" => t("this billing address is already exist would you want load this address as your default billing address"),
+      "shippingTypeStoreError" => t("shippingTypeStoreError"),
+      "nameEmptyError" => t("nameEmptyError"),
+      "shippingTypeBpostPickupPointError" => t("shippingTypeBpostPickupPointError"),
+      "phone" => t("Phone"),
+      "email" => t("Email"),
+      "requiredFieldsError" => t("Veuillez remplir tout les champs obligatoires"),
+      "emailError" => t("Adresse email n'est pas valide"),
+      "BaFieldRequired" => t("Veuillez remplir tout les champs obligatoires"),
+      "fieldCmpVatNumber" => t("Sociéte et numero de tva sont requit"),
+      "invalidCharactersLength" => t("invalidCharactersLength"),
+      "InvalidVatNumber" => t("votre numero de tva est invalid"),
+      "TVANumber" => t("Are you a company ?"),
+      "shippingTypeStore" => t("shippingTypeStore"),
+      "shippingTypeBpostPickupPoint" => t("shippingTypeBpostPickupPoint"),
+      "shippingTypeStoreInAntwerpen" => t("Shipping address"),
+      "shippingTypePrinter" => t("Shipping address"),
+      "shippingTypeStoreAdd" => t("shippingTypeStoreAdd"),
+      "shippingTypeStoreChange" => t("shippingTypeStoreChange"),
+      "shippingTypeBpostPickupPointAdd" => t("shippingTypeBpostPickupPointAdd"),
+      "shippingTypeBpostPickupPointChange" => t("shippingTypeBpostPickupPointChange"),
+      "changeName" => t("changeName"),
+      "shippingTypeStoreMessage" => t("shippingTypeStoreMessage"),
+      "shippingTypeBpostPickupPointMessage" => t("shippingTypeBpostPickupPointMessage"),
+      "VatAlreadyUsed" => t("VatAlreadyUsed")
+    );
+
+     $cart = \printconnect\Carts\Factory::GetCartJson();
+     $result = json_decode($cart->data);
+    $script = "<script type='text/javascript'>
+        var GlobalPrefix = '".$language->prefix."';
+        var GlobalVat = 0.21;
+        var ChekoutGlobalLabels = ".json_encode($labels).";
+        var isConnected = " . (isset($_SESSION['customerid']) ? 1 : 0) . "
+        var neutral = ".(($result->neutralShipping)?1:0).";
+    </script>";
+    $script .= "<style>#box-progress{display: block;}</style>";
+    $script .= '<link rel="stylesheet" href="/webapp/js/libs/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />';
+    $script .= '<script data-main="/webapp/js/checkout/main" src="/webapp/js/libs/requirejs/require.js"></script>';
+    $script .= '<div id="myCheckout"></div>';
+
+    return $script;
+}
+
+function new_checkout_ajax_getshippingaddresses() {
+    $shippings = \printconnect\Shipping\Types\Factory::GetCustomerShippingAddresses();
+    $billings = \printconnect\Customers\BillingAccounts\Factory::GetCustomerBillingAccounts();
+    $selected = \printconnect\Shipping\Types\Factory::GetSelectedShipping();
+
+    $orderItemShipping = json_decode($selected->data, 1);
+
+    $customer = \printconnect\Customers\Factory::Current();
+
+    if($customer && isset($orderItemShipping['orderShippingAddress']) && isset($orderItemShipping['orderShippingAddress']['name']) && empty($orderItemShipping['orderShippingAddress']['name'])) {
+        $orderItemShipping['orderShippingAddress']['name'] = $customer->name;
+    }
+
+    $data = array();
+
+    if($orderItemShipping['deliveryType'] != 'deliveryTypePickup') {
+        $shippings = json_decode($shippings->data, 1);
+        $md5Shppings = array();
+        foreach ($shippings as $key => $item) {
+            $item['isShipping'] = 1;
+            $data[] = $item;
+            $md5Shppings[] = md5($item['street'] . $item['postalCode']);
+        }
+
+        $billings = json_decode($billings->data, 1);
+
+        foreach ($billings as $key => $item) {
+            if(!isset($item['id'])){
+               continue;
+            }
+            // test if the same address exists on the sa list
+            if(in_array(md5($item['street'] . $item['postalCode']), $md5Shppings)) {
+                continue;
+            }
+
+            $item['isShipping'] = 0;
+            $data[] = $item;
+        }
+    } else {
+        if(isset($orderItemShipping['orderShippingAddress']) && !$orderItemShipping['orderShippingAddress']['pickupPointId']) {
+            $orderItemShipping['orderShippingAddress'] = NULL;
+        }
+    }
+
+    Dal::BuildJson(array(
+        'orderItemShipping' => $orderItemShipping,
+        'addresses' => $data
+    ));
+}
+
+function new_checkout_ajax_saveshippingaddress() {
+    $response = \printconnect\Shipping\Types\Factory::SaveOrderShippingAddresses($_POST);
+
+    Dal::BuildJson(json_decode($response->data, 1));
+}
+
+function new_checkout_ajax_getbillingaccounts() {
+    $response = \printconnect\Customers\BillingAccounts\Factory::GetCustomerBillingAccounts();
+
+    Dal::BuildJson(json_decode($response->data, 1)); 
+}
+
+function new_checkout_and_delivery_counties(){
+    header('Content-Type: application/json');
+    $response = \printconnect\Countries\Factory::GetCountriesList();
+    $countries = json_decode($response->data, 1);
+    
+    $countries = array_filter($countries, function($country){
+        return in_array($country["iso"], array("BE", "FR", "NL", "LU"));
+    });
+    
+    $countries = array_values($countries);
+    
+    $translates = array(
+        "BE" => t("Belgique"),
+        "FR" => t("France"),
+        "NL" => t("Pays-Bas"),
+        "LU" => t("Luxembourg")
+    );
+    
+    foreach($countries as $index => $country) {
+        $countries[$index]['tag'] = $translates[$country["iso"]];
+    }
+    echo json_encode($countries);
+    exit();
+}
+
+function new_checkout_check_vatnumber() {
+    $vatNumber = $_GET['vatNumber'];
+    $response = \printconnect\Customers\BillingAccounts\Factory::CheckExistingVatNumber($vatNumber);
+    Dal::BuildJson(json_decode($response->data, 1));
+}
+
+function save_neutral_shipping(){
+    $neutral = ($_POST['neutral'] == 'true') ? 1: 0;
+    $response = \printconnect\Carts\Factory::saveNeutralShipping($neutral);
+    Dal::BuildJson(json_decode($response->data, 1));
+}
+
+function new_checkout_ajax_getpaymentmethods()
+{
+    $response = \printconnect\PaymentMethods\Factory::GetPaymentMethods();
+    $customer = printconnect\Customers\Factory::Current();
+    $cart = \printconnect\Carts\Factory::GetCartJson();
+    $result = json_decode($cart->data);
+    Dal::BuildJson(array(
+        'paymentMethods' => json_decode($response->data, 1),
+        'amountWithoutPayment' => $result->subTotalAmount - $result->orderItemsPayment[0]->price,
+        'customerName' => $customer->lastName.' '.$customer->firstName,
+	'customerFcp' => $customer->freeOfCashPayment
+    ));
+}
+
+function validate_vat_number() {
+    $vatNumber = $_GET['vatNumber'];
+    $response = \printconnect\Customers\BillingAccounts\Factory::ValidateVatNumber($vatNumber);
+    Dal::BuildJson(json_decode($response->data, 1));
+}
+
+function new_checkout_ajax_savepaymentmethod($paymentmethodId)
+{
+    $response = \printconnect\PaymentMethods\Factory::SavePaymentMethod($paymentmethodId);
+    Dal::BuildJson(json_decode($response->data, 1));
+}
+
+function new_checkout_submit_all_form()
+{
+    if(isset($_POST['shipping-detail-delivery-type']) && $_POST['shipping-detail-delivery-type'] == "deliveryTypePickup") {
+        $data['name'] = $_POST['shipping-detail-contact'];
+        $data['id'] = $_POST['shipping-detail-id'];
+        $data['deliverytype'] = $_POST['shipping-detail-delivery-type'];
+
+        $response = \printconnect\Shipping\Types\Factory::SaveOrderShippingAddresses($data);
+    }else if(isset($_POST['customer-first-address-id'])) {
+        $data['id'] = $_POST['customer-first-address-id'];
+        $response = \printconnect\Shipping\Types\Factory::SaveOrderShippingAddresses($data);
+    }
+
+    \printconnect\Carts\Factory::RecalculateCart();
+    
+    drupal_goto('payment');
+}
+// ==============================================================================================
 
 function _pccheckout_set_callback($value) {
     $cart = Carts\Factory::Current();

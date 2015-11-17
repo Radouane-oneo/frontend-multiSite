@@ -33,6 +33,7 @@ function pccustomers_block_info() {
   );
   $blocks['manage'] = array(
       'info' => t('Customer `Manage your account` (TO BE REMOVED'),
+      'cache' => DRUPAL_NO_CACHE,
   );
   $blocks['profile'] = array(
       'info' => t('Customer profile links'),
@@ -156,14 +157,19 @@ function pccustomers_block_view($delta = '') {
       return $block;
       break;
     case 'manage':
-      // $customer = Factory::Current();
+      $customer = Factory::Current();
+      $link = l(t('Manage your account'), 'myprintconnect');
+
+      if ($customer->firstName!='' || $customer->firstName!= null) {
+        $link = l(t('Hello') . ' ' . $customer->firstName, 'myprintconnect');
+      }
       // if ($customer) {
       $block['content'][] = array(
           'image' => array(
               '#theme' => 'pccustomers_avatar',
           ),
           'link' => array(
-              '#markup' => l(t('Manage your account'), 'myprintconnect'),
+              '#markup' => $link,
           ),
       );
       return $block;

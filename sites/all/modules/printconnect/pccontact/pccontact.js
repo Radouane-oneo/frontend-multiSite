@@ -13,7 +13,7 @@ jQuery(document).ready(function (e) {
         var email = jQuery('#pccontact_general_form').find('#edit-email').val();
         var comment = jQuery('#pccontact_general_form').find('#edit-comment').val();
 	var emailReg = /^^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z.]{2,5}$/i;
-        var phoneReg = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
+    var phoneReg = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
 		
 		
 
@@ -31,7 +31,9 @@ jQuery(document).ready(function (e) {
 				.append('<p class="errorForms">'+MailError+'</p>').hide().fadeIn().show();
             return false;
          }
-		else if (!phoneReg.test( phone ) ) {
+        
+        //else if (!phoneReg.test( phone ) ) {
+		else if (isNaN(phone) || phone.length < 9 || phone.length > 10) {
 			var PhoneError = jQuery('#pccontact_general_form').find('#edit-phone').attr('data-PhoneError');
 			jQuery(document).find('.errorForms').remove();
 			jQuery(document).find('#pccontact_general_form #edit-actions')

@@ -279,7 +279,7 @@ function pctemplates_selection_form2($form, &$form_state) {
            $build['flesh'] = array(
                 '#markup' => '<a class="btn-cmd" href="'.$templateUrl.'">
                                     <span class="flesh"></span>
-                                    Utiliser ce modèle
+                                    '.t("Utiliser ce modèle").'
                                 </a>'
             );
        
@@ -316,6 +316,7 @@ function pctemplates_selection_form2($form, &$form_state) {
         '#attributes' => array('class' => array('filters')),
         '#weight' => 100,
     );
+
     asort($availableProducts);
     asort($availableSegments);
     
@@ -323,8 +324,13 @@ function pctemplates_selection_form2($form, &$form_state) {
     
 //  
     $form['filters']['description'] = array(
-                '#markup' => "<div class='intro'><h2>Personnaliser un modèle en ligne</h2><p>Des milliers de modèles classés par secteur d'activité, prêts à être personnalisés en ligne.</p></div>", 
+                '#markup' => "<div class='intro'><h2>".t('Personnaliser un modèle en ligne')."</h2><p>".t('Des milliers de modèles classés par secteur d\'activité, prêts à être personnalisés en ligne.')."</p></div>", 
          );
+
+    $form['filters']['filtersWrap'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('filtersWrap')),
+    );
 
   if (count($availableProducts) > 0) {
         $items = array();
@@ -337,10 +343,10 @@ function pctemplates_selection_form2($form, &$form_state) {
         }
 
         if (count($items) > 1) {
-            $form['filters']['products'] = array(
+            $form['filters']['filtersWrap']['products'] = array(
                 '#type' => 'select',
                 '#title' => t('product'),
-                '#options' => $items,
+                '#options' => $items, 
             );
         }
     }
@@ -356,24 +362,23 @@ function pctemplates_selection_form2($form, &$form_state) {
 
         if (count($items) > 1) {
              
-            $form['filters']['segments'] = array(
+            $form['filters']['filtersWrap']['segments'] = array(
                 '#type' => 'select',
-                '#title' => '',
-                '#options' => $items,
-                 '#attributes' => array('style' => 'display:none'),  
+                '#title' => t('segment'),
+                '#options' => $items
             );
         }
-         $form['filters']['inputsegments'] = array(
+         /*$form['filters']['inputsegments'] = array(
                 '#type' => 'textfield',
                 '#title' => '',
                 '#size'=>'20',
-                '#attributes' => array('placeholder' => 'Rechercher'), 
+                '#attributes' => array('placeholder' => t("Search") , 'style' => 'display:none'), 
              
-         ); 
+         );*/ 
     }
   
 //     // filters by autres filters commenté le 06082014 flyer fr
-     /*
+     
     foreach ($availableFilters as $filterId => $filter) {
         $items = array();
         $inputType = 'select';
@@ -411,11 +416,13 @@ function pctemplates_selection_form2($form, &$form_state) {
             }
             
             if ($inputType == 'select') {
-                $form['filters'][$filterId] = array(
-                    '#type' => 'select',
-                    '#title' => $filter['name'],
-                    '#options' => $items,
-                );
+                if($filter['name'] != "Orientation " && $filter['name'] != "Orientatie") {                    
+                    $form['filters']['filtersWrap'][$filterId] = array(
+                        '#type' => 'select',
+                        '#title' => $filter['name'],
+                        '#options' => $items,
+                    );
+                }
             } else {
                 $form['filters'][$filterId] = array(
                     '#type' => 'fieldset',
@@ -428,8 +435,8 @@ function pctemplates_selection_form2($form, &$form_state) {
             }
         }
     }
-*/
-    $form['filters']['submit']= array(
+
+    $form['filters']['filtersWrap']['submit']= array(
         '#type' => 'submit',
         '#value' => t("search"),
     );

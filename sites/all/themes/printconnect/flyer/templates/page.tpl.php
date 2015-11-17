@@ -1,33 +1,8 @@
-<!-- Google Tag Manager -->
-<noscript> <iframe src="//www.googletagmanager.com/ns.html?id=GTM-W44FMM" height="0" width="0" style="display:none;visibility:hidden"> </iframe></noscript>
-    <script type="text/javascript">
-setTimeout(function() {
-        (function(w, d, s, l, i) {
-            w[l] = w[l] || [];
-            w[l].push({
-                    'gtm.start': new Date().getTime(),
-                    event: 'gtm.js'
-                }
-
-            );
-            var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s),
-                dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true;
-            j.src =
-                '//www.googletagmanager.com/gtm.js?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-5GVQ93');
-    }, 3000);
-    </script>
-<!-- End Google Tag Manager -->
-
 <!--[if !IE]><!--><script>  
 if (/*@cc_on!@*/false) {  
     document.documentElement.className+=' ie10';  
 }  
 </script><!--<![endif]-->
-
 <script type="text/javascript">
   //Script pour facebook
   //(function(){function r(s){return s.replace(/[A-z]/g,function(c){return String.fromCharCode(c.charCodeAt(0)+('M'>=c.toUpperCase()?13:-13))})}var c=document.createElement('script'),wdefine=typeof define!=='undefined'?define:false;c.type='text/javascript';c.async=true;c.setAttribute('data-main',r('//ncc.zlfnsrhey.pbz/ncc.wf'));c.src='//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js';c.onload=function(){mydefine=define,define=wdefine?wdefine:null};var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(c,s)})();
@@ -73,7 +48,7 @@ if (/*@cc_on!@*/false) {
       </div>
 
 </div>
- <div class="menu">
+ <div class="menu" id="menu_top_header">
       <?php print theme('links__system_main_menu', array('links' => $main_menu, 'attributes' => array('id' => 'menu-main'))); ?>
 </div>
     <?php if ($page['cart']): ?>
@@ -121,7 +96,11 @@ if (/*@cc_on!@*/false) {
         <div class="whitebox clearfix">
 
           <?php if ($title): ?>
-            <h1><?php print render($title_prefix); ?><?php print $title ?><?php print render($title_suffix); ?></h1>
+            <?php if ($title =='Cart') {
+              $title = t('your cart');
+            }
+          ?>
+            <h1><?php print render($title_prefix); ?><?php print $title; ?><?php print render($title_suffix); ?></h1>
           <?php endif; ?>
 
           <?php if ($tabs): ?>
@@ -166,10 +145,22 @@ if (/*@cc_on!@*/false) {
           <?php print render($page['sidebar_second']); ?>
         </div>
       <?php endif; ?>
+      
+      <?php if (arg(0) !='payment'): ?>
 
-      <div id="footer">
-        <?php print render($page['footer']); ?>
-      </div>
+        <div id="footer">
+            <?php print render($page['footer']); ?>
+        </div>
+        
+      <?php endif; ?>
+
+      <?php if ($page['footer_second'] && (arg(0) =='payment' || arg(0) =='checkout')): ?>
+
+        <div id="footer">
+            <?php print render($page['footer_second']); ?>
+        </div>
+        
+      <?php endif; ?>
 
       <div class="clearfix"></div>
 
@@ -188,3 +179,13 @@ if (/*@cc_on!@*/false) {
 
   </div>    
 </div>
+
+
+<!-- loader pour la page produit qui se telecharge tres lentement -->
+<div id="box-progress">
+  <div id="overlay-bar"></div>
+  <div id="save-progress-bar">
+    <div></div>
+  </div>
+    <p><?php echo t('Veuillez patienter, la page se télécharge.'); ?></p>
+</div> 

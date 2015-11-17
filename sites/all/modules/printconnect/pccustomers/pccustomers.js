@@ -141,10 +141,14 @@ var registerClicked = false;
             var _this = $(this); 
             var inputName;
             if(_this.val() == "" || _this.val() == 0) {
-              inputName = $(elem).attr('name');
-              _this.addClass('error');
-              errorMsgs[i] = labels["isRequired"].replace('!name', inputName);
-              errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+                inputName = $(elem).attr('name');
+                _this.addClass('error');
+                if(inputName == "vatNumber[number]"){
+                   errorMsgs[i] = Drupal.t('Le champ N° de TVA est requis.');
+                }
+                else
+                    errorMsgs[i] = labels["isRequired"].replace('!name', inputName);
+                errorMarkup += "<li>"+errorMsgs[i]+"</li>";
             } else if (_this.val().length < 3 && this.name !="postalCode" && this.name !="country" && this.name !="phone") {
                 inputName = $(elem).attr('name');
                 _this.addClass('error');

@@ -499,7 +499,7 @@ function _pcorders_order_form_build_overview($order) {
     
     if ($order->orderItems) {
       foreach ($order->orderItems as $oi) {
-        if($oi->designTemplate) {
+        if($oi->designTemplate && $oi->designTemplate->price) {
             $label = t('Supplément');
             $rows[] = array(
                 'data' => array(

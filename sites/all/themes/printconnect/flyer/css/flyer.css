@@ -3155,7 +3155,7 @@ a.ui-button.inactivebtn{
 }
 .page-products #edit-actions .button-wrapper {
     background-color: #79b61a;
-    width: 330px;
+    width: 50%;
     display: inline-block;
     text-align: center;
     float: right;
@@ -11368,19 +11368,19 @@ input.ui-button.payment {
 }
 .page-cart #edit-actions .button-wrapper {
     background-color: #79b61a;
-    width: 330px;
+    width: 50%;
     display: inline-block;
     text-align: center;
     float: right;
 }
 #total-price {
     vertical-align: top;
-    width: 328px;
+    width: 50%;
     float: left;
     line-height: 50px;
 }
 .page-payment #total-price{
-	width: 752px;
+	width: 750px;
 }
 #total-price .value {
     font-size: 30px;

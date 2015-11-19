@@ -2,8 +2,8 @@
         Drupal.behaviors.pctemplates = {
             detach: function (context) {},
             attach: function (context, settings) {
-                wrapFiledest();
                 wrapElements();
+                removeMargin();
                  $(".custom.last-child > td:nth-child(2)").attr('colspan','4');
                 $("input[name='custom']").click(function(){
                     $("input[name='quantity'][value='custom']").attr("checked","checked");
@@ -232,11 +232,12 @@ function wrapElements () {
     }   
 }
 
-function addDropdownOpen () {
-    
+function removeMargin () {
+    if (jQuery('#price-template-block').length > 0) {
+        jQuery('.priceblock').css('margin-top' , 0);
+    }
 }
 
-/*jQuery(document).ready(function() {
+jQuery(document).ready(function() {
     wrapFiledest();
-    wrapElements();
-}); */
+}); 

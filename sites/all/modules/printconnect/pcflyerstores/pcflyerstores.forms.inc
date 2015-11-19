@@ -36,7 +36,7 @@ function pcflyerstores_picker_form($form, &$form_state, $countryCode = '', $regi
     
      $form['selection']['results'] = array(
         '#type' => 'fieldset',
-        '#title' => t('Select your pickup point'),
+        '#title' => t('Select your flyer store'),
         '#attributes' => array('class' => array('results')),
         '#prefix' => '<div id="replace_textfield_div">',
         '#suffix' => '</div>',

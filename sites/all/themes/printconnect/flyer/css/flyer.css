@@ -12530,6 +12530,10 @@ form#pccheckout-payment-form fieldset legend{
     color: #fff;
     float: right;
 }
+.page-myprintconnect h1{
+	margin-bottom: 10px;
+}
+
 .page-templates- #block-system-main #pctemplates-config-form2 #price-template-block {
     background: none repeat scroll 0 0 #F1F1F1;
     border: 1px solid #d1d1d1 !important;

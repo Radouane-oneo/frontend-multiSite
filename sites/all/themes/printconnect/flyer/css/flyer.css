@@ -3223,7 +3223,9 @@ a.ui-button.inactivebtn{
 	background: url("images/step123.png") -8px -160px no-repeat;
 	height: 95px;
 }
-.page-checkout-invoiceanddelivery #block-printconnect-progress .item-list, .page-checkout-payment  #block-printconnect-progress .item-list{
+.page-checkout-invoiceanddelivery #block-printconnect-progress .item-list,
+.page-checkout-payment  #block-printconnect-progress .item-list,
+.page-payment  #block-printconnect-progress .item-list{
      margin-left: 174px;
 }
 .page-cart .whitebox {

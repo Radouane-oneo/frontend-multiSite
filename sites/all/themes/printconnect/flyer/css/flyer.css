@@ -2068,7 +2068,11 @@ body.front #block-block-13:after {
 }
 .page-products #pcproducts-config-form .dropdown, 
 .page-templates #pctemplates-config-form2 .dropdown {
-	margin: 0 0 10px 0 !important;
+	/*margin: 0 0 10px 0 !important;*/
+	padding: 0 0 10px 0 !important;
+    border-style: solid;
+    border-color: #e1e1e1;
+    border-width: 0 1px 1px 1px;
 }
 .page-products #pcproducts-config-form .dropdown a, 
 

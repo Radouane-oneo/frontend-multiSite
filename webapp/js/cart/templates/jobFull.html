@@ -78,7 +78,7 @@
 			</div>
 
 			<!-- Model Payemnt -->
-			<% if (model.designTemplate.price) { %>
+			<% if (model.designTemplate.price>0 && model.designTemplate.price!= null) { %>
 				<div class="file-model">
 					<span class="model-txt"><%= model.designTemplate.description %></span>
 					<%= priceTpl({price:model.designTemplate.price,classToAdd:'model-price'}) %>

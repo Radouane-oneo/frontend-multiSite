@@ -1,0 +1,7 @@
+name = Export Products
+package = printconnect
+description = Export list products in xml data
+version = 7.x-1.0
+core = 7.x
+dependencies[] = pcproducts
+

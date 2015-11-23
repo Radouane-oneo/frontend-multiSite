@@ -1,7 +1,7 @@
 <?php
 use printconnect\Invoices\Invoice;
 use printconnect\Invoices\Factory;
-function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALSE) {
+function pcorders_order_form($form, &$form_state, $orderId, $confirmation = FALSE) {die;
 \printconnect\Carts\Factory::Clear();
 $order = \printconnect\Orders\Factory::Get($orderId, false);
 

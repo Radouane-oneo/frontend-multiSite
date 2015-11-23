@@ -32,8 +32,9 @@
                                             name = model.configuration.name+' '+model.configuration.config[0].name
                                         }
                                     %>
-					<h3><%= model.quantity %> <%= config.labels.ex %>. <%= name %></h3>				
-
+					<h3><%= model.quantity %> <%= config.labels.ex %>. <%= name %></h3>	
+                                        
+                                        <input type="hidden" value="<%= model.price %>"  productid="<%= model.configuration.productId %>" quantity="<%= model.quantity %>">
 					<div class="item-list">
 						<ul>
 						<% _.each(model.configuration.config, function(itemConfig, i){ %>

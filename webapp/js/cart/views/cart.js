@@ -45,7 +45,10 @@ define([
             $("#save-progress-bar").find("div").stop(true).animate({width: 100 + '%'},1000, function(){
                 $('#box-progress').hide();
             });
-             
+            jQuery("#pccart-cart-form #jobBox  input[type='hidden']").each(function() {
+                products.push({ identifier: jQuery(this).attr('productId'), amount: parseFloat(jQuery(this).val()), currency: 'EUR', quantity: jQuery(this).attr('quantity') });
+            });
+            basket['products'] = products;
         },
         render : function(){
             this.setElement(this.template({

@@ -12547,6 +12547,6 @@ form#pccheckout-payment-form fieldset legend{
     margin-top: -15px;
 }
 
-.i18n-nl-NL #pcsamplepacks-requested-form .ctn-searchprocess > a{
+.i18n-nl-NL #pcsamplepacks-requested-form a#searchprocess{
 	display: none !important;
 }

@@ -113,6 +113,7 @@ function pcsegments_segment($id) {
     
   }
   
+  /*
     $build['content'] = array(
         '#prefix' => '<p class ="contenttemplates">',
         '#suffix' => '</p>',
@@ -153,6 +154,8 @@ function pcsegments_segment($id) {
                 $build['content']['contentitem2'.$i]= array('#markup' => "</li>"); $i++; } 
                 $build['content']['endul']= array('#markup' => "</ul></div></div>");
   }
+   * */
+   
   return $build;
 }
 

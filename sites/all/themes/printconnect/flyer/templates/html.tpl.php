@@ -165,7 +165,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <?php if (arg(3) == 'confirmation') :
     $order = \printconnect\Orders\Factory::Get($_SESSION['orderID'], false);
     ?>
-    <div id="blocHidden" style="display: none;">
+    <div id="#hiddenPricesPayment" style="display: none;">
         <?php
         $date = new DateTime();
         $date = $date->getTimestamp();

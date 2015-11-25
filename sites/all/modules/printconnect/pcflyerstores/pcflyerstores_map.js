@@ -330,7 +330,7 @@ function chooseMarker(id) {
                         return function() {
 		            torun = 0;
 			    openInfoWindow  = infoWindow;
-                            infoWindow.setContent(infoWindowContent[i][0]);
+                            infoWindow.setContent('<div class="scrollFix">' + infoWindowContent[i][0] + '</div>');
                             infoWindow.open(map, marker);
 			}
                     })(marker, i));

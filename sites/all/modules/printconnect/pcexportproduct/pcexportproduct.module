@@ -109,7 +109,7 @@ function pcexportproduct_all(){
                         <g:condition>New</g:condition>
                         <g:price>'.round($price,2).' EUR</g:price>
                         <g:availability>in stock</g:availability>
-                        <g:image_link>'.$_SERVER['SERVER_NAME'].base_path().printconnect_getimage('products', $product->id).'</g:image_link>
+                        <g:image_link>'.printconnect_getimage('products', $product->id).'</g:image_link>
                         <g:shipping>
                             <g:country>'.$country.'</g:country>
                             <g:service>'.t($service).'</g:service>

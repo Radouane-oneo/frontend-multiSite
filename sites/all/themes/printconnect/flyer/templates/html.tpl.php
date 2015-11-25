@@ -57,7 +57,11 @@
   <script src="//load.sumome.com/" data-sumo-site-id="05fcb8fc80d0ed7d3b05209edd96c6c64ab0f99c7496911c3100d14a2e13c935" async="async"></script>
 </head>
 <body class="<?php print $classes.$node_css_class; ?>" <?php print $attributes;?>>
-   <?php if ($language->prefix == 'nlnl'): ?>    
+   <?php if ($language->prefix == 'nlnl'): ?>  
+<script src="//config1.veinteractive.com/tags/cfbffe97/e5d2/4e6b/9068/f79727b560ca/tag.js" type="text/javascript" async></script>
+<?php if (arg(3) == 'confirmation') :?>
+<img src="//drs2.veinteractive.com/DataReceiverService.asmx/Pixel?journeycode=cfbffe97-e5d2-4e6b-9068-f79727b560ca" width="1" height="1"/>
+<?php endif; ?> 
 <!-- Google Tag Manager -->
 <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-PBZ8Q5"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -80,6 +84,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
    <?php endif; ?>
    <?php if ($language->prefix == 'befr'): ?>
+<script src="//config1.veinteractive.com/tags/A1436EEF/EC59/4D50/AB2A/8B27C27BDF6A/tag.js" type="text/javascript" async></script>
+<?php if (arg(3) == 'confirmation') :?>
+<img src="//drs2.veinteractive.com/DataReceiverService.asmx/Pixel?journeycode=A1436EEF-EC59-4D50-AB2A-8B27C27BDF6A" width="1" height="1"/>
+<?php endif; ?> 
 <!-- Google Tag Manager -->
 <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5GVQ93"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -91,6 +99,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
    <?php endif; ?> 
    <?php if ($language->prefix == 'lufr'): ?>
+<script src="//config1.veinteractive.com/tags/def9f390/5969/4edd/aa51/25e8c97b2f7b/tag.js" type="text/javascript" async></script>
+<?php if (arg(3) == 'confirmation') :?>
+<img src="//drs2.veinteractive.com/DataReceiverService.asmx/Pixel?journeycode=def9f390-5969-4edd-aa51-25e8c97b2f7b" width="1" height="1"/>
+<?php endif; ?> 
 <!-- Google Tag Manager -->
 <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MW2SDM"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>

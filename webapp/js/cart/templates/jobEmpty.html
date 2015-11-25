@@ -1,5 +1,6 @@
 <fieldset class="jubempty items cartItemsContainer form-wrapper orderBox" data-orderItem="<%= model.id %>">
-	<div class="fieldset-wrapper">
+<input type="hidden" value="<%= model.price %>"  productid="<%= model.configuration.productId %>" quantity="<%= model.quantity %>">	
+    <div class="fieldset-wrapper">
 		<div class="item job  clearfix form-wrapper job-item-event">
 			<div class="refJob-code" style="display: <%= (model.emailDesigner ==null)?'none':'block' %>;">
 				<div class="form-item">
@@ -82,7 +83,7 @@
                             <li><%= config.labels["dtOptions2"] %></li>
                             <li><%= config.labels["dtOptions3"] %></li>
                             <% if(model.hasLayouts == true){ %>
-                            	<li><%= config.labels["dtOptionsModule"] %> <a href="<%= config.designtoolLink %><%= model.configuration.designtoolLink %>&insertModel=1" class="designtool iframe model-form fancybox.iframe"><%= config.labels["dtOptionsModuleLink"] %></a></li>
+                            	<!-- li><%= config.labels["dtOptionsModule"] %> <a href="<%= config.designtoolLink %><%= model.configuration.designtoolLink %>&insertModel=1" class="designtool iframe model-form fancybox.iframe"><%= config.labels["dtOptionsModuleLink"] %></a></li -->
                             <% } %>
 
                             <li><%= config.labels["dtOptions4"] %></li>
@@ -109,7 +110,7 @@
                 		<ul class="options-file-impression indice-5">
                             <li><%= config.labels["proUploadOptions1"] %></li>
                             <li><%= config.labels["proUploadOptions2"] %></li>
-                            <li><%= config.labels["proUploadRespecte"] %> <a href="#" data-orderItem="<%= model.id %>" class="technic-details model-form"><%= config.labels["proUploadTechnices"] %></a> <%= config.labels["or"] %> <a target="_blank" href="/les-paramètres-prédéfinis-pdf-cest-quoi" id="predef-params" class="model-form" target="_blank"><%= config.labels["proUploadParams"] %></a></li>
+                            <li><%= config.labels["proUploadRespecte"] %> <a href="#" data-orderItem="<%= model.id %>" class="technic-details model-form"><%= config.labels["proUploadTechnices"] %></a> <%= config.labels["or"] %> <%= config.labels["proUploadParams"] %></li>
                             <li><%= config.labels["proUploadOptions3"] %></li>
                 		</ul>
                 		

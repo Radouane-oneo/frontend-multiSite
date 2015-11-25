@@ -780,3 +780,6 @@ span.datainfobul:after {
 .page-products #block-system-main .form-wrapper.actions span.price span.value{
   margin-right: 15px;
 }
+#block-pcproducts-list .active{
+    font-weight: normal;
+}

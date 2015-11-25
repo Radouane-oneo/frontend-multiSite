@@ -120,7 +120,9 @@ if (/*@cc_on!@*/false) {
           <?php endif; ?>
 
           <?php print render($page['content']); ?>
-
+          <?php if ($page['blocModele']): ?>
+              <?php print render($page['blocModele']); ?>
+          <?php endif; ?>
 
           <?php if ($is_front): ?>
             <?php if ($page['fronttabs']): ?>

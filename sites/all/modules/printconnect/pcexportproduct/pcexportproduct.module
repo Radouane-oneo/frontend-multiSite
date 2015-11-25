@@ -1,0 +1,130 @@
+<?php
+use printconnect\Products\Configurations;
+//function pcexportproduct_perm() {
+//  return array('access pcexportproduct');
+//}
+function pcexportproduct_menu() {
+    $items = array();  
+	
+    $items['listproducts'] = array(
+      'title' => t('Products & categories'),
+      'page callback' => 'pcexportproduct_page',
+      'page arguments' => array('main'),
+      'access arguments' => array('access content'),
+      'type' => MENU_NORMAL_ITEM, 
+    );
+    $items['listproducts/xml'] = array(
+      'title' => t('Products & categories'),
+      'page callback' => 'pcexportproduct_all',
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+    );
+    return $items;
+}
+
+function pcexportproduct_theme($existing, $type, $theme, $path){
+    return array(
+	'pcexportproduct' => array(
+	'template' => 'pcexportproduct',
+	'variables'=> array('items' => NULL,'title'=>NULL)),
+	
+  );
+}
+
+function pcexportproduct_page(){
+    
+    $form['xml'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('xmlfeed')),
+    );
+    
+    $form['xml']['intro'] = array('#markup' => '<p>' . t('This is a sample feed containing the required and recommended attributes for a variety of different products') . '</p>');
+
+    $form['xml']['link'] = array(
+             '#markup' => l(t('Export in XML'), 'listproducts/xml', array('attributes' => array('class' => array('button', 'request')))),
+    );
+      $items = drupal_render($form);
+    return theme('pcexportproduct', array('items' => $items));
+
+}
+function pcexportproduct_all(){
+    
+    global $language;   
+      
+    switch ($language->prefix) {
+        case 'frfr':
+            $country = "FR";
+            $service = "Standard";
+            $priceshipping = "14.99";
+            $tva = 1.20;
+            break;
+        case 'befr':
+            $country = "BE";
+            $service = "free shipping";
+            $priceshipping = "00.00";
+            $tva = 1.21;
+            break;
+          case 'benl':
+            $country = "BE";
+            $service = "free shipping";
+            $priceshipping = "00.00";
+            $tva = 1.21;
+            break;
+          case 'lufr':
+            $country = "LU";
+            $service = "Standard";
+            $priceshipping = "14.99";
+            $tva = 1.21;
+            break;
+          case 'nlnl':
+            $country = "NL";
+            $service = "Standard";
+            $priceshipping = "14.99";
+            $tva = 1.21;
+            break;
+
+    }
+    header('Content-type: text/xml');
+    header('Content-Disposition: attachment; filename="feed.xml"');
+    $xml_output = '<?xml version="1.0"?>';
+    $xml_output .= '<rss xmlns:g="http://base.google.com/ns/1.0" version="1.0">
+            <channel>
+            <title>'.$_SERVER['HTTP_HOST'].' '.$language->prefix.'</title>
+            <link>'.$_SERVER['HTTP_HOST'].'</link>
+            <description>'.t('This is a sample feed containing the required and recommended attributes for a variety of different products').'</description>';
+    $products = _pcproducts_activeproducts('isxml');
+    
+    foreach ($products as $product) {
+       $productId = $product->id;
+       $itemsTogetData = $product->toolboxItems;
+       //echo $productId; var_dump($product->toolboxItems);
+       $qty = $product->quantity;
+       $url = $_SERVER['SERVER_NAME'].base_path().'products/' . $productId . '/' . implode(',', $itemsTogetData) . '/'. $qty;
+       $price = $product->sellPrice * $tva;
+       $xml_output .= '<item>
+                        <title>'.$product->name.'</title>
+                        <link>'.$url.'</link>
+                        <description>'.strip_tags($product->shortDescription).'</description>
+                        <g:id>'.$product->id.'</g:id>
+                        <g:condition>New</g:condition>
+                        <g:price>'.round($price,2).' EUR</g:price>
+                        <g:availability>in stock</g:availability>
+                        <g:image_link>'.printconnect_getimage('products', $product->id).'</g:image_link>
+                        <g:shipping>
+                            <g:country>'.$country.'</g:country>
+                            <g:service>'.t($service).'</g:service>
+                            <g:price>'.$priceshipping.' EUR</g:price>
+                        </g:shipping>
+                        <g:identifier_exists>FALSE</g:identifier_exists>
+                        <g:product_type>Business &amp; Industrial > Advertising &amp; Marketing</g:product_type>
+                        <g:google_product_category>Business &amp; Industrial > Advertising &amp; Marketing</g:google_product_category>
+                        <g:brand>'.$_SERVER['HTTP_HOST'].'</g:brand>
+                        </item>';
+
+   // break;
+    }
+    $xml_output .= '</channel></rss>'; 
+    print $xml_output;
+   
+}
+

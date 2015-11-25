@@ -2068,7 +2068,11 @@ body.front #block-block-13:after {
 }
 .page-products #pcproducts-config-form .dropdown, 
 .page-templates #pctemplates-config-form2 .dropdown {
-	margin: 0 0 10px 0 !important;
+	/*margin: 0 0 10px 0 !important;*/
+	padding: 0 0 10px 0 !important;
+    border-style: solid;
+    border-color: #e1e1e1;
+    border-width: 0 1px 1px 1px;
 }
 .page-products #pcproducts-config-form .dropdown a, 
 
@@ -3155,7 +3159,7 @@ a.ui-button.inactivebtn{
 }
 .page-products #edit-actions .button-wrapper {
     background-color: #79b61a;
-    width: 330px;
+    width: 50%;
     display: inline-block;
     text-align: center;
     float: right;
@@ -3223,7 +3227,9 @@ a.ui-button.inactivebtn{
 	background: url("images/step123.png") -8px -160px no-repeat;
 	height: 95px;
 }
-.page-checkout-invoiceanddelivery #block-printconnect-progress .item-list, .page-checkout-payment  #block-printconnect-progress .item-list{
+.page-checkout-invoiceanddelivery #block-printconnect-progress .item-list,
+.page-checkout-payment  #block-printconnect-progress .item-list,
+.page-payment  #block-printconnect-progress .item-list{
      margin-left: 174px;
 }
 .page-cart .whitebox {
@@ -11368,19 +11374,19 @@ input.ui-button.payment {
 }
 .page-cart #edit-actions .button-wrapper {
     background-color: #79b61a;
-    width: 330px;
+    width: 50%;
     display: inline-block;
     text-align: center;
     float: right;
 }
 #total-price {
     vertical-align: top;
-    width: 328px;
+    width: 50%;
     float: left;
     line-height: 50px;
 }
 .page-payment #total-price{
-	width: 752px;
+	width: 750px;
 }
 #total-price .value {
     font-size: 30px;
@@ -12530,9 +12536,18 @@ form#pccheckout-payment-form fieldset legend{
     color: #fff;
     float: right;
 }
+.page-myprintconnect h1{
+	margin-bottom: 10px;
+}
+
 .page-templates- #block-system-main #pctemplates-config-form2 #price-template-block {
     background: none repeat scroll 0 0 #F1F1F1;
     border: 1px solid #d1d1d1 !important;
     border-top: none !important;
     margin-top: -15px;
+}
+
+.i18n-nl-NL #pcsamplepacks-request-form a#searchprocess,
+.i18n-nl-NL #pcsamplepacks-requested-form a#searchprocess{
+	display: none !important;
 }

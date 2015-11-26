@@ -16,6 +16,7 @@
 	$('.vatAlreadyUsed').parent().hide();
       if (number.val() !='' && country.val() != '' && $('#companyInput').val() != '') {
 	var vatNumberBA = $("#edit-vatnumber-number").val().replace(/\./g, "").replace(/ /g,"");
+        $("#edit-vatnumber-number").val(vatNumberBA);
 	var decision = false;
 	switch($('#edit-vatnumber-country').val()) {
             case 'BE':

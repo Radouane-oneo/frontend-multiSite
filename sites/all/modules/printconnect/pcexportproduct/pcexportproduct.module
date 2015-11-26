@@ -84,7 +84,7 @@ function pcexportproduct_all(){
             break;
 
     }
-    header('Content-type: text/xml');
+    header("Content-Type: text/xml");
     header('Content-Disposition: attachment; filename="feed.xml"');
     $xml_output = '<?xml version="1.0"?>';
     $xml_output .= '<rss xmlns:g="http://base.google.com/ns/1.0" version="1.0">
@@ -124,7 +124,7 @@ function pcexportproduct_all(){
    // break;
     }
     $xml_output .= '</channel></rss>'; 
-    print $xml_output;
+    print utf8_encode($xml_output);
    
 }
 

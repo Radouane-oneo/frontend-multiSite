@@ -1,0 +1,33 @@
+<div id="edit-summary-shipping" class="shipping form-wrapper">
+    <legend><span class="fieldset-legend"><%= model.labels['shippingAddress'] %></span></legend>
+    <% 
+    var firstAddress = (model.shippingAddresses.orderItemShipping &&
+    model.shippingAddresses.orderItemShipping.orderShippingAddress) ?
+    false : true; 
+    var orderItemShippingAddress = (model.shippingAddresses.orderItemShipping &&
+    model.shippingAddresses.orderItemShipping.orderShippingAddress) ?
+    model.shippingAddresses.orderItemShipping.orderShippingAddress : model.shippingAddresses.addresses[0]; 
+    var countrySelected = _.findWhere(model.countries, {id : orderItemShippingAddress.country});
+    if(typeof countrySelected == "undefined") {
+        countrySelected = "BE";
+    }else {
+        countrySelected = countrySelected.iso;
+    } 
+    %>
+    <div class="fieldset-wrapper fieldset-wrapper-shipping-detail">
+        <% if(orderItemShippingAddress) { %>
+        <div class="address wrap_detail">
+            <% if(firstAddress) { %>
+                <input type="hidden" name="customer-first-address-id" value="<%= orderItemShippingAddress.id %>">
+            <% } %>
+            <div class="name"><%= orderItemShippingAddress.name %></div>
+            <div class="street"><%= orderItemShippingAddress.street %></div>
+            <div class="place"><%= isNaN(orderItemShippingAddress.country)? orderItemShippingAddress.country:countrySelected %> - <%=
+                orderItemShippingAddress.postalCode %> <%= orderItemShippingAddress.city %>
+            </div>
+            <div class="phone"><%= orderItemShippingAddress.phone %></div>
+        </div>
+        <% } %>
+        <a class="toggle" href="#shipping-address" id="toggle-shipping-form"><%= model.labels['changeShippingAddress'] %></a>
+    </div>
+</div>

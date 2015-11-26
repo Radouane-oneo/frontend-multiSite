@@ -523,7 +523,7 @@ function pctemplates_callback($type) {
 	$cart->productId = isset($_SESSION['templateProductId'])
 	    ? $_SESSION['templateProductId']
 	    : null;
-        $item = Carts\Factory::CreateItem($cart, $priceGroupId, $qty, NULL, NULL, $options, $vatPercentage);
+        $item = Carts\Factory::CreateItem($cart, $priceGroupId, $qty, NULL, NULL, $options, $vatPercentage, '', '', '');
         $item = Carts\Factory::GetItem($cart, $item->id);
 	$item = Carts\Factory::LoadItem($item);
 	$item->file = $file;
@@ -1150,7 +1150,19 @@ $product = Products\Factory::Get($productId);
   } else {
     $price = 0;
   }
-  $subtotal += $price + $optionsPrice;
+  
+  $priceTemplate = (float)$template->designTemplates->price;
+  $priceTemplateDesc = $template->designTemplates->description;
+  if($priceTemplate){
+      $form['priceTemplate'] = array(
+        '#id' => 'price-template-block',
+        '#type' => 'item',
+        '#title' => $priceTemplateDesc,
+        '#markup' => theme('price', array('value' => $priceTemplate)),
+      );
+  }
+  
+  $subtotal += $price + $optionsPrice + $priceTemplate;
   $total = $subtotal * (1 + $_SESSION['shop_vat']);
   $form['priceblock'] = array(
       '#id' => 'priceblock',

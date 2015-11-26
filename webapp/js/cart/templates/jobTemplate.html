@@ -1,0 +1,56 @@
+<!-- templateDetail -->
+<fieldset id="templates" class="templates form-wrappersss">
+    <legend><span class="fieldset-legend"><%= config.labels['technicalDetails'] %></span><i class="close-tdc"></i></legend>
+    <div class="fieldset-wrapper detailtechnique-wrapper">
+        <div id="edit-templates-text" class="text form-wrapper">
+            <%= config.labels['technicalDescription'] %>
+        </div>
+        <div id="edit-templates-image" class="image form-wrapper">
+        <a target="_blank" href="/<%= config.prefix %>/file/template_<%= model.configuration.template.id %>__<%= config.labels['langId'] %>.zip">
+            <img src="/file/<%= model.configuration.template.thumbnail %>"></a>
+        </div>
+        <div id="edit-templates-desciption" class="description form-wrapper">
+            <div id="edit-templates-desciption-name" class="name form-wrapper">
+                <%= config.labels['formatToProvide'] %> :
+                <%
+                    var size =  model.configuration.template.size.match(/\d+/g);
+                    var bleed =  model.configuration.template.bleed.match(/\d+/g);
+                    var v1 = parseInt(bleed[0]) * 2 + parseInt(size[0]) ;
+                    var v2 = parseInt(bleed[0]) * 2 + parseInt(size[1]) ;
+                    print( v1 +" x "+v2 +" mm");
+                %>
+            </div>
+
+            <div class="form-item form-type-item" id="edit-templates-desciption-brut">
+                <label for="edit-templates-desciption-brut"><%= config.labels['formatBrut'] %> : </label>
+                <% print( v1 +" x "+v2 +" mm"); %>
+            </div>
+
+            <div class="form-item form-type-item" id="edit-templates-desciption-size">
+                <label for="edit-templates-desciption-size"><%= config.labels['formatFini'] %> : </label>
+                <%= model.configuration.template.size %>
+            </div>
+
+            <div class="form-item form-type-item" id="edit-templates-desciption-bleed">
+                <label for="edit-templates-desciption-bleed"><%= config.labels['bleed'] %> : </label>
+                <%= model.configuration.template.bleed %>
+            </div>
+            <div class="form-item form-type-item" id="edit-templates-desciption-color">
+                <label for="edit-templates-desciption-color"><%= config.labels['color'] %> : </label>
+                <%= model.configuration.template.colorMode %>
+            </div>
+            <div class="form-item form-type-item" id="edit-templates-desciption-resolution">
+                <label for="edit-templates-desciption-resolution"><%= config.labels['resolution'] %> : </label>
+                <%= model.configuration.template.resolution %>
+            </div>
+        </div>
+        <div id="edit-templates-linktodownload" class="link form-wrapper">
+            <div class="form-item form-type-item" id="edit-templates-linktodownload-link">
+                <a target="_blank" href="/<%= config.prefix %>/file/template_<%= model.configuration.template.id %>__<%= config.labels['langId'] %>.zip">
+                    <%= config.labels['downloadTemplateText'] %>
+                </a>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<!-- End templateDetail -->

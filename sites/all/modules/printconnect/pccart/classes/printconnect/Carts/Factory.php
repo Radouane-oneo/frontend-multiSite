@@ -5,8 +5,157 @@ namespace printconnect\Carts {
   use printconnect\Dal;
 use printconnect\Customers;
 
-  class Factory {
-  
+class Factory {
+
+    public static function GetCartJson()
+    {
+        $response = NULL;
+        
+        if (isset($_SESSION['cartid'])) {
+            $response = Dal::SendRequest('new-cart/id/'. $_SESSION['cartid']);
+        }elseif($_SESSION['customerid']) {
+            $response = Dal::SendRequest('new-cart/customer/'. $_SESSION['customerid']);
+        }
+
+        if(!$response) {
+            $_SESSION['cartCount'] = 0;
+        }else {
+            $cart = json_decode($response->data);
+            $number = count($cart->orderItems);
+            $_SESSION['cartCount'] = $number;
+        }
+
+        return $response;
+    } 
+
+    public static function DeleteItem($id) 
+    {
+        $cartId = isset($_SESSION['cartid']) ? $_SESSION['cartid'] : NULL;
+        $response = Dal::SendRequest(sprintf('cart-item/id/%d/cart/%d', $id, $cartId), 'DELETE');
+
+        if($response->code == 200) {
+            self::UpdateCartCount(FALSE);
+        }
+
+        return $response;
+    }
+
+    public static function DeleteDesign($id) 
+    {
+        return Dal::SendRequest(sprintf('order-item-file/orderItemId/%d', $id), 'DELETE');
+    }
+
+    public function saveNeutralShipping($neutral)
+    {
+        return Dal::SendRequest('supplement-parameter', 'POST', array(
+            'id' => $_SESSION['cartid'],
+            'neutral' => $neutral
+        ));
+    }
+    
+    public static function SaveRefJob($id, $refJob)
+    {
+        return Dal::SendRequest('supplement-parameter', 'POST', array(
+            'id' => $id,
+            'refJob' => $refJob
+        ));
+    }
+
+    public static function SaveEmailDesigner($id, $email)
+    {
+        return Dal::SendRequest('supplement-parameter', 'POST', array(
+            'id' => $id,
+            'emailDesigner' => $email
+        ));
+    }
+    
+    public static function SaveRefOrder($id, $orderRef)
+    {
+        return Dal::SendRequest('supplement-parameter', 'POST', array(
+            'id' => $id,
+            'customer_reference' => $orderRef
+        ));
+    }    
+
+    public static function ApplyDiscount($code)
+    {
+        $cartId = isset($_SESSION['cartid']) ? $_SESSION['cartid'] : NULL;
+
+        return Dal::SendRequest('order-discount-code', 'POST', array(
+            'order' => $cartId,
+            'code' => $code
+        ));
+    }
+
+    public static function RemoveDiscount($code)
+    {
+        $cartId = isset($_SESSION['cartid']) ? $_SESSION['cartid'] : NULL;
+
+        return Dal::SendRequest('order-discount-code', 'DELETE', array(
+            'order' => $cartId,
+            'code' => $code
+        ));
+    }
+
+    public static function RemoveFileCheck($itemId)
+    {
+        return Dal::SendRequest('supplement-parameter', 'POST', array(
+            'fileCheck' => 'remove',
+            'id' => $itemId
+        ));
+    }
+
+    public static function SetPickupPoint($pickuppoint)
+    {
+        $cartId = isset($_SESSION['cartid']) ? $_SESSION['cartid'] : NULL;
+        return Dal::SendRequest('pickuppointdetail', 'PUT', array(
+            'id' => $cartId,
+            'pickuppoint' => $pickuppoint->GetProperties()
+        ));
+    }
+
+    public static function GetCartCount()
+    {
+        if(!isset($_SESSION['cartid'])) {
+            return 0;
+        }
+        if(!isset($_SESSION['cartCount'])) {
+            $response = self::GetCartJson();
+            $cart = json_decode($response->data);
+        
+            $number = count($cart->orderItems);
+            $_SESSION['cartCount'] = $number;
+        }else {
+            $number = $_SESSION['cartCount'];
+        }
+        return $number;
+    }
+
+    public static function UpdateCartCount($append = TRUE) 
+    {
+        if(isset($_SESSION['cartCount'])) {
+            $count = $_SESSION['cartCount'];
+        }else {
+            $count = 0;
+        }
+
+        if($append) {
+            $count++;
+        }else {
+            $count--;
+        }
+
+        $_SESSION['cartCount'] = $count;
+    }
+
+    public static function RecalculateCart() 
+    {
+        $cartId = isset($_SESSION['cartid']) ? $_SESSION['cartid'] : NULL;
+        return Dal::SendRequest('recalculate-cart', 'POST', array(
+            'id' => $cartId
+        ));
+    }
+
     public static function saveInCache($object, $data) 
     {
         if (!empty($data)) {
@@ -17,7 +166,7 @@ use printconnect\Customers;
             );
         }
     }
-  
+
     public static function Get($id, $cache = TRUE) {
       return new Cart(array('id' => $id), $cache);
     }
@@ -321,6 +470,7 @@ use printconnect\Customers;
 	);
       } catch (\Exception $ex) {
       }
+      self::UpdateCartCount(TRUE);
       return $object;
     }
 
@@ -372,40 +522,6 @@ use printconnect\Customers;
       return $item;
     }
 
-    public static function DeleteItem($id, Cart $cart) {
-      $cartItems = $cart->orderItems;
-      $counter = 0; 
-      foreach($cartItems as $key => $job) {
-          if($job->discountId == null) {
-            $counter++;
-          }
-          if ($job->id == $id) {
-              unset($cartItems[$key]);
-          }
-      }
-      if ($counter <= 1) {
-        self::Clear();
-      }
-      $cart->orderItems = array_values($cartItems);
-
-      $fotolias = $cart->fotoliaItems;
-      foreach($fotolias as $key => $fotolia) {
-        if ($fotolia->parentId = $id) {
-            unset($fotolias[$key]);
-        }
-      }
-      $cart->fotoliaItems = $fotolias;
-
-      Dal::updateElement($cart, 'cart', 
-        array('id' => $cart->id), 
-        array(
-            'orderItems' => $cart->orderItems,
-            'fotoliaItems' => $fotolias
-        )
-      );
-       
-      return Dal::Delete('cart-item', array('id' => $id, 'cart' => $cart->id));
-    }
     public static function DeleteItemFile($id) {
       $cart = self::Current();
       $cartItems = $cart->orderItems;

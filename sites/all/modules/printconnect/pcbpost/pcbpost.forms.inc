@@ -52,6 +52,11 @@ function pcbpost_picker_form($form, &$form_state, $callback = FALSE) {
       '#attributes' => array('class' => array('search')),
   );
 
+  $form['bpost']['search']['wrap_leftInput'] = array(
+      '#type' => 'container',
+      '#attributes' => array('class' => array('leftInput')),
+  );
+
 //  $form['bpost']['search']['title'] = array(
 //      '#type' => 'markup',
 //      '#markup' => t('Find your pickup point'),
@@ -66,14 +71,14 @@ function pcbpost_picker_form($form, &$form_state, $callback = FALSE) {
           //  '#ajax' => $ajax,
   );
 
-  $form['bpost']['search']['place'] = array(
+  $form['bpost']['search']['wrap_leftInput']['place'] = array(
       '#type' => 'textfield',
       '#title' => t('Place'),
       '#size' => 20,
           //'#ajax' => $ajax,
   );
 
-  $form['bpost']['search']['search'] = array(
+  $form['bpost']['search']['wrap_leftInput']['search'] = array(
       '#type' => 'submit',
       '#value' => t('Find'),
       //'#button_type' => 'button',

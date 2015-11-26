@@ -1,0 +1,12 @@
+<p class="lineSeparator"><%= model.labels['NeutralShippingTitle'] %></p>
+<div id="edit-shipping-neutral-text" class="form-item form-type-item">
+    <p class="neutralDescritpion">
+        <input type="checkbox" id="neutralRadioClick" class="form-checkbox" <% if(model.isNeutral) print ("checked='checked'");%>>
+        <label class="option" for="neutralRadioClick"><%= model.labels['Neutralexplain'] %> </label>
+    </p>
+</div>
+
+<div class="clearfix form-actions form-wrapper" id="edit-actions">
+    <input id="processPayment"class="checkout-submit payment form-submit ui-button ui-widget ui-state-default ui-corner-all" 
+        type="submit" id="edit-actions-submit" name="op" value="<%= model.labels['securePaymentBtn'] %>" role="button">
+</div>

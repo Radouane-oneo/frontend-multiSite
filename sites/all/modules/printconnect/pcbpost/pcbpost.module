@@ -63,7 +63,7 @@ function theme_pcbpost_poi($vars) {
     if ($vars['format'] == 'infowindow') {
       $html .= '
           <div>
-          <div class="name">' . htmlentities($poi->Name) . '</div>
+          <div class="name name_popup_map">' . htmlentities($poi->Name) . '</div>
           <div class="address">' . $poi->Street . ' ' . $poi->Number . '<br/>' . $poi->Zip . ' ' . $poi->City . '</div>
           </div>';
 
@@ -392,12 +392,11 @@ function pcbpost_invoiceanddelivery_form_shipping_submit($form, &$form_state) {
 }
 
 function _pcbpost_set_pickuppoint($id) {
-  $cart = \printconnect\Carts\Factory::Current();
-  if ($cart) {
-    $poi = \printconnect\bPost\Factory::Get($id);
-    $poi->EnsureLoaded();
-    $cart->pickuppoint = $poi->cartObject;
-    \printconnect\Carts\Factory::Save($cart);
-  }
+  $poi = \printconnect\bPost\Factory::Get($id);
+  $poi->EnsureLoaded();
+
+  $response = \printconnect\Carts\Factory::SetPickupPoint($poi->cartObject);
+
+  \printconnect\Dal::BuildJson(json_decode($response->data, 1));
   exit;
 }

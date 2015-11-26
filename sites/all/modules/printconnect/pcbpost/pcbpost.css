@@ -1,5 +1,6 @@
 #pcbpost-picker-form .form-item{
   display:inline-block;
+  float: left;
 }
 
 #pcbpost-picker-form .form-submit{
@@ -16,6 +17,15 @@
   min-width:0;
   width:auto;
 }
+#pcbpost-picker-form .form-item input[name="postal"]{
+  width:250px;
+  max-width: 250px;
+}
+
+#pcbpost-picker-form .form-item input[name="place"]{
+  width:376px;
+  max-width: 400px;
+ } 
 
 #pcbpost-picker-form .form-item label{
   min-width:0;
@@ -27,15 +37,16 @@
 #pcbpost-picker-form #result #map{
   width:640px;
   height:540px;
-  float:right;
+  float:left;
 }
 
 #pcbpost-picker-form #result .pois{
   float:left;
-  width:300px;
+  width:333px;
   display:none;
   height:540px;
   overflow:auto;
+  border-right: 1px solid #f1f1f1;
 }
 
 #pcbpost-picker-form #result .pois .list{
@@ -44,8 +55,10 @@
   -webkit-border-radius: 7px;
   -khtml-border-radius: 7px;
   border-radius: 7px;
-  margin:10px;
-  padding:10px;
+  margin:0 10px 0 0px; 
+}
+#pcbpost-picker-form #result .pois .list h3{
+  margin-bottom: 20px;
 }
 
 #pcbpost-picker-form #result .item-list ul li{
@@ -54,8 +67,9 @@
   margin:0;
   padding-left:40px;
   background: url(postpoint.png) no-repeat top left;
-  height: 50px;  
+  /*min-height: 50px;  */
   line-height: 1em;
+  margin-bottom: 10px;
 }
 
 #pcbpost-picker-form #result .name {
@@ -65,8 +79,8 @@
 }
 
 #pcbpost-picker-form #result .address {
-  font-size: 10px;
-  line-height:1.2em;
+  font-size: 12px;
+  line-height:1.4em;
 }
 
 #pcbpost-picker-form #result .services {
@@ -89,4 +103,15 @@
 
 #pcbpost-picker-form fieldset .fieldset-wrapper{
   padding:0;
+}
+
+#pcbpost-picker-form .search{
+  padding: 0 10px;
+  border-bottom: 1px solid #f1f1f1;
+}
+#pcbpost-picker-form .search:after{
+  display: block;
+  content: '';
+  clear: both;
+  width: 100%;
 }

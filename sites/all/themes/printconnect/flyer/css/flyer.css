@@ -59,6 +59,10 @@ html, body, .ui-widget {
 .clearfix {
 	clear: both
 }
+.clear{
+	 
+	clear: both;
+}
 /*body {
 	background: #f1f1f1 url(http://d4e7wxbvl20c1.cloudfront.net/d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/xmas/background_without_top.jpg) top center no-repeat;  XMAS BACKGROUND REMOVE AFTER 
 	color: #646464;  maincolor 
@@ -103,7 +107,8 @@ select {
 }
 #pccustomers-newaddress-form label,
 #pccustomers-address-form label,
-#pccustomers-changepassword-form label {
+#pccustomers-address-billingaddresses-form label, 
+#pccustomers-newaddress-billingaddresses-form label {
 	display: block;
 	float: left;
 	font-weight: 400;
@@ -129,22 +134,32 @@ select {
 	float: left;
 }
 #pccustomers-newaddress-form .form-item-postalCode input, 
-#pccustomers-address-form .form-item-postalCode input {
+#pccustomers-address-form .form-item-postalCode input ,
+#pccustomers-address-billingaddresses-form .form-item-postalCode input,
+#pccustomers-newaddress-billingaddresses-form .form-item-postalCode input 
+{
 	width: 100px;
 	border-radius: 3px 0 0 3px;
 }
 #pccustomers-newaddress-form .form-item-city input, 
-#pccustomers-address-form .form-item-city input {
+#pccustomers-address-form .form-item-city input,
+#pccustomers-address-billingaddresses-form .form-item-city input,
+#pccustomers-newaddress-billingaddresses-form .form-item-city input {
 	border-left: 0 none;
 	border-radius: 0 3px 3px 0;
 	width: 338px;
 }
 #pccustomers-newaddress-form .form-item-street, 
-#pccustomers-address-form .form-item-street {
+#pccustomers-address-form .form-item-street,
+#pccustomers-address-form .wrap_postal_codeCity .form-item-postalCode,
+#pccustomers-address-form .wrap_postal_codeCity .form-item-city
+{
 	margin-bottom: 0;
 }
 #pccustomers-newaddress-form .form-item-country, 
-#pccustomers-address-form .form-item-country {
+#pccustomers-address-form .form-item-country ,
+#pccustomers-address-billingaddresses-form .form-item-country,
+#pccustomers-newaddress-billingaddresses-form .form-item-country {
 	clear: left;
 }
 #pccustomers-newaddress-form input[type="submit"], 
@@ -177,7 +192,8 @@ select {
 #pccustomers-newaddress-form select,
 #pccustomers-address-form select,
 #pccustomers-newaddress-billingaddresses-form select,
-#pccustomers-address-billingaddresses-form select{
+#pccustomers-address-billingaddresses-form select,
+#pccustomers-newaddress-billingaddresses-form select {
 	width: 480px;
 }
 #pccustomers-newaddress-form input.country, 
@@ -259,7 +275,7 @@ h1, h2, h3, h4, h5, h6 {
 	color: #646464; /* maincolor */
 }
 h1, #content h1 {
-	font-size: 16px; /* font-size: 20px; */
+	font-size: 16px;
 	text-transform: uppercase;
 	font-weight: 700;
 }
@@ -268,7 +284,7 @@ h2, #center h1 {
 	font-weight: 600;
 }
 h3 {
-	font-size: 14px; /* font-size: 16px; */
+	font-size: 14px;
 	text-transform: uppercase;
 	font-weight: 400;
 }
@@ -353,7 +369,7 @@ body.page-cobranding #header_left img {
 #block-block-3 ul.contact {
 	padding: 0;
 	float: left;
-	margin: -12px 98px 0 0;
+	margin: -12px 15px 0 0;
 }
 #block-block-3 ul.contact p {
  font-weight: 600;
@@ -361,7 +377,6 @@ body.page-cobranding #header_left img {
 #block-block-3 ul.contact li {
 	list-style: none;
 	float: left;
-	margin-right: 22px;
 }
 #block-block-3 ul.contact li a {
 	color: #3c3c3c; /* maincolor */
@@ -467,7 +482,7 @@ body.page-cobranding #header_left img {
 	/*border-left: 1px solid #fff;*/
 	height: 35px;
 	margin-top: -11px;
-	padding-left: 7px;
+	padding-left: 15px;
 	padding-top: 11px;
 	border-left: 1px solid #fff;
 }
@@ -697,7 +712,7 @@ div#cart{
 	position: relative;
 	top: -11px;
 	margin-bottom: -9px;
-	z-index: 101;
+	z-index: 999;
 }
 /* ---- END - CART ------------------------- */
 
@@ -707,6 +722,7 @@ div#cart{
 #sidebar-first{
 	float: left;
 	margin-right: 10px;
+    display: block;
 }
 #sidebar-second {
 	float: right;
@@ -718,6 +734,9 @@ div#cart{
     width: 660px;
     margin: 10px 10px 10px 0;
 	display: none;
+}
+.page-payment .breadcrumb{
+	display: block;
 }
 /* ---- END - BREADCRUMB -------------------- */
 
@@ -741,8 +760,17 @@ div#cart{
 	float: left
 }
 body.one-sidebar #content {
-	width: 855px
+	width: 855px;
 }
+
+.page-checkout-invoiceanddelivery  #sidebar-first{
+	display: none;
+}
+
+input.cmd-collecte{
+	width: 190px;
+}
+
 .sidebar-second #block-pcmenu-main > .content > ul,
 .no-sidebars #block-pcmenu-main > .content > ul,
 .one-sidebar #block-pcmenu-main > .content > ul {
@@ -750,10 +778,18 @@ body.one-sidebar #content {
   overflow: hidden;
   padding: 0;
 }
+
 body.two-sidebars #content {
 	width: 680px;
 	margin-bottom: 10px;
 }
+
+body.page-paymentrequest  #content,
+body.page-checkout-invoiceanddelivery  #content{
+	width: 100%;
+}
+
+
 body.two-sidebars #content .whitebox{
 	margin-bottom: 0;
 }
@@ -764,7 +800,7 @@ body.two-sidebars #content .whitebox{
 
 .region-sidebar-first .block, 
 .region-sidebar-second .block {
-	margin-bottom: 10px;
+	margin-bottom: 12px;
 	padding: 16px 10px 10px;
 	border-radius: 3px;
 	background: #fff;
@@ -884,7 +920,6 @@ body.two-sidebars #content .whitebox{
 } */
 #footer #block-block-6 p {
 	margin: 10px 0 15px;
-	font-size: 14px;
 }
 
 #footer #block-block-6 label{
@@ -1157,7 +1192,7 @@ a.button.request:active {
 }
 .ui-button .ui-button-text {
 	display: inline;
-	line-height: 17px;
+	line-height: 18px;
 }
 .form-submit, .ui-button a.button, a:visited.button, a.ui-button, a:visited.ui-button{
 	color: #fff;
@@ -1302,13 +1337,6 @@ input.ui-button.upload:active {
 	/*background-image: url("images/button_upload_active.png");*/
 }
 
-.demande-paiement .form-actions input[type="submit"],
-input.pay-now, 
-input.ui-button.pay-now, input.payment, 
-input.ui-button.payment {
-	background: #77b800 url("images/button_payment.png") no-repeat left;
-	padding-left: 55px;
-}
 input.pay-now.ui-state-hover, 
 input.pay-now:hover, 
 input.pay-now.ui-state-hover, 
@@ -1402,7 +1430,7 @@ a.button.cart .ui-button-text {
 	background-position:-436px -444px;
 	display: block;
 	width: 159px;
-	padding: 0 0 0 20px;
+	padding: 0 0 0 19px;
 	color: #fff;
 	position: relative;
 	height: 350px; /* before: 317px; before before: 297px; */
@@ -1422,6 +1450,7 @@ a.button.cart .ui-button-text {
 #block-pccustomers-profile .item-list ul li {
 	list-style: none !important;
 	margin-left: 0 !important;
+	margin-bottom: 0;
 }
 #block-pccustomers-profile h2 {
 	color: #fff;
@@ -1465,7 +1494,7 @@ a.button.cart .ui-button-text {
 	margin-left: 33px;
 	padding-top: 25px;
 	margin-bottom: 30px;
-	font-size: 14px;
+	font-size: 16px;
  	font-weight: 700;
 }
 .type-selectBox-dropdown-menu {
@@ -2068,7 +2097,7 @@ body.front #block-block-13:after {
 .page-templates #pctemplates-config-form2 .dropdown li:nth-child(4n+5) {
 	clear: left !important;
 }
-.page-products #pcproducts-config-form .dropdown li:nth-child(4n+5):before, 
+/*.page-products #pcproducts-config-form .dropdown li:nth-child(4n+5):before, 
 .page-templates #pctemplates-config-form2 .dropdown li:nth-child(4n+5):before {
 	content: '';
 	display: block;
@@ -2076,7 +2105,7 @@ body.front #block-block-13:after {
 	height: 1px;
 	background: #f1f1f1;
 	position: absolute;
-}
+}*/
 .page-products #pcproducts-config-form .dropdown li .form-type-item, 
 .page-templates #pctemplates-config-form2 .dropdown li .form-type-item {
 	text-align: left;
@@ -2184,7 +2213,7 @@ body.front #block-block-13:after {
 }
 #pcproducts-config-form .templates .description{
 	float: left;
-	width: 50%;
+	width: 52%;
 }
 #pcproducts-config-form .templates #edit-templates-linktodownload{
 	float: left;
@@ -2373,12 +2402,13 @@ body.front #block-block-13:after {
 	background-repeat: no-repeat;
 	padding: 8px 8px 10px 15px;
 	clear: left;
-	font-size: 13px;
+	font-size: 12px;
 	border-style: solid;
 	border-color:#e1e1e1;
 	border-width: 0 1px 1px 1px;
 	margin: 0;
 	color: #666666;
+	position: relative;
 }
 .page-products #block-system-main .form-type-select.expanded,
 .page-products #block-system-main .form-type-checkboxes.expanded,
@@ -2422,7 +2452,7 @@ body.front #block-block-13:after {
 .page-products #block-system-main div.deadline{
 	border-left: 1px solid #e1e1e1;
 	width: 345px;
-	background: url(images/bg_deadline.png) no-repeat 100% center #f6f6f6;
+/*	background: url(images/bg_deadline.png) no-repeat 100% center #f6f6f6;*/
 }
 .page-products #block-system-main .deadline, 
 .page-templates- #block-system-main .deadline {
@@ -2551,22 +2581,6 @@ body.front #block-block-13:after {
 	width: inherit !important;
 	float: none !important;
 }
-.page-paymentrequest .demande-paiement .form-wrapper.actions,
-#pccheckout-payment-form .form-wrapper.actions,
-.page-checkout-upload #edit-actions,
-#pccheckout-invoiceanddelivery-form .form-actions,
-.page-products #block-system-main .form-wrapper.actions,
-.page-cart #block-system-main .form-wrapper.actions{
-	background: #3c3c3c;
-	border-radius: 0 0 5px 5px;
-	-webkit-border-radius: 0 0 5px 5px;
-	-moz-border-radius: 0 0 5px 5px;
-	padding: 0;
-	height: 62px;
-	margin: 0 0 20px; /* IE8 and below */
-	box-shadow: 0px 0px 10px 1px #000 inset;
-	overflow: hidden;
-}
 #pccheckout-invoiceanddelivery-form .form-actions{
 	margin: 0;
 }
@@ -2578,22 +2592,24 @@ body.front #block-block-13:after {
 	display: none;
 }
 
+.page-paymentrequest .demande-paiement .form-wrapper.actions,
+#pccheckout-payment-form .form-wrapper.actions,
+.page-checkout-upload #edit-actions,
+#pccheckout-invoiceanddelivery-form .form-actions,
+.page-products #block-system-main .form-wrapper.actions{
+	background: #3c3c3c;
+	border-radius: 0 0 5px 5px;
+	-webkit-border-radius: 0 0 5px 5px;
+	-moz-border-radius: 0 0 5px 5px;
+	padding: 0;
+	height: 62px;
+	margin: 0 0 20px; /* IE8 and below */
+	box-shadow: 0px 0px 10px 1px #000 inset;
+	overflow: hidden;
+}
 a.ui-button.inactivebtn{
 	background: #ccc;
 	cursor: default;
-}
-
-.page-paymentrequest .demande-paiement .form-actions span.price,
-#pccheckout-payment-form .form-actions span.price,
-.page-cart #block-system-main .form-wrapper.actions span.price,
-.page-products #block-system-main .form-wrapper.actions span.price {
-	float: left;
-	color: #fff;
-	font-size: 33px;
-	line-height: 60px;
-	line-height: normal\9; /* IE HACK */
-	font-weight: bold;
-	font-family: arial;
 }
 .page-paymentrequest .demande-paiement .form-actions span.price .currency,
 #pccheckout-payment-form .form-actions span.price .currency,
@@ -2603,29 +2619,23 @@ a.ui-button.inactivebtn{
 	margin-right: -10px;
 	vertical-align: inherit;
 }
+.page-paymentrequest .demande-paiement .form-actions span.price, 
+#pccheckout-payment-form .form-actions span.price, 
+.page-products #block-system-main .form-wrapper.actions span.price {
+    float: left;
+    color: #fff;
+    font-size: 33px;
+    line-height: 60px;
+    line-height: normal\9;
+    font-weight: bold;
+    font-family: arial;
+}
 .page-paymentrequest .demande-paiement .form-actions span.price .decimals ,#pccheckout-payment-form .form-actions span.price .decimals ,#pccheckout-payment-form .form-actions span.price .decimalpoint,
 .page-cart #block-system-main .form-wrapper.actions span.price .decimalpoint, .page-cart #block-system-main .form-wrapper.actions span.price .decimals,
 .page-products #block-system-main .form-wrapper.actions span.price .decimalpoint, .page-products #block-system-main .form-wrapper.actions span.price .decimals {
 	font-size: 25px;
 	vertical-align: middle;
 	line-height: 30px;
-}
-.page-paymentrequest .demande-paiement .form-actions input[type="submit"],
-#pccheckout-payment-form .form-actions input,
-.page-cart #block-system-main .form-wrapper.actions input,
-.page-products #block-system-main .form-wrapper.actions input {
-	height: 62px;
-	width: 245px;
-	float: right;
-	margin: 0;
-	-webkit-border-radius: 0;
-	-moz-border-radius: 0;
-	border-radius: 0;
-	font-weight: bold;
-	text-align: left;
-	border-bottom: 1px solid #5a8a02;
-	border-top: 1px solid #5a8a02;
-	border-right: 1px solid #5a8a02;
 }
 .page-products #pcproducts-config-form table.grid {
 	-webkit-border-radius: 5px;
@@ -2641,6 +2651,21 @@ a.ui-button.inactivebtn{
 	font-weight: 600;
 	height: 37px;
 	line-height: 27px;
+}
+.page-paymentrequest .demande-paiement .form-actions input[type="submit"],
+.page-products #block-system-main .form-wrapper.actions input {
+    height: 62px;
+    width: 245px;
+    float: right;
+    margin: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    font-weight: bold;
+    text-align: left;
+    border-bottom: 1px solid #5a8a02;
+    border-top: 1px solid #5a8a02;
+    border-right: 1px solid #5a8a02;
 }
 .page-products #pcproducts-config-form table.grid thead th{
 	padding: 6px 20px;
@@ -2873,9 +2898,11 @@ a.ui-button.inactivebtn{
 	margin-top: 20px;
 }
 #pcdesigner-upload-form .templates  .image img {
-  max-height: 350px;
+  
+  max-width: 328px;
+  /*max-height: 350px;
   width: 100%;
-  height: auto;
+  height: auto;*/
 }
 
 
@@ -2950,7 +2977,7 @@ a.ui-button.inactivebtn{
     margin-right: 45px;
     min-height: 135px;
 }
-#pcproducts-config-form .templates > .fieldset-wrapper, #pcdesigner-upload-form .templates > .fieldset-wrapper {
+#pcproducts-config-form .templates > .fieldset-wrapper {
 	border-radius: 3px;
 	background: #f1f1f1;
 	margin: 0;
@@ -2999,9 +3026,24 @@ a.ui-button.inactivebtn{
 	font-size: 12px;
     border: 0;
 }
+.page-products #block-system-main #templates .form-item.form-type-item a{ 
+    display: block;  
+    cursor: pointer;
+    float: right;
+    color: #fff;
+    display: block;
+    font-weight: 400;
+    font-size: 12px;
+    padding: 8px 8px 8px 35px;
+    border-radius: 4px 4px 4px 4px;
+    width: auto; 
+    /*background: -webkit-linear-gradient(top,#77b800 0%,#669c02 100%);
+    background: -moz-linear-gradient(top,#77b800 0%,#669c02 100%);
+    background: -o-linear-gradient(top,#77b800 0%,#669c02 100%);*/
+    background: url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/Develop/downlode.png) no-repeat 6px center #77b800;
+}
 .invoice a#toggle-invoice-form,
-.shipping a#toggle-shipping-form,
-.page-products #block-system-main #templates .form-item.form-type-item a {
+.shipping a#toggle-shipping-form {
 	display: block;
 	padding: 10px 15px;
 	border: 1px solid #dadada;
@@ -3012,21 +3054,27 @@ a.ui-button.inactivebtn{
 }
 .invoice a#toggle-invoice-form,
 .shipping a#toggle-shipping-form{
-	padding: 7px 15px;
+	padding: 5px 15px;
 	display: inline-block;
-	margin-top: 10px;
+	margin-top: 14px;
+	background-color: #6faa01;
+	color: white;
+	border: 0;
+	border-radius: 3px;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 24px;
 }
 .page-products #block-system-main #templates .form-item.form-type-item label ,    #pcdesigner-upload-form .templates label{
 	display: inline;
-	width: inherit;
 	margin-right: 5px;
 	font-weight: 400;
 	font-size: 12px;
 	background-position: left;
 	background-repeat: no-repeat;
 	padding-left: 10px;
-	width: 30%;
-        background: url("images/calc_dot.png") no-repeat left;
+	width: auto;
+    background: url("images/calc_dot.png") no-repeat left;
 }
 #pcproducts-config-form .description .text {
 	overflow: hidden;
@@ -3062,6 +3110,66 @@ a.ui-button.inactivebtn{
 }
 #pcproducts-config-formImage2 li {
 	display: none;
+}
+.page-products #block-system-main .edit-actions-product{
+ 	margin-bottom: 0;
+}
+.page-products #block-system-main .edit-actions-product span.price .currency,
+.page-products #block-system-main .edit-actions-product span.price .currency {
+	 font-size: 33px;
+}
+.page-products #block-system-main .edit-actions-product span.price .decimalpoint, 
+.page-products #block-system-main .edit-actions-product span.price .decimals {
+	font-size: 25px;
+	border-bottom: 0;
+}
+.page-products #block-system-main .edit-actions-product {
+	background: #3c3c3c;
+ 	padding: 0;
+ 	-moz-border-radius: 0 0 5px 5px;
+}
+.page-products #block-system-main .edit-actions-product span.price {
+ 	float: left;
+ 	color: #fff;
+}
+
+.page-products #block-system-main .edit-actions-product input{
+	font-size: 16px;
+ 	height: 50px;
+ 	border-radius: 0;
+}
+.page-products #block-system-main #edit-actions input {
+    background: #79b61a url("images/button_payment.png") no-repeat 75px center;
+    font-size: 16px;
+    height: 50px;
+    margin: 0;
+    font-weight: 400;
+    text-align: center;
+    width: 100%;
+    display: inline-block;
+    padding-left: 40px;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    border: none;
+}
+.page-products #edit-actions .button-wrapper {
+    background-color: #79b61a;
+    width: 330px;
+    display: inline-block;
+    text-align: center;
+    float: right;
+}
+.page-products #block-system-main .edit-actions-product span.price label {
+    font-size: 14px;
+    margin-right: 5px;
+    text-align: right;
+    line-height: 50px;
+    float: left;
+    clear: right;
+    color: #fff;
+    font-weight: normal;
+    margin: 0;
 }
 /* ---- END - PRODUCT PAGE */
 
@@ -3132,13 +3240,6 @@ a.ui-button.inactivebtn{
 	top: 5px;
 	left: 10px;
 }
-.page-cart .currency, .page-cart .decimals, .page-cart .decimalpoint {
-	font-size: 14px;
-	line-height: 15px;
-	vertical-align: top;
-}
-.page-cart .shipping table .currency, .page-cart .shipping table .decimals {
-}
 .page-cart .shipping table tr td:nth-child(2) .currency, 
 .page-cart .shipping table tr td:nth-child(2) .decimals {
 	font-size: inherit;
@@ -3162,15 +3263,9 @@ legend {
 }
 .page-cart .form-wrapper.file-check, 
 .page-cart .form-wrapper.shipping, 
-.page-cart .form-wrapper.discount {
+.page-cart .form-wrapper.discount, 
+.page-cart.discounts.form-wrappers {
 	margin-top: 10px;
-}
-.page-cart #pccart-cart-form .item {
-	background: #f1f1f1;
-	border-radius: 4px 4px 4px 4px;
-	padding: 10px;
-	margin-bottom: 10px;
-	position: relative;
 }
 .page-cart #pccart-cart-form .item.discounts {
 	background: transparent;
@@ -3187,15 +3282,6 @@ legend {
 }
 #pccart-cart-form .item .prefix:after {
 	content: ':';
-}
-.page-cart #pccart-cart-form .item .image {
-	width: 200px;
-	background: #fff;
-	border-radius: 3px 3px 3px 3px;
-	margin-bottom: 5px;
-	min-height: 85px;
-	margin-right: 10px;
-	border: 1px solid #ff6600;
 }
 .page-cart #pccart-cart-form .item .image div {
 	display: block;
@@ -3271,53 +3357,21 @@ legend {
 	width: 100%;
 }
 
-.page-cart #pccart-cart-form .item .description {
-	width: 280px;
-	margin-bottom: 30px;
-}
-
-.page-cart #pccart-cart-form .item .preview2 .description {
-	width: 480px;
-}
-.page-cart #pccart-cart-form .item .description h3 {
-	margin-bottom: 0;
-	font-weight: 700;
-}
-.page-cart #pccart-cart-form .item .description .price {
-color: #f60;
-font-size: 40px;
-top: 10px;
-  right: 29px;
-font-weight: bold;
-line-height: normal\9;
-}
-.page-cart #pccart-cart-form .item .description .decimalpoint,
-.page-cart #pccart-cart-form .item .description .decimals {
-font-size: 30px;
-line-height: 30px;
-vertical-align: top;
-}
-
-.page-cart #pccart-cart-form .item .description .whole {
-margin-left: -8px;
-vertical-align: bottom;
-}
-.page-cart #pccart-cart-form .item .description .currency {
-font-size: 40px;
-vertical-align: bottom;
-}
 .page-cart #pccart-cart-form .item .description ul {
 	margin: 0;
 	padding: 0;
 }
-.page-cart #pccart-cart-form .item .description ul li {
+.page-cart #pccart-cart-form .item .description ul li ,
+.page-upload-design #pcdesigner-upload-form  ul.itemsdesign li {
 	list-style: none;
 	margin: 0 0 3px 0;
 	padding: 0;
-	font-size: 13px;
+	font-size: 12px;
 	line-height: 15px;
 }
-.page-cart #pccart-cart-form .item .description ul li label {
+.page-cart #pccart-cart-form .item .description ul li label,
+.page-upload-design #pcdesigner-upload-form  ul.itemsdesign li label
+ {
 	float: left;
 	margin-right: 10px;
 	font-weight: 700;
@@ -3332,16 +3386,6 @@ vertical-align: bottom;
 	padding: 0 0 0 4px;
 	color: #646464; /* maincolor */
 	
-}
-.page-cart #pccart-cart-form .item .form-type-checkbox {
-	border-radius: 0 0 4px 4px;
-	clear: left;
-	/*margin: 0 -10px -10px;*/
-	padding: 10px;
-	float: left;
-	display: block;
-	width: 640px;
-	margin: 10px -10px -10px -10px;
 }
 .page-cart .form-item.form-type-radio.form-item-cart-shipping-type, 
 .page-cart .form-item.form-type-radio.form-item-cart-checks-options {
@@ -3360,7 +3404,7 @@ vertical-align: bottom;
 	text-align: right;
 }
 .fieldset-wrapper {
-	border-radius: 4px 4px 4px 4px;
+	border-radius: 4px 4px;
 	margin-bottom: 10px;
 	padding: 10px;
 	position: relative;
@@ -3405,12 +3449,6 @@ vertical-align: bottom;
 	color: #f60;
 	font-size: 24px;
 }
-.page-cart #pccart-cart-form .shipping table .decimals, 
-.page-cart #pccart-cart-form .shipping table .decimalpoint {
-font-size: 14px;
-line-height: 15px;
-vertical-align: top;
-}
 .page-cart #pccart-cart-form .shipping table thead, 
 .page-cart #pccart-cart-form .shipping .footer {
 	display: none;
@@ -3442,19 +3480,6 @@ vertical-align: top;
 	float: left;
 	margin: 0;
 }
-.page-cart .discount input[type="submit"] {
-	float: right;
-	text-align: center;
-	width: 120px;
-	color: #fff !important;
-	border: 0 none !important;
-	background: url(images/flesh-button-seul.png) no-repeat 15px 6px #6faa01;
-	padding-left: 40px;
-	font-weight: bold;
-	padding-top: 7px;
-	padding-bottom: 7px;
-	margin-top: 3px;
-}
 .page-cart .discount input[type="text"] {
 	padding: 8px;
 	width: 200px; /*290px; /* was 350px */
@@ -3467,12 +3492,6 @@ vertical-align: top;
 }
 .page-cart #edit-cart-discounts input.remove {
 	top: 0;
-}
-.page-cart #edit-cart-discounts .price {
-	color: #f60;
-	font-size: 24px;
-	position: absolute;
-	right: 40px;
 }
 .page-cart .actions > a {
 	margin-left: 10px;
@@ -3544,14 +3563,6 @@ vertical-align: top;
 .page-cart .file-check table tr td.first-child{
 	padding-right: 0;
 }
-.page-cart .file-check > div > table > tbody > tr > td.last-child, 
-.page-cart .shipping > div > table > tbody > tr > td.last-child {
-	color: #ff6600;
-	font-size: 20px;
-	font-weight: 600;
-	text-align: right;
-	width: 120px;
-}
 .page-cart .priceblock.form-wrapper {
 	margin-top: 10px !important;
 }
@@ -3572,15 +3583,6 @@ vertical-align: top;
 .page-offer .priceblock div span.price {
 	font-size: 24px;
 }
-.page-cart .priceblock > div.subtotal .value, 
-.page-cart .priceblock > div.vat .value, 
-.page-offer .priceblock > div.subtotal .value, 
-.page-offer .priceblock > div.vat .value {
-	color: #f60;
-	font-size: 20px;
-	line-height: normal\9; /* IE HACK */
-	font-weight: bold;
-}
 .page-cart .priceblock > div.subtotal .value .price .currency, 
 
 .page-cart .priceblock > div.subtotal .value .price .decimals, 
@@ -3597,15 +3599,6 @@ vertical-align: top;
 	font-size: 14px;
 	line-height: 16px;
 	vertical-align: top;
-}
-.page-cart .priceblock > div.subtotal,
-.page-cart .priceblock > div.vat{
-	padding: 15px 10px 15px 35px;
-}
-.page-cart .priceblock > div.subtotal, 
-.page-offer .priceblock > div.subtotal {
-	border-radius: 4px 4px 0 0;
-	border-bottom: 1px solid #e1e1e1;
 }
 .page-cart .priceblock > div.total {
 	background: #3c3c3c;
@@ -3645,15 +3638,6 @@ vertical-align: top;
 	border: 0 none !important;
 	color: #ff6600 !important;
 	padding-left: 0 !important;
-}
-.page-cart .download {
-    background: url("images/imprimer.png") no-repeat scroll right center rgba(0, 0, 0, 0);
-    color: #666666;
-    float: right;
-    font-size: 14px;
-    font-weight: bold;
-    line-height: 25px;
-    padding-right: 32px;
 }
 .page-cart .total-container {
 	float: right;
@@ -3698,7 +3682,8 @@ vertical-align: top;
 .page-cart form .discount .fieldset-wrapper {
 	height: 40px\9; /* IE HACK */
 }
-.page-cart .items .fieldset-wrapper {
+.page-cart .items .fieldset-wrapper,
+.page-upload-design .templates .fieldset-wrapper {
 	background: transparent;
 	padding: 0;
 	border: 0;
@@ -3780,11 +3765,10 @@ vertical-align: top;
 .form-item-forgotemail > label {
 	float: left;
 	font-weight: 400;
-	line-height: 44px;
 	margin-right: 20px;
 	text-align: right;
 	text-transform: uppercase;
-	width: 130px;
+	width: 170px;
 	line-height: 46px;
 }
 .form-item-forgotemail > input {
@@ -3893,11 +3877,24 @@ a.googleconnect {
 	margin-bottom: 10px;
 }
 .page-checkout #pccheckout-personal-form fieldset#edit-personal, 
-.page-checkout #pccheckout-personal-form fieldset#edit-address {
-	border-bottom: solid 1px #fff;
-	margin: 0 -10px 10px;
-	padding: 0 10px 10px;
+.page-checkout #pccheckout-personal-form fieldset#edit-address{
+	border-bottom: 1px solid #e3e3e3;
+	margin: 0;
+	padding: 10px 10px 10px;
 }
+
+.page-checkout #pccheckout-personal-form fieldset#edit-company{ 
+	margin: 0;
+	padding: 10px 10px 10px;
+}
+
+.page-checkout #pccheckout-personal-form fieldset#edit-personal .fieldset-wrapper,
+.page-checkout #pccheckout-personal-form fieldset#edit-address  .fieldset-wrapper,
+.page-checkout #pccheckout-personal-form fieldset#edit-company  .fieldset-wrapper{
+	margin-bottom: 0;
+	padding: 0 10px;
+} 
+
 .page-checkout #pccheckout-personal-form fieldset legend {
 	display: none;
 }
@@ -3915,18 +3912,14 @@ a.googleconnect {
 	overflow: hidden;
 }
 .page-checkout #pccheckout-personal-form label {
-
 	display: block;
-	margin: 0;
-	font-weight: 400;
-	text-transform: uppercase;
-	float: left;
-	padding-right: 20px;
-	width: 150px;
-	text-align: right;
-	line-height: 19px;
-	padding-top: 10px;
-	padding-bottom: 10px;
+    float: left;
+    font-weight: 400; 
+    line-height: 34px;
+    margin: 0 10px 6px 0;
+    overflow: hidden;
+    text-transform: uppercase;
+    width: 477px;
 }
 .page-checkout #pccheckout-personal-form select, 
 .page-checkout #pccheckout-personal-form input[type="text"] {
@@ -3976,16 +3969,24 @@ a.googleconnect {
 	padding: 10px 0 0 0;
 	position: relative;
 	overflow: hidden;
+	
 }
-#pccheckout-invoiceanddelivery-form fieldset legend {
+
+.page-checkout #pccheckout-personal-form{
+	border-color: #e1e1e1;
+    border-style: solid;
+    border-width: 1px;
+}
+#pccheckout-invoiceanddelivery-form legend{
 	display: block;
 	font-size: 14px;
 	color: #666666;
 	font-weight: 700;
 	position: relative;
-	margin: 0;
+	margin: 0 0 15px;
+	padding: 0;
 }
-#pccheckout-invoiceanddelivery-form fieldset.collapsible > legend {
+#pccheckout-invoiceanddelivery-form .collapsible > legend {
 	display: none;
 }
 .page-checkout #pccheckout-personal-form {
@@ -3993,58 +3994,63 @@ a.googleconnect {
 }
 .page-checkout #pccheckout-invoiceanddelivery-form .invoice{
 	float: left;
-	margin-top: 15px;
-	min-height: 182px;
-	padding: 6px 10px 10px 25px;
+	/*min-height: 182px;*/
+	padding: 15px 10px 18px 15px;
 	position: relative;
-	width: 375px;
+	width: 450px;
 }
 .page-checkout #pccheckout-invoiceanddelivery-form .shipping {
 	border-left: 1px solid #e1e1e1;
 	margin-left: 0;
-	margin-top: 16px;
-	min-height: 182px;
-	padding: 7px 9px 10px 32px;
+	/*min-height: 182px;*/
+	padding: 15px 9px 18px 15px;
 	position: relative;
-	width: 385px;
+	width: 500px;
 	float: left;
 }
+
 .page-checkout #pccheckout-invoiceanddelivery-form .invoice > .fieldset-wrapper,
 .page-checkout #pccheckout-invoiceanddelivery-form .shipping > .fieldset-wrapper{
 	padding: 0;
 }
+
 .page-checkout-invoiceanddelivery .invoice h3, 
 .page-checkout-invoiceanddelivery .shipping h3 {
 	font-weight: 600;
 	margin-bottom: 10px;
 }
-.page-checkout-invoiceanddelivery .pup {
-	min-height: 110px;
-}
+
 .page-checkout-invoiceanddelivery #invoice-address input[type="submit"], 
 .page-checkout-invoiceanddelivery #shipping-address input[type="submit"] {
-	margin-left: 493px; 
+	margin-left: 491px; 
 	margin-top: 20px;
 }
 .page-pcbpost-picker .whitebox {
 	margin: 10px;
-	height: 600px;
+	/*height: 558px;
+	height: 519px;*/
 	overflow: hidden;
+	padding: 16px 0px 0px;
+}
+.page-pcbpost-picker .whitebox > h1{
+	margin-left: 10px;
 }
 .page-pcbpost-picker #pcbpost-picker-form #result {
-	background: #f1f1f1;
+	background: #fff;
 	border-radius: 4px 4px 4px 4px;
-	height: 520px;
+	/*height: 520px;
+	height: 457px;*/
 }
 .page-pcbpost-picker #pcbpost-picker-form #result #map {
 	border-radius: 4px 4px 4px 4px;
-	width: 590px;
-	height: 500px;
-	margin: 10px;
+	width: 600px; 
+	height: 416px;
+	margin: 10px 0px 10px 10px;
 }
 .page-pcbpost-picker #pcbpost-picker-form #result .pois {
-	height: 500px;
-	margin-top: 10px;
+	/*height: 510px;*/
+	height: 426px;
+	padding-top: 10px;
 	margin-left: 10px;
 	background: #fff;
 	border-radius: 4px 4px 4px 4px;
@@ -4076,13 +4082,20 @@ a.googleconnect {
 #pcbpost-picker-form .form-submit {
 	display: inline-block;
 	float: none;
-	margin: 1em;
-	position: absolute;
+	margin: 0.8em 0 1em 1em;
+	/*position: absolute;*/
 	height: 38px;
+	min-width: 79px;
+}
+#pcbpost-picker-form .leftInput {
+	float: right;
 }
 #pcbpost-picker-form #result .name, 
 #pcbpost-picker-form #result .services {
-	color: #f60;
+	color: #646464;
+}
+#pcbpost-picker-form #result .name.name_popup_map{
+	color: #ff6600;
 }
 .page-pcbpost-picker table.openinghours tr, 
 .page-pcbpost-picker table.openinghours tr td {
@@ -4107,23 +4120,58 @@ a.googleconnect {
 .page-checkout-invoiceanddelivery table.openinghours tr td.last-child {
 	text-align: right;
 }
-.page-checkout #pccheckout-invoiceanddelivery-form .address, 
+
+.page-checkout-invoiceanddelivery #pccheckout-invoiceanddelivery-form .pup,
+.page-checkout #pccheckout-invoiceanddelivery-form .invoice .address, 
 .page-checkout #pccheckout-invoiceanddelivery-form .store {
-	min-height: 50px;
+	min-height: 85px !important;
 }
+
+.page-checkout-invoiceanddelivery #pccheckout-invoiceanddelivery-form .pup{
+	overflow: hidden;
+}
+
+.page-checkout-invoiceanddelivery #pccheckout-invoiceanddelivery-form .pup #detail{
+	float: left;
+	width: 47%;
+	padding-right: 3%;
+}
+.page-checkout-invoiceanddelivery #pccheckout-invoiceanddelivery-form .pup #hoursDetail{
+	float: left;
+	width: 45%;
+	padding-left: 4.5%;
+	border-left: 1px solid #d1d1d1;
+}
+
+.page-checkout-invoiceanddelivery h6{
+	font-weight: 700;
+}
+.page-checkout-invoiceanddelivery #hoursDetail tbody{
+	background: none;
+	color: #646464;
+}
+
+
+.page-checkout-invoiceanddelivery #hoursDetail tbody td:first-child{
+    width: 60px;
+    padding-right: 10px;
+}
+.page-checkout-invoiceanddelivery .pup #hoursDetail td{
+	line-height: 18px;
+}
+
+
 .page-checkout .fieldset-legend {
 	padding-left: 0 !important;
 	background: none !important;
 }
 .page-checkout #shipping-address, 
 .page-checkout #invoice-address {
-
-          padding: 0 20px;
-    width: 960px;
+    padding: 0 20px;
 }
 .page-checkout #shipping-address.form-wrapper, 
 .page-checkout #invoice-address.form-wrapper {
-	margin: 20px 0 19px;
+	margin: 12px 0 19px;
 }
 .page-checkout #shipping-address.form-wrapper h3, 
 .page-checkout #invoice-address.form-wrapper h3 {
@@ -4220,8 +4268,17 @@ a.googleconnect {
 .page-checkout-personal .actions {
 	margin-top: 0 !important;
 }
- #pcproducts-config-form #edit-actions.edit-actions-product{
-  margin-top: -15px;	
+ #pcproducts-config-form #edit-actions.edit-actions-product {
+    background: #3c3c3c;
+    padding: 0;
+    overflow: hidden;
+    height: 50px;
+    margin: -15px 0 20px;
+    box-shadow: none;
+
+    border-radius: 0 0 5px 5px;
+    -webkit-border-radius: 0 0 5px 5px;
+    -moz-border-radius: 0 0 5px 5px;
 } 
 
 .detailtechnique-wrapper{
@@ -4416,9 +4473,6 @@ a.googleconnect {
 	margin-top: 0;
 	margin-bottom: 10px;
 }
-.page-cart #edit-cart-designer-warning {
-	margin-bottom: 20px;
-}
 .page-checkout-upload .designer-content-email {
 	background: #dfdfdf;
 	border-bottom: 1px solid #fff;
@@ -4487,39 +4541,30 @@ a.googleconnect {
 }
 
 .page-paymentrequest table.grid,
-#pccheckout-payment-form table.grid {
-
-	width: 328px;
+#pccheckout-payment-form table.grid { 
+	width: 477px;
 	border: 1px solid #e1e1e1;
 	border-collapse: separate;
 	border-radius: 3px;
 	border-spacing: 0;
-	margin: -11px auto 0 -10px;
+	margin: 0px auto 0 -7px;
 	padding: 0;
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
-	border-radius: 0;
-        
+	border-radius: 0; 
 }
-#pccheckout-payment-form table.grid {
-    height: 223px;
-}
-#pccheckout-payment-form .payment-methods-table{
-    float:left;
-       border-right: medium none !important;
 
-}
+  
+.page-paymentrequest #edit-aboutmethode,
 .imgpayment{
     background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/paymentmethods/payment.jpg") no-repeat scroll center top #fff;
-    float: left;
-    height: 112px;
+    float: right;
+    height: 78px;
     margin-left: 16px;
-    margin-top: -41px;
     padding-top: 167px;
     position: relative;
     text-align: center;
-    width: 476px;
-    margin-bottom: 10px;
+    width: 442px;
 }
 
 .page-paymentrequest-key table.grid.clearfix:after, 
@@ -4575,7 +4620,7 @@ a.googleconnect {
 .page-checkout-payment table.grid tr td {
 	
 }
-.page-paymentrequest-key table.grid tr td span.price, 
+/*.page-paymentrequest-key table.grid tr td span.price,*/ 
 .page-checkout-payment table.grid tr td span.price {
 	color: #f60;
 	font-weight: 600;
@@ -4629,23 +4674,24 @@ a.googleconnect {
 .page-paymentrequest-key .order .fieldset-wrapper table td.text-right {
 	text-align: right;
 }
-.page-paymentrequest-key .order .fieldset-wrapper table .price {
+/*.page-paymentrequest-key .order .fieldset-wrapper table .price {
 	color: #ff6600;
 }
-/*.page-checkout-payment table.grid tr td:first-child {
+.page-checkout-payment table.grid tr td:first-child {
   display: none;
 }*/
 
 .page-checkout-payment .agree-and-pay input[type="submit"] {
 	margin-left: 10px;
 }
+.page-paymentrequest .condition-general .form-item-agree, 
 .page-checkout-payment .form-item-agree {
 	/*background: #f60;
 	padding: 5px 10px;
 	color: #fff;
 	margin: 0;*/
 	background: #e1e1e1;
-	padding: 10px 20px;
+	padding: 10px 10px;
 	color: #fff;
 	margin: 0;
 	color: #646464;
@@ -4654,8 +4700,10 @@ a.googleconnect {
 .page-checkout-payment .form-item-actions-agree input {
 	height: inherit !important;
 }
+.page-paymentrequest .condition-general a,
 .page-checkout-payment .form-item-agree a {
 	color: #646464;
+	text-decoration: underline;
 }
 .page-checkout-payment .overview h2 {
 	margin-top: 30px;
@@ -4691,9 +4739,9 @@ a.googleconnect {
 	padding: 0 10px;
 }
 .page-checkout-payment .overview table th:last-child {
-	width: 15%;
+	width: 24.7%;
 }
-.page-checkout-payment .overview table tr, .page-checkout-payment .overview table tr.even, .page-checkout-payment .overview table tr.odd {
+form#pcpayments-request-form table tr,.page-checkout-payment .overview table tr, .page-checkout-payment .overview table tr.even, .page-checkout-payment .overview table tr.odd {
 	color: #646464; /* maincolor */
 	border-top: 1px solid #f1f1f1;
 	border-bottom: none;
@@ -4716,7 +4764,7 @@ a.googleconnect {
 }
 .page-checkout-payment .overview table tr:last-child {
 	background: #f1f1f1;
-          border: 1px solid #e1e1e1 !important;
+    border-top: 1px solid #e1e1e1 !important;
 }
 .page-checkout-payment .overview table tr th:last-child {
 	text-align: right;
@@ -4772,15 +4820,17 @@ a.googleconnect {
 	clear: both;
 	padding-top: 0;
 }
-.page-checkout-invoiceanddelivery #pccheckout-invoiceanddelivery-form > div > .summary{
+.page-checkout-invoiceanddelivery #pccheckout-invoiceanddelivery-form > .summary{
 	border-color: #e1e1e1;
 	border-style: solid;
 	border-width:1px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
-	padding-bottom: 10px;
+	padding: 0;
+	overflow: hidden;
 }
+
 .page-checkout-invoiceanddelivery .shipping {
 	float: left;
 	background: #f1f1f1;
@@ -4835,7 +4885,9 @@ a.googleconnect {
 	margin-right: 10px;
 }
 #pcorders-order-form .delivery {
-	border-right: 1px solid #fff;
+	margin-right: 0;
+    padding-left: 2%;
+    border-left: 1px solid #d1d1d1;
 }
 .page-myprintconnect #content .block-pccustomers {
 	float: none;
@@ -4858,21 +4910,10 @@ a.googleconnect {
 #pcorders-order-form #edit-invoices {
 	display: none;
 }
-.page-myprintconnect table {
-	width: 100%;
-	border: 1px solid #f1f1f1;
-	margin: 10px 0;
-}
-.page-myprintconnect table thead {
-	background: #ff6600;
-	height: 23px;
-	line-height: 23px;
-	color: #fff;
-}
 .page-myprintconnect table th {
 	color: #fff;
 	text-transform: uppercase;
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: 400;
 }
 .page-myprintconnect table th, 
@@ -4888,7 +4929,7 @@ a.googleconnect {
 .page-myprintconnect table tr.odd {
 	background: none;
 	color: #646464; /* maincolor */
-	border-bottom: 1px solid #f1f1f1;
+	border-bottom: 0;
 }
 .page-myprintconnect table tr.even {
 	background: #f1f1f1;
@@ -4897,19 +4938,7 @@ a.googleconnect {
 	background: #f1f1f1;
 	border-radius: 4px 4px 4px 4px;
 }
-.page-myprintconnect-orders #pcorders-order-form .delivery .fieldset-wrapper, 
-.page-myprintconnect-orders #pcorders-order-form .invoice .fieldset-wrapper {
-	min-height: 160px;
-}
-.page-myprintconnect-orders #pcorders-order-form .smaller {
-	display: none;
-}
-.page-myprintconnect-orders #pcorders-order-form .delivery {
-	border-radius: 4px 0 0 4px;
-}
-.page-myprintconnect-orders #pcorders-order-form .invoice {
-	border-radius: 0 4px 4px 0;
-}
+
 #pcorders-order-form .delivery h2, 
 #pcorders-order-form .invoice h2, 
 #pcorders-order-form .details h2,
@@ -4918,14 +4947,15 @@ a.googleconnect {
 	font-size: 16px;
 }
 .page-myprintconnect-orders #edit-thanks {
-	background: #f1f1f1;
-	border-radius: 4px 4px 4px 4px;
-	padding: 10px;
+	background: none;
+	padding: 0;
 	margin-bottom: 10px;
 }
 .page-myprintconnect-orders #edit-thanks h2 {
-	font-size: 28px;
-	line-height: 28px;
+	font-weight: bold;
+    font-size: 12px;
+    line-height: 20px;
+    text-transform: capitalize;
 }
 .page-myprintconnect-orders .current {
 }
@@ -4994,14 +5024,6 @@ a.googleconnect {
 	color: #646464; /* maincolor */
 	font-size: 12px;
 }
-#pcorders-order-form .address {
-	margin: 0;
-}
-.page-myprintconnect-orders .order .fieldset-wrapper {
-	padding: 0;
-	margin-bottom: 0;
-	background: #fff;
-}
 .page-myprintconnect-orders .details, 
 .page-myprintconnect-orders .overview, 
 .page-myprintconnect-orders .extra {
@@ -5022,35 +5044,9 @@ a.googleconnect {
 	background: #f1f1f1;
 	color: #646464; /* maincolor */
 }
-.page-myprintconnect-orders .details {
-	padding: 10px;
-	border-radius: 4px 4px 0 0;
-}
 .page-myprintconnect-orders .details .item {
 	margin-left: 0 !important;
 	position: relative;
-}
-.page-myprintconnect-orders .details .item .image {
-	margin-right: 10px;
-	width: 138px !important;
-}
-.page-myprintconnect-orders .details .item .image img {
-	border: 5px solid #fff;
-	border-radius: 4px 4px 4px 4px;
-	max-width: 128px !important;
-	min-width: 128px !important;
-}
-.page-myprintconnect-orders .details .item .image a {
-	display: block;
-	background: rgba(255, 255, 255, 0.25);
-	text-align: center;
-	padding: 5px 0;
-	position: relative;
-	bottom: 63px;
-	margin-bottom: -58px;
-}
-.page-myprintconnect-orders .details .item .description {
-	width: 490px !important;
 }
 .page-myprintconnect-orders .details .item .description h4 {
 	font-family: 'Open Sans', sans-serif;
@@ -5072,102 +5068,7 @@ a.googleconnect {
 .page-myprintconnect-orders .extra table tbody tr {
 	border-bottom: 1px solid #fff;
 }
-.page-myprintconnect-orders .overview table tbody td, 
-.page-myprintconnect-orders .extra table tbody td {
-	padding: 5px 10px;
-}
-.page-myprintconnect-orders .description .price, 
-.page-myprintconnect-orders .overview table tbody td .price, 
-.page-myprintconnect-orders .extra table tbody td .price {
-	color: #f60;
-	font-size: 30px;
-	font-weight: 600;
-	line-height: 30px;
-	margin-right: 0 !important;
-	float: right;
-	width: auto !important;
-}
-.page-myprintconnect-orders .description .price .currency, 
-.page-myprintconnect-orders .description .price .decimals, 
-.page-myprintconnect-orders .description .price .decimalpoint, 
-.page-myprintconnect-orders .overview table tbody td .price .currency, 
-.page-myprintconnect-orders .extra table tbody td .price .currency, 
-.page-myprintconnect-orders .overview table tbody td .price .decimals, 
-.page-myprintconnect-orders .extra table tbody td .price .decimals, 
-.page-myprintconnect-orders .overview table tbody td .price .decimalpoint, 
-.page-myprintconnect-orders .extra table tbody td .price .decimalpoint {
-	font-size: 0.5em;
-	line-height: 1.25em;
-	vertical-align: top;
-}
-.page-myprintconnect-orders .priceblock {
-	background: none !important;
-	padding: 0 !important;
-	border: none !important;
-	margin-top: 0 !important;
-	font-weight: 600;
-	font-size: 14px;
-	line-height: 30px;
-}
-.page-myprintconnect-orders .priceblock .subtotal,
-.page-myprintconnect-orders .priceblock .vat {
-	background: #f1f1f1;
-	padding: 10px;
-	margin-bottom: 1px;
-}
-.page-myprintconnect-orders .priceblock .subtotal .value, 
-.page-myprintconnect-orders .priceblock .vat .value {
-	font-size: 30px;
-	line-height: 30px;
-	font-weight: 600;
-}
-.page-myprintconnect-orders .priceblock .subtotal .currency, 
-.page-myprintconnect-orders .priceblock .subtotal .decimals, 
-.page-myprintconnect-orders .priceblock .vat .currency, 
-.page-myprintconnect-orders .priceblock .vat .decimals {
-	font-size: 0.5em;
-	line-height: 1.25em;
-	vertical-align: top;
-}
-.page-myprintconnect-orders .priceblock .total {
-	background: #3c3c3b;
-	padding: 10px;
-	border-radius: 0 0 4px 4px;
-	color: #fff;
-}
-.page-myprintconnect-orders .priceblock .price label {
-	font-size: 14px;
-}
-.page-myprintconnect-orders .priceblock .total {
-	display: none;
-}
-.page-myprintconnect-orders .priceblock .subtotal span.price, 
-.page-myprintconnect-orders .priceblock .vat span.price, 
-.page-myprintconnect-orders .priceblock .total span.price {
-	margin-right: 0 !important;
-	font-size: 30px;
-	line-height: 30px;
-}
-.page-myprintconnect-orders .priceblock .total span.price {
-	font-size: 60px;
-	line-height: 60px;
-}
-.page-myprintconnect-orders .text-right span.price .currency, 
-.page-myprintconnect-orders .text-right span.price .decimalpoint, 
-.page-myprintconnect-orders .text-right span.price .decimals, 
-.page-myprintconnect-orders .priceblock .subtotal span.price .currency, 
-.page-myprintconnect-orders .priceblock .vat span.price .currency, 
-.page-myprintconnect-orders .priceblock .total span.price .currency, 
-.page-myprintconnect-orders .priceblock .subtotal span.price .decimalpoint, 
-.page-myprintconnect-orders .priceblock .vat span.price .decimalpoint, 
-.page-myprintconnect-orders .priceblock .total span.price .decimalpoint, 
-.page-myprintconnect-orders .priceblock .subtotal span.price .decimals, 
-.page-myprintconnect-orders .priceblock .vat span.price .decimals, 
-.page-myprintconnect-orders .priceblock .total span.price .decimals {
-	font-size: 0.5em;
-	vertical-align: top;
-	line-height: 1.25em;
-}
+
 /* ---- END - CHECKOUT --- */
 
 .page-news #main #content table tbody {
@@ -5259,7 +5160,8 @@ a.googleconnect {
 	margin: 10px 0;
 	clear: both;
 }
-.page-myprintconnect-profile #pccustomers-profile-form label {
+
+.page-myprintconnect-profile #pccustomers-profile-form label{
 	display: block;
 	margin: 0;
 	font-weight: 400;
@@ -5268,10 +5170,11 @@ a.googleconnect {
 	padding-right: 20px;
 	width: 140px;
 	text-align: right;
-	line-height: 38px;
+	line-height: 38px !important;
 }
 .page-myprintconnect-profile #pccustomers-profile-form select, 
-.page-myprintconnect-profile #pccustomers-profile-form input[type="text"] {
+.page-myprintconnect-profile #pccustomers-profile-form input[type="text"] 
+{
 	background: #fff;
 	border: 1px solid #d7d7d7;
 	border-radius: 4px 4px 4px 4px;
@@ -5385,8 +5288,7 @@ a.googleconnect {
 	border-radius: 4px 4px 4px 4px;
 }
 #pctemplates-selection-form #edit-colors {
-	margin-bottom: 10px;
-	margin-top: 10px;
+	margin-top: 18px;
 }
 #pctemplates-selection-form #edit-colors legend {
 	float: left;
@@ -5641,7 +5543,7 @@ div.error, table tr.error {
 }
 .page-myprintconnect-forgotpassword #pccustomers-forgotpassword-form .form-actions {
 	margin: 0 -10px -10px -10px;
-	padding: 10px;
+	padding: 0;
 }
 .page-myprintconnect-forgotpassword .fieldset-wrapper input[type="submit"] {
 	margin-left: 30%;
@@ -5695,16 +5597,34 @@ div.error, table tr.error {
 	border-top: 1px solid #5a8a02;
 	border-right: 1px solid #5a8a02;
 }
-.page-myprintconnect-forgotpassword .region-content .form-actions input[type="submit"], .page-myprintconnect-login .region-content .form-actions input[type="submit"] {
+
+.page-myprintconnect-login .region-content .form-actions input[type="submit"] {
 	float: left;
 }
-.page-myprintconnect-changepassword .region-content .form-actions input[type=submit], .page-myprintconnect-addresses-new .region-content .form-actions input[type=submit], .page-myprintconnect-profile .region-content .form-actions input[type=submit] {
+
+.page-myprintconnect-forgotpassword .region-content .form-actions input[type="submit"]{
+	float: right;
+    height: 50px;
+}
+
+.page-myprintconnect-forgotpassword .region-content .form-actions a.link{
+	float: left;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: arial;
+    margin-left: 10px;
+    line-height: 50px;
+}
+
+.page-myprintconnect-addresses-new .region-content .form-actions input[type=submit], .page-myprintconnect-profile .region-content .form-actions input[type=submit] {
 	background-image: url("images/button_continue.png");
 	background-position: left;
 	background-repeat: no-repeat;
 	padding-left: 55px;
 }
-.page-myprintconnect-changepassword .region-content .form-actions input[type=submit]:hover, .page-myprintconnect-addresses-new .region-content .form-actions input[type=submit]:hover, .page-myprintconnect-profile .region-content .form-actions input[type=submit]:hover {
+
+.page-myprintconnect-addresses-new .region-content .form-actions input[type=submit]:hover, .page-myprintconnect-profile .region-content .form-actions input[type=submit]:hover {
 	background-image: url("images/button_continue_hover.png");
 }
  .page-myprintconnect-changepassword .region-content .form-actions input[type=submit]:acitve, .page-myprintconnect-addresses-new .region-content .form-actions input[type=submit]:active, .page-myprintconnect-profile .region-content .form-actions input[type=submit]:active {
@@ -5715,7 +5635,7 @@ div.error, table tr.error {
 	min-width: 220px;
 	line-height: 35px;
 	display: inline-block;
-	margin-right: 10px;
+	margin-right: 0px;
 }
 .page-myprintconnect-orders- .region-content .form-actions a.button {
 	max-width: 220px;
@@ -5730,18 +5650,7 @@ div.error, table tr.error {
 	padding-left : 90px;
 	line-height: normal\9; /* IE HACK */
 }
-.region-content .form-actions span.price label {
-	font-size: 14px;
-	margin-right: 5px;
-	margin-top: 28px;
-	text-align: right;
-	line-height: 20px;
-	float: left;
-	clear: right;
-	color: #bdbdbd;
-	font-weight: bold;
-}
-.region-content .form-actions span.price .currency {
+/*.region-content .form-actions span.price .currency {
 	font-size: 30px;
 	line-height: 30px;
 	margin-right: -10px;
@@ -5751,7 +5660,7 @@ div.error, table tr.error {
 	font-size: 0.5em;
 	vertical-align: top;
 	line-height: 30px;
-}
+}*/
 /* end edw */
 
 .search-results {
@@ -5899,6 +5808,17 @@ body.page-stores-picker {
 	background-position: left;
 	background-repeat: no-repeat;
         background: url("images/icon_fax.png") no-repeat left;
+}
+.region-content .form-actions span.price label {
+    font-size: 14px;
+    margin-right: 5px;
+    margin-top: 22px;
+    text-align: right;
+    line-height: 20px;
+    float: left;
+    clear: right;
+    color: #fff;
+    font-weight: 400;
 }
 .store div.email {
 	background-position: left;
@@ -6991,15 +6911,6 @@ a.disabled {
 	position: relative;
 	top: 34px;
 }*/
-#pctemplates-selection-form #edit-submit {
-	/*background: url(images/designSearchButton.png) no-repeat;
-	width: 143px;
-	height: 32px;
-	padding-left: 35px;
-	font-size: 14px;
-	float: left;
-	margin-top: 6px;*/
-}
 .button.owndesigntop > .ui-button-text {
 	background: url("images/button_owndesign.png") no-repeat left;
 	padding-left: 25px;
@@ -7292,8 +7203,12 @@ margin-bottom:10px;
 
 .payment-methods-table tr td.last-child{
 	margin-top:9px;	
-	font-weight: bold;
+	font-weight: normal;
 	text-align: center;
+}
+
+.payment-methods-table tr td.last-child .value{
+	font-size: 12px;
 }
 
 .fr-FR a{
@@ -7303,11 +7218,7 @@ margin-bottom:10px;
 #edit-specifications-products label{
     font-family: Verdana,Arial,sans-serif;
 }
-#pcpayments-request-form .productItem td.first-child {
-    background-image: url("images/calc_dot.png");
-    background-repeat :no-repeat;
-    background-position: 2% 50%;
-}
+
 .i18n-nl-BE .item27,.i18n-nl-BE  .item6,.i18n-nl-BE  .item26, .i18n-nl-BE.item26,.i18n-nl-BE  .item31, .i18n-nl-BE .item9,.i18n-nl-BE .item19{
 	position:relative;
 	top:1px !important;
@@ -7321,14 +7232,6 @@ margin-bottom:10px;
 .i18n-nl-NL .item27,.i18n-nl-NL  .item6,.i18n-nl-NL  .item26, .i18n-nl-NL.item26,.i18n-nl-NL  .item31, .i18n-nl-NL .item9,.i18n-nl-NL .item19{
 	position:relative;
 	top:1px !important;
-}
-
-
-#edit-cart-discounts .fieldset-wrapper > .form-wrapper {
-    height: 50px;
-    position: relative;
-    border-bottom: 1px rgb(252, 248, 248) solid;
-    padding-top: 10px;
 }
 
 #edit-cart-discounts .fieldset-wrapper > .form-wrapper > #edit-cart-discounts-wdeal53-description > .price .currency {
@@ -7455,13 +7358,13 @@ display: none;
 	position:relative;	
 }
 
-.page-myprintconnect-addresses #pccustomers-address-form input.button.form-submit{
-    margin-left: 0!important;
-background: url(images/button_continue.png) no-repeat 3px center !important;
-background-color:-webkit-linear-gradient(top, #77B800 0%, #669C02 100%) ;
-background-color:-moz-linear-gradient(top, #77B800 0%, #669C02 100%) ;
-padding-left: 61px;
-}
+/*.page-myprintconnect-addresses #pccustomers-address-form input.button.form-submit{
+	margin-left: 0!important;
+	background: url(images/button_continue.png) no-repeat 3px center !important;
+	background-color:-webkit-linear-gradient(top, #77B800 0%, #669C02 100%) ;
+	background-color:-moz-linear-gradient(top, #77B800 0%, #669C02 100%) ;
+	padding-left: 61px;
+}*/
 
 .ie10 .page-myprintconnect-addresses #pccustomers-address-form input[type="submit"]{
     margin-left: 0!important;
@@ -7472,7 +7375,7 @@ background-color:-webkit-linear-gradient(top, #77B800 0%, #669C02 100%) ;
 padding-left: 61px;
 }
 
-.fotolia-items span{
+.fotolia-items > span:first-child{
 background: url("images/rsz_fotolia-icon.png") no-repeat scroll 0 2px / 28px auto transparent;
 padding-left: 32px;
 padding-top: 3px;
@@ -7747,9 +7650,7 @@ float:left;
 	width: 550px !important;
 	margin-left: 0px !important;
 }
-.address {
-	min-height: 0px !important;
-}
+
 .page-myprintconnect #edit-recentoffers{
 	margin-top: 30px;
 }
@@ -7760,13 +7661,7 @@ float:left;
    padding-right: 30px;
 }
 
-.page-myprintconnect table th, .page-myprintconnect table tr td {
-    vertical-align: top;
-}
-.page-myprintconnect table th {
 
-    font-size: 13px !important;
-}
 .page-myprintconnect .region-content {
   /*margin-left: 5px;*/
 } 
@@ -7776,7 +7671,7 @@ float:left;
 .description table .vacations { 
 border-collapse: inherit  !important; 
 }
-#pccustomers-dashboard-form{margin-left: -8px!important; }
+#pccustomers-dashboard-form{/*margin-left: -8px!important;*/ }
 .page-cart #pccart-cart-form .shipping table tbody tr{ 
     font-size: 11px !important;
 }
@@ -7799,12 +7694,17 @@ div.myoffers table.list thead tr th:nth-child(2){
     width: auto;
 }
 
+.region-header-right{
+	float: right;
+	padding-right: 80px;
+}
 /*########## New Flyer FR ###########*/
 .info-bloc{
 	clear: both;
 	position: relative;
-	padding-right: 115px;
+	padding-right: 100px;
 	padding-top: 18px;
+	margin-right: -80px!important;
 }
 .info-bloc ul{
 	margin: 0;
@@ -7977,13 +7877,13 @@ div.myoffers table.list thead tr th:nth-child(2){
 	background-color: #ff6600;
 }
 
-.block.nos-avantages .content a{
+/*.block.nos-avantages .content a{
 	text-decoration: none;
 	color: #646464;
 	display: block;
 	padding-left: 30px;
 	background: url(images/sprite_icons.png) no-repeat 0 -134px;
-}
+}*/
 .block.nos-avantages ul{
 	list-style: none;
 	margin: 0;
@@ -8057,13 +7957,6 @@ div.myoffers table.list thead tr th:nth-child(2){
 	border-radius: 0 0 3px 3px;
 }
 
-#pccart-cart-form fieldset legend{
-	font-size: 18px;
-	font-weight: 600;
-	color: #666666;
-	margin: 15px 0;
-}
-
 .front .region-contenttop{
 	padding-left: 0;
 }
@@ -8086,11 +7979,13 @@ div.myoffers table.list thead tr th:nth-child(2){
 .view-best-sales .headproduct > h2{
 	float: left;
 	font-size: 16px;
-	font-weight: 600;
+	font-weight: 600;*
+        text-transform: uppercase;
 }
 
 .block-pctemplates .nosmodel > a,
-.view-best-sales .headproduct > a{
+.view-best-sales .headproduct > a,
+.page-segments .headerTitleProduct .allProduct > a{
 	font-family: 'Open Sans', sans-serif;
 	float: right;
 	font-size: 12px;
@@ -8102,7 +7997,8 @@ div.myoffers table.list thead tr th:nth-child(2){
 	text-decoration: none;
 }
 .block-pctemplates .nosmodel > a:hover,
-.view-best-sales .headproduct > a:hover{
+.view-best-sales .headproduct > a:hover,
+.page-segments .headerTitleProduct .allProduct > a:hover{
 	background-position: -7px -503px;
 	color: #333333;
 }
@@ -8172,9 +8068,9 @@ div.myoffers table.list thead tr th:nth-child(2){
 	float: left;
 	font-size: 14px;
 	color: #ffffff;
-	line-height: 25px;
+	line-height: 24px;
 	height: 40px;
-	font-weight: bold;
+	font-weight: 400;
 	background: url(images/flesh-button-seul.png) no-repeat 17px center #6faa01 !important;
 	padding: 8px 20px 8px 45px;
 	border: 0;
@@ -8195,7 +8091,7 @@ div.myoffers table.list thead tr th:nth-child(2){
 	font-weight: bold;
 	font-size: 14px;
 	color: #333333;
-	text-transform: capitalize;
+	text-transform: none;
 	text-align: center;
 	margin-bottom: 10px;
 }
@@ -8230,16 +8126,38 @@ form#pccheckout-payment-form fieldset.paymentmethodefond legend{
 #edit-payment-method fieldset{
     /*border: 1px solid #e1e1e1;*/    
 }
+.page-payment #edit-payment-method{
+	 -webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+    border-radius:3px;
+}
+.page-payment #detailCommande .wrap-table-detailcmd{
+	-webkit-border-radius: 4px 4px 0 0;
+	-moz-border-radius: 4px 4px 0 0;
+	border-radius: 4px 4px 0 0;
+}
+
 form#pccheckout-payment-form fieldset{
     -webkit-border-radius: 0 0 3px 3px;
 	-moz-border-radius: 0 0 3px 3px;
-    border-radius: 0 0 3px 3px;
-}
+    border-radius:0 0 3px;
+} 
 
 form#pccheckout-payment-form  .paymentmethodefond{
       background-color: #f1f1f1;
+      border: 1px solid #e1e1e1;
+      margin-top: 20px;
 }
 
+.page-payment .paymentDescription{
+	margin-top: 13px;
+}
+
+.page-payment .paymentDescription >p{
+	margin: 21px 0 18px;
+}
+
+form#pcpayments-request-form table tr,
 form#pccheckout-payment-form table tr{
     height:34px!important;
 }
@@ -8249,17 +8167,20 @@ form#pccheckout-payment-form .payment-methods-table tr {
    display: table-header-group;
    text-transform: uppercase;
 }
+.page-payment  form#pccheckout-payment-form .payment-methods-table tr:last-child td{
+ 	border-bottom: none;
+}
 form#pccheckout-payment-form table{
   padding-bottom: 13px;
 }
 
+form#pcpayments-request-form fieldset.payment .fieldset-wrapper,
 form#pccheckout-payment-form fieldset.paymentmethodefond .fieldset-wrapper{
-	padding-bottom: 0;
 	margin-bottom: 0;
-         border-left: 1px solid #e1e1e1;
-         border-right: 1px solid #e1e1e1;
-         border-bottom: 1px solid #e1e1e1;
+    padding: 17px 15px 20px;
 }
+
+form#pcpayments-request-form .order  table tr.first-child td,
 form#pccheckout-payment-form .overview table.sticky-enabled th{
 	background-color: #ff6600;
 	border:1px solid #e95e01;
@@ -8277,18 +8198,24 @@ form#pccheckout-payment-form .overview  table.sticky-enabled th:first-child{
 form#pccheckout-payment-form .overview table.sticky-enabled{
 	border-radius: 3px 3px 0 0;
 }
+form#pcpayments-request-form table tr,
 form#pccheckout-payment-form .overview table.sticky-enabled tr{
 	border: 0;
 }
+
+form#pcpayments-request-form table tr.productItem td{
+	background: #fff;
+}
+form#pcpayments-request-form .order table tr.last-child td,
+form#pcpayments-request-form .order table tr.productItem td,
 form#pccheckout-payment-form .overview table.sticky-enabled td{
-	
-	padding: 3px 20px;
-	font-size: 13px;
+	padding: 3px 15px;
+	font-size: 12px;
 	color: #666666;
-	line-height: 13px;
+	line-height: 16px;
 	border-style: solid;
 	border-width: 1px 1px 0 0;
-	border-color: #e1e1e1;
+	border-color:#d9d9d9;
 	height: 30px;
 }
 form#pccheckout-payment-form .overview table.sticky-enabled td.last-child{
@@ -8296,8 +8223,9 @@ form#pccheckout-payment-form .overview table.sticky-enabled td.last-child{
 }
 form#pccheckout-payment-form .form-actions span.price {
 
-  padding-left: 24px!important;
+  padding-left: 17px!important;
 }
+/*form#pcpayments-request-form table tr td:first-child,*/
 form#pccheckout-payment-form .overview table.sticky-enabled td:first-child{
 	border-width: 1px 1px 0 1px;
 }
@@ -8688,11 +8616,6 @@ a.seemore{
 	font-size: 13px;
 	padding-left: 10px;
 	background: url(images/plus.png) no-repeat 0 center;
-}
-.lp-container h2.title{
-	background: url(images/icone_title.png) no-repeat 0 center;
-	padding-left: 20px;
-
 }
 
 #popup_overlay.popin_overlay{
@@ -10161,9 +10084,10 @@ ul.type_product-selectBox-dropdown-menu li .sub-items884 {
 	padding: 10px 0; 
 }
 
-body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintconnect-addresses.page-myprintconnect table,body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintconnect-closedorders table {
-	margin-left: -7px !important;
-	margin-top: 16px !important;
+body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintconnect-addresses.page-myprintconnect table,
+body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintconnect-closedorders table {
+	/*margin-left: -7px !important;
+	margin-top: 16px !important;*/
 }
 body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintconnect-addresses.page-myprintconnect table tr td:first-child {
 width: 203px !important;
@@ -10293,10 +10217,10 @@ border: none;
 		display: none;
 	}
 	label.option {
-		display: inline;
-		font-weight: normal;
-		color: #646464 !important;
-		font-size: 13px;
+	    font-size: 12px;
+	    display: inline;
+	    font-weight: normal;
+	    color: #646464 !important;
 	}
 
 	.form-type-radio {
@@ -10434,7 +10358,7 @@ border: none;
 		}
  		
  		tr:nth-child(1) td.first-child {
-			border-radius: 5px 0px 0px 0px;
+			border-radius: 0;
 		}
    			
    		input[type="radio"]{
@@ -10677,6 +10601,9 @@ a.cart.button{
 	height: 44px;
 	bottom: 0;
 }
+.i18n-nl-NL #footer .search-footer.block a.button{
+	background-position:21px -453px
+}
 #footer .search-footer.block a.button .ui-button-text{
 	line-height: 46px;
 }
@@ -10743,4 +10670,1670 @@ a.cart.button{
 	border-radius: 0 !important;
 	overflow: visible !important;
 	margin-top: 0 !important;
+}
+
+/* ======= Order week new CSS ======= */ 
+
+/* Page profil */
+.page-myprintconnect-profile #pccustomers-profile-form label{
+	display: block;
+	margin: 0;
+	font-weight: 400;
+	text-transform: uppercase;
+	float: left;
+	padding-right: 0;
+	width: 188px;
+	text-align: left;
+	line-height: 38px;
+    padding-left: 10px;
+}
+
+.page-myprintconnect-profile #pccustomers-profile-form .form-item.form-type-textfield.form-item-email {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d6d6d6;
+}
+
+.page-myprintconnect-profile #pccustomers-profile-form input[type="text"] {
+	width: 428px;
+}
+
+#pccustomers-profile-form > div ,#pccustomers-changepassword-form > div{
+    background-color: #f1f1f1;
+    padding-top: 18px;
+    margin-top: 10px;
+    border: 1px solid #d6d6d6; 
+    -webkit-border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    border-radius: 4px 4px 4px 4px;
+}
+
+.page-myprintconnect-changepassword #pccustomers-changepassword-form > div > .form-item{
+	margin-top: 0;
+}
+.region-content .form-actions {
+	padding: 0;    
+	margin: -1px;
+}
+
+.page-myprintconnect-profile .region-content .form-actions input[type=submit],
+.page-myprintconnect-changepassword .region-content .form-actions input[type=submit] {
+	background: #71ad00;
+    padding-left: 0;
+    text-align: center;
+}
+
+.page-myprintconnect-profile .region-content .form-actions input[type=submit]:hover {
+	background-image: none;
+}
+
+.region-content .form-actions input[type=submit] {
+	height: 62px;
+	min-width: 220px;
+	/* float:left;  IE BUG */
+	display: inline-block;
+	float: right;
+	margin-right: 0;
+	font-weight: 400;
+	text-align: center;
+	border: none; 
+	-webkit-border-radius: 0 0 3px 0;
+	-moz-border-radius: 0 0 3px 0;
+	border-radius: 0 0 3px 0;
+}
+
+p.requieredfields {
+    margin-left: 200px;
+    margin: -5px 0 5px 202px;
+}
+
+p.requieredfields span.form-required {
+    margin: 0 4px;
+}
+
+/* Page factures */
+.page-myprintconnect-offers .myoffers{
+	margin-top: 1em;
+}
+.page-myprintconnect-offers .myoffers table.list.offers th,
+.page-myprintconnect-closedorders  div.orders table.list.orders th,
+.page-myprintconnect-orders .listCommande > table.list.orders tr th,
+.page-myprintconnect-addresses #pccustomers-addresses-form .wrap_addressesLivraison > table.addressesLivraison tr th,
+.page-myprintconnect-addresses #pccustomers-addresses-form  .wrap_addressesFacturation > table.addressesFacturation tr th{
+	font-weight: bold;
+	border-bottom: 1px solid #ff6600;
+	border-top: 1px solid #ff6600;
+} 
+.page-myprintconnect-offers .myoffers table.list.offers th:first-child,
+.page-myprintconnect-closedorders  div.orders table.list.orders th:first-child,
+.page-myprintconnect-orders .listCommande > table.list.orders tr th:first-child,
+.page-myprintconnect-addresses #pccustomers-addresses-form .wrap_addressesLivraison > table.addressesLivraison tr th:first-child,
+.page-myprintconnect-addresses #pccustomers-addresses-form  .wrap_addressesFacturation > table.addressesFacturation tr th:first-child,
+.page-myprintconnect-invoices #pcinvoices-list-form  table.list  tr th:first-child{
+	border-left: 1px solid #b95009; 
+}
+.page-myprintconnect-offers .myoffers table.list.offers th:last-child,
+.page-myprintconnect-closedorders  div.orders table.list.orders th:last-child,
+.page-myprintconnect-orders .listCommande > table.list.orders tr th:last-child,
+.page-myprintconnect-addresses #pccustomers-addresses-form .wrap_addressesLivraison > table.addressesLivraison tr th:last-child,
+.page-myprintconnect-addresses #pccustomers-addresses-form  .wrap_addressesFacturation > table.addressesFacturation tr th:last-child,
+.page-myprintconnect-invoices #pcinvoices-list-form  table.list  tr th:last-child{
+	border-right: 1px solid #b95009;
+}
+.page-myprintconnect-addresses #pccustomers-addresses-form table.addresses tr td,
+.page-myprintconnect-closedorders  div.orders table.list.orders tr td,
+.page-myprintconnect-offers .myoffers table.list.offers tr td,
+.page-myprintconnect-orders .listCommande > table.list.orders tr td,
+.page-myprintconnect-addresses #pccustomers-addresses-form .wrap_addressesLivraison > table.addressesLivraison tr td,
+.page-myprintconnect-addresses #pccustomers-addresses-form  .wrap_addressesFacturation > table.addressesFacturation tr td
+{
+  vertical-align: middle;
+  border-right: 1px solid #dcdcdc;
+}
+
+.page-myprintconnect-addresses #pccustomers-addresses-form table.addresses tr td:last-child,
+.page-myprintconnect-closedorders  div.orders table.list.orders tr td:last-child,
+.page-myprintconnect-offers .myoffers table.list.offers tr td:last-child,
+.page-myprintconnect-orders .listCommande > table.list.orders tr td:last-child,
+.page-myprintconnect-addresses #pccustomers-addresses-form .wrap_addressesLivraison > table.addressesLivraison tr td:last-child,
+.page-myprintconnect-addresses #pccustomers-addresses-form  .wrap_addressesFacturation > table.addressesFacturation tr td:last-child{
+	border-right: none;
+}
+.page-myprintconnect #edit-invoices div#edit-list,
+.page-myprintconnect-closedorders  div.orders,
+.page-myprintconnect-addresses #pccustomers-addresses-form .wrap_addressesLivraison,
+.page-myprintconnect-addresses #pccustomers-addresses-form  .wrap_addressesFacturation,
+.page-myprintconnect-offers .myoffers,
+.page-myprintconnect-orders .listCommande {
+ 	background: #fff;
+	overflow: hidden;
+	border: 1px solid #DCDCDC;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border-top: 1px solid #b95009;
+}
+.page-myprintconnect #edit-invoices table {
+	width: 100%;
+    margin: 0 !important;
+    border-collapse: collapse;
+}
+.page-myprintconnect table thead {
+	background: #ff6600;
+	line-height: 39px;
+	color: #fff;
+}
+.page-myprintconnect #edit-invoices table th {
+    font-size: 12px !important;
+    font-weight: bold;
+    border-top: 0;
+    border-bottom: 1px solid #dcdcdc;
+}
+.page-myprintconnect #edit-invoices table tr td {
+    border-right: 1px solid #dcdcdc;
+    vertical-align: middle;
+    width: 99px;
+}
+.page-myprintconnect #edit-invoices table tr td.last-child {
+    width: 20px;
+    border: 0;
+}
+.page-myprintconnect #edit-invoices table tr td.last-child a {
+	background: url('http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/order_week/icon__pdf.png') no-repeat;
+    width: 18px;
+    height: 23px;
+    display: block;
+    text-indent: 2000px;
+    margin: 0 auto;
+}
+
+.page-myprintconnect #edit-invoices .price {
+	font-weight: bold;
+	color: #f60;
+}
+
+/* Page Adresses */
+.page-myprintconnect-addresses #pccustomers-newaddress-form > div ,
+.page-myprintconnect-mybillingaddress-new #pccustomers-newaddress-billingaddresses-form > div,
+.page-myprintconnect-addresses #pccustomers-address-form > div,
+.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form > div,
+.page-myprintconnect-editbillingaddresses #pccustomers-newaddress-billingaddresses-form > div
+
+{
+    background-color: #f1f1f1;
+    padding-top: 18px;
+    margin-top: 10px;
+    border: 1px solid #d6d6d6; 
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius:  5px;
+}
+.page-myprintconnect-addresses .region-content .form-actions {
+    /*padding-left: 15px;
+    margin-top: 39px;
+    padding: 10px 19px!important;*/
+}
+#pccustomers-newaddress-form input[type="submit"], 
+#pccustomers-address-form input[type="submit"],
+.page-myprintconnect-addresses #pccustomers-address-form input.button.form-submit {
+	background: #71ad00;
+    padding-left: 0;
+    text-align: center;
+    margin-bottom: 0; 
+    top: 0; 
+}
+#pccustomers-newaddress-form input[type="submit"], 
+#pccustomers-address-form input[type="submit"] {
+	background-image: none;
+}
+
+ 
+#pccustomers-newaddress-form input[type="text"]#edit-lastname {
+    width: 218px;
+}
+#pccustomers-newaddress-form input[type="text"]#edit-name {
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+#pccustomers-newaddress-form input[type="text"]#edit-lastname { 
+    border-radius: 0px 3px 3px 0px;
+    -moz-border-radius: 0px 3px 3px 0px;
+    -webkit-border-radius: 0px 3px 3px 0px;
+}
+#pccustomers-newaddress-form label, 
+#pccustomers-address-form label,
+#pccustomers-address-billingaddresses-form label,
+#pccustomers-newaddress-billingaddresses-form label
+{
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 0;
+    width: 158px;
+}
+
+.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form .form-item-isCompany input#isUserCompany,
+.page-myprintconnect-editbillingaddresses #pccustomers-newaddress-billingaddresses-form .form-item-isCompany input#isUserCompany{
+  margin-left: 8px;
+    margin-right: 8px;
+}
+
+.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form #vatNumber .form-item-vatNumber .country,
+.page-myprintconnect-editbillingaddresses #pccustomers-newaddress-billingaddresses-form #vatNumber .form-item-vatNumber .country{
+	border-right: 0px;
+	border-radius: 3px 0 0 3px;
+}
+
+.page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form #vatNumber .form-item-vatNumber .number,
+.page-myprintconnect-editbillingaddresses #pccustomers-newaddress-billingaddresses-form  #vatNumber .form-item-vatNumber .number {
+    border-radius: 0 3px 3px 0;
+}
+
+
+#pccustomers-newaddress-form .form-item-name,
+#pccustomers-newaddress-form .form-item-lastname {
+    margin-top: 0;
+    float: left;
+}
+#pccustomers-newaddress-form .form-item-lastname > label { display: none;}
+#pccustomers-newaddress-form .form-item-phone {
+    clear: both;
+}
+#pccustomers-newaddress-form .form-item-company {
+    display: block;
+    padding-top: 10px;
+    border-top: 1px solid #d6d6d6;
+}
+#pccustomers-address-form .form-item-company {
+    display: block;
+    padding-top: 10px;
+    border-top: 1px solid #d6d6d6;
+}
+#pccustomers-newaddress-form .form-item-postalCode,
+#pccustomers-newaddress-form .form-item-city,
+#pccustomers-address-billingaddresses-form .form-item-postalCode,
+#pccustomers-address-billingaddresses-form .form-item-city,
+#pccustomers-newaddress-billingaddresses-form .form-item-postalCode, 
+#pccustomers-newaddress-billingaddresses-form .form-item-city {
+    float: left;
+}
+#pccustomers-newaddress-form .form-item-postalCode,
+#pccustomers-address-billingaddresses-form .form-item-postalCode, 
+#pccustomers-newaddress-billingaddresses-form .form-item-postalCode {
+	clear: both;
+}
+
+/* Page Cart */
+.page-cart #pccart-cart-form .item .description .price {
+	color: #f60;
+	font-size: 20px;
+	line-height: 20px;
+	top: 10px;
+	right: 29px;
+	font-weight: bold;
+}
+.page-cart #pccart-cart-form .item .description h3 ,
+.page-upload-design .templates .fieldset-wrapper .productDetail  #edit-product h2{
+	margin-bottom: 7px;
+	font-weight: 700;
+	max-width: 520px;
+}
+.page-cart #pccart-cart-form .item .description {
+	width: 100%;
+    max-width: 100%;
+}
+.page-cart #pccart-cart-form .item .preview2 .description {
+	width: 100%;
+	margin-bottom: 0;
+}
+.page-cart #pccart-cart-form .item,
+.page-upload-design .templates .fieldset-wrapper{
+	background: #f1f1f1;
+	padding: 10px 0 0;
+	margin-bottom: 13px;
+	position: relative;
+	border: 1px solid #d1d1d1; 
+	border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+	-webkit-border-radius: 5px 5px 5px 5px;
+}
+.page-cart #pccart-cart-form .item .preview2,
+.page-cart #pccart-cart-form .item .prodactTemplates,
+.page-upload-design .templates .fieldset-wrapper .productDetail  {
+	padding: 0 13px;
+}
+.page-cart #pccart-cart-form .item .preview2,
+.page-upload-design .templates .fieldset-wrapper .productDetail {
+    border-bottom: 1px solid #d1d1d1;
+    padding-bottom: 5px;
+}
+.page-cart #pccart-cart-form .item .form-type-checkbox {
+	background-color: #e1e1e1;
+    clear: left;
+    padding: 10px;
+    float: left;
+    display: block;
+    width: 640px;
+    margin: 0;
+}
+.page-cart #pccart-cart-form .item .prodactTemplates {
+    border-bottom: 1px solid #d1d1d1;
+}
+.page-cart #pccart-cart-form .form-type-checkbox input.form-checkbox {margin-right: 10px;}
+.refJob-code .form-item {
+    margin: 0;
+    padding: 0 10px 10px;
+    border-bottom: 1px solid #d1d1d1;
+}
+.refJob-code .form-item label {
+    display: inline-block;
+    margin-right: 10px;
+}
+.refjobTxt {
+    width: 319px;
+    height: 40px;
+    line-height: 40px;    
+    box-sizing: border-box;
+}
+.page-cart #pccart-cart-form .preview1 .description .price {
+    right: 10px;
+}
+.preview1 {
+    border-left: 1px solid #d1d1d1;
+    border-right: 1px solid #d1d1d1;
+    position: relative;
+    padding: 10px 0 5px 10px;
+    overflow: hidden;
+    height: auto;
+    width: 303px;
+    display: inline-block;
+    vertical-align: top;
+}
+#pccart-cart-form .refJob-code .items_actions {
+    top: -27px;
+}
+.page-cart #pccart-cart-form .item .image {
+	width: 156px;
+	min-height: 85px;
+	margin: 10px 10px 0;
+    border: 0;
+
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+}
+#pccart-cart-form .jobPrice {
+    position: relative;
+    display: inline-block;
+    width: 150px;
+    padding-right: 10px;
+    vertical-align: top;
+    padding-top: 10px;
+    text-align: right;
+}
+#pccart-cart-form .jobPrice .price {
+    position: relative;
+    color: #f60;
+    font-size: 20px;
+    line-height: 20px;
+    top: 0;
+    right: 0;
+    font-weight: bold;
+}
+#pccart-cart-form .item .image img {
+	background: #fff;
+    display: block;
+    max-width: 150px;
+    margin: auto;
+    margin-bottom: 8px;
+
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+}
+#pccart-cart-form .jobFull-img span.delete_item {
+    background-position: 0 3px;
+    border: none;
+    padding: 0 0 0 20px;
+    cursor: pointer;
+    text-indent: -20000px;
+    position: absolute;
+    top: 2px;
+    right: 3px;
+}
+#pccart-cart-form .preview1 a.updateProduct {	
+    background: url(images/bg_btns.png) no-repeat -3px -124px;
+    font-size: 11px;
+    color: #666666;
+    float: left;
+    padding-left: 20px;
+    position: absolute;
+    bottom: 6px;
+}
+#pccart-cart-form .jobFull-img a.previewlink {
+    background: none;
+    padding: 0;
+}
+.cartItemsContainer .file-model .model-txt,
+.fotolia-img-name {
+    display: inline-block;
+    width: 480px;
+    padding: 10px 0;
+    border-right: 1px solid #ccc;
+}
+.cart-fotolias{
+    clear: both;
+    overflow: hidden;
+}
+.cartItemsContainer .file-model,
+.cart-fotolias .fotolia-items{
+	background-color: #e1e1e1;
+    position: relative;
+    border-top: 1px solid #ccc;
+    width: 100%;
+    padding: 0 10px;
+    margin: 0;
+    box-sizing: border-box;
+    clear:both;
+}
+.page-cart #pccart-cart-form .item .designer-email {
+    background: #dfdfdf;
+    border: 1px solid #d1d1d1;
+    border-style: solid none;
+    margin: 0;
+    padding: 10px;
+}
+.page-cart #pccart-cart-form input[type="text"] {
+    height: 40px;
+    box-sizing: border-box;
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+}
+input[type="text"].inputdesigneremail {
+    width: 319px;
+}
+.inputdesigner label {
+    font-size: 12px;
+    font-weight: normal;
+    width: 321px;
+    float: left;
+    line-height: 40px;
+}
+.page-cart #edit-cart-designer-warning {
+	font-size: 10px;
+    margin-bottom: 0;
+    color: #3c3c3b;
+    line-height: normal;
+    padding: 10px;
+}
+.page-cart .shipping table tr td {
+	border-top: 0;
+}
+.page-cart .discount input[type="button"] {
+    float: right;
+    text-align: center;
+    width: 120px;
+    color: #fff !important;
+    border: 0 none !important;
+    background: #6faa01;
+    padding: 10px;
+    text-align: center;
+}
+a#delete-discount {
+    background: url("/sites/all/modules/printconnect/pccart/images/bg_btns.png") no-repeat scroll -3px 0 rgba(0, 0, 0, 0);
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    margin: 14px 6px 0 10px;
+}
+.page-cart #edit-cart-discounts .description.form-wrapper {
+    margin: 0;
+    position: relative;
+}
+.page-cart #edit-cart-discounts .description.form-wrapper .form-wrapper {
+    display: inline-block;
+    vertical-align: top;
+    width: 90%;
+    font-size: 12px;
+}
+span#discountCodeVal {
+    font-weight: bold;
+    color: #f60;
+    text-transform: uppercase;
+}
+.page-cart #edit-cart-discounts .description.form-wrapper .form-wrapper.discounBottom {
+    background-color: #e1e1e1;
+    border-top: 1px solid #e1e1e1;
+    width: 100%;
+    padding: 10px 10px 10px 35px;
+    box-sizing: border-box;
+}
+.page-cart #edit-cart-discounts .form-wrapper.discounTop {
+    padding: 10px 0;
+}
+.page-cart #edit-cart-discounts .price {
+    font-size: 14px;
+	font-weight: bold;
+	color: #f60;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+}
+.page-cart .file-check > div > table > tbody > tr > td.last-child, 
+.page-cart .shipping > div > table > tbody > tr > td.last-child {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ff6600;
+    text-align: right;
+    width: 90px;
+    text-transform: uppercase;
+}
+.shipping-map .pcflyerstores-picker-link,
+.BPost-info .pcbpost-picker-link {
+    width: 311px;
+    color: #fff;
+    border: 0;
+    background: #6faa01;
+    padding: 10px;
+    text-align: center;
+    margin-top: 10px;
+    box-sizing: border-box;
+    border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+}
+.BPost-info .pcbpost-picker-link {
+	margin: 0;
+}
+.shipping-map, 
+.shipping-info,
+.BPost-info,
+.BPost-hours {
+    width: 331px;
+    display: inline-block;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.shipping-info {
+	vertical-align: top;
+	width: 321px;
+	border-left: 1px solid #d1d1d1;
+	padding: 20px 20px 40px;
+}
+.BPost-hours {
+	vertical-align: top;
+	width: 321px;
+	border-left: 1px solid #d1d1d1;
+	padding: 10px 20px;
+}
+#pccart-cart-form .shipping .shipping-flyerStore,
+#pccart-cart-form .shipping .shipping-BPost {
+    background-color: #e1e1e1;
+    padding: 0;
+}
+table#opening-hours td {
+    padding: 0 10px;
+    border: 0;
+}
+.bold-title {
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.page-cart .priceblock > div.subtotal .value, 
+.page-cart .priceblock > div.vat .value, 
+.page-offer .priceblock > div.subtotal .value, 
+.page-offer .priceblock > div.vat .value {
+	color: #f60;
+	font-size: 14px;
+	line-height: normal\9; /* IE HACK */
+	font-weight: bold;
+}
+.page-cart .priceblock > div.subtotal{
+	padding: 10px 10px 0;
+}
+.page-cart .priceblock > div.vat {
+	padding: 0 10px 10px;
+}
+.page-cart .priceblock > div.subtotal, 
+.page-offer .priceblock > div.subtotal {
+	border-radius: 4px 4px 0 0;
+	border-bottom: 0;
+}
+.page-cart #block-system-main .form-wrapper.actions{
+	background: #3c3c3c;
+    padding: 0;
+    margin: 0 0 20px;
+    overflow: hidden;
+    height: 50px;
+
+    border-radius: 0 0 5px 5px;
+    -webkit-border-radius: 0 0 5px 5px;
+    -moz-border-radius: 0 0 5px 5px;
+}
+.page-cart #block-system-main .form-wrapper.actions span.price {
+    float: left;
+    color: #fff;
+    font-size: 33px;
+    line-height: 60px;
+    line-height: normal\9;
+    font-weight: bold;
+    font-family: arial;
+    padding-left: 10px;
+}
+.demande-paiement .form-actions input[type="submit"],
+input.pay-now, 
+input.ui-button.pay-now, 
+input.ui-button.payment {
+    background: #79b61a url("images/button_payment.png") no-repeat left center;
+}
+
+.page-checkout-personal .continue.save-button{
+	background: #79b61a;
+	padding-left: 15px;
+}
+
+.page-checkout-personal .continue.save-button:hover{
+	background: #79b61a;
+	cursor: pointer;
+}
+
+.page-paymentrequest .form-actions input.button,
+.page-payment #edit-actions input.payment{
+    background: #79b61a url("images/button_payment.png") no-repeat 25px  center;
+    cursor: pointer;
+    font-weight: 400 !important;
+}
+
+.page-cart #block-system-main .form-wrapper.actions input{
+	font-size: 16px;
+    height: 50px;
+    margin: 0;
+    font-weight: 400;
+    text-align: center;
+    width: 100%;
+    display: inline-block;
+    padding-left: 40px;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+.page-cart #block-system-main .form-wrapper.actions input{
+	background: #79b61a url("images/button_payment.png") no-repeat 75px center;
+}
+.page-cart #edit-actions .button-wrapper {
+    background-color: #79b61a;
+    width: 330px;
+    display: inline-block;
+    text-align: center;
+    float: right;
+}
+#total-price {
+    vertical-align: top;
+    width: 328px;
+    float: left;
+    line-height: 50px;
+}
+.page-payment #total-price{
+	width: 752px;
+}
+#total-price .value {
+    font-size: 30px;
+    font-weight: bold;
+    color: #fff;
+    float: right;
+    margin-right: 15px;
+}
+.page-payment #total-price .value{
+	margin-top: 4px;
+}
+.page-cart .region-content .form-actions span.price label {
+    font-size: 14px;
+    margin-right: 5px;
+    text-align: right;
+    line-height: 50px;
+    float: left;
+    clear: right;
+    color: #fff;
+    font-weight: normal;
+    margin: 0;
+}
+.cart-empty {
+    background: #f1f1f1 url("images/cart-empty.png") no-repeat center 20px;
+    padding: 20px;
+    text-align: center;
+    padding-top: 184px;
+    border: 1px solid #d1d1d1;
+
+    border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+}
+.cart-empty .continue-shopping {
+    margin: 0;
+}
+#pccart-cart-form fieldset legend{
+	font-size: 18px;
+	font-weight: bold;
+	color: #666666;
+	margin: 15px 0;
+}
+.page-cart .download {
+    background: url("images/imprimer.png") no-repeat scroll right center rgba(0, 0, 0, 0);
+    color: #f60;
+    float: right;
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 25px;
+    padding-right: 32px;
+}
+#pccart-cart-form .jobFull-img a {
+	background: none;
+	padding: 0;
+    text-align: center;
+    float: none;
+    display: block;
+    line-height: 17px;
+}
+.edit-job {
+    float: right;
+    width: auto;
+    margin-top: 15px;
+}
+#pccart-cart-form .item-list {
+    display: inline-block;
+    max-width: 480px;
+    vertical-align: top;
+}
+.edit-job a {
+    background: url(images/bg_btns.png) no-repeat 0 -125px;
+	color: #666666;
+    font-size: 11px;
+    float: left;
+    padding-left: 25px;
+}    
+.page-cart #pccart-cart-form .item .preview2 .description.jobDesigner {
+    position: relative;
+    padding-top: 6px;
+}
+.page-cart #pccart-cart-form .item .preview2 .description.jobDesigner .price {
+    right: 0;
+}
+.page-cart #pccart-cart-form .item .preview2 .description.jobDesigner .items_actions {
+    display: none;
+}
+#pccart-cart-form .prodactTemplates .poll-form.designToolOnly {
+    border: none;
+    margin: 0 auto;
+    display: block;
+    float: none;
+}
+.page-cart #edit-cart-shipping .shipping-wrapper {
+	padding-bottom: 0;
+}
+.page-cart .edit-cart-discount-text {
+	margin-top: 0;
+}
+
+
+
+/*FancyBox*/
+.fancybox-skin.designtool{
+	background-color: transparent !important;
+	box-shadow:none !important;
+}
+.fancybox-skin.designtool .fancybox-close{
+	display: none !important;
+}
+/*End Fancybox*/
+
+/* Loading page cart */
+#overlay-bar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(119, 119, 119);
+    opacity: 0.7;
+    cursor: auto;
+    z-index: 9999;
+}
+
+#save-progress-bar {
+    border: 2px solid #636363;
+    height: 20px;
+    margin: -12px 0 0 -202px;
+    width: 400px;
+    overflow: hidden;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background: #fff;
+    z-index: 9999;
+}
+
+#save-progress-bar > div {
+    height: 100%;
+    background: #f60;
+    overflow: hidden;
+    width: 0;
+    float: left;
+}
+
+#myForm{
+  min-height: 300px;
+}
+
+#box-progress p{
+  top: 50%;
+  font-family: Ubuntu,sans-serif;
+  font-size: 14px;
+  position: fixed;
+  width: 100%;
+  color: #fff;
+  z-index: 9999;
+  text-align: center;
+  margin: 22px 0 0;
+  left: 0;
+}
+
+#box-progress{
+  display: none;
+}
+
+/* Mailing Popup */
+.mailing-container .box-gris{
+  padding: 13px 13px 13px 54px;
+  background: url(images/picto.png) no-repeat 16px center #f1f1f1;
+  margin-bottom: 14px;
+  border: 1px solid #a5a6a7;
+}
+
+.mailing-container{
+    clear: both;
+    position: relative;
+}
+
+.mailing-container .box-gris p{
+  margin: 0;
+  font-size: 12px;
+  color: #646464;
+  text-decoration: underline;
+  line-height: 15px;
+}
+.mailing-container .box-gris a{
+  color: #ff6800;
+  text-decoration: underline;
+}
+.mailing-container .close{
+  position: absolute;
+  right: -8px;
+  top: -10px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  background: #84888b;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 11px;
+  color: #fff;
+  font-family: 'Open Sans',sans-serif;
+  cursor: pointer;
+}
+
+.mailing-container .left{
+  float: left;
+  width: 65%;
+}
+
+.grey-bg-popup{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1718px;
+  z-index: 400;
+  opacity: 0.7;
+  cursor: pointer;
+  height: 1718px;
+  background-color: rgb(119, 119, 119);
+}
+.mailing-container .mailpopup{
+	-webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.mailing-container .mailpopup > img{
+  float: right;
+  width: 35%;
+}
+
+.mailing-container .mailpopup h3{
+  font-size: 15px;
+  color: #646464;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.mailing-container .mailpopup p{
+  font-size: 13px;
+  color: #646464;
+  margin: 0 0 17px;
+  line-height: 15px;
+}
+.mailing-container .mailpopup .email{
+	margin-bottom: 11px;
+}
+
+.mailpopup input{
+
+}
+.mailpopup input[type="text"]{
+  -webkit-box-sizing: border-box; /* Safari 3.0 - 5.0, Chrome 1 - 9, Android 2.1 - 3.x */
+  -moz-box-sizing: border-box;    /* Firefox 1 - 28 */
+  box-sizing: border-box;         /* Safari 5.1+, Chrome 10+, Firefox 29+, Opera 7+, IE 8+, Android 4.0+, iOS any */
+  padding: 14px;
+  border: 1px solid #8f8f8f;
+  font-size: 12px;
+  color: #646464;
+  width: 100%;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.mailpopup .name input[type="text"]{
+  border-top: 1px solid #8f8f8f;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.mailpopup input[type="submit"]{
+  margin-top: 68px;
+  text-align: center;
+  padding: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  display: inline-block;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  padding: 8px 30px 8px 41px;
+  border-radius: 4px 4px 4px 4px;
+  border: none;
+  text-align: left;
+  background: #77b800;
+  background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/lp15/elements/icon_action.png") no-repeat 7px center /20px 20px,-webkit-linear-gradient(top, #77b800 0%, #669c02 100%);
+  background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/lp15/elements/icon_action.png") no-repeat 7px center /20px 20px,-moz-linear-gradient(top, #77b800 0%, #669c02 100%);
+  background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/lp15/elements/icon_action.png") no-repeat 7px center /20px 20px,-o-linear-gradient(top, #77b800 0%, #669c02 100%);
+  background: -ms-linear-gradient(top, #77b800 0%,#669c02 100%);
+  width: auto;
+}
+.mailpopup input[type="button"]{
+  margin-top: 68px;
+  text-align: center;
+  padding: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  display: inline-block;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  padding: 8px 30px 8px 41px;
+  border-radius: 4px 4px 4px 4px;
+  border: none;
+  text-align: left;
+  background: #77b800;
+  background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/lp15/elements/icon_action.png") no-repeat 7px center /20px 20px,-webkit-linear-gradient(top, #77b800 0%, #669c02 100%);
+  background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/lp15/elements/icon_action.png") no-repeat 7px center /20px 20px,-moz-linear-gradient(top, #77b800 0%, #669c02 100%);
+  background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/lp15/elements/icon_action.png") no-repeat 7px center /20px 20px,-o-linear-gradient(top, #77b800 0%, #669c02 100%);
+  background: -ms-linear-gradient(top, #77b800 0%,#669c02 100%);
+  width: auto;
+}
+.mailing-container .mailpopup{
+	position: fixed;
+	left: 50%;
+	z-index: 501;
+	display: none;
+	top: 50% !important;
+	width: 515px;
+	border: 1px solid #a5a6a7;
+	padding: 20px;
+	background: #fff;
+	margin-left: -273px;
+	margin-top: -157px;
+}
+ 
+.page-myprintconnect-offers .myoffers{
+	margin-top: 1em;
+	/*-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	overflow: hidden;
+	border: 1px solid #dcdcdc;
+	border-top: 0;*/
+}
+.page-myprintconnect-closedorders  div.orders,
+.page-myprintconnect-addresses #pccustomers-addresses-form,
+.page-myprintconnect-offers .myoffers
+{
+	/*-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	overflow: hidden;
+	border: 1px solid #dcdcdc;
+	border-top: 0;*/
+}
+
+.page-myprintconnect-addresses #pccustomers-addresses-form table.addresses,
+.page-myprintconnect-closedorders  div.orders table.list.orders,
+.page-myprintconnect-offers .myoffers table.list.offers{
+	/*border-bottom: 1px solid #dcdcdc;
+	overflow: hidden;
+	border-radius: 5px;*/
+}
+
+.page-myprintconnect-offers .myoffers table.list.offers th,.page-myprintconnect-closedorders  div.orders table.list.orders th{
+	font-weight: bold;
+	border-bottom: 1px solid #ff6600;
+} 
+
+.page-myprintconnect-addresses #pccustomers-addresses-form table.addresses tr td,
+.page-myprintconnect-closedorders  div.orders table.list.orders tr td,
+.page-myprintconnect-offers .myoffers table.list.offers tr td
+{
+  vertical-align: middle;
+  border-right: 1px solid #dcdcdc;
+}
+ 
+ .shipping-contact{
+ 	clear: both;
+ 	padding-top: 10px;
+ }
+
+.page-myprintconnect-addresses #pccustomers-addresses-form .wrap_addressesLivraison,
+.page-myprintconnect-orders .listCommande,
+.page-myprintconnect-closedorders div.orders{
+	margin-top: 10px;
+}
+
+.labelAdd_facturation , .labelAdd_adresse{
+	margin-top: 10px;
+	display: block;
+}
+
+#pccustomers-newaddress-billingaddresses-form .form-item-isCompany input{
+	margin-left: 10px;
+    vertical-align: middle;
+    position: relative;
+    float: none !important;
+}
+
+#pccustomers-newaddress-billingaddresses-form .country{
+ 	border-radius: 3px 0 0 3px;
+ 	border-right: none;	
+}
+
+#pccustomers-newaddress-billingaddresses-form .number{
+	    border-radius: 0 3px 3px 0;
+}
+
+.page-cart #pccart-cart-form .old-price{
+	position: absolute;
+	top: 35px;
+    right: 32px;
+}
+.page-myprintconnect-orders-confirmation .form-actions{
+  	padding: 15px 20px;
+    margin: 0;
+}
+
+.page-myprintconnect-orders-confirmation .form-actions span.price .currency{
+  margin: 0;
+}
+
+.page-myprintconnect-orders-confirmation .fieldset-wrapper{
+	padding: 10px;
+}
+
+
+.page-products #block-system-main .boxShippingDate .delivery div > label,
+.page-products #block-system-main .boxShippingDate .deadline div > label{
+	font-weight: 600;
+}
+.page-products #block-system-main .boxShippingDate .delivery div > .day,
+.page-products #block-system-main .boxShippingDate .deadline div > .day{
+	font-weight: 700;
+}
+
+.page-products #block-system-main .boxShippingDate .deadlines span a{
+	color: #f60;
+	font-weight: 600;
+}
+
+.boxShippingDate .sticky-enabled td:first-child{
+	width: 51%;
+	background: url(images/flesh.png) no-repeat right center;
+}
+.boxShippingDate .sticky-enabled tbody{
+	border-bottom: 1px solid #f6f6f6 !important;
+}
+
+.boxShippingDate{
+	padding-bottom: 30px;
+}
+
+#block-block-93{
+    display: none;
+}
+
+.linkproduct {
+  float: right;
+    line-height: 0;
+    margin-top: -9px;
+    text-decoration: underline;
+}
+
+/* Page confirmation */
+#delivery-invoice {
+    background: #f1f1f1;
+    overflow: hidden;
+    border: 1px solid #d1d1d1;
+    padding: 0 10px;
+    margin-bottom: 20px;
+    border-radius: 0px 0px 3px 3px;
+    -moz-border-radius: 0px 0px 3px 3px;
+    -webkit-border-radius: 0px 0px 3px 3px;
+}
+#pcorders-order-form .delivery legend,
+#pcorders-order-form .invoice legend {
+    font-size: 14px;
+    font-weight: bold;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    line-height: 14px;
+}
+#pcorders-order-form .address {
+	margin: 0;
+    line-height: 20px;
+}
+.address {
+	min-height: 0px !important;
+}
+.page-myprintconnect-orders #pcorders-order-form .delivery .fieldset-wrapper, 
+.page-myprintconnect-orders #pcorders-order-form .invoice .fieldset-wrapper {
+	/*min-height: 160px;*/
+    padding: 18px 0 0 0;
+    margin-bottom: 0;
+}
+#edit-order legend {
+    display: none;
+}
+.page-myprintconnect-orders .details {
+	padding: 0;
+	border-radius: 4px 4px 0 0;
+}
+.page-myprintconnect-orders .details .item .image {
+    width: 156px;
+    min-height: 85px;
+    margin: 10px 10px;
+    border: 0;
+    float: left;
+
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+}
+.page-myprintconnect-orders .details .item .image img {
+	border: 5px solid #fff;
+	border-radius: 4px 4px 4px 4px;
+	max-width: 128px !important;
+	min-width: 128px !important;
+}
+.page-myprintconnect-orders .details .item .image a {
+	display: block;
+	background: rgba(255, 255, 255, 0.25);
+	text-align: center;
+	padding: 5px 0;
+	position: relative;
+	bottom: 63px;
+	margin-bottom: -58px;
+}
+.page-myprintconnect-orders #edit-order {
+    background: #f1f1f1;
+    border: 1px solid #d1d1d1;
+    padding: 0;
+    margin-bottom: 0;
+    
+    border-radius: 3px 3px 0px 0px;
+    -moz-border-radius: 3px 3px 0px 0px;
+    -webkit-border-radius: 3px 3px 0px 0px;
+}
+
+.page-myprintconnect-orders .order .fieldset-wrapper {
+	background: none;
+	padding: 0;
+	margin-bottom: 0;
+}
+.page-myprintconnect-orders .details .price, 
+.page-myprintconnect-orders .overview table tbody td .price, 
+.page-myprintconnect-orders .extra table tbody td .price {
+    color: #f60;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 14px;
+    float: right;
+}
+.page-myprintconnect-orders .details .item .description {
+    border-left: 1px solid #d1d1d1;
+    position: relative;
+    padding: 18px 10px 17px 10px;
+    overflow: hidden;
+    min-height: 140px;
+    width: 303px;
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 0;
+}
+.page-myprintconnect-orders .details .price {
+    padding: 18px 10px 0;
+}
+.page-myprintconnect-orders .details .description h3 {
+	line-height: 20px;
+    font-weight: 700;
+}
+.page-myprintconnect-orders .details .description .item-list ul li {
+    list-style: none;
+    margin: 0 0 3px 0;
+    padding: 0;
+    font-size: 13px;
+    line-height: 15px;
+}
+.page-myprintconnect-orders .details .description .item-list ul li label {
+	font-size: 12px;
+    float: left;
+    margin-right: 10px;
+    font-weight: 700;
+}
+.page-myprintconnect-orders .overview table tbody tr {
+    background: #fff;
+    border-radius: 0;
+    border-bottom: 1px solid #d1d1d1;
+}
+.page-myprintconnect-orders .overview table tbody td, 
+.page-myprintconnect-orders .extra table tbody td {
+    padding: 5px 10px;
+    line-height: 16px;
+}
+.page-myprintconnect-orders .overview table tbody td.first-child {
+    width: 156px;
+}
+.page-myprintconnect-orders .overview table tbody td.last-child {
+    width: 135px;
+}
+.page-myprintconnect table th, .page-myprintconnect table tr td {
+    vertical-align: middle;
+}
+.page-myprintconnect-orders .priceblock .price label {
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 22px;
+}
+.page-myprintconnect-orders .priceblock .subtotal .value, 
+.page-myprintconnect-orders .priceblock .vat .value {
+    color: #f60;
+	font-size: 14px;
+    font-weight: bold;
+    line-height: 14px;
+}
+.page-myprintconnect-orders .priceblock {
+    background: none !important;
+    border: none !important;
+    margin-top: 0 !important;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 30px;
+    padding: 10px 0;
+}
+.page-myprintconnect-orders .priceblock .subtotal,
+.page-myprintconnect-orders .priceblock .vat {
+    background: #f1f1f1;
+    padding: 0 10px;
+    line-height: 20px;
+}
+.page-myprintconnect-orders .priceblock .total {
+	background: #3c3c3b;
+	padding: 10px;
+	border-radius: 0 0 4px 4px;
+	color: #fff;
+}
+.page-myprintconnect-orders .priceblock .total {
+	display: none;
+}
+.page-myprintconnect-orders .priceblock .subtotal span.price, 
+.page-myprintconnect-orders .priceblock .vat span.price, 
+.page-myprintconnect-orders .priceblock .total span.price {
+	margin-right: 0 !important;
+	font-size: 30px;
+	line-height: 30px;
+}
+.page-myprintconnect-orders .priceblock .total span.price {
+	font-size: 60px;
+	line-height: 60px;
+}
+.page-myprintconnect-orders-confirmation #edit-actions span.price {
+    float: none;
+    color: #fff;
+    font-size: 30px;
+    overflow: hidden;
+    display: block;
+    position: relative;
+    line-height: 30px;
+    padding: 0;
+}
+.page-myprintconnect-orders-confirmation #edit-actions span.price label {
+    font-size: 16px;
+    margin: 0;
+    text-align: left;
+    line-height: 30px;
+    float: left;
+    clear: right;
+    color: #fff;
+    font-weight: 400;
+}
+.page-myprintconnect-orders-confirmation #edit-actions span.price .value {
+    font-weight: bold;
+    float: right;
+    line-height: 30px;
+}
+.page-myprintconnect-orders #edit-extra .fieldset-wrapper {
+    border-radius: 0;
+}
+.page-myprintconnect-orders .priceblock:before {
+    background: #d1d1d1;
+    content: ' ';    
+    position: absolute;  
+    display: block;  
+	height: 100%;
+    width: 1px;
+    right: 155px;
+    top: 0;
+}
+.headerorder {
+    background: #f1f1f1;
+    overflow: hidden;
+    border: 1px solid #d1d1d1;
+    border-bottom: 0;
+    padding: 17px 20px 15px 10px;
+    border-radius: 3px 3px 0px 0px;
+    -moz-border-radius: 3px 3px 0px 0px;
+    -webkit-border-radius: 3px 3px 0px 0px;
+}
+.headerright, .headerleft {
+    width: 50%;
+    float: left;
+    line-height: 12px;
+}
+.headerright span.title {
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 20px;
+    text-transform: uppercase;
+    color: #646464;
+    display: block;
+}
+.headerright span.status {
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #f60;
+    line-height: 20px;
+}
+.deliverydate {
+    font-size: 12px;
+    line-height: 20px;
+    color: #646464;
+}
+span.senddate {
+    float: right;
+}
+body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintconnect-orders-confirmation span.fieldset-legend {
+    margin: 0 !important;
+}
+.page-myprintconnect-orders #pcorders-order-form .smaller {
+	margin-top: 50px;
+}
+.page-myprintconnect-orders #pcorders-order-form .smaller.neutral {
+    margin-top: 90px;
+}
+#pcorders-order-form #edit-order #edit-details .description >.labelOrder {
+    font-size: 12px;
+    font-weight: normal;
+    margin: 0;
+}
+#pcorders-order-form #edit-order #edit-details .description >.labelOrder span.refJob {
+    color: #f60;
+    text-transform: none;
+}
+.blocfotoliacontrol {
+    background: #e1e1e1;
+    padding: 0;
+    border: 1px solid #d1d1d1;
+    border-style: solid none none none;
+}
+.bloccontrol h3 {
+    font-size: 12px;
+    text-transform: none;
+    float: left;
+}
+.page-myprintconnect-orders .bloccontrol .price, .page-myprintconnect-orders .blocfotolia .price  {
+    padding: 0;
+    line-height: 20px;
+}
+.bloccontrol, 
+.blocfotolia {
+    padding: 0 10px;
+}
+.page-myprintconnect-orders .overview table {
+	margin: 0 !important;
+}
+.blocJob {
+    border-bottom: 1px solid #d1d1d1;
+}
+.blocJob:last-child {
+    border-bottom: 0;
+}
+.blocfotoliacontrol > div {
+    padding: 10px;
+    border-bottom: 1px solid #d1d1d1;
+}
+.blocfotoliacontrol > div:last-child {
+    border-bottom: 0;
+}
+.page-myprintconnect-orders .description .item-list {
+    margin-top: 25px;
+}
+.page-myprintconnect-orders .overview {
+	border-top: 1px solid #d1d1d1;
+}
+#designerWarning {
+    background: #f60 url(images/attention.png) no-repeat 10px 15px;
+    border: 1px solid #dc5800;
+    padding: 15px 81px 18px 43px;
+    width: 100%;
+    margin-bottom: -1px;
+    position: relative;
+    box-sizing: border-box;
+}
+#designerWarning:after {
+    content: ' ';
+    background: #f60;
+    display: block;
+    height: 101%;
+    width: 2px;
+    position: absolute;
+    right: 154px;
+    top: -1px;
+    z-index: 1;
+}
+#designerWarning p {
+    font-size: 13px;
+    color: #fff;
+    margin: 0 0 20px;
+}
+#designerWarning p:last-child {
+    margin-bottom: 0;
+}
+#designerWarning p > span {
+    display: block;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.page-myprintconnect-orders .blocInvoice {
+    border: 1px solid #d1d1d1;
+    margin-top: 20px;
+    overflow: hidden;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+}
+.page-myprintconnect-orders .blocInvoice .form-item,
+.page-myprintconnect-orders .blocInvoice .form-item table {
+    margin: 0;
+}
+.page-myprintconnect-orders .blocInvoice table thead th {
+    font-weight: bold;
+    border : 0;
+    border-right: 1px solid #d15400;
+}
+.page-myprintconnect-orders .blocInvoice table thead th.last-child {
+    border: 0;
+}
+.page-myprintconnect-orders .blocInvoice table tr td {
+    border: 1px solid #d1d1d1;
+    border-style: solid solid none none;
+}
+.page-myprintconnect-orders .blocInvoice tr.even {
+    background: #fff;
+}
+.page-myprintconnect-orders .blocInvoice table tr td.last-child a {
+    background: url('http://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/order_week/icon__pdf.png') no-repeat;
+    width: 18px;
+    height: 23px;
+    display: block;
+    padding-left: 30px;
+    color: #646464;
+}
+.page-myprintconnect-orders .blocInvoice table tr td.last-child {
+    width: 170px;
+    box-sizing: border-box;
+}
+.page-myprintconnect-orders .blocInvoice .price {
+    color: #f60;
+    font-weight: bold;
+}
+/* End page confirmation */
+
+.region-content #pcorders-order-form .form-actions {
+	padding: 15px 10px 15px 22px;
+	margin: 0;
+}
+.region-footer-second .block h2{
+	display: none;
+}
+.region-footer-second ul{
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	list-style: none;
+}
+.region-footer-second ul li{
+	float: left;
+	margin: 0 6px;
+	list-style: none;
+	color: #646464;
+	position: relative;
+}
+.region-footer-second ul li:after{
+	content: ' ';
+    position: absolute;
+    top: 48%;
+    right: -8px;
+    width: 4px;
+    background: #646464;
+    display: block;
+    height: 1px;
+}
+.region-footer-second ul li:last-child:after{
+	display: none;
+}
+.region-footer-second ul li a{
+	color: #646464;
+}
+#trQuantitePersonalisee{
+    display:none;
+}
+.select-city-adress > a.select2-choice,
+.select-country-adress >a.select2-choice {
+	width: 468px !important;
+}
+form#pccheckout-payment-form fieldset legend{
+	font-size: 16px;
+}
+#pcproducts-config-form .templates .text {
+	margin-bottom: 0;
+}
+.page-products #pcproducts-config-form .dropdown li.selectedItem {
+    background: #F1F1F1;
+    margin: 0;
+    padding: 10px 5px;
+}
+#block-block-95{
+    display: none;
+}
+
+ 
+.page-payment #menu_top_header.menu,
+.page-checkout #menu_top_header.menu{
+	display: none;
+}
+
+
+.page-templates .region-content .form-actions{
+	padding: 15px 10px;
+}
+.page-templates .region-content .form-actions span.price{
+	padding-left: 0;
+}
+
+.page-templates .region-content .form-actions a.button.action > .ui-button-text{
+	background: url(/sites/all/themes/printconnect/flyer/css/images/button_order.png) no-repeat left;
+    padding-left: 25px;
+    display: inline-block;
+}
+
+.page-templates #price-template-block{
+	padding-left: 10px!important;
+}
+#divpopup {
+    border: 1px solid;
+    display: none;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
+.lireSuite {
+    margin-top: 35px;
 }

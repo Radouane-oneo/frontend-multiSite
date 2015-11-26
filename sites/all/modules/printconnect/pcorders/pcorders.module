@@ -170,10 +170,12 @@ function _pcorders_callback() {
 //      );
       $content['orders'] = array(
           '#theme' => 'table',
+          '#prefix' => '<div class="listCommande">',
           '#rows' => $rows,
           '#header' => array(t('Created'), t('Finished'), t('Expected delivery'), t('Status'), t('Number')),
           '#empty' => t('No orders'),
           '#attributes' => array('class' => array('list', 'orders')),
+          '#suffix' => '</div>',
       );
 
       return $content;
@@ -366,10 +368,9 @@ function pcorders_form_pcpayments_request_form_alter(&$form, &$form_state) {
     if (isset($form_state['storage']['order'])) {
     $orderId = $form_state['storage']['order'];
     $order = Factory::Get($orderId);
-
     $form['order'] = array(
         '#type' => 'fieldset',
-        '#title' => t('Details of your order @number', array('@number' => $order->number)),
+        '#title' => t('Montant à payer'),
         '#attributes' => array('class' => array('order')),
         '#weight'=> 5,
     );
@@ -399,17 +400,142 @@ function pcorders_form_pcpayments_request_form_alter(&$form, &$form_state) {
     $rows[] = array(
         'no_striping' => TRUE,
         'data' => array(
-            t('VAT'),
+            t('Total HTVA à payer'),
             array(
-                'data' => theme('price', array('value' => ($form_state['storage']['total']-$form_state['storage']['totalExclVat']), 'free' => TRUE)),
+                'data' => theme('price', array('value' => ($form_state['storage']['totalExclVat']))),
                 'class' => array('text-right'),
             ),
         ),
     );
+    
     $form['order']['list'] = array(
         '#markup' => theme('table', array('rows' => $rows)),
     );
     variable_set("items", $rows);
+    
+    $rowsOrders[] = array(
+        'data' => array(
+            t('Description'),
+            array(
+                'data' =>  t('Price'),
+                'class' => array('text-right'),
+            ),
+        ),
+    );
+    
+    
+    //get order items
+    foreach ($order->orderItems as $key) {
+      if ($key->productName == 'Fotolia Image') {
+        $case1 = $key->productName;
+      }else{
+        $case1 = $key->quantity . ' ' . t('ex') . '. ' . $key->productName;
+      }
+      
+
+      $rowsOrders[] = array(
+         'class' => array('productItem'),
+          'data' => array(
+              $case1,
+              array(
+                  'data' => theme('price', array('value' => $key->price, 'free' => TRUE)),
+                  'class' => array('text-right'),
+              ),
+          ),
+      );
+
+      // file check
+      if ($key->fileCheck->price) {
+          $rowsOrders[] = array(
+           'class' => array('productItem'),
+            'data' => array(
+                t('Contrôle professionel de'),
+                array(
+                    'data' => theme('price', array('value' => $key->fileCheck->price, 'free' => TRUE)),
+                    'class' => array('text-right'),
+                ),
+            ),
+          );
+      }
+
+
+      // designTemplate
+      if ($key->designTemplate->price) {
+          $rowsOrders[] = array(
+           'class' => array('productItem'),
+            'data' => array(
+               $key->designTemplate->description,
+                array(
+                    'data' => theme('price', array('value' => $key->designTemplate->price, 'free' => TRUE)),
+                    'class' => array('text-right'),
+                ),
+            ),
+          );
+      }
+
+    }
+
+    //get methode de livraison
+    $shippingPrice = ($order->orderItemShipping->price >0)? $order->orderItemShipping->price : t('Free');
+    $rowsOrders[] = array(
+        'class' => array('productItem'),
+        'data' => array(
+            $order->orderItemShipping->shippingTypeTitle,
+            array(
+                'data' => theme('price', array('value' => $shippingPrice, 'free' => TRUE)),
+                'class' => array('text-right'),
+            ),
+        ),
+    );
+
+
+    //get methode de paiement
+    $paymentPrice = ($order->orderItemsPayment[0]->price >0)? $order->orderItemsPayment[0]->price : t('Free');
+    $rowsOrders[] = array(
+        'class' => array('productItem'),
+        'data' => array(
+            $order->orderItemsPayment[0]->description,
+            array(
+                'data' => theme('price', array('value' => $paymentPrice, 'free' => TRUE)),
+                'class' => array('text-right'),
+            ),
+        ),
+    );
+
+    //get subTotalAmount
+    /*$rowsOrders[] = array(
+        'class' => array('productItem','before-last'),
+        'data' => array(
+            t('Total HTVA déjà payé'),
+            array(
+                'data' => theme('price', array('value' => $order->subTotalAmount, 'free' => TRUE)),
+                'class' => array('text-right'),
+            ),
+        ),
+    );*/
+
+    //get totalAmount
+    $rowsOrders[] = array(
+        'data' => array(
+            t('Total TTC déjà payé'),
+            array(
+                'data' => theme('price', array('value' => $form_state['storage']['amountPaid'])),
+                'class' => array('text-right'),
+            ),
+        ),
+    );
+    
+    $form['orderPaid'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Montant déjà payé'),
+        '#attributes' => array('class' => array('order-paid', 'order')),
+        '#weight'=> 4,
+    );
+    
+    $form['orderPaid']['list'] = array(
+        '#markup' => theme('table', array('rows' => $rowsOrders)),
+    );
+    
   }
 }
 

@@ -5,9 +5,9 @@ body.flyerstrap #content { width: 1030px; }
 body.logged-in.toolbar.toolbar-drawer.flyerstrap #content { margin-top: -36px; }
 body.flyerstrap.page-node-edit #content { z-index: 99; position: relative; }
 #flyerstrap { margin-top: 13px; }
-.flyerstrap .whitebox { background-color: transparent; }
+.flyerstrap .whitebox { background-color: transparent; border: none;}
 b { font-weight: 600; }
-.page-node-edit .whitebox { background-color: #FFF!important; padding: 10px; margin: 25px 162px; width: 680px; }
+
 
 /* GENERAL */
 .flyerstrap-block {
@@ -47,7 +47,7 @@ b { font-weight: 600; }
 	left: -2810px;
 	height: 250px;
 	position: absolute;
-	top: -37px;
+	top: -36px;
 	/*z-index: 7;*/
 }
 
@@ -58,14 +58,14 @@ b { font-weight: 600; }
 	padding: 0px 0 22px 40px;
 	margin-left: 150px;
 	float: left;
-    margin-top: -5px;
+    margin-top: -19px;
 }
 
 #header-image {
 	height: 250px;
 	max-height: 250px;
 	position: absolute;
-	top: -37px;
+	top: -36px;
 	right: -50px;
 	/*z-index: 8;*/
 }

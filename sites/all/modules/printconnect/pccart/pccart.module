@@ -1,4 +1,5 @@
 <?php
+use \printconnect\Dal;
 use printconnect\Carts\Factory;
 use printconnect\Shipping;
 use printconnect\Diagnostics\Debug;
@@ -15,6 +16,93 @@ use printconnect\Customers\Factory as CustomersFactory;
 use printconnect\Carts\Discounts;
 
 function pccart_menu() {
+
+// ===== ORDER WEEK HOOKS ================================================================
+
+$items['cart'] = array(
+    'page callback' => 'new_cart_loadpage',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'title' => 'your cart'
+);
+
+$items['cart/ajax/getcart'] = array(
+    'page callback' => 'new_cart_ajax_getcart',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/getshippingtypes'] = array(
+    'page callback' => 'new_cart_ajax_getshippingtypes',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/removeitem/%'] = array(
+    'page callback' => 'new_cart_ajax_removeitem',
+    'page arguments' => array(3),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/removedesign/%'] = array(
+    'page callback' => 'new_cart_ajax_removedesign',
+    'page arguments' => array(3),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/removefilecheck/%'] = array(
+    'page callback' => 'new_cart_ajax_removefilecheck',
+    'page arguments' => array(3),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/setrefjob'] = array(
+    'page callback' => 'new_cart_ajax_setrefjob',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/setemaildesigner'] = array(
+    'page callback' => 'new_cart_ajax_setemaildesigner',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/setreforder'] = array(
+    'page callback' => 'new_cart_ajax_setreforder',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/selectshippingtype/%'] = array(
+    'page callback' => 'new_cart_ajax_selectshippingtype',
+    'page arguments' => array(3),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
+$items['cart/ajax/applydiscount'] = array(
+    'page callback' => 'new_cart_ajax_applydiscount',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+$items['cart/ajax/removediscount'] = array(
+    'page callback' => 'new_cart_ajax_removediscount',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+// =======================================================================================
 
 $items['cart/%/submit'] = array(
       'page callback' => '_pccart_callback',
@@ -34,13 +122,6 @@ $items['cart/%/submit'] = array(
       'page arguments' => array('cart_customer_ref', 3),
       'access arguments' => array('access content'),
       'type' => MENU_CALLBACK,
-  );
-  $items['cart'] = array(
-      'title' => 'Cart',
-      'page callback' => 'drupal_get_form',
-      'page arguments' => array('pccart_cart_form2'),
-      'access arguments' => array('access content'),
-      'file' => 'pccart.forms.inc',
   );
 
   $items['cart/%/delete'] = array(
@@ -105,6 +186,224 @@ $items['cart/%/submit'] = array(
   return $items;
 
 }
+
+// ================================== ORDER WEEK V3 FUNCTIONS ===================================
+
+// main function to load cart page
+function new_cart_loadpage() {
+    global $language;
+
+    $labels = array(
+        "formatBrut" => t('Format brut'),
+        "formatFini" => t('Format fini'),
+        "bleed" => t('Débords'),
+        "color" => t('Couleur'),
+        "resolution" => t('Résolution'),
+        "downloadTemplateText" => t('Téléchargez les gabarits pour ce format'),
+        "formatToProvide" => t('Format à fournir'),
+        "technicalDetails" => t('DÉTAILS TECHNIQUES'),
+        "technicalDescription" => t('Vous devez préparer vos fichiers pour l impression ? Le type de fichier idéal est JPG ou PDF/X-1a:2001'),
+        "shipping" => t('Livraison'),
+        "chooseFlyerStore" => t('Choisissez votre FlyerStore'),
+        "chooseBpostPickupPoint" => t('Choisissez votre point de relais'),
+        "nameFlyerStore" => t('Nom du Flyerstore'),
+        "openingHours" => t('Heures d ouverture'),
+        "day_1" => t('Lundi'),
+        "day_2" => t('Mardi'),
+        "day_3" => t('Mercredi'),
+        "day_4" => t('Jeudi'),
+        "day_5" => t('Vendredi'),
+        "day_6" => t('Samedi'),
+        "day_7" => t('Dimanche'),
+        "chooseOtherFlyerStore" => t('Choisissez un autre FlyerStore'),
+        "nameBpost" => t('Nom du point poste'),
+        "chooseOtherBpostPickupPoint" => t('Choisissez un autre point poste'),
+        "jobNotNullError" => t('jobNotNullError'),
+        "jobNotNullErrorMail" => t('set adresse of designer'),
+        "jobNotNullErrorMailNotValid" => t('Adresse de designer not valid'),
+        "shippingNotNullError" => t('shippingNotNullError'),
+        "mustConnectedError" => t('Pour activer votre code de réduction, cliquez sur votre compte et connectez vous. Ensuite, returnez vers votre panier '),
+        "invalidDiscountCode" => t('Sorry, this coupon code was already used or not validated'),
+        "cartIsEmpty" => t('Votre panier est vide.'),
+        "continue" => t('Continuer les achats'),
+        "discountCode" => t('Discount'),
+        "discountText" => t('Heb je een promocode, voucher of cadeaubon gekregen? Vul hem dan hier in!'),
+        "apply" => t('Apply'),
+        "discountsCode" => t('Discounts'),
+        "useCode" => t('Vous utilisez le code'),
+        "customerReference" => t('Reference'),
+        "customerReferenceText" => t('Avez-vous besoin d une référence sur votre facture'),
+        "subTotal" => t('Total excl. VAT'),
+        "subTotalVat" => t('VAT'),
+        "subTotalWithTVA" => t('Total incl. VAT'),
+        "pay" => t('Pay now'),
+        "shipping" => t('Shipment'),
+        "chooseFlyerStore" => t('Choose your pickup point'),
+        "chooseBpostPickupPoint" => t('Choisissez votre point de relais'),
+        "free" => t('Free'),
+        "downloadDevis" => t('Download as offer'),
+        "designtoolTitle" => t('Téléchargez votre fichier ou créez en ligne'),
+        "dlLinkTitle" => t('DESIGNTOOL'),
+        "dlLinkSubtitle" => t('Pour tous les clients (recommandé)'),
+        "dtOptions1" => t('Téléchargez votre fichier dans notre designtool'),
+        "dtOptions2" => t('Recevez un aperçu de vos impressions'),
+        "dtOptions3" => t('Faites votre conception gratuitement en ligne'),
+        "dtOptions4" => t('Contrôle du fichier optionnel (4,99 € hors TVA)'),
+        "dtOptionsModule" => t('Adaptez un de nos'),
+        "dtOptionsModuleLink" => t('1000+ modèles gratuits en ligne'),
+        "dtBtnText" => t('COMMENCER'),
+        "proUploadLinkTitle" => t('PRO UPLOAD'),
+        "proUploadLinkSubtitle" => t('Pour les graphistes professionnels'),
+        "proUploadOptions1" => t('Téléchargez immédiatement votre fichier à imprimer'),
+        "proUploadOptions2" => t('Fichiers de max. 200 MB'),
+        "proUploadOptions3" => t('Contrôle du fichier optionnel (€ 4,99 hors TVA)'),
+        "proUploadRespecte" => t('Respectez les'),
+        "proUploadTechnices" => t('détails techniques'),
+        "proUploadParams" => t('paramètres prédéfinis'),
+        "proUploadBtnText" => t('COMMENCER'),
+        "or" => t('ou'),
+        "graphisteOptions" => t('Je ne vais pas télécharger moi-même les fichiers. Mon graphiste va le faire pour moi.'),
+        "graphisteAdresse" => t('Adresse e-mail du designer'),
+        "graphisteAttention" => t('Attention !! Si vous avez choisi loption fichiers téléchargés par mon graphiste, nous ne pouvons pas vous garantir la date de livraison pour l instant.'),
+        "ex" => t('ex'),
+        "refjob" => t('reference job'),
+        "previsualis" => t('Prévisualiser'),
+        "updatePage" => t('Modifier la mise en page'),
+        "deleteOrder" => t('Supprimer'),
+        "fotoliaImg" =>  t('Fotolia Image'),
+        "controleProfessionel" => t('Contrôle professionel de'),
+        "updateProduct" => t('update product'),
+        "continue" => t('Continue shopping'),
+        "linkProduct" => t('link product')
+    );
+
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Cache-Control: post-check=0, pre-check=0", false);
+    header("Pragma: no-cache");
+
+    $script = "<script type='text/javascript'>
+        var GlobalLandId = ".$language->id.";
+        var GlobalLabels = ".json_encode($labels).";
+        var GlobalPrefix = '".$language->prefix."';
+        var GlobalVat = 0.21;
+        var isConnected = " . (isset($_SESSION['customerid']) ? 1 : 0) . ";
+        var GlobalDesigntoolLink = '".variable_get('pc_designtoolurl')."';
+    </script>";
+    $script .= "<style>#box-progress{display: block;}</style>";
+    
+    $script .= '<link rel="stylesheet" href="/webapp/js/libs/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />';
+    $script .= '<script data-main="/webapp/js/cart/main" src="/webapp/js/libs/requirejs/require.js"></script>';
+    $script .= '<div id="myCart"></div>';
+
+    return $script;
+}
+
+// function to get json cart
+function new_cart_ajax_getcart() {
+    $response = Factory::GetCartJson();
+
+    Dal::BuildJson($response->data);
+}
+
+// function to get json of shipping types
+function new_cart_ajax_getshippingtypes() {
+    $shippingsTypes = printconnect\Carts\Shipping\Factory::GetShippingTypes();
+
+    $shippingsTypes = json_decode($shippingsTypes->data, 1);
+
+    Dal::BuildJson($shippingsTypes);
+}
+
+function new_cart_ajax_removeitem($itemId) {
+    $response = Factory::DeleteItem($itemId);
+
+    Dal::BuildJson(json_decode($response->data, 1));
+}
+
+function new_cart_ajax_removedesign($itemId) {
+
+    $response = Factory::DeleteDesign($itemId);
+
+    Dal::BuildJson(json_decode($response->data, 1));
+}
+
+function new_cart_ajax_setrefjob() {
+    $itemId = $_POST['id'];
+    $refJob = $_POST['refJob'];
+
+    $response = Factory::SaveRefJob($itemId, $refJob);
+    if($response) {
+        Dal::BuildJson();
+    }else {
+        Dal::BuildJson(array(), 500);
+    }
+}
+
+function new_cart_ajax_setemaildesigner() {
+    $itemId = $_POST['id'];
+    $email = $_POST['email'];
+
+    $response = Factory::SaveEmailDesigner($itemId, $email);
+
+    if($response) {
+        Dal::BuildJson();
+    }else {
+        Dal::BuildJson(array(), 500);
+    }
+}
+
+function new_cart_ajax_setreforder() {
+    $cartId = $_POST['cartId'];
+    $orderRef = $_POST['orderRef'];
+
+    $response = Factory::SaveRefOrder($cartId, $orderRef);
+
+    if($response) {
+        Dal::BuildJson();
+    }else {
+        Dal::BuildJson(array(), 500);
+    }
+}
+
+function new_cart_ajax_selectshippingtype($shippingTypeId) {
+    $response = printconnect\Carts\Shipping\Factory::SetShippingType($shippingTypeId);
+
+    Dal::BuildJson(json_decode($response->data, 1));
+}
+
+function new_cart_ajax_applydiscount() {
+    $discountCode = $_POST['code'];
+    $response = Factory::ApplyDiscount($discountCode);
+
+    if($response->code == 200) {
+        Dal::BuildJson(json_decode($response->data, 1));
+    }else {
+        Dal::BuildJson(array(), $response->code, $response->data);
+    }
+}
+
+function new_cart_ajax_removediscount() {
+    $discountCode = $_POST['code'];
+    $response = Factory::RemoveDiscount($discountCode);
+
+    if($response->code == 200) {
+        Dal::BuildJson(json_decode($response->data, 1));
+    }else {
+        Dal::BuildJson(array(), $response->code, $response->data);
+    }
+}
+
+function new_cart_ajax_removefilecheck($itemId) {
+    $response = Factory::RemoveFileCheck($itemId);
+
+    if($response->code == 200) {
+        Dal::BuildJson(json_decode($response->data, 1));
+    }else {
+        Dal::BuildJson(array(), $response->code, $response->data);
+    }
+}
+
+// ==============================================================================================
 
 function pccart_progress() {
 
@@ -378,25 +677,16 @@ function pccart_block_view($delta = '') {
 
 
         $block['content'] = $content;
-      }
+      } 
       return $block;
       break;
 
     case 'indicator':
-      $cart = Factory::Current();
+      $number = Factory::GetCartCount();
       $baseContent = $content = t('Cart');
-      $number = 0;
-      foreach($cart->orderItems as $job) {
-	if ($job->discountId == null) {
-	    $number++;
-	}
-      }
 
-      if ($cart) {
-        $content .= ' (' . $number . ')';
-      } else {
-        $content .= ' (0)';
-      }
+      $content .= ' (' . $number . ')';
+
       $block['content'] = l($content, 'cart', array('attributes' => array(
 	    'class' => array('button', 'cart', 'cartCounter'),
 	    'TranslatedText' => $baseContent,
@@ -611,35 +901,45 @@ function _pccart_add($productId, $qty, $options, $priceGroupId, $vat = FALSE) {
 }
 
 function add_cartitem_submit() {
-  if(!isset($_POST)) {
-    drupal_not_found();
-  }
-  $productId = $_POST['productId'];
-  $qty = $_POST['quantity'];
-  $options = explode(',', $_POST['options']);
-  $priceGroupId = $_POST['priceGroupId'];
-  $widthCF = $_POST['widthCF'];
-  $heightCF = $_POST['heightCF'];
-  $cf = $_POST['CF'];
-  $vat = false;
-  $customer = CustomersFactory::Current();
-  $cart = Factory::CurrentOrCreate();
-
-  if (!$cart) {
-    $cart = Factory::Create();
-    if ($customer) {
-      $cart->customerId = $customer->id;
-      Factory::Save($cart);
+    if(!isset($_POST)) {
+        drupal_not_found();
     }
-  }
-  $relatedProducts = array();
-  $description = '';
-  $cart->productId = $productId;
-  Factory::CreateItem($cart, $priceGroupId, $qty, $description, $relatedProducts, $options, $vat, $widthCF, $heightCF, $cf);
-  Factory::Refresh($cart);
 
-  drupal_goto('cart');
+    $productId = $_POST['productId'];
+    $qty = $_POST['quantity'];
+    $options = explode(',', $_POST['options']);
+    $priceGroupId = $_POST['priceGroupId'];
+    $widthCF = $_POST['widthCF'];
+    $heightCF = $_POST['heightCF'];
+    $cf = $_POST['CF'];
+    $vat = false;
+    $itemId = (isset($_POST['jobId']) && !empty($_POST['jobId'])) ? $_POST['jobId'] : NULL;
 
+    if(!$itemId) {
+        $customer = CustomersFactory::Current();
+        $cart = Factory::CurrentOrCreate();
+        if (!$cart) {
+                $cart = Factory::Create();
+                if ($customer) {
+                        $cart->customerId = $customer->id;
+                        Factory::Save($cart);
+                }
+        }
+        $cart->EnsureLoaded();
+        $relatedProducts = array();
+        $description = '';
+        $cart->productId = $productId;
+        Factory::CreateItem($cart, $priceGroupId, $qty, $description, $relatedProducts, $options, $vat, $widthCF, $heightCF, $cf);
+    }else {
+        $cart = Factory::CurrentOrCreate();
+        $item = Factory::GetItem($cart, $itemId);
+        $item->EnsureLoaded();
+        $item->productPriceGroupId = $priceGroupId;
+        $item->quantity = $qty;
+        $item->options = $options;
+        Factory::SaveItem($item, $widthCF, $heightCF, $cf);
+    }
+    drupal_goto('cart');
 }
 
 function _pccart_callback() {
@@ -1137,7 +1437,9 @@ function pccart_form_pccustomers_loginas_form_submit($form, &$form_state) {
 }
 
 function pccart_loggedin($customerId) {
-
+  if(isset($_SESSION['cartCount'])) {
+      unset($_SESSION['cartCount']);
+  }
   $cart = Factory::Current();
   if ($cart) {
     if ($customerId != $cart->customer) {
@@ -1171,4 +1473,3 @@ function pccart_loggedout() {
   } catch (\Exception $ex) {
   }
 }
-

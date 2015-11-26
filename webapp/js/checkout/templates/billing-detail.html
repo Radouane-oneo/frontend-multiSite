@@ -1,0 +1,15 @@
+<div class="invoice form-wrapper " id="edit-summary-invoice">
+    <legend>
+        <span class="fieldset-legend"><%= model.labels['BillingAccount'] %> </span>
+    </legend>
+    <div class="fieldset-wrapper fieldset-wrapper-billing-detail fieldset-sameheight">
+        <div class="address wrap_detail">
+            <div class="name"><%= model.defaultBA.name %></div>
+            <div class="street"><%= model.defaultBA.street %></div>
+            <div class="place"><%= model.defaultBA.postalCode + " - "+ model.defaultBA.city %></div>
+        </div>
+        <a id="toggle-invoice-form" href="#invoice-address" class="toggle jquery-once-1-processed">
+            <%= model.labels['changeBA'] %>
+        </a>
+    </div>
+</div>

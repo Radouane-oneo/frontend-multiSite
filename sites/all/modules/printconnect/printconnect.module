@@ -335,7 +335,25 @@ function theme_helplink($vars) {
 }
 
 function theme_generalconditionslink($vars) {
-  return l(t($vars['title']), variable_get('site_generalconditions', 'generalconditions'),array('attributes'=>array('target'=>'_blank')));
+  global $language;
+  switch ($language->prefix) {
+        case 'benl':
+            return l(t($vars['title']), 'node/841',array('attributes'=>array('target'=>'_blank')));
+            break;
+        case 'nlnl':
+            return l(t($vars['title']), 'node/842',array('attributes'=>array('target'=>'_blank')));
+            break;
+        case 'befr':
+            return l(t($vars['title']), 'node/843',array('attributes'=>array('target'=>'_blank')));
+            break;
+        case 'frfr':
+            return l(t($vars['title']), 'node/7',array('attributes'=>array('target'=>'_blank')));
+            break;
+        case 'lufr':
+           return l(t($vars['title']), 'node/844',array('attributes'=>array('target'=>'_blank')));
+            break;
+    }
+  
 }
 
 function theme_privacypolicylink($vars) {
@@ -419,45 +437,90 @@ function theme_price($vars) {
   } else {
     $parts = explode(',', number_format($price, $decimals, ',', ''));
 
-    $build = array(
-        '#prefix' => '<' . $container . drupal_attributes($attributes) . '>',
-        '#suffix' => "</$container>",
-        'title' => array(
-            '#markup' => $title,
-        ),
-        'value' => array(
-            '#prefix' => '<span class="value">',
-            '#suffix' => '</span>',
-            'currency' => array(
-                '#prefix' => '<span class="currency">',
+   global $language;
+   $lg = $language->prefix;
+   $arrayLanguage = array('frfr');
+   if (in_array($lg, $arrayLanguage)){
+        $build = array(
+            '#prefix' => '<' . $container . drupal_attributes($attributes) . '>',
+            '#suffix' => "</$container>",
+            'title' => array(
+                '#markup' => $title,
+            ),
+            'value' => array(
+                '#prefix' => '<span class="value">',
                 '#suffix' => '</span>',
-                '#markup' => $currencySymbol,
-                '#weight' => 4,
+                'currency' => array(
+                    '#prefix' => '<span class="currency">',
+                    '#suffix' => '</span>',
+                    '#markup' => '&nbsp;' . $currencySymbol,
+                    '#weight' => 5,
+                ),
+                'space' => array(
+                    '#markup' => '&nbsp;',
+                    '#weight' => 1,
+                ),
+                'whole' => array(
+                    '#prefix' => '<span class="whole">',
+                    '#suffix' => '</span>',
+                    '#markup' => $parts[0],
+                    '#weight' => 2,
+                ),
+                'decimalpoint' => array(
+                    '#prefix' => '<span class="decimalpoint">',
+                    '#suffix' => '</span>',
+                    '#markup' => ',',
+                    '#weight' => 3,
+                ),
+                'decimals' => array(
+                    '#prefix' => '<span class="decimals">',
+                    '#suffix' => '</span>',
+                    '#markup' => $parts[1],
+                    '#weight' => 4,
+                ),
             ),
-            'space' => array(
-                '#markup' => '&nbsp;',
-                '#weight' => 3,
+        );
+    }
+    else{
+        $build = array(
+            '#prefix' => '<' . $container . drupal_attributes($attributes) . '>',
+            '#suffix' => "</$container>",
+            'title' => array(
+                '#markup' => $title,
             ),
-            'whole' => array(
-                '#prefix' => '<span class="whole">',
+            'value' => array(
+                '#prefix' => '<span class="value">',
                 '#suffix' => '</span>',
-                '#markup' => $parts[0],
-                '#weight' => 0,
+                'currency' => array(
+                    '#prefix' => '<span class="currency">',
+                    '#suffix' => '</span>',
+                    '#weight' => 5,
+                ),
+                'space' => array(
+                    '#markup' => '&nbsp;',
+                    '#weight' => 1,
+                ),
+                'whole' => array(
+                    '#prefix' => '<span class="whole">',
+                    '#suffix' => '</span>',
+                    '#markup' => $currencySymbol.'&nbsp;'.$parts[0],
+                    '#weight' => 2,
+                ),
+                'decimalpoint' => array(
+                    '#prefix' => '<span class="decimalpoint">',
+                    '#suffix' => '</span>',
+                    '#markup' => ',',
+                    '#weight' => 3,
+                ),
+                'decimals' => array(
+                    '#prefix' => '<span class="decimals">',
+                    '#suffix' => '</span>',
+                    '#markup' => $parts[1],
+                    '#weight' => 4,
+                ),
             ),
-            'decimalpoint' => array(
-                '#prefix' => '<span class="decimalpoint">',
-                '#suffix' => '</span>',
-                '#markup' => ',',
-                '#weight' => 1,
-            ),
-            'decimals' => array(
-                '#prefix' => '<span class="decimals">',
-                '#suffix' => '</span>',
-                '#markup' => $parts[1],
-                '#weight' => 2,
-            ),
-        ),
-    );
+        );
+    }
 
     if ($currencySymbol == 'Dh') {
       $build['value']['space']['#weight'] = 5;
@@ -466,9 +529,7 @@ function theme_price($vars) {
 
 
     return drupal_render($build);
-
-    return '<' . $container . drupal_attributes($attributes) . '>' . $title . '<span class="value"><span class="whole">' . $parts[0] . '</span><span class="decimalpoint">,</span><span class="decimals">' . $parts[1] . '</span>&nbsp;<span class="currency">' . $currencySymbol . '</span></span></$container>';
-  }
+    }
 }
 
 function theme_number($vars) {

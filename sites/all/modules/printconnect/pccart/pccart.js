@@ -2,6 +2,8 @@
 	Drupal.behaviors.pccart = {
 		detach: function (context) { },
 		attach: function (context, settings) {
+                        $('#edit-calculer').removeClass('ui-state-disabled');
+                        $('#edit-actions-addtocart').removeClass('ui-state-disabled');
 			try{document.domain = 'flyer.fr';}
 			catch(e){console.log(e);}
 			updateDomain();
@@ -20,9 +22,10 @@
 			$('.deletedesign').click(function(e){
 				$('.item-hide-'+$(this).attr('itemFileId')).fadeIn("slow");
 				$(this).parents('.job').fadeOut("slow");
-				$.post('cart/deletedesign/'+$(this).attr('itemFileId'),{},function(){
-					$(this).parents('.job').remove();
-					updateDiscounts();
+				$.post('/cart/ajax/removedesign/'+$(this).attr('itemFileId'),{},function(){
+                                    location.href=location.href;
+//					$(this).parents('.job').remove();
+//					updateDiscounts();
 				});
 				if ($('.fotolia-items-'+$(this).attr('itemFileId')).length < $('.fotolia-items').length) {
 					$('.fotolia-items-'+$(this).attr('itemFileId')).parent().remove();
@@ -73,7 +76,7 @@
 				});
 			}
 			/* ------------Remove items------------*/
-			$("#pccart-cart-form .removecart").live('click',function () {
+			/*$("#pccart-cart-form .removecart").live('click',function () {
 				var targetItem = $(this);
 				itemid = $(this).siblings('.itemID').text();
 				$(this).parents('.item').fadeOut("slow");
@@ -92,6 +95,7 @@
 						}
 					}
 				});
+				
 				$("input[name='"+nameitemid+"']").remove();
 				$('.item-' + itemid).remove();
 				if ($('.fotolia-items-'+itemid).length < $('.fotolia-items').length) {
@@ -104,7 +108,7 @@
 				$('.cartCounter').attr('number', number);
 				$('.cartCounter span').html(baseText+ ' ('+number+')');
 				PriceCallback();
-			});
+			});*/
 			/* ----- technic-details -----*/
 			$('.technic-details').click(function(e){
 				e.preventDefault();

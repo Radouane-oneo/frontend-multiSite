@@ -108,17 +108,19 @@ function pccontact_popup_form_validate($form, &$form_state) {
 }
 
 // general form 
-
+/*
 function pccontact_general_form($form, &$form_state, $key = 'general') {
   $customer = \printconnect\Customers\Factory::Current();
   global $language;
   $path=base_path()."sites/all/themes/printconnect/flyer/css/images/translogo/$language->prefix.png";
+  $prefix = strtolower($language->language);
+  $img = base_path().drupal_get_path('module', 'pccontact') . '/img/logo-'. $prefix.'.png';
+
   if($form_state['build_info']['args'][0] == 'stores') {
       $match=split('//',theme_get_setting('logo_path'));
       $imageName=str_replace("logo", "logo_inversed", $match[1]);
       $path='/sites/default/files/'.$imageName;
   }
-  $language->prefix = "frfr";
   $emails = array(
       'benl' => 'info@flyer.be',
       'befr' => 'info@flyer.be',
@@ -130,14 +132,14 @@ function pccontact_general_form($form, &$form_state, $key = 'general') {
   $phones = array(
       'benl' => '070 222 309',
       'befr' => '070 222 309',
-      'nlnl' => '+32 50 79 97 70',
+      'nlnl' => '08 58 887 689',
       'frfr' => '03 20 38 24 53',
       'lufr' => '27 86 01 39'
   );
   
   $form['container']['image'] = array(
       '#markup' => '<div class="head">
-          <img src="/sites/all/modules/printconnect/pccontact/img/logo.png"></div>',
+          <img src="' . $img . '"></div>',
   );
   
   $form['container']['title'] = array(
@@ -146,7 +148,7 @@ function pccontact_general_form($form, &$form_state, $key = 'general') {
           <strong> '.t('HEB JE EEN VRAAG').' ?</strong>
           </p><p id ="sub1"> '.t('Zinnetje over customer service').'</p>',
   );
-  
+  echo 'lolo';
   $form['container']['imageCallIcon'] = array(
       '#markup' => 
       '<div id ="imgsContacts">
@@ -228,32 +230,30 @@ function pccontact_general_form_submit($form, &$form_state) {
    switch ($language->prefix) {
         case 'benl':
             $result = drupal_mail('pccontact', $key, 
-                    variable_get('pccontact_email', 'info@flyer.be'),
-                    '', $form_state['values'],
-                    NULL, $send);
+                    variable_get('pccontact_general', 'info@flyer.be'),'', $form_state['values'],NULL, $send);
             break;
         case 'befr':
             $result = drupal_mail('pccontact', $key,
-                    variable_get('pccontact_email', 'info@flyer.be'),
+                    variable_get('pccontact_general', 'info@flyer.be'),
                     '', $form_state['values'], NULL, $send);
             break;
         case 'nlnl':
             $result = drupal_mail('pccontact', $key,
-                    variable_get('pccontact_email', 'info@flyer.nl'),
+                    variable_get('pccontact_general', 'info@flyer.nl'),
                     '', $form_state['values'], NULL, $send);
             break;
         case 'frfr':
             $result = drupal_mail('pccontact', $key,
-                    variable_get('pccontact_email', 'info@flyer.fr'),
+                    variable_get('pccontact_general', 'info@flyer.fr'),
                     '', $form_state['values'], NULL, $send);
             break;
         case 'lufr':
             $result = drupal_mail('pccontact', $key,
-                    variable_get('pccontact_email', 'info@flyer.lu'),
+                    variable_get('pccontact_general', 'info@flyer.lu'),
                     '', $form_state['values'], NULL, $send);
             break;
     }
-    
+    die($result);
     $sendMeail = FALSE;
     if ($result['result'] == TRUE) {
         $sendMeail = TRUE;
@@ -264,7 +264,7 @@ function pccontact_general_form_submit($form, &$form_state) {
 }
 
 
-
+*/
 function pccontact_stors_form($form, &$form_state) {
   $customer = \printconnect\Customers\Factory::Current();
 
@@ -344,9 +344,19 @@ function pccontact_stors_form($form, &$form_state) {
 function pccontact_stors_form_submit($form, &$form_state) {
     global $language;
     $send = TRUE;
+    if ($language->prefix == 'befr' || $language->prefix == 'benl') {
+      $mailto = 'info@flyer.be';
+    }else if ($language->prefix == 'frfr') {
+      $mailto = 'info@flyer.fr';
+    }else if ($language->prefix == 'nlnl') {
+      $mailto = 'info@flyer.nl';
+    }elseif ($language->prefix == 'lufr') {
+      $mailto = 'info@flyer.lu';
+    }
+
     $result = drupal_mail('pccontact',
             'stores',
-            variable_get('pccontact_stores', 'bik8yg@gmail.com, aaltje.vanderzee@flyer.be'),
+            $mailto,
             language_default(),
             $form_state['values'],
             NULL,

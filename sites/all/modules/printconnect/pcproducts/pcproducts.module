@@ -315,8 +315,9 @@ function pcproducts_block_view($delta = '') {
         $i=0;
         $data = null;
         $total = count($products);
+        
         foreach ($products as $product) {
-            if( ($i % intval($total/3))  == 0 && $i <> 0 && $i <> $total-1 ) $data .= '</ul><ul class="menu">';
+            if( ($i % (intval($total/3)+1))  == 0 && $i <> 0 && $i <> $total ) $data .= '</ul><ul class="menu">';
             $data .= '<li>'.l($product->name, 'products/' . $product->id).'</li>';
             $i++;
         }
@@ -636,11 +637,10 @@ function pcproducts_validate_product() {
 }
 
 function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = FALSE, $edit = FALSE) {
-    header('Cache-Control: public, max-age=' . 3600);
-
     pcproducts_validate_product();
 
     global $language;
+ 
     global $user;
     //ini_set('memory_limit', '5000M');
     //ini_set('max_execution_time', '50000');
@@ -664,6 +664,7 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
     }
 
     //drupal_set_breadcrumb(array(l(t('Home'), '<front>'), l(t('Products'), 'products')));
+    $bannerUrl = getBannerIfExists($productId);
 
     $labels = getLabels($edit);
 
@@ -676,25 +677,28 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
         var GlobalDefaultItems = ".json_encode($gItems).";
         var GlobalDefaultOptions = ".json_encode($gOtions).";
         var GlobalDefaultQuantity = ".(!$qty ? 'null' : $qty).";
-        var GlobalJobId = ".(!$edit ? 'null' : $edit->id).";
+        var GlobalJobId = ".(!$edit ? 'null' : $edit).";
+        var GlobalPrefix = '".$language->prefix."';
+        var GlobalBannerUrl = '".$bannerUrl."';
     </script>";
-
-    $script .= '<script data-main="/configSelector/js/main" src="/configSelector/js/libs/requirejs/require.js"></script>';
+    $script .= "<style>#box-progress{display: block;}</style>";
+    $script .= '<script data-main="/webapp/js/productConfig/main" src="/webapp/js/libs/requirejs/require.js"></script>';
     $script .= '<div id="myForm"></div>';
 
     return $script;
 }
 
 function getLabels($edit = false) {
+    global $language;
     $labels = array(
-        "langId" => 10,
+        "langId" => $language->id,
         "options" => t('Options'),
         "noOptions" => t('No options selected'),
         "quantity" => t('Quantity'),
         "priceNoTVA" => t('Price VAT excl.'),
         "priceWithTVA" => t('Price VAT incl.'),
         "enterQuantity" => t('Enter your amount'),
-        "calculate" => t('Calculer'),
+        "calculate" => t('CALCULER'),
         "totalNoTVA" => t('Total excl. VAT'),
         "addToCart" => $edit ? t('Update') : t('Add to cart'),
         "technicalDetails" => t('Design documents'),
@@ -725,6 +729,12 @@ function getLabels($edit = false) {
         "et"=> t('et'),
         "textTolNotValid"=> t('textTolNotValid'),
         "msgErrorCFNotFloat"=> t('msgErrorCFNotFloat'),
+        "infobrut"=> t('infobrut'),
+        "infosize"=> t('infosize'),
+        "infobleed"=> t('infobleed'),
+        "infocolor"=> t('infocolor'),
+        "inforesolution"=> t('inforesolution'),
+        "ouvrir" =>t('ouvrir'),
         
     );
 
@@ -1073,6 +1083,7 @@ function _pcproducts_getproductname($id) {
   if (is_numeric($id)) {
     printconnect_ensureinitialized();
     $product = \printconnect\Products\Factory::Get($id);
+	\printconnect\Products\Factory::LoadProduct($product);
     return $product->name;
   }
 }
@@ -1208,4 +1219,45 @@ function pcproducts_pcmenumain() {
         );
     }
   return $menuItems;
+}
+
+
+function getBannerIfExists($productId)
+{
+    global $language;
+    switch ($language->prefix) {
+        case 'befr':
+        case 'frfr':
+            $prefix = 'fr';
+            break;
+        case 'lufr':
+            $prefix = 'lufr';
+            break;
+        case 'benl':
+            $prefix = 'nl';
+            break;
+        case 'nlnl':
+            $prefix = 'nlnl';
+            break;
+        case 'lunl':
+            $prefix = 'nl';
+            break;
+        case 'en':
+            $prefix = 'en';
+            break;
+
+        default:
+            break;
+    }
+
+    $bannerUrl = variable_get('pc_images') . '/productpage_banners/banner_'.$prefix.'_'.$productId.'.jpg';
+    $bannerUrl2 = variable_get('pc_images') . '/productpage_banners/banner_'.$prefix.'_'.$productId.'.png';
+
+    if (getimagesize($bannerUrl) != FALSE || getimagesize($bannerUrl2) != FALSE){
+        $bannerUrl = (getimagesize($bannerUrl)) ? $bannerUrl : $bannerUrl2;
+
+        return $bannerUrl;
+    }
+
+    return '';
 }

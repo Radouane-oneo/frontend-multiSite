@@ -33,6 +33,7 @@ function pccustomers_block_info() {
   );
   $blocks['manage'] = array(
       'info' => t('Customer `Manage your account` (TO BE REMOVED'),
+      'cache' => DRUPAL_NO_CACHE,
   );
   $blocks['profile'] = array(
       'info' => t('Customer profile links'),
@@ -97,7 +98,6 @@ function pccustomers_preprocess_page(&$vars) {
  */
 function pccustomers_block_view($delta = '') {
   global $user;
-
   $block = FALSE;
   switch ($delta) {
     case 'login':
@@ -1230,7 +1230,7 @@ function theme_pccustomers_googleconnect($vars) {
     $title = 'Connect using Google';
   }
   $callback = url('myprintconnect/google', array('absolute' => TRUE));
-  $appId = variable_get('pc_googleappid', '630860089189.apps.googleusercontent.com');
+  $appId = variable_get('pc_googleappid', '597572367573-asd9a1puvigasr6o5160m871p9t6rvvg.apps.googleusercontent.com');
 
 
   $url = "https://accounts.google.com/o/oauth2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&state=$redirect&redirect_uri=$callback&response_type=code&client_id=$appId&approval_prompt=force";

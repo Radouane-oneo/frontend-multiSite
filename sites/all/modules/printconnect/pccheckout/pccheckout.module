@@ -110,7 +110,7 @@ function pccheckout_progress() {
       ),
       array(
           'title' => t('Payment'),
-          'paths' => array('checkout/payment'),
+          'paths' => array('payment'),
           'weight' => 60,
       ),
   );

@@ -60,6 +60,7 @@ regions[sidebar_first] = Sidebar First
 regions[sidebar_second] = Sidebar Second
 regions[contenttop] = Content top
 regions[content] = Content
+regions[blocModele] = Bloc Modele
 regions[fronttabs] = Front Tabs
 regions[contentbottom] = Content bottom
 regions[footer] = Footer

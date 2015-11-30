@@ -100,8 +100,8 @@ function pcflyerstores_detail_form($form, &$form_state, $storeId) {
 
 function pcflyerstores_landingpage_form ($form, &$form_state, $MystoreId = ''){
     $store = \printconnect\Stores\Factory::Get($MystoreId);
-    $store->EnsureLoaded();
-    if (!isset($store->name)){
+    $store->EnsureLoaded();    
+    if (!$store->active){
         drupal_goto('mystores');
     }else{
         drupal_set_title('flyerstore - '.$store->name, PASS_THROUGH);

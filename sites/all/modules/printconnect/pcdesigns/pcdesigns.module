@@ -235,7 +235,6 @@ function pcdesigns_callback() {
         if (isset($_GET['myPcId'])) {
           $_SESSION['savedDesigns'][$item->id] = $_GET['myPcId'];
         }
-        die('ppppppppp');
         Carts\Factory::SaveItem($item);
 //  //\printconnect\Carts\Factory::RefreshItem($item);
         Carts\Factory::Refresh($cart);

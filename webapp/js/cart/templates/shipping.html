@@ -17,11 +17,13 @@
                         styleLink = "display:none";
                     }
                 }
-                if (!model.orderItemShipping.shippingTypeResellerShop && shipping.defaultItem){
+
+                if ((!model.orderItemShipping.shippingTypeResellerShop && shipping.shippingType.type == "shippingTypeStore") || config.shipping.length==1){
                     checked = "checked='checked'";
                     style = "display:inline-block";
                     styleLink = "display:inline-block";
                 }
+
                 %>
 
                 <tr class="shipp-item odd <%= (i == 0)?'first-child':'' %> <%= (i == config.shipping.length-1)?'last-child':'' %>">

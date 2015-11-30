@@ -27,6 +27,9 @@ jQuery(document).ready(function(e) {
             jQuery('.jquery-countdown-timer-processed').clone().prependTo('#countlandingpage');
         }, 2000);
     };*/
+
+    /* Remove flyerstrap class from Edit and translate page */
+    /*jQuery('body.page-node-edit , .page-node-translate').removeClass('flyerstrap');*/
 	
 });
 

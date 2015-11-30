@@ -792,6 +792,7 @@ body.page-checkout-invoiceanddelivery  #content{
 
 body.two-sidebars #content .whitebox{
 	margin-bottom: 0;
+	position: relative;
 }
 #content .region-content {
 	position: relative;

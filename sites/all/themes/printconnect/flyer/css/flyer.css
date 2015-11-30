@@ -11877,6 +11877,9 @@ input.ui-button.payment {
 	margin: 0;
     line-height: 20px;
 }
+.page-myprintconnect-orders #pcorders-order-form .address{ 
+   min-height: 150px !important;
+}
 .address {
 	min-height: 0px !important;
 }
@@ -12121,10 +12124,10 @@ body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintc
     margin: 0 !important;
 }
 .page-myprintconnect-orders #pcorders-order-form .smaller {
-	margin-top: 50px;
+	margin-top: 10px;
 }
 .page-myprintconnect-orders #pcorders-order-form .smaller.neutral {
-    margin-top: 90px;
+   /* margin-top: 90px;*/
 }
 #pcorders-order-form #edit-order #edit-details .description >.labelOrder {
     font-size: 12px;

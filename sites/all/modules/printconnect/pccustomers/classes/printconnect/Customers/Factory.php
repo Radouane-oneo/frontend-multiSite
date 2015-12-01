@@ -56,8 +56,12 @@ class Factory {
     try {
       $customer = new Customer(array('email' => $email));
       Dal::Load($customer, 'customer', array('email' => $email));
-      return $customer;
-    } catch (\printconnect\Dal\NotFoundException $ex) {
+      if ($customer->id) {
+	return $customer;
+      } else {
+	return false;
+      }
+    } catch (Exception $ex) {
       return FALSE;
     }
   }

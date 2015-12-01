@@ -141,10 +141,31 @@ var registerClicked = false;
             var _this = $(this); 
             var inputName;
             if(_this.val() == "" || _this.val() == 0) {
-              inputName = $(elem).attr('name');
-              _this.addClass('error');
-              errorMsgs[i] = labels["isRequired"].replace('!name', inputName);
-              errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+                inputName = $(elem).attr('name');
+                _this.addClass('error');
+                if(inputName == "vatNumber[number]"){
+                   errorMsgs[i] = Drupal.t('Le champ N° de TVA est requis.');
+                }
+                else if(inputName == "firstName"){
+                   errorMsgs[i] = Drupal.t('firstName message error');
+                }else if(inputName == "lastName"){
+                   errorMsgs[i] = Drupal.t('lastName message error');
+                }else if(inputName == "phone"){
+                   errorMsgs[i] = Drupal.t('phone message error');
+                }else if(inputName == "street"){
+                   errorMsgs[i] = Drupal.t('street message error');
+                }else if(inputName == "postalCode"){
+                   errorMsgs[i] = Drupal.t('postalCode message error');
+                }else if(inputName == "city"){
+                   errorMsgs[i] = Drupal.t('city message error');
+                }else if(inputName == "country"){
+                   errorMsgs[i] = Drupal.t('country message error');
+                }else if(inputName == "company"){
+                   errorMsgs[i] = Drupal.t('company message error');
+                }
+                else
+                    errorMsgs[i] = labels["isRequired"].replace('!name', inputName);
+                errorMarkup += "<li>"+errorMsgs[i]+"</li>";
             } else if (_this.val().length < 3 && this.name !="postalCode" && this.name !="country" && this.name !="phone") {
                 inputName = $(elem).attr('name');
                 _this.addClass('error');

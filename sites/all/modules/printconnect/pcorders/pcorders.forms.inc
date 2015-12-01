@@ -134,6 +134,10 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
   $form['header']['left'] ['livraison'] = array(
         '#markup' => "<div class='shippingdate'><span class='livraison'>".t('shipping date').":</span><span class='senddate'> ".format_date(strtotime($order->expectedShippingDate), 'medium', 'd-m-y')."</span></div>"
     );
+  $order->user!=NULL ? $salesId=$order->user->salesId : $salesId="";
+  $form['header']['left'] ['salesid'] = array(
+        '#markup' => "<div class='salesId'><span class='livraison'>".t('salesId').":</span><span class='senddate'>".$salesId."</span></div>"
+    );
   
   $form['deliveryinvoice'] = array(
       '#type' => 'container',
@@ -499,7 +503,7 @@ function _pcorders_order_form_build_overview($order) {
     
     if ($order->orderItems) {
       foreach ($order->orderItems as $oi) {
-        if($oi->designTemplate) {
+        if($oi->designTemplate && $oi->designTemplate->price) {
             $label = t('Supplément');
             $rows[] = array(
                 'data' => array(

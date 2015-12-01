@@ -182,7 +182,6 @@ function pcdesigns_saveddesigns_form_order_submit($form, &$form_state) {
 //$item->file = $file;
 //$item->thumbnail = $thumbnail;
   $item->design_tool_job_id = $design->jobId;
-die('opopo');
   Carts\Factory::SaveItem($item);
   Carts\Factory::Refresh($cart);
 
@@ -222,9 +221,8 @@ function pcdesigns_callback() {
           $cart->customerId = $customer->id;
           Carts\Factory::Save($cart);
         }
-
         $item = Carts\Factory::CreateItem($cart, $priceGroupId, $qty, NULL, NULL, $options);
-        $item = Carts\Factory::GetItem($cart, $item->id);
+	$item = Carts\Factory::GetItem($cart, $item->id);
 	Carts\Factory::LoadItem($item);
 	$item->file = $file;
         $item->thumbnail = $thumbnail;
@@ -235,7 +233,6 @@ function pcdesigns_callback() {
         if (isset($_GET['myPcId'])) {
           $_SESSION['savedDesigns'][$item->id] = $_GET['myPcId'];
         }
-        die('ppppppppp');
         Carts\Factory::SaveItem($item);
 //  //\printconnect\Carts\Factory::RefreshItem($item);
         Carts\Factory::Refresh($cart);

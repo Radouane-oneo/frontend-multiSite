@@ -6,13 +6,15 @@ define([
     'views/jobView',
     'views/discountCode',
     'views/customerReference',
+    'views/salesId',
     'views/priceBlock',
     'views/Error'
-], function (Backbone, cartModel, cartTemplate, shippingView, jobView, discountView, customerReferenceView, priceBlockView, errorView) {
+], function (Backbone, cartModel, cartTemplate, shippingView, jobView, discountView, customerReferenceView,salesIdView, priceBlockView, errorView) {
 
     return Backbone.View.extend({
         template: _.template(cartTemplate),
         events: {
+            'click .close-tdc' : 'hideDetailTechnics'
         },
         initialize: function() {
             _this = this;
@@ -35,6 +37,9 @@ define([
 
                 //customerReference View
                 this.customerReferenceView = new customerReferenceView(this.model);
+                
+                //salesId View
+                this.salesIdView = new salesIdView(this.model);
 
                 //priceBlock View
                 this.priceBlockView = new priceBlockView(this.model);
@@ -44,7 +49,10 @@ define([
             $("#save-progress-bar").find("div").stop(true).animate({width: 100 + '%'},1000, function(){
                 $('#box-progress').hide();
             });
-             
+            jQuery("#pccart-cart-form #jobBox  input[type='hidden']").each(function() {
+                products.push({ identifier: jQuery(this).attr('productId'), amount: parseFloat(jQuery(this).val()), currency: 'EUR', quantity: jQuery(this).attr('quantity') });
+            });
+            basket['products'] = products;
         },
         render : function(){
             this.setElement(this.template({
@@ -58,6 +66,11 @@ define([
         },
         changeShipping : function(orderItemShipping){
             this.model.set("orderItemShipping", orderItemShipping);
+        },
+        hideDetailTechnics : function(e){
+            $('#technic-details').hide('fade',function(){
+                $(this).html('<i class="close-tdc"></i>');
+            })
         }
         
     });

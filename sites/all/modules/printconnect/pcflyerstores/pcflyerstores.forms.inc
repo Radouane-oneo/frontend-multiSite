@@ -36,7 +36,7 @@ function pcflyerstores_picker_form($form, &$form_state, $countryCode = '', $regi
     
      $form['selection']['results'] = array(
         '#type' => 'fieldset',
-        '#title' => t('Select your pickup point'),
+        '#title' => t('Select your flyer store'),
         '#attributes' => array('class' => array('results')),
         '#prefix' => '<div id="replace_textfield_div">',
         '#suffix' => '</div>',
@@ -101,13 +101,16 @@ function pcflyerstores_detail_form($form, &$form_state, $storeId) {
 function pcflyerstores_landingpage_form ($form, &$form_state, $MystoreId = ''){
     $store = \printconnect\Stores\Factory::Get($MystoreId);
     $store->EnsureLoaded();
-
-    drupal_set_title('flyerstore - '.$store->name, PASS_THROUGH);
-    $form['info'] = array(
-        '#theme' => 'pcflyerstores_landingpage_info',
-        '#store' => $store,
-    );
-    return $form;
+    if (!isset($store->name)){
+        drupal_goto('mystores');
+    }else{
+        drupal_set_title('flyerstore - '.$store->name, PASS_THROUGH);
+        $form['info'] = array(
+            '#theme' => 'pcflyerstores_landingpage_info',
+            '#store' => $store,
+        );
+        return $form;
+    }
 }
 
 function pcflyerstores_search_form ($form, &$form_state ){

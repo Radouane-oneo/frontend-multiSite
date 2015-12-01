@@ -188,7 +188,8 @@ function new_payment_loadpage() {
         "textPayment" => t('textPayment'),
         "textImagePayment" => t('textImagePayment'),
         "methodePaymentNull" => t('methodePaymentNull'),        
-        "cher" => t('cher')
+        "cher" => t('cher'),
+        "banktransferTag" => t('banktransferTag')
     );
 
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");

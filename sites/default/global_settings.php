@@ -1,1 +1,1 @@
-<?php $databases = array('default'=>array('default'=>array('driver'=>'mysql','database'=>'flyer_fr_25112015','username'=>'root','password'=>'q6BsexDwGuUeuYWa','host'=>'localhost','port'=>'','prefix'=>'',),),);
+<?php $databases = array('default'=>array('default'=>array('driver'=>'mysql','database'=>'flyer_fr_30112015','username'=>'root','password'=>'q6BsexDwGuUeuYWa','host'=>'localhost','port'=>'','prefix'=>'',),),);

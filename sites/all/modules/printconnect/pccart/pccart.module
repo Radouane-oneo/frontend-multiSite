@@ -242,6 +242,7 @@ function new_cart_loadpage() {
         "customerReferenceText" => t('Avez-vous besoin d une référence sur votre facture'),
         "salesIdText" => t('salesIdText'),
         "SalesIdNotExist" => t('SalesIdNotExist'),
+        "dataInfoBulReferenceSalesId" => t('dataInfoBulReferenceSalesId'),
         "subTotal" => t('Total excl. VAT'),
         "subTotalVat" => t('VAT'),
         "subTotalWithTVA" => t('Total incl. VAT'),

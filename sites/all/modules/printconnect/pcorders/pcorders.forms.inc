@@ -136,7 +136,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
     );
   $order->user!=NULL ? $salesId=$order->user->salesId : $salesId="";
   $form['header']['left'] ['salesid'] = array(
-        '#markup' => "<div class='salesId'><span class='livraison'>".t('salesId').":</span><span class='senddate'>".$salesId."</span></div>"
+        '#markup' => "<div class='salesId'><span class='livraison'>".strtoupper(t('salesId')).":</span><span class='senddate'>".$salesId."</span></div>"
     );
   
   $form['deliveryinvoice'] = array(

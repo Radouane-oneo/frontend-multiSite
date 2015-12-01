@@ -1,11 +1,16 @@
 <fieldset id="edit-cart-reference" class="discount ref form-wrapper">
-    <legend><span class="fieldset-legend"><%= config.labels['customerReference'] %></span></legend>
+    <legend>
+    	<span class="fieldset-legend"><%= config.labels['customerReference'] %></span>
+    	<span class="infobul">
+            <span class="datainfobul">Format fini + débord (marge supplémentaire autour de votre document).</span>
+        </span>
+    </legend>
     <div class="fieldset-wrapper">
         <div class="form-item form-type-item" id="edit-cart-reference-text">
             <%= config.labels['customerReferenceText'] %>
         </div>
         <div class="form-item form-type-textfield form-item-cart-reference-input">
-            <input type="text" maxlength="128" size="30" value="<%= model.customerReference %>" id="edit-cart-reference-input"  class="refCustomer form-text" >
+            <input type="text" maxlength="128" size="30" value="<%= model.customerReference %>" id="edit-cart-reference-input"  class="refCustomer form-text" placeholder="<%= config.labels['customerReferenceExample'] %>">
         </div>
     </div>
 </fieldset>

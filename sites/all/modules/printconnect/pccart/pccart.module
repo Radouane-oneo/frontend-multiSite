@@ -83,6 +83,13 @@ $items['cart/ajax/setreforder'] = array(
     'type' => MENU_CALLBACK,
 );
 
+$items['cart/ajax/setsalesId'] = array(
+    'page callback' => 'new_cart_ajax_setsalesId',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
+
 $items['cart/ajax/selectshippingtype/%'] = array(
     'page callback' => 'new_cart_ajax_selectshippingtype',
     'page arguments' => array(3),
@@ -192,7 +199,7 @@ $items['cart/%/submit'] = array(
 // main function to load cart page
 function new_cart_loadpage() {
     global $language;
-
+    //die("ouchayan");
     $labels = array(
         "formatBrut" => t('Format brut'),
         "formatFini" => t('Format fini'),
@@ -232,7 +239,10 @@ function new_cart_loadpage() {
         "discountsCode" => t('Discounts'),
         "useCode" => t('Vous utilisez le code'),
         "customerReference" => t('Reference'),
+        "salesId" => t('salesId'),
         "customerReferenceText" => t('Avez-vous besoin d une référence sur votre facture'),
+        "salesIdText" => t('salesIdText'),
+        "SalesIdNotExist" => t('SalesIdNotExist'),
         "subTotal" => t('Total excl. VAT'),
         "subTotalVat" => t('VAT'),
         "subTotalWithTVA" => t('Total incl. VAT'),
@@ -360,6 +370,19 @@ function new_cart_ajax_setreforder() {
 
     if($response) {
         Dal::BuildJson();
+    }else {
+        Dal::BuildJson(array(), 500);
+    }
+}
+
+function new_cart_ajax_setsalesId() {
+    $cartId = $_POST['cartId'];
+    $salesId = $_POST['salesId'];
+
+    $response = Factory::SaveSalesId($cartId, $salesId);
+
+    if($response) {
+        Dal::BuildJson($response->data);
     }else {
         Dal::BuildJson(array(), 500);
     }

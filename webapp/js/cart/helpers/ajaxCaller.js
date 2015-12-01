@@ -9,7 +9,8 @@ define([], function () {
             "deleteJobDesign" :    "/cart/ajax/removedesign/",
             "deleteFileCheck" :    "/cart/ajax/removefilecheck/",
             "setRefJob" :    "/cart/ajax/setrefjob",
-            "setMailDeisigner" :    "/cart/ajax/setemaildesigner"
+            "setMailDeisigner" :    "/cart/ajax/setemaildesigner",
+            "changeSalesId" : "/cart/ajax/setsalesId"
         },
         call : function(action, data, method, params){
             $('body').css('cursor','wait');
@@ -17,6 +18,7 @@ define([], function () {
             if (!method) {method = "POST"}
             if (!params) {params = ""}
             var config = require("config");
+
             return $.ajax({
                 type: method,
                 url: "/" + config.prefix + this.urls[action] + params,

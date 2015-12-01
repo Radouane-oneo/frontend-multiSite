@@ -10,6 +10,11 @@
  background:#f60 
 }
 
+*{
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
 /*@font-face {
 	font-family: 'same_same_but_differentRg';
 	src: url('fonts/samesamebutdifferent_0.eot');
@@ -3145,7 +3150,7 @@ a.ui-button.inactivebtn{
  	border-radius: 0;
 }
 .page-products #block-system-main #edit-actions input {
-    background: #79b61a url("images/button_payment.png") no-repeat 65px center;
+    background: #79b61a url("images/button_addcart.png") no-repeat 65px center;
     font-size: 16px;
     height: 50px;
     margin: 0;
@@ -4051,7 +4056,7 @@ a.googleconnect {
 }
 .page-pcbpost-picker #pcbpost-picker-form #result #map {
 	border-radius: 4px 4px 4px 4px;
-	width: 600px; 
+	width: 62.4%; 
 	height: 416px;
 	margin: 10px 0px 10px 10px;
 }

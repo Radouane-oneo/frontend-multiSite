@@ -31,7 +31,7 @@ use printconnect\Dal\ForbiddenException;
 
     public function Get($entity, $params, $language = FALSE) {
       $url = $this->GetUrl($entity, $params, FALSE, $language);
-            if(variable_get('pc_env', 'production') == 'production') {
+            if(variable_get('pc_env', 'production') == 'production' && $entity != 'customer') {
                 $json = $this->fromCache($url);
 		if ($entity == 'pickuppointdetail/service/store') {
                     if ($_SERVER["HTTP_HOST"] == 'http://preprd.flyer.fr/')
@@ -158,15 +158,20 @@ use printconnect\Dal\ForbiddenException;
       $start = microtime(true);
       $response = drupal_http_request($url, array('header' => $header, 'method' => 'GET', 'timeout' => $this->timeout));
       $end = microtime(true);
-       
+
       //watchdog('pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'GET', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), WATCHDOG_DEBUG, ($end - $start) . ' on GET ' . $url);
+
       switch ((int) $response->code) {
         case 200:
           $data = $response->data;
           $data= html_entity_decode($data, ENT_NOQUOTES);
           return $data;
         case 404:
-          throw new NotFoundException($url, array($response->data), array());
+	  /* if (preg_match('/customer/', $url) && $response->data == '"Record does not exist!"') {
+		$data = $response->data;
+          $data= html_entity_decode($data, ENT_NOQUOTES);
+          return $data;
+	    }*/
           return FALSE;
           break;
         case 403:
@@ -227,8 +232,9 @@ use printconnect\Dal\ForbiddenException;
 
         return $data;
       } else {
+
             //var_dump("Error", $response->data, $url, $data);die;
-            throw new Exception('POST ' . $url, $data, $this->ReadErrorInformation($response));
+            throw new Exception('POST ' . $url, $data, $this->ReadErrorInformation($response)); 
       }
 //     if($entity == "order-discount-code"){
 //        $_SESSION['data']=$data;

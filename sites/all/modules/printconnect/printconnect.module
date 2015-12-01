@@ -876,7 +876,8 @@ function printconnect_block_view($delta = '') {
         }
 
         $items[] = array(
-            'data' => l($item['title'], $item['paths'][0]),
+            //'data' => l($item['title'], $item['paths'][0]),
+            'data' => $item['title'],
             'class' => $class,
         );
       }

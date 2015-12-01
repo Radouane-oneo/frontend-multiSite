@@ -199,7 +199,6 @@ $items['cart/%/submit'] = array(
 // main function to load cart page
 function new_cart_loadpage() {
     global $language;
-    //die("ouchayan");
     $labels = array(
         "formatBrut" => t('Format brut'),
         "formatFini" => t('Format fini'),

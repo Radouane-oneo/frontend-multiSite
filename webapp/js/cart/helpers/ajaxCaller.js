@@ -18,7 +18,6 @@ define([], function () {
             if (!method) {method = "POST"}
             if (!params) {params = ""}
             var config = require("config");
-
             return $.ajax({
                 type: method,
                 url: "/" + config.prefix + this.urls[action] + params,

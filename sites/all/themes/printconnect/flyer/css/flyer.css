@@ -12559,7 +12559,7 @@ form#pccheckout-payment-form fieldset legend{
 .virement-bancaire { position: relative; }
 .virement-bancaire:hover p { display: block; }
 .virement-bancaire p {
-    background: rgba(169,169,169, 0.8);
+    background: rgba(169,169,169, 1);
     position: absolute;
     width: 500px;
     text-transform: none;
@@ -12576,7 +12576,7 @@ form#pccheckout-payment-form fieldset legend{
 }
 .virement-bancaire p:before {
     content: "\25B2";
-    color: rgba(169,169,169, 0.8);
+    color: rgba(169,169,169, 1);
     position: absolute;
     font-size: 10px;
     top: -14px;

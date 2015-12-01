@@ -10,11 +10,7 @@
  background:#f60 
 }
 
-*{
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-}
+ 
 /*@font-face {
 	font-family: 'same_same_but_differentRg';
 	src: url('fonts/samesamebutdifferent_0.eot');
@@ -2464,6 +2460,14 @@ body.front #block-block-13:after {
 	border-left: 1px solid #e1e1e1;
 	width: 345px;
 /*	background: url(images/bg_deadline.png) no-repeat 100% center #f6f6f6;*/
+}
+
+.page-products #block-system-main div.delivery
+.page-products #block-system-main div.deadline
+{
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
 .page-products #block-system-main .deadline, 
 .page-templates- #block-system-main .deadline {

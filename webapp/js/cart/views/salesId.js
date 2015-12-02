@@ -30,11 +30,11 @@ define([
                 salesId : $(e.currentTarget).val()
             }).done(function(resultData){
                 if(resultData['data']['id'] === undefined){
-                   console.log(resultData['data']);
-                   $("#sales_id_message").show();
-                   $("#edit-cart-salesId-input").val("");
+                   if($(e.currentTarget).val()!=""){
+                        $("#sales_id_message").show();
+                        $("#edit-cart-salesId-input").val("");
+                   }
                 }else{
-                   console.log(resultData['data']['id']);
                    $("#sales_id_message").hide();
                 }
 

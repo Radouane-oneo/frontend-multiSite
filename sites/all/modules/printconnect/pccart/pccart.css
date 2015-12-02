@@ -760,12 +760,12 @@ div#edit-linkcart a {
   float: left;
   padding-left: 10px;
   border-right: 1px solid #d1d1d1;
-  /*border-left: 1px solid #f9f9f9;*/
-  width: 300px;
+  width: 280px;
 }
 
 .prodactTemplates .first {
   border-left: none !important;
+  width: 330px !important;
 }
 
 .prodactHasTemplates .poll-form2 {

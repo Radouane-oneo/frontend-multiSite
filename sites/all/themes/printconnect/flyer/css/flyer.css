@@ -2687,7 +2687,6 @@ a.ui-button.inactivebtn{
     border-right: 1px solid #5a8a02;
 }
 .page-products #pcproducts-config-form table.grid thead th{
-	padding: 6px 20px;
 	font-size: 13px;
 	font-weight: bold;
 	border-style: solid;
@@ -2698,7 +2697,7 @@ a.ui-button.inactivebtn{
 }
 .page-products #pcproducts-config-form TABLE.grid THEAD th.text-right, 
 .page-products #pcproducts-config-form TABLE.grid THEAD th.last-child {
-	text-align: center;
+	text-align: right;
 }
 .page-products #pcproducts-config-form table.grid tbody {
 	background: #fff;
@@ -2830,7 +2829,7 @@ a.ui-button.inactivebtn{
 
 .page-products #pcproducts-config-form table.grid th:last-child {
 	text-align: right;
-	padding-right: 20px;
+	 padding-right: 15px;
 }
 .page-products #pcproducts-config-form table.grid tbody tr:hover {
 	cursor: pointer;
@@ -2842,7 +2841,7 @@ a.ui-button.inactivebtn{
 .page-products #pcproducts-config-form table.grid tr.checked*/ {
 	background-color: #f1f1f1;
 }
-.page-products #pcproducts-config-form table.grid tr td{
+/*.page-products #pcproducts-config-form table.grid tr td{
 	padding-top: 5px;
 	padding-bottom: 5px;
 	border-style:solid;
@@ -2851,7 +2850,7 @@ a.ui-button.inactivebtn{
 	text-align: center;
 	font-size: 14px;
 	color: #666666;
-}
+}*/
 
 .page-products #pcproducts-config-form table.grid tr td:first-child {
  	width: 20px;
@@ -2881,7 +2880,7 @@ a.ui-button.inactivebtn{
 .page-products #pcproducts-config-form table.grid tr td:nth-child(2) {
 	padding-left: 25px;
 	text-align: left;
-	width: 275px;
+	/*width: 275px;*/
 }
 .page-products #pcproducts-config-form table.grid tr th:nth-child(2){
 	padding-left: 0;
@@ -12594,4 +12593,41 @@ form#pccheckout-payment-form fieldset legend{
     font-size: 10px;
     top: -14px;
     left: 20.5%;
+}
+.messagedeal{
+	padding-right: 48px;
+	color: white;
+}
+.superdeal{
+	background-color: #15B7D3 !important;
+}
+
+.superdeal * {
+	color: #fff; !important;
+        text-align: right;
+}
+.superdeal:hover *{
+	color: #15B7D3; !important;
+}
+.page-products #pcproducts-config-form table.grid tbody tr td .price {
+  float: right;
+  min-width: 60px;
+  text-align: right;
+}
+.page-products #pcproducts-config-form table.grid th:nth-child(4) {
+    text-align: right;
+    padding-right: 15px;
+}
+.page-products #pcproducts-config-form table.grid tr th:nth-child(2), .page-products #pcproducts-config-form table.grid tr td:nth-child(2) {
+    padding-left: 25px;
+}
+.page-products #pcproducts-config-form table.grid tr td {
+    border-color: #e1e1e1;
+    border-style: solid;
+    border-width: 0 1px 0 0;
+    color: #666666;
+    font-size: 14px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-right: 14px;
 }

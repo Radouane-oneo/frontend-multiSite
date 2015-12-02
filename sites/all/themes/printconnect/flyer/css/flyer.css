@@ -12603,11 +12603,11 @@ form#pccheckout-payment-form fieldset legend{
 }
 
 .superdeal * {
-	color: #fff; !important;
+	color: #fff !important;
         text-align: right;
 }
 .superdeal:hover *{
-	color: #15B7D3; !important;
+	color: #15B7D3 !important;
 }
 .page-products #pcproducts-config-form table.grid tbody tr td .price {
   float: right;

@@ -243,6 +243,8 @@ function new_cart_loadpage() {
         "salesIdText" => t('salesIdText'),
         "SalesIdNotExist" => t('SalesIdNotExist'),
         "dataInfoBulReferenceSalesId" => t('dataInfoBulReferenceSalesId'),
+        "salesIdExample" => t('salesIdExample'),
+        "customerReferenceExample" => t('customerReferenceExample'),
         "subTotal" => t('Total excl. VAT'),
         "subTotalVat" => t('VAT'),
         "subTotalWithTVA" => t('Total incl. VAT'),

@@ -74,36 +74,9 @@
 			<div class="prodactTemplates centroid-2" style="display: <%= (model.emailDesigner ==null)?'block':'none' %>;">
 				<div class="prodactHasTemplates">
 					<div class="title-chose"><%= config.labels["designtoolTitle"] %></div>
-					<div class="poll-form poll-form1 first <%= (model.hasProUpload == true)?'':'designToolOnly' %>">
-						<div class="title-image design-tool"></div>
-						<div class="option-title"><%= config.labels["dlLinkTitle"] %></div>
-						<p class="txto"><%= config.labels["dlLinkSubtitle"] %></p>
-						<ul class="options-file-impression indice-5">
-                            <li><%= config.labels["dtOptions1"] %></li>
-                            <li><%= config.labels["dtOptions2"] %></li>
-                            <li><%= config.labels["dtOptions3"] %></li>
-                            <% if(model.hasLayouts == true){ %>
-                            	<!-- li><%= config.labels["dtOptionsModule"] %> <a href="<%= config.designtoolLink %><%= model.configuration.designtoolLink %>&insertModel=1" class="designtool iframe model-form fancybox.iframe"><%= config.labels["dtOptionsModuleLink"] %></a></li -->
-                            <% } %>
-
-                            <li><%= config.labels["dtOptions4"] %></li>
-                		</ul>
-                		<%  
-                			var urlCallback = encodeURIComponent("http://" + document.location.host + "/" + config.prefix + "/cart/callback");
-                			var designtoolLink = model.configuration.designtoolLink.replace(/(dcb=).*?(&)/,'$1' + urlCallback + '$2');
-                			designtoolLink = designtoolLink.replace(/(&quickupload=).*/,'');
-                			designtoolLink = designtoolLink.replace(/(&j=).*/,'');
-                			var proUploadLink = designtoolLink + "&quickupload=1";
-                		%>
-                		<a href="<%= config.designtoolLink %><%= designtoolLink %>" class="upload designtool fancybox.iframe iframe">
-                			<span class="text buttondesigntool btnupfile">
-                				<span class="txtgras"><%= config.labels["dtBtnText"] %></span>
-                			</span>
-                		</a>
-                	</div>
-
+					
                 	<% if(model.hasProUpload == true){ %>
-                	<div class="poll-form poll-form2">
+                	<div class="poll-form poll-form1 first">
                 		<div class="title-image pro-upload"></div>
                 		<div class="option-title"><%= config.labels["proUploadLinkTitle"] %></div>
                 		<p class="txto"><%= config.labels["proUploadLinkSubtitle"] %></p>
@@ -121,6 +94,34 @@
                 		</a>
                 	</div>
                 	<% } %>
+
+                    <div class="poll-form poll-form2 <%= (model.hasProUpload == true)?'':'designToolOnly' %>">
+                        <div class="title-image design-tool"></div>
+                        <div class="option-title"><%= config.labels["dlLinkTitle"] %></div>
+                        <p class="txto"><%= config.labels["dlLinkSubtitle"] %></p>
+                        <ul class="options-file-impression indice-5">
+                            <li><%= config.labels["dtOptions1"] %></li>
+                            <li><%= config.labels["dtOptions2"] %></li>
+                            <li><%= config.labels["dtOptions3"] %></li>
+                            <% if(model.hasLayouts == true){ %>
+                                <!-- li><%= config.labels["dtOptionsModule"] %> <a href="<%= config.designtoolLink %><%= model.configuration.designtoolLink %>&insertModel=1" class="designtool iframe model-form fancybox.iframe"><%= config.labels["dtOptionsModuleLink"] %></a></li -->
+                            <% } %>
+
+                            <li><%= config.labels["dtOptions4"] %></li>
+                        </ul>
+                        <%  
+                            var urlCallback = encodeURIComponent("http://" + document.location.host + "/" + config.prefix + "/cart/callback");
+                            var designtoolLink = model.configuration.designtoolLink.replace(/(dcb=).*?(&)/,'$1' + urlCallback + '$2');
+                            designtoolLink = designtoolLink.replace(/(&quickupload=).*/,'');
+                            designtoolLink = designtoolLink.replace(/(&j=).*/,'');
+                            var proUploadLink = designtoolLink + "&quickupload=1";
+                        %>
+                        <a href="<%= config.designtoolLink %><%= designtoolLink %>" class="upload designtool fancybox.iframe iframe">
+                            <span class="text buttondesigntool btnupfile">
+                                <span class="txtgras"><%= config.labels["dtBtnText"] %></span>
+                            </span>
+                        </a>
+                    </div>
                 </div>
             </div>
             <!-- designtool -->

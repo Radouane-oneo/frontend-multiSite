@@ -16,7 +16,7 @@ namespace printconnect\Products\Shipping {
 //                      });
 
 
-      Dal::LoadCollection($object, 'shipping-date', array('product' => $productId, 'toolboxItems' => implode(',', $items), 'quantity' => $qty), function ($value) {
+      Dal::LoadCollection($object, 'shipping-date', array('product' => $productId, 'toolboxItems' => implode(',', $items), 'options' => implode(',', $options), 'quantity' => $qty), function ($value) {
                         $date = new \printconnect\Object($value);
                         $date->loaded = TRUE;
                         return $date;

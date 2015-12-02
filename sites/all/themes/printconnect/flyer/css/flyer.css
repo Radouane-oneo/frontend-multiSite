@@ -10,6 +10,7 @@
  background:#f60 
 }
 
+ 
 /*@font-face {
 	font-family: 'same_same_but_differentRg';
 	src: url('fonts/samesamebutdifferent_0.eot');
@@ -308,7 +309,8 @@ h2 {
 .page-cart .region-contenttop , 
 .page-checkout-personal .region-contenttop ,
 .page-checkout-payment .region-contenttop ,
-.page-checkout-invoiceanddelivery .region-contenttop, .page-checkout-upload .region-contenttop
+.page-checkout-invoiceanddelivery .region-contenttop, .page-checkout-upload .region-contenttop,
+.page-payment .region-contenttop
 {
 	padding-left:0px !important;	
 }
@@ -792,6 +794,7 @@ body.page-checkout-invoiceanddelivery  #content{
 
 body.two-sidebars #content .whitebox{
 	margin-bottom: 0;
+	position: relative;
 }
 #content .region-content {
 	position: relative;
@@ -2458,6 +2461,14 @@ body.front #block-block-13:after {
 	width: 345px;
 /*	background: url(images/bg_deadline.png) no-repeat 100% center #f6f6f6;*/
 }
+
+.page-products #block-system-main div.delivery
+.page-products #block-system-main div.deadline
+{
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
 .page-products #block-system-main .deadline, 
 .page-templates- #block-system-main .deadline {
 	border-radius: 4px 0 0 0;
@@ -3143,7 +3154,7 @@ a.ui-button.inactivebtn{
  	border-radius: 0;
 }
 .page-products #block-system-main #edit-actions input {
-    background: #79b61a url("images/button_payment.png") no-repeat 65px center;
+    background: #79b61a url("images/button_addcart.png") no-repeat 65px center;
     font-size: 16px;
     height: 50px;
     margin: 0;
@@ -4049,7 +4060,7 @@ a.googleconnect {
 }
 .page-pcbpost-picker #pcbpost-picker-form #result #map {
 	border-radius: 4px 4px 4px 4px;
-	width: 600px; 
+	width: 62.4%; 
 	height: 416px;
 	margin: 10px 0px 10px 10px;
 }
@@ -11876,6 +11887,9 @@ input.ui-button.payment {
 	margin: 0;
     line-height: 20px;
 }
+.page-myprintconnect-orders #pcorders-order-form .address{ 
+   min-height: 150px !important;
+}
 .address {
 	min-height: 0px !important;
 }
@@ -12120,10 +12134,10 @@ body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintc
     margin: 0 !important;
 }
 .page-myprintconnect-orders #pcorders-order-form .smaller {
-	margin-top: 50px;
+	margin-top: 10px;
 }
 .page-myprintconnect-orders #pcorders-order-form .smaller.neutral {
-    margin-top: 90px;
+   /* margin-top: 90px;*/
 }
 #pcorders-order-form #edit-order #edit-details .description >.labelOrder {
     font-size: 12px;
@@ -12550,4 +12564,30 @@ form#pccheckout-payment-form fieldset legend{
 .i18n-nl-NL #pcsamplepacks-request-form a#searchprocess,
 .i18n-nl-NL #pcsamplepacks-requested-form a#searchprocess{
 	display: none !important;
+}
+.virement-bancaire { position: relative; }
+.virement-bancaire:hover p { display: block; }
+.virement-bancaire p {
+    background: rgba(169,169,169, 1);
+    position: absolute;
+    width: 500px;
+    text-transform: none;
+    top: 16px;
+    left: -56px;
+    color: #fff;
+    padding: 10px 15px;
+    z-index: 1;
+    display: none;
+
+    border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+}
+.virement-bancaire p:before {
+    content: "\25B2";
+    color: rgba(169,169,169, 1);
+    position: absolute;
+    font-size: 10px;
+    top: -14px;
+    left: 20.5%;
 }

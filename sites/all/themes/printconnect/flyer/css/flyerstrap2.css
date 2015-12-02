@@ -5,6 +5,7 @@ body.flyerstrap #content { width: 1030px; }
 body.logged-in.toolbar.toolbar-drawer.flyerstrap #content { margin-top: -36px; }
 body.flyerstrap.page-node-edit #content { z-index: 99; position: relative; }
 #flyerstrap { margin-top: 13px; }
+.logged-in #flyerstrap { margin-top: 75px; }
 .flyerstrap .whitebox { background-color: transparent; border: none;}
 b { font-weight: 600; }
 

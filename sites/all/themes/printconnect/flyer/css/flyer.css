@@ -12610,6 +12610,7 @@ form#pccheckout-payment-form fieldset legend{
     line-height: normal;
     left: 30px;
     top: -2px;
+}
 
 .virement-bancaire { position: relative; }
 .virement-bancaire:hover p { display: block; }

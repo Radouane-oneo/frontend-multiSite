@@ -217,6 +217,7 @@ function pcpayments_request_form_callback(&$form, &$form_state) {
   $form['priceblock']['#vatAmount'] = $vatAmount;
   $form['actions']['price']['#value']=$total;
   $orderId = $form_state['storage']['order'];
+
   $order = \printconnect\Orders\Factory::Get($orderId);
   \printconnect\Orders\Factory::LoadOrder($order);
   \printconnect\PaymentMethods\Factory::Save($paymentMethodId, $order, true, $request->requestKey);

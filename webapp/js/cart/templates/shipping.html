@@ -9,7 +9,7 @@
                 var checked = "";
                 var style = "display:none";
                 var styleLink = "display:none";
-                if (shipping.id == model.orderItemShipping.shippingTypeResellerShop){
+                if (model.orderItemShipping != null && shipping.id == model.orderItemShipping.shippingTypeResellerShop){
                     checked = "checked='checked'";
                     style = "display:inline-block";
                     styleLink = "display:inline-block";
@@ -18,7 +18,7 @@
                     }
                 }
 
-                if ((!model.orderItemShipping.shippingTypeResellerShop && shipping.shippingType.type == "shippingTypeStore") || config.shipping.length==1){
+                if ((!model.orderItemShipping && shipping.shippingType.type == "shippingTypeStore") || config.shipping.length==1){
                     checked = "checked='checked'";
                     style = "display:inline-block";
                     styleLink = "display:inline-block";
@@ -58,7 +58,7 @@
                     </td>
                 </tr>
                 <%
-                if(shipping.shippingType.type == "shippingTypeStore" && model.orderItemShipping.shippingTypeTag == "shippingTypeStore" && model.orderItemShipping.orderShippingAddress) { %>
+                if(model.orderItemShipping != null && shipping.shippingType.type == "shippingTypeStore" && model.orderItemShipping.shippingTypeTag == "shippingTypeStore" && model.orderItemShipping.orderShippingAddress) { %>
                 <tr>
                     <td class="shipping-flyerStore" colspan="3">
                         <div class="shipping-map">
@@ -96,7 +96,7 @@
                     </td>
                 </tr>
                 <% } %>
-                <% if(shipping.shippingType.type == "shippingTypeBpostPickupPoint" && model.orderItemShipping.shippingTypeTag == "shippingTypeBpostPickupPoint" && model.orderItemShipping.orderShippingAddress) { %>
+                <% if(model.orderItemShipping != null && shipping.shippingType.type == "shippingTypeBpostPickupPoint" && model.orderItemShipping.shippingTypeTag == "shippingTypeBpostPickupPoint" && model.orderItemShipping.orderShippingAddress) { %>
                 <tr>
                     <td class="shipping-BPost" colspan="3">
                         <div class="BPost-info">

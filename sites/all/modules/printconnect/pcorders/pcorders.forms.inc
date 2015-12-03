@@ -323,12 +323,13 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         '#items' => $rows,
             //'#markup' => theme('item_list', array('items' => $rows)),
     );
-    
     if (isset($item->tracking)) {
       foreach ($item->tracking as $box) {
-        $form['order']['details']['item'][$item->id]['description']['tracking'] = array(
-            '#markup' => l(t('Track'), $box->trackingLink, array('attributes' => array('target' => '_new', /* 'class' => array('button', 'display-block') */))),
+	foreach($box->trackingLink as $key => $link) {
+        $form['order']['details']['item'][$item->id]['description']['tracking'][$key] = array(
+            '#markup' => l(t('Track box :').' '.(int)($key + 1), $link, array('attributes' => array('target' => '_new', /* 'class' => array('button', 'display-block') */))).'<br>',
         );
+	}
       }
     }
     if(count($item->fotoliaItems)|| $item->fileCheck){

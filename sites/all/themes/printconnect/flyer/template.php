@@ -233,7 +233,7 @@ function flyer_preprocess_html(&$vars) {
 	$node = menu_get_object();
 	if ($node && isset($node->nid)) {
 		$node = node_load($node->nid);
-		if (isset($node->field_flyerstrap_template['und'])&&$node->field_flyerstrap_template['und'][0]['value']=="1")
+		if (isset($node->field_flyerstrap_template['und'])&&$node->field_flyerstrap_template['und'][0]['value']=="1" && !in_array($arg[2], array('edit','translate')))
 			$vars['node_css_class'] = ' flyerstrap';
 	}
 }

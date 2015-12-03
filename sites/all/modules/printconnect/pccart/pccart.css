@@ -747,7 +747,7 @@ table.targetPrice tbody tr.last-child td { border:none; }
 ul.options-file-impression {
   height: 145px;
   display: block;
-  width: 320px;
+  width: auto;
 }
 
 div#edit-linkcart a {
@@ -756,20 +756,21 @@ div#edit-linkcart a {
 
 #pccart-cart-form .prodactTemplates .poll-form{
   text-align: center;
-  display: inline-block;
   float: left;
   padding-left: 10px;
+  padding-right: 10px;
   border-right: 1px solid #d1d1d1;
-  /*border-left: 1px solid #f9f9f9;*/
-  width: 300px;
+  width: 306px;
 }
 
-.prodactTemplates .first {
+#pccart-cart-form .prodactTemplates .first {
   border-left: none !important;
+  padding-left: 0;
 }
 
-.prodactHasTemplates .poll-form2 {
+#pccart-cart-form .prodactHasTemplates .poll-form2 {
   border-right: none !important;
+  padding-right: 0;
 }
 
 #edit-templates-linktodownload {

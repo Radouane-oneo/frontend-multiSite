@@ -6,8 +6,9 @@ define([
 
     return Backbone.View.extend({
         template: _.template(salesIdTemplate),
+        hasError: false,
         events: {
-            "change #edit-cart-salesId-input" : "changeSalesId"
+            "blur #edit-cart-salesId-input" : "changeSalesId"
         },
         initialize: function(model) {
             this.config = require("config");
@@ -24,22 +25,33 @@ define([
             $(this.config.bottomBox).append(this.$el);
         },
         changeSalesId : function(e){
-            this.model.set({"salesId": $(e.currentTarget).val()}, {silent: true});
+            var me =this;
+            this.model.set({"salesId": $("#edit-cart-salesId-input").val()}, {silent: true});
             ajaxCaller.call("changeSalesId",{
                 cartId : this.model.id,
-                salesId : $(e.currentTarget).val()
+                salesId : $("#edit-cart-salesId-input").val()
             }).done(function(resultData){
                 if(resultData['data']['id'] === undefined){
-                   if($(e.currentTarget).val()!=""){
+                   if($("#edit-cart-salesId-input").val()!=""){
                         $("#sales_id_message").show();
-                        $("#edit-cart-salesId-input").val("");
+                        //$("#edit-cart-salesId-input").val("");
+                        //console.log("true");
+                       me.hasError=true;
+                   }else{
+                       $("#sales_id_message").hide();
+                       me.hasError=false;
                    }
                 }else{
                    $("#sales_id_message").hide();
+                   //console.log("false");
+                   me.hasError=false;
                 }
 
             });
-            e.preventDefault();
+            //e.preventDefault();
+        },
+        errors : function(){ 
+            return this.hasError;
         }
 
     });

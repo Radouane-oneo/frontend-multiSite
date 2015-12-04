@@ -39,11 +39,10 @@ define([
                 $(window).scrollTop($(this.config.containerId).offset().top);
                 return false;
             }
-            console.log(salesIdError);
             if(salesIdError){
-                console.log(salesIdError);
                 return false;
             }
+            
             if(myCart.disable) return false;
             location.href = "/" + this.config.prefix + "/checkout";
 

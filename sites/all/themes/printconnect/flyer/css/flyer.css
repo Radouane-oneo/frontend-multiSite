@@ -7951,7 +7951,21 @@ div.myoffers table.list thead tr th:nth-child(2){
 	background:url(images/icons_24.png) no-repeat 0 center;
 	line-height: 25px;
 }
-
+#sidebar-second .nos-avantages  h2 {
+  color: #f60;
+  font-family: "Open Sans",sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+#sidebar-second .nos-avantages {
+  background: #fff none repeat scroll 0 0;
+  border: 1px solid #e7e3e3;
+  border-radius: 3px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  padding: 16px 10px 10px;
+}
 #block-views-deals-block .view-deals{
 	position: relative;
 }

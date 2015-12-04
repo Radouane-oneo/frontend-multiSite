@@ -1264,10 +1264,10 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
           array('password'),
       ),
   );
-  /*$form['login']['forgot'] = array(
+  $form['login']['forgot'] = array(
         '#markup' => l(t('Forgot your password?'), 'myprintconnect/forgotpassword', array('query' => array('return' => $redirect), 'attributes' => array('class' => array('link')))),
         '#weight' => 9,
-    );*/
+    );
    /*Secont form */
   
    $form['login']['decriptionnew'] = array(

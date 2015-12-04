@@ -134,10 +134,12 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
   $form['header']['left'] ['livraison'] = array(
         '#markup' => "<div class='shippingdate'><span class='livraison'>".t('shipping date').":</span><span class='senddate'> ".format_date(strtotime($order->expectedShippingDate), 'medium', 'd-m-y')."</span></div>"
     );
-  $order->user!=NULL ? $salesId=$order->user->salesId : $salesId="";
-  $form['header']['left'] ['salesid'] = array(
-        '#markup' => "<div class='salesId'><span class='livraison'>".strtoupper(t('salesId')).":</span><span class='senddate'>".$salesId."</span></div>"
-    );
+
+  if($order->user!=NULL){
+    $form['header']['left'] ['salesid'] = array(
+          '#markup' => "<div class='salesId'><span class='livraison'>".strtoupper(t('salesId')).":</span><span class='senddate'>".$order->user->salesId."</span></div>"
+      );
+  }
   
   $form['deliveryinvoice'] = array(
       '#type' => 'container',

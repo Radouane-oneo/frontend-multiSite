@@ -28,6 +28,7 @@ define([
         stepCheckout : function(){
             var jobsError = myCart.jobView.errors();
             var shippingError = myCart.shippingView.errors();
+            var salesIdError = myCart.salesIdView.errors();
             if(jobsError) {
                 myCart.errorView.render(jobsError);
                 $(window).scrollTop($(this.config.containerId).offset().top);
@@ -36,6 +37,11 @@ define([
             if(shippingError) {
                 myCart.errorView.render(shippingError);
                 $(window).scrollTop($(this.config.containerId).offset().top);
+                return false;
+            }
+            console.log(salesIdError);
+            if(salesIdError){
+                console.log(salesIdError);
                 return false;
             }
             if(myCart.disable) return false;

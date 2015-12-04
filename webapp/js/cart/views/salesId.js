@@ -23,6 +23,8 @@ define([
             }));
 
             $(this.config.bottomBox).append(this.$el);
+            if(this.hasError)
+                $("#sales_id_message").show();
         },
         changeSalesId : function(e){
             var me =this;

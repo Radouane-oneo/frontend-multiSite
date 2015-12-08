@@ -786,7 +786,7 @@ function pccustomers_newaddress_form($form, $form_state) {
 
   $form['name'] = array(
       '#type' => 'textfield',
-      '#title' => t('Name'),
+      '#title' => t('FullName'),
       '#required' => TRUE,
       '#size' => 71,
   );
@@ -800,14 +800,14 @@ function pccustomers_newaddress_form($form, $form_state) {
 
   $form['street'] = array(
       '#type' => 'textfield',
-      '#title' => t('Street'),
+      '#title' => t('NumberAndStreet'),
       '#required' => TRUE,
       '#size' => 71,
   );
 
   $form['postalCode'] = array(
       '#type' => 'textfield',
-      '#title' => t('PostalCode'),
+      '#title' => t('PostalCodeAndLocality'),
       '#required' => TRUE,
       '#size' => 71,
       '#attributes' => array('class' => array('postalCode')),

@@ -1,7 +1,7 @@
  
 .GridLoadingEffects li {
 	display: block; 
-	opacity: 0;
+	opacity: 0; 
 }
 
 .GridLoadingEffects li.shown,

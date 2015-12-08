@@ -215,6 +215,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     console.log(basket);
     </script>
 <?php endif; ?>
+    <?php if (arg(0) != 'cart'):?>
 <script type="text/javascript">
     (function(){
         var s   = document.createElement('script');
@@ -226,5 +227,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         x.parentNode.insertBefore( s, x );
     })();
 </script>
+    <?php endif; ?>
 </body>
 </html>

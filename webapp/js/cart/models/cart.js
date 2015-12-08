@@ -31,7 +31,7 @@ define([
             _.each(this.get("discountItems"), function(discountItem){
                 subTotalAmount += parseFloat(discountItem.price);
             });
-            if(this.get("orderItemShipping").price)
+            if(this.get("orderItemShipping") != null && this.get("orderItemShipping").price)
                 subTotalAmount += parseFloat(this.get("orderItemShipping").price);
             return subTotalAmount;
         }

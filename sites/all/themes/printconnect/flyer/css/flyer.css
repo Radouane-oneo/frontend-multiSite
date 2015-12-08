@@ -9,7 +9,11 @@
  color:#fff;
  background:#f60 
 }
-
+html body{
+	opacity: 1;
+	display: block; 
+}
+ 
 /*@font-face {
 	font-family: 'same_same_but_differentRg';
 	src: url('fonts/samesamebutdifferent_0.eot');
@@ -308,7 +312,8 @@ h2 {
 .page-cart .region-contenttop , 
 .page-checkout-personal .region-contenttop ,
 .page-checkout-payment .region-contenttop ,
-.page-checkout-invoiceanddelivery .region-contenttop, .page-checkout-upload .region-contenttop
+.page-checkout-invoiceanddelivery .region-contenttop, .page-checkout-upload .region-contenttop,
+.page-payment .region-contenttop
 {
 	padding-left:0px !important;	
 }
@@ -2459,6 +2464,14 @@ body.front #block-block-13:after {
 	width: 345px;
 /*	background: url(images/bg_deadline.png) no-repeat 100% center #f6f6f6;*/
 }
+
+.page-products #block-system-main div.delivery
+.page-products #block-system-main div.deadline
+{
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
 .page-products #block-system-main .deadline, 
 .page-templates- #block-system-main .deadline {
 	border-radius: 4px 0 0 0;
@@ -2673,7 +2686,6 @@ a.ui-button.inactivebtn{
     border-right: 1px solid #5a8a02;
 }
 .page-products #pcproducts-config-form table.grid thead th{
-	padding: 6px 20px;
 	font-size: 13px;
 	font-weight: bold;
 	border-style: solid;
@@ -2684,7 +2696,7 @@ a.ui-button.inactivebtn{
 }
 .page-products #pcproducts-config-form TABLE.grid THEAD th.text-right, 
 .page-products #pcproducts-config-form TABLE.grid THEAD th.last-child {
-	text-align: center;
+	text-align: right;
 }
 .page-products #pcproducts-config-form table.grid tbody {
 	background: #fff;
@@ -2816,7 +2828,7 @@ a.ui-button.inactivebtn{
 
 .page-products #pcproducts-config-form table.grid th:last-child {
 	text-align: right;
-	padding-right: 20px;
+	 padding-right: 15px;
 }
 .page-products #pcproducts-config-form table.grid tbody tr:hover {
 	cursor: pointer;
@@ -2828,7 +2840,7 @@ a.ui-button.inactivebtn{
 .page-products #pcproducts-config-form table.grid tr.checked*/ {
 	background-color: #f1f1f1;
 }
-.page-products #pcproducts-config-form table.grid tr td{
+/*.page-products #pcproducts-config-form table.grid tr td{
 	padding-top: 5px;
 	padding-bottom: 5px;
 	border-style:solid;
@@ -2837,7 +2849,7 @@ a.ui-button.inactivebtn{
 	text-align: center;
 	font-size: 14px;
 	color: #666666;
-}
+}*/
 
 .page-products #pcproducts-config-form table.grid tr td:first-child {
  	width: 20px;
@@ -2867,7 +2879,7 @@ a.ui-button.inactivebtn{
 .page-products #pcproducts-config-form table.grid tr td:nth-child(2) {
 	padding-left: 25px;
 	text-align: left;
-	width: 275px;
+	/*width: 275px;*/
 }
 .page-products #pcproducts-config-form table.grid tr th:nth-child(2){
 	padding-left: 0;
@@ -3144,7 +3156,7 @@ a.ui-button.inactivebtn{
  	border-radius: 0;
 }
 .page-products #block-system-main #edit-actions input {
-    background: #79b61a url("images/button_payment.png") no-repeat 65px center;
+    background: #79b61a url("images/button_addcart.png") no-repeat 65px center;
     font-size: 16px;
     height: 50px;
     margin: 0;
@@ -4050,7 +4062,7 @@ a.googleconnect {
 }
 .page-pcbpost-picker #pcbpost-picker-form #result #map {
 	border-radius: 4px 4px 4px 4px;
-	width: 600px; 
+	width: 62.4%; 
 	height: 416px;
 	margin: 10px 0px 10px 10px;
 }
@@ -7938,7 +7950,21 @@ div.myoffers table.list thead tr th:nth-child(2){
 	background:url(images/icons_24.png) no-repeat 0 center;
 	line-height: 25px;
 }
-
+#sidebar-second .nos-avantages  h2 {
+  color: #f60;
+  font-family: "Open Sans",sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+#sidebar-second .nos-avantages {
+  background: #fff none repeat scroll 0 0;
+  border: 1px solid #e7e3e3;
+  border-radius: 3px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  padding: 16px 10px 10px;
+}
 #block-views-deals-block .view-deals{
 	position: relative;
 }
@@ -11877,6 +11903,9 @@ input.ui-button.payment {
 	margin: 0;
     line-height: 20px;
 }
+.page-myprintconnect-orders #pcorders-order-form .address{ 
+   min-height: 150px !important;
+}
 .address {
 	min-height: 0px !important;
 }
@@ -12121,10 +12150,10 @@ body.html.not-front.not-logged-in.two-sidebars.page-myprintconnect.page-myprintc
     margin: 0 !important;
 }
 .page-myprintconnect-orders #pcorders-order-form .smaller {
-	margin-top: 50px;
+	margin-top: 10px;
 }
 .page-myprintconnect-orders #pcorders-order-form .smaller.neutral {
-    margin-top: 90px;
+   /* margin-top: 90px;*/
 }
 #pcorders-order-form #edit-order #edit-details .description >.labelOrder {
     font-size: 12px;
@@ -12551,4 +12580,67 @@ form#pccheckout-payment-form fieldset legend{
 .i18n-nl-NL #pcsamplepacks-request-form a#searchprocess,
 .i18n-nl-NL #pcsamplepacks-requested-form a#searchprocess{
 	display: none !important;
+}
+.virement-bancaire { position: relative; }
+.virement-bancaire:hover p { display: block; }
+.virement-bancaire p {
+    background: rgba(169,169,169, 1);
+    position: absolute;
+    width: 500px;
+    text-transform: none;
+    top: 16px;
+    left: -56px;
+    color: #fff;
+    padding: 10px 15px;
+    z-index: 1;
+    display: none;
+
+    border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+}
+.virement-bancaire p:before {
+    content: "\25B2";
+    color: rgba(169,169,169, 1);
+    position: absolute;
+    font-size: 10px;
+    top: -14px;
+    left: 20.5%;
+}
+.messagedeal{
+	padding-right: 48px;
+	color: white;
+}
+.superdeal{
+	background-color: #15B7D3 !important;
+}
+
+.superdeal * {
+	color: #fff !important;
+        text-align: right;
+}
+.superdeal:hover *{
+	color: #15B7D3 !important;
+}
+.page-products #pcproducts-config-form table.grid tbody tr td .price {
+  float: right;
+  min-width: 60px;
+  text-align: right;
+}
+.page-products #pcproducts-config-form table.grid th:nth-child(4) {
+    text-align: right;
+    padding-right: 15px;
+}
+.page-products #pcproducts-config-form table.grid tr th:nth-child(2), .page-products #pcproducts-config-form table.grid tr td:nth-child(2) {
+    padding-left: 25px;
+}
+.page-products #pcproducts-config-form table.grid tr td {
+    border-color: #e1e1e1;
+    border-style: solid;
+    border-width: 0 1px 0 0;
+    color: #666666;
+    font-size: 14px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-right: 14px;
 }

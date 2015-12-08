@@ -23,6 +23,7 @@ stylesheets-conditional[IE][all][] = css/ie.css
 #stylesheets[all][] = css/style470f.css
 #stylesheets[all][] = css/preview470f.css
 stylesheets[all][] = css/select2.css 
+stylesheets[all][] = libraries/GridLoadingEffects/css/component.css 
 
 scripts[] = libraries/jQueryui/jQueryui.js
 scripts[] = libraries/Jcookies/cookies.js
@@ -31,6 +32,18 @@ scripts[] = libraries/scrollBarPlugin/jquery.mCustomScrollbar.concat.min.js
 scripts[] = libraries/homeSlider/homeslider.js
 scripts[] = libraries/jcarousellite/jcarousellite.js
 scripts[] = libraries/jquery.selectBox/jquery.selectBox.js
+scripts[] = libraries/jquery.selectBox/jquery.selectBox.js
+
+scripts[] = libraries/GridLoadingEffects/js/modernizr.custom.js 
+scripts[] = libraries/GridLoadingEffects/js/masonry.pkgd.min.js
+scripts[] = libraries/GridLoadingEffects/js/classie.js
+scripts[] = libraries/GridLoadingEffects/js/imagesloaded.js
+scripts[] = libraries/GridLoadingEffects/js/AnimOnScroll.js
+
+
+
+
+
 
 
 #scripts[] = libraries/mjslider/jquery.themepunch.plugins.min00ad.js
@@ -38,8 +51,7 @@ scripts[] = libraries/jquery.selectBox/jquery.selectBox.js
 scripts[] = js/html5shiv.js
 scripts[] = js/selectivizr-min.js
 #scripts[] = js/sliderfunction.js
-#scripts[] = libraries/mjslider2/jquery.themepunch.plugins.min470f.js
-#scripts[] = libraries/mjslider2/jquery.themepunch.revolution.min470f.js
+#scripts[] = libraries/mjslider2/jquery.themepunch.plugins.min470f.js 
 
 
 

@@ -31,7 +31,7 @@ use printconnect\Dal\ForbiddenException;
 
     public function Get($entity, $params, $language = FALSE) {
       $url = $this->GetUrl($entity, $params, FALSE, $language);
-            if(variable_get('pc_env', 'production') == 'production') {
+            if(variable_get('pc_env', 'production') == 'production' && $entity != 'customer') {
                 $json = $this->fromCache($url);
 		if ($entity == 'pickuppointdetail/service/store') {
                     if ($_SERVER["HTTP_HOST"] == 'http://preprd.flyer.fr/')
@@ -156,17 +156,22 @@ use printconnect\Dal\ForbiddenException;
     private function Call($url) {
       $header = array('Content-Type' => 'application/json');
       $start = microtime(true);
-      $response = drupal_http_request($url, array('header' => $header, 'method' => 'GET', 'timeout' => $this->timeout));
+      $response = drupal_http_request($url, array('header' => $header, 'method' => 'GET', 'timeout' => 900));
       $end = microtime(true);
-       
+
       //watchdog('pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'GET', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), WATCHDOG_DEBUG, ($end - $start) . ' on GET ' . $url);
+
       switch ((int) $response->code) {
         case 200:
           $data = $response->data;
           $data= html_entity_decode($data, ENT_NOQUOTES);
           return $data;
         case 404:
-          throw new NotFoundException($url, array($response->data), array());
+	  /* if (preg_match('/customer/', $url) && $response->data == '"Record does not exist!"') {
+		$data = $response->data;
+          $data= html_entity_decode($data, ENT_NOQUOTES);
+          return $data;
+	    }*/
           return FALSE;
           break;
         case 403:
@@ -194,7 +199,7 @@ use printconnect\Dal\ForbiddenException;
      
 	$data = json_encode($properties);
       $start = microtime(true);
-      $response = drupal_http_request($url, array('header' => $header, 'method' => 'PUT', 'data' => $data));
+      $response = drupal_http_request($url, array('header' => $header, 'method' => 'PUT', 'timeout' => 900, 'data' => $data));
       $end = microtime(true);
       //watchdog('pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'PUT', '%url' => $url, '%timing' => ($end - $start), '%data' => $data, '%response' => print_r($response, TRUE)), WATCHDOG_DEBUG, ($end - $start) . ' on PUT ' . $url);
   
@@ -212,12 +217,15 @@ use printconnect\Dal\ForbiddenException;
      
       $header = array('Content-Type' => 'application/json');
       $start = microtime(true);
+
       if ($properties) {
         $data = json_encode($properties);
-        $response = drupal_http_request($url, array('header' => $header, 'method' => 'POST', 'data' => $data));
+
+        $response = drupal_http_request($url, array('header' => $header, 'method' => 'POST', 'timeout' => 900, 'data' => $data));
       } else {
         $data = array();
-        $response = drupal_http_request($url, array('header' => $header, 'method' => 'POST'));
+
+        $response = drupal_http_request($url, array('header' => $header, 'method' => 'POST', 'timeout' => 900));
       }
       $end = microtime(true);
       //watchdog('pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'POST', '%url' => $url, '%timing' => ($end - $start), '%data' => $data, '%response' => print_r($response, TRUE)), WATCHDOG_DEBUG, ($end - $start) . ' on POST ' . $url);
@@ -228,7 +236,7 @@ use printconnect\Dal\ForbiddenException;
         return $data;
       } else {
             //var_dump("Error", $response->data, $url, $data);die;
-            throw new Exception('POST ' . $url, $data, $this->ReadErrorInformation($response));
+            throw new Exception('POST ' . $url, $data, $this->ReadErrorInformation($response)); 
       }
 //     if($entity == "order-discount-code"){
 //        $_SESSION['data']=$data;
@@ -239,7 +247,7 @@ use printconnect\Dal\ForbiddenException;
       $url = $this->GetUrl($entity, $params);
       $header = array('Content-Type' => 'application/json');
       $start = microtime(true);
-      $response = drupal_http_request($url, array('header' => $header, 'method' => 'DELETE'));
+      $response = drupal_http_request($url, array('header' => $header, 'method' => 'DELETE', 'timeout' => 900));
       $end = microtime(true);
       //watchdog('pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'DELETE', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), WATCHDOG_DEBUG, ($end - $start) . ' on DELETE ' . $url);
       if ($response->code == 200) {

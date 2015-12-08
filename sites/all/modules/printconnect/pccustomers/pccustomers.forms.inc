@@ -1233,6 +1233,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
   $form['login']['email'] = array(
       '#type' => 'textfield',
       '#title' => t('Email'),
+      //'#name' => t('email_login'),
       '#required' => TRUE,
       '#weight' => 7,
       '#attributes' => array('class' => array('customer-email', 'hint')),
@@ -1242,12 +1243,11 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
       '#type' => 'password',
       '#title' => t('Password'),
       '#required' => TRUE,
+      //'#name' => t('Password_login'),
       '#attributes' => array('autocomplete' => 'off', 'class' => array('hint')),
       '#weight' => 8,
       '#description' => t('Your password'),
   );
-  
-  
   /*$form['login']['actions'] = array(
       '#type' => 'actions',
       '#attributes' => array('class' => array('form-actions', 'clearfix')),
@@ -1271,7 +1271,6 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
         '#weight' => 9,
     );
    /*Secont form */
-  
   
    $form['login']['decriptionnew'] = array(
       '#prefix'=> '<div class="login-form-item last-item"><p>',
@@ -1310,7 +1309,6 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
     );
     
   /* End second form */
-    
     
   /*
     $form['forgot'] = array(
@@ -1441,12 +1439,11 @@ function pccustomers_login_form_login_validate(&$form, &$form_state) {
 //  if (!(isset($form_state['values']['password']) || count($form_state['values']['password']) < 5)) {
 //    form_set_error('password', t('Password not long enough'));
 //  }
-
   $customer = Factory::Login($form_state['values']['email'], $form_state['values']['password']);
   if ($customer && !$customer->blocked) {
 
     if (!valid_email_address($customer->email)) {
-      form_set_error('email', t('Not a valid email address'));
+      form_set_error('email', t('Not a valid identification'));
       return false;
     }
 
@@ -1474,7 +1471,11 @@ function pccustomers_login_form_register_validate(&$form, &$form_state) {
     form_set_error('newpassword', t('Password not long enough'));
     return;
   }
+  try {
   $customer = Factory::GetByEmail($form_state['values']['emailnew']);
+  } catch(Exception $ex) {
+
+  }
   if ($customer) {
     form_set_error('emailnew', t('This email address is already registered'));
     return FALSE;

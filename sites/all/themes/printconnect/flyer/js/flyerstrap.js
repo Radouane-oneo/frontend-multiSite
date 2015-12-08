@@ -24,7 +24,7 @@ jQuery(document).ready(function(e) {
 	sameheight(".flyerstrap .main-page .block6-6-2col","div.sameHeight");
 	sameheight(".flyerstrap .main-page .block6-6-3col","div.sameHeight");
 	sameheight(".flyerstrap .main-page .block4-4","div.sameHeight");
-	sameheight(".flyerstrap .main-page .blockProd-6col","div.prod-col > h3");
+	sameheight(".flyerstrap .main-page .blockProd-6col .prod-3col","div.prod-col > h3");
 
 });
 

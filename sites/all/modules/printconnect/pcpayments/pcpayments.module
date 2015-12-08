@@ -188,7 +188,8 @@ function new_payment_loadpage() {
         "textPayment" => t('textPayment'),
         "textImagePayment" => t('textImagePayment'),
         "methodePaymentNull" => t('methodePaymentNull'),        
-        "cher" => t('cher')
+        "cher" => t('cher'),
+        "banktransferTag" => t('banktransferTag')
     );
 
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
@@ -453,7 +454,7 @@ function pcpayments_redirect_form($form, $form_state, $rid, $paymentMethodId = F
   );
 
 
- // drupal_add_js("jQuery('form.payment').submit();", array('type' => 'inline', 'scope' => 'footer'));
+ drupal_add_js("jQuery('form.payment').submit();", array('type' => 'inline', 'scope' => 'footer'));
 
   $form['#action'] = $requestInfo->action;
   $form['#attributes']['class'][] = 'payment';

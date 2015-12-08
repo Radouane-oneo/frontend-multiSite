@@ -141,7 +141,7 @@
                                id="edit-quantity-<%= price['quantity'] %>" class="grid clearfix form-radio" <%= checked %>>
                     </div>
                 </td>
-                <td><%= price['quantity'] %> ex. <% if(!price['crossedPrice'] && price['promoPrice']) print('<span class="messagedeal">'+config.labels['superDeal']+'</span>&nbsp;') %> </td>
+                <td><%= price['quantity'] %> ex.</td>
                 <td><%
                     if(price['crossedPrice'] && price['promoPrice']) {
                     print(priceTpl({price:Math.round(price['sellPrice']*100)/100,classToAdd:'old'}));
@@ -163,7 +163,9 @@
                     var className = (price['promoPrice'])?'promo':undefined;
                     print(priceTpl({price:Math.round(validPrice*100)/100,classToAdd:className}));
                } %></td>
-                <td class="last-child"><%
+                <td class="last-child">
+                    <% if(!price['crossedPrice'] && price['promoPrice']) print('<span class="messagedeal">'+config.labels['superDeal']+'</span>&nbsp;') %> 
+                    <%
                     var priceWithTVA = validPrice * ( 1 + config.TVA );
                     print(priceTpl({price:Math.round(priceWithTVA*100)/100}));
                 %></td>

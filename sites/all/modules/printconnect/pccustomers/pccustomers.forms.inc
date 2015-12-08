@@ -419,6 +419,7 @@ function pccustomers_address_form($form, $form_state, $addressId) {
       '#title' => t('Name'),
       '#required' => TRUE,
       '#size' => 71,
+      '#maxlength' => 22,
       '#default_value' => $address->name,
   );
   /*$form['phone'] = array(
@@ -433,6 +434,7 @@ function pccustomers_address_form($form, $form_state, $addressId) {
       '#title' => t('Street'),
       '#required' => TRUE,
       '#size' => 71,
+      '#maxlength' => 60,
       '#default_value' => $address->street,
   );
 
@@ -500,6 +502,7 @@ function pccustomers_address_form($form, $form_state, $addressId) {
       '#type' => 'textfield',
       '#title' => t('Company'),
       '#size' => 71,
+      '#maxlength' => 22,
       '#default_value' => $address->company,
   );
 
@@ -549,6 +552,7 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#title' => t('Name'),
       '#required' => TRUE,
       '#size' => 61,
+      '#maxlength' => 22,
       '#default_value' => $Billingaddresses->name,
   );
 
@@ -558,6 +562,7 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#title' => t('Street'),
       '#required' => TRUE,
       '#size' => 61,
+      '#maxlength' => 60,
       '#default_value' => $Billingaddresses->street,
   );
 
@@ -620,6 +625,7 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#type' => 'textfield',
       '#title' => t('Company'),
       '#size' => 61,
+      '#maxlength' => 22,
       '#id' => 'companyInput',
       '#default_value' => $Billingaddresses->company,
   );
@@ -787,6 +793,7 @@ function pccustomers_newaddress_form($form, $form_state) {
   $form['name'] = array(
       '#type' => 'textfield',
       '#title' => t('Name'),
+      '#maxlength' => 22,
       '#required' => TRUE,
       '#size' => 71,
   );
@@ -802,6 +809,7 @@ function pccustomers_newaddress_form($form, $form_state) {
       '#type' => 'textfield',
       '#title' => t('Street'),
       '#required' => TRUE,
+      '#maxlength' => 60,
       '#size' => 71,
   );
 
@@ -850,6 +858,7 @@ function pccustomers_newaddress_form($form, $form_state) {
   $form['company'] = array(
       '#type' => 'textfield',
       '#title' => t('Company'),
+      '#maxlength' => 22,
       '#size' => 71,
   );
 //  $form['vatNumber'] = array(
@@ -952,6 +961,7 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
   $form['summary']['name'] = array(
       '#type' => 'textfield',
       '#title' => t('Name'),
+      '#maxlength' => 22,
       '#size' => 61,
       '#required' => TRUE,
   );
@@ -959,6 +969,7 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
   $form['summary']['street'] = array(
       '#type' => 'textfield',
       '#title' => t('Street'),
+      '#maxlength' => 60,
       '#size' => 61,
       '#required' => TRUE,
   );
@@ -1022,6 +1033,7 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
         '#title' => t('Company'),
         '#required' => FALSE,
         '#size' => 61,
+        '#maxlength' => 22,
         '#attributes' => array(
             'id' => 'companyInput'
         )

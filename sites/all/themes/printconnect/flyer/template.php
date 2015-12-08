@@ -47,7 +47,7 @@ function flyer_form_pccustomers_address_form_alter(&$form, &$form_state) {
 }
 
 function flyer_form_pccustomers_newaddress_form_alter(&$form, &$form_state) {
-	$form['postalCode']['#title'] = t('PC and city');
+	$form['postalCode']['#title'] = t('PostalCodeAndLocality');
 	$form['city']['#title_display'] = 'invisible';
 }
 

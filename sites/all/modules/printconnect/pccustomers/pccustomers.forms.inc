@@ -1443,7 +1443,7 @@ function pccustomers_login_form_login_validate(&$form, &$form_state) {
   if ($customer && !$customer->blocked) {
 
     if (!valid_email_address($customer->email)) {
-      form_set_error('email', t('Not a valid email address identification'));
+      form_set_error('email', t('Not a valid identification'));
       return false;
     }
 

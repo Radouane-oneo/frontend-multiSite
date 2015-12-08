@@ -1233,6 +1233,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
   $form['login']['email'] = array(
       '#type' => 'textfield',
       '#title' => t('Email'),
+      '#name' => t('email_login'),
       '#required' => TRUE,
       '#weight' => 7,
       '#attributes' => array('class' => array('customer-email', 'hint')),
@@ -1242,6 +1243,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
       '#type' => 'password',
       '#title' => t('Password'),
       '#required' => TRUE,
+      '#name' => t('Password_login'),
       '#attributes' => array('autocomplete' => 'off', 'class' => array('hint')),
       '#weight' => 8,
       '#description' => t('Your password'),
@@ -1264,10 +1266,10 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
           array('password'),
       ),
   );
-  /*$form['login']['forgot'] = array(
+  $form['login']['forgot'] = array(
         '#markup' => l(t('Forgot your password?'), 'myprintconnect/forgotpassword', array('query' => array('return' => $redirect), 'attributes' => array('class' => array('link')))),
         '#weight' => 9,
-    );*/
+    );
    /*Secont form */
   
    $form['login']['decriptionnew'] = array(

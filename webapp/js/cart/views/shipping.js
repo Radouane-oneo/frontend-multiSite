@@ -63,7 +63,6 @@ define([
 
         },
         changeShipping : function(e){
-            console.log('test')
             var me = this;
             ajaxCaller.call("changeShipping",{},"GET",$(e.currentTarget).val()).done(function(resultData){
                 if(resultData.code == "200"){

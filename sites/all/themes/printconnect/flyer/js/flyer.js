@@ -32,12 +32,13 @@ jQuery(document).ready(function(e) {
     /*jQuery('body.page-node-edit , .page-node-translate').removeClass('flyerstrap');*/
 	
 
-    //
-    new AnimOnScroll( document.getElementById( 'GridLoadingEffects' ), {
+    // Script qui execute le plugin GridLoadingEffects (Animation des grid)
+    
+    /*new AnimOnScroll( document.getElementById( 'GridLoadingEffects' ), {
         minDuration : 0.4,
         maxDuration : 0.7,
         viewportFactor : 0.2
-    } );
+    } );*/
 });
 
 (function ($) {

@@ -416,7 +416,7 @@ function pccustomers_address_form($form, $form_state, $addressId) {
 
   $form['name'] = array(
       '#type' => 'textfield',
-      '#title' => t('Name'),
+      '#title' => t('FullName'),
       '#required' => TRUE,
       '#size' => 71,
       '#default_value' => $address->name,
@@ -430,7 +430,7 @@ function pccustomers_address_form($form, $form_state, $addressId) {
   );*/
   $form['street'] = array(
       '#type' => 'textfield',
-      '#title' => t('Street'),
+      '#title' => t('NumberAndStreet'),
       '#required' => TRUE,
       '#size' => 71,
       '#default_value' => $address->street,
@@ -444,7 +444,7 @@ function pccustomers_address_form($form, $form_state, $addressId) {
 
   $form['postal_codeCity']['postalCode'] = array(
       '#type' => 'textfield',
-      '#title' => t('PostalCode'),
+      '#title' => t('PostalCodeAndLocality'),
       '#required' => TRUE,
       '#size' => 71,
       '#default_value' => $address->postalCode,

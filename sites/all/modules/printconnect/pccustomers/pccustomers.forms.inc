@@ -1232,7 +1232,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
    );
   $form['login']['email'] = array(
       '#type' => 'textfield',
-      '#title' => t('Email'),
+      '#title' => t('Email identification'),
       //'#name' => t('email_login'),
       '#required' => TRUE,
       '#weight' => 7,
@@ -1241,7 +1241,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
   );
   $form['login']['password'] = array(
       '#type' => 'password',
-      '#title' => t('Password'),
+      '#title' => t('Password identification'),
       '#required' => TRUE,
       //'#name' => t('Password_login'),
       '#attributes' => array('autocomplete' => 'off', 'class' => array('hint')),
@@ -1353,7 +1353,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
   "isRequired" => t('!name field is required.'),
   "invalidCharactersLength" => t('invalidCharactersLength'),
   "newpassword" => t('Password not long enough'),
-  "invaliEmail" => t('Email is not valid'),
+  "invaliEmail" => t('Email is not valid identification'),
   );
 
   $form['scriptForLabels'] = array(

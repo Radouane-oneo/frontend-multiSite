@@ -1232,7 +1232,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
    );
   $form['login']['email'] = array(
       '#type' => 'textfield',
-      '#title' => t('Email identification'),
+      '#title' => t('Email'),
       //'#name' => t('email_login'),
       '#required' => TRUE,
       '#weight' => 7,
@@ -1241,7 +1241,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
   );
   $form['login']['password'] = array(
       '#type' => 'password',
-      '#title' => t('Password identification'),
+      '#title' => t('Password'),
       '#required' => TRUE,
       //'#name' => t('Password_login'),
       '#attributes' => array('autocomplete' => 'off', 'class' => array('hint')),

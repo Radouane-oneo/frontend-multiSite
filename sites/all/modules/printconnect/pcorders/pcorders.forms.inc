@@ -471,7 +471,7 @@ function _pcorders_order_form_build_overview($order) {
             'data' => array(
                 t('Extra'),
                 $item->description,
-                theme('price', array('value' => $item->price * $item->price, 'block' => TRUE)),
+                theme('price', array('value' => $item->price, 'block' => TRUE)),
             ),
             'class' => array('orderItemsAdditional'),
         );

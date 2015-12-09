@@ -1353,7 +1353,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
   "isRequired" => t('!name field is required.'),
   "invalidCharactersLength" => t('invalidCharactersLength'),
   "newpassword" => t('Password not long enough'),
-  "invaliEmail" => t('Email is not valid'),
+  "invaliEmail" => t('Email is not valid identification'),
   );
 
   $form['scriptForLabels'] = array(

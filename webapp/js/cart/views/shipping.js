@@ -55,12 +55,19 @@ define([
                     overlay : {closeClick: false} // prevents closing when clicking OUTSIDE fancybox 
                 },
             });
+
+            //if no methode shipping was checked
+            if (!this.model.get('orderItemShipping') || this.config.shipping.length==1) {
+                $("input[name='shipping-type']:checked").change();
+            };
+
         },
         changeShipping : function(e){
             var me = this;
             ajaxCaller.call("changeShipping",{},"GET",$(e.currentTarget).val()).done(function(resultData){
-                if(resultData.code == "200")
+                if(resultData.code == "200"){
                     me.model.set({"orderItemShipping": resultData.data.orderItemShipping, "discountItems": resultData.data.discountItems});
+                }
             });
             e.preventDefault();
             e.stopPropagation();

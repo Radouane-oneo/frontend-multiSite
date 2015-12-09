@@ -56,7 +56,7 @@
                  
                 <tr class="even">
                     <td class="first-child"><%= model.orderItemShipping.shippingTypeTitle %></td>
-                    <td class="last-child"><%= priceTpl({price:(model.orderItemShipping.price)}) %></td> 
+                    <td class="last-child"><%= priceTpl({price:(model.orderItemShipping.price - (model.orderItemShipping.price * model.orderItemShipping.discount))}) %></td> 
                 </tr>
                 
                 <% if (model.discountItems.length>0) { %>

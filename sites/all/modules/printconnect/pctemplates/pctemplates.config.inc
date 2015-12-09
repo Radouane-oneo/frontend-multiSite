@@ -585,7 +585,7 @@ function getDefaultItemsByParent($parentId, $templateItems, $form_state = array(
   $defaultItems = array();
   if(property_exists($templateItems, $parentId)){
       $dItems = reset($templateItems->$parentId);
-      $items[] = $dItems->id;
+      //$items[] = $dItems->id;
       foreach ($dItems->children as $ditems) {
           foreach($ditems as $item){
             if(in_array($item->id, $selectedItems)) {

@@ -416,7 +416,7 @@ function pccustomers_address_form($form, $form_state, $addressId) {
 
   $form['name'] = array(
       '#type' => 'textfield',
-      '#title' => t('Name'),
+      '#title' => t('FullName'),
       '#required' => TRUE,
       '#size' => 71,
       '#maxlength' => 22,
@@ -431,7 +431,7 @@ function pccustomers_address_form($form, $form_state, $addressId) {
   );*/
   $form['street'] = array(
       '#type' => 'textfield',
-      '#title' => t('Street'),
+      '#title' => t('NumberAndStreet'),
       '#required' => TRUE,
       '#size' => 71,
       '#maxlength' => 60,
@@ -446,7 +446,7 @@ function pccustomers_address_form($form, $form_state, $addressId) {
 
   $form['postal_codeCity']['postalCode'] = array(
       '#type' => 'textfield',
-      '#title' => t('PostalCode'),
+      '#title' => t('PostalCodeAndLocality'),
       '#required' => TRUE,
       '#size' => 71,
       '#default_value' => $address->postalCode,
@@ -792,7 +792,7 @@ function pccustomers_newaddress_form($form, $form_state) {
 
   $form['name'] = array(
       '#type' => 'textfield',
-      '#title' => t('Name'),
+      '#title' => t('FullName'),
       '#maxlength' => 22,
       '#required' => TRUE,
       '#size' => 71,
@@ -807,7 +807,7 @@ function pccustomers_newaddress_form($form, $form_state) {
 
   $form['street'] = array(
       '#type' => 'textfield',
-      '#title' => t('Street'),
+      '#title' => t('NumberAndStreet'),
       '#required' => TRUE,
       '#maxlength' => 60,
       '#size' => 71,
@@ -815,7 +815,7 @@ function pccustomers_newaddress_form($form, $form_state) {
 
   $form['postalCode'] = array(
       '#type' => 'textfield',
-      '#title' => t('PostalCode'),
+      '#title' => t('PostalCodeAndLocality'),
       '#required' => TRUE,
       '#size' => 71,
       '#attributes' => array('class' => array('postalCode')),
@@ -1245,6 +1245,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
   $form['login']['email'] = array(
       '#type' => 'textfield',
       '#title' => t('Email'),
+      //'#name' => t('email_login'),
       '#required' => TRUE,
       '#weight' => 7,
       '#attributes' => array('class' => array('customer-email', 'hint')),
@@ -1254,6 +1255,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
       '#type' => 'password',
       '#title' => t('Password'),
       '#required' => TRUE,
+      //'#name' => t('Password_login'),
       '#attributes' => array('autocomplete' => 'off', 'class' => array('hint')),
       '#weight' => 8,
       '#description' => t('Your password'),
@@ -1276,10 +1278,10 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
           array('password'),
       ),
   );
-  /*$form['login']['forgot'] = array(
+  $form['login']['forgot'] = array(
         '#markup' => l(t('Forgot your password?'), 'myprintconnect/forgotpassword', array('query' => array('return' => $redirect), 'attributes' => array('class' => array('link')))),
         '#weight' => 9,
-    );*/
+    );
    /*Secont form */
   
    $form['login']['decriptionnew'] = array(
@@ -1363,7 +1365,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
   "isRequired" => t('!name field is required.'),
   "invalidCharactersLength" => t('invalidCharactersLength'),
   "newpassword" => t('Password not long enough'),
-  "invaliEmail" => t('Email is not valid'),
+  "invaliEmail" => t('Email is not valid identification'),
   );
 
   $form['scriptForLabels'] = array(
@@ -1453,7 +1455,7 @@ function pccustomers_login_form_login_validate(&$form, &$form_state) {
   if ($customer && !$customer->blocked) {
 
     if (!valid_email_address($customer->email)) {
-      form_set_error('email', t('Not a valid email address'));
+      form_set_error('email', t('Not a valid identification'));
       return false;
     }
 

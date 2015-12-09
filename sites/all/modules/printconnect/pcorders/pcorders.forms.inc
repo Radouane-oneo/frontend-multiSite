@@ -462,7 +462,6 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
 
 function _pcorders_order_form_build_overview($order) {
   $discounts = FALSE;
-
   if ($order) {
     $rows = array();
 
@@ -472,7 +471,7 @@ function _pcorders_order_form_build_overview($order) {
             'data' => array(
                 t('Extra'),
                 $item->description,
-                theme('price', array('value' => $item->price, 'block' => TRUE)),
+                theme('price', array('value' => $item->price * $item->price, 'block' => TRUE)),
             ),
             'class' => array('orderItemsAdditional'),
         );
@@ -521,7 +520,7 @@ function _pcorders_order_form_build_overview($order) {
               t('Shipping'),
               $type->shippingType->tag,
               //array('data' => '', 'class' => array('filler')),
-              theme('price', array('value' => $order->orderItemShipping->price, 'free' => TRUE, 'block' => TRUE)),
+              theme('price', array('value' => $order->orderItemShipping->price - ($order->orderItemShipping->price * $order->orderItemShipping->discount), 'free' => TRUE, 'block' => TRUE)),
           ),
       );
     }

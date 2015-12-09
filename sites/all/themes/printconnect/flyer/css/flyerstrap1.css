@@ -266,7 +266,7 @@
 }
 /* line 203, ../sass/style.scss */
 .main-page .wrap-block h2.green-title {
-  margin-bottom: 13px;
+  margin-bottom: 30px;
   padding: 0;
 }
 /* line 207, ../sass/style.scss */
@@ -612,12 +612,13 @@
 }
 /* line 518, ../sass/style.scss */
 .main-page .blockProd-col .prod-3col .prod-col h3 {
-  font-family: Open Sans;
-  font-size: 18px;
-  line-height: 20px;
-  font-weight: 400;
-  color: #646464;
-  margin-bottom: 11px;
+  font-size: 16px;
+  text-transform: none;
+  display: table-cell;
+  vertical-align: bottom;
+  text-align: center;
+  float: none;
+  width: 144px;
 }
 /* line 526, ../sass/style.scss */
 .main-page .blockProd-col .prod-3col .prod-col .prod-img {

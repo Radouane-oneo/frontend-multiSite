@@ -6,9 +6,10 @@ define([
     'views/jobView',
     'views/discountCode',
     'views/customerReference',
+    'views/salesId',
     'views/priceBlock',
     'views/Error'
-], function (Backbone, cartModel, cartTemplate, shippingView, jobView, discountView, customerReferenceView, priceBlockView, errorView) {
+], function (Backbone, cartModel, cartTemplate, shippingView, jobView, discountView, customerReferenceView,salesIdView, priceBlockView, errorView) {
 
     return Backbone.View.extend({
         template: _.template(cartTemplate),
@@ -36,6 +37,9 @@ define([
 
                 //customerReference View
                 this.customerReferenceView = new customerReferenceView(this.model);
+                
+                //salesId View
+                this.salesIdView = new salesIdView(this.model);
 
                 //priceBlock View
                 this.priceBlockView = new priceBlockView(this.model);

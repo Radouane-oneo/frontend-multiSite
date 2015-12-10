@@ -31,6 +31,14 @@ jQuery(document).ready(function(e) {
     /* Remove flyerstrap class from Edit and translate page */
     /*jQuery('body.page-node-edit , .page-node-translate').removeClass('flyerstrap');*/
 	
+
+    // Script qui execute le plugin GridLoadingEffects (Animation des grid)
+    
+    /*new AnimOnScroll( document.getElementById( 'GridLoadingEffects' ), {
+        minDuration : 0.4,
+        maxDuration : 0.7,
+        viewportFactor : 0.2
+    } );*/
 });
 
 (function ($) {

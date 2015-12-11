@@ -28,6 +28,7 @@ define([
         stepCheckout : function(){
             var jobsError = myCart.jobView.errors();
             var shippingError = myCart.shippingView.errors();
+            var salesIdError = myCart.salesIdView.errors();
             if(jobsError) {
                 myCart.errorView.render(jobsError);
                 $(window).scrollTop($(this.config.containerId).offset().top);
@@ -38,6 +39,10 @@ define([
                 $(window).scrollTop($(this.config.containerId).offset().top);
                 return false;
             }
+            if(salesIdError){
+                return false;
+            }
+            
             if(myCart.disable) return false;
             location.href = "/" + this.config.prefix + "/checkout";
 

@@ -8016,7 +8016,7 @@ div.myoffers table.list thead tr th:nth-child(2){
 .view-best-sales .headproduct > h2{
 	float: left;
 	font-size: 16px;
-	font-weight: 600;*
+	font-weight: 600;
         text-transform: uppercase;
 }
 
@@ -12138,7 +12138,7 @@ input.ui-button.payment {
     color: #f60;
     line-height: 20px;
 }
-.deliverydate {
+.shippingdate, .deliverydate, .salesId {
     font-size: 12px;
     line-height: 20px;
     color: #646464;
@@ -12581,6 +12581,51 @@ form#pccheckout-payment-form fieldset legend{
 .i18n-nl-NL #pcsamplepacks-requested-form a#searchprocess{
 	display: none !important;
 }
+
+/* Sales ID CSS  -- Page Cart */ 
+#salesId {
+    margin-top: 0;
+    border-radius: 0px 0px 4px 4px;
+    -moz-border-radius: 0px 0px 4px 4px;
+    -webkit-border-radius: 0px 0px 4px 4px;
+}
+
+#edit-cart-reference .fieldset-wrapper {
+    margin-bottom: 0;
+    border-radius: 4px 4px 0px 0px;
+    -moz-border-radius: 4px 4px 0px 0px;
+    -webkit-border-radius: 4px 4px 0px 0px;
+}
+
+#edit-cart-reference > legend {
+    width: 100%;
+}
+
+#salesId .fieldset-wrapper {
+    border-radius: 0px 0px 4px 4px;
+    -moz-border-radius: 0px 0px 4px 4px;
+    -webkit-border-radius: 0px 0px 4px 4px;
+    border-top: 0;
+}
+
+#edit-cart-reference span.infobul {
+    background: rgba(0, 0, 0, 0) url("images/icon_question.png") no-repeat center right;
+    border-radius: 0;
+    border-top: 0 none;
+    padding: 5px 10px 5px 10px;
+    position: relative;
+    margin: 0;
+}
+
+#edit-cart-reference span.datainfobul {
+    font-size: 11px;
+    font-weight: 400;
+    text-transform: none;
+    line-height: normal;
+    left: 30px;
+    top: -2px;
+}
+
 .virement-bancaire { position: relative; }
 .virement-bancaire:hover p { display: block; }
 .virement-bancaire p {

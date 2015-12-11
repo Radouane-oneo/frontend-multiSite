@@ -158,20 +158,12 @@ use printconnect\Dal\ForbiddenException;
       $start = microtime(true);
       $response = drupal_http_request($url, array('header' => $header, 'method' => 'GET', 'timeout' => 900));
       $end = microtime(true);
-
-      //watchdog('pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'GET', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), WATCHDOG_DEBUG, ($end - $start) . ' on GET ' . $url);
-
       switch ((int) $response->code) {
         case 200:
           $data = $response->data;
           $data= html_entity_decode($data, ENT_NOQUOTES);
           return $data;
         case 404:
-	  /* if (preg_match('/customer/', $url) && $response->data == '"Record does not exist!"') {
-		$data = $response->data;
-          $data= html_entity_decode($data, ENT_NOQUOTES);
-          return $data;
-	    }*/
           return FALSE;
           break;
         case 403:
@@ -196,18 +188,14 @@ use printconnect\Dal\ForbiddenException;
           $properties['pPrice'] = $properties['price'];
         }
       }
-     
-	$data = json_encode($properties);
+      $data = json_encode($properties);
       $start = microtime(true);
       $response = drupal_http_request($url, array('header' => $header, 'method' => 'PUT', 'timeout' => 900, 'data' => $data));
       $end = microtime(true);
-      //watchdog('pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'PUT', '%url' => $url, '%timing' => ($end - $start), '%data' => $data, '%response' => print_r($response, TRUE)), WATCHDOG_DEBUG, ($end - $start) . ' on PUT ' . $url);
-  
       if ($response->code == 200) {
         $data = json_decode($response->data);
         return $data;
       } else {
-          //var_dump("Error", $url, $data);die;
         throw new Exception('PUT ' . $url, $data, $this->ReadErrorInformation($response));
       }
     }
@@ -228,19 +216,15 @@ use printconnect\Dal\ForbiddenException;
         $response = drupal_http_request($url, array('header' => $header, 'method' => 'POST', 'timeout' => 900));
       }
       $end = microtime(true);
-      //watchdog('pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'POST', '%url' => $url, '%timing' => ($end - $start), '%data' => $data, '%response' => print_r($response, TRUE)), WATCHDOG_DEBUG, ($end - $start) . ' on POST ' . $url);
       
       if ($response->code == 200) {
         $data = json_decode($response->data);
 
         return $data;
       } else {
-            //var_dump("Error", $response->data, $url, $data);die;
             throw new Exception('POST ' . $url, $data, $this->ReadErrorInformation($response)); 
+
       }
-//     if($entity == "order-discount-code"){
-//        $_SESSION['data']=$data;
-//      }
     }
 
     public function Delete($entity, $params) {
@@ -249,7 +233,6 @@ use printconnect\Dal\ForbiddenException;
       $start = microtime(true);
       $response = drupal_http_request($url, array('header' => $header, 'method' => 'DELETE', 'timeout' => 900));
       $end = microtime(true);
-      //watchdog('pcrestdal', '%timing on %type %url \n Data \n %data \n Response %response', array('%type' => 'DELETE', '%url' => $url, '%timing' => ($end - $start), '%data' => '', '%response' => print_r($response, TRUE)), WATCHDOG_DEBUG, ($end - $start) . ' on DELETE ' . $url);
       if ($response->code == 200) {
         $data = json_decode($response->data);
         return $data;

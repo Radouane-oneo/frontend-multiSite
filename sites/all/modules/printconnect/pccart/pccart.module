@@ -24,7 +24,7 @@ $items['cart'] = array(
     'page arguments' => array(),
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
-    'title' => 'your cart'
+    'title' => t('your cart')
 );
 
 $items['cart/ajax/getcart'] = array(
@@ -321,7 +321,6 @@ function new_cart_ajax_removeitem($itemId) {
 }
 
 function new_cart_ajax_removedesign($itemId) {
-
     $response = Factory::DeleteDesign($itemId);
 
     Dal::BuildJson(json_decode($response->data, 1));
@@ -1338,7 +1337,7 @@ function pccart_callback() {
         $cartId = $_GET['cartid'];
         $controlpro = isset($_GET['controlpro']) ? $_GET['controlpro'] : 0;
         $quickupload = isset($_GET['quickupload']) ? $_GET['quickupload'] : 0;
-
+        $dummyUpload = isset($_GET['dummyUpload']) ? $_GET['dummyUpload'] : 0;
         if (isset($_GET['myPcId']) && $_GET['myPcId']) {
           $_SESSION['savedDesigns'][$id] = $_GET['myPcId'];
         }
@@ -1361,6 +1360,7 @@ function pccart_callback() {
         $item->cart_item = $id;
         $item->controlpro = $controlpro;
         $item->quickupload = $quickupload;
+        $item->dummyUpload = $dummyUpload;
         Factory::SaveItem($item);
         Factory::Refresh($cart);
         print update_domain();

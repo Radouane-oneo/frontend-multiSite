@@ -134,6 +134,12 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
   $form['header']['left'] ['livraison'] = array(
         '#markup' => "<div class='shippingdate'><span class='livraison'>".t('shipping date').":</span><span class='senddate'> ".format_date(strtotime($order->expectedShippingDate), 'medium', 'd-m-y')."</span></div>"
     );
+
+  if($order->user!=NULL){
+    $form['header']['left'] ['salesid'] = array(
+          '#markup' => "<div class='salesId'><span class='livraison'>".strtoupper(t('salesId')).":</span><span class='senddate'>".$order->user->salesId."</span></div>"
+      );
+  }
   
   $form['deliveryinvoice'] = array(
       '#type' => 'container',
@@ -462,7 +468,6 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
 
 function _pcorders_order_form_build_overview($order) {
   $discounts = FALSE;
-
   if ($order) {
     $rows = array();
 
@@ -521,7 +526,7 @@ function _pcorders_order_form_build_overview($order) {
               t('Shipping'),
               $type->shippingType->tag,
               //array('data' => '', 'class' => array('filler')),
-              theme('price', array('value' => $order->orderItemShipping->price, 'free' => TRUE, 'block' => TRUE)),
+              theme('price', array('value' => $order->orderItemShipping->price - ($order->orderItemShipping->price * $order->orderItemShipping->discount), 'free' => TRUE, 'block' => TRUE)),
           ),
       );
     }

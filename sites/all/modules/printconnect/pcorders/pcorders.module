@@ -476,7 +476,7 @@ function pcorders_form_pcpayments_request_form_alter(&$form, &$form_state) {
     }
 
     //get methode de livraison
-    $shippingPrice = ($order->orderItemShipping->price >0)? $order->orderItemShipping->price : t('Free');
+    $shippingPrice = ($order->orderItemShipping->price - ($order->orderItemShipping->price * $order->orderItemShipping->discount) >0)? $order->orderItemShipping->price - ($order->orderItemShipping->price * $order->orderItemShipping->discount) : t('Free');
     $rowsOrders[] = array(
         'class' => array('productItem'),
         'data' => array(

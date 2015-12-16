@@ -1,11 +1,22 @@
 <fieldset id="edit-cart-reference" class="discount ref form-wrapper">
-    <legend><span class="fieldset-legend"><%= config.labels['customerReference'] %></span></legend>
+    <legend>
+    	<span class="fieldset-legend"><%= config.labels['customerReference'] %></span>
+    	<span class="infobul">
+            <span class="datainfobul"><%= config.labels['dataInfoBulReferenceSalesId'] %></span>
+        </span>
+    </legend>
+    <div id="sales_id_message" class="messages error" style="display: none;margin-bottom: 10px !important;">
+        <h2 class="element-invisible">Error message</h2>
+        <ul>
+         <li><%= config.labels['SalesIdNotExist'] %></li>
+        </ul>
+    </div>
     <div class="fieldset-wrapper">
         <div class="form-item form-type-item" id="edit-cart-reference-text">
             <%= config.labels['customerReferenceText'] %>
         </div>
         <div class="form-item form-type-textfield form-item-cart-reference-input">
-            <input type="text" maxlength="128" size="30" value="<%= model.customerReference %>" id="edit-cart-reference-input"  class="refCustomer form-text" >
+            <input type="text" maxlength="128" size="30" value="<%= model.customerReference %>" id="edit-cart-reference-input"  class="refCustomer form-text" placeholder="<%= config.labels['customerReferenceExample'] %>">
         </div>
     </div>
 </fieldset>

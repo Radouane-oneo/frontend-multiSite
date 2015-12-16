@@ -94,6 +94,7 @@ function pccheckout_personal_form($form, &$form_state) {
         '#title' => t('First name'),
         '#required' => TRUE,
         '#size' => 30,
+        '#maxlength' => 22,
         '#default_value' => $customer->firstName,
     );
     $form['personal']['lastName'] = array(
@@ -101,6 +102,7 @@ function pccheckout_personal_form($form, &$form_state) {
         '#title' => t('Last name'),
         '#required' => TRUE,
         '#size' => 30,
+        '#maxlength' => 22,
         '#default_value' => $customer->lastName,
     );
     $form['personal']['phone'] = array(
@@ -120,6 +122,7 @@ function pccheckout_personal_form($form, &$form_state) {
         '#type' => 'textfield',
         '#title' => t('Street'),
         '#required' => TRUE,
+        '#maxlength' => 60,
         '#size' => 30,
     );
     $form['address']['postalCode'] = array(
@@ -176,6 +179,7 @@ function pccheckout_personal_form($form, &$form_state) {
         '#title' => t('Company'),
         '#required' => FALSE,
         '#size' => 30,
+        '#maxlength' => 22,
         '#attributes' => array(
             'id' => 'companyInput'
         )

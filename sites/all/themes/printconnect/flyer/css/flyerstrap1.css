@@ -257,6 +257,10 @@
 .main-page {
   margin-top: -259px;
 }
+
+.main-page .wrap-block a:hover, .main-page .wrap-block  a:active,.main-page .wrap-block a:visited{
+  color: #f60 !important;
+}
 /* line 200, ../sass/style.scss */
 .main-page .wrap-block {
   background-color: #fff;

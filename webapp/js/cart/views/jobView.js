@@ -21,6 +21,7 @@ define([
 			this.filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 			this.config = require("config");
             this.model = model;
+	        this.config.dummyUpload = this.model.get('dummyUpload');
 	        this.render();
 	        this.model.on("change",this.render,this);
 	    },
@@ -272,7 +273,7 @@ define([
     		});   	   	
 	    }, 
         errors : function(){
-        	var orderItems = this.model.attributes.orderItems;
+        	var orderItems = this.model.get('orderItems');
         	for (var i = 0; i< orderItems.length; i++) {
         		var checkBox = $(this.config.jobBox).find('.orderBox[data-orderitem="'+orderItems[i].id+'"]').find('.checkbox-event input[type="checkbox"]');
         		var inputBox = $(this.config.jobBox).find('.orderBox[data-orderitem="'+orderItems[i].id+'"]').find('.inputdesigneremail');

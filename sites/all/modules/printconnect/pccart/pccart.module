@@ -286,7 +286,8 @@ function new_cart_loadpage() {
         "controleProfessionel" => t('Contrôle professionel de'),
         "updateProduct" => t('update product'),
         "continue" => t('Continue shopping'),
-        "linkProduct" => t('link product')
+        "linkProduct" => t('link product'),
+        "vipUpload" => t('VIP upload')
     );
 
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");

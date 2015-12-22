@@ -6,7 +6,7 @@
             </label>                 
         </span>
   
-       <%= priceTpl({price:subTotalAmount}) %>
+       <%= priceTpl({price:subTotalAmount * (1 + config.vat)}) %>
     </div>
     <div class="button-wrapper button-wrapper-right">
         <input type="button" value="<%= config.labels['paynow'] %>" name="op" id="actionPayment" class="payment form-submit" role="button">

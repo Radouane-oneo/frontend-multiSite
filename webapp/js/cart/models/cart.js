@@ -37,7 +37,6 @@ define([
             });
             if(this.get("orderItemShipping") != null && this.get("orderItemShipping").price)
                 subTotalAmount += parseFloat(this.get("orderItemShipping").price);
-            console.log('subTotalAmount ' + subTotalAmount);
             return subTotalAmount;
         }
     });

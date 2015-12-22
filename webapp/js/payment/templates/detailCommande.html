@@ -32,6 +32,17 @@
                                 <%}}%>
                         </td>
                     </tr>
+                    
+                    <!-- options -->
+                    <%if (orderItem.options.length>0) { %>
+                        <% _.each(orderItem.options, function(option, i){ %>
+                            <tr>
+                                <td><%=option.optionName %></td>
+                                <td class='last-child'><%= priceTpl({price:option.price,classToAdd:'pricepreflight'}) %></td>
+                            </tr>
+                        <% }); %>
+                    <% }  %>
+
                     <!-- fotolia -->
                     <% if (orderItem.fotoliaItems.length>0) { %>
                         <% _.each(orderItem.fotoliaItems, function(fotolia, i){ %>

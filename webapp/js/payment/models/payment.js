@@ -29,6 +29,7 @@ define([
         },
         subTotalAmount: function() {
             var subTotalAmount = 0;
+            var dummyUpload = parseFloat(this.get('dummyUpload'));
             _.each(this.get("orderItems"), function(orderItem){
                 subTotalAmount += parseFloat(orderItem.price);
                 _.each(orderItem.options, function(option){
@@ -37,6 +38,11 @@ define([
                 _.each(orderItem.fotoliaItems, function(fotoliaItem){
                     subTotalAmount += parseFloat(fotoliaItem.price);
                 });
+
+                //if uploaded via dummyUpload
+                if(orderItem.hasDummyUpload)
+                    subTotalAmount += dummyUpload;
+
                 if(orderItem.fileCheck.price)
                     subTotalAmount += parseFloat(orderItem.fileCheck.price);
             });
@@ -45,6 +51,7 @@ define([
             });
             if(this.get("orderItemShipping").price)
                 subTotalAmount += parseFloat(this.get("orderItemShipping").price);
+            console.log('subTotalAmount ' + subTotalAmount);
             return subTotalAmount;
         }
     });

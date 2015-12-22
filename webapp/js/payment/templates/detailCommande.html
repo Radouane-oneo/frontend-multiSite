@@ -52,6 +52,15 @@
                         <td class='last-child'><%= priceTpl({price:orderItem.designTemplate.price,classToAdd:'price'}) %></td>
                     </tr>
                     <% }  %>
+
+                    <!-- Dummy Upload  -->
+                    <% if (orderItem.hasDummyUpload) { %>
+                        <tr>
+                            <td><%= config.labels.vipUpload %></td>
+                            <td class='last-child'><%= priceTpl({price:model.dummyUpload,classToAdd:'price'}) %></td>
+                        </tr>
+                    <% }  %>
+
                 <%});%>
                  
                 <tr class="even">

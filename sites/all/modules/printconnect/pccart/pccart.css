@@ -177,7 +177,7 @@ padding-bottom: 5px;
   background-repeat: no-repeat;
 }
 
-.poll-form a{
+.poll-form a, .poll-form a:visited{
   font-weight: bold;
   color: #fff;
   font-size: 15px;
@@ -697,6 +697,7 @@ table.targetPrice tbody tr.last-child td { border:none; }
   text-transform: none;
   margin-bottom: 12px;
 }
+
 
 .options-file-impression li {
   background: url(images/bg_btns.png) no-repeat -3px -100px;

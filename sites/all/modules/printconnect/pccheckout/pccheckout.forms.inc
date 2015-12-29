@@ -5,7 +5,7 @@ use printconnect\Carts\Factory as CartsFactory;
 function pccheckout_redirect() {
     _pccustomers_ensureloggedin();
     $customer = \printconnect\Customers\Factory::Current();
-    $addresses = \printconnect\Customers\Addresses\Factory::GetAddresses($customer);
+    $addresses = \printconnect\Customers\Addresses\Factory::GetAddresses($customer, false);
     if (!$customer->firstName || !$customer->lastName || !$customer->phone || !$addresses->count) {
         drupal_goto('checkout/personal');
     } else {

@@ -157,6 +157,9 @@
   background-color: #fff;
   color: #77b700;
 }
+.btn-white:hover,.btn-white:active ,.btn-white:visited {
+  color: #77b700;
+}
 /* line 129, ../sass/style.scss */
 .btn-white:hover {
   background-color: #DDD;
@@ -256,6 +259,10 @@
 /* line 198, ../sass/style.scss */
 .main-page {
   margin-top: -259px;
+}
+
+.main-page .wrap-block a:not(.btn):hover, .main-page .wrap-block  a:not(.btn):active,.main-page .wrap-block a:not(.btn):visited{
+  color: #f60 !important;
 }
 /* line 200, ../sass/style.scss */
 .main-page .wrap-block {

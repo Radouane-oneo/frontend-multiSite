@@ -75,6 +75,14 @@ class Factory {
             'id' => $id,
             'customer_reference' => $orderRef
         ));
+    }  
+    
+    public static function SaveSalesId($id, $salesId)
+    {
+        return Dal::SendRequest('supplement-parameter', 'POST', array(
+            'id' => $id,
+            'sales_id' => $salesId
+        ));
     }    
 
     public static function ApplyDiscount($code)

@@ -2821,10 +2821,6 @@ a.ui-button.inactivebtn{
 .page-products #pcproducts-config-form table.grid tbody tr td .price.old{
 	padding-left: 10px
 }
-.page-products #pcproducts-config-form table.grid tbody tr td .price.promo,
-.page-templates table.grid tbody tr td .price.promo {
-	color: #77b800 !important;
-}
 
 .page-products #pcproducts-config-form table.grid th:last-child {
 	text-align: right;

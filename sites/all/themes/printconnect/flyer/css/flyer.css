@@ -12689,3 +12689,11 @@ form#pccheckout-payment-form fieldset legend{
     padding-top: 5px;
     padding-right: 14px;
 }
+.titleOM{
+    color: #f60;
+    text-transform: uppercase;
+}
+.titleGM{
+    color: #646464;
+    text-transform: uppercase;  
+}

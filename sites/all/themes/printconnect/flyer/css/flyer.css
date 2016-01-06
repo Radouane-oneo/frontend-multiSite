@@ -261,10 +261,12 @@ table tr.even, table tr.odd {
 	position: relative;
 	width: 1032px;
 }
-a, a:visited {
-	color: #f60 !important;
+a, a:visited,
+.page-taxonomy .ui-widget-content a {
+	color: #f60;
 	text-decoration: none
 }
+
 a:hover, a:active {
 	text-decoration: underline
 }
@@ -8311,6 +8313,7 @@ form#pccheckout-payment-form .overview table.sticky-enabled tr.last-child td{
 	margin: 0;
 	display: block;
 	background: url(images/menu-categorie.png) no-repeat 20px -28px;
+    padding: 0 5px 0 35px;
 }
 #block-menu-block-1 ul.menu li a:hover,
 #block-menu-block-1 ul.menu li a.active{

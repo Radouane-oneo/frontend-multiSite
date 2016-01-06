@@ -262,7 +262,7 @@ table tr.even, table tr.odd {
 	width: 1032px;
 }
 a, a:visited {
-	color: #f60;
+	color: #f60 !important;
 	text-decoration: none
 }
 a:hover, a:active {

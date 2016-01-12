@@ -261,10 +261,12 @@ table tr.even, table tr.odd {
 	position: relative;
 	width: 1032px;
 }
-a, a:visited {
+a, a:visited,
+.page-taxonomy .ui-widget-content a {
 	color: #f60;
 	text-decoration: none
 }
+
 a:hover, a:active {
 	text-decoration: underline
 }
@@ -282,6 +284,7 @@ h1, #content h1 {
 	font-size: 16px;
 	text-transform: uppercase;
 	font-weight: 700;
+	margin-bottom: 15px;
 }
 h2, #center h1 {
 	font-size: 16;
@@ -8307,6 +8310,7 @@ form#pccheckout-payment-form .overview table.sticky-enabled tr.last-child td{
 	margin: 0;
 	display: block;
 	background: url(images/menu-categorie.png) no-repeat 20px -28px;
+    padding: 0 5px 0 35px;
 }
 #block-menu-block-1 ul.menu li a:hover,
 #block-menu-block-1 ul.menu li a.active{
@@ -8337,7 +8341,7 @@ form#pccheckout-payment-form .overview table.sticky-enabled tr.last-child td{
 	border-style: solid;
 	border-color: #ececec;
 	border-width: 0 0 1px 0;
-	font-size: 13px;
+	font-size: 12px;
 	color: #666666;
 	font-weight: 600;
 	position: relative;
@@ -8375,7 +8379,7 @@ form#pccheckout-payment-form .overview table.sticky-enabled tr.last-child td{
 	-moz-border-radius: 0;
 	border-radius: 0;
 	color: #646464;
-	font-size: 13px;
+	font-size: 12px;
 	line-height: 17px;
 }
 #accordion-list .ui-accordion-content h3{
@@ -12688,4 +12692,12 @@ form#pccheckout-payment-form fieldset legend{
     padding-bottom: 5px;
     padding-top: 5px;
     padding-right: 14px;
+}
+.titleOM{
+    color: #f60;
+    text-transform: uppercase;
+}
+.titleGM{
+    color: #646464;
+    text-transform: uppercase;  
 }

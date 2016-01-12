@@ -5,8 +5,16 @@ use printconnect\Carts\Factory as CartsFactory;
 function pccheckout_redirect() {
     _pccustomers_ensureloggedin();
     $customer = \printconnect\Customers\Factory::Current();
-    $addresses = \printconnect\Customers\Addresses\Factory::GetAddresses($customer);
-    if (!$customer->firstName || !$customer->lastName || !$customer->phone || !$addresses->count) {
+    $addresses = \printconnect\Customers\Addresses\Factory::GetAddresses($customer, false);
+    $billingAccounts = \printconnect\Customers\BillingAccounts\Factory::GetBillingAccounts($customer);
+    \printconnect\Customers\BillingAccounts\Factory::LoadBillingAccounts($billingAccounts);
+    $countBas = 0;
+    foreach($billingAccounts as $billingAccount) {
+        if($billingAccount && $billingAccount->id) {
+            $countBas++;
+        }
+    }
+    if (!$customer->firstName || !$customer->lastName || !$customer->phone || !$addresses->count || $countBas == 0) {
         drupal_goto('checkout/personal');
     } else {
         drupal_goto('checkout/invoiceanddelivery');

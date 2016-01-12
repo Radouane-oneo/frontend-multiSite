@@ -10,7 +10,14 @@
                         <select name="shipping[detail][current][select]" id="edit-shipping-detail-current-select"
                                 class="form-select" title="">
                                 <option value="0" class="addNewSA"><%= model.labels['addNewSA'] %></option>
-                            <% _.each(model.shippingAddresses.addresses, function(shippingAddress){
+                     
+                                <% 
+                          
+                            var arrayAdresses = model.shippingAddresses.addresses.sort(function (a, b) {
+                                return a.name.localeCompare( b.name );
+                            });
+                            
+                            _.each(arrayAdresses, function(shippingAddress){
                                var name = (shippingAddress.company)?shippingAddress.company:shippingAddress.name;
                             %>
                                 <option is-shipping="<%= shippingAddress.isShipping %>" value="<%= shippingAddress.id %>"><%= name  %> - <%= shippingAddress.street  %> , <%= shippingAddress.postalCode  %> <%= shippingAddress.city %></option>

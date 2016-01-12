@@ -252,8 +252,9 @@ function new_payment_submit($paymentId, $cartId, $totalAmount) {
     }
 
      // A VOIR   $cart->storeCredit = 0;
-  
+ 
     $paymentMethod = \printconnect\PaymentMethods\Factory::Get($paymentId);
+      
     switch (strtolower($paymentMethod->paymentMethod->internalName)) {
         case 'cod':
             \printconnect\Carts\Factory::Process($cart, 'cod');
@@ -272,6 +273,7 @@ function new_payment_submit($paymentId, $cartId, $totalAmount) {
             drupal_goto('myprintconnect/orders/' . $cartId . '/confirmation');
             break;
         default:
+            
             $paymentgateway = 'pcpayments';
             if (function_exists(($paymentgateway . '_processpayment'))) {
 

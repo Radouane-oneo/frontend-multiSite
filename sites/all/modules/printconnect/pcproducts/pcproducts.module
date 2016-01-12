@@ -123,6 +123,15 @@ function pcproducts_menu() {
               'page arguments' => array(1),
               'access arguments' => array('access content')
           );
+
+	  $items["products/promos"] = array(
+              'title' => 'promos prices',
+              'title arguments' => array(1),
+              'description' => t('promos prices'),
+              'page callback' => 'pcproducts_js_form_productWithPromo',
+              'page arguments' => array(1),
+              'access arguments' => array('access content')
+          );
           $items["products/%/%"] = array(
               'title' => 'Configuration',
               'title callback' => '_pcproducts_getproductname',
@@ -635,7 +644,10 @@ function pcproducts_validate_product() {
     }
   }
 }
-
+function pcproducts_js_form_productWithPromo() {
+    $products = Factory::GetProductWithPromo();
+    print($products->data);
+}
 function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = FALSE, $edit = FALSE) {
     pcproducts_validate_product();
 

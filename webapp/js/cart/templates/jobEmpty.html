@@ -15,7 +15,7 @@
 			<div class="preview2">
 				<div class="description form-wrapper <%= (model.emailDesigner ==null)?'':'jobDesigner' %>">
                                     <% var name=''%>
-                                    <% if (model.customWidth != 0 && model.customHeight != 0){
+                                    <% if (model.customWidth != 0  && model.customWidth != null && model.customHeight != 0 && model.customHeight != null){
                                             name = model.configuration.name + ' ' +model.customWidth+' X '+ model.customHeight+' mm';
                                         }else
                                         {

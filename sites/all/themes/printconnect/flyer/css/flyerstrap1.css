@@ -621,11 +621,11 @@
 .main-page .blockProd-col .prod-3col .prod-col h3 {
   font-size: 16px;
   text-transform: none;
-  display: table-cell;
+  display: block;
   vertical-align: bottom;
   text-align: center;
   float: none;
-  width: 144px;
+  width: 100%;
 }
 /* line 526, ../sass/style.scss */
 .main-page .blockProd-col .prod-3col .prod-col .prod-img {

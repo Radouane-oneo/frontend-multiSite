@@ -195,6 +195,8 @@ padding-bottom: 5px;
 
 .poll-form .txto{
   font-weight: normal;
+  color: #646464;
+  margin: 0;
 }
 .img2 .text {
 margin-right: 23px;
@@ -685,7 +687,7 @@ table.targetPrice tbody tr.last-child td { border:none; }
   height: 50px;
 }
 
-.poll-form .designtool.iframe {
+.poll-form .popupbtn{
   display: inline-block;
   background-color: #6faa01;
   border-radius: 3px;
@@ -698,6 +700,13 @@ table.targetPrice tbody tr.last-child td { border:none; }
   margin-bottom: 12px;
 }
 
+.poll-form .filetype{
+  font-size: 12px;
+  color: #9d9d9c;
+  display: block;
+  margin: -6px 0 18px;
+  line-height: 13px;
+}
 
 .options-file-impression li {
   background: url(images/bg_btns.png) no-repeat -3px -100px;
@@ -714,12 +723,38 @@ table.targetPrice tbody tr.last-child td { border:none; }
   font-size: 12px;
 }
 
+.dummyupload .options-file-impression li{
+  background: url(images/dummyicone.png) no-repeat 0 5px;
+}
 .option-title {
   font-weight: bold;
   font-size: 15px;
   margin-bottom: 4px;
 }
 
+.dummy-price{
+  background-color: #ff8200;
+  width: 62px;
+  height: 62px;
+  font-size: 14px;
+  text-align: center;
+  line-height: 62px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  overflow: hidden;
+  color: white;
+  position: absolute;
+  bottom: -31px;
+  left: 50%;
+  margin-left: -31px;
+  font-weight: bold;
+}
+.poll-form.dummyupload{
+  position: relative;
+  padding-bottom: 34px !important;
+  margin-bottom: 28px;
+}
 .page-cart #pccart-cart-form .cartItemsContainer ul li {
   list-style: none;
   padding: 0;

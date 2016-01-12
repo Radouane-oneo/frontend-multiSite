@@ -29,7 +29,7 @@ define([
         },
         subTotalAmount: function() {
             var subTotalAmount = 0;
-            var dummyUpload = parseFloat(this.get('dummyUpload'));
+            //var dummyUpload = parseFloat(this.get('dummyUpload'));
             _.each(this.get("orderItems"), function(orderItem){
                 subTotalAmount += parseFloat(orderItem.price);
                 _.each(orderItem.options, function(option){
@@ -40,8 +40,8 @@ define([
                 });
 
                 //if uploaded via dummyUpload
-                if(orderItem.hasDummyUpload)
-                    subTotalAmount += dummyUpload;
+                /*if(orderItem.hasDummyUpload)
+                    subTotalAmount += dummyUpload;*/
 
                 if(orderItem.fileCheck.price)
                     subTotalAmount += parseFloat(orderItem.fileCheck.price);

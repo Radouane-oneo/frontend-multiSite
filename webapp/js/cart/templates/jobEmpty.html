@@ -84,41 +84,89 @@
                         var dummyUploadLink = designtoolLink + "&dummyupload=1";
                     %>
                     
-                	<% if(model.hasProUpload == true){ %>
-                	<div class="poll-form poll-form1 first">
+                    <% if(model.hasProUpload == true && model.hasDummyUpload == true){ %>
+                        <div class="poll-form poll-form1 bothmode">
+                            <a href="" class="popupbtn">
+                                <span class="buttonlayout btnupfile">
+                                    <span class="txtgras"><%= config.labels["proUploadBtnText"] %></span>
+                                </span>
+                            </a>
 
+                            <ul class="options-file-impression indice-5">
+                                <li><%= config.labels["proUploadOptions1"] %></li>
+                            </ul>
+                        </div>
+                    <% } %>
+
+                    <% if(model.hasProUpload == true && model.hasDummyUpload == false){ %>
+                        <div class="poll-form poll-form1 prouploadmode">
+                            <a href="<%= config.designtoolLink %><%= proUploadLink %>" class="popupbtn designtool iframe fancybox.iframe">
+                                <span class="buttonlayout btnupfile">
+                                    <span class="txtgras"><%= config.labels["proUploadBtnText"] %></span>
+                                </span>
+                            </a>
+                            <span class="filetype">.jpg, .pdf</span>
+                            <p class="txto"><%= config.labels["proUploadLinkSubtitle"] %></p>
+                            <ul class="options-file-impression indice-5">
+                                <li><%= config.labels["proUploadOptions1"] %></li>
+                                <li><%= config.labels["proUploadOptions2"] %></li>
+                                <li><%= config.labels["proUploadOptions3"] %></li>
+                            </ul>
+                        </div>
+                    <% } %>
+
+                    <% if(model.hasProUpload == false && model.hasDummyUpload == true){ %>
+                        <div class="poll-form poll-form1 dummyupload">
+                            <a href="<%= config.designtoolLink %><%= dummyUploadLink %>" class="popupbtn designtool iframe fancybox.iframe">
+                                <span class="buttonlayout btnupfile">
+                                    <span class="txtgras"><%= config.labels["proUploadBtnText"] %></span>
+                                </span>
+                            </a>
+                            <span class="filetype">.doc, .xls, ppt, .png, .tiff, .jpg, .pdf</span>
+                            <ul class="options-file-impression indice-5">
+                                <li><%= config.labels["dummyuploadtxt"] %></li>
+                            </ul>
+                            <div class="dummy-price"><%= priceTpl({price:config.dummyUpload}) %></div>
+                        </div>
+                    <% } %>
+
+                    <%
+                        className = '';
+                        if(model.hasProUpload == false && model.hasDummyUpload == false){
+                            className = 'designToolOnly';   
+                        }
+                    %>
+
+                    <div class="poll-form poll-form2 designtoolmode <%= className %>">
+                        <a href="<%= config.designtoolLink %><%= designtoolLink %>" class="popupbtn designtool fancybox.iframe iframe">
+                            <span class="text buttondesigntool btnupfile">
+                                <span class="txtgras"><%= config.labels["dtBtnText"] %></span>
+                            </span>
+                        </a>
+                        <ul class="options-file-impression indice-5">
+                            <li><%= config.labels["dtOptions1"] %></li>
+                        </ul>
+                    </div>
+
+                    <% if(model.hasProUpload == true){ %>
+                    <!-- div class="poll-form poll-form1 first">
                         <a href="<%= config.designtoolLink %><%= dummyUploadLink %>" class="designtool iframe fancybox.iframe">
                             <span class="buttonlayout btnupfile">
                                 <span class="txtgras"><%= config.labels["proUploadBtnText"] %></span>
                             </span>
                         </a>
-
-                        <!--a href="<%= config.designtoolLink %><%= proUploadLink %>" class="designtool iframe fancybox.iframe">
+                        <a href="<%= config.designtoolLink %><%= proUploadLink %>" class="designtool iframe fancybox.iframe">
                             <span class="buttonlayout btnupfile">
                                 <span class="txtgras"><%= config.labels["proUploadBtnText"] %></span>
                             </span>
-                        </a-->
-
-                		<ul class="options-file-impression indice-5">
-                            <li><%= config.labels["proUploadOptions1"] %></li>
-                		</ul>
-                		
-                	</div>
-                	<% } %>
-
-                    <div class="poll-form poll-form2 <%= (model.hasProUpload == true)?'':'designToolOnly' %>">
-                        
-                        <a href="<%= config.designtoolLink %><%= designtoolLink %>" class="upload designtool fancybox.iframe iframe">
-                            <span class="text buttondesigntool btnupfile">
-                                <span class="txtgras"><%= config.labels["dtBtnText"] %></span>
-                            </span>
                         </a>
-                        
+
                         <ul class="options-file-impression indice-5">
-                            <li><%= config.labels["dtOptions1"] %></li>
+                            <li><%= config.labels["proUploadOptions1"] %></li>
                         </ul>
-                        
-                    </div>
+                    </div -->
+                    <% } %>
+
                 </div>
             </div>
             <!-- designtool -->

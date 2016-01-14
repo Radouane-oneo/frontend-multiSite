@@ -15,7 +15,9 @@ define([
 			'click .removecontrol' : 'deleteControlePro',
 			'blur .refjobTxt' : 'changeRefJob',
 			'blur .inputdesigneremail' : 'designerEmail',
-			'click .technic-details' : 'showDetailTechnics'
+			'click .technic-details' : 'showDetailTechnics',
+			'click .showdesigntool' : 'showPopupDesigntool',
+			'click .close-popup' : 'hidePopupDesigntool'
 		},
 		initialize: function(model) {
 			this.filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -258,6 +260,7 @@ define([
 	    	e.preventDefault();
 	    },
 	    setJobHeight : function () {
+	    	
 	    	$("#pccart-cart-form .jobfull").each(function(i, elem) {
 	    		$(elem).find(".image img").load(function(){
 			  		var maxHeight = $(elem).find(".image").height();
@@ -270,8 +273,47 @@ define([
 			  			$(elem).find(".preview1").css("height" , previewHeight+"px"); 
 			  		}	
 				});     		
-    		});   	   	
-	    }, 
+    		});
+
+	    	$(".prodactHasTemplates").each(function(i, elem) {
+	    		height = 0;
+	    		$(elem).children('.hieghtelem').each(function(i, el) {
+
+	    			if ($(el).innerHeight() > height) height = $(el).innerHeight();
+
+	    		});
+
+	    		if (height>0) $(elem).children('.hieghtelem').height(height);
+	    	});
+    		 	
+	    },
+	    showPopupDesigntool : function(e){
+	    	e.preventDefault();
+	    	$('#overlay-popups').show();
+	    	$(e.currentTarget).parents('.prodactHasTemplates').find('.inpopup').fadeIn();
+
+	    	$('.orderBox .designtool').on('click', function(){
+	    		$('.close-popup').click();
+	    	});
+
+	    	//set height
+	    	popupshowed = $(e.currentTarget).parents('.prodactHasTemplates').find(".inpopup");
+    		height = 0;
+    		$(popupshowed).find('.poll-form').each(function(i, el) {
+
+    			if ($(el).innerHeight() > height) height = $(el).innerHeight();
+
+    		});
+
+    		if (height>0) $(popupshowed).find('.poll-form').innerHeight(height);
+	    	
+
+	    },
+	    hidePopupDesigntool : function(e){
+	    	e.preventDefault();
+	    	$('#overlay-popups').hide();
+	    	$(e.currentTarget).parents('.inpopup').hide();
+	    },
         errors : function(){
         	var orderItems = this.model.get('orderItems');
         	for (var i = 0; i< orderItems.length; i++) {

@@ -197,6 +197,7 @@ padding-bottom: 5px;
   font-weight: normal;
   color: #646464;
   margin: 0;
+  text-align: left;
 }
 .img2 .text {
 margin-right: 23px;
@@ -755,6 +756,11 @@ table.targetPrice tbody tr.last-child td { border:none; }
   padding-bottom: 34px !important;
   margin-bottom: 28px;
 }
+
+.poll-form.dummyupload + .poll-form{
+  padding-bottom: 34px !important;
+}
+
 .page-cart #pccart-cart-form .cartItemsContainer ul li {
   list-style: none;
   padding: 0;
@@ -793,6 +799,8 @@ div#edit-linkcart a {
   width: 310px;
   border: 1px solid #d1d1d1;
   border-radius: 5px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -876,4 +884,42 @@ div#edit-linkcart a {
   color: #666666;
   margin: 0 0 0 5px;
   right: 0;
+}
+
+.prodactHasTemplates.inpopup{
+  position: absolute;
+  z-index: 99999;
+  width: 640px;
+  background-color: #fff;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  padding: 20px;
+  left: -12px;
+  top:0;
+}
+.prodactHasTemplates.inpopup .poll-form1{
+  clear: both;
+}
+
+.prodactHasTemplates.inpopup > h3{
+  color: #646464;
+  font-size: 16px;
+  margin: 0 0 13px;
+  float: left;
+}
+.prodactHasTemplates.inpopup .close-popup{
+  color: #646464;
+  font-size: 10px;
+  float: right;
+  width: 11px;
+  height: 11px;
+  border: 2px solid #646464;
+  line-height: 9px;
+  text-align: center;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  font-weight: bold;
+  cursor: pointer;
 }

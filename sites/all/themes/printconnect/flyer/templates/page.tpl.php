@@ -183,7 +183,10 @@ if (/*@cc_on!@*/false) {
 </div>
 
 
-<!-- loader pour la page produit qui se telecharge tres lentement -->
+<!-- popUp overlay -->
+<div id="overlay-popups"></div>
+
+<!-- loader pour toutes les pages -->
 <div id="box-progress">
   <div id="overlay-bar"></div>
   <div id="content-box">

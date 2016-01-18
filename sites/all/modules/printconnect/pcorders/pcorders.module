@@ -443,7 +443,22 @@ function pcorders_form_pcpayments_request_form_alter(&$form, &$form_state) {
               ),
           ),
       );
-
+      
+      //add options infos
+      if (count($key->options)){
+          foreach ($key->options as $option) {
+            $rowsOrders[] = array(
+             'class' => array('productItem'),
+              'data' => array(
+                 $option->optionName,
+                  array(
+                      'data' => theme('price', array('value' => $option->price, 'free' => TRUE)),
+                      'class' => array('text-right'),
+                  ),
+              ),
+            );
+          }
+      }
       // file check
       if ($key->fileCheck->price) {
           $rowsOrders[] = array(

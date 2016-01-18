@@ -12701,3 +12701,9 @@ form#pccheckout-payment-form fieldset legend{
     color: #646464;
     text-transform: uppercase;  
 }
+.options-file-impression li {
+  background: url(images/check.png) no-repeat;
+  padding-left: 20px!important;
+  text-align: left;
+  font-size: 11px;
+}

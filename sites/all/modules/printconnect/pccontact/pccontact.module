@@ -827,7 +827,7 @@ function pccontact_general_form_submit($form, &$form_state) {
             break;
         case 'befr':
             $result = drupal_mail('pccontact', $key,
-                    variable_get('pccontact_general', 'info@flyer.be, el.idrissi.frata@gmail.com'),
+                    variable_get('pccontact_general', 'info@flyer.be'),
                     '', $form_state['values'], NULL, $send);
             break;
         case 'nlnl':

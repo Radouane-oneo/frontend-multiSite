@@ -384,7 +384,7 @@ function ValidatePostalCode(iso,value) {
    $('#edit-vatnumber-country').val('');
    console.log('herer');
    if ($('#edit-country').val() != 0) {
-       var url = Drupal.settings.basePath + '?q=js/country/' + $(this).val();
+       var url = Drupal.settings.basePath + '?q=js/country/' + $("#edit-country").val();
            $.getJSON(url, null, function (data) {
                $('#edit-vatnumber-country').val(data.vatPrefix).trigger('change');
        });

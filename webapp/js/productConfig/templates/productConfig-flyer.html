@@ -239,9 +239,10 @@
         <!-- templateDetail -->
         <fieldset id="templates" class="templates form-wrappersss">
             <legend><span class="fieldset-legend"><%= config.labels['technicalDetails'] %></span></legend>
-            <div class="fieldset-wrapper detailtechnique-wrapper je suis la">
+            <div class="fieldset-wrapper detailtechnique-wrapper">
                 <div id="edit-templates-text" class="text form-wrapper">
-                    <%= config.labels['technicalDescription'] %>
+                    <%= config.labels['technicalDescription'] %><br>
+                    <a href="<%= config.labels['linkToConftemplate'] %>"><%= config.labels['linkText'] %></a>
                 </div>
                 <div id="edit-templates-image" class="image form-wrapper"><a target="_blank"
                                                                              href="/<%= config.prefix %>/file/template_<%= model.toolBoxGroup.template.id %>__<%= config.labels['langId'] %>.zip"><img
@@ -303,6 +304,10 @@
                             <%= config.labels['downloadText'] %>
                         </a>
                     </div>
+                </div>
+
+                <div class="conclusion">
+                    <span><%= config.labels['ourtip'] %> : </span> <%= config.labels['productdescription'] %>
                 </div>
             </div>
         </fieldset>

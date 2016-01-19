@@ -104,13 +104,16 @@ jQuery(document).ready(function(e) {
 		});
 
 		$('.page-segments .region-content fieldset').eq(1).find('.item-list ul').imagesLoaded(function () {
-			$(this).masonry({
+			try {
+                            $(this).masonry({
 				itemSelector: 'li',
 				isAnimated: true,
 				gutterWidth: 10,
 				isFitWidth: true
-			});
-
+                            });
+                        }
+                        catch (e) {
+                        }
 		});
 	
 

@@ -352,7 +352,7 @@ function chooseMarker(id) {
             }
 	    if ($('#map-canvas').length > 0) {
 		google.maps.event.addDomListener(window, 'load', initialize);	
-	    } else {
+	    } else if ($('#Mapimg').length > 0) {
 		google.maps.event.addDomListener(window, 'load', simpleMap);
 	    }
         }

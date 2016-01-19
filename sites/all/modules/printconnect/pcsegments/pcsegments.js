@@ -103,7 +103,8 @@ jQuery(document).ready(function(e) {
 			return false;
 		});
 
-		$('.page-segments .region-content fieldset').eq(1).find('.item-list ul').imagesLoaded(function () {
+		if($('.page-segments .region-content fieldset').eq(1).find('.item-list ul').length > 0) {
+                    $('.page-segments .region-content fieldset').eq(1).find('.item-list ul').imagesLoaded(function () {
 			try {
                             $(this).masonry({
 				itemSelector: 'li',
@@ -114,7 +115,9 @@ jQuery(document).ready(function(e) {
                         }
                         catch (e) {
                         }
-		});
+		    });
+                }
+                
 	
 
         }

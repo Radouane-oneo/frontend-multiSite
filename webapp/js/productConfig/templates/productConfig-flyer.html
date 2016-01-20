@@ -306,9 +306,12 @@
                     </div>
                 </div>
 
-                <div class="conclusion">
-                    <span><%= config.labels['ourtip'] %> : </span> <%= config.labels['productdescription'] %>
-                </div>
+                <% tipValue = "info for " + GlobalProductId;%>
+                <% if(config.labels['productdescription'] != tipValue) { %>
+                    <div class="conclusion">
+                        <span><%= config.labels['ourtip'] %> : </span> <%= config.labels['productdescription'] %>
+                    </div>
+                <% } %>
             </div>
         </fieldset>
         <!-- End templateDetail -->

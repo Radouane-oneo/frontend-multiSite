@@ -303,13 +303,14 @@ function drupal_add_html_head($data = NULL, $key = NULL) {
     // Make sure the defaults, including Content-Type, come first.
     $stored_head = _drupal_default_html_head();
   }
-
   if (isset($data) && isset($key)) {
     if (!isset($data['#type'])) {
       $data['#type'] = 'html_tag';
     }
     $stored_head[$key] = $data;
+   
   }
+   
   return $stored_head;
 }
 

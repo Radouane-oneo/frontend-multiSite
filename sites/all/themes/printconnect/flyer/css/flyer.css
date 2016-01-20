@@ -12712,7 +12712,7 @@ form#pccheckout-payment-form fieldset legend{
     text-transform: uppercase;  
 }
 .options-file-impression li {
-  background: url(images/check.png) no-repeat;
+  background: url(images/check.png) no-repeat left 5px;
   padding-left: 20px!important;
   text-align: left;
   font-size: 11px;

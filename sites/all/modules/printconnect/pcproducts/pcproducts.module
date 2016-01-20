@@ -678,7 +678,7 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
     //drupal_set_breadcrumb(array(l(t('Home'), '<front>'), l(t('Products'), 'products')));
     $bannerUrl = getBannerIfExists($productId);
 
-    $labels = getLabels($edit);
+    $labels = getLabels($edit, $productId);
 
     $isAdmin = ($user->uid) ? '1' : '0';
 
@@ -700,7 +700,7 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
     return $script;
 }
 
-function getLabels($edit = false) {
+function getLabels($edit = false, $productId) {
     global $language;
     $labels = array(
         "langId" => $language->id,
@@ -747,6 +747,10 @@ function getLabels($edit = false) {
         "infocolor"=> t('infocolor'),
         "inforesolution"=> t('inforesolution'),
         "ouvrir" =>t('ouvrir'),
+        "ourtip" =>t('our tip'),
+        "linkText" =>t('Link text'),
+        "linkToConftemplate" =>t('linkToConftemplate'),
+        "productdescription" =>t('info for ' . $productId),
         
     );
 

@@ -22,7 +22,7 @@
                   <div class="form-item form-type-textfield form-item-shipping-detail-current-street livraison-adresse-street">
                       <label for="edit-shipping-detail-current-street"><%= model.labels['StreetSA'] %><span title="<%= model.labels['requiredField'] %>"
                                                                                        class="form-required">*</span></label>
-                      <input type="text" class="form-text required" maxlength="128" size="30"
+                      <input type="text" class="form-text required" maxlength="60" size="30"
                              value="" name="shipping[detail][current][street]"
                              id="edit-shipping-detail-current-street">
                   </div>
@@ -54,7 +54,7 @@
                   <div class="form-item form-type-textfield form-item-shipping-detail-current-name livraison-adresse-current-name">
                       <label for="edit-shipping-detail-current-name"><%= model.labels['SAName'] %><span
                               title="<%= model.labels['requiredField'] %>" class="form-required">*</span></label>
-                      <input type="text" class="form-text required" maxlength="128" size="30" value=""
+                      <input type="text" class="form-text required" maxlength="22" size="30" value=""
                              name="shipping[detail][current][name]" id="edit-shipping-detail-current-name">
                   </div>
                   <div class="form-item form-type-textfield form-item-shipping-detail-current-phone livraison-adresse-current-phone">
@@ -75,7 +75,7 @@
                 <div class="plr form-item form-type-textfield form-item-shipping-detail-current-company">
                     <label for="edit-shipping-detail-current-company"><%= model.labels['CompanySA'] %>
                     </label>
-                    <input type="text" class="form-text" maxlength="128" size="30" value=""
+                    <input type="text" class="form-text" maxlength="22" size="30" value=""
                            name="shipping[detail][current][company]" id="edit-shipping-detail-current-company">
                 </div>
                 <div class="form-wrapper plr" id="edit-shipping-detail-current-actions livraison-adresse-current-action">

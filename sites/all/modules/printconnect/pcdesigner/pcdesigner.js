@@ -37,7 +37,26 @@
             }
       })
 
-            
+       $('#changeStatusUpprove').click(function(){ 
+           orderitem = $('#jobIdDesiger').val();
+           var href = "setstatusapprove/" + orderitem; 
+           $.getJSON(href, function(data){          
+                if(!data){
+                //$(wopper).css({ "border":"1px solid red"});
+                console.log('non data');
+                }else{
+                 console.log('non data');
+                }
+               });
+//	    		ajaxCaller.call("cart/ajax/setemaildesigner",{
+//	    			'id':orderitem,
+//	    			'email': value
+//	    		},'POST').done(function(result){
+//	                if (result.code == '200') {
+//	                	_this.setDesignerEmailToModel(orderitem, value);
+//	                };
+//	            });	
+       });
 
      
       

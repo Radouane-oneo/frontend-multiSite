@@ -144,6 +144,23 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
                  '#items' => $list,
              )
            );
+     $form['item']['upload']['files'][$file->id]['blocOrange'] = array(
+          '#markup' => '<div id="designerMessage"><p>'.t('line1designer').'</p><p>'.t('line2designer').'</p></div>',
+          );
+      $form['item']['upload']['files'][$file->id]['blocBouton'] = array(
+          '#markup' => ''
+          . '<input type="hidden" value="'.$jobId.'" id="jobIdDesiger">'
+          . '<div id="designerBouton"><p><a href=# id="changeStatusUpprove">'.t('confirm file').'</a></p></div>',
+          );
+             $form['item']['upload']['files'][$file->id]['actions'] = array(
+      '#type' => 'actions',
+      '#attributes' => array('class' => array('clearfix')),
+  );
+
+  $form['item']['upload']['files'][$file->id]['actions']['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Readyrr'),
+  );
   } else {
       $form['item']['upload'] = array(
           '#type' => 'fieldset',
@@ -375,15 +392,6 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
     }
   }
 
-//  $form['actions'] = array(
-//      '#type' => 'actions',
-//      '#attributes' => array('class' => array('clearfix')),
-//  );
-//
-//  $form['actions']['submit'] = array(
-//      '#type' => 'submit',
-//      '#value' => t('Ready'),
-//  );
 
   $form_state['storage']['upload'] = $upload;
 

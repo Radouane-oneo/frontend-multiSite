@@ -23,9 +23,27 @@ function pcdesigner_menu() {
       'access arguments' => array('access content'),
       'type' => MENU_CALLBACK,
   );
+  $items['upload-design/setstatusapprove/%'] = array(
+    'page callback' => '_pcdesigner_callback_setstatusapprove',
+    'page arguments' => array(2),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
   return $items;
 }
+function _pcdesigner_callback_setstatusapprove($jobId) {
+    echo $jobId;die;
+    $itemId = $_POST['id'];
+    $email = $_POST['email'];
 
+    $response = Factory::SaveEmailDesigner($itemId, $email);
+
+    if($response) {
+        Dal::BuildJson();
+    }else {
+        Dal::BuildJson(array(), 500);
+    }
+}
 function _pcdesigner_email_callback($email){
  echo  json_encode(valid_email_address($email));die;
 }

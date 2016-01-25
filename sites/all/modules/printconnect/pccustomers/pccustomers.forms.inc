@@ -17,7 +17,6 @@ function pccustomers_addresses_form($form, $form_state) {
   _pccustomers_ensureloggedin();
   $customer = Factory::Current();
   $addresses = Addresses\Factory::GetAddresses($customer, FALSE);
-
   $form['addresses'] = array(
       '#type' => 'container',
       '#title' => t('Your addresses'),

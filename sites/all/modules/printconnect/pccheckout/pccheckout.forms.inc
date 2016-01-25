@@ -254,7 +254,11 @@ function pccheckout_personal_form($form, &$form_state) {
 function pccheckout_personal_form_validate($form, &$form_state) {
     global $language;
     $customer = $form_state['storage']['customer'];
- 
+    if ($language->prefix !== 'nlnl')
+		    if(!empty($form_state['values']['postalCode']) && !is_numeric($form_state['values']['postalCode'])){
+			form_set_error('postalCode', t('Le champ Code postal doit être numérique.'));
+			return false;
+		    }
     if(!empty($form_state['values']['postalCode']) && !is_numeric($form_state['values']['postalCode'])){
         form_set_error('postalCode', t('Le champ Code postal doit être numérique.'));
         return false;

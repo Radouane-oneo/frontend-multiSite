@@ -281,7 +281,7 @@ function pcsamplepacks_request_form_validate($form, $form_state) {
               );
     if(array_key_exists($country,$isoLengths)){
             if($isoLengths[$country]!= strlen($postalCode) && $country!=150){
-                $message="Le champ Code postal doit contenir".$isoLengths[$country]."chiffres";
+                $message="Le champ Code postal doit contenir ".$isoLengths[$country]." chiffres";
                 form_set_error('postalCode', t($message));
                 return false;
             }
@@ -290,7 +290,7 @@ function pcsamplepacks_request_form_validate($form, $form_state) {
                 form_set_error('postalCode', t('Le champ Code postal doit être numérique.'));
                 return false;
             }
-            if($country==150 && $isoLengths[$country]< strlen($postalCode)){
+            if($country==150 && strlen($postalCode <= 4)){
                 form_set_error('postalCode', t('Le champ Code postal est trop court.'));
                 return false;
             }

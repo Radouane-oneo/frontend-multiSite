@@ -277,8 +277,9 @@ function chooseMarker(id) {
             
             function simpleMap() {
 		$('#Mapimg').css('height', '300px').css('width','400px');
-		try{
-			var simplePosition = $('#Mapimg').attr('position').split('_');
+		var simplePosition = [];
+                try{
+			simplePosition = $('#Mapimg').attr('position').split('_');
 		}catch(e){
 		}
 
@@ -351,7 +352,7 @@ function chooseMarker(id) {
             }
 	    if ($('#map-canvas').length > 0) {
 		google.maps.event.addDomListener(window, 'load', initialize);	
-	    } else {
+	    } else if ($('#Mapimg').length > 0) {
 		google.maps.event.addDomListener(window, 'load', simpleMap);
 	    }
         }

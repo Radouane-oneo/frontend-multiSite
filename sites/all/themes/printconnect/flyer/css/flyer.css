@@ -5435,6 +5435,7 @@ form#pcpayments-request-form table tr,.page-checkout-payment .overview table tr,
 .page-templates- #block-system-main table.grid {
 	margin-top: 19px;
 	width: 100%;
+	border-right: 1px solid;
 }
 .page-templates- #block-system-main table.grid thead {
 	background: #f60;
@@ -12431,7 +12432,7 @@ form#pccheckout-payment-form fieldset legend{
     border-left-width: 1px;
 }
 .page-templates- #block-system-main #pctemplates-config-form2 table.grid thead th {
-    padding: 6px 20px;
+    padding: 0 15px;
     font-size: 13px;
     font-weight: bold;
     border-style: solid;
@@ -12444,11 +12445,19 @@ form#pccheckout-payment-form fieldset legend{
     padding-left: 0;
     text-align: left;
 }
-.page-templates- #block-system-main #pctemplates-config-form2 table.grid td:nth-child(3), 
+
+
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid tbody tr td:nth-child(3n),
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid thead th:nth-child(3n),
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid tbody tr td.last-child,
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid thead th:last-child{
+	text-align: right;
+}
+/*.page-templates- #block-system-main #pctemplates-config-form2 table.grid td:nth-child(3), 
 .page-templates- #block-system-main #pctemplates-config-form2 table.grid th:nth-child(3){
     border-right: 0;
     padding: 0;
-}
+}*/
 .page-templates- #block-system-main #pctemplates-config-form2 table.grid tbody {
     background: #fff;
     color: #646464;
@@ -12473,8 +12482,7 @@ form#pccheckout-payment-form fieldset legend{
     width: 20px;
 }
 .page-templates- #block-system-main #pctemplates-config-form2 table.grid tr td {
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding: 5px 15px;
     border-style: solid;
     border-color: #e1e1e1;
     border-width: 0 1px 0 0;
@@ -12485,11 +12493,13 @@ form#pccheckout-payment-form fieldset legend{
 .page-templates- #block-system-main #pctemplates-config-form2 table.grid tr td:nth-child(2) {
     padding-left: 25px;
     text-align: left;
-    width: 275px;
+    width: 126px;
 }
-.page-templates- #block-system-main #pctemplates-config-form2 table.grid tbody tr td.last-child {
-    border-right: 1px solid #e1e1e1 !important;
+.page-templates- #block-system-main #pctemplates-config-form2 table.grid tbody tr td.last-child{
+	border-right: 1px solid #e1e1e1 !important;
+	width: 264px;
 }
+
 .page-templates- #block-system-main #pctemplates-config-form2 table.grid tr td.last-child {
     padding-right: 15px;
     font-size: 14px;
@@ -12665,6 +12675,10 @@ form#pccheckout-payment-form fieldset legend{
 	-moz-border-radius: 2px 2px 2px 2px;
 	-webkit-border-radius: 2px 2px 2px 2px;
 }
+.quanityOptions .messagedeal{
+	margin-right: 15px;
+}
+
 .superdeal .last-child .price {
 	color: #3b99fc;
 }
@@ -12700,4 +12714,10 @@ form#pccheckout-payment-form fieldset legend{
 .titleGM{
     color: #646464;
     text-transform: uppercase;  
+}
+.options-file-impression li {
+  background: url(images/check.png) no-repeat left 5px;
+  padding-left: 20px!important;
+  text-align: left;
+  font-size: 11px;
 }

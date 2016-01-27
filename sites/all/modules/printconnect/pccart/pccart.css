@@ -704,12 +704,6 @@ table.targetPrice tbody tr.last-child td { border:none; }
   text-transform: none;
 }
 
-.options-file-impression li {
-  background: url(images/bg_btns.png) no-repeat -3px -100px;
-  padding-left: 20px!important;
-  text-align: left;
-  font-size: 11px;
-}
 
 .option-title {
   font-weight: bold;

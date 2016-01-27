@@ -137,7 +137,7 @@ var registerClicked = false;
             150 : 7,
             124 : 4
 	  }
-           if ($('#edit-street').val().length <= 4){
+           if ($('#edit-street').val().length <= 4 && $('#edit-street').val().length != 0){
                 $('#edit-street').addClass('error');
                 errorMsgs[0] = Drupal.t('Le champs rue est trop court');
                 errorMarkup += "<li>"+errorMsgs[0]+"</li>";console.log(errorMarkup);

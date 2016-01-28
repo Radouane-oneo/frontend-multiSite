@@ -1523,7 +1523,8 @@ function pccustomers_login_form_register_validate(&$form, &$form_state) {
 
 //return FALSE;
     }
-
+    //creer une variable de session pour un nouveau client
+    $_SESSION['newClient'] = true;
     $form_state['storage']['customer'] = $customer;
     $form_state['storage']['new_customer'] = TRUE;
 

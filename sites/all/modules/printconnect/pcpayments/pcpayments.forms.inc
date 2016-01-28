@@ -16,9 +16,12 @@ function pcpayments_request_form($form, &$form_state, $key) {
     $request = Requests\Factory::GetByKey($key);
     $request->EnsureLoaded();
     $order = Factory::Get($request->order);
-  
-    $descMethodePaiement = $order->orderItemsPayment[0]->description;
+
     $idMethodePaiement = $order->orderItemsPayment[0]->paymentMethodResellerShop;
+    $paymentMethod = PaymentMethods\Factory::Get($idMethodePaiement);
+    
+    
+    $descMethodePaiement = $paymentMethod->paymentMethod->descriptionTag;
   } catch (\Exception $ex) {
     $form['info'] = array('#markup' => t('This payment request does not exists (anymore)...'));
     return $form;

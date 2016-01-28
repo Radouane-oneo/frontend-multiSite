@@ -137,9 +137,16 @@ var registerClicked = false;
             150 : 7,
             124 : 4
 	  }
+           if ($('#edit-street').val().length <= 4 && $('#edit-street').val().length != 0){
+                $('#edit-street').addClass('error');
+                errorMsgs[0] = Drupal.t('Le champs rue est trop court');
+                errorMarkup += "<li>"+errorMsgs[0]+"</li>";console.log(errorMarkup);
+                //return false;
+            }
           $('#content form input.required, #content form select.required').each(function(i, elem) {
             var _this = $(this); 
             var inputName;
+           
             if(_this.val() == "" || _this.val() == 0) {
                 inputName = $(elem).attr('name');
                 _this.addClass('error');

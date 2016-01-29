@@ -60,7 +60,7 @@ var registerClicked = false;
                 if (decision == false) {
 		    globalEroorVat = true;
                     $("#edit-vatnumber-number").addClass('error');
-                    $("#edit-vatnumber-number").val('');
+                    //$("#edit-vatnumber-number").val('');
                     var vatplaceholder = Drupal.t('insert a valid vat number please');
 		    labels["vatNotNumber"] = vatplaceholder;
                     $('.customErrors').remove();

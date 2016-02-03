@@ -147,19 +147,18 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
      $form['item']['upload']['files'][$file->id]['blocOrange'] = array(
           '#markup' => '<div id="designerMessage"><p>'.t('line1designer').'</p><p>'.t('line2designer').'</p></div>',
           );
-      $form['item']['upload']['files'][$file->id]['blocBouton'] = array(
-          '#markup' => ''
-          . '<input type="hidden" value="'.$jobId.'" id="jobIdDesiger">'
-          . '<div id="designerBouton"><p><a href=# id="changeStatusUpprove">'.t('confirm file').'</a></p></div>',
-          );
-             $form['item']['upload']['files'][$file->id]['actions'] = array(
+      $form['item']['upload']['files'][$file->id]['jobIdDesigerHidden'] = array(
+          '#markup' => '<input type="hidden" value="'.$jobId.'" id="jobIdDesiger">' );
+        
+      $form['item']['upload']['files'][$file->id]['actions'] = array(
       '#type' => 'actions',
       '#attributes' => array('class' => array('clearfix')),
   );
 
   $form['item']['upload']['files'][$file->id]['actions']['submit'] = array(
       '#type' => 'submit',
-      '#value' => t('Readyrr'),
+      '#value' => t('confirm file'),
+      '#id' => 'changeStatusUpprove'
   );
   } else {
       $form['item']['upload'] = array(

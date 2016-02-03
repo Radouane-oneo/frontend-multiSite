@@ -105,7 +105,7 @@
   margin: 0;
   padding: 0;
   margin-bottom: 23px;
-  padding-left: 37px;
+  padding-left: 13px;
 }
 /* line 94, ../sass/style.scss */
 .ul-iteams-1 li {
@@ -273,8 +273,18 @@
 }
 /* line 203, ../sass/style.scss */
 .main-page .wrap-block h2.green-title {
-  margin-bottom: 30px;
+  margin-bottom: 13px;
   padding: 0;
+}
+
+.main-page .wrap-block h3.green-subtitle{
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-family: Open Sans; 
+  line-height: 18px;
+  font-weight: 300;
+  color: #77b700;
+  text-transform: none;
 }
 /* line 207, ../sass/style.scss */
 .main-page .wrap-block p {

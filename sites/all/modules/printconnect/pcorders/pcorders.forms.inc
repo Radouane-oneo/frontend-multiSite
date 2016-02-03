@@ -66,7 +66,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
     $items[4]['data'] = '<div class="date">' . format_date(strtotime($order->expectedDeliveryDate), 'medium', 'd-m-y') . '</div>' . $items[4]['data'];
 
     switch ($order->orderStatus->id) {
-      case 8:
+      case 15:
         $items[1]['class'][] = 'active';
         $listClass = 'step2-active';
         break;

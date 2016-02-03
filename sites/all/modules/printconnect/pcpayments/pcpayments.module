@@ -59,6 +59,7 @@ function pcpayments_menu() {
           'title' => 'Payment',
           'page callback' => 'new_payment_loadpage',
           'page arguments' => array(''),
+          'access callback' => 'pcpayments_access',
           'access arguments' => array('access content'),
           'type' => MENU_CALLBACK,
       );
@@ -163,7 +164,27 @@ function pcpayments_menu() {
   return $items;
 }
 // ================================== ORDER WEEK V3 FUNCTIONS ===================================
+function pcpayments_access() {
+  global $user;
+  //return true;
+  if ($user->uid) {
+    return TRUE;
+  } else {
+    //  die('ttttt');
+//    printconnect_ensureinitialized();
+//    $customer = CustomersFactory::Current();
+//    if ($customer) {
+//      $order = Factory::Get($orderId);
+//      if ($order->customer == $customer->id) {
+//        return TRUE;
+//      }
+//    }
+//
+//    _pccustomers_ensureloggedin();
 
+    return FALSE;
+  }
+}
 // main function to load payment page
 function new_payment_loadpage() {
     global $language;

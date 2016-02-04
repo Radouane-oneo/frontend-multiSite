@@ -25,7 +25,7 @@ var registerClicked = false;
 	}
       var globalEroorVat = false;
       var vatFormats = [{'BE': 10},{'NL' : 12},{'LU' : 8},{'FR' : 11}];
-      $('#pccustomers-address-billingaddresses-form #edit-vatnumber-number').blur(function(){
+      $('#pccustomers-address-billingaddresses-form #edit-vatnumber-number', '#pccustomers-newaddress-billingaddresses-form #edit-vatnumber-number').blur(function(){
             if ($('#edit-vatnumber-number').val() !='' && $('.country').val() != '') {
 		$('.vatAlreadyUsed').parent().hide();
                 var vatNumberBA = $("#edit-vatnumber-number").val().replace(/\./g, "").replace(/ /g,"");
@@ -146,6 +146,16 @@ var registerClicked = false;
           $('#content form input.required, #content form select.required').each(function(i, elem) {
             var _this = $(this); 
             var inputName;
+            if ($(elem).attr('name') == 'vatNumber[number]'){
+                if(_this.val() == "" || _this.val() == 0) {
+                    errorMsgs[i] = Drupal.t('Le champ N° de TVA est requis.');
+                }else{
+                    errorMsgs[i] = Drupal.t('insert a valid vat number please');
+                }
+                errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+                   console.log('coco');
+            }else{
+           
            
             if(_this.val() == "" || _this.val() == 0) {
                 inputName = $(elem).attr('name');
@@ -232,7 +242,7 @@ var registerClicked = false;
                   }
                 }
             } 
-
+          }
           });  
           errorMarkup += "</ul></div>";
           if(errorMsgs.length != 0 ) {

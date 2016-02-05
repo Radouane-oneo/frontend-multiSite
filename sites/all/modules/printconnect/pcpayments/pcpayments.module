@@ -163,14 +163,7 @@ function pcpayments_menu() {
   return $items;
 }
 // ================================== ORDER WEEK V3 FUNCTIONS ===================================
-function pcpayments_access() {die('ppppp');
-// if ($_SESSION['customerid']) {
-//    return TRUE;
-//  } else {
-//
-//
-//    return FALSE;
-//  }
+
    _pccustomers_ensureloggedin();
     $customer = \printconnect\Customers\Factory::Current();
     $addresses = \printconnect\Customers\Addresses\Factory::GetAddresses($_SESSION['customerid'], false);

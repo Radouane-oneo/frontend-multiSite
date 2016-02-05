@@ -31,19 +31,26 @@ define([
             });
         },
         render : function(){
-            console.log(this.model.toJSON());
-            this.setElement(this.template({
-                "model" : this.model.toJSON(),
-                "config" : this.config
-            }));
-            if ((this.model.get("orderItems") == '') ||
+            if (this.model.get("orderItems") == '')
+            {//dans le cas ou le panier est vide
+                window.location.replace("/panier");
+            }
+            else if(
                 (!this.model.get("orderItemShipping").orderShippingAddress) || 
                 (!this.model.get("orderItemShipping").orderShippingAddress.id)||
-                (!this.model.get("billingAccount"))){
-                this.setElement(this.templateAccessDenied({
+                (!this.model.get("billingAccount")))
+                {
+                    //dans le cas ou les adresses sont non remplis
+                    this.setElement(this.templateAccessDenied({
+                        "config" : this.config
+                    }));
+                }else{
+                   this.setElement(this.template({
+                    "model" : this.model.toJSON(),
                     "config" : this.config
-                }));
-            }
+                    })); 
+                }
+             
             $(this.config.containerId).html(this.$el);
         },   
         errors : function(){

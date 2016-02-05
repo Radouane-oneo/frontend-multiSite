@@ -785,8 +785,12 @@ span.datainfobul:after {
 }
 .detailtechnique-wrapper .conclusion{
   clear: both;
-  padding-top: 20px;
+  padding: 10px;
   line-height: 18px;
+  border: 1px solid #646464;
+  top: 10px;
+  position: relative;
+  display: inline-block;
 }
 .detailtechnique-wrapper .conclusion > span{
   color:#f60;

@@ -650,7 +650,6 @@ function pcproducts_js_form_productWithPromo() {
 }
 function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = FALSE, $edit = FALSE) {
     pcproducts_validate_product();
-
     global $language;
  
     global $user;
@@ -681,10 +680,11 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
     $labels = getLabels($edit, $productId);
 
     $isAdmin = ($user->uid) ? '1' : '0';
-
+    $sitePrintconcept = $_POST['sitePrintconcept'];
     $script = "<script type='text/javascript'>
+        var sitePrintconcept = '". $sitePrintconcept ."';
         var GlobalProductId = ". $productId .";
-	      var GlobalLabels = ". json_encode($labels) .";
+	var GlobalLabels = ". json_encode($labels) .";
         var GlobalIsAdmin = ". $isAdmin .";
         var GlobalDefaultItems = ".json_encode($gItems).";
         var GlobalDefaultOptions = ".json_encode($gOtions).";

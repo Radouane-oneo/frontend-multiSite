@@ -3,10 +3,10 @@
 use printconnect\Payments\Requests;
 use printconnect\PaymentMethods\Factory;
 use printconnect\Carts\Factory as CartsFactory;
-use printconnect\Customers\Factory as CustomersFactory;
 use printconnect\Orders\Factory as OrdersFactory;
 use printconnect\Orders\Payments\Factory as PaymentsFactory;
 use printconnect\Drupal\Functions;
+use printconnect\Customers\Factory as CustomersFactory;
 
 function pcpayments_process_payment($paymentMethod, $customerName, $amount, $callback, $params) {
   module_invoke_all('processpayment', $paymentMethod, $customerName, $amount, $callback, $params);
@@ -59,7 +59,6 @@ function pcpayments_menu() {
           'title' => 'Payment',
           'page callback' => 'new_payment_loadpage',
           'page arguments' => array(''),
-          'access callback' => 'pcpayments_access',
           'access arguments' => array('access content'),
           'type' => MENU_CALLBACK,
       );
@@ -164,73 +163,85 @@ function pcpayments_menu() {
   return $items;
 }
 // ================================== ORDER WEEK V3 FUNCTIONS ===================================
-function pcpayments_access() {
-  global $user;
-  //return true;
-  if ($user->uid) {
-    return TRUE;
-  } else {
-    //  die('ttttt');
-//    printconnect_ensureinitialized();
-//    $customer = CustomersFactory::Current();
-//    if ($customer) {
-//      $order = Factory::Get($orderId);
-//      if ($order->customer == $customer->id) {
-//        return TRUE;
-//      }
-//    }
-//
-//    _pccustomers_ensureloggedin();
 
-    return FALSE;
-  }
+   _pccustomers_ensureloggedin();
+    $customer = \printconnect\Customers\Factory::Current();
+    $addresses = \printconnect\Customers\Addresses\Factory::GetAddresses($_SESSION['customerid'], false);
+    $billingAccounts = \printconnect\Customers\BillingAccounts\Factory::GetBillingAccounts($customer);
+    \printconnect\Customers\BillingAccounts\Factory::LoadBillingAccounts($billingAccounts);
+    $countBas = 0;
+    foreach($billingAccounts as $billingAccount) {
+        if($billingAccount && $billingAccount->id) {
+            $countBas++;
+        }
+    }
+    if (!$customer->firstName || !$customer->lastName || !$customer->phone || !$addresses->count || $countBas == 0) {
+        drupal_goto('checkout/personal');
+    } else {
+        drupal_goto('payment');
+    }
 }
-// main function to load payment page
 function new_payment_loadpage() {
     global $language;
+    _pccustomers_ensureloggedin();
+    $customer = \printconnect\Customers\Factory::Current();
+    $addresses = \printconnect\Customers\Addresses\Factory::GetAddresses($customer, false);
+    $billingAccounts = \printconnect\Customers\BillingAccounts\Factory::GetBillingAccounts($customer);
+    \printconnect\Customers\BillingAccounts\Factory::LoadBillingAccounts($billingAccounts);
+    $countBas = 0;
+    foreach($billingAccounts as $billingAccount) {
+        if($billingAccount && $billingAccount->id) {
+            $countBas++;
+        }
+    }
+    if (!$customer->firstName || !$customer->lastName || !$customer->phone || !$addresses->count || $countBas == 0) {
+        drupal_goto('checkout/personal');
+    } else {       
+        $labels = array(        
+            "orderOverview" => t('Order overview'),
+            "controlPro" => t('Control professional'),
+            "fileCheck" => t('File check'),
+            "totalExcl" => t('Total excl. Vat'),
+            "description" => t('Description'),
+            "fotoliaImg" =>  t('Fotolia Image'),
+            "yourPaymentMethod" =>  t('Choose your payment method'),
+            "controleProfessionel" => t('Contrôle professionel de'),
+            "free" => t('free'),
+            "ex" => t('ex'),
+            "price" => t('Price'),
+            "htva" => t('Total HTVA'),
+            "subTotalWithTVA" => t('Total TTC'),
+            "agree" => t('I agree with the !termsandconditionslink', array('!termsandconditionslink' => theme('generalconditionslink'))),
+            "agreeMessage" => t('The field I agree with the <a href="/benl/node/67" target="_blank">terms and conditions</a> is required'),
+            "paynow" => t('Pay now'),
+            "textPayment" => t('textPayment'),
+            "textImagePayment" => t('textImagePayment'),
+            "methodePaymentNull" => t('methodePaymentNull'),        
+            "cher" => t('cher'),
+            "banktransferTag" => t('banktransferTag'),
+            "paymentAccessDenied" => t('paymentAccessDenied'),
+            "accessDenied" => t('accessDenied')
+        );
 
-    $labels = array(        
-        "orderOverview" => t('Order overview'),
-        "controlPro" => t('Control professional'),
-        "fileCheck" => t('File check'),
-        "totalExcl" => t('Total excl. Vat'),
-        "description" => t('Description'),
-        "fotoliaImg" =>  t('Fotolia Image'),
-        "yourPaymentMethod" =>  t('Choose your payment method'),
-        "controleProfessionel" => t('Contrôle professionel de'),
-        "free" => t('free'),
-        "ex" => t('ex'),
-        "price" => t('Price'),
-        "htva" => t('Total HTVA'),
-        "subTotalWithTVA" => t('Total TTC'),
-        "agree" => t('I agree with the !termsandconditionslink', array('!termsandconditionslink' => theme('generalconditionslink'))),
-        "agreeMessage" => t('The field I agree with the <a href="/benl/node/67" target="_blank">terms and conditions</a> is required'),
-        "paynow" => t('Pay now'),
-        "textPayment" => t('textPayment'),
-        "textImagePayment" => t('textImagePayment'),
-        "methodePaymentNull" => t('methodePaymentNull'),        
-        "cher" => t('cher'),
-        "banktransferTag" => t('banktransferTag')
-    );
+        header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+        header("Cache-Control: post-check=0, pre-check=0", false);
+        header("Pragma: no-cache");
 
-    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-    header("Cache-Control: post-check=0, pre-check=0", false);
-    header("Pragma: no-cache");
+        $script = "<script type='text/javascript'>
+            var GlobalLandId = ".$language->id.";
+            var GlobalLabels = ".json_encode($labels).";
+            var GlobalPrefix = '".$language->prefix."';
+            var GlobalVat = 0.21;
+            var isConnected = " . (isset($_SESSION['customerid']) ? 1 : 0) . ";
+        </script>";
+        $script .= "<style>#box-progress{display: block;}</style>";
 
-    $script = "<script type='text/javascript'>
-        var GlobalLandId = ".$language->id.";
-        var GlobalLabels = ".json_encode($labels).";
-        var GlobalPrefix = '".$language->prefix."';
-        var GlobalVat = 0.21;
-        var isConnected = " . (isset($_SESSION['customerid']) ? 1 : 0) . ";
-    </script>";
-    $script .= "<style>#box-progress{display: block;}</style>";
-    
-    $script .= '<link rel="stylesheet" href="/webapp/js/libs/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />';
-    $script .= '<script data-main="/webapp/js/payment/main" src="/webapp/js/libs/requirejs/require.js"></script>';
-    $script .= '<div id="myPayment"></div>';
+        $script .= '<link rel="stylesheet" href="/webapp/js/libs/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />';
+        $script .= '<script data-main="/webapp/js/payment/main" src="/webapp/js/libs/requirejs/require.js"></script>';
+        $script .= '<div id="myPayment"></div>';
 
-    return $script;
+        return $script;
+    }
 }
 
 // function to get json cart

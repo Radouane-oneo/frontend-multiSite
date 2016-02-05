@@ -7,12 +7,14 @@ define([
     'views/conditionGeneral',
     'views/priceBlock',
     'views/Error',
-    'text!../templates/paymentTemplateAccessDenied.html',
-], function (Backbone, paymentModel, paymentTemplate, methodePayment, detailCommande, conditionGeneral, priceBlock, errorView, paymentTemplateAccessDenied) {
+    'text!../templates/templateAdressesVide.html',
+    'text!../templates/templatePaymentCartVide.html',
+], function (Backbone, paymentModel, paymentTemplate, methodePayment, detailCommande, conditionGeneral, priceBlock, errorView, templateAdressesVide, templatePaymentCartVide) {
 
     return Backbone.View.extend({
         template: _.template(paymentTemplate),
-        templateAccessDenied: _.template(paymentTemplateAccessDenied),
+        templateAdressesVide: _.template(templateAdressesVide),
+        templatePaymentCartVide: _.template(templatePaymentCartVide),
         events: {
         },
         initialize: function() {
@@ -33,7 +35,10 @@ define([
         render : function(){
             if (this.model.get("orderItems") == '')
             {//dans le cas ou le panier est vide
-                window.location.replace("/panier");
+                //window.location.replace("/panier");
+                this.setElement(this.templatePaymentCartVide({
+                    "config" : this.config
+                }));
             }
             else if(
                 (!this.model.get("orderItemShipping").orderShippingAddress) || 
@@ -41,7 +46,7 @@ define([
                 (!this.model.get("billingAccount")))
                 {
                     //dans le cas ou les adresses sont non remplis
-                    this.setElement(this.templateAccessDenied({
+                    this.setElement(this.templateAdressesVide({
                         "config" : this.config
                     }));
                 }else{

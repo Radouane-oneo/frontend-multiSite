@@ -59,6 +59,7 @@ function pcpayments_menu() {
           'title' => 'Payment',
           'page callback' => 'new_payment_loadpage',
           'page arguments' => array(''),
+          'access callback' => 'pcpayments_access',
           'access arguments' => array('access content'),
           'type' => MENU_CALLBACK,
       );
@@ -163,23 +164,30 @@ function pcpayments_menu() {
   return $items;
 }
 // ================================== ORDER WEEK V3 FUNCTIONS ===================================
-
+function pcpayments_access() {
+ if ($_SESSION['customerid']) {
+    return TRUE;
+  } else {
+    return FALSE;
+  }
+}
 function new_payment_loadpage() {
     global $language;
-    _pccustomers_ensureloggedin();
-    $customer = \printconnect\Customers\Factory::Current();
-    $addresses = \printconnect\Customers\Addresses\Factory::GetAddresses($customer, false);
-    $billingAccounts = \printconnect\Customers\BillingAccounts\Factory::GetBillingAccounts($customer);
-    \printconnect\Customers\BillingAccounts\Factory::LoadBillingAccounts($billingAccounts);
-    $countBas = 0;
-    foreach($billingAccounts as $billingAccount) {
-        if($billingAccount && $billingAccount->id) {
-            $countBas++;
-        }
-    }
-    if (!$customer->firstName || !$customer->lastName || !$customer->phone || !$addresses->count || $countBas == 0) {
-        drupal_goto('checkout/personal');
-    } else {       
+   
+//    _pccustomers_ensureloggedin();
+//    $customer = \printconnect\Customers\Factory::Current();
+//    $addresses = \printconnect\Customers\Addresses\Factory::GetAddresses($customer, false);
+//    $billingAccounts = \printconnect\Customers\BillingAccounts\Factory::GetBillingAccounts($customer);
+//    \printconnect\Customers\BillingAccounts\Factory::LoadBillingAccounts($billingAccounts);
+//    $countBas = 0;
+//    foreach($billingAccounts as $billingAccount) {
+//        if($billingAccount && $billingAccount->id) {
+//            $countBas++;
+//        }
+//    }
+//    if (!$customer->firstName || !$customer->lastName || !$customer->phone || !$addresses->count || $countBas == 0) {
+//        drupal_goto('checkout/personal');
+//    } else {       
         $labels = array(        
             "orderOverview" => t('Order overview'),
             "controlPro" => t('Control professional'),
@@ -203,7 +211,9 @@ function new_payment_loadpage() {
             "cher" => t('cher'),
             "banktransferTag" => t('banktransferTag'),
             "paymentAccessDenied" => t('paymentAccessDenied'),
-            "accessDenied" => t('accessDenied')
+            "accessDenied" => t('accessDenied'),
+            "accessDeniedCartVide" => t('accessDeniedCartVide'),
+            "paymentCartVide" => t('paymentCartVide')
         );
 
         header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
@@ -224,7 +234,7 @@ function new_payment_loadpage() {
         $script .= '<div id="myPayment"></div>';
 
         return $script;
-    }
+   // }
 }
 
 // function to get json cart

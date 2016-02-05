@@ -164,23 +164,6 @@ function pcpayments_menu() {
 }
 // ================================== ORDER WEEK V3 FUNCTIONS ===================================
 
-   _pccustomers_ensureloggedin();
-    $customer = \printconnect\Customers\Factory::Current();
-    $addresses = \printconnect\Customers\Addresses\Factory::GetAddresses($_SESSION['customerid'], false);
-    $billingAccounts = \printconnect\Customers\BillingAccounts\Factory::GetBillingAccounts($customer);
-    \printconnect\Customers\BillingAccounts\Factory::LoadBillingAccounts($billingAccounts);
-    $countBas = 0;
-    foreach($billingAccounts as $billingAccount) {
-        if($billingAccount && $billingAccount->id) {
-            $countBas++;
-        }
-    }
-    if (!$customer->firstName || !$customer->lastName || !$customer->phone || !$addresses->count || $countBas == 0) {
-        drupal_goto('checkout/personal');
-    } else {
-        drupal_goto('payment');
-    }
-}
 function new_payment_loadpage() {
     global $language;
     _pccustomers_ensureloggedin();

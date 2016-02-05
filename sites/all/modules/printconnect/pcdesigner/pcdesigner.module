@@ -1,5 +1,6 @@
 <?php
 use printconnect\Carts\Factory;
+//use printconnect\Designer\Upload\Factory;
 function pcdesigner_menu() {
   $items['upload-design/%'] = array(
       'title' => 'Upload design',
@@ -23,9 +24,27 @@ function pcdesigner_menu() {
       'access arguments' => array('access content'),
       'type' => MENU_CALLBACK,
   );
+  $items['upload-design/setstatusapprove/%'] = array(
+    'page callback' => '_pcdesigner_callback_setstatusapprove',
+    'page arguments' => array(2),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+);
   return $items;
 }
+function _pcdesigner_callback_setstatusapprove($jobId) {
+//    $itemId = $_POST['id'];
+//    $email = $_POST['email'];
 
+   
+$response = \printconnect\Designer\Upload\Factory::changeStatus($jobId);
+
+    if($response) {
+        Dal::BuildJson();
+    }else {
+        Dal::BuildJson(array(), 500);
+    }
+}
 function _pcdesigner_email_callback($email){
  echo  json_encode(valid_email_address($email));die;
 }

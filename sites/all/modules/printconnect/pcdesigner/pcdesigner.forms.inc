@@ -144,6 +144,22 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
                  '#items' => $list,
              )
            );
+     $form['item']['upload']['files'][$file->id]['blocOrange'] = array(
+          '#markup' => '<div id="designerMessage"><p>'.t('line1designer').'</p><p>'.t('line2designer').'</p></div>',
+          );
+      $form['item']['upload']['files'][$file->id]['jobIdDesigerHidden'] = array(
+          '#markup' => '<input type="hidden" value="'.$jobId.'" id="jobIdDesiger">' );
+        
+      $form['item']['upload']['files'][$file->id]['actions'] = array(
+      '#type' => 'actions',
+      '#attributes' => array('class' => array('clearfix')),
+  );
+
+  $form['item']['upload']['files'][$file->id]['actions']['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('confirm file'),
+      '#id' => 'changeStatusUpprove'
+  );
   } else {
       $form['item']['upload'] = array(
           '#type' => 'fieldset',
@@ -375,15 +391,6 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
     }
   }
 
-//  $form['actions'] = array(
-//      '#type' => 'actions',
-//      '#attributes' => array('class' => array('clearfix')),
-//  );
-//
-//  $form['actions']['submit'] = array(
-//      '#type' => 'submit',
-//      '#value' => t('Ready'),
-//  );
 
   $form_state['storage']['upload'] = $upload;
 
@@ -391,9 +398,10 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
   return $form;
 }
 
-function pcdesigner_upload_form_submit($form, &$form_state) {
-  \printconnect\Designer\Upload\Factory::Confirm($form_state['storage']['upload']);
-  drupal_goto('<front>');
+function pcdesigner_upload_form_submit($form, &$form_state) {die('iiiii');
+//  \printconnect\Designer\Upload\Factory::Confirm($form_state['storage']['upload']);
+//  drupal_goto('<front>');
+    return $form;
 }
 function ProdactHasTemplates($templateId, $item) {
     $apikey = variable_get('pc_apikey');

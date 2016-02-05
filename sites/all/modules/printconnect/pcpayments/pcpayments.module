@@ -165,12 +165,14 @@ function pcpayments_menu() {
 }
 // ================================== ORDER WEEK V3 FUNCTIONS ===================================
 function pcpayments_access() {
+
  if ($_SESSION['customerid']) {
     return TRUE;
   } else {
     return FALSE;
   }
 }
+
 function new_payment_loadpage() {
     global $language;
    

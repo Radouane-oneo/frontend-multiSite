@@ -1,5 +1,6 @@
 <?php
 use printconnect\Carts\Factory;
+//use printconnect\Designer\Upload\Factory;
 function pcdesigner_menu() {
   $items['upload-design/%'] = array(
       'title' => 'Upload design',
@@ -32,11 +33,11 @@ function pcdesigner_menu() {
   return $items;
 }
 function _pcdesigner_callback_setstatusapprove($jobId) {
-    echo $jobId;die;
-    $itemId = $_POST['id'];
-    $email = $_POST['email'];
+//    $itemId = $_POST['id'];
+//    $email = $_POST['email'];
 
-    $response = Factory::SaveEmailDesigner($itemId, $email);
+   
+$response = \printconnect\Designer\Upload\Factory::changeStatus($jobId);
 
     if($response) {
         Dal::BuildJson();

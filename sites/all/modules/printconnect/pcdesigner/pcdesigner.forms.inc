@@ -398,9 +398,10 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
   return $form;
 }
 
-function pcdesigner_upload_form_submit($form, &$form_state) {
-  \printconnect\Designer\Upload\Factory::Confirm($form_state['storage']['upload']);
-  drupal_goto('<front>');
+function pcdesigner_upload_form_submit($form, &$form_state) {die('iiiii');
+//  \printconnect\Designer\Upload\Factory::Confirm($form_state['storage']['upload']);
+//  drupal_goto('<front>');
+    return $form;
 }
 function ProdactHasTemplates($templateId, $item) {
     $apikey = variable_get('pc_apikey');

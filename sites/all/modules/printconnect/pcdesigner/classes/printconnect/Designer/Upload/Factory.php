@@ -21,15 +21,12 @@ namespace printconnect\Designer\Upload {
     public static function Save(Upload &$object){
        return Dal::Save($object, 'upload-design', array());
     }
-
     public static function Confirm(Upload &$object) {die('rtrtrt');
      return  Dal::Save(new \printconnect\Object(), 'upload-design-confirm', array('hash' => $object->hash));
     }
-    public static function changeStatus($jobid)
-    {        
-        return Dal::SendRequest('supplement-parameter', 'POST', array(
-            'id' => $jobid
-        ));
+    public static function changeStatus($jobid, $status)
+    {  
+        return Dal::SendRequest("update-designer-job-status/orderItem/$jobid/status/$status", 'GET', array());
     }
     
   }

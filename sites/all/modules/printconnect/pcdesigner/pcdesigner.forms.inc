@@ -148,7 +148,7 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
           '#markup' => '<div id="designerMessage"><p>'.t('line1designer').'</p><p>'.t('line2designer').'</p></div>',
           );
       $form['item']['upload']['files'][$file->id]['jobIdDesigerHidden'] = array(
-          '#markup' => '<input type="hidden" value="'.$jobId.'" id="jobIdDesiger">' );
+          '#markup' => '<input type="hidden" value="'.$upload->id.'" id="jobIdDesiger">' );
         
       $form['item']['upload']['files'][$file->id]['actions'] = array(
       '#type' => 'actions',
@@ -398,7 +398,7 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
   return $form;
 }
 
-function pcdesigner_upload_form_submit($form, &$form_state) {die('iiiii');
+function pcdesigner_upload_form_submit($form, &$form_state) {//die('iiiii');
 //  \printconnect\Designer\Upload\Factory::Confirm($form_state['storage']['upload']);
 //  drupal_goto('<front>');
     return $form;

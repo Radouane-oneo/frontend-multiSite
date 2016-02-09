@@ -36,40 +36,38 @@
                   $(this).parent().siblings(".prodactTemplates").show();
             }
       })
-    $('#deletedesign').click(function(e){
-	orderitem = $('#jobIdDesiger').val();    	
-       // var href = "/cart/ajax/removedesign/" + orderitem;
-         $.post('/cart/ajax/removedesign/'+orderitem,{},function(){
-                                    location.href=location.href;
-				});
-				if ($('.fotolia-items-'+$(this).attr('itemFileId')).length < $('.fotolia-items').length) {
-					$('.fotolia-items-'+$(this).attr('itemFileId')).parent().remove();
-				} else if ($('.fotolia-items-'+$(this).attr('itemFileId')).length == $('.fotolia-items').length) {
-					$('.fotolia-items-'+$(this).attr('itemFileId')).parents('fieldset').remove();
-				}
-				$('.item-'+$(this).attr('itemFileId')).remove();
-				PriceCallback();
-				return false;
-//            ajaxCaller.call("deleteJobDesign",{}, 'GET', orderitem).done(function(result){
-////                if (result.code == '200') {
-////                	_this.deleteFileFromData(orderitem, result);
-////                };
-//            });
-	    })
-       $('#changeStatusUpprove').click(function(){ 
+        $('#edit-remove').click(function(e){
+            orderitem = $('#jobIdDesiger').val();    	
+            console.log("/cart/ajax/removedesign/" + orderitem);
+            $.post('/cart/ajax/removedesign/'+orderitem,{},function(){
+                                        location.href=location.href;
+                                    });
+            $.post("changestatus/" + orderitem+"/WaitingForFile",{},function(){
+                                        location.href=location.href;
+                                    });
+                if ($('.fotolia-items-'+$(this).attr('itemFileId')).length < $('.fotolia-items').length) {
+                        $('.fotolia-items-'+$(this).attr('itemFileId')).parent().remove();
+                } else if ($('.fotolia-items-'+$(this).attr('itemFileId')).length == $('.fotolia-items').length) {
+                        $('.fotolia-items-'+$(this).attr('itemFileId')).parents('fieldset').remove();
+                }
+                $('.item-'+$(this).attr('itemFileId')).remove();
+                //PriceCallback();
+                return false;
+        })
+        $('#changeStatusUpprove').click(function(){ 
            orderitem = $('#jobIdDesiger').val();console.log(orderitem);
            var href = "changestatus/" + orderitem+"/ToApproved"; 
            $.getJSON(href, function(data){                  
                 if(!data){
-                console.log('non data'+orderitem);
-                
+                    return false;
+                    //dfgd
                 }else{
-                 console.log('non data'+orderitem);
+                    //srfdrg
                  return false;
                 }
                });
                return false;
-       });
+        });
 
      $('#changeStatusConfirm').click(function(){ 
            orderitem = $('#jobIdDesiger').val();console.log(orderitem);

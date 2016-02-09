@@ -375,7 +375,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
     
     $form_state['storage']['itemid'][$item->id] = $item->id;
    
-    if (count($item->files) != 0) { 
+    if (count($item->files) != 0 && $item->emailDesigner != '') { 
       $form['order']['details']['item'][$item->id]['designer'] = array(
           '#type' => 'container',
         '#attributes' => array('class' => array('designerConfirm')),

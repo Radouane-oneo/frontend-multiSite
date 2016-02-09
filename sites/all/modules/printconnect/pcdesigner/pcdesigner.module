@@ -24,20 +24,16 @@ function pcdesigner_menu() {
       'access arguments' => array('access content'),
       'type' => MENU_CALLBACK,
   );
-  $items['upload-design/setstatusapprove/%'] = array(
-    'page callback' => '_pcdesigner_callback_setstatusapprove',
-    'page arguments' => array(2),
+  $items['upload-design/changestatus/%/%'] = array(
+    'page callback' => '_pcdesigner_callback_changestatus',
+    'page arguments' => array(2,3),
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
 );
   return $items;
 }
-function _pcdesigner_callback_setstatusapprove($jobId) {
-//    $itemId = $_POST['id'];
-//    $email = $_POST['email'];
-
-   
-$response = \printconnect\Designer\Upload\Factory::changeStatus($jobId);
+function _pcdesigner_callback_changestatus($jobId, $status) {
+    $response = \printconnect\Designer\Upload\Factory::changeStatus($jobId, $status);
 
     if($response) {
         Dal::BuildJson();

@@ -26,7 +26,7 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
     $items[] = $config->toolboxItem->id;
     $productId = $config->product;
   }
-
+//var_dump($upload);
     $configs = $upload->config;
     $firstConfig = array_shift($configs);
     $product = Products\Factory::Get($productId);

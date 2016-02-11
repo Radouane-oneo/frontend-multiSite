@@ -145,6 +145,7 @@ var registerClicked = false;
             }
           $('#content form input.required, #content form select.required').each(function(i, elem) {
             var _this = $(this); 
+           
             var inputName;
             if ($(elem).attr('name') == 'vatNumber[number]'){
                 if(_this.val() == "" || _this.val() == 0) {
@@ -156,7 +157,7 @@ var registerClicked = false;
                    console.log('coco');
             }else{
            
-           
+            var erTel = /^([0-9\/\s\-_\.]*)$/g;
             if(_this.val() == "" || _this.val() == 0) {
                 inputName = $(elem).attr('name');
                 _this.addClass('error');
@@ -188,7 +189,7 @@ var registerClicked = false;
                 _this.addClass('error');
                 errorMsgs[i] = inputName+": "+labels["invalidCharactersLength"];
                 errorMarkup += "<li>"+errorMsgs[i]+"</li>";
-            } else if (this.name =="phone" && (isNaN(_this.val()) || _this.val().length != 9 && _this.val().length != 10)) {
+            } else if (this.name =="phone" && ( !erTel.test(_this.val()) || _this.val().length != 9)) {
                 inputName = $(elem).attr('name');
                 _this.addClass('error');
                 errorMsgs[i] = labels["phoneNumberError"];

@@ -26,7 +26,6 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
     $items[] = $config->toolboxItem->id;
     $productId = $config->product;
   }
-
     $configs = $upload->config;
     $firstConfig = array_shift($configs);
     $product = Products\Factory::Get($productId);
@@ -109,7 +108,7 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
           '#content' => theme('pcfilesthumb', array('file' => $file->thumbnail, 'cache' => FALSE)),
           '#html' => TRUE,
           '#params' => array(
-              'id' => $id,
+              'id' => $upload->id,
           ),
           '#callback' => 'upload-design/callback/',
           '#versioning' => FALSE,
@@ -200,7 +199,7 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
                 '#suffix' => '</div> ',
                 '#content'=> array('#markup' => '<span class="buttonlayout btnupfile"><span class="txtgras">'.t("COMMENCER").'</span>',),
                 '#params' => array(
-                    'id' => $id,
+                    'id' => $upload->id,
                     'cartid' => $upload->order,
                 ),
                 '#callback' => 'upload-design/callback/',
@@ -225,8 +224,9 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
               '#templateId' => $template->id,
               '#custom' => $custom,
               '#title' => $title,
+              '#callback' => 'upload-design/callback/',
               '#params' => array(
-                  'id' => $id,
+                  'id' => $upload->id,
                   'cartid' => $upload->order,
               ), 
               '#html' => true,
@@ -250,7 +250,7 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
                     '#suffix' => '</div> ',
                     '#content'=> array('#markup' => '<span class="buttonlayout btnupfile"><span class="txtgras">'.t("COMMENCER").'</span>',),
           '#params' => array(
-              'id' => $id,
+              'id' => $upload->id,
               'cartid' => $upload->order,
           ),
           '#callback' => 'upload-design/callback/',

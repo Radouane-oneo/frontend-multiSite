@@ -38,49 +38,34 @@
       })
         $('#edit-remove').click(function(e){
             orderitem = $('#jobIdDesiger').val();    	
-            console.log("/cart/ajax/removedesign/" + orderitem);
             $.post('/cart/ajax/removedesign/'+orderitem,{},function(){
                                         location.href=location.href;
                                     });
             $.post("changestatus/" + orderitem+"/WaitingForFile",{},function(){
                                         location.href=location.href;
                                     });
-                if ($('.fotolia-items-'+$(this).attr('itemFileId')).length < $('.fotolia-items').length) {
-                        $('.fotolia-items-'+$(this).attr('itemFileId')).parent().remove();
-                } else if ($('.fotolia-items-'+$(this).attr('itemFileId')).length == $('.fotolia-items').length) {
-                        $('.fotolia-items-'+$(this).attr('itemFileId')).parents('fieldset').remove();
-                }
-                $('.item-'+$(this).attr('itemFileId')).remove();
+//                if ($('.fotolia-items-'+$(this).attr('itemFileId')).length < $('.fotolia-items').length) {
+//                        $('.fotolia-items-'+$(this).attr('itemFileId')).parent().remove();
+//                } else if ($('.fotolia-items-'+$(this).attr('itemFileId')).length == $('.fotolia-items').length) {
+//                        $('.fotolia-items-'+$(this).attr('itemFileId')).parents('fieldset').remove();
+//                }
+//                $('.item-'+$(this).attr('itemFileId')).remove();
                 //PriceCallback();
                 return false;
         })
         $('#changeStatusUpprove').click(function(){ 
            orderitem = $('#jobIdDesiger').val();console.log(orderitem);
-           var href = "changestatus/" + orderitem+"/ToApproved"; 
-           $.getJSON(href, function(data){                  
-                if(!data){
-                    return false;
-                    //dfgd
-                }else{
-                    //srfdrg
-                 return false;
-                }
-               });
+           $.post("changestatus/" + orderitem+"/ToApproved",{},function(){
+                                       // location.href=location.href;
+                                    });
                return false;
         });
 
      $('#changeStatusConfirm').click(function(){ 
            orderitem = $('#jobIdDesiger').val();console.log(orderitem);
-           var href = "/upload-design/changestatus/" + orderitem+"/Confirm"; 
-           $.getJSON(href, function(data){                  
-                if(!data){
-                //console.log('non data'+orderitem);
-                
-                }else{
-                 //console.log('non data'+orderitem);
-                 return false;
-                }
-               });
+           $.post("/upload-design/changestatus/" + orderitem+"/Confirm",{},function(){
+                                       // location.href=location.href;
+                                    });
                return false;
        });
       

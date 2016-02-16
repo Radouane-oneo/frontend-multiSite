@@ -4,7 +4,8 @@ use printconnect\Customers\Factory as CustomersFactory;
 function pcdesigner_upload_form($form, &$form_state, $id) {
   try {
     $upload = \printconnect\Designer\Upload\Factory::Get($id, FALSE);
-
+    \printconnect\Designer\Upload\Factory::LoadUpload($upload);
+    $id  = ($upload->id) ? $upload->id : $id;
     $upload->EnsureLoaded();
   } catch (\Exception $ex) {
     drupal_not_found();

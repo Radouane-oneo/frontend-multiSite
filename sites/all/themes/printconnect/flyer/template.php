@@ -241,8 +241,9 @@ function flyer_preprocess_html(&$vars) {
 		$vars['head_title'] = t('newstitle') . ' | ' . check_plain(variable_get('site_name', 'Drupal'));
 	elseif (arg(0) == 'products' && is_null(arg(1)))
 		$vars['head_title'] = t('produitstitle') . ' | ' . check_plain(variable_get('site_name', 'Drupal'));
-
-	// save class from node
+        elseif((arg(0) == 'taxonomy'))
+            $vars['head_title'] = drupal_get_path_alias(arg(0).'/'.arg(1).'/'.arg(2)) . ' | ' . check_plain(variable_get('site_name', 'Drupal'));
+                
 	$node = menu_get_object();
 	if ($node && isset($node->nid)) {
 		$node = node_load($node->nid);

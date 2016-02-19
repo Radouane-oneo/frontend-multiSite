@@ -27,7 +27,6 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
     $items[] = $config->toolboxItem->id;
     $productId = $config->product;
   }
-
     $configs = $upload->config;
     $firstConfig = array_shift($configs);
     $product = Products\Factory::Get($productId);
@@ -110,7 +109,7 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
           '#content' => theme('pcfilesthumb', array('file' => $file->thumbnail, 'cache' => FALSE)),
           '#html' => TRUE,
           '#params' => array(
-              'id' => $id,
+              'id' => $upload->id,
           ),
           '#callback' => 'upload-design/callback/',
           '#versioning' => FALSE,
@@ -145,6 +144,22 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
                  '#items' => $list,
              )
            );
+     $form['item']['upload']['files'][$file->id]['blocOrange'] = array(
+          '#markup' => '<div id="designerMessage"><p>'.t('line1designer').'</p><p>'.t('line2designer').'</p></div>',
+          );
+      $form['item']['upload']['files'][$file->id]['jobIdDesigerHidden'] = array(
+          '#markup' => '<input type="hidden" value="'.$upload->id.'" id="jobIdDesiger">' );
+        
+      $form['item']['upload']['files'][$file->id]['actions'] = array(
+      '#type' => 'actions',
+      '#attributes' => array('class' => array('clearfix')),
+  );
+
+  $form['item']['upload']['files'][$file->id]['actions']['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('confirm file'),
+      '#id' => 'changeStatusUpprove'
+  );
   } else {
       $form['item']['upload'] = array(
           '#type' => 'fieldset',
@@ -185,7 +200,7 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
                 '#suffix' => '</div> ',
                 '#content'=> array('#markup' => '<span class="buttonlayout btnupfile"><span class="txtgras">'.t("COMMENCER").'</span>',),
                 '#params' => array(
-                    'id' => $id,
+                    'id' => $upload->id,
                     'cartid' => $upload->order,
                 ),
                 '#callback' => 'upload-design/callback/',
@@ -210,8 +225,9 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
               '#templateId' => $template->id,
               '#custom' => $custom,
               '#title' => $title,
+              '#callback' => 'upload-design/callback/',
               '#params' => array(
-                  'id' => $id,
+                  'id' => $upload->id,
                   'cartid' => $upload->order,
               ), 
               '#html' => true,
@@ -235,7 +251,7 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
                     '#suffix' => '</div> ',
                     '#content'=> array('#markup' => '<span class="buttonlayout btnupfile"><span class="txtgras">'.t("COMMENCER").'</span>',),
           '#params' => array(
-              'id' => $id,
+              'id' => $upload->id,
               'cartid' => $upload->order,
           ),
           '#callback' => 'upload-design/callback/',
@@ -376,15 +392,6 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
     }
   }
 
-//  $form['actions'] = array(
-//      '#type' => 'actions',
-//      '#attributes' => array('class' => array('clearfix')),
-//  );
-//
-//  $form['actions']['submit'] = array(
-//      '#type' => 'submit',
-//      '#value' => t('Ready'),
-//  );
 
   $form_state['storage']['upload'] = $upload;
 
@@ -392,9 +399,10 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
   return $form;
 }
 
-function pcdesigner_upload_form_submit($form, &$form_state) {
-  \printconnect\Designer\Upload\Factory::Confirm($form_state['storage']['upload']);
-  drupal_goto('<front>');
+function pcdesigner_upload_form_submit($form, &$form_state) {//die('iiiii');
+//  \printconnect\Designer\Upload\Factory::Confirm($form_state['storage']['upload']);
+//  drupal_goto('<front>');
+    return $form;
 }
 function ProdactHasTemplates($templateId, $item) {
     $apikey = variable_get('pc_apikey');

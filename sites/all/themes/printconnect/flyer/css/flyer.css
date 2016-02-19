@@ -11667,7 +11667,17 @@ input.ui-button.payment {
 .mailing-container .mailpopup .email{
 	margin-bottom: 11px;
 }
-
+.mailing-container .leftpopup {
+  float: left;
+  width: 65%;
+}
+#remerciement{
+display:none;
+margin-top:20px;
+}
+.mailing-container .close {
+    background: rgb(255, 102, 0) none repeat scroll 0 0!important;
+ }
 .mailpopup input{
 
 }

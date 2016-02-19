@@ -36,10 +36,38 @@
                   $(this).parent().siblings(".prodactTemplates").show();
             }
       })
+        $('#edit-remove').click(function(e){
+            orderitem = $('#jobIdDesiger').val();    	
+            $.post('/cart/ajax/removedesign/'+orderitem,{},function(){
+                                        location.href=location.href;
+                                    });
+            $.post("changestatus/" + orderitem+"/WaitingForFile",{},function(){
+                                        location.href=location.href;
+                                    });
+//                if ($('.fotolia-items-'+$(this).attr('itemFileId')).length < $('.fotolia-items').length) {
+//                        $('.fotolia-items-'+$(this).attr('itemFileId')).parent().remove();
+//                } else if ($('.fotolia-items-'+$(this).attr('itemFileId')).length == $('.fotolia-items').length) {
+//                        $('.fotolia-items-'+$(this).attr('itemFileId')).parents('fieldset').remove();
+//                }
+//                $('.item-'+$(this).attr('itemFileId')).remove();
+                //PriceCallback();
+                return false;
+        })
+        $('#changeStatusUpprove').click(function(){ 
+           orderitem = $('#jobIdDesiger').val();console.log(orderitem);
+           $.post("changestatus/" + orderitem+"/ToApproved",{},function(){
+                                       // location.href=location.href;
+                                    });
+               return false;
+        });
 
-            
-
-     
+     $('#changeStatusConfirm').click(function(){ 
+           orderitem = $('#jobIdDesiger').val();console.log(orderitem);
+           $.post("/upload-design/changestatus/" + orderitem+"/Confirm",{},function(){
+                                       // location.href=location.href;
+                                    });
+               return false;
+       });
       
     }
   }

@@ -84,8 +84,9 @@ define([
             if(this.model.get("submit")) {
                 $("#pcproducts-config-form").submit();
             }
-            if (sitePrintconcept == 'printconcept')
+            if (sitePrintconcept == 'printconcept'){                
                 $("#pcproducts-config-form .dropdown:first").css('display', 'block');
+            }
         },
         toggleExpand: function(e){
             $(e.currentTarget).toggleClass("expanded");

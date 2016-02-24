@@ -56,6 +56,8 @@
         $('#changeStatusUpprove').click(function(){ 
            orderitem = $('#jobIdDesiger').val();console.log(orderitem);
            $.post("changestatus/" + orderitem+"/ToApproved",{},function(){
+               //$('#designerMessage').text();
+               $('#designerMessage .messageUploadDesigner').css({"display":"block"});
            });
                return false;
         });

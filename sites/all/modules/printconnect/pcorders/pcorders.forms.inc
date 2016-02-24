@@ -66,7 +66,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
     $items[4]['data'] = '<div class="date">' . format_date(strtotime($order->expectedDeliveryDate), 'medium', 'd-m-y') . '</div>' . $items[4]['data'];
 
     switch ($order->orderStatus->id) {
-      case 15:
+      case 8:
         $items[1]['class'][] = 'active';
         $listClass = 'step2-active';
         break;
@@ -217,7 +217,6 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
   $totalPrice = 0;
   $idproducts = null;
   foreach ($order->productItems as $item) {
-
     $form['order']['details']['item'][$item->id] = array(
         '#type' => 'container',
         '#attributes' => array('class' => array('blocJob', 'item', 'clearfix'))
@@ -375,6 +374,23 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
     }    
     
     $form_state['storage']['itemid'][$item->id] = $item->id;
+   
+    if (count($item->files) != 0 && $item->emailDesigner != '') { 
+      $form['order']['details']['item'][$item->id]['designer'] = array(
+          '#type' => 'container',
+        '#attributes' => array('class' => array('designerConfirm')),
+              );
+       $form['order']['details']['item'][$item->id]['designer']['designerleft'] = array(
+         '#markup' => '<div id="designerleft">'.t('line 1 designer confirmation').'<br>'.t('line 2 designer confirmation').'</div>',
+          );
+        $form['order']['details']['item'][$item->id]['designer']['jobIdDesigerHidden'] = array(
+          '#markup' => '<input type="hidden" value="'.$item->id.'" id="jobIdDesiger">' );
+       $form['order']['details']['item'][$item->id]['designer']['designerright'] = array(
+      '#type' => 'submit',
+      '#value' => t('Approve lay-out'),
+      '#id' => 'changeStatusConfirm'
+  );
+    }
     $idproducts .= $item->configuration->productId.','; // ids product for tracking
   }
 

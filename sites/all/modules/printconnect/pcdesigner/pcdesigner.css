@@ -269,3 +269,6 @@ span.datainfobul::after {
     margin: 0;
     line-height: 14px;
 }
+#designerMessage .messageUploadDesigner{
+    display:none;
+}

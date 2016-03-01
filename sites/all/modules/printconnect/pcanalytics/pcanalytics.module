@@ -136,8 +136,11 @@ function pcanalytics_page_alter(&$page) {
 
         $order = \printconnect\Orders\Factory::Get($orderId);
         
-        $total = $order->subTotalAmount;
+        $customerCurrent = \printconnect\Customers\Factory::Current();
+        $allOrderCustomer = \printconnect\Orders\Factory::GetOrders($customerCurrent);
+       
         $customer = $order->customer;
+        $total = $order->subTotalAmount;        
         $productname = array();
         foreach ($order->productItems as $item){
             $product = $item->productName . ' x ' . $item->quantity;
@@ -171,10 +174,10 @@ function pcanalytics_page_alter(&$page) {
                     case 'shippingTypeBpostPickupPoint':
                         $productID = 27112;
                         break;
-                }  
-                if (isset($_SESSION['newClient']) && $_SESSION['newClient']) {
-                    $productID = 31187;
-                    unset($_SESSION['newClient']);  
+                }
+                
+                if ($allOrderCustomer->get_count() == 1) {die('tttt');                    
+                    $productID = 31187;  
                 }
                 
                 break;

@@ -176,7 +176,7 @@ function pcanalytics_page_alter(&$page) {
                         break;
                 }
                 
-                if ($allOrderCustomer->get_count() == 1) {die('tttt');                    
+                if ($allOrderCustomer->get_count() == 1) {                  
                     $productID = 31187;  
                 }
                 

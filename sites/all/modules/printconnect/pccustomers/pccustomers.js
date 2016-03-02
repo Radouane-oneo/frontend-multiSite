@@ -151,7 +151,7 @@ var registerClicked = false;
                 if(_this.val() == "" || _this.val() == 0) {
                     errorMsgs[i] = Drupal.t('Le champ N° de TVA est requis.');
                 }else{
-                    errorMsgs[i] = Drupal.t('insert a valid vat number please');
+                    //errorMsgs[i] = Drupal.t('insert a valid vat number please');
                 }
                 errorMarkup += "<li>"+errorMsgs[i]+"</li>";
                    console.log('coco');

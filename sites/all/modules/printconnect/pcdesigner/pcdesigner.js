@@ -65,7 +65,7 @@
      $('#changeStatusConfirm').click(function(){
            orderitem = $('#jobIdDesiger').val();console.log(orderitem);
            $.post("/upload-design/changestatus/" + orderitem+"/Confirm",{},function(){
-            //   console.log("/upload-design/changestatus/" + orderitem+"/Confirm");
+                $('#designerleft .messageConfirmDesign').css({"display":"block"});
             });
                return false;
        });

@@ -11,8 +11,6 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
     drupal_not_found();
     exit;
   }
-  $customer = CustomersFactory::Current();
-
   if (!$upload){
     drupal_not_found();
     exit;
@@ -49,7 +47,7 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
     );
 
     $form['header']['description'] = array(
-        '#markup' => '<div class="descriptionDesigner">'.t('Dear').'<br>'.t('custmer').'  '.$customer->fullName.'  '.t('told you would upload files for his order. Intro to upload by a designer.').'</div>'
+        '#markup' => '<div class="descriptionDesigner">'.t('Dear').'<br>'.t('custmer').'  '.$upload->customerName.'  '.t('told you would upload files for his order. Intro to upload by a designer.').'</div>'
     );
     $templates = Products\Templates\Factory::GetTemplates($productId, $items);                        
     $template = $templates->items[0];

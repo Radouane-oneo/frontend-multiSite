@@ -57,7 +57,9 @@
 				<%
                 var directLink = "http://" + document.location.host + "/" + config.prefix + "/products/" + model.configuration['productId'] + "/" + encodeURIComponent(_.map(model.configuration.config, function(conf){ return conf.toolboxItemId; }).join(",")) + "/" + encodeURIComponent(model.options.join(",")) + "/" + model.quantity+"/"+model.id;
             	%>
-				<a href="<%= directLink %>" class="updateProduct"><%= config.labels["updateProduct"] %></a>				
+				<% if (model.customWidth == 0 && model.customHeight == 0){%>
+				    <a href="<%= directLink %>" class="updateProduct"><%= config.labels["updateProduct"] %></a>				
+				<%}%>
 			</div>
 
 			<div class="jobPrice">

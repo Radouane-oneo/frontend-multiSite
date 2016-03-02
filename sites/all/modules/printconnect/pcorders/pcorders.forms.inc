@@ -234,11 +234,12 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
               '#file' => $file->thumbnail,
           );
         }
-        /*$form['order']['details']['item'][$item->id]['image']['download'] = array(
+        $form['order']['details']['item'][$item->id]['image']['download'] = array(
             '#theme' => 'pcfilesdownloadlink',
             '#file' => pcdesigntool_preview_url($file->designToolJobId),
             '#title' => t('Download preview'),
-        );*/
+            '#attributes' => array('class' => array('linkPdf')),
+        );
       }
     } else {
       $form['order']['details']['item'][$item->id]['image']['product'] = array(
@@ -381,7 +382,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         '#attributes' => array('class' => array('designerConfirm')),
               );
        $form['order']['details']['item'][$item->id]['designer']['designerleft'] = array(
-         '#markup' => '<div id="designerleft">'.t('line 1 designer confirmation').'<br>'.t('line 2 designer confirmation').'</div>',
+         '#markup' => '<div id="designerleft">'.t('line 1 designer confirmation').'<br>'.t('line 2 designer confirmation').'<p class="messageConfirmDesign">'.t("message texte").'</p></div>',
           );
         $form['order']['details']['item'][$item->id]['designer']['jobIdDesigerHidden'] = array(
           '#markup' => '<input type="hidden" value="'.$item->id.'" id="jobIdDesiger">' );

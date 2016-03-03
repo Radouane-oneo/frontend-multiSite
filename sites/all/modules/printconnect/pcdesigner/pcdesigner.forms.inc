@@ -4,8 +4,7 @@ use printconnect\Customers\Factory as CustomersFactory;
 function pcdesigner_upload_form($form, &$form_state, $id) {
   try {
     $upload = \printconnect\Designer\Upload\Factory::Get($id, FALSE);
-	\printconnect\Designer\Upload\Factory::LoadUpload($upload);
-    $id  = ($upload->id) ? $upload->id : $id;
+
     $upload->EnsureLoaded();
   } catch (\Exception $ex) {
     drupal_not_found();
@@ -143,7 +142,10 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
              )
            );
      $form['item']['upload']['files'][$file->id]['blocOrange'] = array(
-          '#markup' => '<div id="designerMessage"><p>'.t('line1designer').'</p><p>'.t('line2designer').'</p><p class="messageUploadDesigner">'.t("Thank you, the file has been successfully uploaded").'</p></div>',
+          '#markup' => '<div id="designerMessage">'
+         . '<div class="linesUploadDesign"><p>'.t('line1designer').'</p><p>'.t('line2designer').'</p></div>'
+         . '<p class="messageUploadDesigner">'.t("Thank you, the file has been successfully uploaded").'</p>'
+         . '</div>',
           );
       $form['item']['upload']['files'][$file->id]['jobIdDesigerHidden'] = array(
           '#markup' => '<input type="hidden" value="'.$upload->id.'" id="jobIdDesiger">' );

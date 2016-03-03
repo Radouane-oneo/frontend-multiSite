@@ -58,6 +58,7 @@
            $.post("changestatus/" + orderitem+"/ToApproved",{},function(){
                //$('#designerMessage').text();
                $('#designerMessage .messageUploadDesigner').css({"display":"block"});
+               $('#designerMessage .linesUploadDesign').css({"display":"none"});
            });
                return false;
         });

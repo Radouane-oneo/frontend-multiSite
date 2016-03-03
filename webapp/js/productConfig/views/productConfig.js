@@ -494,12 +494,12 @@ define([
                           //$("#popupFormId").attr("action",goto);
                           $("#popupFormId").submit();
                         },
-                        error: function(jqXHR, textStatus, ex) { 
+                        error: function(jqXHR, textStatus, ex) {
                           $('#hideshow').attr('style','display:none');
                           $('#remerciement').attr('style','display:block');
                           $('#mailpopup').fadeIn();
                          // $("#popupFormId").attr("action",goto);
-                          $("#popupFormId").submit();
+                       //   $("#popupFormId").submit();
                         }  
                     });
                 }

@@ -24,7 +24,6 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
       '#attributes' => array('class' => array('box', 'clearfix', 'orderstatus')),
           //  '#title' => t('Order status'),
   );
-
   if (variable_get('pc_flow', FALSE) == 'flyer' && $order->orderStatus->id != 16) {
 
     $form['status']['history'] = array(
@@ -101,7 +100,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         '#type' => 'fieldset',
         '#attributes' => array('class' => array('box', 'clearfix')),
         'title' => array(
-            '#markup' => t('Dear @name', array('@name' => $customer->firstName)),
+            '#markup' => '<div class="messageConfirmDesign messages status">'.t("message texte").'</div>'.t('Dear @name', array('@name' => $customer->firstName)),
             '#prefix' => '<h2>',
             '#suffix' => '</h2>',
         ),
@@ -216,6 +215,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
    */
   $totalPrice = 0;
   $idproducts = null;
+    
   foreach ($order->productItems as $item) {
     $form['order']['details']['item'][$item->id] = array(
         '#type' => 'container',
@@ -228,7 +228,8 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
     );
     if (count($item->files)) {        
       foreach ($item->files as $file) {
-          if (isset($file->thumbnail)) {
+        
+        if (isset($file->thumbnail)) {
           $form['order']['details']['item'][$item->id]['image']['thumb'] = array(
               '#theme' => 'pcfilesthumb',
               '#file' => $file->thumbnail,
@@ -377,20 +378,30 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
     $form_state['storage']['itemid'][$item->id] = $item->id;
    
     if (count($item->files) != 0 && $item->emailDesigner != '') { 
-      $form['order']['details']['item'][$item->id]['designer'] = array(
-          '#type' => 'container',
-        '#attributes' => array('class' => array('designerConfirm')),
-              );
-       $form['order']['details']['item'][$item->id]['designer']['designerleft'] = array(
-         '#markup' => '<div id="designerleft">'.t('line 1 designer confirmation').'<br>'.t('line 2 designer confirmation').'<p class="messageConfirmDesign">'.t("message texte").'</p></div>',
+        $form['order']['details']['item'][$item->id]['designer'] = array(
+            '#type' => 'container',
+            '#attributes' => array('class' => array('designerConfirm')),
+        ); 
+   
+        $form['order']['details']['item'][$item->id]['designer']['designerleft'] = array(
+            '#markup' => '<div id="designerleft">'.t('line 1 designer confirmation').'<br>'.t('line 2 designer confirmation').'</div>',
           );
         $form['order']['details']['item'][$item->id]['designer']['jobIdDesigerHidden'] = array(
-          '#markup' => '<input type="hidden" value="'.$item->id.'" id="jobIdDesiger">' );
-       $form['order']['details']['item'][$item->id]['designer']['designerright'] = array(
-      '#type' => 'submit',
-      '#value' => t('Approve lay-out'),
-      '#id' => 'changeStatusConfirm'
-  );
+            '#markup' => '<input type="hidden" value="'.$item->id.'" id="jobIdDesiger">' );
+       
+        if ($item->jobStatus == 'orderItemStatusReceived'){
+            $form['order']['details']['item'][$item->id]['designer']['designerright'] = array(
+                '#markup' => '<div class="greyButton">'.t('Approved').'</div>',
+            );
+        }
+        else
+        {
+            $form['order']['details']['item'][$item->id]['designer']['designerright'] = array(
+                '#type' => 'submit',
+                '#value' => t('Approve lay-out'),
+                '#id' => 'changeStatusConfirm'
+            );
+        }       
     }
     $idproducts .= $item->configuration->productId.','; // ids product for tracking
   }

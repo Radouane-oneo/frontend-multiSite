@@ -57,8 +57,9 @@
            orderitem = $('#jobIdDesiger').val();console.log(orderitem);
            $.post("changestatus/" + orderitem+"/ToApproved",{},function(){
                //$('#designerMessage').text();
-               $('#designerMessage .messageUploadDesigner').css({"display":"block"});
-               $('#designerMessage .linesUploadDesign').css({"display":"none"});
+               $('#changeStatusUpprove').replaceWith('<div class="cadreGris"></div>');
+               $('.messageUploadDesigner').css({"display":"block"});
+              // $('#designerMessage .linesUploadDesign').css({"display":"none"});
            });
                return false;
         });
@@ -66,7 +67,9 @@
      $('#changeStatusConfirm').click(function(){
            orderitem = $('#jobIdDesiger').val();console.log(orderitem);
            $.post("/upload-design/changestatus/" + orderitem+"/Confirm",{},function(){
-                $('#designerleft .messageConfirmDesign').css({"display":"block"});
+               $('#changeStatusConfirm').replaceWith('<div class="greyButton">'+Drupal.t('Approved')+'</div>');
+                $('.messageConfirmDesign').css({"display":"block"});
+                // $('#designerleft').css({"display":"none"});
             });
                return false;
        });

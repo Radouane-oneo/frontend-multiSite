@@ -140,3 +140,35 @@ padding: 0;
     padding-right: 18px !important;
     background: transparent !important;
 }
+.messageConfirmDesign{
+    display: none;
+}
+
+.greyButton {
+    width: 200px;
+    float: right;
+    color: #fff;
+    display: block;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    padding: 8px 10px;
+    border-radius: 4px 4px 4px 4px;
+    border: none;
+    margin: 0;
+    text-align: center;
+    background: grey;
+    position: relative;
+}
+
+.greyButton:before {
+    background: grey;
+    content: ' ';
+    position: absolute;
+    display: block;
+    height: 100%;
+    width: 1px;
+    right: 145px;
+    top: 0;
+    z-index: 99;
+}

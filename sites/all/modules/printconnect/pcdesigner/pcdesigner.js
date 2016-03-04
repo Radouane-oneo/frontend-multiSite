@@ -69,7 +69,7 @@
            $.post("/upload-design/changestatus/" + orderitem+"/Confirm",{},function(){
                $('#changeStatusConfirm').replaceWith('<div class="greyButton">'+Drupal.t('Approved')+'</div>');
                 $('.messageConfirmDesign').css({"display":"block"});
-                // $('#designerleft').css({"display":"none"});
+                 $('#designerleft').css({"display":"none"});
             });
                return false;
        });

@@ -5,6 +5,7 @@
 use printconnect\Payments\Requests;
 use printconnect\PaymentMethods;
 use printconnect\Drupal\Functions;
+use printconnect\Orders\Factory;
 
 function pcpayments_request_form($form, &$form_state, $key) {
 
@@ -14,6 +15,13 @@ function pcpayments_request_form($form, &$form_state, $key) {
   try {
     $request = Requests\Factory::GetByKey($key);
     $request->EnsureLoaded();
+    $order = Factory::Get($request->order);
+
+    $idMethodePaiement = $order->orderItemsPayment[0]->paymentMethodResellerShop;
+    $paymentMethod = PaymentMethods\Factory::Get($idMethodePaiement);
+    
+    
+    $descMethodePaiement = $paymentMethod->paymentMethod->descriptionTag;
   } catch (\Exception $ex) {
     $form['info'] = array('#markup' => t('This payment request does not exists (anymore)...'));
     return $form;
@@ -110,7 +118,6 @@ function pcpayments_request_form($form, &$form_state, $key) {
       '#type' => 'fieldset',
       '#attributes' => array('class' => array('payment')),
   );
-
   $form['wrapperPayement_Price']['payment']['method'] = array(
       '#type' => 'tableselect',
       '#prefix' => '<h3 class="request-title">' . t('Choisissez une mèthode de paiement') .'</h3>',
@@ -122,7 +129,7 @@ function pcpayments_request_form($form, &$form_state, $key) {
       '#ajax' => $ajax,
       '#required' => TRUE,
       '#attributes' => array('class' => array('grid','methodePayement','rows-6')),
-      '#default_value' => $default,
+      '#default_value' => $idMethodePaiement,
   );
     $form['wrapperPayement_Price']['payment']["aboutMethode"] = array(
       '#type' => 'item',
@@ -133,6 +140,7 @@ function pcpayments_request_form($form, &$form_state, $key) {
      $form['wrapperPayement_Price']["textpayment"] = array(
       '#type' => 'item',
       '#id' => 'textpaymentRequest',
+         '#markup' => '<p>'.$descMethodePaiement.'</p>'
     );
 
     $form['agree'] = array(

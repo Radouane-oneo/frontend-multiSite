@@ -103,15 +103,21 @@ jQuery(document).ready(function(e) {
 			return false;
 		});
 
-		$('.page-segments .region-content fieldset').eq(1).find('.item-list ul').imagesLoaded(function () {
-			$(this).masonry({
+		if($('.page-segments .region-content fieldset').eq(1).find('.item-list ul').length > 0) {
+                    $('.page-segments .region-content fieldset').eq(1).find('.item-list ul').imagesLoaded(function () {
+			try {
+                            $(this).masonry({
 				itemSelector: 'li',
 				isAnimated: true,
 				gutterWidth: 10,
 				isFitWidth: true
-			});
-
-		});
+                            });
+                        }
+                        catch (e) {
+                        }
+		    });
+                }
+                
 	
 
         }

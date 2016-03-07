@@ -123,6 +123,15 @@ function pcproducts_menu() {
               'page arguments' => array(1),
               'access arguments' => array('access content')
           );
+
+	  $items["products/promos"] = array(
+              'title' => 'promos prices',
+              'title arguments' => array(1),
+              'description' => t('promos prices'),
+              'page callback' => 'pcproducts_js_form_productWithPromo',
+              'page arguments' => array(1),
+              'access arguments' => array('access content')
+          );
           $items["products/%/%"] = array(
               'title' => 'Configuration',
               'title callback' => '_pcproducts_getproductname',
@@ -635,10 +644,12 @@ function pcproducts_validate_product() {
     }
   }
 }
-
+function pcproducts_js_form_productWithPromo() {
+    $products = Factory::GetProductWithPromo();
+    print($products->data);
+}
 function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = FALSE, $edit = FALSE) {
     pcproducts_validate_product();
-
     global $language;
  
     global $user;
@@ -666,13 +677,20 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
     //drupal_set_breadcrumb(array(l(t('Home'), '<front>'), l(t('Products'), 'products')));
     $bannerUrl = getBannerIfExists($productId);
 
-    $labels = getLabels($edit);
+    $labels = getLabels($edit, $productId);
 
     $isAdmin = ($user->uid) ? '1' : '0';
-
+    $sitePrintconcept = '';
+    
+    if (isset($_GET['site']))
+    {
+      $sitePrintconcept = $_GET['site'];
+    }
+    
     $script = "<script type='text/javascript'>
+        var sitePrintconcept = '". $sitePrintconcept ."';
         var GlobalProductId = ". $productId .";
-	      var GlobalLabels = ". json_encode($labels) .";
+	var GlobalLabels = ". json_encode($labels) .";
         var GlobalIsAdmin = ". $isAdmin .";
         var GlobalDefaultItems = ".json_encode($gItems).";
         var GlobalDefaultOptions = ".json_encode($gOtions).";
@@ -688,7 +706,7 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
     return $script;
 }
 
-function getLabels($edit = false) {
+function getLabels($edit = false, $productId) {
     global $language;
     $labels = array(
         "langId" => $language->id,
@@ -735,6 +753,10 @@ function getLabels($edit = false) {
         "infocolor"=> t('infocolor'),
         "inforesolution"=> t('inforesolution'),
         "ouvrir" =>t('ouvrir'),
+        "ourtip" =>t('our tip'),
+        "linkText" =>t('Link text'),
+        "linkToConftemplate" =>t('linkToConftemplate'),
+        "productdescription" =>t('info for ' . $productId),
         
     );
 
@@ -1080,6 +1102,7 @@ function _pcproducts_url_name($value, $separator = '-') {
 }
 
 function _pcproducts_getproductname($id) {
+   // echo drupal_get_path_alias('products/1');die;
   if (is_numeric($id)) {
     printconnect_ensureinitialized();
     $product = \printconnect\Products\Factory::Get($id);

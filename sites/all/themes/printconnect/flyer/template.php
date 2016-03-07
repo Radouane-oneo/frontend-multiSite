@@ -18,6 +18,19 @@ function flyer_preprocess_page(&$variables) {
 					 $variables['page']['content']['system_main']['main'] = null;
 					 $variables['title']=t('Aide');
 		}
+    //non indexation        
+    $restricted_domains = array('yellowselectie.flyer.be', 'immopret.flyer.fr', 'syntrawest.flyer.be','preprd-flyer.oneo.dev','preprd-flyerfr.oneo.dev'
+        ,'preprd.flyer.fr','preprd.flyer.be','preprd.flyer.fr','preprd.flyer.nl','preprd.flyer.lu'); 
+    if (in_array($_SERVER['HTTP_HOST'], $restricted_domains)) {
+      $meta_robot = array(
+        '#tag' => 'meta',
+        '#attributes' => array(
+          'name' => 'robots',
+          'content' => 'noindex, nofollow'
+        ),
+      );
+      drupal_add_html_head($meta_robot, 'robots');
+    }
 
 }
 
@@ -228,8 +241,10 @@ function flyer_preprocess_html(&$vars) {
 		$vars['head_title'] = t('newstitle') . ' | ' . check_plain(variable_get('site_name', 'Drupal'));
 	elseif (arg(0) == 'products' && is_null(arg(1)))
 		$vars['head_title'] = t('produitstitle') . ' | ' . check_plain(variable_get('site_name', 'Drupal'));
-
-	// save class from node
+        elseif((arg(0) == 'taxonomy'))
+            $vars['head_title'] = ' | ' . check_plain(variable_get('site_name', 'Drupal'));
+            //$vars['head_title'] = drupal_get_path_alias(arg(0).'/'.arg(1).'/'.arg(2)) . ' | ' . check_plain(variable_get('site_name', 'Drupal'));
+                
 	$node = menu_get_object();
 	if ($node && isset($node->nid)) {
 		$node = node_load($node->nid);

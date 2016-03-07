@@ -17,7 +17,6 @@ function pccustomers_addresses_form($form, $form_state) {
   _pccustomers_ensureloggedin();
   $customer = Factory::Current();
   $addresses = Addresses\Factory::GetAddresses($customer, FALSE);
-
   $form['addresses'] = array(
       '#type' => 'container',
       '#title' => t('Your addresses'),
@@ -1524,7 +1523,8 @@ function pccustomers_login_form_register_validate(&$form, &$form_state) {
 
 //return FALSE;
     }
-
+    //creer une variable de session pour un nouveau client
+    $_SESSION['newClient'] = true;
     $form_state['storage']['customer'] = $customer;
     $form_state['storage']['new_customer'] = TRUE;
 

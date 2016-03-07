@@ -24,7 +24,6 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
       '#attributes' => array('class' => array('box', 'clearfix', 'orderstatus')),
           //  '#title' => t('Order status'),
   );
-
   if (variable_get('pc_flow', FALSE) == 'flyer' && $order->orderStatus->id != 16) {
 
     $form['status']['history'] = array(
@@ -101,7 +100,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         '#type' => 'fieldset',
         '#attributes' => array('class' => array('box', 'clearfix')),
         'title' => array(
-            '#markup' => t('Dear @name', array('@name' => $customer->firstName)),
+            '#markup' => '<div class="messageConfirmDesign messages status">'.t("message texte").'</div>'.t('Dear @name', array('@name' => $customer->firstName)),
             '#prefix' => '<h2>',
             '#suffix' => '</h2>',
         ),
@@ -216,8 +215,8 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
    */
   $totalPrice = 0;
   $idproducts = null;
+    
   foreach ($order->productItems as $item) {
-
     $form['order']['details']['item'][$item->id] = array(
         '#type' => 'container',
         '#attributes' => array('class' => array('blocJob', 'item', 'clearfix'))
@@ -229,17 +228,19 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
     );
     if (count($item->files)) {        
       foreach ($item->files as $file) {
-          if (isset($file->thumbnail)) {
+        
+        if (isset($file->thumbnail)) {
           $form['order']['details']['item'][$item->id]['image']['thumb'] = array(
               '#theme' => 'pcfilesthumb',
               '#file' => $file->thumbnail,
           );
         }
-        /*$form['order']['details']['item'][$item->id]['image']['download'] = array(
+        $form['order']['details']['item'][$item->id]['image']['download'] = array(
             '#theme' => 'pcfilesdownloadlink',
             '#file' => pcdesigntool_preview_url($file->designToolJobId),
             '#title' => t('Download preview'),
-        );*/
+            '#attributes' => array('class' => array('linkPdf')),
+        );
       }
     } else {
       $form['order']['details']['item'][$item->id]['image']['product'] = array(
@@ -326,12 +327,10 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
             //'#markup' => theme('item_list', array('items' => $rows)),
     );
     if (isset($item->tracking)) {
-      foreach ($item->tracking as $box) {
-	foreach($box->trackingLink as $key => $link) {
-        $form['order']['details']['item'][$item->id]['description']['tracking'][$key] = array(
-            '#markup' => l(t('Track box :').' '.(int)($key + 1), $link, array('attributes' => array('target' => '_new', /* 'class' => array('button', 'display-block') */))).'<br>',
+      foreach ($item->tracking as $key => $box) {
+        $form['order']['details']['item'][$item->id]['description']['tracking'] = array(
+            '#markup' => l(t('Track'), $box->trackingLink, array('attributes' => array('target' => '_new', /* 'class' => array('button', 'display-block') */))).'<br>',
         );
-	}
       }
     }
     if(count($item->fotoliaItems)|| $item->fileCheck){
@@ -377,6 +376,34 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
     }    
     
     $form_state['storage']['itemid'][$item->id] = $item->id;
+   
+    if (count($item->files) != 0 && $item->emailDesigner != '') { 
+        $form['order']['details']['item'][$item->id]['designer'] = array(
+            '#type' => 'container',
+            '#attributes' => array('class' => array('designerConfirm')),
+        ); 
+        if ($item->jobStatus != 'orderItemStatusReceived'){
+            $form['order']['details']['item'][$item->id]['designer']['designerleft'] = array(
+                '#markup' => '<div id="designerleft">'.t('line 1 designer confirmation').'<br>'.t('line 2 designer confirmation').'</div>',
+              );
+        }
+        $form['order']['details']['item'][$item->id]['designer']['jobIdDesigerHidden'] = array(
+            '#markup' => '<input type="hidden" value="'.$item->id.'" id="jobIdDesiger">' );
+       
+        if ($item->jobStatus == 'orderItemStatusReceived'){
+            $form['order']['details']['item'][$item->id]['designer']['designerright'] = array(
+                '#markup' => '<div class="greyButton">'.t('Approved').'</div>',
+            );
+        }
+        else
+        {
+            $form['order']['details']['item'][$item->id]['designer']['designerright'] = array(
+                '#type' => 'submit',
+                '#value' => t('Approve lay-out'),
+                '#id' => 'changeStatusConfirm'
+            );
+        }       
+    }
     $idproducts .= $item->configuration->productId.','; // ids product for tracking
   }
 

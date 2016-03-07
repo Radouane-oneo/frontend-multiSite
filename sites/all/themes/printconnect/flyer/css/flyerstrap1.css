@@ -85,7 +85,7 @@
   height: 3px;
   position: absolute;
   left: -11px;
-  top: -4px;
+  top: -2px;
 }
 /* line 77, ../sass/style.scss */
 .ul-iteams-2 .li-iteam span {
@@ -105,7 +105,7 @@
   margin: 0;
   padding: 0;
   margin-bottom: 23px;
-  padding-left: 37px;
+  padding-left: 13px;
 }
 /* line 94, ../sass/style.scss */
 .ul-iteams-1 li {
@@ -123,7 +123,7 @@
 }
 /* line 105, ../sass/style.scss */
 .ul-iteams-1 li a {
-  font-size: 14px;
+  font-size: 12px;
   display: inline-block;
   font-family: Open Sans;
   font-weight: 400;
@@ -273,8 +273,18 @@
 }
 /* line 203, ../sass/style.scss */
 .main-page .wrap-block h2.green-title {
-  margin-bottom: 30px;
+  margin-bottom: 13px;
   padding: 0;
+}
+
+.main-page .wrap-block h3.green-subtitle{
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-family: Open Sans; 
+  line-height: 18px;
+  font-weight: 300;
+  color: #77b700;
+  text-transform: none;
 }
 /* line 207, ../sass/style.scss */
 .main-page .wrap-block p {
@@ -621,11 +631,11 @@
 .main-page .blockProd-col .prod-3col .prod-col h3 {
   font-size: 16px;
   text-transform: none;
-  display: table-cell;
+  display: block;
   vertical-align: bottom;
   text-align: center;
   float: none;
-  width: 144px;
+  width: 100%;
 }
 /* line 526, ../sass/style.scss */
 .main-page .blockProd-col .prod-3col .prod-col .prod-img {

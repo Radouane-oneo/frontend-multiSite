@@ -76,6 +76,7 @@ h1.title-main {
 	font-weight: 100 !important;
 	font-size: 30px !important;
 	line-height: 32px !important;
+	margin-bottom: 0 !important;
 }
 
 #header-content p.sub-title-main {
@@ -83,7 +84,7 @@ h1.title-main {
 	font-size: 24px;
 	text-transform: none;
 	margin: 0;
-	line-height: normal;
+	line-height: 28px;
 }
 
 .right { float: right; }

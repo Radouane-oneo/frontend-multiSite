@@ -136,9 +136,9 @@ function pcsamplepacks_request_form($form, $form_state) {
         '#title' => t('House number & bus'),
         '#required' => TRUE,
     );
-    $form['postalCodeS'] = array(
+    $form['postalCode'] = array(
         '#type' => 'textfield',
-        '#title' => t('postalCodeS'),
+        '#title' => t('postalCode'),
         '#default_value' => $defaultAddress ? $defaultAddress->postalCode : '',
         '#required' => TRUE,
     );
@@ -216,7 +216,7 @@ function pcsamplepacks_request_form_address_callback($form, &$form_state) {
     $form['name']['#value'] = '';
     $form['company']['#value'] = '';
     $form['street']['#value'] = '';
-    $form['postalCodeS']['#value'] = '';
+    $form['postalCode']['#value'] = '';
     $form['city']['#value'] = '';
     $form['country']['#value'] = '';
     $form['phone']['#value'] = '';
@@ -226,7 +226,7 @@ function pcsamplepacks_request_form_address_callback($form, &$form_state) {
     $form['name']['#value'] = $address->name;
     $form['company']['#value'] = $address->company;
     $form['street']['#value'] = $address->street;
-    $form['postalCodeS']['#value'] = $address->postalCode;
+    $form['postalCode']['#value'] = $address->postalCode;
     $form['city']['#value'] = $address->city;
     $form['country']['#value'] = $address->country;
     $form['phone']['#value'] = $address->phone;
@@ -266,7 +266,7 @@ function pcsamplepacks_request_form_validate($form, $form_state) {
         return false;
     }
     $country=$form_state['values']['country'];
-    $postalCode=$form_state['values']['postalCodeS'];
+    $postalCode=$form_state['values']['postalCode'];
     $isoList = array(
                 21 => "BE",
                 73  => "FR",

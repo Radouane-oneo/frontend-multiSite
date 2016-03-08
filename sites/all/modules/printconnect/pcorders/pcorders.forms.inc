@@ -39,30 +39,59 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
 
     $statusses = \printconnect\Orders\Factory::GetStatusses();
 
-    $i = 0;
+    $items = array();
     foreach ($statusses as $status) {
       if (in_array($status->id, array(3, 8, 9, 10, 15))) {
-        $items[$i] = array(
-            'data' => $status->translated,
-            'class' => array('step' . ($i + 1)),
-        );
-        $i++;
+		  switch($status->id)
+		  {
+			 case 3 :
+				$items[0] = array(
+					'data' => $status->translated,
+					'class' => array('step1'),
+				);
+				break;
+			 case 8 :
+				$items[1] = array(
+					'data' => $status->translated,
+					'class' => array('step2'),
+				);
+				break;
+			case 9 :
+				$items[2] = array(
+					'data' => $status->translated,
+					'class' => array('step3'),
+				);
+				break;
+			case 10 :
+				$items[3] = array(
+					'data' => $status->translated,
+					'class' => array('step4'),
+				);
+				break;
+			case 15 :
+				$items[4] = array(
+					'data' => $status->translated,
+					'class' => array('step5'),
+				);
+				break;
+		  }
       }
     }
-
-    $items[4]['data'] = t('Delivered');
+	
+	$items[4]['data'] = t('Delivered');
 
     if (!isset($order->orderShippingAddress->pickupPointId) || $order->orderShippingAddress->pickupPointId == 0) {
-      unset($items[15]);
+      unset($items[4]);
     }
-
-    $listClass = '';
+	else
+	{
+		$items[4]['data'] = '<div class="date">' . format_date(strtotime($order->expectedDeliveryDate), 'medium', 'd-m-y') . '</div>' . $items[4]['data'];
+	}
 
     $items[0]['data'] = '<div class="date">' . format_date(strtotime($order->creationDate), 'medium', 'd-m-y') . '</div>' . $items[0]['data'];
-
     $items[2]['data'] = '<div class="date">' . format_date(strtotime($order->expectedShippingDate), 'medium', 'd-m-y') . '</div>' . $items[2]['data'];
 
-    $items[4]['data'] = '<div class="date">' . format_date(strtotime($order->expectedDeliveryDate), 'medium', 'd-m-y') . '</div>' . $items[4]['data'];
+    $listClass = '';
 
     switch ($order->orderStatus->id) {
       case 8:
@@ -87,6 +116,9 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
       /*    $items[0]['class'][] = 'active';
         $listClass = 'step1-active'; */
     }
+	
+	
+	ksort($items);
 
     $form['status']['history']['list'] = array(
         '#markup' => theme('item_list', array('items' => $items, 'attributes' => array('class' => array($listClass)))),

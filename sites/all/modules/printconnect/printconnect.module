@@ -17,10 +17,24 @@ function printconnect_init() {
                         'be' => array('nlnl' => 'benl',
                                       'frfr' => 'befr',
                                       'lufr' => 'befr',
+                                      'frfr' => 'befr',
                                         ),
-                        'fr' => 'frfr',
-                        'nl' => 'nlnl',
-                        'lu' => 'lufr',
+                        'nl' => array('benl' => 'nlnl',
+                                      'lufr' => 'nlnl',
+                                      'befr' => 'nlnl',
+                                      'frfr' => 'nlnl',
+                                        ),
+                        'lu' => array('frfr' => 'lufr',
+                                      'befr' => 'lufr',
+                                      'benl' => 'lufr',
+                                      'nlnl' => 'lufr'
+                                        ),
+                        'fr' => array('lufr' => 'frfr',
+                                      'befr' => 'frfr',
+                                      'benl' => 'frfr',
+                                      'nlnl' => 'frfr'
+                                        ),
+      
                             );
   if(isset($arrayExtention["$uriExtention"]) && is_array($arrayExtention["$uriExtention"])){
     if(array_key_exists($uriRequest[1], $arrayExtention["$uriExtention"]) == TRUE OR !is_array($arrayExtention["$uriExtention"])){

@@ -10,8 +10,6 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
     drupal_not_found();
     exit;
   }
-  $customer = CustomersFactory::Current();
-
   if (!$upload){
     drupal_not_found();
     exit;
@@ -48,7 +46,7 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
     );
 
     $form['header']['description'] = array(
-        '#markup' => '<div class="descriptionDesigner">'.t('Dear').'<br>'.t('custmer').'  '.$customer->fullName.'  '.t('told you would upload files for his order. Intro to upload by a designer.').'</div>'
+        '#markup' => '<div class="messageUploadDesigner messages status">'.t("Thank you, the file has been successfully uploaded").'</div><div class="descriptionDesigner">'.t('Dear').'<br>'.t('custmer').'  '.$upload->customerName.'  '.t('told you would upload files for his order. Intro to upload by a designer.').'</div>'
     );
     $templates = Products\Templates\Factory::GetTemplates($productId, $items);                        
     $template = $templates->items[0];
@@ -115,15 +113,19 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
           '#jobId' => $jobId,
           '#attributes' => array('class' => array( 'iframe', 'display-block')),
       );
-      $form['item']['upload']['files'][$file->id]['remove'] = array(
-                                                '#prefix' => '<div class="removefile">',
-                                                '#suffix' => '</div>',
-                                                '#type' => 'submit',
-                                                '#value' => '',
-                                                '#name' => 'delete_item_' . $upload->id,
-                                                '#has_garbage_value' => FALSE,
-                                                '#attributes' => array('class' => array('delete_item','deletedesign'), 'itemFileId' => $upload->id),
-                                        );
+      
+      $arrayIdStatus = array(7, 8, 9, 15, 23);
+      if (in_array($upload->orderItemStatus , $arrayIdStatus)){
+            $form['item']['upload']['files'][$file->id]['remove'] = array(
+                    '#prefix' => '<div class="removefile">',
+                    '#suffix' => '</div>',
+                    '#type' => 'submit',
+                    '#value' => '',
+                    '#name' => 'delete_item_' . $upload->id,
+                    '#has_garbage_value' => FALSE,
+                    '#attributes' => array('class' => array('delete_item','deletedesign'), 'itemFileId' => $upload->id),
+            );
+      }
       $form['item']['upload']['files'][$file->id]['preview'] = array(
         
           '#suffix'=>'</div>',
@@ -144,21 +146,32 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
              )
            );
      $form['item']['upload']['files'][$file->id]['blocOrange'] = array(
-          '#markup' => '<div id="designerMessage"><p>'.t('line1designer').'</p><p>'.t('line2designer').'</p></div>',
+          '#markup' => '<div id="designerMessage">'
+         . '<div class="linesUploadDesign"><p>'.t('line1designer').'</p><p>'.t('line2designer').'</p></div>'
+        // . '<p class="messageUploadDesigner">'.t("Thank you, the file has been successfully uploaded").'</p>'
+         . '</div>',
           );
       $form['item']['upload']['files'][$file->id]['jobIdDesigerHidden'] = array(
           '#markup' => '<input type="hidden" value="'.$upload->id.'" id="jobIdDesiger">' );
         
       $form['item']['upload']['files'][$file->id]['actions'] = array(
       '#type' => 'actions',
-      '#attributes' => array('class' => array('clearfix')),
+      '#attributes' => array('class' => array('clearfix','blocSubmit')),
   );
-
-  $form['item']['upload']['files'][$file->id]['actions']['submit'] = array(
-      '#type' => 'submit',
-      '#value' => t('confirm file'),
-      '#id' => 'changeStatusUpprove'
-  );
+    $arrayIdStatusConfirm = array(7, 8, 9, 15);  
+     if (in_array($upload->orderItemStatus , $arrayIdStatusConfirm)){
+         $form['item']['upload']['files'][$file->id]['actions']['submit'] = array(
+            '#type' => 'submit',
+            '#value' => t('confirm file'),
+            '#id' => 'changeStatusUpprove'
+        );
+     }
+     else{
+         $form['item']['upload']['files'][$file->id]['actions']['submit'] = array(
+          '#markup' => '<div class="cadreGris"></div>',
+      );
+     }
+   
   } else {
       $form['item']['upload'] = array(
           '#type' => 'fieldset',

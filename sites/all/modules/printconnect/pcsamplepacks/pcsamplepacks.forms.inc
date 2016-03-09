@@ -127,7 +127,7 @@ function pcsamplepacks_request_form($form, $form_state) {
     );
     $form['street'] = array(
         '#type' => 'textfield',
-        '#title' => t('Street'),
+        '#title' => t('Street samplepacks'),
         '#default_value' => $defaultAddress ? $defaultAddress->street : '',
         '#required' => TRUE,
     );
@@ -136,9 +136,9 @@ function pcsamplepacks_request_form($form, $form_state) {
         '#title' => t('House number & bus'),
         '#required' => TRUE,
     );
-    $form['postalCode'] = array(
+    $form['postalCodeS'] = array(
         '#type' => 'textfield',
-        '#title' => t('Postal code'),
+        '#title' => t('postalCodeS'),
         '#default_value' => $defaultAddress ? $defaultAddress->postalCode : '',
         '#required' => TRUE,
     );
@@ -216,7 +216,7 @@ function pcsamplepacks_request_form_address_callback($form, &$form_state) {
     $form['name']['#value'] = '';
     $form['company']['#value'] = '';
     $form['street']['#value'] = '';
-    $form['postalCode']['#value'] = '';
+    $form['postalCodeS']['#value'] = '';
     $form['city']['#value'] = '';
     $form['country']['#value'] = '';
     $form['phone']['#value'] = '';
@@ -226,7 +226,7 @@ function pcsamplepacks_request_form_address_callback($form, &$form_state) {
     $form['name']['#value'] = $address->name;
     $form['company']['#value'] = $address->company;
     $form['street']['#value'] = $address->street;
-    $form['postalCode']['#value'] = $address->postalCode;
+    $form['postalCodeS']['#value'] = $address->postalCode;
     $form['city']['#value'] = $address->city;
     $form['country']['#value'] = $address->country;
     $form['phone']['#value'] = $address->phone;
@@ -238,7 +238,9 @@ function pcsamplepacks_request_form_address_callback($form, &$form_state) {
 function pcsamplepacks_request_form_submit($form, $form_state) {
     
     global $language;
+    
     $samplePack = Factory::Create();
+   
     Forms::LoadObject($form_state['values'], $samplePack);
     if (isset($language->id)) {
         $samplePack->language = $language->id;
@@ -266,7 +268,7 @@ function pcsamplepacks_request_form_validate($form, $form_state) {
         return false;
     }
     $country=$form_state['values']['country'];
-    $postalCode=$form_state['values']['postalCode'];
+    $postalCode=$form_state['values']['postalCodeS'];
     $isoList = array(
                 21 => "BE",
                 73  => "FR",
@@ -283,16 +285,16 @@ function pcsamplepacks_request_form_validate($form, $form_state) {
     if(array_key_exists($country,$isoLengths)){
             if($isoLengths[$country]!= strlen($postalCode) && $country!=150){
                 $message="Le champ Code postal doit contenir ".$isoLengths[$country]." chiffres";
-                form_set_error('postalCode', t($message));
+                form_set_error('postalCodeS', t($message));
                 return false;
             }
             if($country!=150 && !ctype_digit($postalCode)){
 
-                form_set_error('postalCode', t('Le champ Code postal doit être numérique.'));
+                form_set_error('postalCodeS', t('Le champ Code postal doit être numérique.'));
                 return false;
             }
             if($country==150 && strlen($postalCode) <= 4){
-                form_set_error('postalCode', t('Le champ Code postal est trop court.'));
+                form_set_error('postalCodeS', t('Le champ Code postal est trop court.'));
                 return false;
             }
 

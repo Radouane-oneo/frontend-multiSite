@@ -151,7 +151,7 @@ var registerClicked = false;
                 if(_this.val() == "" || _this.val() == 0) {
                     errorMsgs[i] = Drupal.t('Le champ N° de TVA est requis.');
                 }else{
-                    errorMsgs[i] = Drupal.t('insert a valid vat number please');
+                    //errorMsgs[i] = Drupal.t('insert a valid vat number please');
                 }
                 errorMarkup += "<li>"+errorMsgs[i]+"</li>";
                    console.log('coco');
@@ -189,7 +189,7 @@ var registerClicked = false;
                 _this.addClass('error');
                 errorMsgs[i] = inputName+": "+labels["invalidCharactersLength"];
                 errorMarkup += "<li>"+errorMsgs[i]+"</li>";
-            } else if (this.name =="phone" && ( !erTel.test(_this.val()) || _this.val().length != 9)) {
+            } else if (this.name =="phone" && ( !erTel.test(_this.val()) || _this.val().length < 9)) {
                 inputName = $(elem).attr('name');
                 _this.addClass('error');
                 errorMsgs[i] = labels["phoneNumberError"];

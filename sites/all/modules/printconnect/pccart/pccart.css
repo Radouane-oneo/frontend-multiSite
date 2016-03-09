@@ -150,10 +150,6 @@ padding-bottom: 5px;
 #block-pccart-shipping .delivery{
   background:url(../printconnect/images/shipping/pt_icon_3.png) top center no-repeat;
 }
-.poll-form a{
-      color: #FFF !important;
-      font-size: 14px !important;
-}
 .poll-form {
   padding-top: 15px;
   padding-bottom: 15px;
@@ -175,27 +171,33 @@ padding-bottom: 5px;
   line-height: 14px;
 }
 
-#pccart-cart-form .prodactTemplates .poll-form1.double.first{
-    padding-left: 0;
-    width: 320px;
-}
-
-.prodactHasTemplates .poll-form{
-    background-color: transparent;
-}
 .poll-form .visu{
   height: 95px;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-.poll-form a{
+.poll-form a, .poll-form a:visited{
   font-weight: bold;
-  color: #ff6600;
-  font-size: 11px;
+  color: #fff;
+  font-size: 15px;
 }
+
+.poll-form a span.btnupfile{
+  background: url(images/btn_designtool.png) no-repeat 0 2px;
+  display: inline-block;
+  line-height: 30px;
+  padding-left: 35px;
+}
+.poll-form2 a span.btnupfile{
+  background-position: 0 -61px;
+}
+
 .poll-form .txto{
   font-weight: normal;
+  color: #646464;
+  margin: 0;
+  text-align: left;
 }
 .img2 .text {
 margin-right: 23px;
@@ -565,11 +567,6 @@ float: left;
   clear: both;
 }
 
-/* CENTROID ON HAS-PROPUPLOAD */
-.prodactTemplates .first {
-  border-left: none !important;
-}
-
 .centroid-1 .first {
   margin-left: 160px!important;
   border: none!important;
@@ -691,29 +688,81 @@ table.targetPrice tbody tr.last-child td { border:none; }
   height: 50px;
 }
 
-.poll-form .designtool.iframe {
+.poll-form .popupbtn{
   display: inline-block;
-  background-color: #6fa900;
+  background-color: #6faa01;
   border-radius: 3px;
   text-align: center;
-  width: 267px;
+  width: 100%;
   height: 40px;
   line-height: 40px;
   box-sizing: border-box;
-  font-weight: normal;
   text-transform: none;
+  margin-bottom: 12px;
 }
 
+.poll-form .filetype{
+  font-size: 12px;
+  color: #9d9d9c;
+  display: block;
+  margin: -6px 0 18px;
+  line-height: 13px;
+}
 
+.options-file-impression li {
+  background: url(images/bg_btns.png) no-repeat -3px -100px;
+  padding-left: 20px!important;
+  text-align: left;
+  font-size: 12px;
+  color: #646464;
+}
+
+.options-file-impression li a{
+  color: #646464;
+  text-decoration: underline;
+  font-weight: normal;
+  font-size: 12px;
+}
+
+.dummyupload .options-file-impression li{
+  background: url(images/dummyicone.png) no-repeat 0 5px;
+}
 .option-title {
   font-weight: bold;
   font-size: 15px;
   margin-bottom: 4px;
 }
 
+.dummy-price{
+  background-color: #ff8200;
+  width: 62px;
+  height: 62px;
+  font-size: 14px;
+  text-align: center;
+  line-height: 62px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  overflow: hidden;
+  color: white;
+  position: absolute;
+  bottom: -31px;
+  left: 50%;
+  margin-left: -31px;
+  font-weight: bold;
+}
+.poll-form.dummyupload{
+  position: relative;
+  padding-bottom: 34px !important;
+  margin-bottom: 28px;
+}
+
+.poll-form.dummyupload + .poll-form{
+  padding-bottom: 34px !important;
+}
+
 .page-cart #pccart-cart-form .cartItemsContainer ul li {
   list-style: none;
-  margin: 0 0 5px 0;
   padding: 0;
 }
 
@@ -738,12 +787,6 @@ table.targetPrice tbody tr.last-child td { border:none; }
   padding: 0;
 }
 
-ul.options-file-impression {
-  height: 145px;
-  display: block;
-  width: auto;
-}
-
 div#edit-linkcart a {
   word-wrap: break-word;
 }
@@ -751,20 +794,23 @@ div#edit-linkcart a {
 #pccart-cart-form .prodactTemplates .poll-form{
   text-align: center;
   float: left;
-  padding-left: 10px;
-  padding-right: 10px;
-  border-right: 1px solid #d1d1d1;
-  width: 306px;
+  padding: 12px;
+  background-color: #fff;
+  width: 310px;
+  border: 1px solid #d1d1d1;
+  border-radius: 5px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-#pccart-cart-form .prodactTemplates .first {
-  border-left: none !important;
-  padding-left: 0;
+#pccart-cart-form .prodactTemplates .poll-form2{
+  float: right;
 }
 
-#pccart-cart-form .prodactHasTemplates .poll-form2 {
-  border-right: none !important;
-  padding-right: 0;
+#pccart-cart-form .prodactTemplates .poll-form.designToolOnly{
+  float: none;
+  width: 100%;
 }
 
 #edit-templates-linktodownload {
@@ -838,4 +884,42 @@ div#edit-linkcart a {
   color: #666666;
   margin: 0 0 0 5px;
   right: 0;
+}
+
+.prodactHasTemplates.inpopup{
+  position: absolute;
+  z-index: 99999;
+  width: 640px;
+  background-color: #fff;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  padding: 20px;
+  left: -12px;
+  top:0;
+}
+.prodactHasTemplates.inpopup .poll-form1{
+  clear: both;
+}
+
+.prodactHasTemplates.inpopup > h3{
+  color: #646464;
+  font-size: 16px;
+  margin: 0 0 13px;
+  float: left;
+}
+.prodactHasTemplates.inpopup .close-popup{
+  color: #646464;
+  font-size: 10px;
+  float: right;
+  width: 11px;
+  height: 11px;
+  border: 2px solid #646464;
+  line-height: 9px;
+  text-align: center;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  font-weight: bold;
+  cursor: pointer;
 }

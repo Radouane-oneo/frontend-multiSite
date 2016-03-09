@@ -25,7 +25,7 @@ var registerClicked = false;
 	}
       var globalEroorVat = false;
       var vatFormats = [{'BE': 10},{'NL' : 12},{'LU' : 8},{'FR' : 11}];
-      $('#pccustomers-address-billingaddresses-form #edit-vatnumber-number').blur(function(){
+      $('#pccustomers-address-billingaddresses-form #edit-vatnumber-number', '#pccustomers-newaddress-billingaddresses-form #edit-vatnumber-number').blur(function(){
             if ($('#edit-vatnumber-number').val() !='' && $('.country').val() != '') {
 		$('.vatAlreadyUsed').parent().hide();
                 var vatNumberBA = $("#edit-vatnumber-number").val().replace(/\./g, "").replace(/ /g,"");
@@ -60,7 +60,7 @@ var registerClicked = false;
                 if (decision == false) {
 		    globalEroorVat = true;
                     $("#edit-vatnumber-number").addClass('error');
-                    $("#edit-vatnumber-number").val('');
+                    //$("#edit-vatnumber-number").val('');
                     var vatplaceholder = Drupal.t('insert a valid vat number please');
 		    labels["vatNotNumber"] = vatplaceholder;
                     $('.customErrors').remove();
@@ -137,9 +137,27 @@ var registerClicked = false;
             150 : 7,
             124 : 4
 	  }
+           if ($('#edit-street').val().length <= 4 && $('#edit-street').val().length != 0){
+                $('#edit-street').addClass('error');
+                errorMsgs[0] = Drupal.t('Le champs rue est trop court');
+                errorMarkup += "<li>"+errorMsgs[0]+"</li>";console.log(errorMarkup);
+                //return false;
+            }
           $('#content form input.required, #content form select.required').each(function(i, elem) {
             var _this = $(this); 
+           
             var inputName;
+            if ($(elem).attr('name') == 'vatNumber[number]'){
+                if(_this.val() == "" || _this.val() == 0) {
+                    errorMsgs[i] = Drupal.t('Le champ N° de TVA est requis.');
+                }else{
+                    errorMsgs[i] = Drupal.t('insert a valid vat number please');
+                }
+                errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+                   console.log('coco');
+            }else{
+           
+            var erTel = /^([0-9\/\s\-_\.]*)$/g;
             if(_this.val() == "" || _this.val() == 0) {
                 inputName = $(elem).attr('name');
                 _this.addClass('error');
@@ -171,7 +189,7 @@ var registerClicked = false;
                 _this.addClass('error');
                 errorMsgs[i] = inputName+": "+labels["invalidCharactersLength"];
                 errorMarkup += "<li>"+errorMsgs[i]+"</li>";
-            } else if (this.name =="phone" && (isNaN(_this.val()) || _this.val().length != 9 && _this.val().length != 10)) {
+            } else if (this.name =="phone" && ( !erTel.test(_this.val()) || _this.val().length != 9)) {
                 inputName = $(elem).attr('name');
                 _this.addClass('error');
                 errorMsgs[i] = labels["phoneNumberError"];
@@ -225,7 +243,7 @@ var registerClicked = false;
                   }
                 }
             } 
-
+          }
           });  
           errorMarkup += "</ul></div>";
           if(errorMsgs.length != 0 ) {
@@ -384,7 +402,7 @@ function ValidatePostalCode(iso,value) {
    $('#edit-vatnumber-country').val('');
    console.log('herer');
    if ($('#edit-country').val() != 0) {
-       var url = Drupal.settings.basePath + '?q=js/country/' + $(this).val();
+       var url = Drupal.settings.basePath + '?q=js/country/' + $("#edit-country").val();
            $.getJSON(url, null, function (data) {
                $('#edit-vatnumber-country').val(data.vatPrefix).trigger('change');
        });

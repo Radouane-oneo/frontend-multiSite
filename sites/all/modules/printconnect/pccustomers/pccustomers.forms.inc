@@ -17,7 +17,6 @@ function pccustomers_addresses_form($form, $form_state) {
   _pccustomers_ensureloggedin();
   $customer = Factory::Current();
   $addresses = Addresses\Factory::GetAddresses($customer, FALSE);
-
   $form['addresses'] = array(
       '#type' => 'container',
       '#title' => t('Your addresses'),
@@ -416,9 +415,10 @@ function pccustomers_address_form($form, $form_state, $addressId) {
 
   $form['name'] = array(
       '#type' => 'textfield',
-      '#title' => t('Name'),
+      '#title' => t('FullName'),
       '#required' => TRUE,
       '#size' => 71,
+      '#maxlength' => 22,
       '#default_value' => $address->name,
   );
   /*$form['phone'] = array(
@@ -430,9 +430,10 @@ function pccustomers_address_form($form, $form_state, $addressId) {
   );*/
   $form['street'] = array(
       '#type' => 'textfield',
-      '#title' => t('Street'),
+      '#title' => t('NumberAndStreet'),
       '#required' => TRUE,
       '#size' => 71,
+      '#maxlength' => 60,
       '#default_value' => $address->street,
   );
 
@@ -444,7 +445,7 @@ function pccustomers_address_form($form, $form_state, $addressId) {
 
   $form['postal_codeCity']['postalCode'] = array(
       '#type' => 'textfield',
-      '#title' => t('PostalCode'),
+      '#title' => t('PostalCodeAndLocality'),
       '#required' => TRUE,
       '#size' => 71,
       '#default_value' => $address->postalCode,
@@ -500,6 +501,7 @@ function pccustomers_address_form($form, $form_state, $addressId) {
       '#type' => 'textfield',
       '#title' => t('Company'),
       '#size' => 71,
+      '#maxlength' => 22,
       '#default_value' => $address->company,
   );
 
@@ -549,6 +551,7 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#title' => t('Name'),
       '#required' => TRUE,
       '#size' => 61,
+      '#maxlength' => 22,
       '#default_value' => $Billingaddresses->name,
   );
 
@@ -558,6 +561,7 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#title' => t('Street'),
       '#required' => TRUE,
       '#size' => 61,
+      '#maxlength' => 60,
       '#default_value' => $Billingaddresses->street,
   );
 
@@ -620,6 +624,7 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#type' => 'textfield',
       '#title' => t('Company'),
       '#size' => 61,
+      '#maxlength' => 22,
       '#id' => 'companyInput',
       '#default_value' => $Billingaddresses->company,
   );
@@ -786,7 +791,8 @@ function pccustomers_newaddress_form($form, $form_state) {
 
   $form['name'] = array(
       '#type' => 'textfield',
-      '#title' => t('Name'),
+      '#title' => t('FullName'),
+      '#maxlength' => 22,
       '#required' => TRUE,
       '#size' => 71,
   );
@@ -800,14 +806,15 @@ function pccustomers_newaddress_form($form, $form_state) {
 
   $form['street'] = array(
       '#type' => 'textfield',
-      '#title' => t('Street'),
+      '#title' => t('NumberAndStreet'),
       '#required' => TRUE,
+      '#maxlength' => 60,
       '#size' => 71,
   );
 
   $form['postalCode'] = array(
       '#type' => 'textfield',
-      '#title' => t('PostalCode'),
+      '#title' => t('PostalCodeAndLocality'),
       '#required' => TRUE,
       '#size' => 71,
       '#attributes' => array('class' => array('postalCode')),
@@ -850,6 +857,7 @@ function pccustomers_newaddress_form($form, $form_state) {
   $form['company'] = array(
       '#type' => 'textfield',
       '#title' => t('Company'),
+      '#maxlength' => 22,
       '#size' => 71,
   );
 //  $form['vatNumber'] = array(
@@ -952,6 +960,7 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
   $form['summary']['name'] = array(
       '#type' => 'textfield',
       '#title' => t('Name'),
+      '#maxlength' => 22,
       '#size' => 61,
       '#required' => TRUE,
   );
@@ -959,6 +968,7 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
   $form['summary']['street'] = array(
       '#type' => 'textfield',
       '#title' => t('Street'),
+      '#maxlength' => 60,
       '#size' => 61,
       '#required' => TRUE,
   );
@@ -1022,6 +1032,7 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
         '#title' => t('Company'),
         '#required' => FALSE,
         '#size' => 61,
+        '#maxlength' => 22,
         '#attributes' => array(
             'id' => 'companyInput'
         )
@@ -1233,6 +1244,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
   $form['login']['email'] = array(
       '#type' => 'textfield',
       '#title' => t('Email'),
+      //'#name' => t('email_login'),
       '#required' => TRUE,
       '#weight' => 7,
       '#attributes' => array('class' => array('customer-email', 'hint')),
@@ -1242,6 +1254,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
       '#type' => 'password',
       '#title' => t('Password'),
       '#required' => TRUE,
+      //'#name' => t('Password_login'),
       '#attributes' => array('autocomplete' => 'off', 'class' => array('hint')),
       '#weight' => 8,
       '#description' => t('Your password'),
@@ -1264,10 +1277,10 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
           array('password'),
       ),
   );
-  /*$form['login']['forgot'] = array(
+  $form['login']['forgot'] = array(
         '#markup' => l(t('Forgot your password?'), 'myprintconnect/forgotpassword', array('query' => array('return' => $redirect), 'attributes' => array('class' => array('link')))),
         '#weight' => 9,
-    );*/
+    );
    /*Secont form */
   
    $form['login']['decriptionnew'] = array(
@@ -1351,7 +1364,7 @@ function pccustomers_login_form($form, &$form_state, $redirect = 'myprintconnect
   "isRequired" => t('!name field is required.'),
   "invalidCharactersLength" => t('invalidCharactersLength'),
   "newpassword" => t('Password not long enough'),
-  "invaliEmail" => t('Email is not valid'),
+  "invaliEmail" => t('Email is not valid identification'),
   );
 
   $form['scriptForLabels'] = array(
@@ -1441,7 +1454,7 @@ function pccustomers_login_form_login_validate(&$form, &$form_state) {
   if ($customer && !$customer->blocked) {
 
     if (!valid_email_address($customer->email)) {
-      form_set_error('email', t('Not a valid email address'));
+      form_set_error('email', t('Not a valid identification'));
       return false;
     }
 
@@ -1510,7 +1523,8 @@ function pccustomers_login_form_register_validate(&$form, &$form_state) {
 
 //return FALSE;
     }
-
+    //creer une variable de session pour un nouveau client
+    $_SESSION['newClient'] = true;
     $form_state['storage']['customer'] = $customer;
     $form_state['storage']['new_customer'] = TRUE;
 

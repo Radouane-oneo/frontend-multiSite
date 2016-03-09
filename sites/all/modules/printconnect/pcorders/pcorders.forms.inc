@@ -134,6 +134,12 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
   $form['header']['left'] ['livraison'] = array(
         '#markup' => "<div class='shippingdate'><span class='livraison'>".t('shipping date').":</span><span class='senddate'> ".format_date(strtotime($order->expectedShippingDate), 'medium', 'd-m-y')."</span></div>"
     );
+
+  if($order->user!=NULL){
+    $form['header']['left'] ['salesid'] = array(
+          '#markup' => "<div class='salesId'><span class='livraison'>".strtoupper(t('salesId')).":</span><span class='senddate'>".$order->user->salesId."</span></div>"
+      );
+  }
   
   $form['deliveryinvoice'] = array(
       '#type' => 'container',
@@ -211,7 +217,6 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
   $totalPrice = 0;
   $idproducts = null;
   foreach ($order->productItems as $item) {
-
     $form['order']['details']['item'][$item->id] = array(
         '#type' => 'container',
         '#attributes' => array('class' => array('blocJob', 'item', 'clearfix'))
@@ -320,12 +325,10 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
             //'#markup' => theme('item_list', array('items' => $rows)),
     );
     if (isset($item->tracking)) {
-      foreach ($item->tracking as $box) {
-	foreach($box->trackingLink as $key => $link) {
-        $form['order']['details']['item'][$item->id]['description']['tracking'][$key] = array(
-            '#markup' => l(t('Track box :').' '.(int)($key + 1), $link, array('attributes' => array('target' => '_new', /* 'class' => array('button', 'display-block') */))).'<br>',
+      foreach ($item->tracking as $key => $box) {
+        $form['order']['details']['item'][$item->id]['description']['tracking'] = array(
+            '#markup' => l(t('Track'), $box->trackingLink, array('attributes' => array('target' => '_new', /* 'class' => array('button', 'display-block') */))).'<br>',
         );
-	}
       }
     }
     if(count($item->fotoliaItems)|| $item->fileCheck){
@@ -371,6 +374,23 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
     }    
     
     $form_state['storage']['itemid'][$item->id] = $item->id;
+   
+    if (count($item->files) != 0 && $item->emailDesigner != '') { 
+      $form['order']['details']['item'][$item->id]['designer'] = array(
+          '#type' => 'container',
+        '#attributes' => array('class' => array('designerConfirm')),
+              );
+       $form['order']['details']['item'][$item->id]['designer']['designerleft'] = array(
+         '#markup' => '<div id="designerleft">'.t('line 1 designer').'<br>'.t('line 2 designer').'</div>',
+          );
+        $form['order']['details']['item'][$item->id]['designer']['jobIdDesigerHidden'] = array(
+          '#markup' => '<input type="hidden" value="'.$item->id.'" id="jobIdDesiger">' );
+       $form['order']['details']['item'][$item->id]['designer']['designerright'] = array(
+      '#type' => 'submit',
+      '#value' => t('Approve lay-out'),
+      '#id' => 'changeStatusConfirm'
+  );
+    }
     $idproducts .= $item->configuration->productId.','; // ids product for tracking
   }
 
@@ -462,7 +482,6 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
 
 function _pcorders_order_form_build_overview($order) {
   $discounts = FALSE;
-
   if ($order) {
     $rows = array();
 
@@ -521,7 +540,7 @@ function _pcorders_order_form_build_overview($order) {
               t('Shipping'),
               $type->shippingType->tag,
               //array('data' => '', 'class' => array('filler')),
-              theme('price', array('value' => $order->orderItemShipping->price, 'free' => TRUE, 'block' => TRUE)),
+              theme('price', array('value' => $order->orderItemShipping->price - ($order->orderItemShipping->price * $order->orderItemShipping->discount), 'free' => TRUE, 'block' => TRUE)),
           ),
       );
     }

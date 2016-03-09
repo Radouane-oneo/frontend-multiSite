@@ -5,6 +5,10 @@ namespace printconnect\Products {
   use printconnect\Dal;
 
   class Factory {
+  public static function GetProductWithPromo() 
+  {
+      return Dal::SendRequest('product-promo-price', 'GET', array());
+  }
 
     public static function GetAll($language = FALSE, $dal = FALSE, $all = FALSE) {
       $host = $_SERVER['HTTP_HOST'];

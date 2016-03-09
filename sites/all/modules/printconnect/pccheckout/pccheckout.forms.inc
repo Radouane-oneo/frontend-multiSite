@@ -5,8 +5,16 @@ use printconnect\Carts\Factory as CartsFactory;
 function pccheckout_redirect() {
     _pccustomers_ensureloggedin();
     $customer = \printconnect\Customers\Factory::Current();
-    $addresses = \printconnect\Customers\Addresses\Factory::GetAddresses($customer);
-    if (!$customer->firstName || !$customer->lastName || !$customer->phone || !$addresses->count) {
+    $addresses = \printconnect\Customers\Addresses\Factory::GetAddresses($customer, false);
+    $billingAccounts = \printconnect\Customers\BillingAccounts\Factory::GetBillingAccounts($customer);
+    \printconnect\Customers\BillingAccounts\Factory::LoadBillingAccounts($billingAccounts);
+    $countBas = 0;
+    foreach($billingAccounts as $billingAccount) {
+        if($billingAccount && $billingAccount->id) {
+            $countBas++;
+        }
+    }
+    if (!$customer->firstName || !$customer->lastName || !$customer->phone || !$addresses->count || $countBas == 0) {
         drupal_goto('checkout/personal');
     } else {
         drupal_goto('checkout/invoiceanddelivery');
@@ -94,6 +102,7 @@ function pccheckout_personal_form($form, &$form_state) {
         '#title' => t('First name'),
         '#required' => TRUE,
         '#size' => 30,
+        '#maxlength' => 22,
         '#default_value' => $customer->firstName,
     );
     $form['personal']['lastName'] = array(
@@ -101,6 +110,7 @@ function pccheckout_personal_form($form, &$form_state) {
         '#title' => t('Last name'),
         '#required' => TRUE,
         '#size' => 30,
+        '#maxlength' => 22,
         '#default_value' => $customer->lastName,
     );
     $form['personal']['phone'] = array(
@@ -120,6 +130,7 @@ function pccheckout_personal_form($form, &$form_state) {
         '#type' => 'textfield',
         '#title' => t('Street'),
         '#required' => TRUE,
+        '#maxlength' => 60,
         '#size' => 30,
     );
     $form['address']['postalCode'] = array(
@@ -176,6 +187,7 @@ function pccheckout_personal_form($form, &$form_state) {
         '#title' => t('Company'),
         '#required' => FALSE,
         '#size' => 30,
+        '#maxlength' => 22,
         '#attributes' => array(
             'id' => 'companyInput'
         )

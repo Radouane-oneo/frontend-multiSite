@@ -76,6 +76,7 @@ h1.title-main {
 	font-weight: 100 !important;
 	font-size: 30px !important;
 	line-height: 32px !important;
+	margin-bottom: 0 !important;
 }
 
 #header-content p.sub-title-main {
@@ -217,19 +218,19 @@ input.form-element { height: 18px; }
 .btn .icon-youtube 	    { background: url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/flyer_landingpage/flyerstrap1/youtube.png) no-repeat center; }
 
 .btn-green { color: #fff; background-color: #77b700; }
-.btn-green:hover, .btn-green.hover { background-color: #77cd00; }
+.btn-green:hover, .btn-green.hover { background-color: #77cd00;color: #fff !important; }
 .btn-pinterest { color: #fff; background-color: #c8071d; }
-.btn-pinterest:hover, .btn-pinterest.hover { background-color: #d3394a; }
+.btn-pinterest:hover, .btn-pinterest.hover { background-color: #d3394a;color: #fff !important; }
 .btn-facebook { color: #fff; background-color: #2d5996;  }
-.btn-facebook:hover, .btn-facebook.hover { background-color: #577aab; }
+.btn-facebook:hover, .btn-facebook.hover { background-color: #577aab; color: #fff !important;}
 .btn-twitter { color: #fff; background-color: #3aa8db; }
-.btn-twitter:hover, .btn-twitter.hover { background-color: #61b9e2; }
+.btn-twitter:hover, .btn-twitter.hover { background-color: #61b9e2;color: #fff !important; }
 .btn-linkedin { color: #fff; background-color: #006795; }
-.btn-linkedin:hover, .btn-linkedin.hover { background-color: #3385aa; }
+.btn-linkedin:hover, .btn-linkedin.hover { background-color: #3385aa;color: #fff !important; }
 .btn-google { color: #fff; background-color: #d94c39; }
-.btn-google:hover, .btn-google.hover { background-color: #e17061; }
+.btn-google:hover, .btn-google.hover { background-color: #e17061;color: #fff !important; }
 .btn-youtube { color: #fff; background-color: #e3242e; }
-.btn-youtube:hover, .btn-youtube.hover { background-color: #e95058; }
+.btn-youtube:hover, .btn-youtube.hover { background-color: #e95058; color: #fff !important;}
 
 #buttons-box { background-color: transparent; margin-bottom: 0; padding-top: 0; }
 #buttons-box .btn { margin-bottom: 15px; }

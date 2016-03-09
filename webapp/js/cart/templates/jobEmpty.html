@@ -15,7 +15,7 @@
 			<div class="preview2">
 				<div class="description form-wrapper <%= (model.emailDesigner ==null)?'':'jobDesigner' %>">
                                     <% var name=''%>
-                                    <% if (model.customWidth != 0 && model.customHeight != 0){
+                                    <% if (model.customWidth != 0  && model.customWidth != null && model.customHeight != 0 && model.customHeight != null){
                                             name = model.configuration.name + ' ' +model.customWidth+' X '+ model.customHeight+' mm';
                                         }else
                                         {
@@ -29,9 +29,9 @@
                                             <%  if(model.price < model.originPrice){%>
                                                 <% var prefixsFR = ["frfr"];        
                                                 if ($.inArray(GlobalPrefix, prefixsFR) == 0){%>
-                                                <div class="origin-price"><del><%=model.originPrice%> &euro;</del></div>
+                                                <!--div class="origin-price"><del><%=model.originPrice%> &euro;</del></div-->
                                                 <% }else{%>
-                                                    <div class="origin-price"><del>&euro; <%=model.originPrice%></del></div>
+                                                    <!--div class="origin-price"><del>&euro; <%=model.originPrice%></del></div-->
                                                 <%}%>
                                                 <%= priceTpl({price:model.price,classToAdd:'price'}) %>
                                             <%}else{%>

@@ -47,14 +47,14 @@
                     <label for="edit-invoice-address-current-name">
                         <%= model.labels['BAName'] %> <span class="form-required" title="BAFieldsRequired">*</span>
                     </label>
-                    <input type="text" id="baName" class="baInputs" value="<%= model.defaultBA.name %>" size="30" maxlength="128"
+                    <input type="text" id="baName" class="baInputs" value="<%= model.defaultBA.name %>" size="30" maxlength="22"
                    name = "name" class="form-text required" >
                 </div>
                 <div class="form-item form-type-textfield form-item-invoice-address-current-street">
                     <label for="edit-invoice-address-current-street">
                         <%= model.labels['StreetBA'] %> <span class="form-required" title="BAFieldsRequired">*</span>
                     </label>
-                    <input type="text" id="baStreet" value="<%= model.defaultBA.street %>" class ="baInputs" name = "street" size="30" maxlength="128" class="form-text required" >
+                    <input type="text" id="baStreet" value="<%= model.defaultBA.street %>" class ="baInputs" name = "street" size="30" maxlength="60" class="form-text required" >
                 </div>
                 <div class="form-item form-type-textfield form-item-invoice-address-current-postalCode">
                     <label for="edit-invoice-address-current-postalcode">
@@ -96,7 +96,7 @@
             </div>
             <div class="form-item form-type-textfield form-item-invoice-address-current-company plr" style="display: none;">
                 <label for="edit-invoice-address-current-company"><%= model.labels['CompanyBA'] %> <span class="form-required" title="BAFieldsRequired">*</span></label>
-                <input id="companyInput" name="company" type="text" value="<%= (model.defaultBA) ? model.defaultBA.company : '' %>" size="30" maxlength="128" class="form-text">
+                <input id="companyInput" name="company" type="text" value="<%= (model.defaultBA) ? model.defaultBA.company : '' %>" size="30" maxlength="22" class="form-text">
             </div>
             <div id="vatNumber">
                 <div class="plr form-item form-type-vatfield form-item-invoice-address-current-vatNumber vat-validation-processed" style="display: none;">

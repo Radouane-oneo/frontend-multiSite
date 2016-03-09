@@ -32,6 +32,17 @@
                                 <%}}%>
                         </td>
                     </tr>
+                    
+                    <!-- options -->
+                    <%if (orderItem.options.length>0) { %>
+                        <% _.each(orderItem.options, function(option, i){ %>
+                            <tr>
+                                <td><%=option.optionName %></td>
+                                <td class='last-child'><%= priceTpl({price:option.price,classToAdd:'pricepreflight'}) %></td>
+                            </tr>
+                        <% }); %>
+                    <% }  %>
+
                     <!-- fotolia -->
                     <% if (orderItem.fotoliaItems.length>0) { %>
                         <% _.each(orderItem.fotoliaItems, function(fotolia, i){ %>
@@ -56,7 +67,7 @@
                  
                 <tr class="even">
                     <td class="first-child"><%= model.orderItemShipping.shippingTypeTitle %></td>
-                    <td class="last-child"><%= priceTpl({price:(model.orderItemShipping.price)}) %></td> 
+                    <td class="last-child"><%= priceTpl({price:(model.orderItemShipping.price - (model.orderItemShipping.price * model.orderItemShipping.discount))}) %></td> 
                 </tr>
                 
                 <% if (model.discountItems.length>0) { %>

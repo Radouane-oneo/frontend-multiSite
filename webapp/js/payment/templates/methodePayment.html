@@ -33,8 +33,8 @@
                                        > 
                             </div>
                         </td>
-                        <td class="<%= (payment.id == 215)? 'virement-bancaire' : '' %>"><%= payment.paymentMethod.tag %>
-                            <%= (payment.id == 215)? '<p>'+config.labels['banktransferTag']+'</p>' : '' %>
+                        <td class="<%= (payment.paymentMethod.internalName == "transfer")? 'virement-bancaire' : '' %>"><%= payment.paymentMethod.tag %>
+                            <%= (payment.paymentMethod.internalName == "transfer")? '<p>'+config.labels['banktransferTag']+'</p>' : '' %>
                         </td>
                         <td class="last-child">              
                             <%= (paymentPrice == 0)? config.labels['free'] : priceTpl({price:paymentPrice}) %>

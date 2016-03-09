@@ -21,7 +21,7 @@ function pcorders_access() {
 
 function pcorders_order_access($orderId) {
   global $user;
-  return true;
+  //return true;
   if ($user->uid) {
     return TRUE;
   } else {
@@ -421,17 +421,14 @@ function pcorders_form_pcpayments_request_form_alter(&$form, &$form_state) {
                 'class' => array('text-right'),
             ),
         ),
-    );
-    
-    
+    );    
     //get order items
     foreach ($order->orderItems as $key) {
       if ($key->productName == 'Fotolia Image') {
         $case1 = $key->productName;
       }else{
         $case1 = $key->quantity . ' ' . t('ex') . '. ' . $key->productName;
-      }
-      
+      }      
 
       $rowsOrders[] = array(
          'class' => array('productItem'),
@@ -442,8 +439,22 @@ function pcorders_form_pcpayments_request_form_alter(&$form, &$form_state) {
                   'class' => array('text-right'),
               ),
           ),
-      );
-
+      );      
+      //add options infos
+      if (count($key->options)){
+          foreach ($key->options as $option) {
+            $rowsOrders[] = array(
+             'class' => array('productItem'),
+              'data' => array(
+                 $option->optionName,
+                  array(
+                      'data' => theme('price', array('value' => $option->price, 'free' => TRUE)),
+                      'class' => array('text-right'),
+                  ),
+              ),
+            );
+          }
+      }
       // file check
       if ($key->fileCheck->price) {
           $rowsOrders[] = array(
@@ -457,8 +468,6 @@ function pcorders_form_pcpayments_request_form_alter(&$form, &$form_state) {
             ),
           );
       }
-
-
       // designTemplate
       if ($key->designTemplate->price) {
           $rowsOrders[] = array(
@@ -476,7 +485,7 @@ function pcorders_form_pcpayments_request_form_alter(&$form, &$form_state) {
     }
 
     //get methode de livraison
-    $shippingPrice = ($order->orderItemShipping->price >0)? $order->orderItemShipping->price : t('Free');
+    $shippingPrice = ($order->orderItemShipping->price - ($order->orderItemShipping->price * $order->orderItemShipping->discount) >0)? $order->orderItemShipping->price - ($order->orderItemShipping->price * $order->orderItemShipping->discount) : t('Free');
     $rowsOrders[] = array(
         'class' => array('productItem'),
         'data' => array(

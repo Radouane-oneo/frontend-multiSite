@@ -23,6 +23,7 @@ define([
             "focus #edit-custom" : "editCustomQuantity",
             "click .calculCF " : "calculCF",
             "click #edit-actions-addtocart" : "calculCFOrder",
+            "click .banner-link-product" : "bannerClickProduct",
             "click .banner-link" : "bannerClick",
             "click .banner-link-visite" : "bannerClickVisite",
             "click .banner-link-folder" : "bannerClickFolder",
@@ -83,6 +84,8 @@ define([
             if(this.model.get("submit")) {
                 $("#pcproducts-config-form").submit();
             }
+            if (sitePrintconcept == 'printconcept')
+                $("#pcproducts-config-form .dropdown:first").css('display', 'block');
         },
         toggleExpand: function(e){
             $(e.currentTarget).toggleClass("expanded");
@@ -388,6 +391,20 @@ define([
         editCustomQuantity: function(){
             $("#edit-quantity-custom").attr("checked", "checked");
         },
+        bannerClickProduct: function(e){
+            e.preventDefault();
+            var pdfProduct = $("#pdfProduct").val();
+            var pdfTrack = $("#pdfTrack").val();
+            _gaq.push(['_trackEvent', 'PDFdownloads', 'click', pdfTrack]);
+            $('#mailpopup').fadeIn();
+            
+            $("#popupFormId").attr("action","/download.php?product="+pdfProduct);
+            // $("<div class='grey-bg-popup'></div>").insertAfter("#canvas");
+            $('#remerciement').attr('style','display:none');
+            // $('.grey-bg-popup').fadeIn();   
+            $('#divpopup').fadeIn();
+            $('#hideshow').attr('style','display:block');			
+        },
         bannerClick: function(e){
             e.preventDefault();
              _gaq.push(['_trackEvent', 'PDFdownloads', 'click', 'affichegids']);
@@ -429,23 +446,31 @@ define([
         },
         divpopup: function(e){
             e.preventDefault();
-            console.log('lolo');
             $('#mailpopup').fadeOut();
             $('#divpopup').fadeOut();
         },
         formControl: function(){
-            var emailAddressValue = $('#EMAIL_FIELD').val();//.trim;            
+            var emailAddressValue = $('#EMAIL_FIELD').val();//.trim; 
+            var langue = $("#MOEDERTAAL_FIELD").val();
             if(emailAddressValue == ''|| $('#EMAIL_FIELD') == null){
                 $('#EMAIL_FIELD').css({ "border":"1px solid red", "color":"red"});
                 $('#EMAIL_FIELD').val('');
-                $('#EMAIL_FIELD').attr('placeholder','email is verplicht.');
-                $('#EMAIL_FIELD').focus();                
+                if(langue == 'NL')
+                    $('#EMAIL_FIELD').attr('placeholder','email is verplicht.');
+                else
+                    $('#EMAIL_FIELD').attr('placeholder','e-mail est obligé.');
+                $('#EMAIL_FIELD').focus();   
+                return false;
             }else{
                 var emailAddressRegex = /^[^@\s]+@[^\.@\s]+(\.[^@\s^\.]+)+$/;
                 if (!emailAddressRegex.test(emailAddressValue)){               
                     $('#EMAIL_FIELD').css({ "border":"1px solid red", "color":"red"});
-                    $('#EMAIL_FIELD').val('');
+                    $('#EMAIL_FIELD').val('');                    
+                if(langue == 'NL')
                     $('#EMAIL_FIELD').attr('placeholder','Het emailadres klopt niet, controleer of er een @ in staat.');  
+                else
+                    $('#EMAIL_FIELD').attr('placeholder','Adresse e-mail incorrecte, veuillez vérifier la syntaxe.');
+                    return false;
                 }
                 else{
                     $('#EMAIL_FIELD').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
@@ -462,7 +487,6 @@ define([
                         data: formData, 
                         success: function(data){
                           // $(location).attr('href',goto);
-                          console.log('lolo'); 
                           $('#hideshow').attr('style','display:none');
                           $('#remerciement').attr('style','display:block');
                             $('#mailpopup').fadeIn();

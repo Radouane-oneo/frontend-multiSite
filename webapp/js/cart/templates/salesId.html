@@ -1,0 +1,11 @@
+<fieldset id="salesId" class="discount ref form-wrapper">
+    <!-- <legend><span class="fieldset-legend"><%= config.labels['salesId'] %></span></legend> -->
+    <div class="fieldset-wrapper">
+        <div class="form-item form-type-item" id="edit-cart-reference-text">
+           <%= config.labels['salesIdText'] %>
+        </div>
+        <div class="form-item form-type-textfield form-item-cart-reference-input">
+            <input type="text" maxlength="128" size="30" value="<%= model.salesId %>" id="edit-cart-salesId-input"  class="refCustomer form-text" placeholder="<%= config.labels['salesIdExample'] %>">
+        </div>
+    </div>
+</fieldset>

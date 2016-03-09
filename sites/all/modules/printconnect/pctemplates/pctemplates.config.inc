@@ -585,7 +585,7 @@ function getDefaultItemsByParent($parentId, $templateItems, $form_state = array(
   $defaultItems = array();
   if(property_exists($templateItems, $parentId)){
       $dItems = reset($templateItems->$parentId);
-      $items[] = $dItems->id;
+      //$items[] = $dItems->id;
       foreach ($dItems->children as $ditems) {
           foreach($ditems as $item){
             if(in_array($item->id, $selectedItems)) {
@@ -1088,9 +1088,13 @@ function pctemplates_config_form2($form, &$form_state, $templateId, $productId =
     if ($pricing->HasProperty('promoPrice') && $pricing->promoPrice != $pricing->sellPrice) {
       $sellPrice = $pricing->promoPrice;
       $oldPrice = theme('price', array('value' => $pricing->sellPrice, 'attributes' => array('class' => array('old'))));
+      $deal = 'superdeal';
+      $superdeal = '<span class="messagedeal">' . t('TOP AFFAIRE') . '</span>';
     } else {
       $oldPrice = '';
       $sellPrice = $pricing->sellPrice;
+      $deal = '';
+      $superdeal = '';
     }
 
     $quantities[$pricingQuantity] = array(
@@ -1098,7 +1102,8 @@ function pctemplates_config_form2($form, &$form_state, $templateId, $productId =
         'oldprice' => $oldPrice,
         'price' => theme('price', array('value' => $sellPrice)),
         'priceperpiece' => theme('price', array('value' => $sellPrice / $pricingQuantity)),
-        'priceinclvat' => theme('price', array('value' => $sellPrice * (1 + $_SESSION['shop_vat']))),
+        'priceinclvat' => $superdeal . theme('price', array('value' => $sellPrice * (1 + $_SESSION['shop_vat']))),
+        '#attributes' =>  array('class' => array($deal))
     );
   }
 
@@ -1130,7 +1135,7 @@ function pctemplates_config_form2($form, &$form_state, $templateId, $productId =
   $form['quantity'] = array(
       '#type' => 'tableselect',
       '#multiple' => FALSE,
-      '#header' => array('qty' => t('Quantity'), 'oldprice' => '', 'price' => t('Price VAT excl.'), 'priceinclvat' => t('Price VAT incl.')),
+      '#header' => array('qty' => t('Quantity'), 'price' => t('Price VAT excl.'), 'priceinclvat' => t('Price VAT incl.')),
       '#required' => TRUE,
       '#attributes' => array('class' => array('grid quanityOptions', 'clearfix')),
       '#options' => $quantities,

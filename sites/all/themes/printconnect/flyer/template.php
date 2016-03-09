@@ -18,6 +18,19 @@ function flyer_preprocess_page(&$variables) {
 					 $variables['page']['content']['system_main']['main'] = null;
 					 $variables['title']=t('Aide');
 		}
+    //non indexation        
+    $restricted_domains = array('yellowselectie.flyer.be', 'immopret.flyer.fr', 'syntrawest.flyer.be','preprd-flyer.oneo.dev','preprd-flyerfr.oneo.dev'
+        ,'preprd.flyer.fr','preprd.flyer.be','preprd.flyer.fr','preprd.flyer.nl','preprd.flyer.lu'); 
+    if (in_array($_SERVER['HTTP_HOST'], $restricted_domains)) {
+      $meta_robot = array(
+        '#tag' => 'meta',
+        '#attributes' => array(
+          'name' => 'robots',
+          'content' => 'noindex, nofollow'
+        ),
+      );
+      drupal_add_html_head($meta_robot, 'robots');
+    }
 
 }
 
@@ -42,12 +55,12 @@ function flyer_form_pccheckout_personal_form_alter(&$form, &$form_state) {
 }
 
 function flyer_form_pccustomers_address_form_alter(&$form, &$form_state) {
-	$form['postal_codeCity']['postalCode']['#title'] = t('PC and city');
+	$form['postal_codeCity']['postalCode']['#title'] = t('PostalCodeAndLocality');
 	$form['postal_codeCity']['city']['#title_display'] = 'invisible';
 }
 
 function flyer_form_pccustomers_newaddress_form_alter(&$form, &$form_state) {
-	$form['postalCode']['#title'] = t('PC and city');
+	$form['postalCode']['#title'] = t('PostalCodeAndLocality');
 	$form['city']['#title_display'] = 'invisible';
 }
 

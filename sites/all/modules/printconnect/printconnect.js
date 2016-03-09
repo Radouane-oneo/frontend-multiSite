@@ -7,10 +7,10 @@ window.alert = function(arg) {
 function updateDomain() {
   var hosts = window.location.hostname.split('.').reverse();
   var domain = hosts[1] + '.' + hosts[0];
-  if(domain == 'flyer.fr'){
+  /*if(domain == 'flyer.fr'){
       document.domain = domain;
-  }
-
+  }*/
+    
 }
 
 (function ($) {

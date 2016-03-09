@@ -40,6 +40,7 @@ namespace printconnect\SamplePacks {
     
     public static function Save(SamplePack $object) {
       $id = $object->Get('id');
+      $object->postalCode = $object->postalCode ?: $object->postalCodeS?: "";
       if ($id) {
         Dal::Save($object, 'samplepack', array($id));
       } else {

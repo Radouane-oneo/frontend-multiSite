@@ -13,7 +13,7 @@
           $('#pcsamplepacks-request-form #edit-company').val('');
           $('#pcsamplepacks-request-form #edit-country').val('');
           $('#pcsamplepacks-request-form #edit-street').val('');
-          $('#pcsamplepacks-request-form #edit-postalcode').val('');
+          $('#pcsamplepacks-request-form #edit-postalcodeS').val('');
           $('#pcsamplepacks-request-form #edit-city').val('');
           $('#pcsamplepacks-request-form #edit-phone').val('');
         }
@@ -26,7 +26,7 @@
             $('#pcsamplepacks-request-form #edit-company').val(data.company);
             $('#pcsamplepacks-request-form #edit-country').val(data.country);
             $('#pcsamplepacks-request-form #edit-street').val(data.street);
-            $('#pcsamplepacks-request-form #edit-postalcode').val(data.postalCode);
+            $('#pcsamplepacks-request-form #edit-postalcodeS').val(data.postalCodeS);
             $('#pcsamplepacks-request-form #edit-city').val(data.city);
             $('#pcsamplepacks-request-form #edit-phone').val(data.phone);
           });

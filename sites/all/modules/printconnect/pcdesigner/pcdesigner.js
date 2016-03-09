@@ -39,11 +39,11 @@
         $('#edit-remove').click(function(e){
             orderitem = $('#jobIdDesiger').val();    	
             $.post('/cart/ajax/removedesign/'+orderitem,{},function(){
-                                        location.href=location.href;
+                $.post("changestatus/" + orderitem+"/WaitingForFile",{},function(){
+                                        location.href=location.href; 
                                     });
-            $.post("changestatus/" + orderitem+"/WaitingForFile",{},function(){
-                                        location.href=location.href;
-                                    });
+                 });
+            
 //                if ($('.fotolia-items-'+$(this).attr('itemFileId')).length < $('.fotolia-items').length) {
 //                        $('.fotolia-items-'+$(this).attr('itemFileId')).parent().remove();
 //                } else if ($('.fotolia-items-'+$(this).attr('itemFileId')).length == $('.fotolia-items').length) {
@@ -56,16 +56,21 @@
         $('#changeStatusUpprove').click(function(){ 
            orderitem = $('#jobIdDesiger').val();console.log(orderitem);
            $.post("changestatus/" + orderitem+"/ToApproved",{},function(){
-                                       // location.href=location.href;
-                                    });
+               //$('#designerMessage').text();
+               $('#changeStatusUpprove').replaceWith('<div class="cadreGris"></div>');
+               $('.messageUploadDesigner').css({"display":"block"});
+              // $('#designerMessage .linesUploadDesign').css({"display":"none"});
+           });
                return false;
         });
 
-     $('#changeStatusConfirm').click(function(){ 
+     $('#changeStatusConfirm').click(function(){
            orderitem = $('#jobIdDesiger').val();console.log(orderitem);
            $.post("/upload-design/changestatus/" + orderitem+"/Confirm",{},function(){
-                                       // location.href=location.href;
-                                    });
+               $('#changeStatusConfirm').replaceWith('<div class="greyButton">'+Drupal.t('Approved')+'</div>');
+                $('.messageConfirmDesign').css({"display":"block"});
+                 $('#designerleft').css({"display":"none"});
+            });
                return false;
        });
       

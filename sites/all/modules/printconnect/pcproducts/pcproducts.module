@@ -680,7 +680,13 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
     $labels = getLabels($edit, $productId);
 
     $isAdmin = ($user->uid) ? '1' : '0';
-    $sitePrintconcept = $_POST['sitePrintconcept'];
+    $sitePrintconcept = '';
+    
+    if (isset($_GET['site']))
+    {
+      $sitePrintconcept = $_GET['site'];
+    }
+    
     $script = "<script type='text/javascript'>
         var sitePrintconcept = '". $sitePrintconcept ."';
         var GlobalProductId = ". $productId .";
@@ -1096,6 +1102,7 @@ function _pcproducts_url_name($value, $separator = '-') {
 }
 
 function _pcproducts_getproductname($id) {
+   // echo drupal_get_path_alias('products/1');die;
   if (is_numeric($id)) {
     printconnect_ensureinitialized();
     $product = \printconnect\Products\Factory::Get($id);

@@ -5156,11 +5156,11 @@ form#pcpayments-request-form table tr,.page-checkout-payment .overview table tr,
 	min-width: 200px;
 }
 .page-samplepack #pcsamplepacks-request-form .form-item-city, 
-.page-samplepack #pcsamplepacks-request-form .form-item-postalCode {
+.page-samplepack #pcsamplepacks-request-form .form-item-postalCodeS {
 	float: left;
 	margin-top: 0;
 }
-.page-samplepack #pcsamplepacks-request-form input#edit-postalcode {
+.page-samplepack #pcsamplepacks-request-form input#edit-postalcodeS {
 	/*width: 50px;
 	padding-right: 9px;
 	border-radius: 4px 0 0 4px;*/

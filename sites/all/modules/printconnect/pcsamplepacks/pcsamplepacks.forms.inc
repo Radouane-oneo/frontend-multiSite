@@ -348,7 +348,7 @@ function pcsamplepacks_requested_form($form, $form_state) {
   );
 
   $form['description']['image'] = array(
-      '#markup' => '<img src="'.$img.'" style="width: 680px; margin-left: -10px;  margin-top: -24px;" alt="flyer" title="flyer" />', 
+      '#markup' => '<img src="'.$img.'" style="width: 680px; margin-left: -10px;  margin-top: -18px;" alt="flyer" title="flyer" />', 
   );
  $form['description']['contspan'] = array(
       '#type' => 'container',

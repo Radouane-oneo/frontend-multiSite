@@ -887,16 +887,20 @@ div#edit-linkcart a {
 }
 
 .prodactHasTemplates.inpopup{
-  position: absolute;
-  z-index: 99999;
-  width: 640px;
-  background-color: #fff;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  padding: 20px;
-  left: -12px;
-  top:0;
+    position: fixed;
+    z-index: 99999;
+    width: 640px;
+    background-color: #fff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding: 20px;
+    left: 50%;
+    -ms-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    margin-left: -340px;
+    top: 50%;
 }
 .prodactHasTemplates.inpopup .poll-form1{
   clear: both;

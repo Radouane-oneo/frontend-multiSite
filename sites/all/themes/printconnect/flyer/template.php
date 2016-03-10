@@ -414,3 +414,11 @@ function flyer_css_alter(&$css) {
 		unset($css['sites/all/modules/contrib/block_tab/css/block_tab.css']);
 	}
 }
+/*
+* Canonical Link fix
+* Canonical link generation in html.tpl.php
+**/
+function flyer_html_head_alter(&$head_elements) {
+    if(isset($head_elements["metatag_canonical"]) && (arg(0) == 'products'))
+        unset($head_elements["metatag_canonical"]);   
+}

@@ -69,75 +69,90 @@ use_existing_jquery=false,
 f=false,d=document;return{use_existing_jquery:function(){return use_existing_jquery;},library_tolerance:function(){return library_tolerance;},finish:function(){if(!f){f=true;var a=d.getElementById('_vis_opt_path_hides');if(a)a.parentNode.removeChild(a);}},finished:function(){return f;},load:function(a){var b=d.createElement('script');b.src=a;b.type='text/javascript';b.innerText;b.onerror=function(){_vwo_code.finish();};d.getElementsByTagName('head')[0].appendChild(b);},init:function(){settings_timer=setTimeout('_vwo_code.finish()',settings_tolerance);this.load('//dev.visualwebsiteoptimizer.com/j.php?a='+account_id+'&u='+encodeURIComponent(d.URL)+'&r='+Math.random());var a=d.createElement('style'),b='body{opacity:0 !important;filter:alpha(opacity=0) !important;background:none !important;}',h=d.getElementsByTagName('head')[0];a.setAttribute('id','_vis_opt_path_hides');a.setAttribute('type','text/css');if(a.styleSheet)a.styleSheet.cssText=b;else a.appendChild(d.createTextNode(b));h.appendChild(a);return settings_timer;}};}());_vwo_settings_timer=_vwo_code.init();
 </script>
 <!-- End Visual Website Optimizer Asynchronous Code -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+</script>
+<?php $customer = printconnect\Customers\Factory::Current();?>
+<?php  if ($customer): ?>
+
+<?php if ($language->prefix == 'befr'): ?>
+<script>
+ga('create', 'UA-17847813-1', 'auto', { 'siteSpeedSampleRate': 100, 'userId': '<?=$customer->id ?>' });
+ga('require', 'displayfeatures');
+ga('send', 'pageview');
+ga('send', 'pageview', { 'dimension2': '<?=$customer->id ?>' });
+ga('send', 'pageview', { 'metric1': 1 });
+ga('send', 'pageview', { 'dimension3': 'klant', 'dimension4': 'lead' });
+</script>
+<?php endif; ?> 
+ 
+<?php if ($language->prefix == 'benl'): ?>
+<script>
+ga('create', 'UA-17847813-1', 'auto', { 'siteSpeedSampleRate': 100, 'userId': '<?=$customer->id ?>' });
+ga('require', 'displayfeatures');
+ga('send', 'pageview');
+ga('send', 'pageview', { 'dimension2': '<?=$customer->id ?>' });
+ga('send', 'pageview', { 'metric1': 1 });
+ga('send', 'pageview', { 'dimension3': 'klant', 'dimension4': 'lead' });
+</script>
+<?php endif; ?> 
+<?php if ($language->prefix == 'nlnl'): ?>
+<script>
+ga('create', 'UA-17846742-1', 'auto', { 'siteSpeedSampleRate': 100, 'userId': '<?=$customer->id ?>' });
+ga('require', 'displayfeatures');
+ga('send', 'pageview');
+ga('send', 'pageview', { 'dimension1': '<?=$customer->id ?>' });
+ga('send', 'pageview', { 'metric1': 1 });
+ga('send', 'pageview', { 'dimension2’: 'klant', 'dimension3': 'lead' });
+</script>
+<?php endif; ?> 
+<?php if ($language->prefix == 'lufr'): ?>
+<script>
+ga('create', 'UA-17846296-1', 'auto', { 'siteSpeedSampleRate': 100, 'userId': '<?=$customer->id ?>' });
+ga('require', 'displayfeatures');
+ga('send', 'pageview');
+ga('send', 'pageview', { 'dimension1': '<?=$customer->id ?>' });
+ga('send', 'pageview', { 'metric1': 1 });
+ga('send', 'pageview', { 'dimension2’: 'klant', 'dimension3': 'lead' });
+</script>
+<?php endif; ?> 
+<?php if ($language->prefix == 'frfr'): ?>
+<script>
+ga('create', 'UA-17847334-1', 'auto', { 'siteSpeedSampleRate': 100, 'userId': '<?=$customer->id ?>' });
+ga('require', 'displayfeatures');
+ga('send', 'pageview');
+ga('send', 'pageview', { 'dimension1': '<?=$customer->id ?>' });
+ga('send', 'pageview', { 'metric1': 1 });
+ga('send', 'pageview', { 'dimension2’: 'klant', 'dimension3': 'lead' });
+</script>
+<?php endif; ?> 
+<?php endif; ?>
 </head>
 <body class="<?php print $classes.$node_css_class; ?>" <?php print $attributes;?>>
+    <?php 
+    
+    //if($customer); ?>
    <?php if ($language->prefix == 'nlnl'): ?>  
 <script src="//config1.veinteractive.com/tags/cfbffe97/e5d2/4e6b/9068/f79727b560ca/tag.js" type="text/javascript" async></script>
 <?php if (arg(3) == 'confirmation') :?>
 <img src="//drs2.veinteractive.com/DataReceiverService.asmx/Pixel?journeycode=cfbffe97-e5d2-4e6b-9068-f79727b560ca" width="1" height="1"/>
 <?php endif; ?> 
-<!-- Google Tag Manager -->
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-PBZ8Q5"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-PBZ8Q5');</script>
-<!-- End Google Tag Manager -->
-   <?php endif; ?>
-   <?php if ($language->prefix == 'benl'): ?>
-<!-- Google Tag Manager -->
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5GVQ93"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-5GVQ93');</script>
-<!-- End Google Tag Manager -->
    <?php endif; ?>
    <?php if ($language->prefix == 'befr'): ?>
 <script src="//config1.veinteractive.com/tags/A1436EEF/EC59/4D50/AB2A/8B27C27BDF6A/tag.js" type="text/javascript" async></script>
 <?php if (arg(3) == 'confirmation') :?>
 <img src="//drs2.veinteractive.com/DataReceiverService.asmx/Pixel?journeycode=A1436EEF-EC59-4D50-AB2A-8B27C27BDF6A" width="1" height="1"/>
 <?php endif; ?> 
-<!-- Google Tag Manager -->
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5GVQ93"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-5GVQ93');</script>
-<!-- End Google Tag Manager -->
    <?php endif; ?> 
    <?php if ($language->prefix == 'lufr'): ?>
 <script src="//config1.veinteractive.com/tags/def9f390/5969/4edd/aa51/25e8c97b2f7b/tag.js" type="text/javascript" async></script>
 <?php if (arg(3) == 'confirmation') :?>
 <img src="//drs2.veinteractive.com/DataReceiverService.asmx/Pixel?journeycode=def9f390-5969-4edd-aa51-25e8c97b2f7b" width="1" height="1"/>
 <?php endif; ?> 
-<!-- Google Tag Manager -->
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MW2SDM"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MW2SDM');</script>
-<!-- End Google Tag Manager -->
-   <?php endif; ?> 
-   <?php if ($language->prefix == 'frfr'): ?>
-<!-- Google Tag Manager -->
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-NNMLJR"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-NNMLJR');</script>
-<!-- End Google Tag Manager -->
-   <?php endif; ?> 
+   <?php endif; ?>  
   <div id="skip-link">
     <a href="#main-content" class="element-invisible element-focusable"><?php print t('Skip to main content'); ?></a>
   </div>

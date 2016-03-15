@@ -764,18 +764,7 @@ function pccustomers_address_Billingaddresses_form_submit($form, &$form_state) {
   $billingAccount = $form_state['storage']['address'];
   $customerbillingAccount = Factory::Current();
   \printconnect\Customers\BillingAccounts\Factory::Save($billingAccount);
-   switch($billingAccount->vatStatus) {
-            case 'vat_tag_3' :
-                form_set_error('company][vatNumber', t('Your Vat Number is invalid'));
-                return false;
-            break;
-            case 'vat_tag_8' :
-                form_set_error('company][vatNumber', t('Your Vat Number is inactive'));
-                return false;
-            break;
-            default:
-            break;
-       }   
+    
   $customerbillingAccount->billingAccount = $billingAccount->id;
   \printconnect\Customers\Factory::Save($customerbillingAccount);
   \printconnect\Customers\BillingAccounts\Factory::ClearBillingAccountsCache($customerbillingAccount);
@@ -1177,18 +1166,7 @@ function pccustomers_newaddress_form_Billingaddresses_submit($form, &$form_state
     $Billingaddress->customer = $Billingcustomer->id;
     \printconnect\Customers\BillingAccounts\Factory::Save($Billingaddress);
     \printconnect\Customers\BillingAccounts\Factory::ClearBillingAccountsCache($Billingcustomer);
-    switch($Billingaddress->vatStatus) {
-         case 'vat_tag_3' :
-             form_set_error('Number', t('Your Vat Number is invalid'));
-             return false;
-         break;
-         case 'vat_tag_8' :
-             form_set_error('Number', t('Your Vat Number is inactive'));
-             return false;
-         break;
-         default:
-         break;
-    }
+ 
 
     $form_state['rebuild'] = true;
     drupal_set_message(t('Adresse de facturation valider'));

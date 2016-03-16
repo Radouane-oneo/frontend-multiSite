@@ -52,7 +52,6 @@ function pcbpost_theme() {
 function theme_pcbpost_poi($vars) {
   $poi = $vars['poi'];
   $selectable = $vars['selectable'];
-
   if ($poi) {
     $vars['attributes']['class'][] = $poi->Type;
   }
@@ -63,8 +62,8 @@ function theme_pcbpost_poi($vars) {
     if ($vars['format'] == 'infowindow') {
       $html .= '
           <div>
-          <div class="name name_popup_map">' . htmlentities($poi->Name) . '</div>
-          <div class="address">' . $poi->Street . ' ' . $poi->Number . '<br/>' . $poi->Zip . ' ' . $poi->City . '</div>
+          <div class="name name_popup_map">' . utf8_encode(htmlentities($poi->Name)) . '</div>
+          <div class="address">' . utf8_encode($poi->Street) . ' ' . $poi->Number . '<br/>' . $poi->Zip . ' ' . utf8_encode($poi->City) . '</div>
           </div>';
 
       $rows = array();
@@ -103,8 +102,8 @@ function theme_pcbpost_poi($vars) {
 
       $html .= '
           <div>
-          <div class="name"><h3>' . htmlentities($poi->Name) . '</h3></div>
-          <div class="address">' . $poi->Street . ' ' . $poi->Number . '<br/>' . $poi->Zip . ' ' . $poi->City . '</div>
+          <div class="name"><h3>' . utf8_encode(htmlentities($poi->Name)) . '</h3></div>
+          <div class="address">' . utf8_encode($poi->Street) . ' ' . $poi->Number . '<br/>' . $poi->Zip . ' ' . utf8_encode($poi->City) . '</div>
           </div>';
 
       $rows = array();
@@ -118,14 +117,13 @@ function theme_pcbpost_poi($vars) {
     }
     if ($vars['format'] == 'list') {
       $html .= '
-          <div class="name">' . htmlentities($poi->Name) . '</div>
+          <div class="name">' . utf8_encode(htmlentities($poi->Name)) . '</div>
           <div class="address">' . $poi->Street . ' ' . $poi->Number . '<br/> ' . $poi->Zip . ' ' . $poi->City . '</div>
        ';
     }
   }
 
   $html .= '</div>';
-
   return $html;
 }
 

@@ -129,7 +129,6 @@ class Collection extends Object implements \Iterator, \ArrayAccess {
     foreach ($this->_items as $item) {
       $items[] = $item->toArray();
     }
-
     return json_encode($items);
   }
 

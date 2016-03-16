@@ -25,7 +25,7 @@ namespace printconnect {
 
         $header = array('Content-Type' => 'application/json');
 
-        if($method == 'GET') {
+        if($method == 'GET' && !preg_match("/new-cart/", $request)) {
             $cached = self::FromCache($url);
             if($cached) {
               return $cached;

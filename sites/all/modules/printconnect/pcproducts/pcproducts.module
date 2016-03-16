@@ -757,6 +757,8 @@ function getLabels($edit = false, $productId) {
         "linkText" =>t('Link text'),
         "linkToConftemplate" =>t('linkToConftemplate'),
         "productdescription" =>t('info for ' . $productId),
+        "linkToControl" =>t('linkToControl'),
+        "linkTextControl" =>t('linkTextControl'),
         
     );
 

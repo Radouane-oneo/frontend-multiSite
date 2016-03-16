@@ -12731,3 +12731,7 @@ form#pccheckout-payment-form fieldset legend{
   text-align: left;
   font-size: 11px;
 }
+
+.page-samplepack div.error {
+    margin-bottom: 28px !important;
+}

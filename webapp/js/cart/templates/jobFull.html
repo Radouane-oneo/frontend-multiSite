@@ -29,7 +29,7 @@
                                             name = model.configuration.name + ' ' +model.customWidth+' X '+ model.customHeight+' mm';
                                         }else
                                         {
-                                            name = model.configuration.name+' '+model.configuration.config[0].name
+                                            name = model.configuration.name+' '+ _.filter(model.configuration.config, function(conf){return conf.groupName== "Format"; })[0].name
                                         }
                                     %>
 					<h3><%= model.quantity %> <%= config.labels.ex %>. <%= name %></h3>	

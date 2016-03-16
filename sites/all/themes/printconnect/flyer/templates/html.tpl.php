@@ -117,8 +117,6 @@ ga('send', 'pageview');
 ga('create', 'UA-17847813-1', 'auto', { 'siteSpeedSampleRate': 100, 'userId': '<?=$customer->id ?>' });
 ga('require', 'displayfeatures');
 ga('send', 'pageview', { 'dimension2': '<?=$customer->id ?>' });
-ga('send', 'pageview', { 'metric1': 1 });
-ga('send', 'pageview', { 'dimension3': 'klant', 'dimension4': 'lead' });
 </script>
 <?php endif; ?> 
  
@@ -127,8 +125,6 @@ ga('send', 'pageview', { 'dimension3': 'klant', 'dimension4': 'lead' });
 ga('create', 'UA-17847813-1', 'auto', { 'siteSpeedSampleRate': 100, 'userId': '<?=$customer->id ?>' });
 ga('require', 'displayfeatures');
 ga('send', 'pageview', { 'dimension2': '<?=$customer->id ?>' });
-ga('send', 'pageview', { 'metric1': 1 });
-ga('send', 'pageview', { 'dimension3': 'klant', 'dimension4': 'lead' });
 </script>
 <?php endif; ?> 
 <?php if ($language->prefix == 'nlnl'): ?>
@@ -136,8 +132,6 @@ ga('send', 'pageview', { 'dimension3': 'klant', 'dimension4': 'lead' });
 ga('create', 'UA-17846742-1', 'auto', { 'siteSpeedSampleRate': 100, 'userId': '<?=$customer->id ?>' });
 ga('require', 'displayfeatures');
 ga('send', 'pageview', { 'dimension1': '<?=$customer->id ?>' });
-ga('send', 'pageview', { 'metric1': 1 });
-ga('send', 'pageview', { 'dimension2’: 'klant', 'dimension3': 'lead' });
 </script>
 <?php endif; ?> 
 <?php if ($language->prefix == 'lufr'): ?>
@@ -145,8 +139,6 @@ ga('send', 'pageview', { 'dimension2’: 'klant', 'dimension3': 'lead' });
 ga('create', 'UA-17846296-1', 'auto', { 'siteSpeedSampleRate': 100, 'userId': '<?=$customer->id ?>' });
 ga('require', 'displayfeatures');
 ga('send', 'pageview', { 'dimension1': '<?=$customer->id ?>' });
-ga('send', 'pageview', { 'metric1': 1 });
-ga('send', 'pageview', { 'dimension2’: 'klant', 'dimension3': 'lead' });   
 </script>
 <?php endif; ?> 
 <?php if ($language->prefix == 'frfr'): ?>
@@ -154,8 +146,6 @@ ga('send', 'pageview', { 'dimension2’: 'klant', 'dimension3': 'lead' });
 ga('create', 'UA-17847334-1', 'auto', { 'siteSpeedSampleRate': 100, 'userId': '<?=$customer->id ?>' });
 ga('require', 'displayfeatures');
 ga('send', 'pageview', { 'dimension1': '<?=$customer->id ?>' });
-ga('send', 'pageview', { 'metric1': 1 });
-ga('send', 'pageview', { 'dimension2’: 'klant', 'dimension3': 'lead' });
 </script>
 <?php endif; ?> 
 <?php endif; ?>

@@ -22,7 +22,8 @@ define([
         isConnected : isConnected,
         langId : GlobalLandId,
         designtoolLink : GlobalDesigntoolLink,
-        labels : GlobalLabels
+        labels : GlobalLabels,
+        globalprefix: GlobalPrefix
     };
 
 });

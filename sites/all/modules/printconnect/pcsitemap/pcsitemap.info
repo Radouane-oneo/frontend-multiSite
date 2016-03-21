@@ -1,0 +1,4 @@
+name = Sitemap
+description = Provides the sitemap and sitemap.xml
+package = printconnect
+core = 7.x

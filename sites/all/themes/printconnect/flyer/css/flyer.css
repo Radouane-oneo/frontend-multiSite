@@ -787,7 +787,8 @@ input.cmd-collecte{
   padding: 0;
 }
 
-body.two-sidebars #content {
+body.two-sidebars #content,
+body.front  #content {
 	width: 680px;
 	margin-bottom: 10px;
 }

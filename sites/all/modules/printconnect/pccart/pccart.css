@@ -768,6 +768,10 @@ table.targetPrice tbody tr.last-child td { border:none; }
   text-decoration: none;
 }
 
+.page-cart .poll-form li.controlpro a:hover{
+  text-decoration: underline;
+}
+
 .page-cart #pccart-cart-form .cartItemsContainer ul li {
   list-style: none;
   padding: 0;

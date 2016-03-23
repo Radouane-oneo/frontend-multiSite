@@ -261,6 +261,7 @@ function new_cart_loadpage() {
         "dtOptions2" => t('Recevez un aperçu de vos impressions'),
         "dtOptions3" => t('Faites votre conception gratuitement en ligne'),
         "dtOptions4" => t('Contrôle du fichier optionnel (4,99 € hors TVA)'),
+        "controlProLink" => t('<a href="/mon-fichier-est-il-contrôlé">Mon fichier est-il contrôlé</a>'),
         "dtOptionsModule" => t('Adaptez un de nos'),
         "dtOptionsModuleLink" => t('1000+ modèles gratuits en ligne'),
         "dtBtnText" => t('DESIGN ONLINE'),

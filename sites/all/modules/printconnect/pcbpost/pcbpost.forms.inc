@@ -179,27 +179,21 @@ function _pcbpost_picker_form_add_results(&$form, &$form_state) {
     } else {
       $selectable = FALSE;
     }
-
     $pois = \printconnect\bPost\Factory::Search($postal, $place);
-
     if ($pois->Count) {
-
       foreach ($pois as $poi) {
-        $id = $poi->Id;
-
-        $items[] = theme('pcbpost_poi', array('poi' => $poi, 'format' => 'list', 'attributes' => array('id' => 'li-' . $id)));
-        $form['bpost']['result']['infowindow'][(string) $id] = array(
-            '#markup' => theme('pcbpost_poi', array('poi' => $poi, 'format' => 'infowindow', 'selectable' => $selectable, 'attributes' => array('id' => 'infowindow-' . $id))),
-        );
-        $form['bpost']['result']['html'][(string) $id] = array(
-            '#markup' => theme('pcbpost_poi', array('poi' => $poi, 'format' => 'detail', 'attributes' => array('id' => 'html-' . $id, 'class' => array('class' => array('pup', 'box', 'clearfix'))))),
-        );
+	        $id = $poi->Id;
+	        $items[] = theme('pcbpost_poi', array('poi' => $poi, 'format' => 'list', 'attributes' => array('id' => 'li-' . $id)));
+	        $form['bpost']['result']['infowindow'][(string) $id] = array(
+	            '#markup' => theme('pcbpost_poi', array('poi' => $poi, 'format' => 'infowindow', 'selectable' => $selectable, 'attributes' => array('id' => 'infowindow-' . $id))),
+	        );
+	        $form['bpost']['result']['html'][(string) $id] = array(
+	            '#markup' => theme('pcbpost_poi', array('poi' => $poi, 'format' => 'detail', 'attributes' => array('id' => 'html-' . $id, 'class' => array('class' => array('pup', 'box', 'clearfix'))))),
+	        );
       }
-
       $json = $pois->toJSON();
-
+	  
       $form['bpost']['result']['poisjson']['#value'] = $json;
-
       $form['bpost']['result']['pois']['content']['list']['#markup'] = theme('item_list', array('items' => $items));
       hide($form['bpost']['result']['pois']['content']['text']);
     } else {

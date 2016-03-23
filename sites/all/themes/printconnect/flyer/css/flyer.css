@@ -787,7 +787,8 @@ input.cmd-collecte{
   padding: 0;
 }
 
-body.two-sidebars #content {
+body.two-sidebars #content,
+body.front  #content {
 	width: 680px;
 	margin-bottom: 10px;
 }
@@ -12741,4 +12742,9 @@ form#pccheckout-payment-form fieldset legend{
   padding-left: 20px!important;
   text-align: left;
   font-size: 11px;
+}
+
+.page-samplepack div.error,
+.page-samplepack div.status {
+    margin-bottom: 28px !important;
 }

@@ -4,8 +4,8 @@ use printconnect\Customers\Factory as CustomersFactory;
 function pcdesigner_upload_form($form, &$form_state, $id) {
   try {
     $upload = \printconnect\Designer\Upload\Factory::Get($id, FALSE);
-
-    $upload->EnsureLoaded();
+    \printconnect\Designer\Upload\Factory::LoadUpload($upload);
+    $id  = ($upload->id) ? $upload->id : $id;
   } catch (\Exception $ex) {
     drupal_not_found();
     exit;
@@ -89,7 +89,6 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
         $model_list_index=4;
     }
    
-  
   if (count($upload->files)) {  
    $form['item']['upload'] = array(
         '#type' => 'fieldset',
@@ -191,6 +190,7 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
             '#items' => $list,
         )
       );
+     
     $templates = \printconnect\Products\Templates\Factory::GetTemplates($productId, $items);
     if (count($templates->items)) {
         $template = $templates->items[0];    

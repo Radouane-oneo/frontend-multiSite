@@ -119,7 +119,10 @@ function pcanalytics_page_alter(&$page) {
             $page['page_bottom']['pcanalytics']['conversion']['#markup'] = $conversion;
         }
     } else {
-        $page['page_bottom']['pcanalytics']['analytics']['#markup'] = $analytics;
+        global $language;
+        $lg = $language->prefix;
+        if ($lg != 'lufr')
+            $page['page_bottom']['pcanalytics']['analytics']['#markup'] = $analytics;
         if ($remarketingDefault) {
             $page['page_bottom']['pcanalytics']['remarketingDefault']['#markup'] = $remarketingDefault;
         }

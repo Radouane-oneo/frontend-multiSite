@@ -188,7 +188,9 @@ use printconnect\Dal\ForbiddenException;
           $properties['pPrice'] = $properties['price'];
         }
       }
+      
       $data = json_encode($properties);
+     
       $start = microtime(true);
       $response = drupal_http_request($url, array('header' => $header, 'method' => 'PUT', 'timeout' => 900, 'data' => $data));
       $end = microtime(true);

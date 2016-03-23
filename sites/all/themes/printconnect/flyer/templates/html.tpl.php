@@ -89,7 +89,19 @@ ga('send', 'pageview');
 ga('create', 'UA-17846296-1', 'auto', { 'siteSpeedSampleRate': 100, 'userId': '<?=$customer->id ?>' });
 ga('require', 'displayfeatures');
 ga('send', 'pageview', { 'dimension1': '<?=$customer->id ?>' });
+</script>
+<?php 
+$customerCurrent = \printconnect\Customers\Factory::Current();
+$allOrderCustomer = \printconnect\Orders\Factory::GetOrders($customerCurrent);
+if ($allOrderCustomer->get_count() == 0) {  ?>
+<script>
+ga('send', 'pageview', { 'dimension3': 'lead' });
+</script>
+<?php }else{?>
+<script>
+ga('send', 'pageview', { 'dimension2': 'klant' });
 </script> 
+<?php } ?>
 <?php endif; ?> 
 <?php endif; ?> 
 </head>

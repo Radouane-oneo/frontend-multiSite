@@ -279,7 +279,7 @@ define([
 	    		height = 0;
 	    		$(elem).children('.hieghtelem').each(function(i, el) {
 
-	    			if ($(el).innerHeight() > height) height = $(el).innerHeight();
+	    			if ($(el).innerHeight() > height) height = $(el).height();
 
 	    		});
 

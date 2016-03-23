@@ -483,7 +483,6 @@ class Factory {
 
     public static function SaveItem( Item $object, $widthCF, $heightCF, $cf ) {        
       //$object->cart_item = $object->id;
-        
       $refJob = $object->refJob;
       $object->product_price_group = $object->productPriceGroupId;
       $object->description = '';
@@ -511,20 +510,6 @@ class Factory {
               break;
           }
       }
-      $cartAmounts = $item->cartAmount;
-      Dal::updateElement($cart, 'cart',
-            array(
-                'id' => $cart->id
-            ),
-            array(
-                'orderItems' => $orderItems,
-                'subTotalAmount' => $cartAmounts->subTotalAmount,
-                'vatAmount' => $cartAmounts->vatAmount,
-                'totalAmount' => $cartAmounts->totalAmount,
-      	        'fotoliaItems' => ($item->fotoliaItems != null) ?
-          		    $item->fotoliaItems : null
-                )
-        );
 	
       return $item;
     }

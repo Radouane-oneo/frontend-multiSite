@@ -12,13 +12,18 @@
 				</div>
 			</div>
 			<div class="jobFull-img image form-wrapper">
-				<img src="https://dt-printconcept-production.s3.amazonaws.com/<%= model.files[0].thumbnail %>">
-				<a href="<%= config.designtoolLink %><%= model.configuration.designtoolPreviewLink %>" target="blank" class="previewlink"><%= config.labels["previsualis"] %></a>
 				<%
-				var urlCallback = encodeURIComponent("http://" + document.location.host + "/" + config.prefix + "/cart/callback");
-    			var designtoolLink = model.configuration.designtoolLink.replace(/(dcb=).*?(&)/,'$1' + urlCallback + '$2');
-				%>			
-				<a href="<%= config.designtoolLink %><%= designtoolLink %>" class="designtool iframe fancybox.iframe"><%= config.labels["updatePage"] %></a>	
+					var urlCallback = encodeURIComponent("http://" + document.location.host + "/" + config.prefix + "/cart/callback");
+    				var designtoolLink = model.configuration.designtoolLink.replace(/(dcb=).*?(&)/,'$1' + urlCallback + '$2');
+				%>
+				<% if(model.hasDummyUpload){ %>
+					<img src="/sites/all/modules/printconnect/pccart/images/dummpupload_img.png">
+				<% }else{ %>
+					<img src="https://dt-printconcept-production.s3.amazonaws.com/<%= model.files[0].thumbnail %>">
+					<a href="<%= config.designtoolLink %><%= model.configuration.designtoolPreviewLink %>" target="blank" class="previewlink"><%= config.labels["previsualis"] %></a>
+					<a href="<%= config.designtoolLink %><%= designtoolLink %>" class="designtool iframe fancybox.iframe"><%= config.labels["updatePage"] %></a>	
+				<%}%>
+				
 				<span data-orderItem="<%= model.id %>" class="delete_item deletedesign"><%= config.labels["deleteOrder"] %></span>
 			</div>
 
@@ -78,6 +83,15 @@
                                         <%= priceTpl({price:model.price,classToAdd:'price'}) %>
                                     <%}}%>
 			</div>
+
+			<!-- Dummy Upload -->
+			<% if(model.hasDummyUpload){ %>
+				<div class="file-model dummyUpload-box">
+					<span class="model-txt"><%= config.labels.vipUpload %></span>
+					<%= priceTpl({price:config.dummyUpload,classToAdd:'model-price'}) %>
+				</div>
+			<% }  %>
+			<!-- END Dummy Upload -->
 
 			<!-- Model Payemnt -->
 			<% if (model.designTemplate.price>0 && model.designTemplate.price!= null) { %>

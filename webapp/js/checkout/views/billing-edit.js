@@ -204,6 +204,7 @@ define([
                 });
         },
         changeBA: function(e) {
+	    this.enableSave = true;
             var elmTarget = $(e.currentTarget);
             var data = this.model.toJSON();
             var targetBA = _.find(data.billingAccouts, function(billingAccount) {

@@ -26,6 +26,7 @@ var registerClicked = false;
       var globalEroorVat = false;
       var vatFormats = [{'BE': 10},{'NL' : 12},{'LU' : 8},{'FR' : 11}];
       $('#pccustomers-address-billingaddresses-form #edit-vatnumber-number', '#pccustomers-newaddress-billingaddresses-form #edit-vatnumber-number').blur(function(){
+         
             if ($('#edit-vatnumber-number').val() !='' && $('.country').val() != '') {
 		$('.vatAlreadyUsed').parent().hide();
                 var vatNumberBA = $("#edit-vatnumber-number").val().replace(/\./g, "").replace(/ /g,"");
@@ -114,13 +115,14 @@ var registerClicked = false;
         });
       /* ========== PCCUSTOMER form validation ========== */
  
-      $('.save-button').click(function (e) { 
+      $('.save-button').click(function (e) {
       	  $('.vatAlreadyUsed').parent().hide(); 
 	  $('.messages.error').each(function(){
               if(!$(this).hasClass('vatAlreadyUsed')) {
                   $(this).remove();
               }
           });
+          
           $('#content form .required').removeClass("error");
           var errorMarkup = "<div class='messages error'><ul>";
           var errorMsgs = new Array();
@@ -150,10 +152,11 @@ var registerClicked = false;
             if ($(elem).attr('name') == 'vatNumber[number]'){
                 if(_this.val() == "" || _this.val() == 0) {
                     errorMsgs[i] = Drupal.t('Le champ N° de TVA est requis.');
+                    errorMarkup += "<li>"+errorMsgs[i]+"</li>";
                 }else{
                     //errorMsgs[i] = Drupal.t('insert a valid vat number please');
                 }
-                errorMarkup += "<li>"+errorMsgs[i]+"</li>";
+                
                    console.log('coco');
             }else{
            
@@ -245,6 +248,65 @@ var registerClicked = false;
             } 
           }
           });  
+          //start validation vatnumber
+          if ($('#isUserCompany:checked').length > 0) {              
+            var number = $('.number');
+            var company = $('#companyInput');
+            if (number.val() == '' || company.val() == '') {
+                 e.preventDefault();
+                  number.addClass('error');
+                  company.addClass('error');
+            }
+            else{
+                var vatNumberBA = $("#edit-vatnumber-number").val().replace(/\./g, "").replace(/ /g,"");
+                var decision = false;
+                $.each(vatFormats, function(c, obj){
+                    $.each(obj, function(t, dt){
+                        if (t == $('#edit-vatnumber-country').val() && $("#edit-vatnumber-number").val().length == dt) {
+                            decision = true;
+                        }
+                    });
+                });
+		switch($('#edit-vatnumber-country').val()) {
+            	    case 'BE':
+                        decision = (vatNumberBA.charAt(0) == 0) ? decision : false;
+            	    break;
+            	    case 'LU':
+                        decision = ($.isNumeric(vatNumberBA)) ? decision : false;
+	            break;
+		    case 'NL':
+			var re = /^[0-9]{9}B[0-9]{2}$/;
+    			decision = re.test(vatNumberBA);
+		    break;
+		    case 'FR':
+                        var re = /^[0-9A-Z]{2}[0-9]{9}$/;
+                        decision = re.test(vatNumberBA);
+                    break;
+            	    break
+            	    default:
+            	        decision = decision;
+            	    break;
+         	}
+                if (decision == false) {
+		    globalEroorVat = true;
+                    $("#edit-vatnumber-number").addClass('error');
+                    //$("#edit-vatnumber-number").val('');
+                    var vatplaceholder = Drupal.t('insert a valid vat number please');
+		    labels["vatNotNumber"] = vatplaceholder;
+                    $('.customErrors').remove();
+                    if ($('.messages').length == 1){
+                        $('.region-content').before('<div class="messages error"><ul><li class="customErrors">'+vatplaceholder+'</li></ul></div>');
+                    } else {
+                        $('.messages ul').append('<li class="customErrors">caca'+vatplaceholder+'</li>');
+                    }
+                    $('html, body').animate({
+                        scrollTop:$(".messages.error").offset().top
+                    }, 'slow');
+                    return false;
+                } 
+            }
+          }
+          //end validation vatnumber
           errorMarkup += "</ul></div>";
           if(errorMsgs.length != 0 ) {
             e.preventDefault();

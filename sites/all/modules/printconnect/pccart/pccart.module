@@ -1369,7 +1369,7 @@ function pccart_callback() {
         $cartId = $_GET['cartid'];
         $controlpro = isset($_GET['controlpro']) ? $_GET['controlpro'] : 0;
         $quickupload = isset($_GET['quickupload']) ? $_GET['quickupload'] : 0;
-        $dummyUpload = isset($_GET['dummyUpload']) ? $_GET['dummyUpload'] : 0;
+        $dummyUpload = isset($_GET['dummyupload']) ? $_GET['dummyupload'] : 0;
         if (isset($_GET['myPcId']) && $_GET['myPcId']) {
           $_SESSION['savedDesigns'][$id] = $_GET['myPcId'];
         }
@@ -1392,7 +1392,7 @@ function pccart_callback() {
         $item->cart_item = $id;
         $item->controlpro = $controlpro;
         $item->quickupload = $quickupload;
-        $item->dummyUpload = $dummyUpload;
+        $item->viaDummyUpload = $dummyUpload;
         Factory::SaveItem($item);
         Factory::Refresh($cart);
         print update_domain();

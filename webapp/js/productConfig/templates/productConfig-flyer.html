@@ -34,7 +34,7 @@
                 <%= config.labels["toolBoxDescription_" + toolBoxItem.id] %>
             </div>
             <div class="item-list">
-                <% if(toolBoxItem.id == config.labels["format"]) { %> 
+                <% if(toolBoxItem.id == config.labels["format"] && 1 == 2) { %> 
                     <% if(config.labels["customFormat"] == true) { %>
                         <div class="blocCustomFormat">   
                             <div class="inputCustomFormat">
@@ -242,7 +242,8 @@
             <div class="fieldset-wrapper detailtechnique-wrapper">
                 <div id="edit-templates-text" class="text form-wrapper">
                     <%= config.labels['technicalDescription'] %><br>
-                    <a href="<%= config.labels['linkToConftemplate'] %>"><%= config.labels['linkText'] %></a>
+                    <a href="<%= config.labels['linkToConftemplate'] %>"><%= config.labels['linkText'] %></a><br>
+                    <a href="<%= config.labels['linkToControl'] %>"><%= config.labels['linkTextControl'] %></a>
                 </div>
                 <div id="edit-templates-image" class="image form-wrapper"><a target="_blank"
                                                                              href="/<%= config.prefix %>/file/template_<%= model.toolBoxGroup.template.id %>__<%= config.labels['langId'] %>.zip"><img

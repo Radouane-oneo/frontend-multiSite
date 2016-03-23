@@ -13,12 +13,12 @@
                     checked = "checked='checked'";
                     style = "display:inline-block";
                     styleLink = "display:inline-block";
-                    if (model.orderItemShipping.orderShippingAddress){
-                        styleLink = "display:none";
+                    if (model.orderItemShipping.orderShippingAddress && model.orderItemShipping.orderShippingAddress &&(shipping.shippingType.type != "shippingTypeStoreInAntwerpen")){
+                       styleLink = "display:none";
                     }
                 }
 
-                if ((!model.orderItemShipping && shipping.shippingType.type == "shippingTypeStore") || config.shipping.length==1){
+                if ( (!model.orderItemShipping && shipping.shippingType.type == "shippingTypeStore") || config.shipping.length==1){
                     checked = "checked='checked'";
                     style = "display:inline-block";
                     styleLink = "display:inline-block";
@@ -34,10 +34,17 @@
                     </td>
                     <td>
                         <span><%= shipping.shippingType.tag %></span><br>
+                        <% if((config.globalprefix == 'benl') && (shipping.shippingType.type == "shippingTypeStoreInAntwerpen")){ %>
+                              <span style="<%= styleLink %>" class="storeLink">
+                                <a class=""  target= "_blank" href="http://www.politieantwerpen.be/verkeershinder" style="display: inline;">
+                                    OPGELET: verkeershinder
+                                </a>
+                            </span>
+                        <% } %>
                         <% if(shipping.shippingType.type == "shippingTypeStore"){ %>
                             <span style="<%= styleLink %>" class="storeLink">
                                 <a class="pcflyerstores-picker-link fancybox.iframe" href="/<%= config.prefix %>/stores/picker/callback/pcflyerstores_callback/?contentonly=1" style="display: inline;">
-                                    <%= config.labels['chooseFlyerStore'] %>
+                                   <%= config.labels['chooseFlyerStore'] %>
                                 </a>
                             </span>
                         <% } %>

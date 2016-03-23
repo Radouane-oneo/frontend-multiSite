@@ -69,7 +69,7 @@ use_existing_jquery=false,
 f=false,d=document;return{use_existing_jquery:function(){return use_existing_jquery;},library_tolerance:function(){return library_tolerance;},finish:function(){if(!f){f=true;var a=d.getElementById('_vis_opt_path_hides');if(a)a.parentNode.removeChild(a);}},finished:function(){return f;},load:function(a){var b=d.createElement('script');b.src=a;b.type='text/javascript';b.innerText;b.onerror=function(){_vwo_code.finish();};d.getElementsByTagName('head')[0].appendChild(b);},init:function(){settings_timer=setTimeout('_vwo_code.finish()',settings_tolerance);this.load('//dev.visualwebsiteoptimizer.com/j.php?a='+account_id+'&u='+encodeURIComponent(d.URL)+'&r='+Math.random());var a=d.createElement('style'),b='body{opacity:0 !important;filter:alpha(opacity=0) !important;background:none !important;}',h=d.getElementsByTagName('head')[0];a.setAttribute('id','_vis_opt_path_hides');a.setAttribute('type','text/css');if(a.styleSheet)a.styleSheet.cssText=b;else a.appendChild(d.createTextNode(b));h.appendChild(a);return settings_timer;}};}());_vwo_settings_timer=_vwo_code.init();
 </script>
 <!-- End Visual Website Optimizer Asynchronous Code -->
-<?php if ($language->prefix == 'lufr'): ?>
+<?php if ($language->prefix == 'befr'): ?>
 <script>
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -89,7 +89,19 @@ ga('send', 'pageview');
 ga('create', 'UA-17846296-1', 'auto', { 'siteSpeedSampleRate': 100, 'userId': '<?=$customer->id ?>' });
 ga('require', 'displayfeatures');
 ga('send', 'pageview', { 'dimension1': '<?=$customer->id ?>' });
+</script>
+<?php 
+$customerCurrent = \printconnect\Customers\Factory::Current();
+$allOrderCustomer = \printconnect\Orders\Factory::GetOrders($customerCurrent);
+if ($allOrderCustomer->get_count() == 0) {  ?>
+<script>
+ga('send', 'pageview', { 'dimension3': 'lead' });
+</script>
+<?php }else{?>
+<script>
+ga('send', 'pageview', { 'dimension2': 'klant' });
 </script> 
+<?php } ?>
 <?php endif; ?> 
 <?php endif; ?> 
 </head>

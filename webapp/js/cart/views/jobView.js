@@ -275,16 +275,18 @@ define([
 				});     		
     		});
 
-	    	$(".prodactHasTemplates").each(function(i, elem) {
+	    	/*$(".prodactHasTemplates").each(function(i, elem) {
 	    		height = 0;
+	    		var dummy = 24;
 	    		$(elem).children('.hieghtelem').each(function(i, el) {
-
-	    			if ($(el).innerHeight() > height) height = $(el).height();
+	    			if ($(el).hasClass('dummyupload')) dummy = 42;
+	    			if ($(el).innerHeight() > height) height = $(el).innerHeight();
 
 	    		});
 
+	    		height-= dummy;
 	    		if (height>0) $(elem).children('.hieghtelem').height(height);
-	    	});
+	    	});*/
     		 	
 	    },
 	    showPopupDesigntool : function(e){

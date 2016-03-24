@@ -72,7 +72,7 @@
 			<!-- end preview -->
 
 			<div class="prodactTemplates centroid-2" style="display: <%= (model.emailDesigner ==null)?'block':'none' %>;">
-				<div class="prodactHasTemplates">
+				<div class="prodactHasTemplates <%= (model.hasProUpload == false && model.hasDummyUpload == true)? 'table-dummy': '' %>">
 					<div class="title-chose"><%= config.labels["designtoolTitle"] %></div>
 					<%  
                         var urlCallback = encodeURIComponent("http://" + document.location.host + "/" + config.prefix + "/cart/callback");
@@ -97,7 +97,7 @@
                                 <li><%= config.labels["bothmodetxt"] %></li>
                             </ul>
                         </div>
-
+                        <div class="cell"></div>
                         <!-- show on popup -->
                         <div class="prodactHasTemplates inpopup" style="display:none;">
                             <span class="close-popup">x</span>
@@ -117,7 +117,7 @@
                                     <li class="controlpro"><%= config.labels["controlProLink"] %></li>
                                 </ul>
                             </div>
-
+                            <div class="cell"></div>
                             <div class="poll-form poll-form2 dummyupload">
                                 <a href="<%= config.designtoolLink %><%= dummyUploadLink %>" class="popupbtn designtool iframe fancybox.iframe">
                                     <span class="buttonlayout btnupfile">
@@ -150,6 +150,7 @@
                                 <li class="controlpro"><%= config.labels["controlProLink"] %></li>
                             </ul>
                         </div>
+                        <div class="cell"></div>
                     <% } %>
 
                     <% if(model.hasProUpload == false && model.hasDummyUpload == true){ %>
@@ -166,6 +167,7 @@
                             </ul>
                             <div class="dummy-price"><%= priceTpl({price:config.dummyUpload}) %></div>
                         </div>
+                        <div class="cell"></div>
                     <% } %>
 
                     <%

@@ -299,7 +299,7 @@ define([
 	    	});
 
 	    	//set height
-	    	popupshowed = $(e.currentTarget).parents('.prodactHasTemplates').find(".inpopup");
+	    	/*popupshowed = $(e.currentTarget).parents('.prodactHasTemplates').find(".inpopup");
     		height = 0;
     		$(popupshowed).find('.poll-form').each(function(i, el) {
 
@@ -307,7 +307,7 @@ define([
 
     		});
 
-    		if (height>0) $(popupshowed).find('.poll-form').innerHeight(height);
+    		if (height>0) $(popupshowed).find('.poll-form').innerHeight(height);*/
 	    	
 
 	    },

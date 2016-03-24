@@ -818,16 +818,17 @@ div#edit-linkcart a {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  display: table-cell;
 }
 
 #pccart-cart-form .prodactHasTemplates{
   display: table;
   width: 100%;
 }
-
-#pccart-cart-form .prodactHasTemplates .hieghtelem , .prodactHasTemplates .cell{
-  display: table-cell;
+#pccart-cart-form .prodactHasTemplates.inpopup{
+  display: none;
 }
+
 .prodactHasTemplates .cell{
   width: 14px;
 }
@@ -918,13 +919,18 @@ div#edit-linkcart a {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    padding: 20px;
+    padding: 20px 20px 45px;
     left: 50%;
     -ms-transform: translateY(-50%);
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
     margin-left: -340px;
-    top: 50%;
+    top: 50%; 
+}
+
+.prodactHasTemplates .prodact-table{
+  display: table;
+  width: 100%;
 }
 .prodactHasTemplates.inpopup .poll-form1{
   clear: both;

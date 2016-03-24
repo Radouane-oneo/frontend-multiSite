@@ -196,11 +196,16 @@ padding-bottom: 5px;
 .poll-form .txto{
   font-weight: normal;
   color: #646464;
-  margin: 0;
+  margin: 0 0 8px;
   text-align: left;
 }
 .img2 .text {
 margin-right: 23px;
+}
+
+.table-dummy{
+  border-spacing: 0 30px;
+  margin-top: -25px;
 }
 
 #pccart-cart-form .products li{
@@ -725,7 +730,7 @@ table.targetPrice tbody tr.last-child td { border:none; }
 }
 
 .dummyupload .options-file-impression li{
-  background: url(images/dummyicone.png) no-repeat 0 5px;
+  /*background: url(images/dummyicone.png) no-repeat 0 5px;*/
 }
 .option-title {
   font-weight: bold;
@@ -804,7 +809,7 @@ div#edit-linkcart a {
 
 #pccart-cart-form .prodactTemplates .poll-form{
   text-align: center;
-  float: left;
+  float: none!important;
   padding: 12px;
   background-color: #fff;
   width: 310px;
@@ -813,10 +818,19 @@ div#edit-linkcart a {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  display: table-cell;
 }
 
-#pccart-cart-form .prodactTemplates .poll-form2{
-  float: right;
+#pccart-cart-form .prodactHasTemplates{
+  display: table;
+  width: 100%;
+}
+#pccart-cart-form .prodactHasTemplates.inpopup{
+  display: none;
+}
+
+.prodactHasTemplates .cell{
+  width: 14px;
 }
 
 #pccart-cart-form .prodactTemplates .poll-form.designToolOnly{
@@ -900,18 +914,23 @@ div#edit-linkcart a {
 .prodactHasTemplates.inpopup{
     position: fixed;
     z-index: 99999;
-    width: 640px;
+    width: 640px!important;
     background-color: #fff;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    padding: 20px;
+    padding: 20px 20px 45px;
     left: 50%;
     -ms-transform: translateY(-50%);
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
     margin-left: -340px;
-    top: 50%;
+    top: 50%; 
+}
+
+.prodactHasTemplates .prodact-table{
+  display: table;
+  width: 100%;
 }
 .prodactHasTemplates.inpopup .poll-form1{
   clear: both;
@@ -926,7 +945,8 @@ div#edit-linkcart a {
 .prodactHasTemplates.inpopup .close-popup{
   color: #646464;
   font-size: 10px;
-  float: right;
+  position: absolute;
+  right: 20px;
   width: 11px;
   height: 11px;
   border: 2px solid #646464;

@@ -72,7 +72,7 @@
 			<!-- end preview -->
 
 			<div class="prodactTemplates centroid-2" style="display: <%= (model.emailDesigner ==null)?'block':'none' %>;">
-				<div class="prodactHasTemplates">
+				<div class="prodactHasTemplates <%= (model.hasProUpload == false && model.hasDummyUpload == true)? 'table-dummy': '' %>">
 					<div class="title-chose"><%= config.labels["designtoolTitle"] %></div>
 					<%  
                         var urlCallback = encodeURIComponent("http://" + document.location.host + "/" + config.prefix + "/cart/callback");
@@ -97,39 +97,41 @@
                                 <li><%= config.labels["bothmodetxt"] %></li>
                             </ul>
                         </div>
-
+                        <div class="cell"></div>
                         <!-- show on popup -->
                         <div class="prodactHasTemplates inpopup" style="display:none;">
                             <span class="close-popup">x</span>
                             <h3><%= config.labels["2popuptitle"] %></h3>
-                            <div class="poll-form poll-form1 prouploadmode">
-                                <a href="<%= config.designtoolLink %><%= proUploadLink %>" class="popupbtn designtool iframe fancybox.iframe">
-                                    <span class="buttonlayout btnupfile">
-                                        <span class="txtgras"><%= config.labels["proUploadBtnText"] %></span>
-                                    </span>
-                                </a>
-                                <span class="filetype">.jpg, .pdf</span>
-                                <p class="txto"><%= config.labels["proUploadLinkSubtitle"] %></p>
-                                <ul class="options-file-impression indice-5">
-                                    <li><%= config.labels["proUploadOptions1"] %></li>
-                                    <li><%= config.labels["proUploadOptions2"] %></li>
-                                    <li><%= config.labels["proUploadOptions3"] %></li>
-                                    <li class="controlpro"><%= config.labels["controlProLink"] %></li>
-                                </ul>
-                            </div>
-
-                            <div class="poll-form poll-form2 dummyupload">
-                                <a href="<%= config.designtoolLink %><%= dummyUploadLink %>" class="popupbtn designtool iframe fancybox.iframe">
-                                    <span class="buttonlayout btnupfile">
-                                        <span class="txtgras"><%= config.labels["dummyBtnText"] %></span>
-                                    </span>
-                                </a>
-                                <span class="filetype">.doc, .xls, ppt, .png, .tiff, .jpg, .pdf</span>
-                                <ul class="options-file-impression indice-5">
-                                    <li><%= config.labels["dummyuploadtxt"] %></li>
-                                    <li class="controlpro"><%= config.labels["controlProLink"] %></li>
-                                </ul>
-                                <div class="dummy-price"><%= priceTpl({price:config.dummyUpload}) %></div>
+                            <div class="prodact-table">
+                                <div class="poll-form poll-form1 prouploadmode">
+                                    <a href="<%= config.designtoolLink %><%= proUploadLink %>" class="popupbtn designtool iframe fancybox.iframe">
+                                        <span class="buttonlayout btnupfile">
+                                            <span class="txtgras"><%= config.labels["proUploadBtnText"] %></span>
+                                        </span>
+                                    </a>
+                                    <span class="filetype">.jpg, .pdf</span>
+                                    <p class="txto"><%= config.labels["proUploadLinkSubtitle"] %></p>
+                                    <ul class="options-file-impression indice-5">
+                                        <li><%= config.labels["proUploadOptions1"] %></li>
+                                        <li><%= config.labels["proUploadOptions2"] %></li>
+                                        <li><%= config.labels["proUploadOptions3"] %></li>
+                                        <li class="controlpro"><%= config.labels["controlProLink"] %></li>
+                                    </ul>
+                                </div>
+                                <div class="cell"></div>
+                                <div class="poll-form poll-form2 dummyupload">
+                                    <a href="<%= config.designtoolLink %><%= dummyUploadLink %>" class="popupbtn designtool iframe fancybox.iframe">
+                                        <span class="buttonlayout btnupfile">
+                                            <span class="txtgras"><%= config.labels["dummyBtnText"] %></span>
+                                        </span>
+                                    </a>
+                                    <span class="filetype">.doc, .xls, ppt, .png, .tiff, .jpg, .pdf</span>
+                                    <ul class="options-file-impression indice-5">
+                                        <li><%= config.labels["dummyuploadtxt"] %></li>
+                                        <li class="controlpro"><%= config.labels["controlProLink"] %></li>
+                                    </ul>
+                                    <div class="dummy-price"><%= priceTpl({price:config.dummyUpload}) %></div>
+                                </div>
                             </div>
                         </div>
                     <% } %>
@@ -150,6 +152,7 @@
                                 <li class="controlpro"><%= config.labels["controlProLink"] %></li>
                             </ul>
                         </div>
+                        <div class="cell"></div>
                     <% } %>
 
                     <% if(model.hasProUpload == false && model.hasDummyUpload == true){ %>
@@ -166,6 +169,7 @@
                             </ul>
                             <div class="dummy-price"><%= priceTpl({price:config.dummyUpload}) %></div>
                         </div>
+                        <div class="cell"></div>
                     <% } %>
 
                     <%

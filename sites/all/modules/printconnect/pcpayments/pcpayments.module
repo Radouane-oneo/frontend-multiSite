@@ -215,7 +215,8 @@ function new_payment_loadpage() {
             "paymentAccessDenied" => t('paymentAccessDenied'),
             "accessDenied" => t('accessDenied'),
             "accessDeniedCartVide" => t('accessDeniedCartVide'),
-            "paymentCartVide" => t('paymentCartVide')
+            "paymentCartVide" => t('paymentCartVide'),
+            "vipUpload" => t('VIP upload')
         );
 
         header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");

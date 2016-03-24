@@ -173,6 +173,7 @@ function update_domain() {
 function printconnect_cron() {
     define('DRUPAL_ROOT', getcwd());
     include_once('../../../includes/bootstrap.inc');
+    
     drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
     registry_rebuild();
     system_rebuild_theme_data();

@@ -28,6 +28,7 @@ function _pcsitemap_getsitemap() {
       drupal_alter('pcsitemap', $items);
       cache_set('pcsitemap_sitemap_' . $language->language, $items, 'cache');
     }
+    var_dump($cache);die;
   }
   return $items;
 }

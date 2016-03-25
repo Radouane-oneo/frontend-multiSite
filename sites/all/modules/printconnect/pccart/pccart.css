@@ -770,10 +770,6 @@ table.targetPrice tbody tr.last-child td { border:none; }
   color: #646464;
   font-size: 11px;
   font-weight: normal;
-  text-decoration: none;
-}
-
-.page-cart .poll-form li.controlpro a:hover{
   text-decoration: underline;
 }
 

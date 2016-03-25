@@ -12381,7 +12381,7 @@ form#pccheckout-payment-form fieldset legend{
 }
 
 .page-templates .region-content .form-actions a.button.action > .ui-button-text{
-	background: #79b61a url("images/button_payment.png") no-repeat left;
+	background: #79b61a url("images/button_action.png") no-repeat left;
     padding-left: 39px;
     display: inline-block;
     line-height: 26px;

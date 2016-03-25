@@ -748,7 +748,7 @@ function pctemplates_config_form2($form, &$form_state, $templateId, $productId =
             ),
             '#prefix'=>'<div class="allContentImage">', 
             'image' => array(
-            '#theme' => 'designtoollink',
+            '#theme' => 'designtoollinkBtt',
             '#designtoolTemplateId' => $template->designTemplates->designToolTemplateId,
             '#title' => $template->designTemplates->name,
             '#content' => array(

@@ -130,8 +130,7 @@ function pccheckout_personal_form($form, &$form_state) {
         '#type' => 'textfield',
         '#title' => t('Street'),
         '#required' => TRUE,
-        '#maxlength' => 60,
-        '#size' => 30,
+        '#maxlength' => 60
     );
     $form['address']['postalCode'] = array(
         '#type' => 'textfield',

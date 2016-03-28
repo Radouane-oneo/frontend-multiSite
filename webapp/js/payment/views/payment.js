@@ -6,11 +6,15 @@ define([
     'views/detailCommande',
     'views/conditionGeneral',
     'views/priceBlock',
-    'views/Error'
-], function (Backbone, paymentModel, paymentTemplate, methodePayment, detailCommande, conditionGeneral, priceBlock, errorView) {
+    'views/Error',
+    'text!../templates/templateAdressesVide.html',
+    'text!../templates/templatePaymentCartVide.html',
+], function (Backbone, paymentModel, paymentTemplate, methodePayment, detailCommande, conditionGeneral, priceBlock, errorView, templateAdressesVide, templatePaymentCartVide) {
 
     return Backbone.View.extend({
         template: _.template(paymentTemplate),
+        templateAdressesVide: _.template(templateAdressesVide),
+        templatePaymentCartVide: _.template(templatePaymentCartVide),
         events: {
         },
         initialize: function() {
@@ -29,11 +33,29 @@ define([
             });
         },
         render : function(){
-            //console.log(this.model);
-            this.setElement(this.template({
-                "model" : this.model.toJSON(),
-                "config" : this.config
-            }));
+            if (this.model.get("orderItems") == '')
+            {//dans le cas ou le panier est vide
+                //window.location.replace("/panier");
+                this.setElement(this.templatePaymentCartVide({
+                    "config" : this.config
+                }));
+            }
+            else if(
+                (!this.model.get("orderItemShipping").orderShippingAddress) || 
+                (!this.model.get("orderItemShipping").orderShippingAddress.id)||
+                (!this.model.get("billingAccount")))
+                {
+                    //dans le cas ou les adresses sont non remplis
+                    this.setElement(this.templateAdressesVide({
+                        "config" : this.config
+                    }));
+                }else{
+                   this.setElement(this.template({
+                    "model" : this.model.toJSON(),
+                    "config" : this.config
+                    })); 
+                }
+             
             $(this.config.containerId).html(this.$el);
         },   
         errors : function(){

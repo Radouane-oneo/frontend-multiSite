@@ -119,7 +119,10 @@ function pcanalytics_page_alter(&$page) {
             $page['page_bottom']['pcanalytics']['conversion']['#markup'] = $conversion;
         }
     } else {
-        $page['page_bottom']['pcanalytics']['analytics']['#markup'] = $analytics;
+        global $language;
+        $lg = $language->prefix;
+        if ($lg != 'lufr')
+            $page['page_bottom']['pcanalytics']['analytics']['#markup'] = $analytics;
         if ($remarketingDefault) {
             $page['page_bottom']['pcanalytics']['remarketingDefault']['#markup'] = $remarketingDefault;
         }
@@ -135,13 +138,17 @@ function pcanalytics_page_alter(&$page) {
         $orderId = $path[2];
 
         $order = \printconnect\Orders\Factory::Get($orderId);
-        $total = $order->subTotalAmount;
+        
+        $customerCurrent = \printconnect\Customers\Factory::Current();
+        $allOrderCustomer = \printconnect\Orders\Factory::GetOrders($customerCurrent);
+       
         $customer = $order->customer;
+        $total = $order->subTotalAmount;        
         $productname = array();
         foreach ($order->productItems as $item){
             $product = $item->productName . ' x ' . $item->quantity;
             $productname[] = $product;
-        }
+        }        
         $lastprodact = end($productname);
         $googleoptionTracking = '<script type="text/javascript">
               var ttConversionOptions = {';
@@ -154,6 +161,28 @@ function pcanalytics_page_alter(&$page) {
             case 'benl':
                 $campaignID = 18217;
                 $productID = 27112;
+                switch ($order->orderItemShipping->shippingTypeTag){
+                    case 'shippingTypeStore':
+                        $productID = 29034;
+                        break;
+                    case 'shippingTypeBpostHome':
+                        $productID = 27112;
+                        break;
+                    case 'shippingTypeStoreInAntwerpen':
+                        $productID = 27112;
+                        break;
+                    case 'shippingTypePrinter':
+                        $productID = 27112;
+                        break;
+                    case 'shippingTypeBpostPickupPoint':
+                        $productID = 27112;
+                        break;
+                }
+                
+                if ($allOrderCustomer->get_count() == 1) {                  
+                    $productID = 31187;  
+                }
+                
                 break;
             case 'frfr':
                 $campaignID = 20542;

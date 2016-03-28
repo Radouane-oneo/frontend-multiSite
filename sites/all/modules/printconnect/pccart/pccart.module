@@ -24,7 +24,7 @@ $items['cart'] = array(
     'page arguments' => array(),
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
-    'title' => 'your cart'
+    'title' => t('your cart')
 );
 
 $items['cart/ajax/getcart'] = array(
@@ -261,9 +261,10 @@ function new_cart_loadpage() {
         "dtOptions2" => t('Recevez un aperçu de vos impressions'),
         "dtOptions3" => t('Faites votre conception gratuitement en ligne'),
         "dtOptions4" => t('Contrôle du fichier optionnel (4,99 € hors TVA)'),
+        "controlProLink" => t('Mon fichier est-il contrôlé'),
         "dtOptionsModule" => t('Adaptez un de nos'),
         "dtOptionsModuleLink" => t('1000+ modèles gratuits en ligne'),
-        "dtBtnText" => t('COMMENCER'),
+        "dtBtnText" => t('DESIGN ONLINE'),
         "proUploadLinkTitle" => t('PRO UPLOAD'),
         "proUploadLinkSubtitle" => t('Pour les graphistes professionnels'),
         "proUploadOptions1" => t('Téléchargez immédiatement votre fichier à imprimer'),
@@ -272,7 +273,7 @@ function new_cart_loadpage() {
         "proUploadRespecte" => t('Respectez les'),
         "proUploadTechnices" => t('détails techniques'),
         "proUploadParams" => t('paramètres prédéfinis'),
-        "proUploadBtnText" => t('COMMENCER'),
+        "proUploadBtnText" => t('DRUKKLAAR'),
         "or" => t('ou'),
         "graphisteOptions" => t('Je ne vais pas télécharger moi-même les fichiers. Mon graphiste va le faire pour moi.'),
         "graphisteAdresse" => t('Adresse e-mail du designer'),
@@ -286,7 +287,14 @@ function new_cart_loadpage() {
         "controleProfessionel" => t('Contrôle professionel de'),
         "updateProduct" => t('update product'),
         "continue" => t('Continue shopping'),
-        "linkProduct" => t('link product')
+        "linkProduct" => t('link product'),
+        "vipUpload" => t('VIP upload'),
+        "dummyuploadtxt" => t('Ik begrijp dat mijn bestand niet drukklaar is, maar wil dat Flyer.be mijn bestand in de mate van het mogelijke drukklaar maakt en dat hier een kost van € 19,95 excl. BTW (€ 24,14 incl. BTW) voor wordt aangerekend.'),
+        "bothmodetxt" => t('Upload elk drukbaar bestand (tot 200 MB)'),
+        "uploadBtn" => t('UPLOAD BESTAND'),
+        "dummyBtnText" => t('OVERIGE'),
+        "2popuptitle" => t('Welk type bestand wil je uploaden?'),
+        "dummyuploadextension" => t('.doc, .xls, .ppt, .png, .tiff, .jpg, .pdf')
     );
 
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
@@ -333,7 +341,6 @@ function new_cart_ajax_removeitem($itemId) {
 }
 
 function new_cart_ajax_removedesign($itemId) {
-
     $response = Factory::DeleteDesign($itemId);
 
     Dal::BuildJson(json_decode($response->data, 1));
@@ -1363,7 +1370,7 @@ function pccart_callback() {
         $cartId = $_GET['cartid'];
         $controlpro = isset($_GET['controlpro']) ? $_GET['controlpro'] : 0;
         $quickupload = isset($_GET['quickupload']) ? $_GET['quickupload'] : 0;
-
+        $dummyUpload = isset($_GET['dummyupload']) ? $_GET['dummyupload'] : 0;
         if (isset($_GET['myPcId']) && $_GET['myPcId']) {
           $_SESSION['savedDesigns'][$id] = $_GET['myPcId'];
         }
@@ -1386,6 +1393,7 @@ function pccart_callback() {
         $item->cart_item = $id;
         $item->controlpro = $controlpro;
         $item->quickupload = $quickupload;
+        $item->viaDummyUpload = $dummyUpload;
         Factory::SaveItem($item);
         Factory::Refresh($cart);
         print update_domain();

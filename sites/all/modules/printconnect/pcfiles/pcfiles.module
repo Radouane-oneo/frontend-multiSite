@@ -116,12 +116,10 @@ function _pcfiles_file($fileId, $cache = FALSE) {
   $fileId = $fileparts[0];
 
   $parts = explode('_', $fileId);
-  
   if($parts[0] == 'template') {
     global $language;
     $templates = \printconnect\Products\Templates\Factory::GetTemplates(NULL, NULL, $parts[1]);
     $template = $templates[0];
-
     foreach ($template->templateImages as $value) {
         if($value->languageId == $language->id) {
             $fileId = $value->file;

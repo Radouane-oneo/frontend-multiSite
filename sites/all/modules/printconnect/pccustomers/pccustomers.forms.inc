@@ -17,7 +17,6 @@ function pccustomers_addresses_form($form, $form_state) {
   _pccustomers_ensureloggedin();
   $customer = Factory::Current();
   $addresses = Addresses\Factory::GetAddresses($customer, FALSE);
-
   $form['addresses'] = array(
       '#type' => 'container',
       '#title' => t('Your addresses'),
@@ -765,18 +764,7 @@ function pccustomers_address_Billingaddresses_form_submit($form, &$form_state) {
   $billingAccount = $form_state['storage']['address'];
   $customerbillingAccount = Factory::Current();
   \printconnect\Customers\BillingAccounts\Factory::Save($billingAccount);
-   switch($billingAccount->vatStatus) {
-            case 'vat_tag_3' :
-                form_set_error('company][vatNumber', t('Your Vat Number is invalid'));
-                return false;
-            break;
-            case 'vat_tag_8' :
-                form_set_error('company][vatNumber', t('Your Vat Number is inactive'));
-                return false;
-            break;
-            default:
-            break;
-       }   
+    
   $customerbillingAccount->billingAccount = $billingAccount->id;
   \printconnect\Customers\Factory::Save($customerbillingAccount);
   \printconnect\Customers\BillingAccounts\Factory::ClearBillingAccountsCache($customerbillingAccount);
@@ -1178,18 +1166,7 @@ function pccustomers_newaddress_form_Billingaddresses_submit($form, &$form_state
     $Billingaddress->customer = $Billingcustomer->id;
     \printconnect\Customers\BillingAccounts\Factory::Save($Billingaddress);
     \printconnect\Customers\BillingAccounts\Factory::ClearBillingAccountsCache($Billingcustomer);
-    switch($Billingaddress->vatStatus) {
-         case 'vat_tag_3' :
-             form_set_error('Number', t('Your Vat Number is invalid'));
-             return false;
-         break;
-         case 'vat_tag_8' :
-             form_set_error('Number', t('Your Vat Number is inactive'));
-             return false;
-         break;
-         default:
-         break;
-    }
+ 
 
     $form_state['rebuild'] = true;
     drupal_set_message(t('Adresse de facturation valider'));
@@ -1524,7 +1501,8 @@ function pccustomers_login_form_register_validate(&$form, &$form_state) {
 
 //return FALSE;
     }
-
+    //creer une variable de session pour un nouveau client
+    $_SESSION['newClient'] = true;
     $form_state['storage']['customer'] = $customer;
     $form_state['storage']['new_customer'] = TRUE;
 

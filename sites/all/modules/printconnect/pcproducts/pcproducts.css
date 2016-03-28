@@ -783,3 +783,17 @@ span.datainfobul:after {
 #block-pcproducts-list .active{
     font-weight: normal;
 }
+.detailtechnique-wrapper .conclusion{
+  clear: both;
+  padding: 10px;
+  line-height: 18px;
+  border: 1px solid #646464;
+  top: 10px;
+  position: relative;
+  display: inline-block;
+}
+.detailtechnique-wrapper .conclusion > span{
+  color:#f60;
+  font-weight: 600;
+  margin-right: 5px;
+}

@@ -21,10 +21,11 @@
 
         <!-- toolBoxItems -->
         <% _.each(model.toolBoxGroup.tree,function(toolBoxItem, i){ %>
+    	<% var selected = _.find(toolBoxItem.data, function(item){ return $.inArray(item.id, model.toolBoxGroup.toolboxItems)!=-1 }); %>
+    	<% if(selected) { %>
         <div class="form-item <%= (_.toArray(toolBoxItem.data).length==1)?'form-type-item':'form-type-select' %>">
             <%= (_.toArray(toolBoxItem.data).length==1)?'':'<div class="dropdownopen">'+ config.labels["ouvrir"] +'</div>' %>
             <label><%= toolBoxItem.name %></label>
-            <% var selected = _.find(toolBoxItem.data, function(item){ return $.inArray(item.id, model.toolBoxGroup.toolboxItems)!=-1 }); %>
             <div class="text selected-item" href="#" data-id="<%= selected.id %>">
                 <%= $('<div/>').html(selected.name).text() %>
             </div>
@@ -78,6 +79,7 @@
                 </ul>
             </div>
         </div>
+        <% } %>
         <% }); %>
         <!-- End toolBoxItems -->
 
@@ -235,13 +237,15 @@
         <!-- shippingDetail -->
         <div id="bloc-shipping" class="boxShippingDate"><%= shippingHTML %></div>
         <!-- End shippingDetail -->
-        <% if(model.widthCF == null && model.heightCF == null)  {%> 
+        <% console.log(model);if((model.widthCF == null && model.heightCF == null)  || (model.widthCF == 0 && model.heightCF == 0))  {%> 
         <!-- templateDetail -->
         <fieldset id="templates" class="templates form-wrappersss">
             <legend><span class="fieldset-legend"><%= config.labels['technicalDetails'] %></span></legend>
-            <div class="fieldset-wrapper detailtechnique-wrapper je suis la">
+            <div class="fieldset-wrapper detailtechnique-wrapper">
                 <div id="edit-templates-text" class="text form-wrapper">
-                    <%= config.labels['technicalDescription'] %>
+                    <%= config.labels['technicalDescription'] %><br>
+                    <a href="<%= config.labels['linkToConftemplate'] %>"><%= config.labels['linkText'] %></a><br>
+                    <a href="<%= config.labels['linkToControl'] %>"><%= config.labels['linkTextControl'] %></a>
                 </div>
                 <div id="edit-templates-image" class="image form-wrapper"><a target="_blank"
                                                                              href="/<%= config.prefix %>/file/template_<%= model.toolBoxGroup.template.id %>__<%= config.labels['langId'] %>.zip"><img
@@ -304,6 +308,13 @@
                         </a>
                     </div>
                 </div>
+
+                <% tipValue = "info for " + GlobalProductId;%>
+                <% if(config.labels['productdescription'] != tipValue) { %>
+                    <div class="conclusion">
+                        <span><%= config.labels['ourtip'] %> : </span> <%= config.labels['productdescription'] %>
+                    </div>
+                <% } %>
             </div>
         </fieldset>
         <!-- End templateDetail -->

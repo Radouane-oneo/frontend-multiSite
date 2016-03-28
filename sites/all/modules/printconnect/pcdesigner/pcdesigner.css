@@ -256,3 +256,29 @@ span.datainfobul::after {
     font-size: 12px;
     font-weight: 700;
 }
+#designerMessage{
+  background: #f60 none repeat scroll 0 0;
+  color: #fff;
+  float: left;
+  padding: 10px 10px;
+  clear: both;
+  width: 100%;
+  box-sizing: border-box;
+}
+#designerMessage p {
+    margin: 0;
+    line-height: 14px;
+}
+.messageUploadDesigner{
+    display:none;
+}
+#designerMessage .linesUploadDesign{
+    display:block;
+}
+.cadreGris {
+    background: grey;
+    float: right;
+    width: 220px;
+    height: 62px;
+    border-radius: 0 0 3px 0;
+}

@@ -12,13 +12,18 @@
 				</div>
 			</div>
 			<div class="jobFull-img image form-wrapper">
-				<img src="https://dt-printconcept-production.s3.amazonaws.com/<%= model.files[0].thumbnail %>">
-				<a href="<%= config.designtoolLink %><%= model.configuration.designtoolPreviewLink %>" target="blank" class="previewlink"><%= config.labels["previsualis"] %></a>
 				<%
-				var urlCallback = encodeURIComponent("http://" + document.location.host + "/" + config.prefix + "/cart/callback");
-    			var designtoolLink = model.configuration.designtoolLink.replace(/(dcb=).*?(&)/,'$1' + urlCallback + '$2');
-				%>			
-				<a href="<%= config.designtoolLink %><%= designtoolLink %>" class="designtool iframe fancybox.iframe"><%= config.labels["updatePage"] %></a>	
+					var urlCallback = encodeURIComponent("http://" + document.location.host + "/" + config.prefix + "/cart/callback");
+    				var designtoolLink = model.configuration.designtoolLink.replace(/(dcb=).*?(&)/,'$1' + urlCallback + '$2');
+				%>
+				<% if(model.hasDummyUpload){ %>
+					<img src="/sites/all/modules/printconnect/pccart/images/dummpupload_img.png">
+				<% }else{ %>
+					<img src="https://dt-printconcept-production.s3.amazonaws.com/<%= model.files[0].thumbnail %>">
+					<a href="<%= config.designtoolLink %><%= model.configuration.designtoolPreviewLink %>" target="blank" class="previewlink"><%= config.labels["previsualis"] %></a>
+					<a href="<%= config.designtoolLink %><%= designtoolLink %>" class="designtool iframe fancybox.iframe"><%= config.labels["updatePage"] %></a>	
+				<%}%>
+				
 				<span data-orderItem="<%= model.id %>" class="delete_item deletedesign"><%= config.labels["deleteOrder"] %></span>
 			</div>
 
@@ -29,7 +34,7 @@
                                             name = model.configuration.name + ' ' +model.customWidth+' X '+ model.customHeight+' mm';
                                         }else
                                         {
-                                            name = model.configuration.name+' '+model.configuration.config[0].name
+                                            name = model.configuration.name+' '+ (_.filter(model.configuration.config, function(conf){return conf.groupName== "Format"; })[0] ? _.filter(model.configuration.config, function(conf){return conf.groupName== "Format"; })[0].name :"");
                                         }
                                     %>
 					<h3><%= model.quantity %> <%= config.labels.ex %>. <%= name %></h3>	
@@ -57,7 +62,9 @@
 				<%
                 var directLink = "http://" + document.location.host + "/" + config.prefix + "/products/" + model.configuration['productId'] + "/" + encodeURIComponent(_.map(model.configuration.config, function(conf){ return conf.toolboxItemId; }).join(",")) + "/" + encodeURIComponent(model.options.join(",")) + "/" + model.quantity+"/"+model.id;
             	%>
-				<a href="<%= directLink %>" class="updateProduct"><%= config.labels["updateProduct"] %></a>				
+				<% if (model.customWidth == 0 && model.customHeight == 0){%>
+				    <a href="<%= directLink %>" class="updateProduct"><%= config.labels["updateProduct"] %></a>				
+				<%}%>
 			</div>
 
 			<div class="jobPrice">
@@ -67,15 +74,24 @@
                                     <%  if(model.price < model.originPrice){%>
                                         <% var prefixsFR = ["frfr"];        
                                         if ($.inArray(GlobalPrefix, prefixsFR) == 0){%>
-                                        <div class="origin-price"><del><%=model.originPrice%> &euro;</del></div>
+                                        <!--div class="origin-price"><del><%=model.originPrice%> &euro;</del></div -->
                                         <% }else{%>
-                                            <div class="origin-price"><del>&euro; <%=model.originPrice%></del></div>
+                                            <!--div class="origin-price"><del>&euro; <%=model.originPrice%></del></div-->
                                         <%}%>
                                         <%= priceTpl({price:model.price,classToAdd:'price'}) %>
                                     <%}else{%>
                                         <%= priceTpl({price:model.price,classToAdd:'price'}) %>
                                     <%}}%>
 			</div>
+
+			<!-- Dummy Upload -->
+			<% if(model.hasDummyUpload){ %>
+				<div class="file-model dummyUpload-box">
+					<span class="model-txt"><%= config.labels.vipUpload %></span>
+					<%= priceTpl({price:config.dummyUpload,classToAdd:'model-price'}) %>
+				</div>
+			<% }  %>
+			<!-- END Dummy Upload -->
 
 			<!-- Model Payemnt -->
 			<% if (model.designTemplate.price>0 && model.designTemplate.price!= null) { %>

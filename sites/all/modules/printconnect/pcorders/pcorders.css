@@ -97,3 +97,78 @@ padding: 0;
     float: right;
     margin-bottom: 20px;
 } 
+
+#pcorders-order-form #designerleft{
+    float: left;
+    margin-bottom: 20px;
+} 
+
+#changeStatusConfirm {
+    width: 200px;
+    float: right;
+    z-index: 99;
+}
+
+#pcorders-order-form .designerConfirm #designerleft{
+    margin: 0;
+    line-height: 15px;
+    padding-top: 2px;
+}
+
+.designerConfirm {
+    border-top: 1px solid #d1d1d1;  
+    position: relative;
+    padding: 10px;
+    overflow: hidden;
+}
+
+.designerConfirm:before {
+    background: #f1f1f1;
+    content: ' ';
+    position: absolute;
+    display: block;
+    height: 100%;
+    width: 1px;
+    right: 155px;
+    top: 0;
+    z-index: 99;
+}
+#designerleft .messageConfirmDesign{
+    display: none;
+}
+.linkPdf{
+    padding-right: 18px !important;
+    background: transparent !important;
+}
+.messageConfirmDesign{
+    display: none;
+}
+
+.greyButton {
+    width: 200px;
+    float: right;
+    color: #fff;
+    display: block;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    padding: 8px 10px;
+    border-radius: 4px 4px 4px 4px;
+    border: none;
+    margin: 0;
+    text-align: center;
+    background: grey;
+    position: relative;
+}
+
+.greyButton:before {
+    background: grey;
+    content: ' ';
+    position: absolute;
+    display: block;
+    height: 100%;
+    width: 1px;
+    right: 145px;
+    top: 0;
+    z-index: 99;
+}

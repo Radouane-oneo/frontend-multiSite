@@ -607,6 +607,7 @@ function pcproducts_js_callback() {
 function getFromServer($filename) {
     $apikey = variable_get('pc_apikey', '');
     $rest = 'http://admin.preprd.printconcept.com/rest/';
+    $rest = 'http://admin.printconcept.com/rest/'; 
     $url = "{$rest}json/filename/{$filename}?apikey={$apikey}";
     return file_get_contents($url);
 }
@@ -650,7 +651,6 @@ function pcproducts_js_form_productWithPromo() {
 }
 function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = FALSE, $edit = FALSE) {
     pcproducts_validate_product();
-
     global $language;
  
     global $user;
@@ -678,13 +678,20 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
     //drupal_set_breadcrumb(array(l(t('Home'), '<front>'), l(t('Products'), 'products')));
     $bannerUrl = getBannerIfExists($productId);
 
-    $labels = getLabels($edit);
+    $labels = getLabels($edit, $productId);
 
     $isAdmin = ($user->uid) ? '1' : '0';
-
+    $sitePrintconcept = '';
+    
+    if (isset($_GET['site']))
+    {
+      $sitePrintconcept = $_GET['site'];
+    }
+    
     $script = "<script type='text/javascript'>
+        var sitePrintconcept = '". $sitePrintconcept ."';
         var GlobalProductId = ". $productId .";
-	      var GlobalLabels = ". json_encode($labels) .";
+	var GlobalLabels = ". json_encode($labels) .";
         var GlobalIsAdmin = ". $isAdmin .";
         var GlobalDefaultItems = ".json_encode($gItems).";
         var GlobalDefaultOptions = ".json_encode($gOtions).";
@@ -700,7 +707,7 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
     return $script;
 }
 
-function getLabels($edit = false) {
+function getLabels($edit = false, $productId) {
     global $language;
     $labels = array(
         "langId" => $language->id,
@@ -747,6 +754,12 @@ function getLabels($edit = false) {
         "infocolor"=> t('infocolor'),
         "inforesolution"=> t('inforesolution'),
         "ouvrir" =>t('ouvrir'),
+        "ourtip" =>t('our tip'),
+        "linkText" =>t('Link text'),
+        "linkToConftemplate" =>t('linkToConftemplate'),
+        "productdescription" =>t('info for ' . $productId),
+        "linkToControl" =>t('linkToControl'),
+        "linkTextControl" =>t('linkTextControl'),
         
     );
 
@@ -1092,6 +1105,7 @@ function _pcproducts_url_name($value, $separator = '-') {
 }
 
 function _pcproducts_getproductname($id) {
+   // echo drupal_get_path_alias('products/1');die;
   if (is_numeric($id)) {
     printconnect_ensureinitialized();
     $product = \printconnect\Products\Factory::Get($id);

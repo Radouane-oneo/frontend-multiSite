@@ -5,7 +5,7 @@ namespace printconnect\Carts {
   class Cart extends \printconnect\Object {
 
     public function Clear() {
-      // $this->items->Clear();
+       $this->items->Clear();
     }
 
 //    public function get_items(){

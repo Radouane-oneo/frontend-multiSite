@@ -3,7 +3,7 @@
 namespace printconnect\Products {
 
   use printconnect\Dal;
-
+  use printconnect\Segments\Factory as SegmentsFactory;
   class Factory {
   public static function GetProductWithPromo() 
   {

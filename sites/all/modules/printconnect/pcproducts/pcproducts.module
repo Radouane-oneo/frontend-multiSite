@@ -873,21 +873,21 @@ function _pcproducts_activeproducts($all = FALSE) {
   $allProducts = _pcproducts_array($all);
   $order = explode(',', variable_get('pcproducts_order', ''));
   $result = array();
-  foreach ($order as $productId) {
+  /*foreach ($order as $productId) {
     if (isset($allProducts[$productId])) {
       $product = $allProducts[$productId];
       $result[] = $product;
       unset($allProducts[$productId]);
     }
   }
-
+  
   foreach ($allProducts as $productId => $product) {
     if ($product->active) {
       $result[] = $product;
     }
-  }
+  }*/
 
-  return $result;
+  return array_values($allProducts);
 }
 
 function _pcproducts_array($all = FALSE) {

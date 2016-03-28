@@ -30,6 +30,18 @@ namespace printconnect\Products {
           $products->loaded = true;
           return $products;
       }
+      global $language;
+      $segments = SegmentsFactory::GetAll ( $language );
+      $products = new Products ( array (), array (), FALSE, $language );
+      foreach ( $segments as $seg ) {
+      	foreach ( $seg->products as $product ) {
+      		$product = new Product ( $product );
+      		$product->loaded = TRUE;
+      		$products->Add ( $product );
+      	}
+      }
+      $products->loaded = true;
+      return $products;
       $products = new Products(array(), array(), FALSE, $language);
       $basedPath = variable_get('pc_products_json_path');
       global $language;

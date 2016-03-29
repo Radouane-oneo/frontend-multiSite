@@ -17,7 +17,8 @@ define([
 			'blur .inputdesigneremail' : 'designerEmail',
 			'click .technic-details' : 'showDetailTechnics',
 			'click .showdesigntool' : 'showPopupDesigntool',
-			'click .close-popup' : 'hidePopupDesigntool'
+			'click .close-popup' : 'hidePopupDesigntool',
+			'click .controlpro a' : 'openInotherTab'
 		},
 		initialize: function(model) {
 			this.filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -315,6 +316,12 @@ define([
 	    	e.preventDefault();
 	    	$('#overlay-popups').hide();
 	    	$(e.currentTarget).parents('.inpopup').hide();
+	    },
+	    openInotherTab : function(e){
+	    	e.preventDefault();
+	    	var url = $(e.currentTarget).attr('href');
+        	var win = window.open(url, '_blank');  ///similar to above solution
+        	win.focus();
 	    },
         errors : function(){
         	var orderItems = this.model.get('orderItems');

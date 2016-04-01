@@ -124,14 +124,14 @@ function pcproducts_menu() {
               'access arguments' => array('access content')
           );
 
-	  $items["products/promos"] = array(
-              'title' => 'promos prices',
-              'title arguments' => array(1),
-              'description' => t('promos prices'),
-              'page callback' => 'pcproducts_js_form_productWithPromo',
-              'page arguments' => array(1),
-              'access arguments' => array('access content')
-          );
+//	  $items["products/promos"] = array(
+//              'title' => 'promos prices',
+//              'title arguments' => array(1),
+//              'description' => t('promos prices'),
+//              'page callback' => 'pcproducts_js_form_productWithPromo',
+//              'page arguments' => array(1),
+//              'access arguments' => array('content')
+//          );
           $items["products/%/%"] = array(
               'title' => 'Configuration',
               'title callback' => '_pcproducts_getproductname',

@@ -453,7 +453,8 @@ function xmlsitemap_rebuild_form() {
   // Build a list of rebuildable link types.
   module_load_include('generate.inc', 'xmlsitemap');
   $rebuild_types = xmlsitemap_get_rebuildable_link_types();
-
+  $rebuild_types[] = "pcproducts";
+//var_dump($rebuild_types);die;
   $form['entities'] = array(
     '#type' => 'select',
     '#title' => t("Select which link types you would like to rebuild"),

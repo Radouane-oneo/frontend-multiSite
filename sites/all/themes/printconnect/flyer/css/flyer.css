@@ -4256,13 +4256,22 @@ a.googleconnect {
 .page-checkout #invoice-address input[type=text] {
 	width: 418px; /*300px - padding */
 }
-.page-checkout #shipping-address .form-item-shipping-detail-current-postalCode input[type="text"], .page-checkout #invoice-address .form-item-invoice-address-current-postalCode input[type="text"] {
+.page-checkout #shipping-address .form-item-shipping-detail-current-postalCode input[type="text"]{
+	width: 50px;
+	float: left;
+	border-right: none;
+	border-radius: 4px 0 0 4px;
+}
+.page-checkout #invoice-address .form-item-invoice-address-current-postalCode input[type="text"] {
 	width: 40px;
 	float: left;
 	border-right: none;
 	border-radius: 4px 0 0 4px;
 }
-.page-checkout #shipping-address .form-item-shipping-detail-current-city input[type="text"], 
+.page-checkout #shipping-address .form-item-shipping-detail-current-city input[type="text"]{
+	width: 347px;
+	border-radius: 0 4px 4px 0;
+} 
 .page-checkout #invoice-address .form-item-invoice-address-current-city input[type="text"] {
 	width: 356px;
 	border-radius: 0 4px 4px 0;

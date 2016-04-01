@@ -154,6 +154,7 @@ function xmlsitemap_generate_page(stdClass $sitemap, $page) {
 }
 
 function xmlsitemap_generate_chunk(stdClass $sitemap, XMLSitemapWriter $writer, $chunk) {
+    
   $output_elements = drupal_map_assoc(variable_get('xmlsitemap_output_elements', array('lastmod', 'changefreq', 'priority')));
   $lastmod_format = variable_get('xmlsitemap_lastmod_format', XMLSITEMAP_LASTMOD_MEDIUM);
 
@@ -516,7 +517,6 @@ function xmlsitemap_rebuild_batch_finished($success, $results, $operations, $ela
 function xmlsitemap_get_rebuildable_link_types() {
   $rebuild_types = array();
   $entities = xmlsitemap_get_link_info();
-
   foreach ($entities as $entity => $info) {
     if (empty($info['xmlsitemap']['rebuild callback'])) {
       // If the entity is missing a rebuild callback, skip.

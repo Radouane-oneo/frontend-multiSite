@@ -18,7 +18,7 @@
 
 #block-pcmenu-main > .content > ul{
   overflow: hidden;
-  margin: 0 0 0 175px;
+  margin: 0 0 0 175px !important;
   padding: 0;
 }
 

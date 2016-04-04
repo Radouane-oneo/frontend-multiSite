@@ -65,7 +65,7 @@
         });
 
      $('.changeStatusConfirm').click(function(){
-			element = $(this);
+		   element = $(this);
            orderitem = element.parents(".designerConfirm").find('#jobIdDesiger').val();
 		   console.log(orderitem);
            $.post("/upload-design/changestatus/" + orderitem+"/Confirm",{},function(){

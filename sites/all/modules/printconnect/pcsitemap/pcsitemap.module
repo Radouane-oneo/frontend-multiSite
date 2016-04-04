@@ -1,0 +1,154 @@
+<?php
+
+function pcsitemap_menu() {
+  $items['sitemap.xml'] = array(
+      'title' => t('Site map'),
+      'page callback' => 'pcsitemap_xmlsitemap',
+      'access callback' => TRUE,
+      'type' => MENU_CALLBACK,
+  );
+  $items['sitemap'] = array(
+      'title' => t('Site map'),
+      'page callback' => 'pcsitemap_sitemap',
+      'access callback' => TRUE,
+  );
+  return $items;
+}
+
+function _pcsitemap_getsitemap() {
+  global $language;
+
+   $items = &drupal_static(__FUNCTION__);
+  if (!isset($items)) {
+    $cache = cache_get('pcsitemap_sitemap_' . $language->language);
+    if ($cache) {
+      $items = $cache->data;
+    } else {
+      $items = module_invoke_all('pcsitemap');
+      drupal_alter('pcsitemap', $items);
+      cache_set('pcsitemap_sitemap_' . $language->language, $items, 'cache');
+    }
+  }
+  return $items;
+}
+
+function pcsitemap_sitemap() {
+    
+  $items = _pcsitemap_getsitemap();
+    foreach ($items as $key => $value) {
+        if($value["#title"] == "404" ||  $value["#title"] == "403" || $value["#title"] == ""){
+           unset($items[$key]);
+        }
+     }
+
+  unset($items["pcproducts"]);
+  drupal_alter('pcsitemap', $items);
+
+  $l = _pcsitemap_list($items);
+  unset($l[2]);
+  return theme('item_list', array('items' => $l));
+}
+
+function pcsitemap_pcsitemap() {
+  global $language;
+  $weight = 0;
+
+  $items['home'] = array(
+      '#title' => t('Home'),
+      '#link' => '<front>',
+      '#weight' => -100,
+  );
+
+  $ids = db_select('node', 'n')
+                  ->fields('n', array('nid', 'title'))
+                  ->condition('n.type', array('page', 'article'))
+                  ->condition('n.status', 1)
+                  ->condition('language', $language->language)
+                  ->orderBy('sticky', 'DESC')
+                  ->orderBy('created', 'ASC')
+                  ->range(0, 10000)
+                  ->addTag('node_access')
+                  ->execute()->fetchCol();
+
+  $nodes = node_load_multiple($ids);
+
+  foreach ($nodes as $node) {
+    $weight += 0.01;
+    $items[$node->nid] = array(
+        '#title' => $node->title,
+        '#link' => 'node/' . $node->nid,
+        '#changed' => $node->changed,
+        '#weight' => $weight,
+    );
+  }
+
+  return $items;
+}
+
+function pcsitemap_xmlsitemap() {
+  $items = _pcsitemap_getsitemap();
+
+  _pcsitemap_buildxml($items, $list);
+
+  $xml .= '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+  foreach ($list as $item) {
+    $xml .= '<url>';
+    $xml .= '<loc>' . url($item['#link'], array('absolute' => TRUE)) . '</loc>';
+    if (isset($item['#changed'])) {
+      $xml .= '<lastmod>' . date('c', $item['#changed']) . '</lastmod>';
+    }
+    $xml .= '<changefreq>weekly</changefreq>';
+    if (isset($item))
+      $xml .= '</url>';
+  }
+
+  $xml .= '</urlset>';
+
+  //$mtime = filemtime($file);
+  $mtime = time();
+  $last_modified = gmdate(DATE_RFC1123, $mtime);
+  $etag = '"' . md5($last_modified) . '"';
+
+  $headers = array(
+      'Content-type' => 'text/xml; charset=utf-8',
+      'Content-length' => strlen($xml),
+      'Last-modified' => $last_modified,
+      'Etag' => $etag,
+      'Expires' => gmdate(DATE_RFC1123, $mtime + variable_get('pcsitemap_lifetime', 0)),
+      'Cache-Control' => 'must-revalidate',
+      'X-Robots-Tag' => 'noindex, follow',
+  );
+
+  foreach ($headers as $name => $value) {
+    drupal_add_http_header($name, $value);
+  }
+  drupal_send_headers();
+
+  drupal_set_time_limit(240);
+
+  if ($xml) {
+    print $xml;
+  } else {
+    drupal_not_found();
+  }
+  drupal_exit();
+}
+
+function _pcsitemap_list($items) {
+  $list = array();
+  foreach (element_children($items, TRUE) as $key) {
+    $list[] = array(
+        'data' => l($items[$key]['#title'], $items[$key]['#link']),
+        'children' => _pcsitemap_list($items[$key]),
+    );
+  }
+  return $list;
+}
+
+function _pcsitemap_buildxml($items, &$list) {
+  foreach (element_children($items, TRUE) as $key) {
+    $list[] = $items[$key];
+    _pcsitemap_buildxml($items[$key], $list);
+  }
+}
+

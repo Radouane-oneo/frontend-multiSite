@@ -15,12 +15,16 @@ define([
 			'click .removecontrol' : 'deleteControlePro',
 			'blur .refjobTxt' : 'changeRefJob',
 			'blur .inputdesigneremail' : 'designerEmail',
-			'click .technic-details' : 'showDetailTechnics'
+			'click .technic-details' : 'showDetailTechnics',
+			'click .showdesigntool' : 'showPopupDesigntool',
+			'click .close-popup' : 'hidePopupDesigntool',
+			'click .controlpro a' : 'openInotherTab'
 		},
 		initialize: function(model) {
 			this.filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 			this.config = require("config");
             this.model = model;
+	        this.config.dummyUpload = this.model.get('dummyUpload');
 	        this.render();
 	        this.model.on("change",this.render,this);
 	    },
@@ -257,6 +261,7 @@ define([
 	    	e.preventDefault();
 	    },
 	    setJobHeight : function () {
+	    	
 	    	$("#pccart-cart-form .jobfull").each(function(i, elem) {
 	    		$(elem).find(".image img").load(function(){
 			  		var maxHeight = $(elem).find(".image").height();
@@ -269,10 +274,57 @@ define([
 			  			$(elem).find(".preview1").css("height" , previewHeight+"px"); 
 			  		}	
 				});     		
-    		});   	   	
-	    }, 
+    		});
+
+	    	/*$(".prodactHasTemplates").each(function(i, elem) {
+	    		height = 0;
+	    		var dummy = 24;
+	    		$(elem).children('.hieghtelem').each(function(i, el) {
+	    			if ($(el).hasClass('dummyupload')) dummy = 42;
+	    			if ($(el).innerHeight() > height) height = $(el).innerHeight();
+
+	    		});
+
+	    		height-= dummy;
+	    		if (height>0) $(elem).children('.hieghtelem').height(height);
+	    	});*/
+    		 	
+	    },
+	    showPopupDesigntool : function(e){
+	    	e.preventDefault();
+	    	$('#overlay-popups').show();
+	    	$(e.currentTarget).parents('.prodactHasTemplates').find('.inpopup').fadeIn();
+
+	    	$('.orderBox .designtool').on('click', function(){
+	    		$('.close-popup').click();
+	    	});
+
+	    	//set height
+	    	/*popupshowed = $(e.currentTarget).parents('.prodactHasTemplates').find(".inpopup");
+    		height = 0;
+    		$(popupshowed).find('.poll-form').each(function(i, el) {
+
+    			if ($(el).innerHeight() > height) height = $(el).innerHeight();
+
+    		});
+
+    		if (height>0) $(popupshowed).find('.poll-form').innerHeight(height);*/
+	    	
+
+	    },
+	    hidePopupDesigntool : function(e){
+	    	e.preventDefault();
+	    	$('#overlay-popups').hide();
+	    	$(e.currentTarget).parents('.inpopup').hide();
+	    },
+	    openInotherTab : function(e){
+	    	e.preventDefault();
+	    	var url = $(e.currentTarget).attr('href');
+        	var win = window.open(url, '_blank');  ///similar to above solution
+        	win.focus();
+	    },
         errors : function(){
-        	var orderItems = this.model.attributes.orderItems;
+        	var orderItems = this.model.get('orderItems');
         	for (var i = 0; i< orderItems.length; i++) {
         		var checkBox = $(this.config.jobBox).find('.orderBox[data-orderitem="'+orderItems[i].id+'"]').find('.checkbox-event input[type="checkbox"]');
         		var inputBox = $(this.config.jobBox).find('.orderBox[data-orderitem="'+orderItems[i].id+'"]').find('.inputdesigneremail');

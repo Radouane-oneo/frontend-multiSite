@@ -124,14 +124,14 @@ function pcproducts_menu() {
               'access arguments' => array('access content')
           );
 
-	  $items["products/promos"] = array(
-              'title' => 'promos prices',
-              'title arguments' => array(1),
-              'description' => t('promos prices'),
-              'page callback' => 'pcproducts_js_form_productWithPromo',
-              'page arguments' => array(1),
-              'access arguments' => array('access content')
-          );
+//	  $items["products/promos"] = array(
+//              'title' => 'promos prices',
+//              'title arguments' => array(1),
+//              'description' => t('promos prices'),
+//              'page callback' => 'pcproducts_js_form_productWithPromo',
+//              'page arguments' => array(1),
+//              'access arguments' => array('content')
+//          );
           $items["products/%/%"] = array(
               'title' => 'Configuration',
               'title callback' => '_pcproducts_getproductname',
@@ -607,6 +607,7 @@ function pcproducts_js_callback() {
 function getFromServer($filename) {
     $apikey = variable_get('pc_apikey', '');
     $rest = 'http://admin.preprd.printconcept.com/rest/';
+    $rest = 'http://admin.printconcept.com/rest/'; 
     $url = "{$rest}json/filename/{$filename}?apikey={$apikey}";
     return file_get_contents($url);
 }
@@ -757,6 +758,8 @@ function getLabels($edit = false, $productId) {
         "linkText" =>t('Link text'),
         "linkToConftemplate" =>t('linkToConftemplate'),
         "productdescription" =>t('info for ' . $productId),
+        "linkToControl" =>t('linkToControl'),
+        "linkTextControl" =>t('linkTextControl'),
         
     );
 
@@ -870,21 +873,21 @@ function _pcproducts_activeproducts($all = FALSE) {
   $allProducts = _pcproducts_array($all);
   $order = explode(',', variable_get('pcproducts_order', ''));
   $result = array();
-  foreach ($order as $productId) {
+  /*foreach ($order as $productId) {
     if (isset($allProducts[$productId])) {
       $product = $allProducts[$productId];
       $result[] = $product;
       unset($allProducts[$productId]);
     }
   }
-
+  
   foreach ($allProducts as $productId => $product) {
     if ($product->active) {
       $result[] = $product;
     }
-  }
+  }*/
 
-  return $result;
+  return array_values($allProducts);
 }
 
 function _pcproducts_array($all = FALSE) {
@@ -1283,4 +1286,28 @@ function getBannerIfExists($productId)
     }
 
     return '';
+}
+
+function pcproducts_xmlsitemap_link_info() {
+  return array(
+    'pcproducts' => array(
+      'label' => t('pcproducts'),
+      'xmlsitemap' => array(
+        'rebuild callback' => 'pcproducts_xmlsitemap_index_links',
+        ),
+      )
+    );
+}
+function pcproducts_xmlsitemap_index_links($limit) {
+    $products = _pcproducts_activeproducts();
+    foreach ($products as $product) {
+        $link = array(
+          'type' => 'products',
+          'loc' => 'products/'.$product->id,
+          'access' => 1,
+          'status' => 1,
+        );
+        xmlsitemap_link_save($link);
+    }
+  
 }

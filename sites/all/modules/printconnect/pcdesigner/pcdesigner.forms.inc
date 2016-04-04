@@ -4,8 +4,8 @@ use printconnect\Customers\Factory as CustomersFactory;
 function pcdesigner_upload_form($form, &$form_state, $id) {
   try {
     $upload = \printconnect\Designer\Upload\Factory::Get($id, FALSE);
-
-    $upload->EnsureLoaded();
+    \printconnect\Designer\Upload\Factory::LoadUpload($upload);
+    $id  = ($upload->id) ? $upload->id : $id;
   } catch (\Exception $ex) {
     drupal_not_found();
     exit;
@@ -89,7 +89,6 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
         $model_list_index=4;
     }
    
-  
   if (count($upload->files)) {  
    $form['item']['upload'] = array(
         '#type' => 'fieldset',
@@ -113,15 +112,19 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
           '#jobId' => $jobId,
           '#attributes' => array('class' => array( 'iframe', 'display-block')),
       );
-      $form['item']['upload']['files'][$file->id]['remove'] = array(
-                                                '#prefix' => '<div class="removefile">',
-                                                '#suffix' => '</div>',
-                                                '#type' => 'submit',
-                                                '#value' => '',
-                                                '#name' => 'delete_item_' . $upload->id,
-                                                '#has_garbage_value' => FALSE,
-                                                '#attributes' => array('class' => array('delete_item','deletedesign'), 'itemFileId' => $upload->id),
-                                        );
+      
+      $arrayIdStatus = array(7, 8, 9, 15, 23);
+      if (in_array($upload->orderItemStatus , $arrayIdStatus)){
+            $form['item']['upload']['files'][$file->id]['remove'] = array(
+                    '#prefix' => '<div class="removefile">',
+                    '#suffix' => '</div>',
+                    '#type' => 'submit',
+                    '#value' => '',
+                    '#name' => 'delete_item_' . $upload->id,
+                    '#has_garbage_value' => FALSE,
+                    '#attributes' => array('class' => array('delete_item','deletedesign'), 'itemFileId' => $upload->id),
+            );
+      }
       $form['item']['upload']['files'][$file->id]['preview'] = array(
         
           '#suffix'=>'</div>',
@@ -154,18 +157,20 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
       '#type' => 'actions',
       '#attributes' => array('class' => array('clearfix','blocSubmit')),
   );
-  
-    if ($upload->orderItemStatus == "23"){
-      $form['item']['upload']['files'][$file->id]['actions']['submit'] = array(
+    $arrayIdStatusConfirm = array(7, 8, 9, 15);  
+     if (in_array($upload->orderItemStatus , $arrayIdStatusConfirm)){
+         $form['item']['upload']['files'][$file->id]['actions']['submit'] = array(
+            '#type' => 'submit',
+            '#value' => t('confirm file'),
+            '#id' => 'changeStatusUpprove'
+        );
+     }
+     else{
+         $form['item']['upload']['files'][$file->id]['actions']['submit'] = array(
           '#markup' => '<div class="cadreGris"></div>',
       );
-    }else{
-        $form['item']['upload']['files'][$file->id]['actions']['submit'] = array(
-          '#type' => 'submit',
-          '#value' => t('confirm file'),
-          '#id' => 'changeStatusUpprove'
-      );
-    }
+     }
+   
   } else {
       $form['item']['upload'] = array(
           '#type' => 'fieldset',
@@ -185,6 +190,7 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
             '#items' => $list,
         )
       );
+     
     $templates = \printconnect\Products\Templates\Factory::GetTemplates($productId, $items);
     if (count($templates->items)) {
         $template = $templates->items[0];    

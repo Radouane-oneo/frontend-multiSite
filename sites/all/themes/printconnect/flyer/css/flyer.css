@@ -787,7 +787,8 @@ input.cmd-collecte{
   padding: 0;
 }
 
-body.two-sidebars #content {
+body.two-sidebars #content,
+body.front  #content {
 	width: 680px;
 	margin-bottom: 10px;
 }
@@ -4255,13 +4256,22 @@ a.googleconnect {
 .page-checkout #invoice-address input[type=text] {
 	width: 418px; /*300px - padding */
 }
-.page-checkout #shipping-address .form-item-shipping-detail-current-postalCode input[type="text"], .page-checkout #invoice-address .form-item-invoice-address-current-postalCode input[type="text"] {
+.page-checkout #shipping-address .form-item-shipping-detail-current-postalCode input[type="text"]{
+	width: 50px;
+	float: left;
+	border-right: none;
+	border-radius: 4px 0 0 4px;
+}
+.page-checkout #invoice-address .form-item-invoice-address-current-postalCode input[type="text"] {
 	width: 40px;
 	float: left;
 	border-right: none;
 	border-radius: 4px 0 0 4px;
 }
-.page-checkout #shipping-address .form-item-shipping-detail-current-city input[type="text"], 
+.page-checkout #shipping-address .form-item-shipping-detail-current-city input[type="text"]{
+	width: 347px;
+	border-radius: 0 4px 4px 0;
+} 
 .page-checkout #invoice-address .form-item-invoice-address-current-city input[type="text"] {
 	width: 356px;
 	border-radius: 0 4px 4px 0;
@@ -11045,6 +11055,11 @@ p.requieredfields span.form-required {
     border-bottom: 1px solid #d1d1d1;
     padding-bottom: 5px;
 }
+
+.page-cart #pccart-cart-form .item .preview2{
+	border-bottom: 0;
+}
+
 .page-cart #pccart-cart-form .item .form-type-checkbox {
 	background-color: #e1e1e1;
     clear: left;
@@ -11056,7 +11071,9 @@ p.requieredfields span.form-required {
 }
 .page-cart #pccart-cart-form .item .prodactTemplates {
     border-bottom: 1px solid #d1d1d1;
+    padding-bottom: 13px;
 }
+
 .page-cart #pccart-cart-form .form-type-checkbox input.form-checkbox {margin-right: 10px;}
 .refJob-code .form-item {
     margin: 0;
@@ -11501,16 +11518,12 @@ input.ui-button.payment {
 .page-cart #pccart-cart-form .item .preview2 .description.jobDesigner .items_actions {
     display: none;
 }
-#pccart-cart-form .prodactTemplates .poll-form.designToolOnly {
-    border: none;
-    margin: 0 auto;
-    display: block;
-    float: none;
-}
+
 .page-cart #edit-cart-shipping .shipping-wrapper {
 	padding-bottom: 0;
 }
-.page-cart .edit-cart-discount-text {
+
+.page-cart .edit-cart-discount-text{
 	margin-top: 0;
 }
 
@@ -11526,35 +11539,48 @@ input.ui-button.payment {
 }
 /*End Fancybox*/
 
+#overlay-popups{
+	display: none;
+}
 /* Loading page cart */
-#overlay-bar{
+#overlay-bar, #overlay-popups{
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgb(119, 119, 119);
-    opacity: 0.7;
+    background-color: #303030;
+    opacity: 0.8;
     cursor: auto;
     z-index: 9999;
 }
 
-#save-progress-bar {
-    border: 2px solid #636363;
-    height: 20px;
-    margin: -12px 0 0 -202px;
-    width: 400px;
-    overflow: hidden;
-    position: fixed;
+#content-box{
+	position: fixed;
     top: 50%;
     left: 50%;
-    background: #fff;
     z-index: 9999;
+    margin: -37px 0 0 -340px;
+    width: 680px;
+    height: 74px;
+    background-color: #fff;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+#save-progress-bar {
+    height: 18px;
+    width: 100%;
+    overflow: hidden;
+    background: #fff;
+	overflow: hidden;
 }
 
 #save-progress-bar > div {
     height: 100%;
-    background: #f60;
+    background: #fe6417;
     overflow: hidden;
     width: 0;
     float: left;
@@ -11565,16 +11591,11 @@ input.ui-button.payment {
 }
 
 #box-progress p{
-  top: 50%;
   font-family: Ubuntu,sans-serif;
-  font-size: 14px;
-  position: fixed;
-  width: 100%;
-  color: #fff;
-  z-index: 9999;
+  font-size: 12px;
+  color: #646464;
   text-align: center;
   margin: 22px 0 0;
-  left: 0;
 }
 
 #box-progress{
@@ -12369,7 +12390,7 @@ form#pccheckout-payment-form fieldset legend{
 }
 
 .page-templates .region-content .form-actions a.button.action > .ui-button-text{
-	background: #79b61a url("images/button_payment.png") no-repeat left;
+	background: #79b61a url("images/button_action.png") no-repeat left;
     padding-left: 39px;
     display: inline-block;
     line-height: 26px;
@@ -12725,9 +12746,15 @@ form#pccheckout-payment-form fieldset legend{
     color: #646464;
     text-transform: uppercase;  
 }
+
 .options-file-impression li {
   background: url(images/check.png) no-repeat left 5px;
   padding-left: 20px!important;
   text-align: left;
   font-size: 11px;
+}
+
+.page-samplepack div.error,
+.page-samplepack div.status {
+    margin-bottom: 28px !important;
 }

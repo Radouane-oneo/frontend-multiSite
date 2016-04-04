@@ -8,30 +8,37 @@ function flyer_breadcrumb($vars) {
 	}
 }
 function flyer_preprocess_page(&$variables) {
-		drupal_add_library('system', 'ui.button');
-		$_SESSION['isfront']=0;
-		if ($variables['is_front']) {
-				$_SESSION['isfront']=1;
-		}
-		//  drupal_add_css('http://fonts.googleapis.com/css?family=Magra:400,700', array('type' => 'external'));
-		if( arg(0) == "taxonomy" && arg(1) == "term") {
-					 $variables['page']['content']['system_main']['main'] = null;
-					 $variables['title']=t('Aide');
-		}
-    //non indexation        
-    $restricted_domains = array('yellowselectie.flyer.be', 'immopret.flyer.fr', 'syntrawest.flyer.be','preprd-flyer.oneo.dev','preprd-flyerfr.oneo.dev'
-        ,'preprd.flyer.fr','preprd.flyer.be','preprd.flyer.fr','preprd.flyer.nl','preprd.flyer.lu'); 
-    if (in_array($_SERVER['HTTP_HOST'], $restricted_domains)) {
-      $meta_robot = array(
-        '#tag' => 'meta',
-        '#attributes' => array(
-          'name' => 'robots',
-          'content' => 'noindex, nofollow'
-        ),
-      );
-      drupal_add_html_head($meta_robot, 'robots');
+    drupal_add_library('system', 'ui.button');
+    $_SESSION['isfront']=0;
+    if ($variables['is_front']) {
+        $_SESSION['isfront']=1;
     }
-
+    //  drupal_add_css('http://fonts.googleapis.com/css?family=Magra:400,700', array('type' => 'external'));
+    if( arg(0) == "taxonomy" && arg(1) == "term") {
+                             $variables['page']['content']['system_main']['main'] = null;
+                             $variables['title']=t('Aide');
+    }
+    //non indexation google: add noindex  
+    $host = $_SERVER['HTTP_HOST'];
+    global $conf;
+    $parts = explode('.', $host);
+    $subdomain = $parts[0];
+    $copartner = FALSE;
+    if ((isset($conf['cobrandedshops']) && array_key_exists($subdomain, $conf['cobrandedshops'])) 
+            || (stristr($host, 'stg-flyer') == TRUE)
+            || (stristr($host, 'stg.oneo') == TRUE)
+            || (stristr($host, 'dev-flyerfr') == TRUE)
+            || (stristr($host, 'dev.flyer') == TRUE)
+            || (stristr($host, 'preprd') == TRUE)) {
+        $meta_robot = array(
+            '#tag' => 'meta',
+            '#attributes' => array(
+              'name' => 'robots',
+              'content' => 'noindex, nofollow'
+            ),
+        );
+        drupal_add_html_head($meta_robot, 'robots');
+    }
 }
 
 /**
@@ -413,4 +420,12 @@ function flyer_css_alter(&$css) {
 		unset($css['sites/all/modules/printconnect/pcrotator/pcrotator.css']);
 		unset($css['sites/all/modules/contrib/block_tab/css/block_tab.css']);
 	}
+}
+/*
+* Canonical Link fix
+* Canonical link generation in html.tpl.php
+**/
+function flyer_html_head_alter(&$head_elements) {
+    if(isset($head_elements["metatag_canonical"]) && (arg(0) == 'products'))
+        unset($head_elements["metatag_canonical"]);   
 }

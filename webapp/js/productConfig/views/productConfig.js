@@ -396,7 +396,11 @@ define([
             e.preventDefault();
             var pdfProduct = $("#pdfProduct").val();
             var pdfTrack = $("#pdfTrack").val();
-            _gaq.push(['_trackEvent', 'PDFdownloads', 'click', pdfTrack]);
+            var website = $("#WEBSITE_FIELD").val();
+            if (website == 'flyer.lu')
+                ga('send', 'event', { 'eventCategory': 'PDFdownloads', 'eventAction': 'click', 'eventLabel': pdfTrack });
+            else
+                _gaq.push(['_trackEvent', 'PDFdownloads', 'click', pdfTrack]);
             $('#mailpopup').fadeIn();
             
             $("#popupFormId").attr("action","/download.php?product="+pdfProduct);

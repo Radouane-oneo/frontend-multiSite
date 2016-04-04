@@ -129,14 +129,13 @@ use printconnect\Dal\ForbiddenException;
              $url .=  '&';
         }
         $url .=  'apikey='.$this->apikey;
-        if (isset($language->id)) {
+        if (isset($language->id) && $entity != 'design-template') {
             $url .= '&language=' . $language->id;
-        } else {
+        } elseif ($entity == 'design-template') {
+            $url .= '&language=1';
+	} else {
             $url .= '&language=2';
         }
-        if ($entity == 'pickuppointdetail/service/store') {
-	}
-        //echo $url;echo '<br>';
       return $url;
     }
 
@@ -188,7 +187,9 @@ use printconnect\Dal\ForbiddenException;
           $properties['pPrice'] = $properties['price'];
         }
       }
+      
       $data = json_encode($properties);
+     
       $start = microtime(true);
       $response = drupal_http_request($url, array('header' => $header, 'method' => 'PUT', 'timeout' => 900, 'data' => $data));
       $end = microtime(true);

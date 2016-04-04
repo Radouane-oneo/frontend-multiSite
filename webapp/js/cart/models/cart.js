@@ -29,7 +29,7 @@ define([
                 if(orderItem.designTemplate.price)
                     subTotalAmount += parseFloat(orderItem.designTemplate.price);
                 
-                if(orderItem.hasDummyUpload)
+                if(orderItem.isDummyUpload)
                     subTotalAmount += dummyUpload;
             });
             _.each(this.get("discountItems"), function(discountItem){

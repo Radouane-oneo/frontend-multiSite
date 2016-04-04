@@ -432,6 +432,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
             $form['order']['details']['item'][$item->id]['designer']['designerright'] = array(
                 '#type' => 'submit',
                 '#value' => t('Approve lay-out'),
+				'#attributes' => array('class' => array('changeStatusConfirm')),
                 '#id' => 'changeStatusConfirm'
             );
         }       

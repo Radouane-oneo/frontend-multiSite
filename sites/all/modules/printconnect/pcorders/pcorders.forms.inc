@@ -418,7 +418,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
             '#type' => 'container',
             '#attributes' => array('class' => array('designerConfirm')),
         ); 
-        if ($item->jobStatus != 'orderItemStatusReceived'){
+        if ($item->jobStatus == 'orderItemStatusToApproved'){
             $form['order']['details']['item'][$item->id]['designer']['designerleft'] = array(
                 '#markup' => '<div id="designerleft">'.t('line 1 designer confirmation').'<br>'.t('line 2 designer confirmation').'</div>',
               );
@@ -426,7 +426,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         $form['order']['details']['item'][$item->id]['designer']['jobIdDesigerHidden'] = array(
             '#markup' => '<input type="hidden" value="'.$item->id.'" id="jobIdDesiger">' );
        
-        if ($item->jobStatus == 'orderItemStatusReceived'){
+        if ($item->jobStatus != 'orderItemStatusToApproved'){
             $form['order']['details']['item'][$item->id]['designer']['designerright'] = array(
                 '#markup' => '<div class="greyButton">'.t('Approved').'</div>',
             );

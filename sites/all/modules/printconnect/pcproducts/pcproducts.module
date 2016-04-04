@@ -605,9 +605,10 @@ function pcproducts_js_callback() {
 }
 
 function getFromServer($filename) {
+    global $conf;
     $apikey = variable_get('pc_apikey', '');
-    $rest = 'http://admin.preprd.printconcept.com/rest/';
-    $rest = 'http://admin.printconcept.com/rest/'; 
+    
+    $rest = $conf['pc_url'];
     $url = "{$rest}json/filename/{$filename}?apikey={$apikey}";
     return file_get_contents($url);
 }
@@ -1197,28 +1198,8 @@ function pcproducts_filter($code) {
 }
 
 function pcproducts_pcmenumain() {
-  global $user;
-  $products = Factory::GetAll();
-  $products->EnsureLoaded();
   $alphaArray = _pcproducts_alpha_array();
-  $products = _pcproducts_activeproducts();
-  $products = Factory::GetTop();
-  $i = 0;
-  $top = variable_get('pcproducts_top', 3);
-
-  foreach ($products as $product) {
-    $i++;
-    $class = array();
-    if ($i < $top) {
-      $class[] = 'top';
-    }
-    if ($i <= 5) {
-      $top10[] = l($product->name, 'products/' . $product->id, array('html' => TRUE, 'attributes' => array('title' => $product->name, 'class' => $class)));
-    } else {
-      break;
-    }
-  }
-
+  
   $menuItems['product'] = array(
       '#title' => t('Products'),
       '#link' => 'products',

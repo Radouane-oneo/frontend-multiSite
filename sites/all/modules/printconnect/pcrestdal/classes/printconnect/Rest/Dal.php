@@ -209,7 +209,6 @@ use printconnect\Dal\ForbiddenException;
 
       if ($properties) {
         $data = json_encode($properties);
-
         $response = drupal_http_request($url, array('header' => $header, 'method' => 'POST', 'timeout' => 900, 'data' => $data));
       } else {
         $data = array();

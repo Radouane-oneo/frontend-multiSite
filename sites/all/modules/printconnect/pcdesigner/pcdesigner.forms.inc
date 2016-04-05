@@ -198,7 +198,7 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
             $form['item']['upload']['designtool'] = array(
                 '#theme' => 'designtoollinkBtt',
                 '#templateId' => $template->id,
-                '#prefix' =>  '<div class="poll-form poll-form1 first">' .
+                '#prefix' =>  '<div class="poll-form poll-form1 first poll-form-tmp">' .
                                                   '<div class="title-image design-tool"></div>' .
                                                   '<div class="option-title">DESIGNTOOL</div>' .
                                                   '<p class="txto">'.t('Pour tous les clients (recommandé)').'</p>' .
@@ -221,7 +221,7 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
             );
 
             $form['item']['upload']['proflink'] = array(
-               '#prefix' => '<div class="poll-form poll-form2">' .
+               '#prefix' => '<div class="poll-form poll-form2 poll-form-tmp">' .
                       '<div class="title-image pro-upload"></div>' .
                       '<div class="option-title">PRO UPLOAD</div>' .
                       '<p class="txto">'.t('Pour les graphistes professionnels').'</p>' .
@@ -249,7 +249,7 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
          $form['item']['upload']['designtool'] = array(
           '#theme' => 'designtoollinkBtt',
           '#templateId' => $template->id,
-          '#prefix' =>  '<div class="poll-form poll-form1 first designToolOnly">' .
+          '#prefix' =>  '<div class="poll-form poll-form1 first designToolOnly poll-form-tmp">' .
                                             '<div class="title-image design-tool"></div>' .
                                             '<div class="option-title">DESIGNTOOL</div>' .
                                             '<p class="txto">'.t('Pour tous les clients (recommandé)').'</p>' .

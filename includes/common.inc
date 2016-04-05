@@ -5332,6 +5332,17 @@ function drupal_cron_run() {
   // Grab the defined cron queues.
   $queues = module_invoke_all('cron_queue_info');
   drupal_alter('cron_queue_info', $queues);
+  
+	$host = $_SERVER['HTTP_HOST'];
+
+    if ((stristr($host, 'stg-flyer') == TRUE)
+            || (stristr($host, 'stg.oneo') == TRUE)
+            || (stristr($host, 'dev-flyerfr') == TRUE)
+            || (stristr($host, 'dev.flyer') == TRUE)
+            || (stristr($host, 'preprd-') == TRUE)) 
+	{			
+		return false;
+    }
 
   // Try to acquire cron lock.
   if (!lock_acquire('cron', 240.0)) {

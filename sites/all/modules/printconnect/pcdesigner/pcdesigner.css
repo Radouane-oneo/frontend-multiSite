@@ -98,12 +98,19 @@ span.datainfobul::after {
 }
 .page-upload-design #pcdesigner-upload-form .templates_product .poll-form1{
     border-left: none !important;
-    width: 327px; 
+    width: 327px;
+    padding-left: 13px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 .page-upload-design #pcdesigner-upload-form .templates_product .poll-form2 {
     border-right: none !important;
-    padding-left: 0;
+    padding-left: 13px;
     width: 328px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .page-upload-design #pcdesigner-upload-form .templates_product .poll-form ul.options-file-impression {
@@ -113,11 +120,16 @@ span.datainfobul::after {
 }
 .page-upload-design #pcdesigner-upload-form .templates_product .poll-form1 ul.options-file-impression {
     max-width: 296px;
-    margin-left: 19px;
+    margin-left: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    min-height: 145px;
 }
 .page-upload-design #pcdesigner-upload-form .templates_product .poll-form2 ul.options-file-impression {
     max-width: 331px;
     margin-left: 5px;
+    min-height: 145px;
 }
 .page-upload-design #pcdesigner-upload-form .templates_product .poll-form ul.options-file-impression li {
     list-style: none;
@@ -281,4 +293,30 @@ span.datainfobul::after {
     width: 220px;
     height: 62px;
     border-radius: 0 0 3px 0;
+}
+
+.poll-form-tmp .designtool.iframe {
+    display: inline-block;
+    background-color: #6fa900;
+    border-radius: 3px;
+    text-align: center;
+    width: 267px;
+    height: 40px;
+    line-height: 40px;
+    box-sizing: border-box;
+    font-weight: normal;
+    text-transform: none;
+}
+
+.poll-form-tmp .txto {
+    color: #ff6600;
+    font-size: 12px;
+    font-weight: 400;
+    margin: 0 0 10px;
+    line-height: 14px;
+    text-align: center;
+}
+.poll-form-tmp a span.btnupfile{
+    background: none;
+    padding-left: 0;
 }

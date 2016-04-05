@@ -957,7 +957,7 @@ function pcproducts_flush_caches() {
 }
 
 function pcproducts_cron() {
-  _pcproducts_rebuildaliasses();
+  //_pcproducts_rebuildaliasses();
 }
 
 function pcproducts_calculator_form($form, &$form_state) {

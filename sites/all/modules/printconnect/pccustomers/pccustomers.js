@@ -117,10 +117,10 @@ var registerClicked = false;
  
       $('.save-button').click(function (e) {
       	  $('.vatAlreadyUsed').parent().hide(); 
-          $('.messages.error').each(function(){
-            if(!$(this).hasClass('vatAlreadyUsed')) {
-                $(this).remove();
-            }
+	  $('.messages.error').each(function(){
+              if(!$(this).hasClass('vatAlreadyUsed')) {
+                  $(this).remove();
+              }
           });
           
           $('#content form .required').removeClass("error");
@@ -133,21 +133,18 @@ var registerClicked = false;
             150 : "NL",
             124 : "LU"
           };
- 	        
-          var isoLengths = {
-            21 : 4,
+ 	  var isoLengths = {
+	    21 : 4,
             73 : 5,
             150 : 7,
             124 : 4
-	        }
-
-          if ($('#edit-street').val().length <= 4 && $('#edit-street').val().length != 0){
-            $('#edit-street').addClass('error');
-            errorMsgs[0] = Drupal.t('Le champs rue est trop court');
-            errorMarkup += "<li>"+errorMsgs[0]+"</li>";console.log(errorMarkup);
-            //return false;
-          }
-
+	  }
+           if ($('#edit-street').val().length <= 4 && $('#edit-street').val().length != 0){
+                $('#edit-street').addClass('error');
+                errorMsgs[0] = Drupal.t('Le champs rue est trop court');
+                errorMarkup += "<li>"+errorMsgs[0]+"</li>";console.log(errorMarkup);
+                //return false;
+            }
           $('#content form input.required, #content form select.required').each(function(i, elem) {
             var _this = $(this); 
            
@@ -161,9 +158,7 @@ var registerClicked = false;
                 }
                 
                    console.log('coco');
-            }
-
-            else {
+            }else{
            
             var erTel = /^([0-9\/\s\-_\.]*)$/g;
             if(_this.val() == "" || _this.val() == 0) {
@@ -227,7 +222,7 @@ var registerClicked = false;
                     errorMsgs[i] = labels["vatNotNumber"];
                     errorMarkup += "<li>"+errorMsgs[i]+"</li>";
 		}
-            } /*else if (this.name == "postalCode") { 
+            } else if (this.name == "postalCode") { 
                 var country = $('#edit-country option:selected').val();
                 var iso = isoList[country];
                 value = $(this).val();
@@ -250,7 +245,7 @@ var registerClicked = false;
                     errorMarkup += "<li>"+errorMsgs[i]+"</li>";
                   }
                 }
-            } */
+            } 
           }
           });  
           //start validation vatnumber

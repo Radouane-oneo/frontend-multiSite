@@ -11724,7 +11724,7 @@ margin-top:20px;
 }
 
 .mailpopup input[type="submit"]{
-  margin-top: 68px;
+  margin-top: 11px;
   text-align: center;
   padding: 14px;
   font-weight: 600;
@@ -11746,7 +11746,7 @@ margin-top:20px;
   width: auto;
 }
 .mailpopup input[type="button"]{
-  margin-top: 68px;
+  margin-top: 11px;
   text-align: center;
   padding: 14px;
   font-weight: 600;
@@ -11766,7 +11766,7 @@ margin-top:20px;
   background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/lp15/elements/icon_action.png") no-repeat 7px center /20px 20px,-o-linear-gradient(top, #77b800 0%, #669c02 100%);
   background: -ms-linear-gradient(top, #77b800 0%,#669c02 100%);
   width: auto;
-}
+} 
 .mailing-container .mailpopup{
 	position: fixed;
 	left: 50%;
@@ -11775,7 +11775,7 @@ margin-top:20px;
 	top: 50% !important;
 	width: 515px;
 	border: 1px solid #a5a6a7;
-	padding: 20px;
+	padding: 20px 16px 14px 19px;
 	background: #fff;
 	margin-left: -273px;
 	margin-top: -157px;

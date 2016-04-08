@@ -11677,12 +11677,13 @@ input.ui-button.payment {
   color: #646464;
   font-weight: 700;
   margin-bottom: 14px;
+  line-height: 21px;
 }
 
 .mailing-container .mailpopup p{
   font-size: 13px;
   color: #646464;
-  margin: 0 0 17px;
+  margin: 0 0 25px;
   line-height: 15px;
 }
 .mailing-container .mailpopup .email{

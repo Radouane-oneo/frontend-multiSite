@@ -11683,7 +11683,8 @@ input.ui-button.payment {
 .mailing-container .mailpopup p{
   font-size: 13px;
   color: #646464;
-  margin: 0 0 18px;
+  margin: 0;
+  margin-bottom: 18px !important;
   line-height: normal;
 }
 .mailing-container .mailpopup .email{

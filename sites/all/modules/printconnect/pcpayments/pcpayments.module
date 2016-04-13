@@ -275,7 +275,7 @@ function new_payment_submit($paymentId, $cartId, $totalAmount) {
     $cart = printconnect\Carts\Factory::Current();
     if ($totalAmount <= 0) {
         \printconnect\Carts\Factory::Process($cart, 'invoice');
-        drupal_goto('myprintconnect/orders/' . $id . '/confirmation');
+        drupal_goto('myprintconnect/orders/' . $cart->id . '/confirmation');
         drupal_exit();
     }
 

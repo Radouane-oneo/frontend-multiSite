@@ -63,7 +63,7 @@ namespace printconnect\bPost {
         $poi = new POI();
 
         $poi->Id = (string) $detail->ID;
-        $poi->Name = (string) self::remplaceStr($detail->OFFICE);
+        $poi->Name = (string) $detail->OFFICE;//self::remplaceStr($detail->OFFICE);
         $poi->Street = (string) $detail->STREET;
         $poi->Number = (string) $detail->NR;
         $poi->Zip = (string) $detail->ZIP;

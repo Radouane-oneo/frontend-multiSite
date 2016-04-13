@@ -199,7 +199,7 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
             $form['item']['upload']['proflink'] = array(
                '#prefix' => '<div class="prodactTemplates centroid-2"><div class="prodactHasTemplates"><div class="poll-form poll-form1 prouploadmode hieghtelem">',
                           '#theme' => 'designtoolproflink',
-                          '#content'=> array('#markup' => '<span class="text buttondesigntool btnupfile"><span class="txtgras">'.t('COMMENCER').'</span>',),
+                          '#content'=> array('#markup' => '<span class="text buttondesigntool btnupfile"><span class="txtgras">'.t('UPLOAD BESTAND').'</span>',),
                           '#templateId' => $template->id,
                           '#custom' => $custom,
                           '#title' => $title,

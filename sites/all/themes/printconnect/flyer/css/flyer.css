@@ -11051,7 +11051,7 @@ p.requieredfields span.form-required {
 	padding: 0 13px;
 }
 .page-cart #pccart-cart-form .item .preview2,
-.page-upload-design .templates .fieldset-wrapper .productDetail {
+/*.page-upload-design .templates .fieldset-wrapper .productDetail*/ {
     border-bottom: 1px solid #d1d1d1;
     padding-bottom: 5px;
 }

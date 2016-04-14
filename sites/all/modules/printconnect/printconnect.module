@@ -982,6 +982,8 @@ function printconnect_preprocess_page(&$vars) {
 
 function printconnect_getimage($type, $id) {
   global $theme_key;
+  global $conf;
+  return $conf['pc_images']."/products/$id.png";
   $image = FALSE;
   if ($type == "products") {
     $product = \printconnect\Products\Factory::Get($id);

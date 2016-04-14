@@ -129,10 +129,8 @@ use printconnect\Dal\ForbiddenException;
              $url .=  '&';
         }
         $url .=  'apikey='.$this->apikey;
-        if (isset($language->id) && $entity != 'design-template') {
+        if (isset($language->id)) {
             $url .= '&language=' . $language->id;
-        } elseif ($entity == 'design-template') {
-            $url .= '&language=1';
 	} else {
             $url .= '&language=2';
         }
@@ -209,7 +207,6 @@ use printconnect\Dal\ForbiddenException;
 
       if ($properties) {
         $data = json_encode($properties);
-
         $response = drupal_http_request($url, array('header' => $header, 'method' => 'POST', 'timeout' => 900, 'data' => $data));
       } else {
         $data = array();

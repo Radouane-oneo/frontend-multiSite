@@ -195,84 +195,78 @@ function pcdesigner_upload_form($form, &$form_state, $id) {
     if (count($templates->items)) {
         $template = $templates->items[0];    
         if($upload->hasProUpload){
+
+            $form['item']['upload']['proflink'] = array(
+               '#prefix' => '<div class="prodactTemplates centroid-2"><div class="prodactHasTemplates"><div class="poll-form poll-form1 prouploadmode hieghtelem">',
+                          '#theme' => 'designtoolproflink',
+                          '#content'=> array('#markup' => '<span class="text buttondesigntool btnupfile"><span class="txtgras">'.t('UPLOAD BESTAND').'</span>',),
+                          '#templateId' => $template->id,
+                          '#custom' => $custom,
+                          '#title' => $title,
+                          '#callback' => 'upload-design/callback/',
+                          '#params' => array(
+                              'id' => $upload->id,
+                              'cartid' => $upload->order,
+                          ), 
+                          '#html' => true,
+                          '#attributes' => array('class' => array( 'iframe', 'popupbtn')),      
+              '#suffix' => '<span class="filetype">.jpg, .pdf</span>
+                  <p class="txto">' . t('Pour les graphistes professionnels') . '</p>
+                  <ul class="options-file-impression indice-5">
+                      <li>' . t('Téléchargez immédiatement votre fichier à imprimer') .  '</li>
+                      <li>' .t('Fichiers de max. 200 MB') .'</li>
+                      <li>' .t('Contrôle du fichier optionnel (€ 4,99 hors TVA)') .'</li>
+                      <li class="controlpro">' . t('Mon fichier est-il contrôlé'). '</li>
+                  </ul>' .
+              '</div><div class="cell"></div>',
+            );
+
             $form['item']['upload']['designtool'] = array(
                 '#theme' => 'designtoollinkBtt',
                 '#templateId' => $template->id,
-                '#prefix' =>  '<div class="poll-form poll-form1 first">' .
-                                                  '<div class="title-image design-tool"></div>' .
-                                                  '<div class="option-title">DESIGNTOOL</div>' .
-                                                  '<p class="txto">'.t('Pour tous les clients (recommandé)').'</p>' .
-                                                  '<ul class="options-file-impression indice-'. $model_list_index .'">
-                                                      <li>'. t('Téléchargez votre fichier dans notre designtool') .'</li>
-                                                      <li>'. t('Recevez un aperçu de vos impressions') .'</li>
-                                                      <li>'. t('Faites votre conception gratuitement en ligne') .'</li>
-                                                      '.$li_model.'
-                                                      <li>'. t('Contrôle du fichier optionnel (€ 4,99 hors TVA)') .'</li>
-                                                  </ul>',
-                '#suffix' => '</div> ',
-                '#content'=> array('#markup' => '<span class="buttonlayout btnupfile"><span class="txtgras">'.t("COMMENCER").'</span>',),
-                '#params' => array(
-                    'id' => $upload->id,
-                    'cartid' => $upload->order,
-                ),
-                '#callback' => 'upload-design/callback/',
-                '#versioning' => FALSE, 
-                '#attributes' => array('class' => array('upload', 'designtool', 'iframe'))
+                '#prefix' => '<div class="poll-form poll-form1 prouploadmode hieghtelem">',
+                          '#content'=> array('#markup' => '<span class="text buttondesigntool btnupfile"><span class="txtgras">'.t('DESIGN ONLINE').'</span>',),
+                          '#params' => array(
+                          'id' => $upload->id,
+                          'cartid' => $upload->order,
+                      ),
+                      '#callback' => 'upload-design/callback/',
+                      '#versioning' => FALSE, 
+                      '#attributes' => array('class' => array('upload', 'designtool', 'iframe', 'popupbtn')),
+
+              '#suffix' => '<ul class="options-file-impression indice-5">
+                      <li>' . t('Téléchargez votre fichier dans notre designtool') .  '</li>
+                      <li>' . t('Recevez un aperçu de vos impressions') .'</li>
+                      <li>' . t('Faites votre conception gratuitement en ligne') .'</li>
+                      <li>' . t('Contrôle du fichier optionnel (4,99 € hors TVA)') .'</li>
+                      <li class="controlpro">' . t('Mon fichier est-il contrôlé'). '</li>
+                  </ul>' .
+              '</div></div></div>',
             );
 
-            $form['item']['upload']['proflink'] = array(
-               '#prefix' => '<div class="poll-form poll-form2">' .
-                      '<div class="title-image pro-upload"></div>' .
-                      '<div class="option-title">PRO UPLOAD</div>' .
-                      '<p class="txto">'.t('Pour les graphistes professionnels').'</p>' .
-                      '<ul class="options-file-impression indice-'. $model_list_index .'" data-id="'. $item->id .'" data-link="/'.$language->prefix.'/products/'.$product->id.'">
-                          <li>'. t('Téléchargez immédiatement votre fichier bon à tirer') .'</li>
-                          <li>'. t('Fichiers de max. 200 MB') .'</li>
-                          <li>'. t('Respectez les <a href="#" class="technic-details model-form">détails techniques</a> ou <a href="/node/102" id="predef-params" class="model-form" target="_blank">paramètres prédéfinis</a>') .'</li>
-                          <li>'. t('Contrôle du fichier optionnel (€ 4,99 hors TVA)') .'</li>
-                      </ul>',
-              '#suffix' => '</div> ',
-              '#theme' => 'designtoolproflink',
-              '#content'=> array('#markup' => '<span class="text buttondesigntool btnupfile"><span class="txtgras">'.t('COMMENCER').'</span>',),
-              '#templateId' => $template->id,
-              '#custom' => $custom,
-              '#title' => $title,
-              '#callback' => 'upload-design/callback/',
-              '#params' => array(
-                  'id' => $upload->id,
-                  'cartid' => $upload->order,
-              ), 
-              '#html' => true,
-              '#attributes' => array('class' => array( 'iframe')),
-            );
      }else{
          $form['item']['upload']['designtool'] = array(
-          '#theme' => 'designtoollinkBtt',
-          '#templateId' => $template->id,
-          '#prefix' =>  '<div class="poll-form poll-form1 first designToolOnly">' .
-                                            '<div class="title-image design-tool"></div>' .
-                                            '<div class="option-title">DESIGNTOOL</div>' .
-                                            '<p class="txto">'.t('Pour tous les clients (recommandé)').'</p>' .
-                                            '<ul class="options-file-impression indice-'. $model_list_index .'">
-                                                <li>'. t('Téléchargez votre fichier dans notre designtool') .'</li>
-                                                <li>'. t('Recevez un aperçu de vos impressions') .'</li>
-                                                <li>'. t('Faites votre conception gratuitement en ligne') .'</li>
-                                                '.$li_model.'
-                                                <li>'. t('Contrôle du fichier optionnel (€ 4,99 hors TVA)') .'</li>
-                                            </ul>',
-                    '#suffix' => '</div> ',
-                    '#content'=> array('#markup' => '<span class="buttonlayout btnupfile"><span class="txtgras">'.t("COMMENCER").'</span>',),
-          '#params' => array(
-              'id' => $upload->id,
-              'cartid' => $upload->order,
-          ),
-          '#callback' => 'upload-design/callback/',
-          '#versioning' => FALSE,
-          '#custom' => $custom,
-          '#title' => $title,
-          '#html' => true,
-          '#attributes' => array('class' => array('upload', 'designtool', 'iframe'))
-      );
+                '#theme' => 'designtoollinkBtt',
+                '#templateId' => $template->id,
+                '#prefix' => '<div class="prodactTemplates centroid-2"><div class="prodactHasTemplates"><div class="poll-form poll-form1 prouploadmode designToolOnly">',
+                          '#content'=> array('#markup' => '<span class="text buttondesigntool btnupfile"><span class="txtgras">'.t('DESIGN ONLINE').'</span>',),
+                          '#params' => array(
+                          'id' => $upload->id,
+                          'cartid' => $upload->order,
+                      ),
+                      '#callback' => 'upload-design/callback/',
+                      '#versioning' => FALSE, 
+                      '#attributes' => array('class' => array('upload', 'designtool', 'iframe', 'popupbtn')),
+
+              '#suffix' => '<ul class="options-file-impression indice-5">
+                      <li>' . t('Téléchargez votre fichier dans notre designtool') .  '</li>
+                      <li>' . t('Recevez un aperçu de vos impressions') .'</li>
+                      <li>' . t('Faites votre conception gratuitement en ligne') .'</li>
+                      <li>' . t('Contrôle du fichier optionnel (4,99 € hors TVA)') .'</li>
+                      <li class="controlpro">' . t('Mon fichier est-il contrôlé'). '</li>
+                  </ul>' .
+              '</div></div></div>',
+            );
      }
     }
   }

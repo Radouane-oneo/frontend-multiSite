@@ -259,20 +259,24 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         '#attributes' => array('class' => array('image')),
     );
     if (count($item->files)) {        
-      foreach ($item->files as $file) {
-        
+      foreach ($item->files as $file) { 
+        $imgPath = ($file->viaDummyUpload == 1)
+            ? 'dummy'
+        	: $file->thumbnail; 
         if (isset($file->thumbnail)) {
           $form['order']['details']['item'][$item->id]['image']['thumb'] = array(
               '#theme' => 'pcfilesthumb',
-              '#file' => $file->thumbnail,
+              '#file' => $imgPath,
           );
         }
-        $form['order']['details']['item'][$item->id]['image']['download'] = array(
+        if ($file->viaDummyUpload != 1) {
+            $form['order']['details']['item'][$item->id]['image']['download'] = array(
             '#theme' => 'pcfilesdownloadlink',
             '#file' => pcdesigntool_preview_url($file->designToolJobId),
             '#title' => t('Download preview'),
             '#attributes' => array('class' => array('linkPdf')),
-        );
+            );
+        }
       }
     } else {
       $form['order']['details']['item'][$item->id]['image']['product'] = array(
@@ -414,7 +418,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
             '#type' => 'container',
             '#attributes' => array('class' => array('designerConfirm')),
         ); 
-        if ($item->jobStatus != 'orderItemStatusReceived'){
+        if ($item->jobStatus == 'orderItemStatusToApproved'){
             $form['order']['details']['item'][$item->id]['designer']['designerleft'] = array(
                 '#markup' => '<div id="designerleft">'.t('line 1 designer confirmation').'<br>'.t('line 2 designer confirmation').'</div>',
               );
@@ -422,7 +426,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         $form['order']['details']['item'][$item->id]['designer']['jobIdDesigerHidden'] = array(
             '#markup' => '<input type="hidden" value="'.$item->id.'" id="jobIdDesiger">' );
        
-        if ($item->jobStatus == 'orderItemStatusReceived'){
+        if ($item->jobStatus != 'orderItemStatusToApproved'){
             $form['order']['details']['item'][$item->id]['designer']['designerright'] = array(
                 '#markup' => '<div class="greyButton">'.t('Approved').'</div>',
             );
@@ -432,6 +436,7 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
             $form['order']['details']['item'][$item->id]['designer']['designerright'] = array(
                 '#type' => 'submit',
                 '#value' => t('Approve lay-out'),
+				'#attributes' => array('class' => array('changeStatusConfirm')),
                 '#id' => 'changeStatusConfirm'
             );
         }       
@@ -576,6 +581,21 @@ function _pcorders_order_form_build_overview($order) {
             );
         }
       }
+    }
+    if ($order->orderItems) {
+    	foreach ($order->orderItems as $oi) {
+    		foreach ($oi->files as $file) {
+    			if ($file->viaDummyUpload) {
+    				$rows[] = array(
+    						'data' => array(
+    								t('Dummy upload'),
+    								t('dummy upload description'),
+    								theme('price', array('value' => $file->dummyPrice, 'free' => TRUE, 'block' => TRUE)),
+    						),
+    				);
+    			}
+    		}
+    	}
     }
     
     if (isset($order->orderItemShipping)) {

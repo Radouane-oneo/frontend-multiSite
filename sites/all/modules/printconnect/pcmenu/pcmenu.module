@@ -94,7 +94,7 @@ function _pcmenu_main() {
           $description = $item['#description'];
         } else {
           $description = $title;
-        }
+        }        
         $result .= l($title, $item['#link'], array('attributes' => array('title' => $description), 'html' => TRUE));
       }
      

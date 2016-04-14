@@ -78,12 +78,16 @@ function theme_pcfilesdownloadlink($vars) {
 }
 
 function theme_pcfilesthumb($vars) {
-  if (strstr($vars['file'], '/')) {
+  if (strstr($vars['file'], '/') || $vars['file'] == 'dummy') {
     $s3 = variable_get('pc_files_s3', 'https://dt-printconcept-production.s3.amazonaws.com/');
-    $url = $s3 . $vars['file'];
-    if ($vars['cache']) {
-      $url .= '?' . variable_get('css_js_query_string', '0');
+    if ($vars['file'] == 'dummy') {
+        $url = 'sites/default/files/dummpupload_img.png';
     } else {
+        $url = $s3 . $vars['file'];
+    }
+    if ($vars['cache'] && $vars['file'] != 'dummy') {
+      $url .= '?' . variable_get('css_js_query_string', '0');
+    } elseif($vars['file'] != 'dummy') {
       $url .= '?' . md5(uniqid(rand(), true));
     }
   } else {
@@ -94,8 +98,10 @@ function theme_pcfilesthumb($vars) {
       $url .= '/' . md5(uniqid(rand(), true));
     }
   }
+  $url = ($vars['file'] == 'dummy')
+      ? $url : url($url);
   return theme('image', array(
-      'path' => url($url),
+      'path' => $url,
       'attributes' => $vars['attributes'],
       'alt' =>$vars['alt'],
       ));

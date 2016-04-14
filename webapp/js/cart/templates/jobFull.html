@@ -16,7 +16,7 @@
 					var urlCallback = encodeURIComponent("http://" + document.location.host + "/" + config.prefix + "/cart/callback");
     				var designtoolLink = model.configuration.designtoolLink.replace(/(dcb=).*?(&)/,'$1' + urlCallback + '$2');
 				%>
-				<% if(model.hasDummyUpload){ %>
+				<% if(model.isDummyUpload){ %>
 					<img src="/sites/all/modules/printconnect/pccart/images/dummpupload_img.png">
 				<% }else{ %>
 					<img src="https://dt-printconcept-production.s3.amazonaws.com/<%= model.files[0].thumbnail %>">
@@ -85,7 +85,7 @@
 			</div>
 
 			<!-- Dummy Upload -->
-			<% if(model.hasDummyUpload){ %>
+			<% if(model.isDummyUpload){ %>
 				<div class="file-model dummyUpload-box">
 					<span class="model-txt"><%= config.labels.vipUpload %></span>
 					<%= priceTpl({price:config.dummyUpload,classToAdd:'model-price'}) %>

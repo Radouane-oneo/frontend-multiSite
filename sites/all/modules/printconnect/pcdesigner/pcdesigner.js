@@ -64,12 +64,14 @@
                return false;
         });
 
-     $('#changeStatusConfirm').click(function(){
-           orderitem = $('#jobIdDesiger').val();console.log(orderitem);
+     $('.changeStatusConfirm').click(function(){
+		   element = $(this);
+           orderitem = element.parents(".designerConfirm").find('#jobIdDesiger').val();
+		   console.log(orderitem);
            $.post("/upload-design/changestatus/" + orderitem+"/Confirm",{},function(){
-               $('#changeStatusConfirm').replaceWith('<div class="greyButton">'+Drupal.t('Approved')+'</div>');
+				element.replaceWith('<div class="greyButton">'+Drupal.t('Approved')+'</div>');
                 $('.messageConfirmDesign').css({"display":"block"});
-                 $('#designerleft').css({"display":"none"});
+                element.parents(".designerConfirm").find('#designerleft').css({"display":"none"});
             });
                return false;
        });

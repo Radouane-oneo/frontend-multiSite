@@ -253,11 +253,11 @@ function pccheckout_personal_form($form, &$form_state) {
 function pccheckout_personal_form_validate($form, &$form_state) {
     global $language;
     $customer = $form_state['storage']['customer'];
- 
+ /*
     if(!empty($form_state['values']['postalCode']) && !is_numeric($form_state['values']['postalCode'])){
         form_set_error('postalCode', t('Le champ Code postal doit être numérique.'));
         return false;
-    }
+    }*/
     if(is_numeric($form_state['values']['postalCode']) && strlen($form_state['values']['postalCode'])<4){
         form_set_error('postalCode', t('Le champ Code postal doit être supérieur à 3 chiffres.'));
         return false;

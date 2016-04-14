@@ -65,7 +65,7 @@
                     <% }  %>
 
                     <!-- Dummy Upload -->
-                    <% if(orderItem.hasDummyUpload) { %>
+                    <% if(orderItem.isDummyUpload) { %>
                         <tr>
                             <td><%= config.labels.vipUpload %></td>
                             <td class='last-child'><%= priceTpl({price:model.dummyUpload,classToAdd:'price'}) %></td>

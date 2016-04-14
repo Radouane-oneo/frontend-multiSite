@@ -11051,7 +11051,7 @@ p.requieredfields span.form-required {
 	padding: 0 13px;
 }
 .page-cart #pccart-cart-form .item .preview2,
-.page-upload-design .templates .fieldset-wrapper .productDetail {
+/*.page-upload-design .templates .fieldset-wrapper .productDetail*/ {
     border-bottom: 1px solid #d1d1d1;
     padding-bottom: 5px;
 }
@@ -11677,13 +11677,15 @@ input.ui-button.payment {
   color: #646464;
   font-weight: 700;
   margin-bottom: 14px;
+  line-height: 21px;
 }
 
 .mailing-container .mailpopup p{
   font-size: 13px;
   color: #646464;
-  margin: 0 0 17px;
-  line-height: 15px;
+  margin: 0;
+  margin-bottom: 18px !important;
+  line-height: normal;
 }
 .mailing-container .mailpopup .email{
 	margin-bottom: 11px;
@@ -11711,6 +11713,7 @@ margin-top:20px;
   font-size: 12px;
   color: #646464;
   width: 100%;
+  height: 44px;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
@@ -11724,7 +11727,7 @@ margin-top:20px;
 }
 
 .mailpopup input[type="submit"]{
-  margin-top: 68px;
+  margin-top: 11px;
   text-align: center;
   padding: 14px;
   font-weight: 600;
@@ -11746,7 +11749,7 @@ margin-top:20px;
   width: auto;
 }
 .mailpopup input[type="button"]{
-  margin-top: 68px;
+  margin-top: 11px;
   text-align: center;
   padding: 14px;
   font-weight: 600;
@@ -11766,7 +11769,7 @@ margin-top:20px;
   background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/lp15/elements/icon_action.png") no-repeat 7px center /20px 20px,-o-linear-gradient(top, #77b800 0%, #669c02 100%);
   background: -ms-linear-gradient(top, #77b800 0%,#669c02 100%);
   width: auto;
-}
+} 
 .mailing-container .mailpopup{
 	position: fixed;
 	left: 50%;
@@ -11775,7 +11778,7 @@ margin-top:20px;
 	top: 50% !important;
 	width: 515px;
 	border: 1px solid #a5a6a7;
-	padding: 20px;
+	padding: 20px 16px 14px 19px;
 	background: #fff;
 	margin-left: -273px;
 	margin-top: -157px;

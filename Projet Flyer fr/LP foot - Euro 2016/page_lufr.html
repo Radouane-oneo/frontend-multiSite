@@ -1,0 +1,729 @@
+<style type="text/css">
+   .space--block {
+       padding: 15px 24px 24px;
+   }
+   #header-box {
+      height: 230px;
+   }
+   .wrap-block{
+      position: relative;
+   }
+   .main-page .wrap--block {
+       background-color: #fff;
+       -moz-border-radius: 4px;
+       -webkit-border-radius: 4px;
+       border-radius: 4px;
+   }
+   .block-segment {
+       padding: 16px 0 14px;
+       text-align: center;
+   }
+   .block-segment p {
+       font-size: 20px !important;
+       font-weight: 300 !important;
+       margin: 0;
+       line-height: normal;
+   }
+   .block-segment p > a,
+   .block-segment p > a:hover, 
+   .block-segment p > a:visited, 
+   .block-segment p > a:active {
+      color: #77b700 !important;
+      text-decoration: none;
+   }
+   .btn.btn-orange {
+      background: #f60;
+      color: #fff; 
+      -moz-transition-property: background-color;
+      -o-transition-property: background-color;
+      -webkit-transition-property: background-color;
+      transition-property: background-color;
+      -moz-transition-duration: 0.2s;
+      -o-transition-duration: 0.2s;
+      -webkit-transition-duration: 0.2s;
+      transition-duration: 0.2s;
+   }
+   .btn.btn-orange:hover{
+      background: #FF8636;
+   }
+   .block3-3 .footer .extinfo .btn.btn-orange {
+      margin-top: 11px;
+      margin-bottom: 8px;
+   }
+   .block-segment {
+      padding: 16px 0 14px;
+      text-align: center;
+   }
+   .block-segment p{
+      font-size: 20px !important;
+      font-weight: 300 !important;
+      margin:0;
+   }
+
+   .block-segment p > a,
+   .block-segment p > a:hover,
+   .block-segment p > a:visited,
+   .block-segment p > a:active{
+      color: #77b700 !important;
+      text-decoration: none;
+   }
+  
+   .whitepaper h2{
+      font-size: 20px;
+      font-weight: 300;
+      text-transform: none;
+      margin-bottom: 7px;
+   }
+   .whitepaper p{
+      margin: 0;
+      margin-bottom: 17px;
+   }
+   .second-title {
+      font-size: 20px;
+      font-weight: 100;
+      margin-bottom: 19px;
+      text-transform: none;
+   }
+   .nodig {
+      width: 314px;
+      display: inline-block;
+      margin-right: 44.6px;
+      float: left;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+   }
+   .nodig .inner-nodig {
+      overflow: hidden;
+      max-height: 136px;
+      -moz-border-radius: 4px;
+      -webkit-border-radius: 4px;
+      border-radius: 4px;
+   }
+   .nodig .inner-nodig:hover img {
+      transform: scale(1.1);
+      -ms-transform: scale(1.1);
+      -webkit-transform: scale(1.1);
+      -o-transform: scale(1.1);
+      -moz-transform: scale(1.1);
+   }
+   .nodig a:hover, .nodig a:focus, .nodig a:visited {
+      text-decoration: none;
+      color: #646464 !important;
+   }
+   .nodig a ,
+   .nodig a:hover,
+   .nodig a:visited,
+   .nodig a:active{
+      color: #646464 !important;
+      text-decoration: none !important;
+   }
+   .nodig .inner-nodig img {
+      transition: all 0.5s;
+      -moz-transition: all 0.5s;
+      -webkit-transition: all 0.5s;
+      -o-transition: all 0.5s;
+   }
+   .nodig h4 {
+      margin-top: 13px;
+      color: #77b700;
+      font-size: 16px;
+      display: block;
+      line-height: 24px;
+   }
+   .nodig p{
+      margin: 0;
+      font-size: 12px;
+      line-height: 18px;
+   }
+   .nodig p > span.gray-txt{
+      color: #929191 !important;
+      font-size: 12px;
+      line-height: 18px;
+   }
+   .last {
+      margin-left: 0 !important;
+   }
+   #header-image{
+      z-index: 8;
+      height: 282px;
+      top: -23px;
+      right: 33px;
+      width: 449px;
+   }
+   #header-content a.ticket_id {
+      position: absolute;
+      bottom: -16px;
+      left: 42px;
+      -moz-transform: rotate(-8deg);
+      -webkit-transform: rotate(-8deg);
+      -o-transform: rotate(-8deg);
+      -ms-transform: rotate(-8deg);
+      transform: rotate(-2deg);
+   }
+   #header-content a.ticket_id >span:hover{
+     background: #77cd00;
+   }
+   #header-content a.ticket_id  ,
+   #header-content a.ticket_id:hover,
+   #header-content a.ticket_id:visited,
+   #header-content a.ticket_id:active{
+      text-decoration: none !important;
+   }
+   #header-content a.ticket_id >span{
+      color: #fff;
+      background: #a2c614;
+      font-size: 17px;
+      padding: 2px 8px 3px 7px;
+      font-weight: 600;
+   }
+   #header-content a.ticket_id >span span.light{
+      font-weight: 300;
+   }
+   
+   .main-page .block2-2-2 .block--iteam .imgHead {
+      height: 260px;
+      -moz-border-radius: 4px 4px 0 0;
+      -webkit-border-radius: 4px 4px 0 0;
+      border-radius: 4px 4px 0 0;
+      overflow: hidden;
+   }
+   .main-page .block2-2-2 .block--iteam .imgHead img {
+      width: 328px;
+      height: 260px;
+   }
+   
+   .main-page .block2-2-2 .block--iteam .img-drapeau {
+      position: absolute;
+      top: -33px;
+      left: 16px;
+   }
+.main-page .block2-2-2 .block--iteam .img-drapeau>img{
+    width: 243px;
+}
+   .wrap-block .pricetag {
+      background: url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/FlyerLandingpage/LP_corporate/shape.png) no-repeat center top;
+      width: 98px;
+      height: 71px;
+      position: absolute;
+      right: 11px;
+      top: -46px;
+      text-align: center;
+      color: #fff;
+      padding: 14px 0 0 12px;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+   }
+
+   .wrap-block .pricetag  .txt span.qty {
+      font-size: 12px;
+      text-align: center;
+      text-transform: uppercase;
+   }
+   .wrap-block .pricetag  .txt .qty,  .wrap-block .pricetag  .txt .prix,  .wrap-block .pricetag  .txt .exl {
+       display: block;
+       line-height: 12px;
+   }
+   .wrap-block .pricetag  .txt .prix{
+      font-size: 20px;
+      font-weight: 300;
+   }
+   .wrap-block .pricetag  .txt .prix span.bold {
+       font-size: 20px;
+       font-weight: 700;
+   }
+   .wrap-block .pricetag .txt .prix span.bold sup.sup-prix{
+      font-weight: 600;
+      font-size: 11px;
+   }
+   .wrap-block .pricetag .txt .exl {
+      font-size: 8px;
+      color: #fff;
+      font-weight: 400;
+      margin-top: 4px;
+      margin-left: 5px;
+      text-transform: uppercase;
+   }
+   .main-page .block2-2-2 .block--iteam {
+      transition-property: -webkit-transform,box-shadow;
+      transition-property: transform,box-shadow;
+      transition-duration: .3s;
+      transition-timing-function: cubic-bezier(0.25,.46,.45,.94);
+      width: 31.5%;
+      display: inline-block;
+      margin-right: 28px; 
+      float: left;
+      position: relative;
+   }
+   
+   .main-page .block2-2-2 .block--iteam:hover { 
+      -webkit-box-shadow: 0 7px 43px 8px rgba(0, 0, 0, 0.1); 
+      box-shadow: 0 7px 43px 8px rgba(0, 0, 0, 0.1);
+      -ms-transform: translateY(-8px);
+      transform:translateY(-8px);
+   }
+   .main-page .block2-2-2 .block--iteam .wrap-block .detail-info {
+      margin-bottom: 9px;
+   }
+   .main-page .block2-2-2 .block--iteam .wrap-block .detail-info h2{
+      font-size: 14px !important;
+   }
+
+   .wrap-block .detail-info span.green {
+      color: #86c225 !important;
+      font-size: 14px; 
+      font-family: Open Sans; 
+      line-height: 18px;
+      font-weight: 400; 
+      margin: 0;
+      display: block;
+   }
+
+   .btn-large{
+      display: block;
+      text-align: center;
+   }
+
+   .into-title{
+      margin-top: 30px;
+      margin-bottom:30px; 
+   }
+   .into-title p{
+      margin: 0;
+      font-size: 20px;
+      font-weight: 300;
+   }
+   .block3-3 h2.light-title{
+      font-size: 20px;
+      font-weight: 300;
+      text-transform: none;
+      margin-bottom: 9px;
+   }
+
+   .main-page .block3-3 .block3-3-1, .main-page .block3-3 .block3-3-2 {
+      width: 48.6% !important;
+   }
+
+   .main-page .block3-3 .block3-3-1 .head{
+      background:#c4bd01 url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/FlyerLandingpage/lp_footEuro2016/gradien.png) no-repeat center top;
+   }
+   
+   .main-page .block3-3 .block3-3-2 .head{
+      background:#007a94 url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/FlyerLandingpage/lp_footEuro2016/gradien.png) no-repeat center top; 
+   }
+
+   .main-page .block3-3 .block3-3-1 .head,
+   .main-page .block3-3 .block3-3-2 .head
+   {
+      -moz-border-radius: 4px 4px 0 0;
+      -webkit-border-radius: 4px 4px 0 0;
+      border-radius: 4px 4px 0 0;
+   }
+   .main-page .block3-3 .block3-3-1 .head img{
+      top: -19px;
+      left: 106px;
+      position: relative;
+   }
+    .main-page .block3-3 .block3-3-2 .head img{
+      top: -38px;
+      left: 106px;
+      position: relative;
+   }
+
+   .block3-3 .head{ 
+      height: 244px;
+      width: 501px;
+   }
+
+   .main-page .block3-3 .block3-3-1,.main-page .block3-3 .block3-3-2{
+      /*overflow: hidden;*/
+   }
+   .main-page .block3-3 .block3-3-1 p,.main-page .block3-3 .block3-3-2 p{
+      margin-bottom: 17px;
+   } 
+   #header-content {
+    padding: 37px 0 22px 40px;
+   }
+
+   #header-content h1.title--main {
+    font-size: 36px !important;
+    color: #fff;
+    font-weight: 400 !important;
+    text-transform: none !important;
+    line-height: 37px;
+    margin-bottom: 0;
+   }
+
+   #header-content p.sub-title-main {
+      color: #fff;
+   }
+
+   #header-background {
+      height: 266px;
+   }
+   
+   a.martine {
+      z-index: 1;
+      top: 33px;
+      left: 201px;
+   }
+
+   a.martine, a.charles {
+       position: absolute;
+   }
+
+   a.charles {
+      left: 35px;
+      top: 0px;
+      z-index: 2; 
+   }
+
+   a.btn-header {
+      bottom: -32px;
+      position: absolute;
+      right: -3px;
+      background: #fff;
+      color: #00556e !important;
+      font-size: 14px;
+      padding: 7px 21px 7px 58px;
+      line-height: 16px; 
+        -moz-border-radius: 4px 4px 0 0;
+      -webkit-border-radius: 4px 4px 0 0;
+      border-radius: 4px 4px 0 0;
+      text-decoration: none !important;
+   }
+   a.btn-header .wrap-span{
+      display: inline-block;
+   }
+   a.btn-header .wrap-span >span{
+      display: block;
+   }
+
+   a.btn-header .wrap-span >span.light{
+      font-weight: 300;
+   }
+   a.btn-header .wrap-span >span.bold{
+      font-weight: 700;
+   }
+
+
+   a.btn-header i.icon,a.btn-header .wrap-span{
+      vertical-align: middle;
+   }
+
+    a.btn-header i.icon{
+      background: url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/FlyerLandingpage/LP_events/icon-blue.png) no-repeat center;
+      width: 35px;
+      height: 35px;
+      display: inline-block;
+      margin-right: 4px;
+   }
+   
+    .tooltip:hover:after {
+       background: #666;
+       background: rgba(102,102,102,.8);
+       border-radius: 5px; 
+       color: #fff;
+       content: attr(data-title);
+       left: 20%;
+       padding: 5px 5px 5px 10px;
+       position: absolute;
+       z-index: 98;
+       width: 180px;
+   }
+   .charles.tooltip:hover:before {
+      border: solid;
+      border-color: #666 transparent;
+      border-width: 0px 6px 6px 6px; 
+      content: "";
+      left: 50%;
+      position: absolute;
+      z-index: 100;
+   }
+   .martine.tooltip:hover:before {
+      border: solid;
+      border-color: transparent #666666 transparent transparent;
+      border-width: 6px 6px 4px 0;
+      content: "";
+      left: 50%;
+      position: absolute;
+      z-index: 100;
+   }
+   .martine.tooltip:hover,
+   .charles.tooltip:hover{
+      opacity: 1;
+   }
+   .martine.tooltip:hover:after{top: 21px;left: 106px;}
+   .martine.tooltip:hover:before { top: 58px;left: 100px;}
+   .charles.tooltip:hover:after{top: 125px;left: 0%;}
+   .charles.tooltip:hover:before {top: 119px;left: 48%;}
+   .space--bottom {
+      margin-bottom: 65px;
+   }
+   .space---bottom {
+      margin-bottom: 70px;
+   }
+   .whitepaper{
+      position: relative;
+      background-image: url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/FlyerLandingpage/lp_footEuro2016/img--ek.png); 
+      background-repeat: no-repeat; 
+   }
+   .whitepaper .img {
+      position: absolute;
+      left: 0px;
+      top: -27px;
+    }
+    .whitepaper .img img{
+      width: 466px;
+    }
+     .whitepaper .left-txt{
+      margin-left: 50%;
+      max-width: 50%;
+    }
+</style>
+<div class="main-page" id="flyerstrap">
+   <!-- IMPORTANT!: don't forget the place this on Bedanktkaartje of your page, and close </div> at the bootom of your page--><!-- HEADER -->
+   <div id="header-box">
+      <div id="header-background" style="background: url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/FlyerLandingpage/lp_footEuro2016/black_banner.png) no-repeat center #000;">
+         &nbsp;
+      </div>
+      <div id="header-image"> 
+          <img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/FlyerLandingpage/lp_footEuro2016/lufr_player.png" alt="player">
+      </div>
+      <div id="header-content" style="color: #646464;">
+         <h1 class="title--main">Toutes les impressions </h1>
+         <p style="line-height: 41px !important;" class="sub-title-main">
+           pour votre événement Euro 2016
+         </p>
+         <a href="/lufr/tout-le-monde-flyer" class="ticket_id" target="_blank">
+          <span>#<span id="span" class="light">flyer</span>pourtous</span>
+         </a>
+      </div>
+   </div>
+   <!-- END HEADER -->
+   
+   <div class="into-title"> 
+      <p> 
+         De la communication ciblée pour les vrais <strong>gagnants</strong
+      </p>
+   </div>
+
+   <!-- Block produit -->
+   <div class="block2-2-2 clear space--bottom">
+      <!-- col 1 -->
+      <div class="block--iteam">
+         <div class="imgHead">
+            <a href="/products/4/45%2C18%2C11//250"  target="_self">
+               <img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/FlyerLandingpage/lp_footEuro2016/prod_1.png">
+            </a>
+         </div> 
+         <div class="wrap-block space--block">
+            <div class="pricetag">
+               <div class="txt">
+                  <span class="qty">250 ex.</span> 
+                  <span class="prix">€<span class="bold">109<sup class="sup-prix">,00</sup></span></span>
+                  <span class="exl">HTVA</span>
+               </div>
+            </div>
+            <div class="detail-info">
+               <h2 class="title">Affiches</h2>
+               <span class="green">Format A2, papier satiné 135 g/m², recto</span>  
+            </div> 
+            <a href="/products/4/45%2C18%2C11//250" class="btn btn-green btn-large" target="_self"><i class="icon icon-action-w"></i>Pour votre événement</a>
+         </div>
+      </div>
+      <!-- end col 1-->
+      <!-- col 2 -->
+      <div class="block--iteam">
+         <div class="imgHead">
+            <a href="/products/1/7%2C18%2C10//1000"  target="_self">
+               <img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/FlyerLandingpage/lp_footEuro2016/prod_2.png">
+            </a>
+         </div> 
+         <div class="wrap-block space--block">
+            <div class="pricetag">
+               <div class="txt">
+                  <span class="qty">1000 ex.</span> 
+                  <span class="prix">€<span class="bold">19<sup class="sup-prix">,95</sup></span></span>
+                  <span class="exl">HTVA</span>
+               </div>
+            </div>
+            <div class="detail-info">
+               <h2 class="title">Flyers</h2>
+               <span class="green">Format A5, papier satiné 135 g/m², recto verso</span>  
+            </div> 
+            <a href="/products/1/7%2C18%2C10//1000" class="btn btn-green btn-large" target="_self"><i class="icon icon-action-w"></i>Pour votre événement</a>
+         </div>
+      </div>
+      <!-- end col 2-->
+      <!-- col 3 -->
+      <div class="block--iteam last">
+       <div class="imgHead">
+         <a href="/products/253/1182%2C1184%2C31%2C812%2C1154%2C1185//500"  target="_self">
+            <img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/FlyerLandingpage/lp_footEuro2016/prod_3.png">
+         </a>
+         </div> 
+         <div class="wrap-block space--block">
+            <div class="pricetag">
+               <div class="txt">
+                  <span class="qty">500 ex. </span> 
+                  <span class="prix">€<span class="bold">45<sup class="sup-prix">,00</sup></span></span>
+                  <span class="exl">HTVA</span>
+               </div>
+            </div>
+            <div class="detail-info">
+               <h2 class="title">Bracelets en Tyvek</h2>
+               <span class="green">L = 1,9 cm, 1 couleur, recto</span>  
+            </div> 
+            <a href="/products/253/1182%2C1184%2C31%2C812%2C1154%2C1185//500" class="btn btn-green btn-large" target="_self"><i class="icon icon-action-w"></i>Pour votre événement</a>
+         </div>
+      </div>
+      <!-- end col 3 -->
+   </div>
+   <!-- END Block produit -->
+   
+ 
+   
+   <!-- Block produit -->
+   <div class="block2-2-2 clear space--bottom">
+      <!-- col 1 -->
+      <div class="block--iteam">
+         <div class="imgHead">
+            <a href="/products/109/539%2C552%2C543%2C548%2C11%2C581//1" target="_self">
+               <img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/FlyerLandingpage/lp_footEuro2016/herbe.png">
+            </a>
+         </div>
+         <div class="img-drapeau">
+  <a href="/products/109/539%2C552%2C543%2C548%2C11%2C581//1" target="_self">
+            <img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/FlyerLandingpage/lp_footEuro2016/ek_vlag.png" alt="Beachflags">
+</a>
+         </div>
+         <div class="wrap-block space--block">
+            <div class="pricetag">
+               <div class="txt">
+                  <span class="qty">1 ex.</span> 
+                  <span class="prix">€<span class="bold">119<sup class="sup-prix">,50</sup></span></span>
+                  <span class="exl">HTVA</span>
+               </div>
+            </div>
+            <div class="detail-info">
+               <h2 class="title">Beach flags</h2>
+               <span class="green">Mini 65 x 190 cm, avec mât et pied plateau, recto</span>  
+            </div> 
+            <a href="/products/109/539%2C552%2C543%2C548%2C11%2C581//1" class="btn btn-green btn-large" target="_self"><i class="icon icon-action-w"></i>Pour votre événement</a>
+         </div>
+      </div>
+      <!-- end col 1-->
+      <!-- col 2 -->
+      <div class="block--iteam">
+         <div class="imgHead">
+            <a href="/products/61/844%2C10%2C486%2C299//500" target="_self">
+               <img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/FlyerLandingpage/lp_footEuro2016/prod_5.png">
+            </a>
+         </div> 
+         <div class="wrap-block space--block">
+            <div class="pricetag">
+               <div class="txt">
+                  <span class="qty">500 ex.</span> 
+                  <span class="prix">€<span class="bold">120<sup class="sup-prix">,00</sup></span></span>
+                  <span class="exl">HTVA</span>
+               </div>
+            </div>
+            <div class="detail-info">
+               <h2 class="title">Formes de découpe</h2>
+               <span class="green">Accroche rétroviseur A5, 400 g/m² papier mat, recto verso</span>  
+            </div> 
+            <a href="/products/61/844%2C10%2C486%2C299//500" class="btn btn-green btn-large" target="_self"><i class="icon icon-action-w"></i>Pour votre événement</a>
+         </div>
+      </div>
+      <!-- end col 2-->
+      <!-- col 3 -->
+      <div class="block--iteam last">
+         <div class="imgHead">
+            <a href="/products/249/1042%2C1045%2C1053%2C1057%2C1062%2C1074%2C1084%2C1088%2C1092//10" target="_self">
+               <img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/FlyerLandingpage/lp_footEuro2016/prod_6.png">
+            </a>
+         </div> 
+         <div class="wrap-block space--block">
+            <div class="pricetag">
+               <div class="txt">
+                  <span class="qty">10 ex.</span> 
+                  <span class="prix">€<span class="bold">132<sup class="sup-prix">,67</sup></span></span>
+                  <span class="exl">HTVA</span>
+               </div>
+            </div>
+            <div class="detail-info">
+               <h2 class="title">T-shirts</h2>
+               <span class="green">Manches courtes, unisexe, M, impression à l'avant au milieu</span>  
+            </div> 
+            <a href="/products/249/1042%2C1045%2C1053%2C1057%2C1062%2C1074%2C1084%2C1088%2C1092//10" class="btn btn-green btn-large" target="_self"><i class="icon icon-action-w"></i>Pour votre événement</a>
+         </div>
+      </div>
+      <!-- end col 3 -->
+   </div>
+   <!-- END Block produit -->
+ 
+   <div class="block3-3 clear space---bottom">
+      <!-- col 1 -->
+      <div class="wrap-block block3-3-1 toLeft">
+         <div class="head">
+            <a href="/événements-entreprises-organisation" target="_self">
+               <img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/FlyerLandingpage/lp_footEuro2016/martine-cherles.png" alt="Corporate events">
+            </a>
+         </div>
+         <div class="space-block">
+            <h2 class="light-title">Les événements d'entreprise</h2>
+            <p>Des salons, des congrès, des séminaires,... Regardez nos impressions pour votre événement d'entreprise.</p>
+            <div class="center">
+               <a class="btn btn-orange" href="/événements-entreprises-organisation" target="_self"><i class="icon icon-action-w">&nbsp;</i>Les événements d'entreprise</a>
+            </div>
+         </div>
+        
+      </div>
+      <!-- end col 1-->
+
+      <!-- col 2 -->
+      <div class="wrap-block block3-3-2 toLeft last">
+         <div class="head">
+            <a href="/fêtes-organisation" target="_self">
+               <img src="http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/FlyerLandingpage/lp_footEuro2016/martine-cherles-2.png" alt="Corporate events">
+            </a>
+         </div>
+         <div class="space-block">
+            <h2 class="light-title">Différentes façons de faire la fête ! </h2>
+            <p>
+              Des festivals, des fêtes d’étudiants et de scouts, des soirées privées,... À chaque fête ses impressions.
+            </p>
+             <div class="center">
+               <a class="btn btn-orange" href="/fêtes-organisation" target="_self"><i class="icon icon-action-w">&nbsp;</i>Faites la fête</a>
+            </div> 
+         </div>
+       
+      </div>
+      <!-- end col 2-->
+   </div>
+ 
+<!-- END -->
+</div>
+<script type="text/javascript">
+   jQuery(function(){
+   
+      jQuery('a.smoutscroll').click(function() {
+          if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+            var target = jQuery(this.hash);
+            target = target.length ? target : jQuery('[name=' + this.hash.slice(1) +']');
+            if (target.length) {
+              jQuery('html,body').animate({
+                scrollTop: target.offset().top - 100
+              }, 1000);
+              return false;
+            }
+          }
+      });
+ 
+    
+ 
+   });
+</script>
+ 

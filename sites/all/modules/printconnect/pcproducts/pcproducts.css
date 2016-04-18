@@ -544,8 +544,70 @@ body #footer #block-pcproducts-list ul.menu li{
 	content: '';
 }
 
-.blocCustomFormat .inputCustomFormat .wrapTxt{
+/*.blocCustomFormat .inputCustomFormat .wrapTxt{
 	float: left;
+}*/
+
+.blocCustomFormat .box-info{
+  clear: both;
+  margin-left: 195px;
+  padding-top: 10px;
+}
+.blocCustomFormat .box-info .moreInfo{
+  float: right;
+  position: relative;
+  width: 17px;
+  height: 17px;
+  line-height: 17px;
+  text-align: center;
+  font-size: 12px;
+  color: #646464;
+  background-color: #eaeaea;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.box-info .moreInfo .infoTxt{
+  position: absolute;
+  right: -20px;
+  border-color: #8a8a8a;
+  border-style: solid;
+  border-width: 1px 1px 1px 2px;
+  padding: 15px 10px;
+  background-color: white;
+  width: 300px;
+  display: block;
+  z-index: 10;
+
+  -webkit-transform: scale(0) rotateZ(-12deg);
+  -moz-transform: scale(0) rotate(-12deg);
+  -ms-transform: scale(0) rotateZ(-12deg);
+  -o-transform: scale(0) rotate(-12deg);
+  transform: scale(0) rotateZ(-12deg);
+  -webkit-transition: all .25s;
+  -moz-transition: all .25s;
+  -ms-transition: all .25s;
+  -o-transition: all .25s;
+  transition: all .25s;
+}
+
+.box-info .moreInfo .moreInfo:hover .infoTxt{
+  opacity: 1;
+  -webkit-transform: scale(1) rotateZ(0);
+  -moz-transform: scale(1) rotate(0);
+  -ms-transform: scale(1) rotateZ(0);
+  -o-transform: scale(1) rotate(0);
+  transform: scale(1) rotateZ(0);
+}
+
+.box-info .moreInfo .infoTxt:after{
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 10px;
+    width: 15px;
+    height: 16px;
+    background: url(images/infoflesh.png) 0 0;
 }
 
 .blocCustomFormat .inputCustomFormat .wrapBtn{
@@ -557,17 +619,42 @@ body #footer #block-pcproducts-list ul.menu li{
 	vertical-align: middle;
 }
 
-.blocCustomFormat .inputCustomFormat  .bold-txt{
-	font-weight: 700;
-	margin-right: 4px;
+.blocCustomFormat .inputCustomFormat .bold-txt{
+  font-weight: 600;
+  margin-right: 5px;
+  width: 190px;
+  color: #646464;
 }
-.blocCustomFormat .inputCustomFormat  .light-txt{
+
+.blocCustomFormat .inputCustomFormat .wrap-input-calcul{
+  display: inline-block;
+  width: 425px;
+}
+.blocCustomFormat .inputCustomFormat #edit-calculer{
+  float: right;
+  width: 190px;
+}
+
+.blocCustomFormat .inputCustomFormat .form-text{
+	display: inline-block;
+  width: 178px;
+}
+
+.blocCustomFormat .inputCustomFormat .light-txt{
+    font-weight: 400;
+    margin-right: 11px;
+    margin-left: 14px;
+    font-size: 10px;
+}
+
+.blocCustomFormat .inputCustomFormat .mm{
 	font-weight: 400;
-	margin-right: 10px;
-	margin-left: 7px;
+  color: #646464;
+  margin-left: -30px;
 }
+
 .blocCustomFormat .inputCustomFormat  #wcf , .blocCustomFormat .inputCustomFormat  #hcf{
-	width: 104px;
+	width: 175px;
 }
 
 .blocCustomFormat .inputCustomFormat  #wcf , .blocCustomFormat .inputCustomFormat  #hcf,.blocCustomFormat .inputCustomFormat .calculCF{

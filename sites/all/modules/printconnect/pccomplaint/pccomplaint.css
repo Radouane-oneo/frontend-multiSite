@@ -121,3 +121,18 @@
     line-height: 41px;
     padding: 0;
 }
+
+.complaintSuccess {
+    background: url("http://flyer-fr.dev/sites/all/themes/printconnect/flyer/css/images/validicon.png") no-repeat 189px 30px;
+    border-bottom: 1px solid #e7e3e3;
+    padding: 30px 42px;
+}
+
+.complaintSuccess p {
+    margin: 0;
+    padding-left: 200px;
+}
+
+.complaintSuccess p.questions {
+    margin-top: 20px;
+}

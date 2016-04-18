@@ -35,37 +35,6 @@
                 <%= config.labels["toolBoxDescription_" + toolBoxItem.id] %>
             </div>
             <div class="item-list">
-                <% if(toolBoxItem.id == config.labels["format"]) { %> 
-                    <% if(config.labels["customFormat"] == true) { %>
-                        <div class="blocCustomFormat">   
-                            <div class="inputCustomFormat">
-                                <div class='msgErrorCF'></div>
-                                <form>
-                                <div class="wrapTxt">
-                                    <label class="bold-txt label-txt"><%= config.labels['newCF'] %> :</label>
-                                    <input type="text" id="wcf" name="widthCF" value="<%= model.widthCF %>" placeholder="<%= config.labels['breedte'] %>"><label class="light-txt label-txt">mm &nbsp; X</label>
-                                    <input type="text" id="hcf" name="heightCF" value="<%= model.heightCF %>"  placeholder="<%= config.labels['hoogte'] %>"><label class="light-txt label-txt">mm</label>                             
-                                    <input type="hidden" id="msgErrorCF" class="msgErrorCF" value="<%= config.labels['msgErrorCF'] %>">
-                                    <input type="hidden" id="msgCFValid" class="msgCFValid" value="<%= config.labels['msgCFValid'] %>">
-                                    <input type="hidden" id="msgErrorCFNotValid" class="msgErrorCFNotValid" value="<%= config.labels['msgErrorCFNotValid'] %>">
-                                     <input type="hidden" id="msgErrorCFHeightNotValid" class="msgErrorCF" value="<%= config.labels['msgErrorCFHeightNotValid'] %>">
-                                    <input type="hidden" id="msgErrorCFWidthNotValid" class="msgErrorCF" value="<%= config.labels['msgErrorCFWidthNotValid'] %>">
-                                    <input type="hidden" id="msgErrorCFTolNotValid" class="msgErrorCF" value="<%= config.labels['msgErrorCFTolNotValid'] %>">
-                                    <input type="hidden" id="msgErrorCFNotFloat" class="msgErrorCF" value="<%= config.labels['msgErrorCFNotFloat'] %>">
-                                    <input type="hidden" id="textWidthNotValid" class="msgErrorCF" value="<%= config.labels['textWidthNotValid'] %>">
-                                    <input type="hidden" id="textHeightNotValid" class="msgErrorCF" value="<%= config.labels['textHeightNotValid'] %>">
-                                    <input type="hidden" id="textTolNotValid" class="msgErrorCF" value="<%= config.labels['textTolNotValid'] %>">
-                                    <input type="hidden" id="et" class="msgErrorCF" value="<%= config.labels['et'] %>">
-                                </div>
-                                <div class="wrapBtn">
-                                    <input type="button" value="<%= config.labels['berekenen'] %>" class="form-submit calculCF">
-                                </div>
-                               
-                                </form>
-                            </div>
-                        </div>
-                    <% } %> 
-                <% } %>
                 <ul>
                     <% _.each(toolBoxItem.data,function(item){ %>
                      <li class='<%= item.code %> <% if(selected && (item.id == selected.id)){ print("selectedItem"); } %> '>
@@ -115,6 +84,54 @@
         </div>
         <% } %>
         <!-- End Options-->
+
+        <% if(config.labels["customFormat"] == true) { %>
+        <!-- Costum format Box -->
+        <div class="detailtechnique-wrapper">
+            <div class="blocCustomFormat">   
+                <div class="inputCustomFormat">
+                    <form>
+                        <div class="wrapTxt">
+                            <label class="bold-txt label-txt"><%= config.labels['newCF'] %> :</label>
+                            <input type="text" id="wcf" name="widthCF" value="<%= model.widthCF %>" placeholder="<%= config.labels['breedte'] %>"><span class="mm">mm</span><label class="light-txt label-txt">&nbsp; X</label>
+                            <input type="text" id="hcf" name="heightCF" value="<%= model.heightCF %>"  placeholder="<%= config.labels['hoogte'] %>"><span class="mm">mm</span>                            
+                            <input type="hidden" id="msgErrorCF" class="msgErrorCF" value="<%= config.labels['msgErrorCF'] %>">
+                            <input type="hidden" id="msgCFValid" class="msgCFValid" value="<%= config.labels['msgCFValid'] %>">
+                            <input type="hidden" id="msgErrorCFNotValid" class="msgErrorCFNotValid" value="<%= config.labels['msgErrorCFNotValid'] %>">
+                             <input type="hidden" id="msgErrorCFHeightNotValid" class="msgErrorCF" value="<%= config.labels['msgErrorCFHeightNotValid'] %>">
+                            <input type="hidden" id="msgErrorCFWidthNotValid" class="msgErrorCF" value="<%= config.labels['msgErrorCFWidthNotValid'] %>">
+                            <input type="hidden" id="msgErrorCFTolNotValid" class="msgErrorCF" value="<%= config.labels['msgErrorCFTolNotValid'] %>">
+                            <input type="hidden" id="msgErrorCFNotFloat" class="msgErrorCF" value="<%= config.labels['msgErrorCFNotFloat'] %>">
+                            <input type="hidden" id="textWidthNotValid" class="msgErrorCF" value="<%= config.labels['textWidthNotValid'] %>">
+                            <input type="hidden" id="textHeightNotValid" class="msgErrorCF" value="<%= config.labels['textHeightNotValid'] %>">
+                            <input type="hidden" id="textTolNotValid" class="msgErrorCF" value="<%= config.labels['textTolNotValid'] %>">
+                            <input type="hidden" id="et" class="msgErrorCF" value="<%= config.labels['et'] %>">
+                            <div class="box-info">
+                                <div class='msgErrorCF'></div>
+                                <span class="moreInfo">?
+                                    <span class="infoTxt">
+                                        <strong><%= config.labels['infoTitle'] %></strong>
+                                        <%= config.labels['infoDescription'] %>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- div class="wrapBtn">
+                            <input type="button" value="<%= config.labels['berekenen'] %>" class="form-submit calculCF">
+                        </div -->
+                    </form>
+                </div>
+                <div class="inputCustomFormat form-item form-type-textfield form-item-custom form-item-calcul-qte">
+                    <label class="bold-txt label-txt" for="edit-custom"><%= config.labels["enterQuantity"] %></label>
+                    <div class="wrap-input-calcul">
+                    <input type="text" class="form-text" maxlength="128" size="60" value="<%= (customQuantity)?model.quantity:'' %>" name="custom" id="edit-custom">
+                    <input type="submit" value="<%= config.labels['calculate'] %>" name="op" id="edit-calculer" class="ajax-calculate form-submit ui-button ui-widget ui-state-default ui-corner-all btn-calcul" role="button">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END Costum format Box -->
+        <% } %>
 
         <!-- pricesTable -->
         <div class="wrap-tableqte">
@@ -196,15 +213,6 @@
                     <div class="form-item form-type-radio form-item-quantity">
                         <input type="radio" value="custom" name="customQte" id="edit-quantity-custom"
                                class="grid clearfix form-radio">
-                    </div>
-                </td>
-                <td colspan="4" class="last-child">
-                    <div class="form-item form-type-textfield form-item-custom form-item-calcul-qte">
-                        <label for="edit-custom"><%= config.labels["enterQuantity"] %></label>
-                        <div class="wrap-input-calcul">
-                        <input type="text" class="form-text" maxlength="128" size="60" value="<%= (customQuantity)?model.quantity:'' %>" name="custom" id="edit-custom">
-                        <input type="submit" value="<%= config.labels['calculate'] %>" name="op" id="edit-calculer" class="ajax-calculate form-submit ui-button ui-widget ui-state-default ui-corner-all btn-calcul" role="button">
-                        </div>
                     </div>
                 </td>
             </tr>

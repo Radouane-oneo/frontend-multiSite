@@ -40,12 +40,12 @@ function pccomplaint_form($form, &$form_state) {
     );
     $form['complaint']['form']['order']['titleorder'] = array(
         '#markup' => t('title order complaint'),
-        '#prefix' => '<h1>',
-        '#suffix' => '</h1>', 
+        '#prefix' => '<h3>',
+        '#suffix' => '</h3>', 
     );
     $form['complaint']['form']['order']['labelorder'] = array(
-        '#markup' => t('labelorder'),
-        '#prefix' => '<div class="labelorder">',
+        '#markup' => t('labelorder')."<span> *</span>",
+        '#prefix' => '<div class="identification"><div class="labelorder">',
         '#suffix' => '</div>', 
     );
     $form['complaint']['form']['order']['orderid'] = array(
@@ -56,6 +56,11 @@ function pccomplaint_form($form, &$form_state) {
         '#type' => 'textfield',
         '#attribute' => array('placeholder' => t('jobnumber')),
     );
+
+     $form['complaint']['form']['order']['txtJobId'] = array(
+        '#markup' => "<span class='txtJobId'>".t('txtJobId')."</span>",
+        '#suffix' => '</div>',
+    );
     
     //bloc about
     $form['complaint']['form']['about'] = array(
@@ -64,12 +69,12 @@ function pccomplaint_form($form, &$form_state) {
     );
     $form['complaint']['form']['about']['titleorder'] = array(
         '#markup' => t('title about the issue'),
-        '#prefix' => '<h1>',
-        '#suffix' => '</h1>', 
+        '#prefix' => '<h3>',
+        '#suffix' => '</h3>', 
     );
     $form['complaint']['form']['about']['labelorder'] = array(
-        '#markup' => t('your complaint'),
-        '#prefix' => '<div class="labelorder">',
+        '#markup' => t('your complaint')."<span> *</span>",
+        '#prefix' => '<div class="orderIssue"><div class="labelorder">',
         '#suffix' => '</div>', 
     );
     $options = array (
@@ -86,7 +91,9 @@ function pccomplaint_form($form, &$form_state) {
     );
     $form['complaint']['form']['about']['description'] = array(
         '#type' => 'textarea',
+        '#rows' => 8,
         '#attributes' => array('class' => array('select-city-adress'), 'placeholder' => t('Description about')),
+        '#suffix' => '</div>', 
  
     );
     $form['complaint']['form']['about']['dropdrag'] = array( 
@@ -94,7 +101,7 @@ function pccomplaint_form($form, &$form_state) {
         '#attributes' => array('class' => array('blocdropdrag')),
     );
      $form['complaint']['form']['about']['dropdrag']['picture'] = array(
-        '#markup' => t('pictures').'<br>'.t('required text'),
+        '#markup' => "<span class='dropTitle'>".t('pictures')."</span>"."<br><p>".t('required text')."</p>",
         '#prefix' => '<div class="blocpicture">',
         '#suffix' => '</div>', 
     
@@ -117,12 +124,12 @@ function pccomplaint_form($form, &$form_state) {
     );
     $form['complaint']['form']['like']['titleorder'] = array(
         '#markup' => t('what would you like us to do'),
-        '#prefix' => '<h1>',
-        '#suffix' => '</h1>', 
+        '#prefix' => '<h3>',
+        '#suffix' => '</h3>', 
     );
     $form['complaint']['form']['like']['labelorder'] = array(
-        '#markup' => t('compensation'),
-        '#prefix' => '<div class="labelorder">',
+        '#markup' => t('compensation')."<span> *</span>",
+        '#prefix' => '<div class="compensation"><div class="labelorder">',
         '#suffix' => '</div>', 
     );
     $options = array (
@@ -136,12 +143,16 @@ function pccomplaint_form($form, &$form_state) {
     );
     $form['complaint']['form']['like']['description'] = array(
         '#type' => 'textarea',
-        '#attributes' => array('class' => array('select-city-adress'), 'placeholder' => t('Description like')),
+        '#rows' => 8,
+        '#attributes' => array('class' => array('select-city-adress'), 'placeholder' => t('Comments')),
+        '#suffix' => '</div>', 
  
     );
     $form['complaint']['form']['submit'] = array(
       '#type' => 'submit',
       '#value' => t('submit form complaint'),
+      '#prefix' => '<div class="complaintSubmit">',
+      '#suffix' => '</div>', 
     );
  // $form['#attributes'] = array('enctype' => 'multipart/form-data');
   return $form;

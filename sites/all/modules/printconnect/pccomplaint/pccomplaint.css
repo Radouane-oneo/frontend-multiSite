@@ -1,28 +1,123 @@
 .complaintform{
-    border: 1px solid;
+    border: 1px solid #e7e3e3;
     background-color: #f1f1f1;
+    border-radius: 2px 2px 2px 2px;
+    -moz-border-radius: 2px 2px 2px 2px;
+    -webkit-border-radius: 2px 2px 2px 2px;
 }
 .bloccomplaint{
-    border-bottom: 1px solid;
+    padding: 30px 10px;
+    border-bottom: 1px solid #e7e3e3;
+    position: relative;
 }
-.bloccomplaint h1{
-    font-size: 11px !important;
+#content .bloccomplaint h3 {
+    font-size: 14px;
+    line-height: 14px;
+    margin-bottom: 20px;
+    font-weight: bold;
 }
 .blocpicture{
     float: left;
-    width: 166px;
+    width: 155px;
 }
    
 .blocdropdrag .dropzone {
-    background: transparent none repeat scroll 0 0;
-    border-style: dashed;
+    background: url("http://flyer-fr.dev/sites/all/themes/printconnect/flyer/css/images/uploadicon.png") no-repeat center 15px;
+    border: 2px dashed #e7e3e3;
     min-height: 106px;
     padding: 4px;
-    width: 472px;
+    width: 445px;
+    border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
 }
 .blocdropdrag {
-    height: 174px;
+    height: 110px;
+    line-height: 12px;
 }
 .dropzoneupload{
     float: left;
+}
+
+.bloccomplaint:after,
+.complaintform:after {
+    content: "";
+    width: 100%;
+    height: 0;
+    display: block;
+    clear: both;
+}
+
+.bloccomplaint > div > div {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.bloccomplaint .labelorder {
+    width: 150px;
+    text-transform: uppercase;
+}
+
+.bloccomplaint input[type="text"],
+.bloccomplaint .select2-container > a.select2-choice,
+.bloccomplaint textarea {
+    width: 203px !important;
+    color: #bcbbbb;
+    box-sizing: border-box;
+}
+
+.bloccomplaint .form-item {
+    margin: 0 0 0 20px;
+}
+
+.bloccomplaint .labelorder span {
+    color: red;
+}
+
+.identification .txtJobId {
+    float: right;
+    margin: 5px 193px 0 0;
+    color: #bcbbbb;
+}
+
+.orderIssue .labelorder,
+.compensation .labelorder {
+    line-height: 41px;
+}
+.orderIssue .labelorder, 
+.orderIssue .form-type-select,
+.compensation .labelorder,
+.compensation .form-type-select {
+    vertical-align: top;
+}
+
+.orderIssue {
+    margin-bottom: 20px;
+}
+
+.dropTitle {text-transform: uppercase;}
+
+.blocpicture p {
+    color: #bcbbbb;
+    line-height: 20px;
+    padding-right: 10px;
+}
+
+.dropzone .dz-message {
+    margin: 0 !important;
+    line-height: 106px;
+    color: #bcbbbb;
+}
+
+.complaintSubmit {
+    padding: 30px 42px;
+    width: 420px;
+    float: right;
+}
+
+.complaintSubmit input.ui-button {
+    background: #73b900;
+    width: 100%;
+    line-height: 41px;
+    padding: 0;
 }

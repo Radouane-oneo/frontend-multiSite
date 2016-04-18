@@ -1,0 +1,174 @@
+<?php
+function pccomplaint_menu() {
+  $items = array();
+
+  $items['complaint'] = array( //this creates a URL that will call this form at "examples/form-example"
+    'title' => 'complaint page', //page title
+    'description' => '',
+    'page callback' => 'drupal_get_form', //this is the function that will be called when the page is accessed.  for a form, use drupal_get_form
+    'page arguments' => array('pccomplaint_form'), //put the name of the form here
+    'access callback' => TRUE
+  );
+  $items['complaintupload'] = array( //this creates a URL that will call this form at "examples/form-example"
+    'title' => 'complaint page', //page title
+    'description' => '',
+    'page callback' => 'drupal_get_form', //this is the function that will be called when the page is accessed.  for a form, use drupal_get_form
+    'page arguments' => array('pccomplaint_form_upload'), //put the name of the form here
+    'access callback' => TRUE
+  );
+
+  return $items;
+}
+function pccomplaint_form($form, &$form_state) {
+    
+    $form['complaint'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('complaint')),
+    );
+    $form['complaint']['description'] = array(
+        '#markup' => '<div class="descComplait">' .t('desccomplaint').'</div>'
+    );
+    $form['complaint']['form'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('complaintform')),
+    );
+    
+    //bloc order
+    $form['complaint']['form']['order'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('bloccomplaint')),
+    );
+    $form['complaint']['form']['order']['titleorder'] = array(
+        '#markup' => t('title order complaint'),
+        '#prefix' => '<h1>',
+        '#suffix' => '</h1>', 
+    );
+    $form['complaint']['form']['order']['labelorder'] = array(
+        '#markup' => t('labelorder'),
+        '#prefix' => '<div class="labelorder">',
+        '#suffix' => '</div>', 
+    );
+    $form['complaint']['form']['order']['orderid'] = array(
+        '#type' => 'textfield',
+        '#attribute' => array('placeholder' => t('orderid'))
+    );
+    $form['complaint']['form']['order']['jobid'] = array(
+        '#type' => 'textfield',
+        '#attribute' => array('placeholder' => t('jobnumber')),
+    );
+    
+    //bloc about
+    $form['complaint']['form']['about'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('bloccomplaint')),
+    );
+    $form['complaint']['form']['about']['titleorder'] = array(
+        '#markup' => t('title about the issue'),
+        '#prefix' => '<h1>',
+        '#suffix' => '</h1>', 
+    );
+    $form['complaint']['form']['about']['labelorder'] = array(
+        '#markup' => t('your complaint'),
+        '#prefix' => '<div class="labelorder">',
+        '#suffix' => '</div>', 
+    );
+    $options = array (
+       '0' => t('complaint type'),
+       "1"=>t('not delivered'),
+       "2"=>t('quality'),
+       "3"=>t('damaged'),
+       "4"=>t('other'),
+    );
+    $form['complaint']['form']['about']['complainttype'] = array(
+        '#type' => 'select',
+        '#options' => $options,
+        '#attributes' => array('class' => array('select-city-adress')),
+    );
+    $form['complaint']['form']['about']['description'] = array(
+        '#type' => 'textarea',
+        '#attributes' => array('class' => array('select-city-adress'), 'placeholder' => t('Description about')),
+ 
+    );
+    $form['complaint']['form']['about']['dropdrag'] = array( 
+        '#type' => 'container',
+        '#attributes' => array('class' => array('blocdropdrag')),
+    );
+     $form['complaint']['form']['about']['dropdrag']['picture'] = array(
+        '#markup' => t('pictures').'<br>'.t('required text'),
+        '#prefix' => '<div class="blocpicture">',
+        '#suffix' => '</div>', 
+    
+        );
+    $form['complaint']['form']['about']['dropdrag']['upload'] = array(
+        '#markup' => '<div id="dZUpload" class="dropzone">
+                            <div class="dz-default dz-message">'.t('drag and drop to upload or browse files').'</div>
+                      </div>',
+        '#prefix' => '<div class="dropzoneupload">',
+        '#suffix' => '</div>', 
+    
+        );
+    $form['complaint']['form']['about']['dropdrag']['message'] = array(
+        '#markup' => '<div id="errorUpload"></div>'
+    );
+    //bloc what would you like us to do
+    $form['complaint']['form']['like'] = array(
+        '#type' => 'container',
+        '#attributes' => array('class' => array('bloccomplaint')),
+    );
+    $form['complaint']['form']['like']['titleorder'] = array(
+        '#markup' => t('what would you like us to do'),
+        '#prefix' => '<h1>',
+        '#suffix' => '</h1>', 
+    );
+    $form['complaint']['form']['like']['labelorder'] = array(
+        '#markup' => t('compensation'),
+        '#prefix' => '<div class="labelorder">',
+        '#suffix' => '</div>', 
+    );
+    $options = array (
+       "0"=>t('reprint'),
+       "1"=>t('compensation')
+    );
+    $form['complaint']['form']['like']['compensation'] = array(
+        '#type' => 'select',
+        '#options' => $options,
+        '#attributes' => array('class' => array('select-city-adress'), 'placeholder' => t('compensation')),
+    );
+    $form['complaint']['form']['like']['description'] = array(
+        '#type' => 'textarea',
+        '#attributes' => array('class' => array('select-city-adress'), 'placeholder' => t('Description like')),
+ 
+    );
+    $form['complaint']['form']['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('submit form complaint'),
+    );
+ // $form['#attributes'] = array('enctype' => 'multipart/form-data');
+  return $form;
+}
+
+function pccomplaint_form_validate($form, &$form_state) {
+}
+function pccomplaint_form_submit($form, &$form_state) {
+   // die('ttttt');
+}
+function pccomplaint_form_upload($form, &$form_state) {
+    
+    
+  if (!empty($_FILES)){
+        if(($_FILES['file']['type'] == 'image/jpeg') || ($_FILES['file']['type'] == 'image/jpg')){
+            $tmp = $_FILES['file']['tmp_name'];
+            $dir_separator = DIRECTORY_SEPARATOR;
+            $folder = "uploads";
+            $destination_path = dirname(__FILE__).$dir_separator.$folder.$dir_separator;
+            $target_path = $destination_path.$_FILES['file']['name'];
+            move_uploaded_file($tmp, $target_path); 
+            echo 'true';
+         }
+         else
+         {
+             echo 'false';
+         }
+    }
+    die;
+ }

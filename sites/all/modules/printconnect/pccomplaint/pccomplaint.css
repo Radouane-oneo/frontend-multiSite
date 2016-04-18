@@ -1,0 +1,28 @@
+.complaintform{
+    border: 1px solid;
+    background-color: #f1f1f1;
+}
+.bloccomplaint{
+    border-bottom: 1px solid;
+}
+.bloccomplaint h1{
+    font-size: 11px !important;
+}
+.blocpicture{
+    float: left;
+    width: 166px;
+}
+   
+.blocdropdrag .dropzone {
+    background: transparent none repeat scroll 0 0;
+    border-style: dashed;
+    min-height: 106px;
+    padding: 4px;
+    width: 472px;
+}
+.blocdropdrag {
+    height: 174px;
+}
+.dropzoneupload{
+    float: left;
+}

@@ -61,16 +61,12 @@ define([
             var existQuantity = '';
             if($("#edit-custom").val()){
                 _.each(this.model.get("toolBoxGroup")["pricing"], function(price, i){
-                    console.log(i);
-                    console.log(parseInt($("#edit-custom").val()));
                     if(parseInt($("#edit-custom").val()) == i) {
                         existQuantity = i;
                         return true
                     }
                 });
 
-
-                console.log('lolo'+existQuantity);
                 if (existQuantity == ''){console.log('lolo'+existQuantity);
                     $('#trQuantitePersonalisee').show();
                 }
@@ -87,6 +83,12 @@ define([
             if (sitePrintconcept == 'printconcept'){                
                 $("#pcproducts-config-form .dropdown:first").css('display', 'block');
             }
+
+            //set position of infobul
+            this.setPositionInfobul();
+
+            //input number BTN
+            this.inputTypeNumber();
         },
         toggleExpand: function(e){
             $(e.currentTarget).toggleClass("expanded");
@@ -509,6 +511,23 @@ define([
                 }
             }
         },
+        setPositionInfobul : function(){
+            //get Height of infoTxt
+            var infoP = ($('.infoTxt').height()/2) * (-1);
+            $('.infoTxt').css('top', infoP);
+        },
+        inputTypeNumber : function(){
+            var spins = document.getElementsByClassName("customNumber");
+            for (var i = 0, len = spins.length; i < len; i++) {
+                var spin = spins[i],
+                    span = spin.getElementsByClassName("numberbtn"),
+                    input = document.getElementById("edit-custom");
+                
+                input.onchange = function() { input.value = +input.value || 0; };
+                span[1].onclick = function() { input.value = Math.max(0, input.value - 1); };
+                span[0].onclick = function() { input.value -= -1; };
+            }
+        }
     });
 
 });

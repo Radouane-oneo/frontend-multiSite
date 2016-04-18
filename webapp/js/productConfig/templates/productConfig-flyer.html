@@ -87,7 +87,7 @@
 
         <% if(config.labels["customFormat"] == true) { %>
         <!-- Costum format Box -->
-        <div class="detailtechnique-wrapper">
+        <div class="detailtechnique-wrapper costumFormatBox">
             <div class="blocCustomFormat">   
                 <div class="inputCustomFormat">
                     <form>
@@ -106,10 +106,10 @@
                             <input type="hidden" id="textHeightNotValid" class="msgErrorCF" value="<%= config.labels['textHeightNotValid'] %>">
                             <input type="hidden" id="textTolNotValid" class="msgErrorCF" value="<%= config.labels['textTolNotValid'] %>">
                             <input type="hidden" id="et" class="msgErrorCF" value="<%= config.labels['et'] %>">
-                            <div class="box-info">
+                            <div class="box-info clearfix">
                                 <div class='msgErrorCF'></div>
                                 <span class="moreInfo">?
-                                    <span class="infoTxt">
+                                    <span class="infoTxt" position="-60px">
                                         <strong><%= config.labels['infoTitle'] %></strong>
                                         <%= config.labels['infoDescription'] %>
                                     </span>
@@ -123,9 +123,9 @@
                 </div>
                 <div class="inputCustomFormat form-item form-type-textfield form-item-custom form-item-calcul-qte">
                     <label class="bold-txt label-txt" for="edit-custom"><%= config.labels["enterQuantity"] %></label>
-                    <div class="wrap-input-calcul">
-                    <input type="text" class="form-text" maxlength="128" size="60" value="<%= (customQuantity)?model.quantity:'' %>" name="custom" id="edit-custom">
-                    <input type="submit" value="<%= config.labels['calculate'] %>" name="op" id="edit-calculer" class="ajax-calculate form-submit ui-button ui-widget ui-state-default ui-corner-all btn-calcul" role="button">
+                    <div class="wrap-input-calcul customNumber">
+                        <input type="text" class="form-text" maxlength="128" size="60" value="<%= model.quantity %>" name="custom" id="edit-custom"><span class="add numberbtn">+</span><span class="remove numberbtn">-</span>
+                        <input type="submit" value="<%= config.labels['calculate'] %>" name="op" id="edit-calculer" class="ajax-calculate form-submit ui-button ui-widget ui-state-default ui-corner-all btn-calcul" role="button">
                     </div>
                 </div>
             </div>

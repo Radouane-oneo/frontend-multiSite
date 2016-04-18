@@ -136,3 +136,7 @@
 .complaintSuccess p.questions {
     margin-top: 20px;
 }
+
+.dropzone .dz-preview .dz-details {
+    display: none;
+}

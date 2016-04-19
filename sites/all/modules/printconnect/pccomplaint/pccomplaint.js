@@ -21,11 +21,10 @@
         }
     });
     jQuery("#edit-orderid").change(function(){
-        console.log('ttttttt');
-      var href = "complaint/order/" + jQuery(this).val(); 
+        var href = "complaint/order/" + jQuery(this).val(); 
 //      var  id = $(this).attr('id');
 //      var wopper = '#pccart-cart-form #' + id  ;
-        jQuery.getJSON(href, function(data){          
+        jQuery.getJSON(href, function(data){
          if(!data){
          jQuery(wopper).css({ "border":"1px solid red"});
          }else{

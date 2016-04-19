@@ -155,12 +155,6 @@ function pccomplaint_form($form, &$form_state) {
         '#suffix' => '</div>', 
  
     );
-
-    $form['complaint']['form']['message'] = array(
-        '#markup' => "<div class='complaintSuccess'><p>".t('complaintSuccess text')."</p><p class='questions'>".t('questionsTxt')."</div>",
- 
-    );
-
     $form['complaint']['form']['submit'] = array(
       '#type' => 'submit',
       '#value' => t('submit form complaint'),
@@ -195,9 +189,16 @@ function pccomplaint_form_upload($form, &$form_state) {
     die;
  }
  function _pccomplaint_order_callback($order){
-     echo 'order'.$order;
-     $orderObject = Factory::Get($order);
-     var_dump($orderObject);
+     echo 'orderkkk'.$order;
+    
+   //  $orderObject = Factory::Get($order);
+     $orderObject = \printconnect\Orders\Factory::Get($order, false);
+     if ($orderObject->number != ''){
+         echo 'true';
+     }
+     else{
+         echo 'false';
+     }
  //echo  json_encode(valid_email_address($email));
  die;
 }

@@ -154,6 +154,7 @@ function pccomplaint_form($form, &$form_state) {
         '#suffix' => '</div>', 
  
     );
+    
 
     $form['complaint']['form']['message'] = array(
         '#markup' => "<div class='complaintSuccess'><p>".t('complaintSuccess text')."</p><p class='questions'>".t('questionsTxt')."</div>",

@@ -140,3 +140,20 @@
 .dropzone .dz-preview .dz-details {
     display: none;
 }
+
+.identification .errorMsg {
+    margin: 5px 0 0 173px;
+    color: red;
+}
+
+.orderIssue .errorMsg {
+    position: absolute;
+    color: red;
+    top: 42px;
+    left: 173px;
+}
+
+.orderIssue .errorMsg,
+.identification .errorMsg {
+    display: none;
+}

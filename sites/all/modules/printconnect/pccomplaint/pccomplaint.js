@@ -22,13 +22,15 @@
     });
     jQuery("#edit-orderid").change(function(){
         var href = "complaint/order/" + jQuery(this).val(); 
+        console.log('mmmmm');
 //      var  id = $(this).attr('id');
 //      var wopper = '#pccart-cart-form #' + id  ;
-        jQuery.getJSON(href, function(data){
+        jQuery.getJSON(href, function(data){console.log('oooooo');
          if(!data){
-         jQuery(wopper).css({ "border":"1px solid red"});
+             
+            jQuery(".identification .errorMsg").css({ "display":"bloc"});
          }else{
-              jQuery(wopper).css({ "border":"1px solid #77b800"});
+             jQuery(".identification .errorMsg").css({ "display":"none"});
          }
         });
       });

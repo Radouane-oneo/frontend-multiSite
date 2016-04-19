@@ -1,21 +1,5 @@
 jQuery(document).ready(function(e) {
-    Dropzone.autoDiscover = false;
-    jQuery("#dZUpload").dropzone({
-        acceptedMimeTypes: "image/jpg,image/jpeg",
-        url: "complaintupload",
-        addRemoveLinks: true,
-        success: function (file, response) {
-            console.log("Successfully uploaded :" , response);            
-            if(response == 'false') {
-                jQuery("#errorUpload").text('not good');
-            } else {
-                jQuery("#errorUpload").text('good');    
-            }
-        },
-        error: function (file, response) {
-          //  file.previewElement.classList.add("dz-error");
-        }
-    });
+   
     jQuery('select:not(#pcproducts-calculator-form select)').select2(); 
 
     if (jQuery('#homeSlider').length) {

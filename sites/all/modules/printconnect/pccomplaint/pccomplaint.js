@@ -10,7 +10,7 @@
         success: function (file, response) {
             console.log("Successfully uploaded :" , response);            
             if(response == 'false') {
-                jQuery("#errorUpload").text('not good');
+                jQuery("#errorUpload").text('MessageErrorImage');
             } else {
                 jQuery("#errorUpload").text('good');    
             }
@@ -20,19 +20,39 @@
           jQuery(file.previewElement).hide();
         }
     });
-    jQuery("#edit-orderid").change(function(){
-        var href = "complaint/order/" + jQuery(this).val(); 
-        console.log('mmmmm');
-//      var  id = $(this).attr('id');
-//      var wopper = '#pccart-cart-form #' + id  ;
-        jQuery.getJSON(href, function(data){console.log('oooooo');
-         if(!data){
-             
-            jQuery(".identification .errorMsg").css({ "display":"bloc"});
-         }else{
-             jQuery(".identification .errorMsg").css({ "display":"none"});
-         }
-        });
-      });
+    jQuery("#edit-submit").click(function(e){        
+        actionComplaint(e);  
+    });
+    jQuery("#edit-orderid").change(function(e){
+        actionComplaint(e);  
+    });
+    function actionComplaint(e){
+        e.preventDefault();
+        var span = document.getElementById("errorMsg");
+        if  (isNaN(jQuery('#edit-orderid').val()) || (jQuery('#edit-orderid').val() == '')){             
+            txt = document.createTextNode(Drupal.t('messageErrorOrderId'));
+            span.innerText = txt.textContent;            
+            jQuery("#errorMsg").css({ "display":"inline"});
+            jQuery('#errorMsg').focus();   
+        }
+        else{
+            jQuery("#errorMsg").css({ "display":"none"}); 
+            var href = "complaint/order/" + jQuery('#edit-orderid').val(); 
+            jQuery.ajax({           
+                url: href,
+                success: function(){ 
+                    jQuery("#errorMsg").css({ "display":"none"}); 
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    txt = document.createTextNode(Drupal.t('NotValidOrder'));
+                    span.innerText = txt.textContent;  
+                    jQuery("#errorMsg").css({ "display":"inline"});
+                    jQuery('#errorMsg').focus(); 
+                }       
+            });
+        }
+      }
+  
  });
+
 

@@ -65,7 +65,7 @@ function pccomplaint_form($form, &$form_state) {
     );
 
     $form['complaint']['form']['order']['errorMsg'] = array(
-        '#markup' => "<span class='errorMsg'>".t('errorMsg')."</span>",
+        '#markup' => "<span id='errorMsg'></span>",
     );
 
     $form['complaint']['form']['order']['txtJobId'] = array(
@@ -106,7 +106,7 @@ function pccomplaint_form($form, &$form_state) {
         '#attributes' => array('class' => array('select-city-adress'), 'placeholder' => t('Description about')), 
     );
     $form['complaint']['form']['about']['errorMsg'] = array(
-        '#markup' => "<span class='errorMsg'>".t('errorMsg')."</span>",
+        '#markup' => "<span id='errorMsg'>".t('errorMsg')."</span>",
         '#suffix' => '</div>', 
     );
     $form['complaint']['form']['about']['dropdrag'] = array( 
@@ -201,10 +201,10 @@ function pccomplaint_form_upload($form, &$form_state) {
     die;
  }
  function _pccomplaint_order_callback($order){
-     echo 'orderkkk'.$order;
+ 
     
    //  $orderObject = Factory::Get($order);
-     $orderObject = \printconnect\Orders\Factory::Get($order, false);
+     $orderObject = \printconnect\Orders\Factory::Get($order, false);die($orderObject->number);
      if ($orderObject->number != ''){
          echo 'true';
      }

@@ -262,9 +262,7 @@ vertical-align: top; }
       -moz-transform: scale(1.05, 1.05);
       -ms-transform: scale(1.05, 1.05);
       -o-transform: scale(1.05, 1.05);
-      transform: scale(1.05, 1.05);
-      -webkit-filter: blur(8px);
-      filter: blur(8px); }
+      transform: scale(1.05, 1.05);}
     .dropzone .dz-preview .dz-image {
       border-radius: 9px;
         display: block;

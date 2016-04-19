@@ -57,14 +57,18 @@ function pccomplaint_form($form, &$form_state) {
     );
     $form['complaint']['form']['order']['orderid'] = array(
         '#type' => 'textfield',
-        '#attribute' => array('placeholder' => t('orderid'))
+        '#attributes' => array('class' => array('required'), 'placeholder' => t('orderid')),
     );
     $form['complaint']['form']['order']['jobid'] = array(
         '#type' => 'textfield',
         '#attribute' => array('placeholder' => t('jobnumber')),
     );
 
-     $form['complaint']['form']['order']['txtJobId'] = array(
+    $form['complaint']['form']['order']['errorMsg'] = array(
+        '#markup' => "<span class='errorMsg'>".t('errorMsg')."</span>",
+    );
+
+    $form['complaint']['form']['order']['txtJobId'] = array(
         '#markup' => "<span class='txtJobId'>".t('txtJobId')."</span>",
         '#suffix' => '</div>',
     );
@@ -94,14 +98,16 @@ function pccomplaint_form($form, &$form_state) {
     $form['complaint']['form']['about']['complainttype'] = array(
         '#type' => 'select',
         '#options' => $options,
-        '#attributes' => array('class' => array('select-city-adress')),
+        '#attributes' => array('class' => array('select-city-adress', 'required')),
     );
     $form['complaint']['form']['about']['description'] = array(
         '#type' => 'textarea',
         '#rows' => 8,
-        '#attributes' => array('class' => array('select-city-adress'), 'placeholder' => t('Description about')),
+        '#attributes' => array('class' => array('select-city-adress'), 'placeholder' => t('Description about')), 
+    );
+    $form['complaint']['form']['about']['errorMsg'] = array(
+        '#markup' => "<span class='errorMsg'>".t('errorMsg')."</span>",
         '#suffix' => '</div>', 
- 
     );
     $form['complaint']['form']['about']['dropdrag'] = array( 
         '#type' => 'container',
@@ -159,7 +165,7 @@ function pccomplaint_form($form, &$form_state) {
       '#type' => 'submit',
       '#value' => t('submit form complaint'),
       '#prefix' => '<div class="complaintSubmit">',
-      '#suffix' => '</div>', 
+      '#suffix' => '</div>',       
     );
  // $form['#attributes'] = array('enctype' => 'multipart/form-data');
   return $form;

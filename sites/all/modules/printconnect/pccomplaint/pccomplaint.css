@@ -22,7 +22,7 @@
 }
    
 .blocdropdrag .dropzone {
-    background: url("http://flyer-fr.dev/sites/all/themes/printconnect/flyer/css/images/uploadicon.png") no-repeat center 15px;
+    background: url("/sites/all/themes/printconnect/flyer/css/images/uploadicon.png") no-repeat center 15px;
     border: 2px dashed #e7e3e3;
     min-height: 106px;
     padding: 4px;
@@ -34,9 +34,6 @@
 .blocdropdrag {
     height: 110px;
     line-height: 12px;
-}
-.dropzoneupload{
-    float: left;
 }
 
 .bloccomplaint:after,
@@ -123,7 +120,7 @@
 }
 
 .complaintSuccess {
-    background: url("http://flyer-fr.dev/sites/all/themes/printconnect/flyer/css/images/validicon.png") no-repeat 189px 30px;
+    background: url("/sites/all/themes/printconnect/flyer/css/images/validicon.png") no-repeat 189px 30px;
     border-bottom: 1px solid #e7e3e3;
     padding: 30px 42px;
 }
@@ -156,4 +153,9 @@
 .orderIssue #errorMsg,
 .identification #errorMsg {
     display: none;
+}
+
+#errorUpload {
+    display: block;
+    margin: 5px 0 0 158px;
 }

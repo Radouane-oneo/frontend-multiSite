@@ -500,16 +500,19 @@ function pcorders_form_pcpayments_request_form_alter(&$form, &$form_state) {
 
     //get methode de paiement
     $paymentPrice = ($order->orderItemsPayment[0]->price >0)? $order->orderItemsPayment[0]->price : t('Free');
-    $rowsOrders[] = array(
-        'class' => array('productItem'),
-        'data' => array(
-            $order->orderItemsPayment[0]->description,
-            array(
-                'data' => theme('price', array('value' => $paymentPrice, 'free' => TRUE)),
-                'class' => array('text-right'),
-            ),
-        ),
-    );
+    if(!empty($order->orderItemsPayment[0]->description)){
+          $rowsOrders[] = array(
+                'class' => array('productItem'),
+                'data' => array(
+                    $order->orderItemsPayment[0]->description,
+                    array(
+                        'data' => theme('price', array('value' => $paymentPrice, 'free' => TRUE)),
+                        'class' => array('text-right'),
+                    ),
+                ),
+            );
+    }
+  
 
     //get subTotalAmount
     /*$rowsOrders[] = array(

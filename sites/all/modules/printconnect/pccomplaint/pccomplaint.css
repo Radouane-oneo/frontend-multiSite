@@ -157,3 +157,9 @@
 .identification #errorMsg {
     display: none;
 }
+.complaintSuccess{
+    display: none;
+}
+.complaintSubmit{
+    display: block;
+}

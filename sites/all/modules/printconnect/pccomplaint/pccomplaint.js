@@ -28,17 +28,19 @@
             if(response == 'false') {
                 jQuery("#errorUpload").text('MessageErrorImage');
             } else {
-                jQuery("#errorUpload").text('good');    
+                jQuery("#errorUpload").text(Drupal.t('good'));    
             }
         },
         error: function (file, response) {
-            jQuery("#errorUpload").text('not good');
+            jQuery("#errorUpload").text(Drupal.t('good'));
             jQuery(file.previewElement).hide();
         }
     });    
     if (jQuery('#edit-orderid').val() == ''){
-        Dropzone.instances[0].disable();
-      //  jQuery("#errorUpload").text(Drupal.t('merci de remplir le numero de la commande')); 
+        jQuery('.dropzoneupload').click(function(){
+              jQuery("#errorUpload").text(Drupal.t('merci de remplir le numero de la commande'));
+        });
+        Dropzone.instances[0].disable(); 
     }    
     jQuery("#edit-submit").click(function(e){        
         actionComplaint(e,'submit');  
@@ -65,6 +67,7 @@
                     jQuery("#errorMsg").css({ "display":"none"});
                     Dropzone.instances[0].enable();
                     console.log('success');
+                    jQuery("#errorUpload").css({ "display":"none"});
                     if (action == 'submit'){
                         jQuery("#pccomplaint-form").submit();
                         jQuery("#pccomplaint-form .complaintSubmit").css({ "display":"none"});

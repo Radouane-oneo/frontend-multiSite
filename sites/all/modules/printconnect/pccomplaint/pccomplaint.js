@@ -2,7 +2,7 @@
     Dropzone.autoDiscover = false; 
       
     jQuery("#dZUpload").dropzone({
-        
+         
         addRemoveLinks: true,  
         removedfile: function(file) {
             var name = file.name;        
@@ -35,22 +35,25 @@
             jQuery("#errorUpload").text('not good');
             jQuery(file.previewElement).hide();
         }
-    });
-
+    });    
+    if (jQuery('#edit-orderid').val() == ''){
+        Dropzone.instances[0].disable();
+      //  jQuery("#errorUpload").text(Drupal.t('merci de remplir le numero de la commande')); 
+    }    
     jQuery("#edit-submit").click(function(e){        
         actionComplaint(e,'submit');  
     });
-    jQuery("#edit-orderid").change(function(e){
+    jQuery("#edit-orderid").change(function(e){       
         actionComplaint(e, 'orderid');  
     });
     function actionComplaint(e, action){       
         var span = document.getElementById("errorMsg");
         if  (isNaN(jQuery('#edit-orderid').val()) || (jQuery('#edit-orderid').val() == '')){             
             txt = document.createTextNode(Drupal.t('messageErrorOrderId'));
-            span.innerText = txt.textContent;            
+            span.innerText = txt.textContent;  
+            Dropzone.instances[0].disable();
+          //  jQuery("#errorUpload").text(Drupal.t('merci de remplir le numero de la commande')); 
             jQuery("#errorMsg").css({ "display":"inline"});
-            jQuery('#errorMsg').focus(); 
-          //  e.preventDefault();
         }
         else{
             jQuery("#errorMsg").css({ "display":"none"}); 
@@ -60,6 +63,7 @@
                 url: href,
                 success: function(){ 
                     jQuery("#errorMsg").css({ "display":"none"});
+                    Dropzone.instances[0].enable();
                     console.log('success');
                     if (action == 'submit'){
                         jQuery("#pccomplaint-form").submit();
@@ -69,7 +73,9 @@
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                     txt = document.createTextNode(Drupal.t('NotValidOrder'));
-                    span.innerText = txt.textContent;  
+                    span.innerText = txt.textContent; 
+                    Dropzone.instances[0].disable();
+                  //  jQuery("#errorUpload").text(Drupal.t('merci de remplir le numero de la commande')); 
                     jQuery("#errorMsg").css({ "display":"inline"});
                     jQuery('#errorMsg').focus(); 
                    // e.preventDefault();

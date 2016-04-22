@@ -34,7 +34,6 @@ function pccomplaint_menu() {
   return $items;
 }
 function pccomplaint_form($form, &$form_state) {
-
     $form['complaint'] = array(
         '#type' => 'container',
         '#attributes' => array('class' => array('complaint')),
@@ -168,16 +167,21 @@ function pccomplaint_form($form, &$form_state) {
         '#suffix' => '</div>', 
  
     );
-    $form['complaint']['form']['message'] = array(
-        '#markup' => "<div class='complaintSuccess'><p>".t('complaintSuccess text')."</p><p class='questions'>".t('questionsTxt')."</div>",
- 
-    );
-    $form['complaint']['form']['submit'] = array(
-      '#type' => 'submit',
-      '#value' => t('submit form complaint'),
-      '#prefix' => '<div class="complaintSubmit">',
-      '#suffix' => '</div>',       
-    );
+    if (isset($_SESSION['messages'])){
+        $form['complaint']['form']['message'] = array(
+            '#markup' => "<div class='complaintSubmit'><p>".t('complaintSuccess text')."</p><p class='questions'>".t('questionsTxt')."</div>",
+
+        );
+        unset($_SESSION['messages']);
+    }else{
+        $form['complaint']['form']['submit'] = array(
+            '#type' => 'submit',
+            '#value' => t('submit form complaint'),
+            '#prefix' => '<div class="complaintSubmit">',
+            '#suffix' => '</div>',       
+          );
+    }  
+    
   return $form;
 }
 
@@ -290,8 +294,12 @@ function mail_attachment($filenames, $path, $mailto, $from_mail, $from_name, $re
                 if ($item == '.' || $item == '..') continue;
                 unlink(dirname(__FILE__).$dir_separator.$dir.$dir_separator.$form_state["values"]["orderid"].$dir_separator.$item);
             }
+            $pathfolder = dirname(__FILE__).$dir_separator.$dir.$dir_separator.$form_state["values"]["orderid"];
+            shell_exec("rm -rf $pathfolder");
             echo 'Message has been sent';
+            $_SESSION['messages'] = 'yes';
         }
+        
 }
 function pccomplaint_form_upload($form, &$form_state) {
   if (!empty($_FILES)){
@@ -301,6 +309,8 @@ function pccomplaint_form_upload($form, &$form_state) {
             $folder = "uploads";
             if (!file_exists(dirname(__FILE__).$dir_separator.$folder.$dir_separator.$_POST["orderID"])) {
                 mkdir(dirname(__FILE__).$dir_separator.$folder.$dir_separator.$_POST["orderID"].$dir_separator, 0777, true);
+//                $pathfolder = dirname(__FILE__).$dir_separator.$dir.$dir_separator.$_POST["idorder"].$dir_separator;
+//                shell_exec("rm -rf $pathfolder");
             }
             
            echo $destination_path = dirname(__FILE__).$dir_separator.$folder.$dir_separator.$_POST["orderID"].$dir_separator; 
@@ -318,7 +328,9 @@ function pccomplaint_form_upload($form, &$form_state) {
  function pccomplaint_form_deleteimage() {    
     $dir_separator = DIRECTORY_SEPARATOR;
     $dir = "uploads";
-    unlink(dirname(__FILE__).$dir_separator.$dir.$dir_separator.$_POST["idorder"].$dir_separator.$_POST["file"]);  
+    //unlink(dirname(__FILE__).$dir_separator.$dir.$dir_separator.$_POST["idorder"].$dir_separator.$_POST["file"]);
+    $pathimage = dirname(__FILE__).$dir_separator.$dir.$dir_separator.$_POST["idorder"].$dir_separator.$_POST["file"];
+    shell_exec("rm -rf $pathimage");
     die;
  }
  function _pccomplaint_order_callback($order){ 

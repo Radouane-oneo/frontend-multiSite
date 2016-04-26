@@ -1,8 +1,6 @@
  jQuery(document).ready(function(e) {
-    Dropzone.autoDiscover = false; 
-      
-    jQuery("#dZUpload").dropzone({
-         
+    Dropzone.autoDiscover = false;      
+    jQuery("#dZUpload").dropzone({        
         addRemoveLinks: true,  
         removedfile: function(file) {
             var name = file.name;        
@@ -36,35 +34,58 @@
             jQuery(file.previewElement).hide();
         }
     });    
-    if (jQuery('#edit-orderid').val() == ''){
+    if (jQuery('#edit-orderid').val() == '' || isNaN(jQuery('#edit-orderid').val()) || jQuery('#edit-orderid').val().length > 8){
         jQuery('.dropzoneupload').click(function(){
-              jQuery("#errorUpload").text(Drupal.t('merci de remplir le numero de la commande'));
+              jQuery("#errorUpload").html("<span style='color:red'>"+Drupal.t('merci de remplir le numero de la commande')+"</span>");
+              jQuery('#edit-orderid').focus();
         });
         Dropzone.instances[0].disable(); 
     }    
     jQuery("#edit-submit").click(function(e){        
-        actionComplaint(e,'submit');  
+        if (jQuery('#dZUpload').hasClass('dz-started'))
+        {
+            actionComplaint(e,'submit');           
+        }
+        else{
+            jQuery("#errorUpload").show();
+            jQuery("#errorUpload").html("<span style='color:red'>"+Drupal.t('image requierd')+"</span>");
+            e.stopPropagation();
+            e.preventDefault();
+        }
+             
     });
     jQuery("#edit-orderid").change(function(e){       
         actionComplaint(e, 'orderid');  
     });
-    function actionComplaint(e, action){       
+    function actionComplaint(e, action){ 
+        jQuery('#content .complaintform .required').removeClass("error");
+        jQuery(".errorMsg").hide();
         var span = document.getElementById("errorMsg");
-        if  (isNaN(jQuery('#edit-orderid').val()) || (jQuery('#edit-orderid').val() == '')){             
+        span.innerText = '';
+        if  (isNaN(jQuery('#edit-orderid').val()) || (jQuery('#edit-orderid').val() == '')){ 
+            jQuery('#edit-orderid').addClass("error");
             txt = document.createTextNode(Drupal.t('messageErrorOrderId'));
             span.innerText = txt.textContent;  
             Dropzone.instances[0].disable();
           //  jQuery("#errorUpload").text(Drupal.t('merci de remplir le numero de la commande')); 
             jQuery("#errorMsg").css({ "display":"inline"});
+            e.stopPropagation();
+            e.preventDefault();
+        }else if (jQuery('#edit-orderid').val().length > 8){
+            jQuery("#errorMsg").css({ "display":"none"});
+            jQuery('#edit-orderid').addClass("error");
+            jQuery('#edit-orderid').parent().append('<div class="errorMsg">'+Drupal.t("Fill in 8 digits without OR prefix")+'</div>');
         }
         else{
             jQuery("#errorMsg").css({ "display":"none"}); 
             var href = "complaint/order/" + jQuery('#edit-orderid').val(); 
-            console.log(href);
+            jQuery('#box-progress').show();
             jQuery.ajax({           
                 url: href,
-                success: function(){ 
+                success: function(){
+                    jQuery('#box-progress').hide();
                     jQuery("#errorMsg").css({ "display":"none"});
+                    jQuery("#edit-orderid").removeClass('error');
                     Dropzone.instances[0].enable();
                     console.log('success');
                     jQuery("#errorUpload").css({ "display":"none"});
@@ -75,6 +96,8 @@
                     }
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    jQuery('#box-progress').hide();
+                    jQuery('#edit-orderid').addClass("error");
                     txt = document.createTextNode(Drupal.t('NotValidOrder'));
                     span.innerText = txt.textContent; 
                     Dropzone.instances[0].disable();

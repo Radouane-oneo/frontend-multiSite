@@ -1,3 +1,9 @@
+.youradress {
+  margin-bottom: 24px;
+}
+.youadress #edit-number{
+    width: 100px !important;
+}
 .complaintform{
     border: 1px solid #e7e3e3;
     background-color: #f1f1f1;
@@ -54,7 +60,11 @@
     width: 150px;
     text-transform: uppercase;
 }
-
+.bloccomplaint .labelorderleft {
+    margin-left: 6px;
+    text-transform: uppercase;
+    width: 100px;
+}
 .bloccomplaint input[type="text"],
 .bloccomplaint .select2-container > a.select2-choice,
 .bloccomplaint textarea {
@@ -63,14 +73,23 @@
     box-sizing: border-box;
 }
 
+.bloccomplaint input#edit-number,
+.bloccomplaint input#edit-postalcode{
+    width: 108px  !important;
+}
+
 .bloccomplaint .form-item {
     margin: 0 0 0 20px;
 }
-
+.bloccomplaint .form-item-number, .bloccomplaint .form-item-postalcode {
+    margin: 0 0 0 7px;
+}
 .bloccomplaint .labelorder span {
     color: red;
 }
-
+.bloccomplaint .labelorderleft span {
+    color: red;
+}
 .identification .txtJobId {
     float: right;
     margin: 5px 193px 0 0;
@@ -161,6 +180,6 @@
     display: block;
     margin: 5px 0 0 158px;
 }
-.dropzone .dz-preview.dz-image-preview {
-  background: rgba(0, 0, 0, 0) none repeat scroll 0 0 !important;
+.errorMsg{
+    color:red;
 }

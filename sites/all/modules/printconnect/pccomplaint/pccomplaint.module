@@ -31,13 +31,13 @@ function pccomplaint_menu() {
       'access arguments' => array('access content'),
       'type' => MENU_CALLBACK,
   );
-  $items['retour'] = array( 
-    'title' => 'retour page', //page title
-    'description' => '',
-    'page callback' => 'drupal_get_form', 
-    'page arguments' => array('pcretour_form'), //put the name of the form here
-    'access callback' => TRUE
-  );
+//  $items['retour'] = array( 
+//    'title' => 'retour page', //page title
+//    'description' => '',
+//    'page callback' => 'drupal_get_form', 
+//    'page arguments' => array('pcretour_form'), //put the name of the form here
+//    'access callback' => TRUE
+//  );
   return $items;
 }
 function pccomplaint_form($form, &$form_state) {
@@ -295,7 +295,7 @@ function mail_attachment($filenames, $path, $mailto, $from_mail, $from_name, $re
 
     if(!$mail->send()) {
         echo 'Message could not be sent.';
-        echo 'Mailer Error: ' . $mail->ErrorInfo;
+        echo 'Mailer Error: ' . $mail->ErrorInfo;die;
         } else {
             foreach (scandir(dirname(__FILE__).$dir_separator.$dir.$dir_separator.$form_state["values"]["orderid"].$dir_separator) as $item) {
                 if ($item == '.' || $item == '..') continue;
@@ -305,9 +305,8 @@ function mail_attachment($filenames, $path, $mailto, $from_mail, $from_name, $re
        
             shell_exec("rm -rf $pathfolder");
             echo 'Message has been sent';
-            $_SESSION['messages'] = 'yes';
-        }
-        
+            $_SESSION['messages'] = 'yes';            
+        }        
 }
 function pccomplaint_form_upload($form, &$form_state) {
   if (!empty($_FILES)){
@@ -350,155 +349,4 @@ function pccomplaint_form_upload($form, &$form_state) {
          echo 'false';
      }
  die;
-}
-function pcretour_form($form, &$form_state) {
-    $form['retour'] = array(
-        '#type' => 'container',
-        '#attributes' => array('class' => array('complaint')),
-    );
-    $form['retour']['description'] = array(
-        '#markup' => '<div class="descComplait">' .t('desccomplaint').'</div>'
-    );
-    $form['retour']['form'] = array(
-        '#type' => 'container',
-        '#attributes' => array('class' => array('complaintform')),
-    );
-    
-    //bloc order
-    $form['retour']['form']['order'] = array(
-        '#type' => 'container',
-        '#attributes' => array('class' => array('bloccomplaint')),
-    );
-    $form['retour']['form']['order']['titleorder'] = array(
-        '#markup' => t('title order complaint'),
-        '#prefix' => '<h3>',
-        '#suffix' => '</h3>', 
-    );
-    $form['retour']['form']['order']['labelorder'] = array(
-        '#markup' => t('labelorder')."<span> *</span>",
-        '#prefix' => '<div class="identification"><div class="labelorder">',
-        '#suffix' => '</div>', 
-    );
-    $form['retour']['form']['order']['orderid'] = array(
-        '#type' => 'textfield',
-        '#attributes' => array('class' => array('required'), 'placeholder' => t('orderid')),
-    );
-    $form['retour']['form']['order']['jobid'] = array(
-        '#type' => 'textfield',
-        '#attribute' => array('placeholder' => t('jobnumber')),
-    );
-
-    $form['retour']['form']['order']['errorMsg'] = array(
-        '#markup' => "<span id='errorMsg'></span>",
-    );
-
-    $form['retour']['form']['order']['txtJobId'] = array(
-        '#markup' => "<span class='txtJobId'>".t('txtJobId')."</span>",
-        '#suffix' => '</div>',
-    );
-    
-    //bloc about
-    $form['retour']['form']['about'] = array(
-        '#type' => 'container',
-        '#attributes' => array('class' => array('bloccomplaint')),
-    );
-    $form['retour']['form']['about']['titleorder'] = array(
-        '#markup' => t('title about the issue'),
-        '#prefix' => '<h3>',
-        '#suffix' => '</h3>', 
-    );
-    $form['retour']['form']['about']['labelorder'] = array(
-        '#markup' => t('your complaint')."<span> *</span>",
-        '#prefix' => '<div class="orderIssue"><div class="labelorder">',
-        '#suffix' => '</div>', 
-    );
-    $options = array (
-       //'0' => t('complaint type'),
-       "0"=>t('not delivered'),
-       "1"=>t('quality'),
-       "2"=>t('damaged'),
-       "3"=>t('other'),
-    );
-    $form['retour']['form']['about']['complainttype'] = array(
-        '#type' => 'select',
-        '#options' => $options,
-        '#attributes' => array('class' => array('select-city-adress', 'required')),
-    );
-    $form['retour']['form']['about']['descriptionabout'] = array(
-        '#type' => 'textarea',
-        '#rows' => 8,
-        '#attributes' => array('class' => array('select-city-adress'), 'placeholder' => t('Description about')), 
-    );
-    $form['retour']['form']['about']['errorMsg'] = array(
-        '#markup' => "<span id='errorMsg'>".t('errorMsg')."</span>",
-        '#suffix' => '</div>', 
-    );
-    $form['retour']['form']['about']['dropdrag'] = array( 
-        '#type' => 'container',
-        '#attributes' => array('class' => array('blocdropdrag')),
-    );
-     $form['retour']['form']['about']['dropdrag']['picture'] = array(
-        '#markup' => "<span class='dropTitle'>".t('pictures')."</span>"."<br><p>".t('required text')."</p>",
-        '#prefix' => '<div class="blocpicture">',
-        '#suffix' => '</div>', 
-    
-        );
-    $form['retour']['form']['about']['dropdrag']['upload'] = array(
-        '#markup' => '<div id="dZUpload" class="dropzone">
-                            <div class="dz-default dz-message">'.t('drag and drop to upload or browse files').'</div>
-                      </div>',
-        '#prefix' => '<div class="dropzoneupload">',
-        '#suffix' => '</div>', 
-    
-        );
-    $form['retour']['form']['about']['dropdrag']['message'] = array(
-        '#markup' => '<div id="errorUpload"></div>'
-    );
-    //bloc what would you like us to do
-    $form['retour']['form']['like'] = array(
-        '#type' => 'container',
-        '#attributes' => array('class' => array('bloccomplaint')),
-    );
-    $form['retour']['form']['like']['titleorder'] = array(
-        '#markup' => t('what would you like us to do'),
-        '#prefix' => '<h3>',
-        '#suffix' => '</h3>', 
-    );
-    $form['retour']['form']['like']['labelorder'] = array(
-        '#markup' => t('compensation')."<span> *</span>",
-        '#prefix' => '<div class="compensation"><div class="labelorder">',
-        '#suffix' => '</div>', 
-    );
-    $options = array (
-       "0"=>t('reprint'),
-       "1"=>t('compensation')
-    );
-    $form['retour']['form']['like']['compensation'] = array(
-        '#type' => 'select',
-        '#options' => $options,
-        '#attributes' => array('class' => array('select-city-adress'), 'placeholder' => t('compensation')),
-    );
-    $form['retour']['form']['like']['descriptionlike'] = array(
-        '#type' => 'textarea',
-        '#rows' => 8,
-        '#attributes' => array('class' => array('select-city-adress'), 'placeholder' => t('Comments')),
-        '#suffix' => '</div>', 
- 
-    );
-    if (isset($_SESSION['messages'])){
-        $form['retour']['form']['message'] = array(
-            '#markup' => "<div class='complaintSubmit'><p>".t('complaintSuccess text')."</p><p class='questions'>".t('questionsTxt')."</div>",
-
-        );
-        unset($_SESSION['messages']);
-    }else{
-        $form['retour']['form']['submit'] = array(
-            '#type' => 'submit',
-            '#value' => t('submit form complaint'),
-            '#prefix' => '<div class="complaintSubmit">',
-            '#suffix' => '</div>',       
-          );
-    }  
-    
-  return $form;
 }

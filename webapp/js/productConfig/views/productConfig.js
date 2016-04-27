@@ -198,10 +198,12 @@ define([
                 "price" : price,
                 "quantity" : quantity
             });
+	    if ($('#wcf').val() != '' && $('#hcf').val() != '') {
+                this.calculCF();
+	    }
             return false;
         },
         calculCF: function(e){
-            
             var minHCF = this.config.labels['minHCF'];
             var maxHCF = this.config.labels['maxHCF'];
             var minWCF = this.config.labels['minWCF'];

@@ -107,7 +107,7 @@
                             <input type="hidden" id="textTolNotValid" class="msgErrorCF" value="<%= config.labels['textTolNotValid'] %>">
                             <input type="hidden" id="et" class="msgErrorCF" value="<%= config.labels['et'] %>">
                             <div class="box-info clearfix">
-                                <div class='msgErrorCF'></div>
+                                <div class='msgErrorCF'><%= config.labels['infoGlobalSurface'] + ' ' + (config.labels['maxHCF'] * config.labels['maxWCF']) / 1000000 +' m²'%></div>
                                 <span class="moreInfo">?
                                     <span class="infoTxt" position="-60px">
                                         <strong><%= config.labels['infoTitle'] %></strong>
@@ -153,7 +153,7 @@
             i = i+ 1;
             var checked = (price['quantity']==model.quantity && !customQuantity)?"checked='checked'":"";
             %>
-            <tr class="<%= (i%2==0)?'even':'odd' %> <%= (!price['crossedPrice'] && price['promoPrice'] && (!price['promoEndDate'] || (new Date()) <= new Date(price['promoEndDate'])))? 'superdeal':'' %>">
+            <tr class="<%= (i%2==0)?'even':'odd' %> <%= (!price['crossedPrice'] && price['promoPrice'] && (!price['promoEndDate'] || (new Date()) <= new Date(price['promoEndDate'])))? 'superdeal':'' %>" style="<%= (model.heightCF && model.widthCF && model.quantity != 1)? 'display:none' : '' %>">
                 <td class="first-child">
                     <div class="form-item form-type-radio form-item-quantity">
                         <input type="radio" value="<%= price['quantity'] %>" name="quantity"

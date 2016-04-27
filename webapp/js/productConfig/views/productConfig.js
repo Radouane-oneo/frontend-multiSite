@@ -124,7 +124,7 @@ define([
             var oldSelectedValue = selectEl.find("div.selected-item").attr("data-id");
             var selectedItems = [];
             var me = this;
-            if(!submit)
+            if(!submit && !$(e.currentTarget).parents("li").hasClass('CF'))
             selectEl.click();
 
             this.$("div.selected-item").each(function(){
@@ -194,12 +194,13 @@ define([
             } else {
                 price = this.model.calculatePrice(quantity);
             }
-            this.model.set({
-                "price" : price,
-                "quantity" : quantity
-            });
 	    if ($('#wcf').val() != '' && $('#hcf').val() != '') {
                 this.calculCF();
+            } else {
+                this.model.set({
+                    "price" : price,
+                    "quantity" : quantity
+                });
 	    }
             return false;
         },
@@ -284,11 +285,12 @@ define([
                 $('.msgCFValid').text($('#msgCFValid').val());
                 $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
                 $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"}); 
+	        var customQte = $('.customNumber input.form-text').val();
                 this.model.set({
                            "widthCF": wcfVal,
                            "heightCF":hcfVal,
                            "CF":"CF",
-                           "quantity" : 1
+                           "quantity" : customQte
                        },{silent: true});
                    this.$("li.CF a").trigger("click");
             }

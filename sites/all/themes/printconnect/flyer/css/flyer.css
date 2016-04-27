@@ -11759,14 +11759,14 @@ margin-top:20px;
   font-family: 'Open Sans', sans-serif;
   font-weight: 400;
   font-size: 14px;
-  padding: 8px 30px 8px 41px;
+  padding: 8px 9px 8px 38px;
   border-radius: 4px 4px 4px 4px;
   border: none;
   text-align: left;
   background: #77b800;
-  background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/lp15/elements/icon_action.png") no-repeat 7px center /20px 20px,-webkit-linear-gradient(top, #77b800 0%, #669c02 100%);
-  background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/lp15/elements/icon_action.png") no-repeat 7px center /20px 20px,-moz-linear-gradient(top, #77b800 0%, #669c02 100%);
-  background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/lp15/elements/icon_action.png") no-repeat 7px center /20px 20px,-o-linear-gradient(top, #77b800 0%, #669c02 100%);
+  background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/lp15/elements/icon_action.png") no-repeat 12px center /20px 20px,-webkit-linear-gradient(top, #77b800 0%, #669c02 100%);
+  background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/lp15/elements/icon_action.png") no-repeat 12px center /20px 20px,-moz-linear-gradient(top, #77b800 0%, #669c02 100%);
+  background: url("http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/lp15/elements/icon_action.png") no-repeat 12px center /20px 20px,-o-linear-gradient(top, #77b800 0%, #669c02 100%);
   background: -ms-linear-gradient(top, #77b800 0%,#669c02 100%);
   width: auto;
 } 

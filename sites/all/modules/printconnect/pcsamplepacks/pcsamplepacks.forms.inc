@@ -25,7 +25,7 @@ function pcsamplepacks_request_form($form, $form_state) {
     if($lng == "befr/samplepack" || $lng == "lufr/samplepack" || $lng == "frfr/samplepack" ){
         $img = "http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/flippage/bann_fr.png";   
     }else if($lng == "nlnl/samplepack"){
-          $img = "http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/flippage/nlnl_banner_SampleFlip_request_OK.jpg";
+          $img = "http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/flippage/bann_nl.png";
     }else{
          $img = "http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/flippage/bann_nl.png";
     }
@@ -337,7 +337,7 @@ function pcsamplepacks_requested_form($form, $form_state) {
     if($lng == "befr/samplepack" || $lng == "lufr/samplepack" || $lng == "frfr/samplepack" ){
         $img = "http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/flippage/bann_fr.png";   
     }else if($lng == "nlnl/samplepack"){
-          $img = "http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/flippage/nlnl_banner_SampleFlip_request_OK.jpg";
+          $img = "http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/flippage/bann_nl.png";
     }else{
          $img = "http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/flippage/bann_nl.png";
     }

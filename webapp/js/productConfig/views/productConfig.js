@@ -162,7 +162,7 @@ define([
             }else{
                 var quantity = parseInt($(e.target).val());
                 var pricing = this.model.get("toolBoxGroup")["pricing"][quantity];
-                var price = (pricing["promoPrice"]) ? pricing["promoPrice"] : pricing["sellPrice"];
+                var price = (pricing["promoPrice"]&& (!pricing['promoEndDate'] || (new Date()) <= new Date(pricing['promoEndDate']))) ? pricing["promoPrice"] : pricing["sellPrice"];
                 this.model.set({
                     "price" : price,
                     "quantity" : quantity

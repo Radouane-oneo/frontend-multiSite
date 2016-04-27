@@ -61,12 +61,15 @@
 					<%
 					var directLink = "http://" + document.location.host + "/" + config.prefix + "/products/" + model.configuration['productId'] + "/" + encodeURIComponent(_.map(model.configuration.config, function(conf){ return conf.toolboxItemId; }).join(",")) + "/" + encodeURIComponent(model.options.join(",")) + "/" + model.quantity+"/"+model.id;
             		%>
-                                    <% if (model.customWidth == 0 && model.customHeight == 0){%>
-                                    
-					<div class="edit-job">
-						<a href="<%= directLink %>" class=""><%= config.labels["updateProduct"] %></a>
+                    
+                    <% if (model.customWidth == 0 && model.customHeight == 0){%>
+                    <div class="edit-job" style="line-height: 17.2px;">
+						<a style="line-height: 21px;" href="<%= directLink %>" class=""><%= config.labels["updateProduct"] %></a>
+						<%  _.each(model.options, function(option, i){ %>
+						   <div style="text-align: right">+ <%= priceTpl({price:option.price}) %> </div>
+						<% }); %>
 					</div>
-                                    <%}%>
+					<%}%>
 				</div>
 			</div>
 			<!-- end preview -->

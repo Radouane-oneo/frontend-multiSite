@@ -23,8 +23,8 @@ define([
                 "model" : this.model.toJSON(),
                 "config" : this.config,
                "priceTpl" : _.template(priceTemplate)
-            }));
-            $(this.config.containerId).find("#methodePayment").html(this.$el); 
+            })); 
+            $(this.config.containerId).find("#methodePayment").html(this.$el);
             this.changePayementMethodImg();        
         },
         checkInputMethodPayment : function(e){

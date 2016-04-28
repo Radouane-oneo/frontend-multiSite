@@ -1,5 +1,8 @@
 .youradress {
-  margin-bottom: 24px;
+  margin-bottom: 30px;
+}
+#edit-youradress {
+    padding-bottom: 50px;
 }
 .youadress #edit-number{
     width: 100px !important;
@@ -57,13 +60,13 @@
 }
 
 .bloccomplaint .labelorder {
-    width: 150px;
+    width: 130px;
     text-transform: uppercase;
 }
 .bloccomplaint .labelorderleft {
-    margin-left: 6px;
+    margin-left: 14px;
     text-transform: uppercase;
-    width: 100px;
+    width: 95px;
 }
 .bloccomplaint input[type="text"],
 .bloccomplaint .select2-container > a.select2-choice,
@@ -80,6 +83,7 @@
 
 .bloccomplaint .form-item {
     margin: 0 0 0 20px;
+    position: relative;
 }
 .bloccomplaint .form-item-number, .bloccomplaint .form-item-postalcode {
     margin: 0 0 0 7px;
@@ -127,8 +131,9 @@
 
 .complaintSubmit {
     padding: 30px 42px;
-    width: 420px;
+    width: 430px;
     float: right;
+    margin-right: 24px;
 }
 
 .complaintSubmit input.ui-button {
@@ -182,4 +187,7 @@
 }
 .errorMsg{
     color:red;
+    position: absolute;
+    margin: 3px 0;
+    width: 120px;
 }

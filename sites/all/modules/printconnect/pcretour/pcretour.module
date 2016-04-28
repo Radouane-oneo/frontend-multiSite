@@ -3,8 +3,8 @@ use printconnect\Orders\Factory;
 function pcretour_menu() {
   $items = array();
   $items['retour'] = array( 
-    'title' => 'retour page', //page title
-    'description' => '',
+    'title' => '', //page title
+    'description' => 'qseqfqzsef',
     'page callback' => 'drupal_get_form', 
     'page arguments' => array('pcretour_form'), //put the name of the form here
     'access callback' => TRUE
@@ -30,7 +30,7 @@ function pcretour_form($form, &$form_state) {
         '#attributes' => array('class' => array('bloccomplaint')),
     );
     $form['retour']['form']['order']['titleorder'] = array(
-        '#markup' => t('title order complaint'),
+        '#markup' => t('title retour'),
         '#prefix' => '<h3>',
         '#suffix' => '</h3>', 
     );

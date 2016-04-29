@@ -12,13 +12,20 @@ function pcretour_menu() {
   return $items;
 }
 function pcretour_form($form, &$form_state) {
+//   $apikey = variable_get('pc_apikey');
+//    $url = variable_get('pc_url');
+//   $url .= "label?orderId=".$orderId."&jobId=".$params['jobid']."&boxes=".$params['numberboxselect']."&address[]=".$params['street']."&address[]=".$params['number']."&address[]=".$params['postalcode']."&address[]=".$params['city']."&apikey=".$apikey."&language=13";
+//$url = "http://backend.chadi.oneo.dev/rest/label?orderId=&jobId=1735169&boxes=2&address[]=street&address[]=number&address[]=zipcode&address[]=city&apikey=70817cdde5fdca7c4e2b0a8d3d119fd392406a0e&language=13";
+//
+//   $response = file_get_contents($url);
+//  echo $url =  explode('[]', $response);
+//   $url =  $url[1];
+//   var_dump($url);die;
+//   drupal_goto($url); // die('rrr'); 
     $form['retour'] = array(
         '#type' => 'container',
         '#attributes' => array('class' => array('complaint')),
     );
-//    $form['retour']['description'] = array(
-//        '#markup' => '<div class="descComplait">' .t('desccomplaint').'</div>'
-//    );
     $form['retour']['form'] = array(
         '#type' => 'container',
         '#attributes' => array('class' => array('complaintform')),
@@ -110,9 +117,7 @@ function pcretour_form($form, &$form_state) {
     $form['retour']['form']['youradress']['errorMsg'] = array(
         '#markup' => "<span id='errorMsg'></span>",
         '#suffix' => '</div>',
-    );
-
-    
+    );  
 
     //RETURN SENDING
     $form['retour']['form']['numberbox'] = array(
@@ -170,13 +175,12 @@ function pcretour_form($form, &$form_state) {
 function pcretour_form_validate($form, &$form_state) {
 }
 function pcretour_form_submit($form, &$form_state) {
-   pcretour_notify($form_state, 'flyermailer@gmail.com');
+    pcretour_notify($form_state, 'flyermailer@gmail.com');    
 }
 function pcretour_notify($form_state, $mailto) {
     $params = array();    
     $order = \printconnect\Orders\Factory::Get($form_state["values"]["orderid"], false);
-    $customer = \printconnect\Customers\Factory::Get($order->customer);
-   
+    $customer = \printconnect\Customers\Factory::Get($order->customer);   
     $params['firstName'] = $customer->firstName;
     $params['email'] = $customer->email;
     $params['phone'] = $customer->phone;
@@ -224,7 +228,15 @@ function pcretour_notify($form_state, $mailto) {
     $message .= $params['url'];
    
     mail_retour($mailto,  $params['firstName'],$subject, $message, $orderId);
-   // drupal_set_message('This form has been emailed to '. $from);    
+    $apikey = variable_get('pc_apikey');
+    $url = variable_get('pc_url');
+    $url .= "label?orderId=".$orderId."&jobId=".$params['jobid']."&boxes=".$params['numberboxselect']."&address[]=".$params['street']."&address[]=".$params['number']."&address[]=".$params['postalcode']."&address[]=".$params['city']."&apikey=".$apikey."&language=13";
+//    //http://backend.chadi.oneo.dev/rest/label?orderId=814510&jobId=1735169&boxes=2&address[]=street&address[]=number&address[]=zipcode&address[]=city&apikey=70817cdde5fdca7c4e2b0a8d3d119fd392406a0e&language=13
+
+   $response = file_get_contents($url);
+   $url =  explode('[]', $response);
+   $url =  $url[1];
+   drupal_goto($url);  die('rrr'); 
 }
 function mail_retour($mailto, $from_name, $subject, $message, $orderId) {
        

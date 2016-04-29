@@ -1,4 +1,9 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800&subset=latin,latin-ext);
+@font-face{
+	font-family:"Segoe UI";
+	src:url("http://www.myfontfree.com/data/54/s/segoe-ui/SEGOEUI.TTF");
+}
+
 /* Browser text selection */
 ::selection {
 	color: #fff;

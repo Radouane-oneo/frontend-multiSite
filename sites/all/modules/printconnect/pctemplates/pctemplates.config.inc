@@ -748,22 +748,9 @@ function pctemplates_config_form2($form, &$form_state, $templateId, $productId =
             ),
             '#prefix'=>'<div class="allContentImage">', 
             'image' => array(
-            '#theme' => 'designtoollinkBtt',
-            '#designtoolTemplateId' => $template->designTemplates->designToolTemplateId,
-            '#title' => $template->designTemplates->name,
-            '#content' => array(
                 '#theme' => 'pcfilesimage',
                 '#file' => $thumbnail->fileId,
                 '#attributes' => array('class' => 'thumbnailSize'),
-            ),
-            '#ribbons' => 'design',
-            '#callback' => 'templates/callback/order/',
-            '#oi' => array(
-                'priceGroupId' => $priceGroupId,
-                'quantity' => $qty,
-                'options' => array(),
-            ),
-            '#versioning' => TRUE,
             ),
             '#suffix' => '</div>', 
             );
@@ -1216,19 +1203,10 @@ function pctemplates_config_form2($form, &$form_state, $templateId, $productId =
   $form['actions']['design'] = array(
       '#prefix' => '<div class="button-wrapper">',
       '#suffix' => '</div>',
-      '#theme' => 'designtoollinkBtt',
-      '#designtoolTemplateId' => $template->designTemplates->designToolTemplateId,
-      '#title' => $template->designTemplates->name,
-      '#content' => t('Start design'),
-      '#ribbons' => 'design',
-      '#callback' => 'templates/callback/order/',
-      '#oi' => array(
-          'priceGroupId' => $priceGroupId,
-          'quantity' => $qty,
-          'options' => $options,
-      ),
-      '#versioning' => TRUE,
-      '#attributes' => array('class' => array('button', 'action')),
+      '#type' => 'submit',
+      '#value' => t('Start design'),
+      '#submit' => array('pctemplates_config_form2_submit'),
+      '#attributes' => array('class' => array('button', 'action', 'design')),
   );
 
   $form['specifications'] = array(
@@ -1362,6 +1340,7 @@ function pctemplates_config_form2($form, &$form_state, $templateId, $productId =
   $form_state['storage']['productId'] = $productId;
   $form_state['storage']['items'] = $items;
   $form_state['storage']['options'] = $options;
+  $form_state['storage']['templateId'] = $template->designTemplates->designToolTemplateId;
 
   return $form;
 }
@@ -1453,4 +1432,24 @@ function pctemplates_form_pctemplates_config_form2_alter(&$form, &$form_state) {
       }
     }
   }
+}
+
+function pctemplates_config_form2_submit($form, &$form_state){
+    
+    $priceGroupId = $form_state['storage']['priceGroupId'];
+    $qty = $form_state['storage']['qty'];
+    $options = $form_state['storage']['options'];
+    $templateId = $form_state['storage']['templateId'];
+    
+    $cart = Carts\Factory::CurrentOrCreate();
+    Carts\Factory::Save($cart);
+    $cart->productId = isset($_SESSION['templateProductId']) ? $_SESSION['templateProductId'] : null;
+    $cart->templateId = $templateId;
+    $item = Carts\Factory::CreateItem($cart, $priceGroupId, $qty, NULL, NULL, $options, FALSE, '', '', '');
+    
+    $params = array('query' => array(
+            'id' => $item->id,
+    ));
+    
+    drupal_goto('cart', $params);
 }

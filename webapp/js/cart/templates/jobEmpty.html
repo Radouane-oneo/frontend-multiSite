@@ -72,7 +72,7 @@
 			<!-- end preview -->
 
 			<div class="prodactTemplates centroid-2" style="display: <%= (model.emailDesigner ==null)?'block':'none' %>;">
-				<div class="prodactHasTemplates <%= (model.hasProUpload == false && model.hasDummyUpload == true)? 'table-dummy': '' %>">
+				<div class="prodactHasTemplates <%= (model.hasProUpload == false && model.hasDummyUpload == true  && !model.designTemplate.designtoolTemplateId)? 'table-dummy': '' %>">
 					<div class="title-chose"><%= config.labels["designtoolTitle"] %></div>
 					<%  
                         var urlCallback = encodeURIComponent("http://" + document.location.host + "/" + config.prefix + "/cart/callback");
@@ -81,9 +81,11 @@
                         designtoolLink = designtoolLink.replace(/(&j=).*/,'');
                         var proUploadLink = designtoolLink + "&quickupload=1";
                         var dummyUploadLink = designtoolLink + "&dummyupload=1";
+                        if(model.designTemplate.designtoolTemplateId)
+                            designtoolLink = designtoolLink + "&t=" + model.designTemplate.designtoolTemplateId;
                     %>
                     
-                    <% if(model.hasProUpload == true && model.hasDummyUpload == true){ %>
+                    <% if(model.hasProUpload == true && model.hasDummyUpload == true && !model.designTemplate.designtoolTemplateId){ %>
 
                         <div class="poll-form poll-form1 bothmode hieghtelem">
                             <a href="" class="popupbtn showdesigntool">
@@ -135,7 +137,7 @@
                         </div>
                     <% } %>
 
-                    <% if(model.hasProUpload == true && model.hasDummyUpload == false){ %>
+                    <% if(model.hasProUpload == true && model.hasDummyUpload == false && !model.designTemplate.designtoolTemplateId){ %>
                         <div class="poll-form poll-form1 prouploadmode hieghtelem">
                             <a href="<%= config.designtoolLink %><%= proUploadLink %>" class="popupbtn designtool iframe fancybox.iframe">
                                 <span class="buttonlayout btnupfile">
@@ -154,7 +156,7 @@
                         <div class="cell"></div>
                     <% } %>
 
-                    <% if(model.hasProUpload == false && model.hasDummyUpload == true){ %>
+                    <% if(model.hasProUpload == false && model.hasDummyUpload == true && !model.designTemplate.designtoolTemplateId){ %>
                         <div class="poll-form poll-form1 dummyupload hieghtelem">
                             <a href="<%= config.designtoolLink %><%= dummyUploadLink %>" class="popupbtn designtool iframe fancybox.iframe">
                                 <span class="buttonlayout btnupfile">
@@ -173,7 +175,7 @@
 
                     <%
                         className = '';
-                        if(model.hasProUpload == false && model.hasDummyUpload == false){
+                        if((model.hasProUpload == false && model.hasDummyUpload == false) || model.designTemplate.designtoolTemplateId){
                             className = 'designToolOnly';   
                         }
                     %>

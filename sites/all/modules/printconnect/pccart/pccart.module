@@ -308,6 +308,7 @@ function new_cart_loadpage() {
         var GlobalVat = 0.21;
         var isConnected = " . (isset($_SESSION['customerid']) ? 1 : 0) . ";
         var GlobalDesigntoolLink = '".variable_get('pc_designtoolurl')."';
+        var orderItemId = " . (int)$_GET['id'] . ";
     </script>";
     $script .= "<style>#box-progress{display: block;}</style>";
     

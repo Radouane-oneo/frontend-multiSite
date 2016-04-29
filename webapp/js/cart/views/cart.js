@@ -48,6 +48,7 @@ define([
             clearInterval(timerSaveP);
             $("#save-progress-bar").find("div").stop(true).animate({width: 100 + '%'},1000, function(){
                 $('#box-progress').hide();
+                $('fieldset[data-orderitem="' + orderItemId + '"]').find(".designtoolmode a").click();
             });
             jQuery("#pccart-cart-form #jobBox  input[type='hidden']").each(function() {
                 products.push({ identifier: jQuery(this).attr('productId'), amount: parseFloat(jQuery(this).val()), currency: 'EUR', quantity: jQuery(this).attr('quantity') });

@@ -1053,7 +1053,7 @@ function pcproducts_calculator_form_submit(&$form, &$form_state) {
 function _pcproducts_rebuildaliasses() {
 
   $languages = \printconnect\Drupal\Functions::GetLanguages();
-
+  
   foreach ($languages as $language) {
 
     $products = Factory::GetAll($language);

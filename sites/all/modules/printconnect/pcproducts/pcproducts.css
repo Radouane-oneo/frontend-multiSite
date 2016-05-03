@@ -684,7 +684,15 @@ body #footer #block-pcproducts-list ul.menu li{
 }
 
 .msgErrorCF{ 
-  color: #f00 !important; 
+  color: #f00;
+  float: left;
+  max-width: 400%;
+}
+.no-error{ 
+  color: #646464;
+}
+.no-error strong{ 
+  font-weight: bold;
 }
 
 /* New CSS for Flyer migration */
@@ -914,6 +922,9 @@ span.datainfobul:after {
 
 .costumFormatBox .form-item-calcul-qte{
   border-top: 1px solid #e1e1e1;
+}
+.costumFormatBox .only-contity{
+  border-top: 0;
 }
 
 .customNumber{

@@ -107,7 +107,7 @@
                             <input type="hidden" id="textTolNotValid" class="msgErrorCF" value="<%= config.labels['textTolNotValid'] %>">
                             <input type="hidden" id="et" class="msgErrorCF" value="<%= config.labels['et'] %>">
                             <div class="box-info clearfix">
-                                <div class='msgErrorCF'><%= config.labels['infoGlobalSurface'] + ' ' + (config.labels['maxHCF'] * config.labels['maxWCF']) / 1000000 +' m²'%></div>
+                                <div class='msgErrorCF no-error'><%= config.labels['infoGlobalSurface'] + ' <strong>' + (config.labels['maxHCF'] * config.labels['maxWCF']) / 1000000 +' m²</strong>'%></div>
                                 <span class="moreInfo">?
                                     <span class="infoTxt" position="-60px">
                                         <strong><%= config.labels['infoTitle'] %></strong>
@@ -131,6 +131,18 @@
             </div>
         </div>
         <!-- END Costum format Box -->
+        <% }else{ %>
+            <div class="detailtechnique-wrapper costumFormatBox">
+                <div class="blocCustomFormat">
+                    <div class="inputCustomFormat form-item form-type-textfield form-item-custom form-item-calcul-qte only-contity">
+                        <label class="bold-txt label-txt" for="edit-custom"><%= config.labels["enterQuantity"] %></label>
+                        <div class="wrap-input-calcul customNumber">
+                            <input type="text" class="form-text" maxlength="128" size="60" value="<%= model.quantity %>" name="custom" id="edit-custom"><span class="add numberbtn">+</span><span class="remove numberbtn">-</span>
+                            <input type="submit" value="<%= config.labels['calculate'] %>" name="op" id="edit-calculer" class="ajax-calculate form-submit ui-button ui-widget ui-state-default ui-corner-all btn-calcul" role="button">
+                        </div>
+                    </div>
+                </div>
+        </div>
         <% } %>
 
         <!-- pricesTable -->

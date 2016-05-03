@@ -216,40 +216,47 @@ define([
             if (wcf == '' || hcf == ''){
                 if (wcf == '') $('#wcf').css({ "border":"1px solid red", "color":"red"});else $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
                 if (hcf == '') $('#hcf').css({ "border":"1px solid red", "color":"red"}); else $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                $('.msgErrorCF').removeClass('no-error');
                 $('.msgErrorCF').text($('#msgErrorCF').val());
                 return false;
             }
             if (isNaN(hcf) && isNaN(wcf)){
                 $('#hcf').css({ "border":"1px solid red", "color":"red"});
                 $('#wcf').css({ "border":"1px solid red", "color":"red"});
-                console.log($('#msgErrorCFNotFloat').val());
+                $('.msgErrorCF').removeClass('no-error');
                 $('.msgErrorCF').text($('#msgErrorCFNotFloat').val());
                 return false;
             }
             else{
+                //$('.msgErrorCF').removeClass('no-error');
                 $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
                 $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});  
             }
             if (isNaN(hcf)){
+                $('.msgErrorCF').removeClass('no-error');
                 $('#hcf').css({ "border":"1px solid red", "color":"red"});
                 $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
                 $('.msgErrorCF').text($('#msgErrorCFNotFloat').val());
                 return false;
             }
             else {
+
                 $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
             }
             if(isNaN(wcf)){
+                $('.msgErrorCF').removeClass('no-error');
                 $('#wcf').css({ "border":"1px solid red", "color":"red"});
                 $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
                 $('.msgErrorCF').text($('#msgErrorCFNotFloat').val());
                 return false;
             }
             else
+                $('.msgErrorCF').addClass('no-error');
                 $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
             var wcfVal = parseFloat(wcf.replace(",", "."));                      
             var hcfVal = parseFloat(hcf.replace(",", "."));
             if ( (hcfVal < minHCF || hcfVal > maxHCF) && (wcfVal < minWCF || wcfVal > maxWCF)){
+                $('.msgErrorCF').removeClass('no-error');
                 $('#hcf').css({ "border":"1px solid red", "color":"red"});
                 $('#wcf').css({ "border":"1px solid red", "color":"red"});                
                 $('.msgErrorCF').html(
@@ -259,12 +266,13 @@ define([
                 return false;
             }
             if ( wcfVal < minWCF || wcfVal > maxWCF){
-                console.log(minWCF);
+                $('.msgErrorCF').removeClass('no-error');
                 $('#wcf').css({ "border":"1px solid red", "color":"red"});
                 $('.msgErrorCF').text($('#textWidthNotValid').val() +" "+ minWCF + " mm " + $('#et').val() +" " +maxWCF+ " mm.");
                 return false;
             }
             if ( hcfVal < minHCF || hcfVal > maxHCF){
+                $('.msgErrorCF').removeClass('no-error');
                 $('#hcf').css({ "border":"1px solid red", "color":"red"});
                 $('.msgErrorCF').text($('#textHeightNotValid').val() +" "+ minHCF + " mm "  + $('#et').val()+" " +maxHCF+ " mm.");
                 return false;
@@ -272,7 +280,7 @@ define([
             
             $('.msgErrorCF').text("");              
             if (wcfVal > hcfVal) var cfTol = wcfVal / hcfVal; else var cfTol = hcfVal / wcfVal;
-            console.log('minT'+ maxTOL);
+            $('.msgErrorCF').removeClass('no-error');
             if ( cfTol < minTOL || cfTol > maxTOL) {
                 $('#wcf').css({ "border":"1px solid red", "color":"red"});
                 $('#hcf').css({ "border":"1px solid red", "color":"red"});
@@ -283,6 +291,7 @@ define([
             if (( wcfVal >= minWCF && wcfVal <= maxWCF ) &&  ( hcfVal >= minHCF && hcfVal <= maxHCF ) &&  ( cfTol >= minTOL && cfTol <= maxTOL ))
             {                
                 $('.msgCFValid').text($('#msgCFValid').val());
+                $('.msgErrorCF').addClass('no-error');
                 $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
                 $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"}); 
 	        var customQte = $('.customNumber input.form-text').val();

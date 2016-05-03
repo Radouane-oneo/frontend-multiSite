@@ -763,6 +763,7 @@ function getLabels($edit = false, $productId) {
         "linkTextControl" =>t('linkTextControl'),
         "infoTitle" =>t('About Custom format'),
         "infoDescription" =>t('Content about the restrictions of custom format.'),
+	"infoGlobalSurface" => t('globalSurface'),
         
     );
 

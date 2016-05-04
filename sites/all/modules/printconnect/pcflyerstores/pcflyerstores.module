@@ -10,7 +10,8 @@ $mapLanguage =  $language->language == 'fr-Be' ? 'fr' : 'nl';
 $_SESSION["CountryCode"] = $defaultCountryCode;
 $_SESSION["stores"] = \printconnect\Stores\Factory::Find($defaultCountryCode, $region, $postalcode);   
 }
-    drupal_add_js('https://maps.googleapis.com/maps/api/js?key=AIzaSyBS0SrsMbBXJ_v2kkgCvbiqwFUatl1pd_s&libraries=geometry,places&sensor=true&language='.$mapLanguage,'external');
+    drupal_add_js('https://maps.googleapis.com/maps/api/js?key=AIzaSyBS0SrsMbBXJ_v2kkgCvbiqwFUatl1pd_s&libraries=geometry,places&language='.$mapLanguage,'external');
+	//drupal_add_js('https://maps.googleapis.com/maps/api/js?key=AIzaSyBS0SrsMbBXJ_v2kkgCvbiqwFUatl1pd_s&libraries=geometry,places&sensor=true&language='.$mapLanguage,'external');
 }
 function pcflyerstores_menu() {
     $items['stores/picker'] = array(

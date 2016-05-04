@@ -37,7 +37,7 @@
                     <%if (orderItem.options.length>0) { %>
                         <% _.each(orderItem.options, function(option, i){ %>
                             <tr>
-                                <td><%=option.optionName %></td>
+                                <td style="padding-left:  47px"><%=option.optionName %></td>
                                 <td class='last-child'><%= priceTpl({price:option.price,classToAdd:'pricepreflight'}) %></td>
                             </tr>
                         <% }); %>

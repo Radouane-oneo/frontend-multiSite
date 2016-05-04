@@ -1,7 +1,6 @@
 jQuery(document).ready(function(e) {
    
-    jQuery('select:not(#pcproducts-calculator-form select)').select2(); 
-
+    jQuery('select:not(#pcproducts-calculator-form select)').select2();
     if (jQuery('#homeSlider').length) {
         jQuery('#homeSlider ul').cycle({
             pager:'#pagerSliderHolder',

@@ -65,6 +65,9 @@ select.selectBox{
 .selectBox-dropdown-menu {
   position: absolute;
   z-index: 99999;
+  
+  z-index: 900;
+  
   max-height: 200px;
   min-height: 1em;
   border: solid 1px #BBB; /* should be the same border width as .selectBox-dropdown */

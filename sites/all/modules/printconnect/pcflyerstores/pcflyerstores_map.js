@@ -45,7 +45,7 @@ function chooseMarker(id) {
 	    if ($('#items_ li:not(:hidden)').length == 0 && attr == 'postalCode') {
 	       $.each(postalCodes, function(code, Bposition) {
 		   if (input == code) {
-			console.log('yess '+Bposition);
+			//console.log('yess '+Bposition);
 			var targetPosition = Bposition.split('_');
 			var latLng = new google.maps.LatLng(targetPosition[0], targetPosition[1]); // returns LatLng object
                         map.setCenter(latLng);
@@ -161,7 +161,7 @@ function chooseMarker(id) {
 	    });
 	    $('.pcflyerstores-store-link').live('mousedown', function(){
 		var ids = $(this).find('.place').attr('id').split('_');
-		console.log(ids);
+		//console.log(ids);
                if (openInfoWindow) openInfoWindow.close();
                google.maps.event.trigger(markerObjects[$(this).find('.place').attr('po')], 'click');
 		return false;

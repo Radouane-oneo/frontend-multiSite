@@ -75,7 +75,7 @@
               e.preventDefault();
           }
           else{
-              jQuery("#pccomplaint-form").submit();
+            //  jQuery("#pccomplaint-form").submit();
 //                jQuery("#pccomplaint-form .complaintSubmit").css({ "display":"none"});
 //                jQuery(".complaintSuccess").css({ "display":"block"});
           }
@@ -109,28 +109,29 @@
             jQuery.ajax({           
                 url: href,
                 success: function(data){
+                    
                     if (!data.id) 
-                    {
+                    {                          
                         displayerror();
                     }
                     else
                     {
-                        jQuery('#box-progress').hide();
-                        jQuery("#errorMsg").css({ "display":"none"});
-                        jQuery('#edit-orderid').parent().find('.errorMsg').remove();
-                        jQuery("#errorMsg").css({ "display":"none"});
-                        jQuery("#edit-orderid").removeClass('error');
-                        jQuery.each(data.orderItems, function(i,orderitem) {
-                            jQuery("#edit-jobid").append(jQuery("<option>").attr("value", orderitem.id).attr("data-box", orderitem.tracking.length).text(orderitem.id));
-                         });
-                         jQuery('.select2-chosen').html(data.orderItems[0].id);
-                         jQuery('#edit-numberboxselect').val(data.orderItems[0].tracking.length);
-                         jQuery(".form-item-jobid .select2-chosen").find('option:eq(0)').prop('selected',true);
-                      
-                        if (action == 'submit'){
-                            jQuery("#pccomplaint-form").submit();
-                            jQuery("#pccomplaint-form .complaintSubmit").css({ "display":"none"});
-                            jQuery(".complaintSuccess").css({ "display":"block"});
+                        if(data.orderStatus && [10, 18, 15].indexOf(data.orderStatus.id)!= -1){
+                            console.log(data.orderStatus.id);
+                            jQuery('#box-progress').hide();
+                            jQuery("#errorMsg").css({ "display":"none"});
+                            jQuery('#edit-orderid').parent().find('.errorMsg').remove();
+                            jQuery("#errorMsg").css({ "display":"none"});
+                            jQuery("#edit-orderid").removeClass('error');
+                            jQuery.each(data.orderItems, function(i,orderitem) {
+                                jQuery("#edit-jobid").append(jQuery("<option>").attr("value", orderitem.id).attr("data-box", orderitem.tracking.length).text(orderitem.id));
+                             });
+                            jQuery('.select2-chosen').html(data.orderItems[0].id);
+                            jQuery('#edit-numberboxselect').val(data.orderItems[0].tracking.length);
+                            jQuery(".form-item-jobid .select2-chosen").find('option:eq(0)').prop('selected',true);
+                        }
+                        else{
+                            displayerror();
                         }
                     }
                 },

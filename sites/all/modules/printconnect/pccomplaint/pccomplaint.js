@@ -39,7 +39,7 @@
               jQuery("#errorUpload").html("<span style='color:red'>"+Drupal.t('merci de remplir le numero de la commande')+"</span>");
               jQuery('#edit-orderid').focus();
         });
-        Dropzone.instances[0].disable(); 
+        if(Dropzone.instances[0]) Dropzone.instances[0].disable(); 
     }    
     jQuery("#edit-submit").click(function(e){        
         jQuery('#content .complaintform .required').removeClass("error");
@@ -107,12 +107,12 @@
             jQuery.ajax({           
                 url: href,
                 success: function(data){
-                    if (!data.id) 
-                    {
+                    if (data == 'false') 
+                    {   console.log('NotValidOrder');
                         displayerror();
                     }
                     else
-                    {
+                    {   console.log('ordervalid');
                         jQuery('#box-progress').hide();
                         jQuery("#errorMsg").css({ "display":"none"});
                         jQuery("#edit-orderid").removeClass('error');

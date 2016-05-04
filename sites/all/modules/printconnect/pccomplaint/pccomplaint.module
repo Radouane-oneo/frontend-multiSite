@@ -342,7 +342,8 @@ function pccomplaint_form_upload($form, &$form_state) {
  }
  function _pccomplaint_order_callback($order){ 
      $orderObject = \printconnect\Orders\Factory::Get($order, false);
-     if ($orderObject->number != ''){
+     
+     if ($orderObject->number != '' && in_array($orderObject->orderStatus->id, array(10, 18, 15))){
          echo 'true';
      }
      else{

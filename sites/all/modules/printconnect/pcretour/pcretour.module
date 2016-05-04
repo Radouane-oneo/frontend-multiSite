@@ -1,24 +1,30 @@
 <?php
+use \printconnect\Dal;
 use printconnect\Orders\Factory;
 function pcretour_menu() {
   $items = array();
   $items['retour'] = array( 
-    'title' => 'retour page', //page title
-    'description' => '',
+    'title' => '', //page title
+    'description' => 'qseqfqzsef',
     'page callback' => 'drupal_get_form', 
     'page arguments' => array('pcretour_form'), //put the name of the form here
     'access callback' => TRUE
   );
+  $items['retour/order/%'] = array(
+      'title' => '',
+      'page callback' => '_pcretour_order_callback',
+      'page arguments' => array(2),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
   return $items;
 }
 function pcretour_form($form, &$form_state) {
+
     $form['retour'] = array(
         '#type' => 'container',
         '#attributes' => array('class' => array('complaint')),
     );
-//    $form['retour']['description'] = array(
-//        '#markup' => '<div class="descComplait">' .t('desccomplaint').'</div>'
-//    );
     $form['retour']['form'] = array(
         '#type' => 'container',
         '#attributes' => array('class' => array('complaintform')),
@@ -30,7 +36,7 @@ function pcretour_form($form, &$form_state) {
         '#attributes' => array('class' => array('bloccomplaint')),
     );
     $form['retour']['form']['order']['titleorder'] = array(
-        '#markup' => t('title order complaint'),
+        '#markup' => t('title retour'),
         '#prefix' => '<h3>',
         '#suffix' => '</h3>', 
     );
@@ -43,10 +49,17 @@ function pcretour_form($form, &$form_state) {
         '#type' => 'textfield',
         '#attributes' => array('class' => array('required'), 'placeholder' => t('orderid')),
     );
+    
     $form['retour']['form']['order']['jobid'] = array(
-        '#type' => 'textfield',
-        '#attributes' => array('placeholder' => t('jobnumber')),
+        '#markup' =>'<select id="edit-jobid" name="jobid"></select>',
+//        '#attributes' => array('placeholder' => t('jobnumber')),
     );
+// $form['retour']['form']['order']['jobid'] = array(
+//        '#type' => 'select',
+//        '#options' => array('0'),
+//        '#attributes' => array('class' => array('select-city-adress'), 'placeholder' => t('')),
+//        
+//    );
 
     $form['retour']['form']['order']['errorMsg'] = array(
         '#markup' => "<span id='errorMsg'></span>",
@@ -110,9 +123,7 @@ function pcretour_form($form, &$form_state) {
     $form['retour']['form']['youradress']['errorMsg'] = array(
         '#markup' => "<span id='errorMsg'></span>",
         '#suffix' => '</div>',
-    );
-
-    
+    );  
 
     //RETURN SENDING
     $form['retour']['form']['numberbox'] = array(
@@ -125,27 +136,26 @@ function pcretour_form($form, &$form_state) {
         '#suffix' => '</h3>', 
     );
     $form['retour']['form']['numberbox']['numberboxlabel'] = array(
-        '#markup' => t('number of boxes')."<span> *</span>",
+        '#markup' => t('number of boxes'),
         '#prefix' => '<div class="compensation"><div class="labelorder">',
         '#suffix' => '</div>', 
     );
-    $options = array (
-        
-        "1"=>t('1'),
-         "2"=>t('2'),
-        "3"=>t('3'),
-         "4"=>t('4'),
-        "5"=>t('5'),
-         "6"=>t('6'),
-        "7"=>t('7'),
-         "8"=>t('8'),
-        "9"=>t('9'),
-         "10"=>t('10')
-    );
+//    $options = array (
+//        
+//        "1"=>t('1'),
+//         "2"=>t('2'),
+//        "3"=>t('3'),
+//         "4"=>t('4'),
+//        "5"=>t('5'),
+//         "6"=>t('6'),
+//        "7"=>t('7'),
+//         "8"=>t('8'),
+//        "9"=>t('9'),
+//         "10"=>t('10')
+//    );
     $form['retour']['form']['numberbox']['numberboxselect'] = array(
-        '#type' => 'select',
-        '#options' => $options,
-        '#attributes' => array('class' => array('select-city-adress'), 'placeholder' => t('')),
+        '#type' => 'textfield',
+        '#readonly' => true,
         '#suffix' => '</div>', 
     );
 
@@ -168,15 +178,15 @@ function pcretour_form($form, &$form_state) {
 }
 
 function pcretour_form_validate($form, &$form_state) {
+   
 }
 function pcretour_form_submit($form, &$form_state) {
-   pcretour_notify($form_state, 'flyermailer@gmail.com');
+    pcretour_notify($form_state, 'flyermailer@gmail.com');    
 }
 function pcretour_notify($form_state, $mailto) {
     $params = array();    
     $order = \printconnect\Orders\Factory::Get($form_state["values"]["orderid"], false);
-    $customer = \printconnect\Customers\Factory::Get($order->customer);
-   
+    $customer = \printconnect\Customers\Factory::Get($order->customer);   
     $params['firstName'] = $customer->firstName;
     $params['email'] = $customer->email;
     $params['phone'] = $customer->phone;
@@ -184,8 +194,8 @@ function pcretour_notify($form_state, $mailto) {
     $url = "http://admin.printconcept.com/order/index/order/".$orderId;
     $params['url'] = $url;
     $params['orderId'] = $orderId;
-    $params['jobid'] = $form_state['values']['jobid'];
-    
+    //$params['jobid'] = $form_state['values']['jobid'];
+    $params['jobid'] = $_POST['jobid'];
     $params['street'] = $form_state["values"]["street"];
     $params['number'] = $form_state["values"]["number"];
     $params['city'] = $form_state["values"]["city"];
@@ -222,9 +232,27 @@ function pcretour_notify($form_state, $mailto) {
     }
     $message .= '<br/><b>' . t('url') . '</b>: ';
     $message .= $params['url'];
-   
+    
+    $apikey = variable_get('pc_apikey');
+    $url = variable_get('pc_url') . "label";
+    $ps = "orderId=".$orderId."&jobId=".$params['jobid']."&boxes=".$params['numberboxselect']."&address[]=".urlencode($params['street'])."&address[]=".$params['number']."&address[]=".$params['postalcode']."&address[]=".$params['city']."&apikey=".$apikey."&language=13";
+  
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS,$ps);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $server_output = curl_exec($ch);
+    $result = json_decode($server_output);
+
+    $arrayTracking = $result->trackingLinks;
+    foreach ($arrayTracking as  $linkTracking) {
+        $message .= '<br/><b>' . t('url') . '</b>: '.$linkTracking;
+    }
+  
     mail_retour($mailto,  $params['firstName'],$subject, $message, $orderId);
-   // drupal_set_message('This form has been emailed to '. $from);    
+    drupal_goto( $result->labelUrl);  
+    
 }
 function mail_retour($mailto, $from_name, $subject, $message, $orderId) {
        
@@ -256,13 +284,13 @@ function mail_retour($mailto, $from_name, $subject, $message, $orderId) {
         }        
 }
 
- function _pcretour_order_callback($order){ 
-     $orderObject = \printconnect\Orders\Factory::Get($order, false);
-     if ($orderObject->number != ''){
-         echo 'true';
-     }
-     else{
-         echo 'false';
-     }
- die;
+ function _pcretour_order_callback($order){
+    $response = Factory::GetOrderJson($order);
+  //  var_dump($form_state);die('yyyyy');
+    if($response) {
+        Dal::BuildJson($response->data);
+    }else {
+        Dal::BuildJson(array(), 500);
+    }
+    
 }

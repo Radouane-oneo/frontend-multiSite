@@ -139,6 +139,21 @@ use printconnect\Customers\Customer;
        Dal::Save($object, 'reorder', array('id' => $jobid, 'idCart' => $cartId));
        return $object;
     }
+    public static function GetOrderJson($orderID)
+    {
+        $response = NULL;
+        if (isset($orderID)) {
+            $response = Dal::SendRequest('order/'.$orderID);
+        }
+        return $response;
+    } 
+    public static function GetLabelJson($entity, $params)
+    {
+        $response = NULL;
+        $response = Dal::SendRequest($entity, 'POST', $params);
+       
+    } 
+
 
   }
 

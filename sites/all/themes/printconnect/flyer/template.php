@@ -23,13 +23,14 @@ function flyer_preprocess_page(&$variables) {
     global $conf;
     $parts = explode('.', $host);
     $subdomain = $parts[0];
-    $copartner = FALSE;
+    //            || (stristr($host, 'stg-flyer') == TRUE)
+//            || (stristr($host, 'stg.oneo') == TRUE)
+//            || (stristr($host, 'dev-flyerfr') == TRUE)
+//            || (stristr($host, 'dev.flyer') == TRUE)
+//            || (stristr($host, 'preprd') == TRUE)) {
+    $domainValid = array('flyer.be','flyer.fr','flyer.nl','flyer.lu');
     if ((isset($conf['cobrandedshops']) && array_key_exists($subdomain, $conf['cobrandedshops'])) 
-            || (stristr($host, 'stg-flyer') == TRUE)
-            || (stristr($host, 'stg.oneo') == TRUE)
-            || (stristr($host, 'dev-flyerfr') == TRUE)
-            || (stristr($host, 'dev.flyer') == TRUE)
-            || (stristr($host, 'preprd') == TRUE)) {
+            || (!in_array($host, $domainValid))){
         $meta_robot = array(
             '#tag' => 'meta',
             '#attributes' => array(

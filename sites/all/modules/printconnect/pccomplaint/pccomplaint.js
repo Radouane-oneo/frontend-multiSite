@@ -42,6 +42,30 @@
         Dropzone.instances[0].disable(); 
     }    
     jQuery("#edit-submit").click(function(e){        
+        jQuery('#content .complaintform .required').removeClass("error");
+        jQuery(".errorMsg").hide();
+        var errorField = false;
+        if (jQuery('#edit-orderid').val().length  > 8){
+            jQuery('#edit-orderid').addClass("error");
+            jQuery('#edit-orderid').parent().append('<div class="errorMsg">'+Drupal.t("Fill in 8 digits without OR prefix")+'</div>');
+            errorField = true;
+        }
+        jQuery('#content .identification .required').each(function() {//console.log(jQuery(this));
+            var _this = jQuery(this);
+            if(_this.val() == "" || _this.val() == 0) {                   
+                _this.addClass("error");
+                _this.parent().append('<div class="errorMsg">'+Drupal.t("this field is requierd")+'</div>');
+                errorField = true;
+            }          
+         })
+        if (errorField)  
+        {
+          e.stopPropagation();
+          e.preventDefault();
+        }
+        
+        
+        
         if (jQuery('#dZUpload').hasClass('dz-started'))
         {
             actionComplaint(e,'submit');           
@@ -66,7 +90,7 @@
             jQuery('#edit-orderid').addClass("error");
             txt = document.createTextNode(Drupal.t('messageErrorOrderId'));
             span.innerText = txt.textContent;  
-            Dropzone.instances[0].disable();
+            if(Dropzone.instances[0]) Dropzone.instances[0].disable();
           //  jQuery("#errorUpload").text(Drupal.t('merci de remplir le numero de la commande')); 
             jQuery("#errorMsg").css({ "display":"inline"});
             e.stopPropagation();
@@ -82,25 +106,32 @@
             jQuery('#box-progress').show();
             jQuery.ajax({           
                 url: href,
-                success: function(){
-                    jQuery('#box-progress').hide();
-                    jQuery("#errorMsg").css({ "display":"none"});
-                    jQuery("#edit-orderid").removeClass('error');
-                    Dropzone.instances[0].enable();
-                    console.log('success');
-                    jQuery("#errorUpload").css({ "display":"none"});
-                    if (action == 'submit'){
-                        jQuery("#pccomplaint-form").submit();
-                        jQuery("#pccomplaint-form .complaintSubmit").css({ "display":"none"});
-                        jQuery(".complaintSuccess").css({ "display":"block"});
+                success: function(data){
+                    if (!data.id) 
+                    {
+                        displayerror();
                     }
+                    else
+                    {
+                        jQuery('#box-progress').hide();
+                        jQuery("#errorMsg").css({ "display":"none"});
+                        jQuery("#edit-orderid").removeClass('error');
+                        if(Dropzone.instances[0]) Dropzone.instances[0].enable();
+                        console.log('success');
+                        jQuery("#errorUpload").css({ "display":"none"});
+                        if (action == 'submit'){
+                            jQuery("#pccomplaint-form").submit();
+                            jQuery("#pccomplaint-form .complaintSubmit").css({ "display":"none"});
+                            jQuery(".complaintSuccess").css({ "display":"block"});
+                        }
+                }
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                     jQuery('#box-progress').hide();
                     jQuery('#edit-orderid').addClass("error");
                     txt = document.createTextNode(Drupal.t('NotValidOrder'));
                     span.innerText = txt.textContent; 
-                    Dropzone.instances[0].disable();
+                    if(Dropzone.instances[0]) Dropzone.instances[0].disable();
                   //  jQuery("#errorUpload").text(Drupal.t('merci de remplir le numero de la commande')); 
                     jQuery("#errorMsg").css({ "display":"inline"});
                     jQuery('#errorMsg').focus(); 
@@ -108,6 +139,16 @@
                 }       
             });
         }
+      }
+      function displayerror(){
+        var span = document.getElementById("errorMsg");
+        jQuery('#box-progress').hide(); 
+        jQuery('#edit-orderid').addClass("error");
+        txt = document.createTextNode(Drupal.t('NotValidOrder'));
+        span.innerText = txt.textContent; 
+      //  jQuery("#errorUpload").text(Drupal.t('merci de remplir le numero de la commande')); 
+        jQuery("#errorMsg").css({ "display":"inline"});
+        jQuery('#errorMsg').focus(); 
       }
   
  });

@@ -67,7 +67,7 @@ define([
                     }
                 });
 
-                if (existQuantity == ''){console.log('lolo'+existQuantity);
+                if (existQuantity == ''){
                     $('#trQuantitePersonalisee').show();
                 }
             }
@@ -154,7 +154,7 @@ define([
             var customWidth  = this.model.get('widthCF');
             if((customHeight) && (customWidth)){
                 var price = ((customHeight * customWidth * _.toArray(this.model.get("toolBoxGroup")["pricing"])[0]["sellPrice"]) / (1 * 1000 * 1000)) * 1;
-                console.log('price1custom: '+price+ 'quantity1custom' + 1);    
+                //console.log('price1custom: '+price+ 'quantity1custom' + 1);    
                 this.model.set({
                 "price" : price,
                 "quantity" : 1
@@ -266,7 +266,6 @@ define([
                 return false;
             }
             if ( wcfVal < minWCF || wcfVal > maxWCF){
-                $('.msgErrorCF').removeClass('no-error');
                 $('#wcf').css({ "border":"1px solid red", "color":"red"});
                 $('.msgErrorCF').text($('#textWidthNotValid').val() +" "+ minWCF + " mm " + $('#et').val() +" " +maxWCF+ " mm.");
                 return false;
@@ -315,6 +314,7 @@ define([
             var wcf = $('#wcf').val();
             var hcf = $('#hcf').val();
             if ((wcf == '' && hcf == '') || (typeof wcf == 'undefined' && typeof hcf == 'undefined')){
+                $(this.config.containerId).find('> form').submit();
                 return true;
             }
             else{
@@ -363,7 +363,7 @@ define([
                     return false;
                 }
                 if ( wcfVal < minWCF || wcfVal > maxWCF){
-                    console.log(minWCF);
+                    //console.log(minWCF);
                     $('#wcf').css({ "border":"1px solid red", "color":"red"});
                     $('.msgErrorCF').text($('#textWidthNotValid').val() +" "+ minWCF + " mm " + $('#et').val() +" " +maxWCF+ " mm.");
                     return false;
@@ -376,7 +376,7 @@ define([
             
                 $('.msgErrorCF').text("");              
                 if (wcfVal > hcfVal) var cfTol = wcfVal / hcfVal; else var cfTol = hcfVal / wcfVal;
-                console.log('minT'+ maxTOL);
+                //console.log('minT'+ maxTOL);
                 if ( cfTol < minTOL || cfTol > maxTOL) {
                     $('#wcf').css({ "border":"1px solid red", "color":"red"});
                     $('#hcf').css({ "border":"1px solid red", "color":"red"});
@@ -396,9 +396,11 @@ define([
                            },{silent: true});
                            //console.log(this.model);
                             this.$("li.CF a").trigger("click", 1);
+                       $(this.config.containerId).find('> form').submit();
                        return true;
                 }
          }
+         $(this.config.containerId).find('> form').submit();
         },
         checkQuantity: function(e){
             if(e.which != 8 && isNaN(String.fromCharCode(e.which)))

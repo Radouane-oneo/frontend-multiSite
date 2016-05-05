@@ -406,6 +406,16 @@ function flyer_preprocess_html(&$vars) {
 }
 
 function flyer_css_alter(&$css) {
+	$args = arg();
+	
+	if($args[0]=="complaint") {
+        unset($css['sites/all/modules/printconnect/pcretour/pcretour.css']);
+  	}
+
+	  if($args[0]=="retour") {
+	    unset($css['sites/all/modules/printconnect/pccomplaint/pccomplaint.css']);
+	  }
+
 	if ($_SESSION['isfront'] == 1) {
 		unset($css['sites/all/modules/printconnect/pcbpost/pcbpost.css']);
 		unset($css['sites/all/modules/printconnect/pcdesigner/pcdesigner.css']);

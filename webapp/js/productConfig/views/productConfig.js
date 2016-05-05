@@ -194,7 +194,7 @@ define([
             } else {
                 price = this.model.calculatePrice(quantity);
             }
-	    if ($('#wcf').val() != '' && $('#hcf').val() != '') {
+	    if ($('#wcf').val() != '' && $('#hcf').val() != '' && $('#wcf').val() != null && $('#hcf').val() != null) {
                 this.calculCF();
             } else {
                 this.model.set({

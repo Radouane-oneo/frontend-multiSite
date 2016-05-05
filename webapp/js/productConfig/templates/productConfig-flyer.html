@@ -107,7 +107,7 @@
                             <input type="hidden" id="textTolNotValid" class="msgErrorCF" value="<%= config.labels['textTolNotValid'] %>">
                             <input type="hidden" id="et" class="msgErrorCF" value="<%= config.labels['et'] %>">
                             <div class="box-info clearfix">
-                                <div class='msgErrorCF no-error'><%= config.labels['infoGlobalSurface'] + ' <strong>' + (config.labels['maxHCF'] * config.labels['maxWCF']) / 1000000 +' m²</strong>'%></div>
+                                <div class='msgErrorCF no-error'><%var dimension = ((config.labels['maxHCF'] * config.labels['maxWCF']) / 1000000);dimension = dimension.toString().replace('.', ',')%><%= config.labels['infoGlobalSurface'] + ' <strong>' + dimension +' m²</strong>'%></div>
                                 <span class="moreInfo">?
                                     <span class="infoTxt" position="-60px">
                                         <strong><%= config.labels['infoTitle'] %></strong>

@@ -174,9 +174,10 @@ function pccomplaint_form($form, &$form_state) {
         '#suffix' => '</div>', 
  
     );
+    //var_dump($_SESSION['messages']);die();
     if (isset($_SESSION['messages'])){
         $form['complaint']['form']['message'] = array(
-            '#markup' => "<div class='complaintSubmit'><p>".t('complaintSuccess text')."</p><p class='questions'>".t('questionsTxt')."</div>",
+            '#markup' => "<div class='complaintSuccess'><p>".t('complaintSuccess text')."</p><p class='questions'>".t('questionsTxt')."</div>",
 
         );
         unset($_SESSION['messages']);

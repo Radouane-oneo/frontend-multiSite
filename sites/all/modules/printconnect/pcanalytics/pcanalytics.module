@@ -1,8 +1,7 @@
 <?php
 use printconnect\Carts\Cart;
-
 function pcanalytics_page_alter(&$page) {
-    $domainValid = array('flyer.be','flyer.fr','flyer.nl','flyer.lu');
+    $domainValid = array('flyer.be','flyer.fr','flyer.nl','flyer.lu','www.flyer.be','www.flyer.fr','www.flyer.nl','www.flyer.lu');
     if (in_array($_SERVER['HTTP_HOST'], $domainValid)){
         $account = variable_get('pcanalytics_account', 'account');
         $conversionId = variable_get('pcanalytics_conversionId', false);
@@ -247,7 +246,7 @@ function pcanalytics_page_alter(&$page) {
 }
 
 function pcanalytics_form_pcorders_order_form_alter(&$form, $form_state, $form_id) {
-    $domainValid = array('flyer.be','flyer.fr','flyer.nl','flyer.lu');
+    $domainValid = array('flyer.be','flyer.fr','flyer.nl','flyer.lu','www.flyer.be','www.flyer.fr','www.flyer.nl','www.flyer.lu');
     if (in_array($_SERVER['HTTP_HOST'], $domainValid)){
         $path = arg();
         if (count($path) == 4 && $path[1] == 'orders' && $path[3] == 'confirmation') {

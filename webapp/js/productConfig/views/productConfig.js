@@ -182,19 +182,19 @@ define([
                 $('#trQuantitePersonalisee').hide();
             }
             else{
-               $('#trQuantitePersonalisee').show();     
+               //$('#trQuantitePersonalisee').show();     
             }
             
             var pricing = this.model.get("toolBoxGroup")["pricing"][quantity];
             var price = null;
-            var customHeight = this.model.get('heightCF');
-            var customWidth  = this.model.get('widthCF');
+            var customHeight = $('#hcf').val();//this.model.get('heightCF');
+            var customWidth  = $('#wcf').val() //this.model.get('widthCF');
             if(pricing && !(customHeight) && !(customWidth)){
                 price = (pricing["promoPrice"]) ? pricing["promoPrice"] : pricing["sellPrice"];
             } else {
                 price = this.model.calculatePrice(quantity);
             }
-	    if ($('#wcf').val() != '' && $('#hcf').val() != '' && $('#wcf').val() != null && $('#hcf').val() != null) {
+	    if (($('#wcf').val() != '' || $('#hcf').val() != '') && ($('#wcf').val() != null || $('#hcf').val() != null)) {
                 this.calculCF();
             } else {
                 this.model.set({

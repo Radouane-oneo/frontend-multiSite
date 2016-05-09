@@ -205,7 +205,7 @@
             <%
             var checked = (customQuantity)?"checked='checked'":"";
             %>
-            <tr class="<%= (i%2==0)?'even':'odd' %>" id="trQuantitePersonalisee">
+            <tr class="<%= (i%2==0)?'even':'odd' %>" id="trQuantitePersonalisee" style="display:none;">
                 <td class="first-child">
                     <div class="form-item form-type-radio form-item-quantity">
                         <input type="radio" value="<%= model.quantity %>" name="quantity"

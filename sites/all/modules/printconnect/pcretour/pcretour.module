@@ -159,20 +159,25 @@ function pcretour_form($form, &$form_state) {
         '#suffix' => '</div>', 
     );
 
-//    if (isset($_SESSION['messages'])){
-//        $form['retour']['form']['message'] = array(
-//            '#markup' => "<div class='complaintSubmit'><p>".t('complaintSuccess text')."</p><p class='questions'>".t('questionsTxt')."</div>",
-//
-//        );
-//        unset($_SESSION['messages']);
-//    }else{
+    if (isset($_SESSION['messagesRetour'])){
+        drupal_add_js('window.open(\'' . $_SESSION['urlPDF'] . '\')', 'inline');
+        $form['retour']['form']['message'] = array(
+            '#markup' => "<div class='complaintSubmit'>"
+            . "<p>".t('retourSuccess text')."</p>"
+            . "<p class='questions'>".t('retourquestionsTxt')."</p>"
+            . "<p class='urlPDF'><a href='".$_SESSION['urlPDF']."'>".$_SESSION['urlPDF']."</a></p>"
+            . "</div>",
+        );
+        unset($_SESSION['urlPDF']);
+        unset($_SESSION['messagesRetour']);
+    }else{
         $form['retour']['form']['submit'] = array(
             '#type' => 'submit',
             '#value' => t('submit form retour'),
             '#prefix' => '<div class="complaintSubmit">',
             '#suffix' => '</div>',       
           );
-   // }  
+    }  
     
   return $form;
 }
@@ -251,7 +256,10 @@ function pcretour_notify($form_state, $mailto) {
     }
   
     mail_retour($mailto,  $params['firstName'],$subject, $message, $orderId);
-    drupal_goto( $result->labelUrl);  
+    $_SESSION['urlPDF'] = $result->labelUrl;
+ //   drupal_add_js('window.open(\'' . $result->labelUrl . '\')', 'inline');
+   
+    //drupal_goto( $result->labelUrl);  
     
 }
 function mail_retour($mailto, $from_name, $subject, $message, $orderId) {
@@ -280,7 +288,7 @@ function mail_retour($mailto, $from_name, $subject, $message, $orderId) {
         echo 'Mailer Error: ' . $mail->ErrorInfo;
         } else {
             echo 'Message has been sent';
-            $_SESSION['messages'] = 'yes';        
+            $_SESSION['messagesRetour'] = 'yes';        
         }        
 }
 

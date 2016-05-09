@@ -63,10 +63,8 @@
           e.stopPropagation();
           e.preventDefault();
         }
-        
-        
-        
-        if (jQuery('#dZUpload').hasClass('dz-started'))
+              
+        if (jQuery('#dZUpload').hasClass('dz-started') || (jQuery('#edit-complainttype').val() == 0) || (jQuery('#edit-complainttype').val() == 3))
         {
             actionComplaint(e,'submit');           
         }

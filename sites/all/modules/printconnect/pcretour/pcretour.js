@@ -75,6 +75,7 @@
               e.preventDefault();
           }
           else{
+              
             //  jQuery("#pccomplaint-form").submit();
 //                jQuery("#pccomplaint-form .complaintSubmit").css({ "display":"none"});
 //                jQuery(".complaintSuccess").css({ "display":"block"});
@@ -122,9 +123,12 @@
                             jQuery("#errorMsg").css({ "display":"none"});
                             jQuery('#edit-orderid').parent().find('.errorMsg').remove();
                             jQuery("#errorMsg").css({ "display":"none"});
-                            jQuery("#edit-orderid").removeClass('error');
-                            jQuery.each(data.orderItems, function(i,orderitem) {
-                                jQuery("#edit-jobid").append(jQuery("<option>").attr("value", orderitem.id).attr("data-box", orderitem.tracking.length).text(orderitem.id));
+                            jQuery("#edit-orderid").removeClass('error');                            
+                            jQuery.each(data.orderItems, function(i,orderitem) {                                
+                                if (!orderitem.discountId)
+                                {
+                                    jQuery("#edit-jobid").append(jQuery("<option>").attr("value", orderitem.id).attr("data-box", orderitem.tracking.length).text(orderitem.id));
+                                }
                              });
                             jQuery('.select2-chosen').html(data.orderItems[0].id);
                             jQuery('#edit-numberboxselect').val(data.orderItems[0].tracking.length);

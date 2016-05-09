@@ -32,7 +32,7 @@ define([
                 return false;
             }
             if(!($('#edit-agree').is(':checked'))) {
-                console.log('non');
+                //console.log('non');
                 myPayment.errorView.render(this.config.labels['agreeMessage']);
                 $(window).scrollTop($(this.config.containerId).offset().top);
                 return false;

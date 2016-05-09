@@ -83,7 +83,7 @@ var registerClicked = false;
                         dataType: 'json',
                         success: function (data){
                             if (data.code == 200 && $.isEmptyObject(data.data) == false) {
-				console.log('wsel hna');
+				//console.log('wsel hna');
 				var path = window.location.href.split('/'); path[path.length -1]
 				if (data.data.id != path[path.length -1]) {
                                     $('#edit-vatnumber-number').addClass('error');
@@ -142,7 +142,7 @@ var registerClicked = false;
            if ($('#edit-street').val().length <= 4 && $('#edit-street').val().length != 0){
                 $('#edit-street').addClass('error');
                 errorMsgs[0] = Drupal.t('Le champs rue est trop court');
-                errorMarkup += "<li>"+errorMsgs[0]+"</li>";console.log(errorMarkup);
+                errorMarkup += "<li>"+errorMsgs[0]+"</li>";//console.log(errorMarkup);
                 //return false;
             }
           $('#content form input.required, #content form select.required').each(function(i, elem) {
@@ -157,7 +157,7 @@ var registerClicked = false;
                     //errorMsgs[i] = Drupal.t('insert a valid vat number please');
                 }
                 
-                   console.log('coco');
+                   //console.log('coco');
             }else{
            
             var erTel = /^([0-9\/\s\-_\.]*)$/g;
@@ -462,7 +462,7 @@ function ValidatePostalCode(iso,value) {
     }
   }
    $('#edit-vatnumber-country').val('');
-   console.log('herer');
+   //console.log('herer');
    if ($('#edit-country').val() != 0) {
        var url = Drupal.settings.basePath + '?q=js/country/' + $("#edit-country").val();
            $.getJSON(url, null, function (data) {

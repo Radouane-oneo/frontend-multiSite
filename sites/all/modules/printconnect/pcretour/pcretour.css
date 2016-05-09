@@ -81,7 +81,8 @@
     width: 108px  !important;
 }
 
-.bloccomplaint .form-item {
+.bloccomplaint .form-item,
+.bloccomplaint .select2-container {
     margin: 0 0 0 20px;
     position: relative;
 }
@@ -96,7 +97,7 @@
 }
 .identification .txtJobId {
     float: right;
-    margin: 5px 193px 0 0;
+    margin: 5px 212px 0 0;
     color: #bcbbbb;
 }
 
@@ -163,7 +164,7 @@
 }
 
 .identification #errorMsg {
-    margin: 5px 0 0 173px;
+    margin: 5px 0 0 152px;
     color: red;
 }
 

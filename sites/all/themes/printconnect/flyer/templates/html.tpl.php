@@ -106,7 +106,65 @@ ga('send', 'pageview', { 'dimension2': 'klant' });
 <?php endif; ?> 
 </head>
 <body class="<?php print $classes.$node_css_class; ?>" <?php print $attributes;?>>
-    
+<?php if (arg(3) == 'confirmation') :
+    $order = \printconnect\Orders\Factory::Get($_SESSION['orderID'], false);
+//var_dump($order);
+//var_dump($order->id);die;
+    $customerCurrent = \printconnect\Customers\Factory::Current();
+    $allOrderCustomer = \printconnect\Orders\Factory::GetOrders($customerCurrent);
+    $eventID = $_SESSION['orderID'];
+    switch ($order->orderItemShipping->shippingTypeTag){
+        case 'shippingTypeStore':
+            $eventID = 346589;
+            break;
+        case 'shippingTypeBpostHome':
+            $eventID = 346591;
+            break;
+        case 'shippingTypeStoreInAntwerpen':
+            $eventID = 346591;
+            break;
+        case 'shippingTypePrinter':
+            $eventID = 346591;
+            break;
+        case 'shippingTypeBpostPickupPoint':
+            $eventID = 346591;
+            break;
+    }
+
+    if ($allOrderCustomer->get_count() == 1) {                  
+        $eventID = 346593;  
+    }
+    $productname = array();
+    foreach ($order->productItems as $item){
+        $product = $item->productName . ' x ' . $item->quantity;
+        $productname[] = $product;
+    } 
+    var_dump($productname);die;
+   // ['Folders: 2-luik, Standaard - 250 g/m² glanzend papier, Rillen, Vierkant 148 x 40000', 'Enveloppen: US 229x114mm met venster rechts, Full color, enkelzijdig bedrukt, 80 g/m2 offset papier, Zelfklevende strip x 4000']
+    foreach($productname as $value){
+        ereg_replace("<[^>]*>", "", $value);
+        $htmlcaracter = array("<strong>", "</strong>", "<p>", "</p>", "<br>", ", ", " ", ":", "/", "___", "_-_", "__", "m²");
+        $replace  = array("", "_", "", "", "", "_", "_", "", "_", "_", "_", "_", "m");
+        $newphrase = str_replace($htmlcaracter, $replace, $value);
+        if($lastprodact != $value){
+            $googleoptionTracking .= $newphrase."_and_";
+        }else{
+            $googleoptionTracking .= $newphrase;
+        }
+    }
+    ?>
+<script>
+     dataLayer = [{
+	'eventID': <?=$customerCurrent->id ?>, // event id, existing client (other delivery method)
+	'orderID': <?=$_SESSION['orderID'] ?>, // unique order id
+        'orderValue': <?=$order->subTotalAmount ?>, // order total, vat excl
+        'orderProduct': ['Folders: 2-luik, Standaard - 250 g/m² glanzend papier, Rillen, Vierkant 148 x 40000', 'Enveloppen: US 229x114mm met venster rechts, Full color, enkelzijdig bedrukt, 80 g/m2 offset papier, Zelfklevende strip x 4000'], // all ordered jobs
+        'orderCategory': ['Folder', 'Flyers'], // the ordered jobs category
+        'voucherCode': '', // reduction code
+        'currency': 'EUR' // used currency
+    }];
+</script>
+<?php endif; ?> 
   <?php if ($language->prefix == 'nlnl'): ?>  
 <script src="//config1.veinteractive.com/tags/cfbffe97/e5d2/4e6b/9068/f79727b560ca/tag.js" type="text/javascript" async></script>
 <?php if (arg(3) == 'confirmation') :?>
@@ -224,9 +282,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </script>
 <?php endif; ?>
 
-<?php if (arg(3) == 'confirmation') :
-    $order = \printconnect\Orders\Factory::Get($_SESSION['orderID'], false);
-    ?>
+<?php if (arg(3) == 'confirmation') :?>
     <div id="#hiddenPricesPayment" style="display: none;">
         <?php
         $date = new DateTime();

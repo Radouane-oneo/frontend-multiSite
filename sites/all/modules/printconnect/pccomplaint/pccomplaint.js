@@ -1,5 +1,6 @@
  jQuery(document).ready(function(e) {
-    Dropzone.autoDiscover = false;      
+    Dropzone.autoDiscover = false;  
+    Dropzone.autoQueue = false;
     jQuery("#dZUpload").dropzone({        
         addRemoveLinks: true,  
         removedfile: function(file) {
@@ -13,7 +14,10 @@
             var _ref;
             return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;        
         },
-                      
+//        maxfilesexceeded: function(file)
+//        {
+//        alert('You have uploaded more than 1 Image. Only the first file will be uploaded!');
+//        },             
         acceptedFiles: "image/jpg,image/jpeg",
         maxFiles: 5,
         maxFilesize: 5, 
@@ -138,7 +142,7 @@
             });
         }
       }
-      function displayerror(){
+    function displayerror(){
         var span = document.getElementById("errorMsg");
         jQuery('#box-progress').hide(); 
         jQuery('#edit-orderid').addClass("error");
@@ -147,7 +151,7 @@
       //  jQuery("#errorUpload").text(Drupal.t('merci de remplir le numero de la commande')); 
         jQuery("#errorMsg").css({ "display":"inline"});
         jQuery('#errorMsg').focus(); 
-      }
+    }
   
  });
 

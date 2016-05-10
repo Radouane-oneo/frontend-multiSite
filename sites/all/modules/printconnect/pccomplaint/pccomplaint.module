@@ -341,7 +341,7 @@ function pccomplaint_form_upload($form, &$form_state) {
   if (!empty($_FILES)){
         if(($_FILES['file']['type'] == 'image/jpeg') || ($_FILES['file']['type'] == 'image/jpg')){
             $tmp = $_FILES['file']['tmp_name'];            
-            $img = pc_resize_image($tmp, 1000, 1000);            
+            $img = pc_resize_image($tmp, 1080, 1080);            
             $dir_separator = DIRECTORY_SEPARATOR;
             $folder = "uploads";
             if (!file_exists(dirname(__FILE__).$dir_separator.$folder.$dir_separator.$_POST["orderID"])) {

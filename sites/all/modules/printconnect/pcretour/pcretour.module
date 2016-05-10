@@ -155,7 +155,7 @@ function pcretour_form($form, &$form_state) {
 //    );
     $form['retour']['form']['numberbox']['numberboxselect'] = array(
         '#type' => 'textfield',
-        '#readonly' => true,
+        '#attributes' => array( 'readonly' => 'readonly'),
         '#suffix' => '</div>', 
     );
 

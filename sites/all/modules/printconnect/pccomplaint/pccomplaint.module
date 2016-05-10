@@ -309,21 +309,49 @@ function mail_attachment($filenames, $path, $mailto, $from_mail, $from_name, $re
             $_SESSION['messages'] = 'yes';            
         }        
 }
+
+function pc_resize_image($file, $w, $h, $crop=FALSE) {
+    list($width, $height) = getimagesize($file);
+    $r = $width / $height;
+    if ($crop) {
+        if ($width > $height) {
+            $width = ceil($width-($width*abs($r-$w/$h)));
+        } else {
+            $height = ceil($height-($height*abs($r-$w/$h)));
+        }
+        $newwidth = $w;
+        $newheight = $h;
+    } else {
+        if ($w/$h > $r) {
+            $newwidth = $h*$r;
+            $newheight = $h;
+        } else {
+            $newheight = $w/$r;
+            $newwidth = $w;
+        }
+    }
+    $src = imagecreatefromjpeg($file);
+    $dst = imagecreatetruecolor($newwidth, $newheight);
+    imagecopyresampled($dst, $src, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+    
+    return $dst;
+}
+
 function pccomplaint_form_upload($form, &$form_state) {
   if (!empty($_FILES)){
         if(($_FILES['file']['type'] == 'image/jpeg') || ($_FILES['file']['type'] == 'image/jpg')){
-            $tmp = $_FILES['file']['tmp_name'];
+            $tmp = $_FILES['file']['tmp_name'];            
+            $img = pc_resize_image($tmp, 1000, 1000);            
             $dir_separator = DIRECTORY_SEPARATOR;
             $folder = "uploads";
             if (!file_exists(dirname(__FILE__).$dir_separator.$folder.$dir_separator.$_POST["orderID"])) {
                 mkdir(dirname(__FILE__).$dir_separator.$folder.$dir_separator.$_POST["orderID"].$dir_separator, 0777, true);
 //                $pathfolder = dirname(__FILE__).$dir_separator.$dir.$dir_separator.$_POST["idorder"].$dir_separator;
 //                shell_exec("rm -rf $pathfolder");
-            }
-            
-           echo $destination_path = dirname(__FILE__).$dir_separator.$folder.$dir_separator.$_POST["orderID"].$dir_separator; 
+            }            
+            echo $destination_path = dirname(__FILE__).$dir_separator.$folder.$dir_separator.$_POST["orderID"].$dir_separator; 
             $target_path = $destination_path.$_FILES['file']['name'];
-            move_uploaded_file($tmp, $target_path); 
+            imagejpeg($img, $target_path, 100);            
             echo 'true';
          }
          else
@@ -351,4 +379,31 @@ function pccomplaint_form_upload($form, &$form_state) {
          echo 'false';
      }
  die;
+}
+
+function resize_image($file, $w, $h, $crop=FALSE) {
+    list($width, $height) = getimagesize($file);
+    $r = $width / $height;
+    if ($crop) {
+        if ($width > $height) {
+            $width = ceil($width-($width*abs($r-$w/$h)));
+        } else {
+            $height = ceil($height-($height*abs($r-$w/$h)));
+        }
+        $newwidth = $w;
+        $newheight = $h;
+    } else {
+        if ($w/$h > $r) {
+            $newwidth = $h*$r;
+            $newheight = $h;
+        } else {
+            $newheight = $w/$r;
+            $newwidth = $w;
+        }
+    }
+    $src = imagecreatefromjpeg($file);
+   
+    $dst = imagecreatetruecolor($newwidth, $newheight);
+    imagecopyresampled($dst, $src, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+    return $dst;
 }

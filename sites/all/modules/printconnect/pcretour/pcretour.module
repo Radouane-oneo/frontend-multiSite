@@ -155,14 +155,14 @@ function pcretour_form($form, &$form_state) {
 //    );
     $form['retour']['form']['numberbox']['numberboxselect'] = array(
         '#type' => 'textfield',
-        '#attributes' => array( 'readonly' => 'readonly'),
+        '#readonly' => true,
         '#suffix' => '</div>', 
     );
 
     if (isset($_SESSION['messagesRetour'])){
         drupal_add_js('window.open(\'' . $_SESSION['urlPDF'] . '\')', 'inline');
         $form['retour']['form']['message'] = array(
-            '#markup' => "<div class='complaintSubmit'>"
+            '#markup' => "<div class='complaintSuccess'>"
             . "<p>".t('retourSuccess text')."</p>"
             . "<p class='questions'>".t('retourquestionsTxt')."</p>"
             . "<p class='urlPDF'><a href='".$_SESSION['urlPDF']."'>".$_SESSION['urlPDF']."</a></p>"

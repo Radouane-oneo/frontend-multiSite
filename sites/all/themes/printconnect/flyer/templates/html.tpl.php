@@ -105,7 +105,7 @@ ga('send', 'pageview', { 'dimension2': 'klant' });
 <?php endif; ?> 
 <?php endif; ?> 
 </head>
-<body class="<?php print $classes.$node_css_class; ?>" <?php print $attributes;?>>
+<body class="<?php print $classes . (isset($node_css_class) ? $node_css_class : ''); ?>" <?php print $attributes;?>>
     
   <?php if ($language->prefix == 'nlnl'): ?>  
 <script src="//config1.veinteractive.com/tags/cfbffe97/e5d2/4e6b/9068/f79727b560ca/tag.js" type="text/javascript" async></script>

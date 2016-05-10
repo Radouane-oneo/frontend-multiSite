@@ -30,7 +30,7 @@ use printconnect\Dal\ForbiddenException;
     }
 
     public function Get($entity, $params, $language = FALSE) {
-      $url = $this->GetUrl($entity, $params, FALSE, $language);
+      	$url = $this->GetUrl($entity, $params, FALSE, $language);
        
         if(variable_get('pc_env', 'production') == 'production' && $entity != 'customer') {
             $json = $this->fromCache($url);
@@ -38,18 +38,18 @@ use printconnect\Dal\ForbiddenException;
                     if ($_SERVER["HTTP_HOST"] == 'http://preprd.flyer.fr/')
                         $json = utf8_encode($json);
                 }
-            }else {
+            } else {
                 $json = $this->Call($url);
                 /*if(preg_match('/store/', $entity)) {
                     $input = iconv('UTF-8', 'UTF-8//IGNORE', utf8_encode($json));
                     $json = json_decode($input);
                     return $json;
                 }*/
-		if ($entity == 'pickuppointdetail/service/store') {
-		   $json = utf8_encode($json);
-		}
+				if ($entity == 'pickuppointdetail/service/store') {
+				   $json = utf8_encode($json);
+				}
             }
-	return json_decode($json);
+		return json_decode($json);
     }
 
     public function Search($value, $entity, $language, $log = FALSE) {

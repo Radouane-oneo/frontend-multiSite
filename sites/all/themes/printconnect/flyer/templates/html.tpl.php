@@ -42,7 +42,16 @@
  *
  * @ingroup themeable
  */
-?><!DOCTYPE>
+?>
+
+<?php 
+$current = current_path();
+if( $current == 'node' ) {
+	drupal_goto('<front>');
+}
+?>
+
+<!DOCTYPE>
 <html>
 
 <head profile="<?php print $grddl_profile; ?>">

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file
  * Default theme implementation to display the basic html structure of a single
@@ -191,8 +190,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
 
     <script type="text/javascript">
         var
-        basket = {},
-        products=[];
+        basket  = {},
+        products= [];
        
     </script>
 <?php endif; ?>

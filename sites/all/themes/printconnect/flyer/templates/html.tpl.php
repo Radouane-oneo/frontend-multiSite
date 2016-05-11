@@ -1,4 +1,3 @@
-<?php
 
 /**
  * @file
@@ -49,6 +48,7 @@
 <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate" />
 <meta http-equiv="expires" content="0" />
 <meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="content-language" content="en_us" />
 <?php print $head; ?>
 <?php if (arg(0) == 'products') : ?>
 <link rel="canonical" href="<?= $GLOBALS['base_url'].'/'.$language->prefix.'/'.drupal_get_path_alias('products/'.arg(1)); ?>" />
@@ -56,7 +56,7 @@
 <title><?php print $head_title; ?></title>
 <?php print $styles; ?>
 <?php print $scripts; ?>
-<script type='text/javascript' src="//load.sumome.com/" data-sumo-site-id="05fcb8fc80d0ed7d3b05209edd96c6c64ab0f99c7496911c3100d14a2e13c935" async="async"></script>
+<script type="text/javascript" src="//load.sumome.com/" data-sumo-site-id="05fcb8fc80d0ed7d3b05209edd96c6c64ab0f99c7496911c3100d14a2e13c935" async></script>
 <!-- Start Visual Website Optimizer Asynchronous Code -->
 <script type='text/javascript'>
 var _vwo_code=(function(){
@@ -116,7 +116,7 @@ ga('send', 'pageview', { 'dimension2': 'klant' });
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script type="text/javascript">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
 '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-PBZ8Q5');</script>
 <!-- End Google Tag Manager -->
@@ -142,7 +142,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script type="text/javascript">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
 '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-5GVQ93');</script>
 <!-- End Google Tag Manager -->
@@ -157,7 +157,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script type="text/javascript">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
 '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-MW2SDM');</script>
 <!-- End Google Tag Manager -->
@@ -168,7 +168,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script type="text/javascript">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
 '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-NNMLJR');</script>
 <!-- End Google Tag Manager -->
@@ -231,7 +231,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         $date = new DateTime();
         $date = $date->getTimestamp();
         echo "<input type='hidden' id='transaction' transaction='$date'><div id='hiddenPricesPayment'>";
-        foreach ($order->productItems as $item) {
+        foreach ($order->productItems as $item) { 
             $productID = $item->configuration->productId;
             echo "<input type='hidden'  quantity='$item->quantity' productId='$productID' price='$item->price'>";
         }

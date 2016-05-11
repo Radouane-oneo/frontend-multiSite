@@ -21,7 +21,6 @@ function pcorders_access() {
 
 function pcorders_order_access($orderId) {
   global $user;
-  //return true;
   if ($user->uid) {
     return TRUE;
   } else {

@@ -80,7 +80,7 @@ define([
             this.$("#edit-shipping-detail-current-street").val(address.street);
             this.$("#edit-shipping-detail-current-postalCode").val(address.postalCode);
             this.$("#edit-shipping-detail-current-city").val(address.city);
-            this.$("#edit-shipping-detail-current-country").val(address.country);
+            this.$("#edit-shipping-detail-current-country").select2("val", address.country); 
             this.$("#edit-shipping-detail-current-phone").val(address.phone);
            // this.$("#edit-shipping-detail-current-email").val(address.email);
         },

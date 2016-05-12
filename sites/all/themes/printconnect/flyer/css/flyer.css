@@ -11788,6 +11788,7 @@ margin-top:20px;
 	background: #fff;
 	margin-left: -273px;
 	margin-top: -157px;
+	z-index: 99999;
 }
  
 .page-myprintconnect-offers .myoffers{
@@ -12417,6 +12418,8 @@ form#pccheckout-payment-form fieldset legend{
     top: 0;
     width: 100%;
     z-index: 100;
+    background: rgba(128, 128, 128, 0.65);
+    z-index: 9999;
 }
 .lireSuite {
     margin-top: 35px;

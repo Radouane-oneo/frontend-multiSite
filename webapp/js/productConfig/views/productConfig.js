@@ -393,6 +393,11 @@ define([
         checkQuantity: function(e){
             if(e.which != 8 && isNaN(String.fromCharCode(e.which)))
                 e.preventDefault();
+                
+				if(e.which == 13) {
+					e.preventDefault();
+					this.calculatePrice();
+				}
         },
         editCustomQuantity: function(){
             $("#edit-quantity-custom").attr("checked", "checked");

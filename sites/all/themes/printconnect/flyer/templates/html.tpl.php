@@ -104,7 +104,8 @@ ga('send', 'pageview', { 'dimension2': 'klant' });
 <?php endif; ?> 
 <?php endif; ?> 
 </head>
-<body class="<?php print $classes.$node_css_class; ?>" <?php print $attributes;?>>
+
+<body class="<?php print $classes . (isset($node_css_class) ? $node_css_class : ''); ?>" <?php print $attributes;?>>
 <?php if (arg(3) == 'confirmation') :
     $order = \printconnect\Orders\Factory::Get(arg(2), false);
 //var_dump($order->id);die;
@@ -226,90 +227,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
   <?php print $page_top; ?>
   <?php print $page; ?>
   <?php print $page_bottom; ?>
-<?php if (arg(0) == 'products') : ?>
-    <script type="text/javascript">
-        var product = {
-            identifier: GlobalProductId
-        };
-    </script>
-<?php endif; ?>
-<?php if (arg(0) == 'cart') : ?>
 
-    <script type="text/javascript">
-        var
-        basket  = {},
-        products= [];
-       
-    </script>
-<?php endif; ?>
-<?php if (arg(1) == 'redirect') : ?>
-    <div id="hiddensPricesPayment" style="display: none;">
-        <?php
-        $cart = \printconnect\Carts\Factory::Current();
-        foreach ($cart->productItems as $item) {
-            $productID = $item->configuration->productId;
-            echo "<input type='hidden'  quantity='$item->quantity' productId='$productID' price='$item->price'>";
-        }
-        ?>
-    </div>
-    <script type="text/javascript">
-    var
-    basket = {},
-    products=[],
-    totalprice=0;
-    jQuery("#hiddensPricesPayment input").each(function() {
-        products.push({ identifier: jQuery(this).attr('productId'), amount: parseFloat(jQuery(this).attr('price')), currency: 'EUR', quantity: jQuery(this).attr('quantity') });
-        totalprice += parseFloat(jQuery(this).attr('price'));
-    });
-    basket['products'] = products;
-    var url = location.pathname.split('/');
-    basket['transaction'] = url[4];
-    basket['amount'] = totalprice;
-    basket['currency'] = 'EUR';
-    console.log(basket);
-    </script>
-<?php endif; ?>
-
-<?php if (arg(3) == 'confirmation') :?>
-    <div id="#hiddenPricesPayment" style="display: none;">
-        <?php
-        $date = new DateTime();
-        $date = $date->getTimestamp();
-        echo "<input type='hidden' id='transaction' transaction='$date'><div id='hiddenPricesPayment'>";
-        foreach ($order->productItems as $item) { 
-            $productID = $item->configuration->productId;
-            echo "<input type='hidden'  quantity='$item->quantity' productId='$productID' price='$item->price'>";
-        }
-        ?>
-    </div></div>
-    <script type="text/javascript">
-    var
-    basket = {},
-    products=[],
-    totalprice=0;
-    jQuery("#hiddenPricesPayment input").each(function() {
-            products.push({ identifier: jQuery(this).attr('productId'), amount: parseFloat(jQuery(this).attr('price')), currency: 'EUR', quantity: jQuery(this).attr('quantity') });
-            totalprice += parseFloat(jQuery(this).attr('price'));
-    });
-    basket['products'] = products;
-    basket['transaction'] = jQuery('input[id="transaction"]').attr('transaction');
-    basket['amount'] = totalprice;
-    basket['currency'] = 'EUR';
-    console.log(basket);
-    </script>
-<?php endif; ?>
-    <?php if (arg(0) != 'cart'):?>
-<script type="text/javascript">
-    (function(){
-        var s   = document.createElement('script');
-        var x   = document.getElementsByTagName('script')[0];
-        s.type  = 'text/javascript';
-        s.async = true;
-        s.src   = ('https:'==document.location.protocol?'https://':'http://')
-                + 'eu-sonar.sociomantic.com/js/2010-07-01/adpan/flyer-be';
-        x.parentNode.insertBefore( s, x );
-    })();
-</script>
-    <?php endif; ?>
+	<!-- <?php if (arg(3) == 'confirmation') :
+	    $order = \printconnect\Orders\Factory::Get($_SESSION['orderID'], false);
+	    ?>
+	    <div id="#hiddenPricesPayment" style="display: none;">
+	        <?php
+	        $date = new DateTime();
+	        $date = $date->getTimestamp();
+	        echo "<input type='hidden' id='transaction' transaction='$date'><div id='hiddenPricesPayment'>";
+	        foreach ($order->productItems as $item) {
+	            $productID = $item->configuration->productId;
+	            echo "<input type='hidden'  quantity='$item->quantity' productId='$productID' price='$item->price'>";
+	        }
+	        ?>
+	    </div></div>
+	    
+	<?php endif; ?> -->
+	 
 </body>
 </html>

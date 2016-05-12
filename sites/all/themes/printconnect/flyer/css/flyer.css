@@ -4177,6 +4177,7 @@ a.googleconnect {
 }
 .page-checkout-invoiceanddelivery .pup #hoursDetail td{
 	line-height: 18px;
+	font-size: 12px;
 }
 
 
@@ -4646,7 +4647,7 @@ a.googleconnect {
 }
 .page-paymentrequest-key table.grid tr td, 
 .page-checkout-payment table.grid tr td {
-	
+	font-size: 12px;
 }
 /*.page-paymentrequest-key table.grid tr td span.price,*/ 
 .page-checkout-payment table.grid tr td span.price {

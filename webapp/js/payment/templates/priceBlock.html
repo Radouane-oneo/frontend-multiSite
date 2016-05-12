@@ -4,11 +4,11 @@
             <label>
               <%= config.labels['subTotalWithTVA'] %>
             </label>                 
-        </span>
-  
+        </span>    
        <%= priceTpl({price:model.totalAmount}) %>
     </div>
     <div class="button-wrapper button-wrapper-right">
-        <input type="button" value="<%= config.labels['paynow'] %>" name="op" id="actionPayment" class="payment form-submit" role="button">
+     <!--<input type="button" value="<%= config.labels['paynow'] %>" name="op" id="actionPayment" class="payment form-submit" role="button"> -->
+         <input type="button" value="<%= config.labels['paynow'] %>" name="op" id="actionPayment" class="payment form-submit" role="button">
     </div>
 </div>

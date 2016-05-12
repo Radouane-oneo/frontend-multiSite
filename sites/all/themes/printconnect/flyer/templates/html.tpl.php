@@ -228,7 +228,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
   <?php print $page; ?>
   <?php print $page_bottom; ?>
 
-	<?php if (arg(3) == 'confirmation') :
+	<!-- <?php if (arg(3) == 'confirmation') :
 	    $order = \printconnect\Orders\Factory::Get($_SESSION['orderID'], false);
 	    ?>
 	    <div id="#hiddenPricesPayment" style="display: none;">
@@ -243,7 +243,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
 	        ?>
 	    </div></div>
 	    
-	<?php endif; ?>
+	<?php endif; ?> -->
 	 
 </body>
 </html>

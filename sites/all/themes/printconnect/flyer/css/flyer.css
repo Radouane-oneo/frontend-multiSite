@@ -12766,3 +12766,6 @@ form#pccheckout-payment-form fieldset legend{
 .page-samplepack div.status {
     margin-bottom: 28px !important;
 }
+.ogms {
+  color: #f60;
+}

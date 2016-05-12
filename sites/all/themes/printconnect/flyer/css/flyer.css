@@ -6118,8 +6118,8 @@ body {
 	
 }
 .selectBox-dropdown-menu li.selectBox-selected {
-	display: none;
-	border-bottom: none !important;
+	/* display: none;
+	border-bottom: none !important; */
 }
 .selectBox-dropdown-menu a {
 	text-transform: uppercase;
@@ -6127,7 +6127,12 @@ body {
 	display: inline-block !important;
 
 	cursor: pointer;
-}/* 
+}
+
+.selectBox-arrow {
+	border-left: 1px solid #eee !important;
+}
+/* 
 .product-selectBox-dropdown-menu li span {
 	width: 24px;
 	height: 28px;

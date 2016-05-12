@@ -38,7 +38,7 @@ if (jQuery)(function($) {
 						select.trigger('blur');
 					});
 					if (!$(window).data('selectBox-bindings')) {
-						$(window).data('selectBox-bindings', true).bind('scroll.selectBox', hideMenus).bind('resize.selectBox', hideMenus);
+						//$(window).data('selectBox-bindings', true).bind('scroll.selectBox', hideMenus).bind('resize.selectBox', hideMenus);
 					}
 					if (select.attr('disabled')) control.addClass('selectBox-disabled');
 					// Focus on control when label is clicked
@@ -111,6 +111,12 @@ if (jQuery)(function($) {
 					}
 					// Store data for later use and show the control
 					select.addClass('selectBox').data('selectBox-control', control).data('selectBox-settings', settings).hide();
+					
+					
+					$('#block-pcmenu-main .item-list a').hover(function() {
+						hideMenus();
+					});
+					
 				};
 			var getOptions = function(select, type) {
 					var options;
@@ -225,7 +231,7 @@ if (jQuery)(function($) {
 					var borderBottomWidth = isNaN(control.css('borderBottomWidth')) ? 0 : parseInt(control.css('borderBottomWidth'));
 					// Menu position
 					options.width(control.innerWidth()).css({
-						top: control.offset().top + control.outerHeight() - borderBottomWidth,
+						top: control.offset().top + control.outerHeight() - borderBottomWidth + 10,
 						left: control.offset().left
 					});
 					if (select.triggerHandler('beforeopen')) return false;
@@ -695,3 +701,4 @@ if (jQuery)(function($) {
 		}
 	});
 })(jQuery);
+

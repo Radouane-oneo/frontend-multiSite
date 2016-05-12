@@ -24,6 +24,7 @@ define([
             "click .calculCF " : "calculCF",
             "click #edit-actions-addtocart" : "calculCFOrder",
             "click .banner-link-product" : "bannerClickProduct",
+            "click .banner-link-productEvent" : "bannerClickProductEvent",
             "click .banner-link" : "bannerClick",
             "click .banner-link-visite" : "bannerClickVisite",
             "click .banner-link-folder" : "bannerClickFolder",
@@ -61,8 +62,8 @@ define([
             var existQuantity = '';
             if($("#edit-custom").val()){
                 _.each(this.model.get("toolBoxGroup")["pricing"], function(price, i){
-                    console.log(i);
-                    console.log(parseInt($("#edit-custom").val()));
+                    //console.log(i);
+                    //console.log(parseInt($("#edit-custom").val()));
                     if(parseInt($("#edit-custom").val()) == i) {
                         existQuantity = i;
                         return true
@@ -70,8 +71,9 @@ define([
                 });
 
 
-                console.log('lolo'+existQuantity);
-                if (existQuantity == ''){console.log('lolo'+existQuantity);
+                //console.log('lolo'+existQuantity);
+                if (existQuantity == ''){
+                	//console.log('lolo'+existQuantity);
                     $('#trQuantitePersonalisee').show();
                 }
             }
@@ -152,7 +154,7 @@ define([
             var customWidth  = this.model.get('widthCF');
             if((customHeight) && (customWidth)){
                 var price = ((customHeight * customWidth * _.toArray(this.model.get("toolBoxGroup")["pricing"])[0]["sellPrice"]) / (1 * 1000 * 1000)) * 1;
-                console.log('price1custom: '+price+ 'quantity1custom' + 1);    
+                //console.log('price1custom: '+price+ 'quantity1custom' + 1);    
                 this.model.set({
                 "price" : price,
                 "quantity" : 1
@@ -217,7 +219,7 @@ define([
             if (isNaN(hcf) && isNaN(wcf)){
                 $('#hcf').css({ "border":"1px solid red", "color":"red"});
                 $('#wcf').css({ "border":"1px solid red", "color":"red"});
-                console.log($('#msgErrorCFNotFloat').val());
+                //console.log($('#msgErrorCFNotFloat').val());
                 $('.msgErrorCF').text($('#msgErrorCFNotFloat').val());
                 return false;
             }
@@ -254,7 +256,7 @@ define([
                 return false;
             }
             if ( wcfVal < minWCF || wcfVal > maxWCF){
-                console.log(minWCF);
+                //console.log(minWCF);
                 $('#wcf').css({ "border":"1px solid red", "color":"red"});
                 $('.msgErrorCF').text($('#textWidthNotValid').val() +" "+ minWCF + " mm " + $('#et').val() +" " +maxWCF+ " mm.");
                 return false;
@@ -267,7 +269,7 @@ define([
             
             $('.msgErrorCF').text("");              
             if (wcfVal > hcfVal) var cfTol = wcfVal / hcfVal; else var cfTol = hcfVal / wcfVal;
-            console.log('minT'+ maxTOL);
+            //console.log('minT'+ maxTOL);
             if ( cfTol < minTOL || cfTol > maxTOL) {
                 $('#wcf').css({ "border":"1px solid red", "color":"red"});
                 $('#hcf').css({ "border":"1px solid red", "color":"red"});
@@ -300,6 +302,7 @@ define([
             var wcf = $('#wcf').val();
             var hcf = $('#hcf').val();
             if ((wcf == '' && hcf == '') || (typeof wcf == 'undefined' && typeof hcf == 'undefined')){
+                $(this.config.containerId).find('> form').submit();
                 return true;
             }
             else{
@@ -348,7 +351,7 @@ define([
                     return false;
                 }
                 if ( wcfVal < minWCF || wcfVal > maxWCF){
-                    console.log(minWCF);
+                    //console.log(minWCF);
                     $('#wcf').css({ "border":"1px solid red", "color":"red"});
                     $('.msgErrorCF').text($('#textWidthNotValid').val() +" "+ minWCF + " mm " + $('#et').val() +" " +maxWCF+ " mm.");
                     return false;
@@ -361,7 +364,7 @@ define([
             
                 $('.msgErrorCF').text("");              
                 if (wcfVal > hcfVal) var cfTol = wcfVal / hcfVal; else var cfTol = hcfVal / wcfVal;
-                console.log('minT'+ maxTOL);
+                //console.log('minT'+ maxTOL);
                 if ( cfTol < minTOL || cfTol > maxTOL) {
                     $('#wcf').css({ "border":"1px solid red", "color":"red"});
                     $('#hcf').css({ "border":"1px solid red", "color":"red"});
@@ -381,9 +384,11 @@ define([
                            },{silent: true});
                            //console.log(this.model);
                             this.$("li.CF a").trigger("click", 1);
+                       $(this.config.containerId).find('> form').submit();
                        return true;
                 }
          }
+         $(this.config.containerId).find('> form').submit();
         },
         checkQuantity: function(e){
             if(e.which != 8 && isNaN(String.fromCharCode(e.which)))
@@ -409,6 +414,22 @@ define([
             // $('.grey-bg-popup').fadeIn();   
             $('#divpopup').fadeIn();
             $('#hideshow').attr('style','display:block');			
+        },
+        bannerClickProductEvent: function(e){
+            e.preventDefault();
+            var pdfProduct = $("#pdfProduct").val();
+            var pdfTrack = $("#pdfTrack").val();
+            var website = $("#WEBSITE_FIELD").val();
+            if (website == 'flyer.lu')
+                ga('send', 'event', { 'eventCategory': 'PDFdownloads', 'eventAction': 'click', 'eventLabel': pdfTrack });
+            else
+                _gaq.push(['_trackEvent', 'PDFdownloads', 'click', pdfTrack]);
+            $('#mailpopup').fadeIn();
+            
+            $("#popupFormId").attr("action","/download.php?product="+pdfProduct); 
+            $('#remerciement').attr('style','display:none'); 
+            $('#divpopup').fadeIn();
+            $('#hideshow').attr('style','display:block');   
         },
         bannerClick: function(e){
             e.preventDefault();

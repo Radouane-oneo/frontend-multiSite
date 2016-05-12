@@ -23,13 +23,14 @@ function flyer_preprocess_page(&$variables) {
     global $conf;
     $parts = explode('.', $host);
     $subdomain = $parts[0];
-    $copartner = FALSE;
+    //            || (stristr($host, 'stg-flyer') == TRUE)
+//            || (stristr($host, 'stg.oneo') == TRUE)
+//            || (stristr($host, 'dev-flyerfr') == TRUE)
+//            || (stristr($host, 'dev.flyer') == TRUE)
+//            || (stristr($host, 'preprd') == TRUE)) {
+    $domainValid = array('flyer.be','flyer.fr','flyer.nl','flyer.lu');
     if ((isset($conf['cobrandedshops']) && array_key_exists($subdomain, $conf['cobrandedshops'])) 
-            || (stristr($host, 'stg-flyer') == TRUE)
-            || (stristr($host, 'stg.oneo') == TRUE)
-            || (stristr($host, 'dev-flyerfr') == TRUE)
-            || (stristr($host, 'dev.flyer') == TRUE)
-            || (stristr($host, 'preprd') == TRUE)) {
+            || (!in_array($host, $domainValid))){
         $meta_robot = array(
             '#tag' => 'meta',
             '#attributes' => array(
@@ -313,8 +314,8 @@ function flyer_preprocess_html(&$vars) {
             
             unset($javascript['sites/all/libraries/fancybox/fancybox/jquery.fancybox-1.3.4.js']);
             unset($javascript['sites/all/modules/contrib/fancybox/js/fancybox.js']);
-            unset($javascript['sites/all/themes/printconnect/flyer/libraries/scrollBarPlugin/jquery.mCustomScrollbar.min.js']);
-            unset($javascript['sites/all/themes/printconnect/flyer/libraries/scrollBarPlugin/jquery.mCustomScrollbar.concat.min.js']);
+            //unset($javascript['sites/all/themes/printconnect/flyer/libraries/scrollBarPlugin/jquery.mCustomScrollbar.min.js']);
+            //unset($javascript['sites/all/themes/printconnect/flyer/libraries/scrollBarPlugin/jquery.mCustomScrollbar.concat.min.js']);
             unset($javascript['sites/all/themes/printconnect/flyer/libraries/homeSlider/homeslider.js']);
             unset($javascript['sites/all/themes/printconnect/flyer/js/html5shiv.js']);
             unset($javascript['sites/all/themes/printconnect/flyer/js/selectivizr-min.js']);
@@ -329,7 +330,7 @@ function flyer_preprocess_html(&$vars) {
             unset($javascript['sites/all/modules/printconnect/pcdesigntool/pcdesigntool.js']);
             unset($javascript['sites/all/modules/printconnect/pcorders/pcorders.js']);
             unset($javascript['sites/all/modules/printconnect/pcpayments/pcpayments.js']);
-            unset($javascript['sites/all/modules/printconnect/pcproducts/pcproducts.js']);
+            //unset($javascript['sites/all/modules/printconnect/pcproducts/pcproducts.js']);
             unset($javascript['sites/all/modules/printconnect/pcsegments/jquery.qtip.min.js']);
             unset($javascript['sites/all/modules/printconnect/pcsegments/pcsegments.js']);
             unset($javascript['sites/all/modules/printconnect/pctemplates/jquery.ui.position.min.js']);

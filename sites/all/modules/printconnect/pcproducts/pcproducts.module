@@ -1112,6 +1112,55 @@ function _pcproducts_getproductname($id) {
     printconnect_ensureinitialized();
     $product = \printconnect\Products\Factory::Get($id);
 	\printconnect\Products\Factory::LoadProduct($product);
+	
+	$title  = $product->name;
+	$description  = $product->shortDescription;
+	$imgurl = 'https://d4e7wxbvl20c1.cloudfront.net/images.flyer.fr/products/' . ($product->type == "synonym" ?  $product->parent : $product->id) . '.png';
+	
+	//print_r($description);die();
+	
+	//<meta name="twitter:card" content="summary" />
+	//<meta name="twitter:site" content="@flickr" />
+	//<meta name="twitter:title" content="Small Island Developing States Photo Submission" />
+	//<meta name="twitter:description" content="View the album on Flickr." />
+	//<meta name="twitter:image" content="https://farm6.staticflickr.com/5510/14338202952_93595258ff_z.jpg" />
+	
+	$element = array(
+	  '#tag' => 'meta', // The #tag is the html tag - 
+	  '#attributes' => array( // Set up an array of attributes inside the tag
+	    'name' => 'twitter:card', 
+	    'content' => 'summary_large_image'
+	  ),
+	);
+	drupal_add_html_head($element, 'twitter_type');
+	
+	$element = array(
+	  '#tag' => 'meta', // The #tag is the html tag - 
+	  '#attributes' => array( // Set up an array of attributes inside the tag
+	    'name' => 'twitter:title', 
+	    'content' => $title
+	  ),
+	);
+	drupal_add_html_head($element, 'twitter_title');
+	
+	$element = array(
+	  '#tag' => 'meta', // The #tag is the html tag - 
+	  '#attributes' => array( // Set up an array of attributes inside the tag
+	    'name' => 'twitter:description', 
+	    'content' => $description
+	  ),
+	);
+	drupal_add_html_head($element, 'twitter_description');
+	
+	$element = array(
+	  '#tag' => 'meta', // The #tag is the html tag - 
+	  '#attributes' => array( // Set up an array of attributes inside the tag
+	    'name' => 'twitter:image', 
+	    'content' => $imgurl
+	  ),
+	);
+	drupal_add_html_head($element, 'twitter_image');
+	
     return $product->name;
   }
 }

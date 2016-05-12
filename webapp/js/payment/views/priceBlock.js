@@ -24,6 +24,14 @@ define([
             }));
 
             $(this.config.containerId).find("#priceBlock").html(this.$el);
+            var taginternalName = $('.form-item-payment-method-table input[name="paymentMethod"]:checked').attr('tag-internalName');
+            switch(taginternalName){
+                case "visa":  $(this.config.containerId).find("#priceBlock #actionPayment").val(this.config.labels['paynow']);break;
+                case "Bancontact": $(this.config.containerId).find("#priceBlock #actionPayment").val(this.config.labels['paylater']);break;
+                case "transfer": $(this.config.containerId).find("#priceBlock #actionPayment").val(this.config.labels['paylater']);break;
+                case "mastercard": $(this.config.containerId).find("#priceBlock #actionPayment").val(this.config.labels['paynow']);break;
+                case "paypal": $(this.config.containerId).find("#priceBlock #actionPayment").val(this.config.labels['paynow']);break;
+            }
         },
         actionPayment : function(){
             if(!this.model.get("paymentId")){                

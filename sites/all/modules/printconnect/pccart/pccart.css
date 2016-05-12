@@ -704,6 +704,7 @@ table.targetPrice tbody tr.last-child td { border:none; }
   box-sizing: border-box;
   text-transform: none;
   margin-bottom: 12px;
+  padding: 4px 0;
 }
 
 .poll-form .filetype{

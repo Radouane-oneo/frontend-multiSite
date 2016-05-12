@@ -171,7 +171,29 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
           '#markup' => "<div class='salesId'><span class='livraison'>".strtoupper(t('salesId')).":</span><span class='senddate'>".$order->user->salesId."</span></div>"
       );
   }
-  
+    if ($order->ogms != ''){
+        $form['transaction'] = array(
+              '#type' => 'container',
+              '#attributes' => array('class' => array('headerorder'))
+          );
+        $form['transaction']['right'] = array(
+              '#type' => 'container',
+              '#attributes' => array('class' => array('headerright'))
+          );
+        $form['transaction']['right']['title'] = array(
+                  '#markup' => "<span class='title'>".t('title ogm')."</span>"
+          );
+        $form['transaction']['right']['text'] = array(
+              '#markup' => "<span class='textogm'>".t('texte ogm')."</span>"
+          );
+        $form['transaction']['left'] = array(
+              '#type' => 'container',
+              '#attributes' => array('class' => array('headerleft'))
+          );
+        $form['transaction']['left']['ogms'] = array(
+              '#markup' => "<div class='ogms'>+++".$order->ogms."+++</div>"
+          );
+    }
   $form['deliveryinvoice'] = array(
       '#type' => 'container',
       '#attributes' => array('id' => array('delivery-invoice'))

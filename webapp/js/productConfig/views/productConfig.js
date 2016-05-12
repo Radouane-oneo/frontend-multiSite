@@ -404,7 +404,7 @@ define([
             var website = $("#WEBSITE_FIELD").val();
             if (website == 'flyer.lu')
                 ga('send', 'event', { 'eventCategory': 'PDFdownloads', 'eventAction': 'click', 'eventLabel': pdfTrack });
-            else
+            else if( typeof _gaq != "undefined")
                 _gaq.push(['_trackEvent', 'PDFdownloads', 'click', pdfTrack]);
             $('#mailpopup').fadeIn();
             
@@ -422,7 +422,7 @@ define([
             var website = $("#WEBSITE_FIELD").val();
             if (website == 'flyer.lu')
                 ga('send', 'event', { 'eventCategory': 'PDFdownloads', 'eventAction': 'click', 'eventLabel': pdfTrack });
-            else
+            else if( typeof _gaq != "undefined")
                 _gaq.push(['_trackEvent', 'PDFdownloads', 'click', pdfTrack]);
             $('#mailpopup').fadeIn();
             
@@ -433,7 +433,8 @@ define([
         },
         bannerClick: function(e){
             e.preventDefault();
-             _gaq.push(['_trackEvent', 'PDFdownloads', 'click', 'affichegids']);
+            if( typeof _gaq != "undefined")
+                _gaq.push(['_trackEvent', 'PDFdownloads', 'click', 'affichegids']);
             $('#mailpopup').fadeIn();
             $("#popupFormId").attr("action","/downloadaffiche.php");
            // $("<div class='grey-bg-popup'></div>").insertAfter("#canvas");
@@ -455,7 +456,8 @@ define([
         },
         bannerClickVisite: function(e){  
              e.preventDefault();
-            _gaq.push(['_trackEvent', jQuery("#trackEvent2").attr('value'), 'click', jQuery("#trackEvent4").attr('value')]);
+            if( typeof _gaq != "undefined")
+                _gaq.push(['_trackEvent', jQuery("#trackEvent2").attr('value'), 'click', jQuery("#trackEvent4").attr('value')]);
             $('#mailpopup').fadeIn();
             $("#popupFormId").attr("action","/downloadvisite.php");
            // $("<div class='grey-bg-popup'></div>").insertAfter("#canvas");

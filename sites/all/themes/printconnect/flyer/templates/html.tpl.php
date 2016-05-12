@@ -107,8 +107,7 @@ ga('send', 'pageview', { 'dimension2': 'klant' });
 </head>
 <body class="<?php print $classes.$node_css_class; ?>" <?php print $attributes;?>>
 <?php if (arg(3) == 'confirmation') :
-    $order = \printconnect\Orders\Factory::Get($_SESSION['orderID'], false);
-//var_dump($order);
+    $order = \printconnect\Orders\Factory::Get(arg(2), false);
 //var_dump($order->id);die;
     $customerCurrent = \printconnect\Customers\Factory::Current();
     $allOrderCustomer = \printconnect\Orders\Factory::GetOrders($customerCurrent);
@@ -134,33 +133,23 @@ ga('send', 'pageview', { 'dimension2': 'klant' });
     if ($allOrderCustomer->get_count() == 1) {                  
         $eventID = 346593;  
     }
+    $productcontent = array();
     $productname = array();
+    //var_dump($order);die;
     foreach ($order->productItems as $item){
         $product = $item->productName . ' x ' . $item->quantity;
-        $productname[] = $product;
+        $productcontent[] = $product;
+        $productname[] = $item->configuration->name;
     } 
-    var_dump($productname);die;
-   // ['Folders: 2-luik, Standaard - 250 g/m² glanzend papier, Rillen, Vierkant 148 x 40000', 'Enveloppen: US 229x114mm met venster rechts, Full color, enkelzijdig bedrukt, 80 g/m2 offset papier, Zelfklevende strip x 4000']
-    foreach($productname as $value){
-        ereg_replace("<[^>]*>", "", $value);
-        $htmlcaracter = array("<strong>", "</strong>", "<p>", "</p>", "<br>", ", ", " ", ":", "/", "___", "_-_", "__", "m²");
-        $replace  = array("", "_", "", "", "", "_", "_", "", "_", "_", "_", "_", "m");
-        $newphrase = str_replace($htmlcaracter, $replace, $value);
-        if($lastprodact != $value){
-            $googleoptionTracking .= $newphrase."_and_";
-        }else{
-            $googleoptionTracking .= $newphrase;
-        }
-    }
-    ?>
+?>
 <script>
-     dataLayer = [{
-	'eventID': <?=$customerCurrent->id ?>, // event id, existing client (other delivery method)
-	'orderID': <?=$_SESSION['orderID'] ?>, // unique order id
-        'orderValue': <?=$order->subTotalAmount ?>, // order total, vat excl
-        'orderProduct': ['Folders: 2-luik, Standaard - 250 g/m² glanzend papier, Rillen, Vierkant 148 x 40000', 'Enveloppen: US 229x114mm met venster rechts, Full color, enkelzijdig bedrukt, 80 g/m2 offset papier, Zelfklevende strip x 4000'], // all ordered jobs
-        'orderCategory': ['Folder', 'Flyers'], // the ordered jobs category
-        'voucherCode': '', // reduction code
+     var dataLayer = [{
+	'eventID': '<?=$customerCurrent->id ?>', // event id, existing client (other delivery method)
+	'orderID': '<?=arg(2) ?>', // unique order id
+        'orderValue': '<?=$order->subTotalAmount ?>', // order total, vat excl
+        'orderProduct': <?=json_encode($productcontent)?>, // all ordered jobs
+        'orderCategory': <?=json_encode($productname)?>, // the ordered jobs category
+        'voucherCode': '<?=$order->orderDiscountCodes ?>', // reduction code
         'currency': 'EUR' // used currency
     }];
 </script>

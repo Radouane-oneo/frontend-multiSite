@@ -10311,7 +10311,7 @@ border: none;
 		-webkit-box-shadow: inset 0px 0px 0px 0.9px #b0b0b0;
 		box-shadow: inset 0px 0px 0px 0.9px #b0b0b0;
 		background: #ffffff;
-		background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJod…EiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+		background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodâ€¦EiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
                 background: -moz-linear-gradient(top, #ffffff 0%, #e2dfdf 100%);
 		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2dfdf));
 		background: -webkit-linear-gradient(top, #ffffff 0%,#e2dfdf 100%);
@@ -12779,6 +12779,17 @@ form#pccheckout-payment-form fieldset legend{
 .page-samplepack div.status {
     margin-bottom: 28px !important;
 }
-.ogms {
-  color: #f60;
+
+#edit-transaction {
+    border-radius: 0;
+}
+
+.headerleft .ogms {
+    float: right;
+    color: #f60;
+    margin-top: 25px;
+}
+
+#edit-transaction .title {
+    margin-bottom: 5px;
 }

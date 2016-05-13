@@ -6119,9 +6119,8 @@ body {
 	
 }
 .selectBox-dropdown-menu li.selectBox-selected {
-	/* display: none;
-	border-bottom: none !important; */
-    margin-top: 0px !important;
+	/* display: none; border-bottom: none !important; */
+   	
 }
 .selectBox-dropdown-menu a {
 	text-transform: uppercase;
@@ -6245,7 +6244,9 @@ background-position: -658px top;
 .selectBox-options, .selectBox-options LI {
 	-webkit-column-count: 4;
     -moz-column-count: 4;
-    column-count: 4;	
+    column-count: 4;
+    
+    /* display: inline-table !important;	*/
 }
 
 .product-selectBox-dropdown-menu li {

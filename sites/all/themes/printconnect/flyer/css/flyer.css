@@ -11552,14 +11552,14 @@ input.ui-button.payment {
     background-color: #303030;
     opacity: 0.8;
     cursor: auto;
-    z-index: 9999;
+    z-index: 9999999999;
 }
 
 #content-box{
 	position: fixed;
     top: 50%;
     left: 50%;
-    z-index: 9999;
+    z-index: 9999999999;
     margin: -37px 0 0 -340px;
     width: 680px;
     height: 74px;

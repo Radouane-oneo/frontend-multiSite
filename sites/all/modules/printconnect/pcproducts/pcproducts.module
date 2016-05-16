@@ -961,26 +961,37 @@ function pcproducts_cron() {
 }
 
 function revert_vertical($items, $numCols) {
+    $items = array_map("unserialize", array_unique(array_map("serialize", $items)));
+		
     $nbr = count($items) / $numCols;
-	$nbr = is_double($nbr) ? $nbr + 1 : $nbr;
+	$nbr = is_double($nbr) ? intval($nbr) + 1 : $nbr;
+	
+	
 	
 	$result = array();
-	
 	foreach ($items as $key => $value) {
 		$result[] = array($key%$nbr, $value);
 	}
 	
-	uasort($result, function ($a, $b) {
-        if ($a == $b) {
-        return 0;
-	    }
-	    return ($a < $b) ? -1 : 1;
-    });
+	$vals = array();
+	foreach ($result as $key => $value) {
+		for ($i=0; $i<$nbr; $i++) {
+			if($value[0] == $i)
+			$vals[$i][] = $value[1];
+		}
+	}
 	
 	$items = array();
-	foreach ($result as $r) {
-	    $items[] = $r[1];
+	foreach ($vals as $v) {
+		foreach ($v as $vi => $vv) {
+			$items[] = $vv;
+			//print $vv . ' -- ';
+		}
+		//print '<br>';
+	    
 	}
+	
+	
 	
    	return $items;
 }
@@ -995,10 +1006,19 @@ function pcproducts_calculator_form($form, &$form_state) {
         return strcmp($a->name, $b->name);
     });
 	
+	//$products  = revert_vertical($products, 4);
+	//print_r($products);
+	
 	foreach ($products as $product) {
       $items[$product->id] = $product->name;
     }
 	
+	//print_r($items);die();
+	
+	$item__s = array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30);
+	
+	//print_r($item_s);
+	//die();
 	
   $form['about'] = array(
       '#type' => 'item',

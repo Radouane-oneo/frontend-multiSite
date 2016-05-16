@@ -108,12 +108,6 @@ select.selectBox{
   margin: 0;
 }
 
-.product-selectBox-dropdown-menu.selectBox-options,
-.product-selectBox-dropdown-menu.selectBox-options LI,
-.product-selectBox-dropdown-menu.selectBox-options LI A {
-	display: inline-table;
-}
-
 .selectBox-options li a {
   line-height: 1.5;
   padding: 0 .5em;

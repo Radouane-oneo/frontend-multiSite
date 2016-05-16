@@ -75,6 +75,20 @@
               e.preventDefault();
           }
           else{
+                                            
+              jQuery('#box-progress').show();
+              var rep = setInterval(function(){
+                                                jQuery.get( "verifysend", function(data) {
+                                                    if(data) {
+                                                        jQuery('.complaintSuccess').show();
+                                                        jQuery('#link_pdf').attr('href',data);
+                                                        jQuery('#link_pdf').text(data);
+                                                        jQuery('.complaintSubmit').hide();
+                                                        clearInterval(rep);
+                                                        jQuery('#box-progress').hide();
+                                                    }
+                                                })
+                                            },1000)
               
             //  jQuery("#pccomplaint-form").submit();
 //                jQuery("#pccomplaint-form .complaintSubmit").css({ "display":"none"});

@@ -192,3 +192,6 @@
     margin: 3px 0;
     width: 190px;
 }
+.complaintSuccess{
+    display:none;
+}

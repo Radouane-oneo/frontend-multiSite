@@ -2,7 +2,7 @@
     Dropzone.autoDiscover = false;  
     Dropzone.autoQueue = false;
     jQuery("#dZUpload").dropzone({        
-        addRemoveLinks: true,  
+        addRemoveLinks: true,
         removedfile: function(file) {
             var name = file.name;        
             jQuery.ajax({
@@ -14,27 +14,30 @@
             var _ref;
             return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;        
         },
-//        maxfilesexceeded: function(file)
-//        {
-//        alert('You have uploaded more than 1 Image. Only the first file will be uploaded!');
-//        },             
+                    
         acceptedFiles: "image/jpg,image/jpeg",
         maxFiles: 5,
         maxFilesize: 5, 
+        maxfilesexceeded: function(file)
+        {
+        console.log('You have uploaded more than 5 Image5. Only the first file will be uploaded!');
+        }, 
         sending: function(file, xhr, formData) {
-            formData.append("orderID", jQuery('#edit-orderid').val());
+            formData.append("orderID", jQuery('#edit-orderid').val());   
         },
         url: "complaintupload",        
         success: function (file, response) {
-            console.log("Successfully uploaded :" , response);            
+            console.log("Successfully uploaded:" , response); 
+          
             if(response == 'false') {
                 jQuery("#errorUpload").text('MessageErrorImage');
             } else {
-                jQuery("#errorUpload").text(Drupal.t('good'));    
+                jQuery("#errorUpload").text(Drupal.t('success upload image'));    
             }
         },
         error: function (file, response) {
-            jQuery("#errorUpload").text(Drupal.t('good'));
+            jQuery("#errorUpload").html("<span style='color:red'>"+Drupal.t(response)+"</span>");
+            jQuery("#errorUpload").show();
             jQuery(file.previewElement).hide();
         }
     });    
@@ -68,7 +71,7 @@
           e.preventDefault();
         }
               
-        if (jQuery('#dZUpload').hasClass('dz-started') || (jQuery('#edit-complainttype').val() == 0) || (jQuery('#edit-complainttype').val() == 3))
+        if ((jQuery('.dz-processing').length) || (jQuery('#edit-complainttype').val() == 0) || (jQuery('#edit-complainttype').val() == 3))
         {
             actionComplaint(e,'submit');           
         }

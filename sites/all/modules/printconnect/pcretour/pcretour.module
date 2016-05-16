@@ -269,7 +269,7 @@ function pcretour_notify($form_state, $mailto) {
 
     $arrayTracking = $result->trackingLinks;
     foreach ($arrayTracking as  $linkTracking) {
-        $message .= '<br/><b>' . t('url') . '</b>: '.$linkTracking;
+        $message .= '<br/><b>' . t('url tracking') . '</b>: '.$linkTracking;
     }
   
     mail_retour($mailto,  $params['firstName'],$subject, $message, $orderId);

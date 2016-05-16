@@ -31,8 +31,10 @@
           
             if(response == 'false') {
                 jQuery("#errorUpload").text('MessageErrorImage');
+                jQuery("#errorUpload").show();
             } else {
-                jQuery("#errorUpload").text(Drupal.t('success upload image'));    
+                jQuery("#errorUpload").text(Drupal.t('success upload image'));
+                jQuery("#errorUpload").show();
             }
         },
         error: function (file, response) {

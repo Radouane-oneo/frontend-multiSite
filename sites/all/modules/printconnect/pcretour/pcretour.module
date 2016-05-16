@@ -17,10 +17,24 @@ function pcretour_menu() {
       'access arguments' => array('access content'),
       'type' => MENU_CALLBACK,
   );
+   $items['verifysend'] = array( 
+    'title' => '', //page title
+    'description' => '',
+    'page callback' => 'drupal_get_form', 
+    'page arguments' => array('pcretour_form_verifysend'), //put the name of the form here
+    'access callback' => TRUE
+  );
   return $items;
 }
+function pcretour_form_verifysend(){
+    if($_SESSION['messagesRetour']) {
+        echo $_SESSION['urlPDF'];
+        unset($_SESSION['messagesRetour']);
+        unset($_SESSION['urlPDF']);
+    }
+    die;
+}
 function pcretour_form($form, &$form_state) {
-
     $form['retour'] = array(
         '#type' => 'container',
         '#attributes' => array('class' => array('complaint')),
@@ -158,27 +172,30 @@ function pcretour_form($form, &$form_state) {
         '#attributes' => array( 'readonly' => 'readonly'),
         '#suffix' => '</div>', 
     );
-
-    if (isset($_SESSION['messagesRetour'])){
-        drupal_add_js('window.open(\'' . $_SESSION['urlPDF'] . '\')', 'inline');
+    
+        
+       //drupal_add_js('jQuery("#edit-submit").attr("action","/download.php?product="+pdfProduct)');
         $form['retour']['form']['message'] = array(
             '#markup' => "<div class='complaintSuccess'>"
             . "<p>".t('retourSuccess text')."</p>"
             . "<p class='questions'>".t('retourquestionsTxt')."</p>"
-            . "<p class='urlPDF'><a href='".$_SESSION['urlPDF']."'>".$_SESSION['urlPDF']."</a></p>"
-            . "</div>",
+            . "<p class='urlPDF'><a id='link_pdf' target='_blank' href='".$_SESSION['urlPDF']."'>".$_SESSION['urlPDF']."</a></p>"
+          
+              
+            . "</div>"
         );
-        unset($_SESSION['urlPDF']);
-        unset($_SESSION['messagesRetour']);
-    }else{
+        //drupal_add_js('jQuery(document).ready(function(){jQuery("<form>Test</form>").appendTo(".complaintSuccess").attr("action","'.$_SESSION['urlPDF'].'").attr("target","_blank").submit()})', 'inline');
+      
+  
+    
         $form['retour']['form']['submit'] = array(
             '#type' => 'submit',
             '#value' => t('submit form retour'),
             '#prefix' => '<div class="complaintSubmit">',
             '#suffix' => '</div>',       
           );
-    }  
     
+     $form['#attributes']['target'] = '_blank';
   return $form;
 }
 
@@ -259,7 +276,7 @@ function pcretour_notify($form_state, $mailto) {
     $_SESSION['urlPDF'] = $result->labelUrl;
  //   drupal_add_js('window.open(\'' . $result->labelUrl . '\')', 'inline');
    
-    //drupal_goto( $result->labelUrl);  
+    drupal_goto( $result->labelUrl);  
     
 }
 function mail_retour($mailto, $from_name, $subject, $message, $orderId) {

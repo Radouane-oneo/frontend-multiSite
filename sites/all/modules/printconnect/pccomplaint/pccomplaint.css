@@ -197,3 +197,9 @@
 .dropzone .dz-preview .dz-image {
     border-radius: 4px;
 }
+.errorMsg {
+    color: red;
+    margin: 3px 0;
+    position: absolute;
+    width: 190px;
+}

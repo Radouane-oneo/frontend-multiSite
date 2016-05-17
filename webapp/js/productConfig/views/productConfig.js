@@ -24,6 +24,7 @@ define([
             "click .calculCF " : "calculCF",
             "click #edit-actions-addtocart" : "calculCFOrder",
             "click .banner-link-product" : "bannerClickProduct",
+            "click .banner-link-productEvent" : "bannerClickProductEvent",
             "click .banner-link" : "bannerClick",
             "click .banner-link-visite" : "bannerClickVisite",
             "click .banner-link-folder" : "bannerClickFolder",
@@ -392,6 +393,11 @@ define([
         checkQuantity: function(e){
             if(e.which != 8 && isNaN(String.fromCharCode(e.which)))
                 e.preventDefault();
+                
+				if(e.which == 13) {
+					e.preventDefault();
+					this.calculatePrice();
+				}
         },
         editCustomQuantity: function(){
             $("#edit-quantity-custom").attr("checked", "checked");
@@ -414,9 +420,25 @@ define([
             $('#divpopup').fadeIn();
             $('#hideshow').attr('style','display:block');			
         },
+        bannerClickProductEvent: function(e){
+            e.preventDefault();
+            var pdfProduct = $("#pdfProduct").val();
+            var pdfTrack = $("#pdfTrack").val();
+            var website = $("#WEBSITE_FIELD").val();
+            if (website == 'flyer.lu')
+                ga('send', 'event', { 'eventCategory': 'PDFdownloads', 'eventAction': 'click', 'eventLabel': pdfTrack });
+            else
+                _gaq.push(['_trackEvent', 'PDFdownloads', 'click', pdfTrack]);
+            $('#mailpopup').fadeIn();
+            
+            $("#popupFormId").attr("action","/download.php?product="+pdfProduct); 
+            $('#remerciement').attr('style','display:none'); 
+            $('#divpopup').fadeIn();
+            $('#hideshow').attr('style','display:block');   
+        },
         bannerClick: function(e){
             e.preventDefault();
-             _gaq.push(['_trackEvent', 'PDFdownloads', 'click', 'affichegids']);
+            _gaq.push(['_trackEvent', 'PDFdownloads', 'click', 'affichegids']);
             $('#mailpopup').fadeIn();
             $("#popupFormId").attr("action","/downloadaffiche.php");
            // $("<div class='grey-bg-popup'></div>").insertAfter("#canvas");

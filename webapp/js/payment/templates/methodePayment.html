@@ -11,7 +11,8 @@
             <thead><tr><th class="first-child"></th><th></th><th class="last-child"></th> </tr></thead>
             <tbody>
                <%  var checked = "", descriptionTag = "";
-               var amountWithoutPayment;%>
+               var amountWithoutPayment;               
+               %>
                 <% _.each(config.paymentMethods, function(payment, i){if(!config.customerFcp && payment.paymentMethod.internalName == 'invoice') {return true;}%>
                 <% if (payment.id == model.paymentId){
                      checked = "checked='checked'"; 
@@ -29,6 +30,7 @@
                                        tag-id="<%= payment.paymentMethod.tag %>" 
                                        tagdesc-id="<%= payment.paymentMethod.descriptionTag %>" 
                                        price-id="<%= paymentPrice %>"
+                                       tag-internalName="<%= payment.paymentMethod.internalName %>"
                                        <%= checked %> 
                                        > 
                             </div>
@@ -54,5 +56,19 @@
         </div>  
 </div>
     </div>
-    <div class="textpayment"><% if(model.descriptionTagPayment)  {print(model.descriptionTagPayment);}else {%><p> <% print($("<div></div>").html(descriptionTag).text());%> </p><% } %></div> 
+    <div class="textpayment">
+        <%  
+        if(model.descriptionTagPayment)  
+        {
+            print(model.descriptionTagPayment);
+        }
+        else {
+        %>
+        <p> 
+        <% 
+            print($("<div></div>").html(descriptionTag).text());
+        %> 
+        </p>
+        <% } %>
+    </div> 
 </fieldset>

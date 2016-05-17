@@ -66,8 +66,9 @@ function _pcmenu_main() {
   global $language;
     $items = module_invoke_all('pcmenumain');
     drupal_alter('pcmenumain', $items);
-    uasort($items, 'element_sort');
+    //uasort($items, 'element_sort');
     $result = '<ul>';
+
     foreach ($items as $item) {
       if (isset($item['#dropdown'])) {
         $dropdown = '<div class="dropdown"><div class="arrow"></div><div class="content">';

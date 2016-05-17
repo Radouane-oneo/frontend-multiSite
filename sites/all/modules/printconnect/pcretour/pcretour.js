@@ -131,7 +131,7 @@
                     }
                     else
                     {
-                        if(data.orderStatus && [10, 18, 15].indexOf(data.orderStatus.id)!= -1){
+                        if(data.orderStatus && [10, 18].indexOf(data.orderStatus.id)!= -1){
                             console.log(data.orderStatus.id);
                             jQuery('#box-progress').hide();
                             jQuery("#errorMsg").css({ "display":"none"});

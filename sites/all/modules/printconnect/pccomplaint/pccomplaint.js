@@ -141,7 +141,7 @@
                     }
                     else
                     {
-                        if(data.orderStatus && [10, 18, 15].indexOf(data.orderStatus.id)!= -1){
+                        if(data.orderStatus && [10, 18].indexOf(data.orderStatus.id)!= -1){
                             console.log(data.orderStatus.id);
                             if(Dropzone.instances[0]) Dropzone.instances[0].enable();
                             jQuery("#errorUpload").css({ "display":"none"});

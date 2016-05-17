@@ -16,6 +16,7 @@ define([
             "change #prices-table input.form-radio" : "changeQuantity",
             "click #prices-table tbody tr:not(.custom)" : "selectInput",
             "click #edit-calculer" : "calculatePrice",
+	    "blur #wcf, #hcf" : "blurClick",
           //  "change #prices-table input.form-custom-radio" : "calculatePrice",
             "keypress #edit-custom" : "checkQuantity",
             "click #deadlinestooltip legend" : "toggleCollapse",
@@ -35,6 +36,9 @@ define([
             this.config = require("config");
             this.model = new productConfigModel();
             this.render();
+	    if ($('.msgErrorCF').hasClass('no-error')) {
+	        $('.msgErrorCF').hide();
+	    }
             this.model.on("change",this.render,this);
             clearInterval(timerSaveP);
             $("#save-progress-bar").find("div").stop(true).animate({width: 100 + '%'},1000, function(){
@@ -90,6 +94,11 @@ define([
             //input number BTN
             this.inputTypeNumber();
         },
+	blurClick: function(){
+	    if ($('#wcf').val() != '' && $('#hcf').val() != '') {
+		$('#edit-calculer').trigger('click');
+	    }
+	},
         toggleExpand: function(e){
             $(e.currentTarget).toggleClass("expanded");
             $(e.currentTarget).next().slideToggle();
@@ -117,7 +126,12 @@ define([
                     "CF":null
                 },{silent: true});
             }
-            $('.msgErrorCF').text('');
+	    if ($('.msgErrorCF').hasClass('no-error')) {
+                $('.msgErrorCF').html($('#defaultMsg').val());
+	    } else {
+		$('.msgErrorCF').removeClass('no-error');
+		$('.msgErrorCF').text('');
+	    }
             $('.msgCFValid').text('');
             var dropDown = $(e.currentTarget).parents(".dropdown");
             var selectEl = dropDown.prev();
@@ -188,7 +202,7 @@ define([
             var pricing = this.model.get("toolBoxGroup")["pricing"][quantity];
             var price = null;
             var customHeight = $('#hcf').val();//this.model.get('heightCF');
-            var customWidth  = $('#wcf').val() //this.model.get('widthCF');
+            var customWidth  = $('#wcf').val(); //this.model.get('widthCF');
             if(pricing && !(customHeight) && !(customWidth)){
                 price = (pricing["promoPrice"]) ? pricing["promoPrice"] : pricing["sellPrice"];
             } else {
@@ -266,18 +280,21 @@ define([
                 return false;
             }
             if ( wcfVal < minWCF || wcfVal > maxWCF){
+		$('.msgErrorCF').show();
+		$('.msgErrorCF').removeClass('no-error');
                 $('#wcf').css({ "border":"1px solid red", "color":"red"});
                 $('.msgErrorCF').text($('#textWidthNotValid').val() +" "+ minWCF + " mm " + $('#et').val() +" " +maxWCF+ " mm.");
                 return false;
             }
             if ( hcfVal < minHCF || hcfVal > maxHCF){
+		$('.msgErrorCF').show();
                 $('.msgErrorCF').removeClass('no-error');
                 $('#hcf').css({ "border":"1px solid red", "color":"red"});
                 $('.msgErrorCF').text($('#textHeightNotValid').val() +" "+ minHCF + " mm "  + $('#et').val()+" " +maxHCF+ " mm.");
                 return false;
             }  
             
-            $('.msgErrorCF').text("");              
+           // $('.msgErrorCF').text("");              
             if (wcfVal > hcfVal) var cfTol = wcfVal / hcfVal; else var cfTol = hcfVal / wcfVal;
             $('.msgErrorCF').removeClass('no-error');
             if ( cfTol < minTOL || cfTol > maxTOL) {

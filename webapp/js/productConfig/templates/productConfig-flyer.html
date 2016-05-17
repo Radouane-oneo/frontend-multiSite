@@ -91,6 +91,8 @@
             <div class="blocCustomFormat">   
                 <div class="inputCustomFormat">
                     <form>
+			<%var dimension = ((model.widthCF * model.heightCF) / 1000000);dimension = dimension.toString().replace('.', ',')%>
+			<input type="hidden" id="defaultMsg" value="<%=config.labels['infoGlobalSurface']  + ' <strong>' + dimension + ' m²</strong>'%>">
                         <div class="wrapTxt">
                             <label class="bold-txt label-txt"><%= config.labels['newCF'] %> :</label>
                             <input type="text" id="wcf" name="widthCF" value="<%= model.widthCF %>" placeholder="<%= config.labels['breedte'] %>"><span class="mm">mm</span><label class="light-txt label-txt">&nbsp; X</label>
@@ -107,7 +109,7 @@
                             <input type="hidden" id="textTolNotValid" class="msgErrorCF" value="<%= config.labels['textTolNotValid'] %>">
                             <input type="hidden" id="et" class="msgErrorCF" value="<%= config.labels['et'] %>">
                             <div class="box-info clearfix">
-                                <div class='msgErrorCF no-error'><%var dimension = ((config.labels['maxHCF'] * config.labels['maxWCF']) / 1000000);dimension = dimension.toString().replace('.', ',')%><%= config.labels['infoGlobalSurface'] + ' <strong>' + dimension +' m²</strong>'%></div>
+                                <div class='msgErrorCF no-error'><%var dimension = ((model.widthCF * model.heightCF) / 1000000);dimension = dimension.toString().replace('.', ',')%><%= config.labels['infoGlobalSurface'] + ' <strong>' + dimension +' m²</strong>'%></div>
                                 <span class="moreInfo">?
                                     <span class="infoTxt" position="-60px">
                                         <strong><%= config.labels['infoTitle'] %></strong>

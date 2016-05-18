@@ -963,6 +963,31 @@ function pcproducts_cron() {
   //_pcproducts_rebuildaliasses();
 }
 
+function revert_vertical($items, $numCols) {
+    $nbr = count($items) / $numCols;
+	$nbr = is_double($nbr) ? $nbr + 1 : $nbr;
+	
+	$result = array();
+	
+	foreach ($items as $key => $value) {
+		$result[] = array($key%$nbr, $value);
+	}
+	
+	uasort($result, function ($a, $b) {
+        if ($a == $b) {
+        return 0;
+	    }
+	    return ($a < $b) ? -1 : 1;
+    });
+	
+	$items = array();
+	foreach ($result as $r) {
+	    $items[] = $r[1];
+	}
+	
+   	return $items;
+}
+
 function pcproducts_calculator_form($form, &$form_state) {
     $products = Factory::GetAll();
     $items = array();
@@ -973,10 +998,11 @@ function pcproducts_calculator_form($form, &$form_state) {
         return strcmp($a->name, $b->name);
     });
 	
-    foreach ($products as $product) {
+	foreach ($products as $product) {
       $items[$product->id] = $product->name;
     }
-
+	
+	
   $form['about'] = array(
       '#type' => 'item',
       '#markup' => t('About product calculator'),

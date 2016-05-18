@@ -1,13 +1,13 @@
-<form accept-charset="UTF-8" id="pcproducts-config-form" method="post"
+<form itemscope itemtype="http://schema.org/Product" accept-charset="UTF-8" id="pcproducts-config-form" method="post"
       action="/<%= config.prefix %>/cart/additem/submit">
     <div>
         <div id="edit-description" class="description clearfix form-wrapper">
-
+			<span itemprop="url" content="<%= document.location.href %>"</span>
             <div id="edit-description-image" class="image form-wrapper">
-                <img width="178" height="172" alt="" src="<%= config.imagesUrl %>products/<%= (config.labels['productType']=='synonym') ? config.labels['parentId'] : config.labels['productId'] %>.png">
-                <h3><%= config.labels["productName"] %></h3>
+                <img itemprop="image" width="178" height="172" alt="" src="<%= config.imagesUrl %>products/<%= (config.labels['productType']=='synonym') ? config.labels['parentId'] : config.labels['productId'] %>.png">
+                <h3 itemprop="name" ><%= config.labels["productName"] %></h3>
             </div>
-            <div id="edit-description-text" class="text form-wrapper">
+            <div itemprop="description" id="edit-description-text" class="text form-wrapper">
                 <%= $('<div/>').html(config.labels["productDescription"]).text() %>
             </div>
             <div id='popupbox'></div>

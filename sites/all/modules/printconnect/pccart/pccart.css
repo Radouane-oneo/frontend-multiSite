@@ -779,6 +779,11 @@ table.targetPrice tbody tr.last-child td { border:none; }
   padding: 0;
 }
 
+.page-cart #pccart-cart-form .dummyupload li.firt {
+  line-height: 17px;
+  margin-bottom: 3px;
+}
+
 #pccart-cart-form .prodactTemplates .poll-form a.model-form {
   display: inline;
   padding: 0;

@@ -1,0 +1,5 @@
+name = Retour
+description = Retour
+core = 7.x
+scripts[] = pcretour.js
+stylesheets[all][] = pcretour.css

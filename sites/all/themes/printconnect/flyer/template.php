@@ -29,8 +29,10 @@ function flyer_preprocess_page(&$variables) {
 //            || (stristr($host, 'dev.flyer') == TRUE)
 //            || (stristr($host, 'preprd') == TRUE)) {
    $domainValid = array('flyer.be','flyer.fr','flyer.nl','flyer.lu','www.flyer.be','www.flyer.fr','www.flyer.nl','www.flyer.lu');
-   if ((isset($conf['cobrandedshops']) && array_key_exists($subdomain, $conf['cobrandedshops'])) 
-            || (!in_array($host, $domainValid))){
+   if ((isset($conf['cobrandedshops']) && array_key_exists($subdomain, $conf['cobrandedshops']))
+           || (!in_array($host, $domainValid))
+           ||(arg(0) == 'complaint')
+           ||(arg(0) == 'retour')){
         $meta_robot = array(
             '#tag' => 'meta',
             '#attributes' => array(

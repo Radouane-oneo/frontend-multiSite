@@ -960,7 +960,7 @@ function pcproducts_flush_caches() {
 }
 
 function pcproducts_cron() {
-  //_pcproducts_rebuildaliasses();
+  _pcproducts_rebuildaliasses();
 }
 
 function revert_vertical($items, $numCols) {
@@ -993,12 +993,11 @@ function pcproducts_calculator_form($form, &$form_state) {
     $items = array();
 
     $products = $products->items;
-	
-    usort($products, function ($a, $b) {
-        return strcmp($a->name, $b->name);
+    usort($products, function (Product $a, Product $b) {
+            return strcmp(t($a->name), t($b->name));
     });
 	
-	foreach ($products as $product) {
+    foreach ($products as $product) {
       $items[$product->id] = $product->name;
     }
 	
@@ -1064,7 +1063,7 @@ function pcproducts_calculator_form($form, &$form_state) {
 }
 
 function pcproducts_calculator_form_callback(&$form, &$form_state) {
-  	return $form;
+  return $form;
 }
 
 function pcproducts_calculator_form_submit(&$form, &$form_state) {
@@ -1083,7 +1082,7 @@ function pcproducts_calculator_form_submit(&$form, &$form_state) {
 function _pcproducts_rebuildaliasses() {
 
   $languages = \printconnect\Drupal\Functions::GetLanguages();
-  
+
   foreach ($languages as $language) {
 
     $products = Factory::GetAll($language);

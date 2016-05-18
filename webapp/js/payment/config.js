@@ -19,7 +19,7 @@ define([
         cart : parsedJSON,
         paymentMethods : $.parseJSON(paymentMethodsJSON).data.paymentMethods,
         customerName : $.parseJSON(paymentMethodsJSON).data.customerName,
-	customerFcp : $.parseJSON(paymentMethodsJSON).data.customerFcp,
+	    customerFcp : $.parseJSON(paymentMethodsJSON).data.customerFcp,
         amountWithoutPayment : $.parseJSON(paymentMethodsJSON).data.amountWithoutPayment,
         vat : GlobalVat,
         prefix : GlobalPrefix,

@@ -11222,12 +11222,12 @@ p.requieredfields span.form-required {
     -webkit-border-radius: 5px 5px 5px 5px;
 }
 input[type="text"].inputdesigneremail {
-    width: 319px;
+    width: 308px;
 }
 .inputdesigner label {
     font-size: 12px;
     font-weight: normal;
-    width: 321px;
+    width: 328px;
     float: left;
     line-height: 40px;
 }
@@ -11237,6 +11237,7 @@ input[type="text"].inputdesigneremail {
     color: #3c3c3b;
     line-height: normal;
     padding: 10px;
+    clear: both;
 }
 .page-cart .shipping table tr td {
 	border-top: 0;

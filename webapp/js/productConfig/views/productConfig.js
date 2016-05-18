@@ -270,6 +270,7 @@ define([
             var wcfVal = parseFloat(wcf.replace(",", "."));                      
             var hcfVal = parseFloat(hcf.replace(",", "."));
             if ( (hcfVal < minHCF || hcfVal > maxHCF) && (wcfVal < minWCF || wcfVal > maxWCF)){
+		$('.msgErrorCF').show();
                 $('.msgErrorCF').removeClass('no-error');
                 $('#hcf').css({ "border":"1px solid red", "color":"red"});
                 $('#wcf').css({ "border":"1px solid red", "color":"red"});                

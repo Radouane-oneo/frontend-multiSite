@@ -1224,6 +1224,8 @@ function pcproducts_filter($code) {
 }
 
 function pcproducts_pcmenumain() {
+    // desactiver l'onglet produits A-Z
+    return ;
   $alphaArray = _pcproducts_alpha_array();
   
   $menuItems['product'] = array(

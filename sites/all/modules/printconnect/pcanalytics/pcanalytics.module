@@ -1,6 +1,22 @@
 <?php
 use printconnect\Carts\Cart;
 function pcanalytics_page_alter(&$page) {
+    $analytics = '
+        <!-- Google Code for Analytics -->
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(["_setAccount", "' . $account . '"]);
+            _gaq.push(["_setDomainName", "' . $domain . '"]);
+            _gaq.push(["_trackPageview"]);
+            _gaq.push(["_trackPageLoadTime"]);
+
+            (function() {
+                var ga = document.createElement("script"); ga.type = "text/javascript"; ga.async = true;
+                ga.src = ("https:" == document.location.protocol ? "https://" : "http://") + "stats.g.doubleclick.net/dc.js";
+                var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        ';
     $domainValid = array('flyer.be','flyer.fr','flyer.nl','flyer.lu','www.flyer.be','www.flyer.fr','www.flyer.nl','www.flyer.lu');
     if (in_array($_SERVER['HTTP_HOST'], $domainValid)){
         $account = variable_get('pcanalytics_account', 'account');

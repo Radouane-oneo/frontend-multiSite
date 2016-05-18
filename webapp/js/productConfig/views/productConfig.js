@@ -16,6 +16,7 @@ define([
             "change #prices-table input.form-radio" : "changeQuantity",
             "click #prices-table tbody tr:not(.custom)" : "selectInput",
             "click #edit-calculer" : "calculatePrice",
+	    "blur #wcf, #hcf" : "blurClick",
           //  "change #prices-table input.form-custom-radio" : "calculatePrice",
             "keypress #edit-custom" : "checkQuantity",
             "click #deadlinestooltip legend" : "toggleCollapse",
@@ -24,6 +25,7 @@ define([
             "click .calculCF " : "calculCF",
             "click #edit-actions-addtocart" : "calculCFOrder",
             "click .banner-link-product" : "bannerClickProduct",
+            "click .banner-link-productEvent" : "bannerClickProductEvent",
             "click .banner-link" : "bannerClick",
             "click .banner-link-visite" : "bannerClickVisite",
             "click .banner-link-folder" : "bannerClickFolder",
@@ -35,6 +37,9 @@ define([
             this.config = require("config");
             this.model = new productConfigModel();
             this.render();
+	    if ($('.msgErrorCF').hasClass('no-error')) {
+	        $('.msgErrorCF').hide();
+	    }
             this.model.on("change",this.render,this);
             clearInterval(timerSaveP);
             $("#save-progress-bar").find("div").stop(true).animate({width: 100 + '%'},1000, function(){
@@ -61,18 +66,13 @@ define([
             var existQuantity = '';
             if($("#edit-custom").val()){
                 _.each(this.model.get("toolBoxGroup")["pricing"], function(price, i){
-                    //console.log(i);
-                    //console.log(parseInt($("#edit-custom").val()));
                     if(parseInt($("#edit-custom").val()) == i) {
                         existQuantity = i;
                         return true
                     }
                 });
 
-
-                //console.log('lolo'+existQuantity);
                 if (existQuantity == ''){
-                	//console.log('lolo'+existQuantity);
                     $('#trQuantitePersonalisee').show();
                 }
             }
@@ -88,7 +88,18 @@ define([
             if (sitePrintconcept == 'printconcept'){                
                 $("#pcproducts-config-form .dropdown:first").css('display', 'block');
             }
+
+            //set position of infobul
+            this.setPositionInfobul();
+
+            //input number BTN
+            this.inputTypeNumber();
         },
+	blurClick: function(){
+	    if ($('#wcf').val() != '' && $('#hcf').val() != '') {
+		$('#edit-calculer').trigger('click');
+	    }
+	},
         toggleExpand: function(e){
             $(e.currentTarget).toggleClass("expanded");
             $(e.currentTarget).next().slideToggle();
@@ -116,14 +127,19 @@ define([
                     "CF":null
                 },{silent: true});
             }
-            $('.msgErrorCF').text('');
+	    if ($('.msgErrorCF').hasClass('no-error')) {
+                $('.msgErrorCF').html($('#defaultMsg').val());
+	    } else {
+		$('.msgErrorCF').removeClass('no-error');
+		$('.msgErrorCF').text('');
+	    }
             $('.msgCFValid').text('');
             var dropDown = $(e.currentTarget).parents(".dropdown");
             var selectEl = dropDown.prev();
             var oldSelectedValue = selectEl.find("div.selected-item").attr("data-id");
             var selectedItems = [];
             var me = this;
-            if(!submit)
+            if(!submit && !$(e.currentTarget).parents("li").hasClass('CF'))
             selectEl.click();
 
             this.$("div.selected-item").each(function(){
@@ -181,26 +197,29 @@ define([
                 $('#trQuantitePersonalisee').hide();
             }
             else{
-               $('#trQuantitePersonalisee').show();     
+               //$('#trQuantitePersonalisee').show();     
             }
             
             var pricing = this.model.get("toolBoxGroup")["pricing"][quantity];
             var price = null;
-            var customHeight = this.model.get('heightCF');
-            var customWidth  = this.model.get('widthCF');
+            var customHeight = $('#hcf').val();//this.model.get('heightCF');
+            var customWidth  = $('#wcf').val(); //this.model.get('widthCF');
             if(pricing && !(customHeight) && !(customWidth)){
                 price = (pricing["promoPrice"]) ? pricing["promoPrice"] : pricing["sellPrice"];
             } else {
                 price = this.model.calculatePrice(quantity);
             }
-            this.model.set({
-                "price" : price,
-                "quantity" : quantity
-            });
+	    if (($('#wcf').val() != '' || $('#hcf').val() != '') && ($('#wcf').val() != null || $('#hcf').val() != null)) {
+                this.calculCF();
+            } else {
+                this.model.set({
+                    "price" : price,
+                    "quantity" : quantity
+                });
+	    }
             return false;
         },
         calculCF: function(e){
-            
             var minHCF = this.config.labels['minHCF'];
             var maxHCF = this.config.labels['maxHCF'];
             var minWCF = this.config.labels['minWCF'];
@@ -212,40 +231,48 @@ define([
             if (wcf == '' || hcf == ''){
                 if (wcf == '') $('#wcf').css({ "border":"1px solid red", "color":"red"});else $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
                 if (hcf == '') $('#hcf').css({ "border":"1px solid red", "color":"red"}); else $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
+                $('.msgErrorCF').removeClass('no-error');
                 $('.msgErrorCF').text($('#msgErrorCF').val());
                 return false;
             }
             if (isNaN(hcf) && isNaN(wcf)){
                 $('#hcf').css({ "border":"1px solid red", "color":"red"});
                 $('#wcf').css({ "border":"1px solid red", "color":"red"});
-                //console.log($('#msgErrorCFNotFloat').val());
+                $('.msgErrorCF').removeClass('no-error');
                 $('.msgErrorCF').text($('#msgErrorCFNotFloat').val());
                 return false;
             }
             else{
+                //$('.msgErrorCF').removeClass('no-error');
                 $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
                 $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});  
             }
             if (isNaN(hcf)){
+                $('.msgErrorCF').removeClass('no-error');
                 $('#hcf').css({ "border":"1px solid red", "color":"red"});
                 $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
                 $('.msgErrorCF').text($('#msgErrorCFNotFloat').val());
                 return false;
             }
             else {
+
                 $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
             }
             if(isNaN(wcf)){
+                $('.msgErrorCF').removeClass('no-error');
                 $('#wcf').css({ "border":"1px solid red", "color":"red"});
                 $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
                 $('.msgErrorCF').text($('#msgErrorCFNotFloat').val());
                 return false;
             }
             else
+                $('.msgErrorCF').addClass('no-error');
                 $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
             var wcfVal = parseFloat(wcf.replace(",", "."));                      
             var hcfVal = parseFloat(hcf.replace(",", "."));
             if ( (hcfVal < minHCF || hcfVal > maxHCF) && (wcfVal < minWCF || wcfVal > maxWCF)){
+		$('.msgErrorCF').show();
+                $('.msgErrorCF').removeClass('no-error');
                 $('#hcf').css({ "border":"1px solid red", "color":"red"});
                 $('#wcf').css({ "border":"1px solid red", "color":"red"});                
                 $('.msgErrorCF').html(
@@ -255,20 +282,23 @@ define([
                 return false;
             }
             if ( wcfVal < minWCF || wcfVal > maxWCF){
-                //console.log(minWCF);
+		$('.msgErrorCF').show();
+		$('.msgErrorCF').removeClass('no-error');
                 $('#wcf').css({ "border":"1px solid red", "color":"red"});
                 $('.msgErrorCF').text($('#textWidthNotValid').val() +" "+ minWCF + " mm " + $('#et').val() +" " +maxWCF+ " mm.");
                 return false;
             }
             if ( hcfVal < minHCF || hcfVal > maxHCF){
+		$('.msgErrorCF').show();
+                $('.msgErrorCF').removeClass('no-error');
                 $('#hcf').css({ "border":"1px solid red", "color":"red"});
                 $('.msgErrorCF').text($('#textHeightNotValid').val() +" "+ minHCF + " mm "  + $('#et').val()+" " +maxHCF+ " mm.");
                 return false;
             }  
             
-            $('.msgErrorCF').text("");              
+           // $('.msgErrorCF').text("");              
             if (wcfVal > hcfVal) var cfTol = wcfVal / hcfVal; else var cfTol = hcfVal / wcfVal;
-            //console.log('minT'+ maxTOL);
+            $('.msgErrorCF').removeClass('no-error');
             if ( cfTol < minTOL || cfTol > maxTOL) {
                 $('#wcf').css({ "border":"1px solid red", "color":"red"});
                 $('#hcf').css({ "border":"1px solid red", "color":"red"});
@@ -279,13 +309,15 @@ define([
             if (( wcfVal >= minWCF && wcfVal <= maxWCF ) &&  ( hcfVal >= minHCF && hcfVal <= maxHCF ) &&  ( cfTol >= minTOL && cfTol <= maxTOL ))
             {                
                 $('.msgCFValid').text($('#msgCFValid').val());
+                $('.msgErrorCF').addClass('no-error');
                 $('#wcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"});
                 $('#hcf').css({ "border":"1px solid #8f8f8f", "color":"#8f8f8f"}); 
+	        var customQte = $('.customNumber input.form-text').val();
                 this.model.set({
                            "widthCF": wcfVal,
                            "heightCF":hcfVal,
                            "CF":"CF",
-                           "quantity" : 1
+                           "quantity" : customQte
                        },{silent: true});
                    this.$("li.CF a").trigger("click");
             }
@@ -392,6 +424,11 @@ define([
         checkQuantity: function(e){
             if(e.which != 8 && isNaN(String.fromCharCode(e.which)))
                 e.preventDefault();
+                
+				if(e.which == 13) {
+					e.preventDefault();
+					this.calculatePrice();
+				}
         },
         editCustomQuantity: function(){
             $("#edit-quantity-custom").attr("checked", "checked");
@@ -414,9 +451,25 @@ define([
             $('#divpopup').fadeIn();
             $('#hideshow').attr('style','display:block');			
         },
+        bannerClickProductEvent: function(e){
+            e.preventDefault();
+            var pdfProduct = $("#pdfProduct").val();
+            var pdfTrack = $("#pdfTrack").val();
+            var website = $("#WEBSITE_FIELD").val();
+            if (website == 'flyer.lu')
+                ga('send', 'event', { 'eventCategory': 'PDFdownloads', 'eventAction': 'click', 'eventLabel': pdfTrack });
+            else
+                _gaq.push(['_trackEvent', 'PDFdownloads', 'click', pdfTrack]);
+            $('#mailpopup').fadeIn();
+            
+            $("#popupFormId").attr("action","/download.php?product="+pdfProduct); 
+            $('#remerciement').attr('style','display:none'); 
+            $('#divpopup').fadeIn();
+            $('#hideshow').attr('style','display:block');   
+        },
         bannerClick: function(e){
             e.preventDefault();
-             _gaq.push(['_trackEvent', 'PDFdownloads', 'click', 'affichegids']);
+            _gaq.push(['_trackEvent', 'PDFdownloads', 'click', 'affichegids']);
             $('#mailpopup').fadeIn();
             $("#popupFormId").attr("action","/downloadaffiche.php");
            // $("<div class='grey-bg-popup'></div>").insertAfter("#canvas");
@@ -513,6 +566,23 @@ define([
                 }
             }
         },
+        setPositionInfobul : function(){
+            //get Height of infoTxt
+            var infoP = ($('.infoTxt').height()/2) * (-1);
+            $('.infoTxt').css('top', infoP);
+        },
+        inputTypeNumber : function(){
+            var spins = document.getElementsByClassName("customNumber");
+            for (var i = 0, len = spins.length; i < len; i++) {
+                var spin = spins[i],
+                    span = spin.getElementsByClassName("numberbtn"),
+                    input = document.getElementById("edit-custom");
+                
+                input.onchange = function() { input.value = +input.value || 1; };
+                span[1].onclick = function() { input.value = Math.max(1, input.value - 1); };
+                span[0].onclick = function() { input.value -= -1; };
+            }
+        }
     });
 
 });

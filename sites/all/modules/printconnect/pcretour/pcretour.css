@@ -1,0 +1,197 @@
+.youradress {
+  margin-bottom: 30px;
+}
+#edit-youradress {
+    padding-bottom: 50px;
+}
+.youadress #edit-number{
+    width: 100px !important;
+}
+.complaintform{
+    border: 1px solid #e7e3e3;
+    background-color: #f1f1f1;
+    border-radius: 2px 2px 2px 2px;
+    -moz-border-radius: 2px 2px 2px 2px;
+    -webkit-border-radius: 2px 2px 2px 2px;
+}
+.bloccomplaint{
+    padding: 30px 10px;
+    border-bottom: 1px solid #e7e3e3;
+    position: relative;
+}
+#content .bloccomplaint h3 {
+    font-size: 14px;
+    line-height: 14px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.blocpicture{
+    float: left;
+    width: 155px;
+}
+   
+.blocdropdrag .dropzone {
+    background: url("/sites/all/themes/printconnect/flyer/css/images/uploadicon.png") no-repeat center 15px;
+    border: 2px dashed #e7e3e3;
+    min-height: 106px;
+    padding: 4px;
+    width: 445px;
+    border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
+}
+.blocdropdrag {
+    height: 110px;
+    line-height: 12px;
+}
+
+.bloccomplaint:after,
+.complaintform:after {
+    content: "";
+    width: 100%;
+    height: 0;
+    display: block;
+    clear: both;
+}
+
+.bloccomplaint > div > div {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.bloccomplaint .labelorder {
+    width: 130px;
+    text-transform: uppercase;
+}
+.bloccomplaint .labelorderleft {
+    margin-left: 14px;
+    text-transform: uppercase;
+    width: 95px;
+}
+.bloccomplaint input[type="text"],
+.bloccomplaint .select2-container > a.select2-choice,
+.bloccomplaint textarea {
+    width: 203px !important;
+    color: #bcbbbb;
+    box-sizing: border-box;
+}
+
+.bloccomplaint input#edit-number,
+.bloccomplaint input#edit-postalcode{
+    width: 108px  !important;
+}
+
+.bloccomplaint .form-item,
+.bloccomplaint .select2-container {
+    margin: 0 0 0 20px;
+    position: relative;
+}
+.bloccomplaint .form-item-number, .bloccomplaint .form-item-postalcode {
+    margin: 0 0 0 7px;
+}
+.bloccomplaint .labelorder span {
+    color: red;
+}
+.bloccomplaint .labelorderleft span {
+    color: red;
+}
+.identification .txtJobId {
+    float: right;
+    margin: 5px 212px 0 0;
+    color: #bcbbbb;
+}
+
+.orderIssue .labelorder,
+.compensation .labelorder {
+    line-height: 41px;
+}
+.orderIssue .labelorder, 
+.orderIssue .form-type-select,
+.compensation .labelorder,
+.compensation .form-type-select {
+    vertical-align: top;
+}
+
+.orderIssue {
+    margin-bottom: 20px;
+}
+
+.dropTitle {text-transform: uppercase;}
+
+.blocpicture p {
+    color: #bcbbbb;
+    line-height: 20px;
+    padding-right: 10px;
+}
+
+.dropzone .dz-message {
+    margin: 0 !important;
+    line-height: 106px;
+    color: #bcbbbb;
+}
+
+.complaintSubmit {
+    padding: 30px 42px;
+    width: 430px;
+    float: right;
+    margin-right: 24px;
+}
+
+.complaintSubmit input.ui-button {
+    background: #73b900;
+    width: 100%;
+    line-height: 41px;
+    padding: 0;
+}
+
+.complaintSuccess {
+    background: url("/sites/all/themes/printconnect/flyer/css/images/validicon.png") no-repeat 189px 30px;
+    border-bottom: 1px solid #e7e3e3;
+    padding: 30px 42px;
+}
+
+.complaintSuccess p {
+    margin: 0;
+    padding-left: 200px;
+}
+
+.complaintSuccess p.questions {
+    margin-top: 20px;
+}
+
+.dropzone .dz-preview .dz-details {
+    display: none;
+}
+
+.identification #errorMsg {
+    margin: 5px 0 0 152px;
+    color: red;
+}
+
+.orderIssue #errorMsg {
+    position: absolute;
+    color: red;
+    top: 42px;
+    left: 173px;
+}
+
+.orderIssue #errorMsg,
+.identification #errorMsg {
+    display: none;
+}
+.complaintSubmit{
+    display: block;
+}
+#errorUpload {
+    display: block;
+    margin: 5px 0 0 158px;
+}
+.errorMsg{
+    color:red;
+    position: absolute;
+    margin: 3px 0;
+    width: 190px;
+}
+.complaintSuccess{
+    display:none;
+}

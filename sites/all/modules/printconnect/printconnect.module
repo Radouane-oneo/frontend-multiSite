@@ -7,11 +7,11 @@ function printconnect_init() {
   global $browscap;
   global $base_url;
   
-  $uriRequest = split('/', request_uri());
+  $uriRequest = @split('/', request_uri());
   unset($uriRequest[0]);
   $urlPermant = '';
   $redirectPermanant = FALSE;
-  $arrayBaseurl = split('[/.-]', $base_url); 
+  $arrayBaseurl = @split('[/.-]', $base_url); 
   $uriExtention = $arrayBaseurl[sizeof($arrayBaseurl)-1];
   $arrayExtention = array(
                         'be' => array('nlnl' => 'benl',

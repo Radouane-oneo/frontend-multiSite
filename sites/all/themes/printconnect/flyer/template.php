@@ -29,8 +29,10 @@ function flyer_preprocess_page(&$variables) {
 //            || (stristr($host, 'dev.flyer') == TRUE)
 //            || (stristr($host, 'preprd') == TRUE)) {
    $domainValid = array('flyer.be','flyer.fr','flyer.nl','flyer.lu','www.flyer.be','www.flyer.fr','www.flyer.nl','www.flyer.lu');
-   if ((isset($conf['cobrandedshops']) && array_key_exists($subdomain, $conf['cobrandedshops'])) 
-            || (!in_array($host, $domainValid))){
+   if ((isset($conf['cobrandedshops']) && array_key_exists($subdomain, $conf['cobrandedshops']))
+           || (!in_array($host, $domainValid))
+           ||(arg(0) == 'complaint')
+           ||(arg(0) == 'retour')){
         $meta_robot = array(
             '#tag' => 'meta',
             '#attributes' => array(
@@ -309,9 +311,12 @@ function flyer_preprocess_html(&$vars) {
 	unset($javascript['misc/jquery.js']);
 	unset($javascript['sites/all/modules/printconnect/pccart/pccart.js']);
         $args = arg();
-      
-        if($args[0]=="cart" || $args[0]=="payment" || ($args[0]=="checkout" && $args[1]=="invoiceanddelivery")) {
-            
+      if($args[0]=="complaint") {
+            unset($javascript['sites/all/modules/printconnect/pcretour/pcretour.js']);
+      }
+        if($args[0]=="cart" || $args[0]=="payment" || $args[0]=="retour" || ($args[0]=="checkout" && $args[1]=="invoiceanddelivery")) {
+            unset($javascript['sites/all/modules/printconnect/pccomplaint/dropzone.js']);
+            unset($javascript['sites/all/modules/printconnect/pccomplaint/pccomplaint.js']);
             unset($javascript['sites/all/libraries/fancybox/fancybox/jquery.fancybox-1.3.4.js']);
             unset($javascript['sites/all/modules/contrib/fancybox/js/fancybox.js']);
             //unset($javascript['sites/all/themes/printconnect/flyer/libraries/scrollBarPlugin/jquery.mCustomScrollbar.min.js']);
@@ -403,6 +408,16 @@ function flyer_preprocess_html(&$vars) {
 }
 
 function flyer_css_alter(&$css) {
+	$args = arg();
+	
+	if($args[0]=="complaint") {
+        unset($css['sites/all/modules/printconnect/pcretour/pcretour.css']);
+  	}
+
+	  if($args[0]=="retour") {
+	    unset($css['sites/all/modules/printconnect/pccomplaint/pccomplaint.css']);
+	  }
+
 	if ($_SESSION['isfront'] == 1) {
 		unset($css['sites/all/modules/printconnect/pcbpost/pcbpost.css']);
 		unset($css['sites/all/modules/printconnect/pcdesigner/pcdesigner.css']);

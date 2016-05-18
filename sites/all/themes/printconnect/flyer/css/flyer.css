@@ -2726,6 +2726,7 @@ a.ui-button.inactivebtn{
 	position: relative;
 	height: 43px;
 	border: 0;
+	display: none;
 }
 .page-products #pcproducts-config-form table.grid tr.last-child td:nth-child(2){
 	padding-left: 0;
@@ -4177,6 +4178,7 @@ a.googleconnect {
 }
 .page-checkout-invoiceanddelivery .pup #hoursDetail td{
 	line-height: 18px;
+	font-size: 12px;
 }
 
 
@@ -4646,7 +4648,7 @@ a.googleconnect {
 }
 .page-paymentrequest-key table.grid tr td, 
 .page-checkout-payment table.grid tr td {
-	
+	font-size: 12px;
 }
 /*.page-paymentrequest-key table.grid tr td span.price,*/ 
 .page-checkout-payment table.grid tr td span.price {
@@ -6118,8 +6120,8 @@ body {
 	
 }
 .selectBox-dropdown-menu li.selectBox-selected {
-	/* display: none;
-	border-bottom: none !important; */
+	/* display: none; border-bottom: none !important; */
+   	
 }
 .selectBox-dropdown-menu a {
 	text-transform: uppercase;
@@ -6239,6 +6241,15 @@ background-position: -658px top;
 .product-selectBox-dropdown-menu li span.subMenuIcon69 {
 	background-position: -772px top;
 } */
+
+.selectBox-options, .selectBox-options LI {
+	-webkit-column-count: 4;
+    -moz-column-count: 4;
+    column-count: 4;
+    
+    /* display: inline-table !important;	*/
+}
+
 .product-selectBox-dropdown-menu li {
 	float: left !important;
 	width: 204px !important;
@@ -10301,7 +10312,7 @@ border: none;
 		-webkit-box-shadow: inset 0px 0px 0px 0.9px #b0b0b0;
 		box-shadow: inset 0px 0px 0px 0.9px #b0b0b0;
 		background: #ffffff;
-		background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJod…EiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+		background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodâ€¦EiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
                 background: -moz-linear-gradient(top, #ffffff 0%, #e2dfdf 100%);
 		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2dfdf));
 		background: -webkit-linear-gradient(top, #ffffff 0%,#e2dfdf 100%);
@@ -11211,12 +11222,12 @@ p.requieredfields span.form-required {
     -webkit-border-radius: 5px 5px 5px 5px;
 }
 input[type="text"].inputdesigneremail {
-    width: 319px;
+    width: 308px;
 }
 .inputdesigner label {
     font-size: 12px;
     font-weight: normal;
-    width: 321px;
+    width: 328px;
     float: left;
     line-height: 40px;
 }
@@ -11226,6 +11237,7 @@ input[type="text"].inputdesigneremail {
     color: #3c3c3b;
     line-height: normal;
     padding: 10px;
+    clear: both;
 }
 .page-cart .shipping table tr td {
 	border-top: 0;
@@ -11557,14 +11569,14 @@ input.ui-button.payment {
     background-color: #303030;
     opacity: 0.8;
     cursor: auto;
-    z-index: 9999;
+    z-index: 9999999999;
 }
 
 #content-box{
 	position: fixed;
     top: 50%;
     left: 50%;
-    z-index: 9999;
+    z-index: 9999999999;
     margin: -37px 0 0 -340px;
     width: 680px;
     height: 74px;
@@ -11783,10 +11795,11 @@ margin-top:20px;
 	top: 50% !important;
 	width: 515px;
 	border: 1px solid #a5a6a7;
-	padding: 20px 16px 14px 19px;
+	padding: 20px 16px 20px 19px;
 	background: #fff;
 	margin-left: -273px;
 	margin-top: -157px;
+	z-index: 99999;
 }
  
 .page-myprintconnect-offers .myoffers{
@@ -12416,6 +12429,8 @@ form#pccheckout-payment-form fieldset legend{
     top: 0;
     width: 100%;
     z-index: 100;
+    background: rgba(128, 128, 128, 0.65);
+    z-index: 9999;
 }
 .lireSuite {
     margin-top: 35px;
@@ -12765,4 +12780,18 @@ form#pccheckout-payment-form fieldset legend{
 .page-samplepack div.error,
 .page-samplepack div.status {
     margin-bottom: 28px !important;
+}
+
+#edit-transaction {
+    border-radius: 0;
+}
+
+.headerleft .ogms {
+    float: right;
+    color: #f60;
+    margin-top: 25px;
+}
+
+#edit-transaction .title {
+    margin-bottom: 5px;
 }

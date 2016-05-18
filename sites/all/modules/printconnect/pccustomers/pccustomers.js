@@ -462,7 +462,6 @@ function ValidatePostalCode(iso,value) {
     }
   }
    $('#edit-vatnumber-country').val('');
-   //console.log('herer');
    if ($('#edit-country').val() != 0) {
        var url = Drupal.settings.basePath + '?q=js/country/' + $("#edit-country").val();
            $.getJSON(url, null, function (data) {

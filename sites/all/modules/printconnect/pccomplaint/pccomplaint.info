@@ -1,0 +1,9 @@
+name = Complaint
+description = Complaint
+package = printconnect
+core = 7.x
+dependencies[] = printconnect
+scripts[] = dropzone.js
+scripts[] = pccomplaint.js
+stylesheets[all][] = pccomplaint.css
+stylesheets[all][] = dropzone.css

@@ -1,4 +1,8 @@
-<span class="price <%= (typeof classToAdd != 'undefined')?classToAdd:'' %>">
+<span class="price <%= (typeof classToAdd != 'undefined')?classToAdd:'' %>" itemscope itemprop="offers" itemtype="http://schema.org/Offer">
+	
+	<meta itemprop="priceCurrency" content="EUR">
+	<span class="value" itemprop="price" content="<%= price.toFixed(2) %>"></span>
+	
     <% if(typeof label != 'undefined'){ %><label><%= label %></label><% } %>
     <span class="value">
          <% 

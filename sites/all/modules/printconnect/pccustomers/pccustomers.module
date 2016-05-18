@@ -159,9 +159,10 @@ function pccustomers_block_view($delta = '') {
     case 'manage':
       $customer = Factory::Current();
       $link = l(t('Manage your account'), 'myprintconnect');
-
-      if ($customer->firstName!='' || $customer->firstName!= null) {
-        $link = l(t('Hello') . ' ' . $customer->firstName, 'myprintconnect');
+      if ($customer) { 
+        if ($customer->firstName!='' || $customer->firstName!= null) {
+          $link = l(t('Hello') . ' ' . $customer->firstName, 'myprintconnect');
+        }
       }
       // if ($customer) {
       $block['content'][] = array(

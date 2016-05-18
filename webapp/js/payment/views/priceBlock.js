@@ -33,6 +33,7 @@ define([
                 case "Bancontact": $(this.config.containerId).find("#priceBlock #actionPayment").val(this.config.labels['paynow']);break;
                 case "transfer": $(this.config.containerId).find("#priceBlock #actionPayment").val(this.config.labels['paylater']);break;
                 case "cheque": $(this.config.containerId).find("#priceBlock #actionPayment").val(this.config.labels['paylater']);break;
+                case "invoice": $(this.config.containerId).find("#priceBlock #actionPayment").val(this.config.labels['paylater']);break;
             }
         },
         actionPayment : function(){

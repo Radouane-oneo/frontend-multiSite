@@ -393,6 +393,11 @@ define([
         checkQuantity: function(e){
             if(e.which != 8 && isNaN(String.fromCharCode(e.which)))
                 e.preventDefault();
+                
+				if(e.which == 13) {
+					e.preventDefault();
+					this.calculatePrice();
+				}
         },
         editCustomQuantity: function(){
             $("#edit-quantity-custom").attr("checked", "checked");
@@ -433,7 +438,7 @@ define([
         },
         bannerClick: function(e){
             e.preventDefault();
-             _gaq.push(['_trackEvent', 'PDFdownloads', 'click', 'affichegids']);
+            _gaq.push(['_trackEvent', 'PDFdownloads', 'click', 'affichegids']);
             $('#mailpopup').fadeIn();
             $("#popupFormId").attr("action","/downloadaffiche.php");
            // $("<div class='grey-bg-popup'></div>").insertAfter("#canvas");

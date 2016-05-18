@@ -138,7 +138,8 @@ var submitProductForm= function(callback) {
           pcproductsRequest.abort();
         }
       });
-
+	
+	  try {
       $($productForm, 'input[type="text"]').once().keyup(function(){
         if (pcproductsRequest){
           pcproductsRequest.abort();
@@ -185,6 +186,7 @@ var submitProductForm= function(callback) {
        
         return false;
       });
+      } catch(e) {};
 
       $($productForm, '.step-1 select').change(function(){
         //$($productForm, '.step-1 .fieldset-wrapper').overlay();
@@ -194,11 +196,12 @@ var submitProductForm= function(callback) {
         submitProductForm();
       });
 
+      try {
       $($productForm, '.step-2 .grid input[type="radio"]').once().click(function(event){
         recalculate();
         submitProductForm();
       });
-
+      
       $($productForm, '.step-2 .form-item-options input[type="checkbox"]').once().change(function(){
         recalculate();
         submitProductForm();
@@ -208,7 +211,7 @@ var submitProductForm= function(callback) {
         recalculate();
         submitProductForm();
       });
-
+      
       $('#pcproducts-product-form input[type="radio"], #pcproducts-product-form input[type="checkbox"], #pcproducts-product-form select, #pcproducts-product-form input[type="text"]').once().change(function(){
         });
 
@@ -221,7 +224,7 @@ var submitProductForm= function(callback) {
 
         });
       });
-     
+      
       if ($.fancybox){
         $($productForm, '.deadlines a').fancybox({
           width: 500,
@@ -249,7 +252,7 @@ var submitProductForm= function(callback) {
         var control = $('<div id="' + id + '" class="' + cls + ' select-replacement"/>');
 
         $(this).wrap(control);
-
+		
 
         var dropdown = $('<div class="dropdown"/>').hide();
         dropdown.append('<div class="dropdown-content"/>');
@@ -312,7 +315,7 @@ var submitProductForm= function(callback) {
         $(this).hide();
 
       });
-
+	
 
       $($productForm, '.select-replacement > select').change(function (){
         $('.select', $(this).parent()).html($('option:selected',this).text());
@@ -489,6 +492,8 @@ var submitProductForm= function(callback) {
         var url = $(this).val();
         window.location.href= url;
         });
+        
+        } catch (e) {}
     }
   }
 })(jQuery);

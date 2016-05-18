@@ -82,6 +82,11 @@
                                     <%}else{%>
                                         <%= priceTpl({price:model.price,classToAdd:'price'}) %>
                                     <%}}%>
+				
+				<!-- <br><br>
+				<%  _.each(model.options, function(option, i){ %>
+				   <div style="text-align: right">+ <%= priceTpl({price:option.price}) %> </div>
+				<% }); %> -->
 			</div>
 
 			<!-- Dummy Upload -->

@@ -704,6 +704,7 @@ table.targetPrice tbody tr.last-child td { border:none; }
   box-sizing: border-box;
   text-transform: none;
   margin-bottom: 12px;
+  padding: 4px 0;
 }
 
 .poll-form .filetype{
@@ -776,6 +777,11 @@ table.targetPrice tbody tr.last-child td { border:none; }
 .page-cart #pccart-cart-form .cartItemsContainer ul li {
   list-style: none;
   padding: 0;
+}
+
+.page-cart #pccart-cart-form .dummyupload li.firt {
+  line-height: 17px;
+  margin-bottom: 3px;
 }
 
 #pccart-cart-form .prodactTemplates .poll-form a.model-form {

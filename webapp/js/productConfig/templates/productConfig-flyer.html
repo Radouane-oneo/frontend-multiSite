@@ -1,13 +1,13 @@
-<form accept-charset="UTF-8" id="pcproducts-config-form" method="post"
+<form itemscope itemtype="http://schema.org/Product" accept-charset="UTF-8" id="pcproducts-config-form" method="post"
       action="/<%= config.prefix %>/cart/additem/submit">
     <div>
         <div id="edit-description" class="description clearfix form-wrapper">
-
+			<span itemprop="url" content="<%= document.location.href %>"</span>
             <div id="edit-description-image" class="image form-wrapper">
-                <img width="178" height="172" alt="" src="<%= config.imagesUrl %>products/<%= (config.labels['productType']=='synonym') ? config.labels['parentId'] : config.labels['productId'] %>.png">
-                <h3><%= config.labels["productName"] %></h3>
+                <img itemprop="image" width="178" height="172" alt="" src="<%= config.imagesUrl %>products/<%= (config.labels['productType']=='synonym') ? config.labels['parentId'] : config.labels['productId'] %>.png">
+                <h3 itemprop="name" ><%= config.labels["productName"] %></h3>
             </div>
-            <div id="edit-description-text" class="text form-wrapper">
+            <div itemprop="description" id="edit-description-text" class="text form-wrapper">
                 <%= $('<div/>').html(config.labels["productDescription"]).text() %>
             </div>
             <div id='popupbox'></div>
@@ -203,7 +203,8 @@
                         <label for="edit-custom"><%= config.labels["enterQuantity"] %></label>
                         <div class="wrap-input-calcul">
                         <input type="text" class="form-text" maxlength="128" size="60" value="<%= (customQuantity)?model.quantity:'' %>" name="custom" id="edit-custom">
-                        <input type="submit" value="<%= config.labels['calculate'] %>" name="op" id="edit-calculer" class="ajax-calculate form-submit ui-button ui-widget ui-state-default ui-corner-all btn-calcul" role="button">
+                        <input type="button" value="<%= config.labels['calculate'] %>" name="op" id="edit-calculer" class="ajax-calculate form-submit ui-button ui-widget ui-state-default ui-corner-all btn-calcul" role="button">
+                        <!-- <input type="submit" value="<%= config.labels['calculate'] %>" name="op" id="edit-calculer" class="ajax-calculate form-submit ui-button ui-widget ui-state-default ui-corner-all btn-calcul" role="button"> -->
                         </div>
                     </div>
                 </td>
@@ -227,7 +228,7 @@
             </div>
             <div class="button-wrapper">    
                 <input
-                type="submit" value="<%= config.labels['addToCart'] %>" name="op" id="edit-actions-addtocart"
+                type="button" value="<%= config.labels['addToCart'] %>" name="op" id="edit-actions-addtocart"
                 class="cart  form-submit ui-button"
                 role="button">
             </div>
@@ -237,7 +238,7 @@
         <!-- shippingDetail -->
         <div id="bloc-shipping" class="boxShippingDate"><%= shippingHTML %></div>
         <!-- End shippingDetail -->
-        <% console.log(model);if((model.widthCF == null && model.heightCF == null)  || (model.widthCF == 0 && model.heightCF == 0))  {%> 
+        <% if((model.widthCF == null && model.heightCF == null)  || (model.widthCF == 0 && model.heightCF == 0))  {%> 
         <!-- templateDetail -->
         <fieldset id="templates" class="templates form-wrappersss">
             <legend><span class="fieldset-legend"><%= config.labels['technicalDetails'] %></span></legend>

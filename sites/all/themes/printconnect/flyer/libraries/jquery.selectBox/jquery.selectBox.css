@@ -65,6 +65,9 @@ select.selectBox{
 .selectBox-dropdown-menu {
   position: absolute;
   z-index: 99999;
+  
+  z-index: 900;
+  
   max-height: 200px;
   min-height: 1em;
   border: solid 1px #BBB; /* should be the same border width as .selectBox-dropdown */
@@ -103,6 +106,12 @@ select.selectBox{
   cursor: default;
   padding: 0;
   margin: 0;
+}
+
+.product-selectBox-dropdown-menu.selectBox-options,
+.product-selectBox-dropdown-menu.selectBox-options LI,
+.product-selectBox-dropdown-menu.selectBox-options LI A {
+	display: inline-table;
 }
 
 .selectBox-options li a {

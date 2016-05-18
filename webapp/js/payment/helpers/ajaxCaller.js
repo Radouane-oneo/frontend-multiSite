@@ -14,7 +14,7 @@ define([], function () {
             }).done(function(resultData) {
                 //myCart.disable = false;
             }).error(function(){
-                console.log("erro");
+                //console.log("erro");
             });
         }
 

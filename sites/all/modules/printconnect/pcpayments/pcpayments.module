@@ -207,6 +207,7 @@ function new_payment_loadpage() {
             "agree" => t('I agree with the !termsandconditionslink', array('!termsandconditionslink' => theme('generalconditionslink'))),
             "agreeMessage" => t('The field I agree with the <a href="/benl/node/67" target="_blank">terms and conditions</a> is required'),
             "paynow" => t('Pay now'),
+            "paylater" => t('Pay later'),
             "textPayment" => t('textPayment'),
             "textImagePayment" => t('textImagePayment'),
             "methodePaymentNull" => t('methodePaymentNull'),        

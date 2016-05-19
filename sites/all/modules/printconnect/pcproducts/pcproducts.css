@@ -528,64 +528,172 @@ body #footer #block-pcproducts-list ul.menu li{
     display: none;
 }
 .blocCustomFormat{
-	margin-top: 12px;
+  margin-top: 12px;
 }
 .blocCustomFormat .inputCustomFormat{
-	padding: 11px 10px 9px 20px;
-	border: 1px solid #f1f1f1;
+  padding: 11px 10px 9px 20px;
+  border: 1px solid #f1f1f1;
     display: block;
     border-radius: 4px;
 }
 .blocCustomFormat .inputCustomFormat:after{
-	clear: both;
-	width: 100%;
-	height: 1px;
-	display: block;
-	content: '';
+  clear: both;
+  width: 100%;
+  height: 1px;
+  display: block;
+  content: '';
 }
 
-.blocCustomFormat .inputCustomFormat .wrapTxt{
-	float: left;
+/*.blocCustomFormat .inputCustomFormat .wrapTxt{
+  float: left;
+}*/
+
+.blocCustomFormat .box-info{
+  clear: both;
+  margin-left: 195px;
+  padding-top: 10px;
+}
+.blocCustomFormat .box-info .moreInfo{
+  float: right;
+  position: relative;
+  width: 17px;
+  height: 17px;
+  line-height: 17px;
+  text-align: center;
+  font-size: 12px;
+  color: #646464;
+  background-color: #eaeaea;
+  border-radius: 50%;
+  cursor: pointer;
+  top : -34px;
+}
+
+.box-info .moreInfo .infoTxt{
+  position: absolute;
+  left: -150px;
+  top: -50px;
+  font-size: 12px;
+  line-height: 15px;
+  border-color: #8a8a8a;
+  border-style: solid;
+  border-width: 1px 1px 1px 2px;
+  padding: 15px 10px;
+  background-color: white;
+  width: 300px;
+  display: block;
+  z-index: 10;
+  text-align: left;
+  -webkit-transform: scale(0) rotateZ(-12deg);
+  -moz-transform: scale(0) rotate(-12deg);
+  -ms-transform: scale(0) rotateZ(-12deg);
+  -o-transform: scale(0) rotate(-12deg);
+  transform: scale(0) rotateZ(-12deg);
+  -webkit-transition: all .25s;
+  -moz-transition: all .25s;
+  -ms-transition: all .25s;
+  -o-transition: all .25s;
+  transition: all .25s;
+}
+
+.box-info .moreInfo:hover .infoTxt{
+  opacity: 1;
+  -webkit-transform: scale(1) rotateZ(0);
+  -moz-transform: scale(1) rotate(0);
+  -ms-transform: scale(1) rotateZ(0);
+  -o-transform: scale(1) rotate(0);
+  transform: scale(1) rotateZ(0);
+  left: 40px;
+}
+
+.box-info .moreInfo .infoTxt:after{
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -15px;
+    width: 15px;
+    height: 16px;
+    background: url(images/infoflesh.png) 0 0;
+    margin-top: -15px;
+}
+
+.box-info .moreInfo .infoTxt strong{
+  font-weight: 700;
+  display: block;
+  margin-bottom: 15px;
 }
 
 .blocCustomFormat .inputCustomFormat .wrapBtn{
-	float: right;
+  float: right;
 }
 
 .blocCustomFormat .inputCustomFormat  .label-txt{
-	display: inline-block;
-	vertical-align: middle;
+  display: inline-block;
+  vertical-align: middle;
 }
 
-.blocCustomFormat .inputCustomFormat  .bold-txt{
-	font-weight: 700;
-	margin-right: 4px;
+.blocCustomFormat .inputCustomFormat .bold-txt{
+  font-weight: 600;
+  margin-right: 5px;
+  width: 190px;
+  color: #646464;
 }
-.blocCustomFormat .inputCustomFormat  .light-txt{
-	font-weight: 400;
-	margin-right: 10px;
-	margin-left: 7px;
+
+.blocCustomFormat .inputCustomFormat .wrap-input-calcul{
+  display: inline-block;
+  width: 425px;
 }
+.blocCustomFormat .inputCustomFormat #edit-calculer{
+  float: right;
+  width: 190px;
+  background: url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/flyer_landingpage/flyerstrap1/action.png) 10px center no-repeat #77b800;
+}
+
+.blocCustomFormat .inputCustomFormat .form-text{
+  display: inline-block;
+  width: 178px;
+}
+
+.blocCustomFormat .inputCustomFormat .light-txt{
+    font-weight: 400;
+    margin-right: 10px;
+    margin-left: 16px;
+    font-size: 10px;
+}
+
+.blocCustomFormat .inputCustomFormat .mm{
+  font-weight: 400;
+  color: #646464;
+  margin-left: -30px;
+}
+
 .blocCustomFormat .inputCustomFormat  #wcf , .blocCustomFormat .inputCustomFormat  #hcf{
-	width: 104px;
+  width: 175px;
 }
 
 .blocCustomFormat .inputCustomFormat  #wcf , .blocCustomFormat .inputCustomFormat  #hcf,.blocCustomFormat .inputCustomFormat .calculCF{
-	float: none !important;
-	margin-top: 0 !important;
-	vertical-align: middle;
-	display: inline-block;
+  float: none !important;
+  margin-top: 0 !important;
+  vertical-align: middle;
+  display: inline-block;
 }
 .blocCustomFormat .inputCustomFormat .wrapBtn{
-	margin-top: 4px;
+  margin-top: 4px;
 }
 .blocCustomFormat .inputCustomFormat .wrapBtn .calculCF{
-	background: #79b51d;
-	padding: 6px 30px;
+  background: #79b51d;
+  padding: 6px 30px;
 }
 
 .msgErrorCF{ 
-	color: #f00 !important; 
+  color: #f00;
+  float: left;
+  max-width: 400%;
+}
+.no-error{ 
+  color: #646464;
+}
+.no-error strong{ 
+  font-weight: bold;
 }
 
 /* New CSS for Flyer migration */
@@ -796,4 +904,56 @@ span.datainfobul:after {
   color:#f60;
   font-weight: 600;
   margin-right: 5px;
+}
+.costumFormatBox{
+  margin-top: 10px;
+  clear: both;
+}
+
+.costumFormatBox .blocCustomFormat{
+  margin: 0;
+}
+
+.costumFormatBox .inputCustomFormat{
+  border: 0;
+  padding: 15px;
+  margin: 0;
+  border-radius:0;
+}
+
+.costumFormatBox .form-item-calcul-qte{
+  border-top: 1px solid #e1e1e1;
+}
+.costumFormatBox .only-contity{
+  border-top: 0;
+}
+
+.customNumber{
+  position: relative;
+}
+
+.customNumber .numberbtn{
+  background: url(images/numberflesh.png) 0 0 no-repeat;
+  display: block;
+  position: absolute;
+  left: 170px;
+  top: 1px;
+  width: 27px;
+  height: 18px;
+  font-size: 0;
+  cursor: pointer;
+}
+
+.customNumber .remove{
+  background-position: 0 -18px;
+  display: block;
+  position: absolute;
+  left: 170px;
+  top: auto;
+  bottom: 1px;
+  width: 27px;
+  height: 18px;
+}
+.detailtechnique-wrapper.costumFormatBox{
+  background-color: #fbfbfb;
 }

@@ -761,6 +761,9 @@ function getLabels($edit = false, $productId) {
         "productdescription" =>t('info for ' . $productId),
         "linkToControl" =>t('linkToControl'),
         "linkTextControl" =>t('linkTextControl'),
+        "infoTitle" =>t('About Custom format'),
+        "infoDescription" =>t('Content about the restrictions of custom format.'),
+	"infoGlobalSurface" => t('globalSurface'),
         
     );
 
@@ -957,7 +960,7 @@ function pcproducts_flush_caches() {
 }
 
 function pcproducts_cron() {
-  //_pcproducts_rebuildaliasses();
+  _pcproducts_rebuildaliasses();
 }
 
 function revert_vertical($items, $numCols) {
@@ -999,15 +1002,11 @@ function pcproducts_calculator_form($form, &$form_state) {
     $items = array();
 
     $products = $products->items;
-	
-    usort($products, function ($a, $b) {
-        return strcmp($a->name, $b->name);
+    usort($products, function (Product $a, Product $b) {
+            return strcmp(t($a->name), t($b->name));
     });
 	
-	//$products  = revert_vertical($products, 4);
-	//print_r($products);
-	
-	foreach ($products as $product) {
+    foreach ($products as $product) {
       $items[$product->id] = $product->name;
     }
 	
@@ -1079,7 +1078,7 @@ function pcproducts_calculator_form($form, &$form_state) {
 }
 
 function pcproducts_calculator_form_callback(&$form, &$form_state) {
-  	return $form;
+  return $form;
 }
 
 function pcproducts_calculator_form_submit(&$form, &$form_state) {
@@ -1098,7 +1097,7 @@ function pcproducts_calculator_form_submit(&$form, &$form_state) {
 function _pcproducts_rebuildaliasses() {
 
   $languages = \printconnect\Drupal\Functions::GetLanguages();
-  
+
   foreach ($languages as $language) {
 
     $products = Factory::GetAll($language);
@@ -1243,6 +1242,10 @@ function pcproducts_filter($code) {
 }
 
 function pcproducts_pcmenumain() {
+    // desactiver l'onglet produits A-Z
+   // return ;
+  $shop = \printconnect\Shop\Configuration\Factory::Current();
+  if(35 === $shop->id) return ;
   $alphaArray = _pcproducts_alpha_array();
   
   $menuItems['product'] = array(

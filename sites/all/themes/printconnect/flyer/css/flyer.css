@@ -2726,6 +2726,7 @@ a.ui-button.inactivebtn{
 	position: relative;
 	height: 43px;
 	border: 0;
+	display: none;
 }
 .page-products #pcproducts-config-form table.grid tr.last-child td:nth-child(2){
 	padding-left: 0;
@@ -10304,7 +10305,7 @@ border: none;
 		-webkit-box-shadow: inset 0px 0px 0px 0.9px #b0b0b0;
 		box-shadow: inset 0px 0px 0px 0.9px #b0b0b0;
 		background: #ffffff;
-		background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJod…EiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+		background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodâ€¦EiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
                 background: -moz-linear-gradient(top, #ffffff 0%, #e2dfdf 100%);
 		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e2dfdf));
 		background: -webkit-linear-gradient(top, #ffffff 0%,#e2dfdf 100%);
@@ -11214,12 +11215,12 @@ p.requieredfields span.form-required {
     -webkit-border-radius: 5px 5px 5px 5px;
 }
 input[type="text"].inputdesigneremail {
-    width: 319px;
+    width: 308px;
 }
 .inputdesigner label {
     font-size: 12px;
     font-weight: normal;
-    width: 321px;
+    width: 328px;
     float: left;
     line-height: 40px;
 }
@@ -11229,6 +11230,7 @@ input[type="text"].inputdesigneremail {
     color: #3c3c3b;
     line-height: normal;
     padding: 10px;
+    clear: both;
 }
 .page-cart .shipping table tr td {
 	border-top: 0;
@@ -11560,14 +11562,14 @@ input.ui-button.payment {
     background-color: #303030;
     opacity: 0.8;
     cursor: auto;
-    z-index: 9999;
+    z-index: 9999999999;
 }
 
 #content-box{
 	position: fixed;
     top: 50%;
     left: 50%;
-    z-index: 9999;
+    z-index: 9999999999;
     margin: -37px 0 0 -340px;
     width: 680px;
     height: 74px;
@@ -12772,6 +12774,17 @@ form#pccheckout-payment-form fieldset legend{
 .page-samplepack div.status {
     margin-bottom: 28px !important;
 }
-.ogms {
-  color: #f60;
+
+#edit-transaction {
+    border-radius: 0;
+}
+
+.headerleft .ogms {
+    float: right;
+    color: #f60;
+    margin-top: 25px;
+}
+
+#edit-transaction .title {
+    margin-bottom: 5px;
 }

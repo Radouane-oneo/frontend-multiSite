@@ -11569,7 +11569,7 @@ input.ui-button.payment {
     background-color: #303030;
     opacity: 0.8;
     cursor: auto;
-    z-index: 9999999999;
+    z-index: 999999999; 
 }
 
 #content-box{

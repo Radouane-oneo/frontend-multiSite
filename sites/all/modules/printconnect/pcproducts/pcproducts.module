@@ -966,8 +966,6 @@ function revert_vertical($items, $numCols) {
     $nbr = count($items) / $numCols;
 	$nbr = is_double($nbr) ? intval($nbr) + 1 : $nbr;
 	
-	
-	
 	$result = array();
 	foreach ($items as $key => $value) {
 		$result[] = array($key%$nbr, $value);

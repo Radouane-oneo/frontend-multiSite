@@ -17,6 +17,13 @@ if (jQuery)(function($) {
 			// Private methods
 			//
 			var init = function(select, data) {
+					
+					/* var options = vertical_align(select, 4);
+					$(select).empty();
+					$(select).append(options); */
+					
+					//select = vertical_align(select, 4);
+				
 					var options;
 					// Disable for iOS devices (their native controls are more suitable for a touch device)
 					if (navigator.userAgent.match(/iPad|iPhone|Android|IEMobile|BlackBerry/i)) return false;
@@ -118,6 +125,37 @@ if (jQuery)(function($) {
 					});
 					
 				};
+				
+			var vertical_align = function(data, numCols) {
+			    
+				var nbr = data.length / numCols;
+				nbr = (nbr % 1 != 0) ? Math.floor(nbr) + 1 : nbr;
+			    
+			    var items = [];
+			    $.each(data, function(i, v) {
+					items[i] = [i%nbr, v];
+				});
+				
+				var vals = [];
+				$.each(items, function(k, v) {
+					for (var i=0; i<nbr; i++) {
+						if(v[0] == i) {
+							if(typeof vals[i] == 'undefined') vals[i] = [];
+							vals[i].push(v[1]);
+						}
+					}
+				});
+				
+				var items = [];
+				$.each(vals, function(k, v) {
+					$.each(v, function(vi, vv) {
+						items.push(vv);
+					});
+				});
+			    
+			    return items;
+			};
+			
 			var getOptions = function(select, type) {
 					var options;
 					// Private function to handle recursion in the getOptions function.
@@ -263,6 +301,8 @@ if (jQuery)(function($) {
 						if ($(event.target).parents().andSelf().hasClass('selectBox-options')) return;
 						hideMenus();
 					});
+					
+					options.find('li:first-child').hide();
 				};
 			var hideMenus = function() {
 					if ($(".selectBox-dropdown-menu:visible").length === 0) return;
@@ -620,6 +660,7 @@ if (jQuery)(function($) {
 				};
                                 
 			var generateOptions = function(self, options) {
+				
 					var li = $('<li />'),
 						a = $('<a />');
 					li.addClass(self.attr('class'));

@@ -565,6 +565,7 @@ body #footer #block-pcproducts-list ul.menu li{
   background-color: #eaeaea;
   border-radius: 50%;
   cursor: pointer;
+  top : -34px;
 }
 
 .box-info .moreInfo .infoTxt{

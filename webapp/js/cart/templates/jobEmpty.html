@@ -13,7 +13,7 @@
 				</div>
 			</div>
 			<div class="preview2">
-				<div class="description form-wrapper <%= (model.emailDesigner ==null)?'':'jobDesigner' %>">
+				<div class="description form-wrapper <%= (model.emailDesigner ==null)?'':'jobDesigner' %>" style="padding-bottom: 5px">
                                     <% var name=''%>
                                     <% if (model.customWidth != 0  && model.customWidth != null && model.customHeight != 0 && model.customHeight != null){
                                             name = model.configuration.name + ' ' +model.customWidth+' X '+ model.customHeight+' mm';
@@ -38,7 +38,7 @@
                                                 <%= priceTpl({price:model.price,classToAdd:'price'}) %>
                                             <%}}%>
 					<div class="item-list">
-						<ul>
+						<ul style="overflow: visible;">
 						<% _.each(model.configuration.config, function(itemConfig, i){ %>
 							<% if(i!=0) { %>
 								<li class="<%= (i == 1)?'first':'' %> <%= (i == model.configuration.config.length-1)?'last':'' %>">
@@ -49,7 +49,11 @@
 
 						<% if(model.options.length>0) { %>
 							<% _.each(model.options, function(option, i){ %>
-								<li class="<%= (i == model.options.length-1)?'last':'' %>"> <%= option.optionName %> </li>
+								<li style="position: relative" class="<%= (i == model.options.length-1)?'last':'' %>"> <%= option.optionName %>
+									<div style="text-align: right; position: absolute; right: -340px; top: 0px; ">
+										+ <%= priceTpl({price:option.price}) %>
+									</div>	
+								</li>
 							<% }); %>
 						<% } %>
 
@@ -63,11 +67,14 @@
             		%>
                     
                     <% if (model.customWidth == 0 && model.customHeight == 0){%>
-                    <div class="edit-job" style="line-height: 17.2px;">
+                    <div class="edit-job" style="line-height: 18px;">
 						<a style="line-height: 21px;" href="<%= directLink %>" class=""><%= config.labels["updateProduct"] %></a>
-						<%  _.each(model.options, function(option, i){ %>
-						   <div style="text-align: right">+ <%= priceTpl({price:option.price}) %> </div>
-						<% }); %>
+						<!-- <%  _.each(model.options, function(option, i){ %>
+							<div style="text-align: right">
+								<% if(i == 0) { %><div style="margin-top: 1px"></div><% } %>
+								+ <%= priceTpl({price:option.price}) %>
+							</div>
+						<% }); %> -->
 					</div>
 					<%}%>
 				</div>

@@ -50,7 +50,7 @@
 						<% if(model.options.length>0) { %>
 							<% _.each(model.options, function(option, i){ %>
 								<li style="position: relative" class="<%= (i == model.options.length-1)?'last':'' %>"> <%= option.optionName %>
-									<div style="text-align: right; position: absolute; right: -340px; top: 0px; ">
+									<div style="text-align: right; position: absolute; left: 534px; top: 0px; width: 100px; ">
 										+ <%= priceTpl({price:option.price}) %>
 									</div>	
 								</li>

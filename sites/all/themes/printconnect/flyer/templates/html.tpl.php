@@ -226,9 +226,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
   </div>
   <?php print $page_top; ?>
   <?php print $page; ?>
-  <?php print $page_bottom; ?>
-
-	<!-- <?php if (arg(3) == 'confirmation') :
+  <?php print $page_bottom;?>
+    
+  <?php if (arg(0) == 'cart'): ?>
+    <script data-main="/webapp/js/cart/main" src="/webapp/js/libs/requirejs/require.js"></script>
+  <?php endif; ?>   
+  <?php if (arg(0) == 'checkout'): ?>
+    <script data-main="/webapp/js/checkout/main" src="/webapp/js/libs/requirejs/require.js"></script>
+  <?php endif; ?>
+  <?php if (arg(0) == 'payment'): ?>
+    <script data-main="/webapp/js/payment/main" src="/webapp/js/libs/requirejs/require.js"></script>
+  <?php endif; ?>
+  <?php if (arg(0) == 'product'): ?>
+    <script data-main="/webapp/js/productConfig/main" src="/webapp/js/libs/requirejs/require.js"></script>
+  <?php endif; ?>
+    
+    <!--<?php if (arg(3) == 'confirmation') :
 	    $order = \printconnect\Orders\Factory::Get($_SESSION['orderID'], false);
 	    ?>
 	    <div id="#hiddenPricesPayment" style="display: none;">

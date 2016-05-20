@@ -1228,6 +1228,11 @@ function pcproducts_filter($code) {
 }
 
 function pcproducts_pcmenumain() {
+
+  // desactiver l'onglet produits A-Z
+   return ;
+ /* $shop = \printconnect\Shop\Configuration\Factory::Current();
+  if(35 === $shop->id) return ;*/
   $alphaArray = _pcproducts_alpha_array();
   
   $menuItems['product'] = array(

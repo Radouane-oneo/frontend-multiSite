@@ -21,7 +21,6 @@ function pcorders_access() {
 
 function pcorders_order_access($orderId) {
   global $user;
-  //return true;
   if ($user->uid) {
     return TRUE;
   } else {
@@ -512,7 +511,23 @@ function pcorders_form_pcpayments_request_form_alter(&$form, &$form_state) {
                 ),
             );
     }
-  
+    
+    //additional Items
+    foreach ($order->orderItemsAdditional as $key => $item) {
+        $itemPrice = ($item->price >0)? $item->price : t('Free');
+        if(!empty($item->description)){
+              $rowsOrders[] = array(
+                    'class' => array('productItem'),
+                    'data' => array(
+                        $item->description,
+                        array(
+                            'data' => theme('price', array('value' => $itemPrice, 'free' => TRUE)),
+                            'class' => array('text-right'),
+                        ),
+                    ),
+                );
+        }
+    }
 
     //get subTotalAmount
     /*$rowsOrders[] = array(

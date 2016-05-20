@@ -19,7 +19,7 @@
 				<% if(model.isDummyUpload){ %>
 					<img src="/sites/all/modules/printconnect/pccart/images/dummpupload_img.png">
 				<% }else{ %>
-					<img src="https://dt-printconcept-production.s3.amazonaws.com/<%= model.files[0].thumbnail %>">
+					<img src="https://dt-printconcept-devpreprdproduction.s3.amazonaws.com/<%= model.files[0].thumbnail %>">
 					<a href="<%= config.designtoolLink %><%= model.configuration.designtoolPreviewLink %>" target="blank" class="previewlink"><%= config.labels["previsualis"] %></a>
 					<a href="<%= config.designtoolLink %><%= designtoolLink %>" class="designtool iframe fancybox.iframe"><%= config.labels["updatePage"] %></a>	
 				<%}%>
@@ -27,8 +27,8 @@
 				<span data-orderItem="<%= model.id %>" class="delete_item deletedesign"><%= config.labels["deleteOrder"] %></span>
 			</div>
 
-			<div class="preview1">
-				<div class="description form-wrapper">
+			<div class="preview1" style="overflow: visible;">
+				<div class="description form-wrapper" style="overflow: visible; ">
                                     <% var name=''%>
                                     <% if (model.customWidth > 0 && model.customHeight > 0){
                                             name = model.configuration.name + ' ' +model.customWidth+' X '+ model.customHeight+' mm';
@@ -40,8 +40,8 @@
 					<h3><%= model.quantity %> <%= config.labels.ex %>. <%= name %></h3>	
                                         
                                         <input type="hidden" value="<%= model.price %>"  productid="<%= model.configuration.productId %>" quantity="<%= model.quantity %>">
-					<div class="item-list">
-						<ul>
+					<div class="item-list" style="padding-bottom: 22px; overflow: visible;">
+						<ul style="overflow: visible;">
 						<% _.each(model.configuration.config, function(itemConfig, i){ %>
 							<% if(i!=0) { %>
 								<li class="<%= (i == 1)?'first':'' %> <%= (i == model.configuration.config.length-1)?'last':'' %>"><label><%= model.configuration.config[i].groupName %>:</label>  <%= $('<div/>').html(model.configuration.config[i].name).text() %></li>
@@ -51,7 +51,10 @@
 
 						<% if(model.options.length>0) { %>
 							<% _.each(model.options, function(option, i){ %>
-								<li class="<%= (i == model.options.length-1)?'last':'' %>"> <%= option.optionName %> </li>
+								<li class="<%= (i == model.options.length-1)?'last':'' %>" style="position: relative">
+									<%= option.optionName %>
+									<div style="text-align: right; position: absolute; right: -155px; top: 0px">+ <%= priceTpl({price:option.price}) %> </div>
+								</li>
 							<% }); %>
 						<% } %>
 
@@ -82,6 +85,11 @@
                                     <%}else{%>
                                         <%= priceTpl({price:model.price,classToAdd:'price'}) %>
                                     <%}}%>
+				
+				<!-- <br><br>
+				<%  _.each(model.options, function(option, i){ %>
+				   <div style="text-align: right">+ <%= priceTpl({price:option.price}) %> </div>
+				<% }); %> -->
 			</div>
 
 			<!-- Dummy Upload -->

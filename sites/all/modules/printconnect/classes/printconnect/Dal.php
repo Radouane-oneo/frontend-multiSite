@@ -21,8 +21,12 @@ namespace printconnect {
     public static function SendRequest($request, $method = 'GET', $data = array())
     {
         global $language;
+	global $conf;
         $url = sprintf('%s%s?apikey=%s&language=%d', variable_get('pc_url'), $request, variable_get('pc_apikey'), $language->id);
-
+	if (isset($_SESSION['fromCoBrand']) && !empty($_SESSION['fromCoBrand'])) {
+	  $cobrand = $_SESSION['fromCoBrand'];
+          $url = sprintf('%s%s?apikey=%s&language=%d', variable_get('pc_url'), $request, $conf['cobrandedshops'][$cobrand]['pc_apikey'], $language->id);  
+        }
         $header = array('Content-Type' => 'application/json');
 
         if($method == 'GET' && !preg_match("/new-cart/", $request)) {

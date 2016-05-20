@@ -702,7 +702,7 @@ function pcproducts_js_form($productId = 1, $items = '', $options = '', $qty = F
         var GlobalBannerUrl = '".$bannerUrl."';
     </script>";
     $script .= "<style>#box-progress{display: block;}</style>";
-    $script .= '<script data-main="/webapp/js/productConfig/main" src="/webapp/js/libs/requirejs/require.js"></script>';
+  //  $script = '<script data-main="/webapp/js/productConfig/main" src="/webapp/js/libs/requirejs/require.js"></script>';
     $script .= '<div id="myForm"></div>';
 
     return $script;
@@ -960,7 +960,7 @@ function pcproducts_flush_caches() {
 }
 
 function pcproducts_cron() {
-  _pcproducts_rebuildaliasses();
+  //_pcproducts_rebuildaliasses();
 }
 
 function revert_vertical($items, $numCols) {
@@ -993,11 +993,12 @@ function pcproducts_calculator_form($form, &$form_state) {
     $items = array();
 
     $products = $products->items;
-    usort($products, function (Product $a, Product $b) {
-            return strcmp(t($a->name), t($b->name));
+	
+    usort($products, function ($a, $b) {
+        return strcmp($a->name, $b->name);
     });
 	
-    foreach ($products as $product) {
+	foreach ($products as $product) {
       $items[$product->id] = $product->name;
     }
 	
@@ -1063,7 +1064,7 @@ function pcproducts_calculator_form($form, &$form_state) {
 }
 
 function pcproducts_calculator_form_callback(&$form, &$form_state) {
-  return $form;
+  	return $form;
 }
 
 function pcproducts_calculator_form_submit(&$form, &$form_state) {
@@ -1082,7 +1083,7 @@ function pcproducts_calculator_form_submit(&$form, &$form_state) {
 function _pcproducts_rebuildaliasses() {
 
   $languages = \printconnect\Drupal\Functions::GetLanguages();
-
+  
   foreach ($languages as $language) {
 
     $products = Factory::GetAll($language);
@@ -1227,6 +1228,7 @@ function pcproducts_filter($code) {
 }
 
 function pcproducts_pcmenumain() {
+
   // desactiver l'onglet produits A-Z
    return ;
  /* $shop = \printconnect\Shop\Configuration\Factory::Current();

@@ -237,7 +237,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
   <?php if (arg(0) == 'payment'): ?>
     <script data-main="/webapp/js/payment/main" src="/webapp/js/libs/requirejs/require.js"></script>
   <?php endif; ?>
-  <?php if (arg(0) == 'product'): ?>
+  <?php if (arg(0) == 'products'): ?>
     <script data-main="/webapp/js/productConfig/main" src="/webapp/js/libs/requirejs/require.js"></script>
   <?php endif; ?>
     

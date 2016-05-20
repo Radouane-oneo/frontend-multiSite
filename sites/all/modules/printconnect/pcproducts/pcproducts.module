@@ -614,6 +614,7 @@ function getFromServer($filename) {
 }
 
 function callback_getjson_ajax($action, $productId) {
+    
     header('Cache-Control: public, max-age=' . 3600);
     global $language;
 

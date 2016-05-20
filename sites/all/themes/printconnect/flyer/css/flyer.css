@@ -6134,6 +6134,21 @@ body {
 .selectBox-arrow {
 	border-left: 1px solid #eee !important;
 }
+
+.product-selectBox-dropdown-menu {
+	-webkit-columns: 4;
+    -moz-columns: 4;
+    columns: 4;
+    -webkit-column-gap: 2em;
+    -moz-column-gap: 2em;
+    column-gap: 2em;
+}
+.product-selectBox-dropdown-menu li {
+	-webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+ }
+
 /* 
 .product-selectBox-dropdown-menu li span {
 	width: 24px;
@@ -6242,13 +6257,6 @@ background-position: -658px top;
 	background-position: -772px top;
 } */
 
-.selectBox-options, .selectBox-options LI {
-	-webkit-column-count: 4;
-    -moz-column-count: 4;
-    column-count: 4;
-    
-    /* display: inline-table !important;	*/
-}
 
 .product-selectBox-dropdown-menu li {
 	float: left !important;
@@ -6265,6 +6273,17 @@ background-position: -658px top;
 .product-selectBox-dropdown-menu li a[rel="0"] {
 	border-bottom: none !important;
 }
+
+
+ .selectBox-options LI:not(.selectBox-selected):not(:first-child) {
+    display: inline-block !important;
+	float: none !important;
+}
+
+.product-selectBox-dropdown-menu {
+	overflow: hidden !important;
+}
+
 
 ul.testlijst li span.iconItem{
 	display: inline-block;

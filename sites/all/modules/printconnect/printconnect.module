@@ -7,11 +7,11 @@ function printconnect_init() {
   global $browscap;
   global $base_url;
   
-  $uriRequest = split('/', request_uri());
+  $uriRequest = @split('/', request_uri());
   unset($uriRequest[0]);
   $urlPermant = '';
   $redirectPermanant = FALSE;
-  $arrayBaseurl = split('[/.-]', $base_url); 
+  $arrayBaseurl = @split('[/.-]', $base_url); 
   $uriExtention = $arrayBaseurl[sizeof($arrayBaseurl)-1];
   $arrayExtention = array(
                         'be' => array('nlnl' => 'benl',
@@ -983,7 +983,7 @@ function printconnect_preprocess_page(&$vars) {
 function printconnect_getimage($type, $id) {
   global $theme_key;
   global $conf;
-  return $conf['pc_images']."/products/$id.png";
+  return $conf['pc_images']."/$type/$id.png";
   $image = FALSE;
   if ($type == "products") {
     $product = \printconnect\Products\Factory::Get($id);

@@ -54,7 +54,7 @@
                 return false;
         })
         $('#changeStatusUpprove').click(function(){ 
-           orderitem = $('#jobIdDesiger').val();console.log(orderitem);
+           orderitem = $('#jobIdDesiger').val(); //console.log(orderitem);
            $.post("changestatus/" + orderitem+"/ToApproved",{},function(){
                //$('#designerMessage').text();
                $('#changeStatusUpprove').replaceWith('<div class="cadreGris"></div>');
@@ -67,7 +67,7 @@
      $('.changeStatusConfirm').click(function(){
 		   element = $(this);
            orderitem = element.parents(".designerConfirm").find('#jobIdDesiger').val();
-		   console.log(orderitem);
+		   //console.log(orderitem);
            $.post("/upload-design/changestatus/" + orderitem+"/Confirm",{},function(){
 				element.replaceWith('<div class="greyButton">'+Drupal.t('Approved')+'</div>');
                 $('.messageConfirmDesign').css({"display":"block"});

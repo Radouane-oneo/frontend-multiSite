@@ -50,19 +50,7 @@ define([
                 $('#box-progress').hide();
                 $('fieldset[data-orderitem="' + orderItemId + '"]').find(".designtoolmode a").click();
             });
-            jQuery("#pccart-cart-form #jobBox  input[type='hidden']").each(function() {
-                products.push({ identifier: jQuery(this).attr('productId'), amount: parseFloat(jQuery(this).val()), currency: 'EUR', quantity: jQuery(this).attr('quantity') });
-            });
-            basket['products'] = products;
-             
-            var s   = document.createElement('script');
-            var x   = document.getElementsByTagName('script')[0];
-            s.type  = 'text/javascript';
-            s.async = true;
-            s.src   = ('https:'==document.location.protocol?'https://':'http://')
-                    + 'eu-sonar.sociomantic.com/js/2010-07-01/adpan/flyer-be';
-            x.parentNode.insertBefore( s, x );
-    
+            
         },
         render : function(){
             this.setElement(this.template({

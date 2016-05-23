@@ -742,7 +742,8 @@ function _pctemplates_getFiltersNew($filtertemplates) {
     }
 
     foreach ($tmpProducts as $product) {
-        $products[$product->id] = $product->name;
+		if($product->active == true)
+			$products[$product->id] = $product->name;
     }
     foreach ($tmpSegments as $segment) {
         $segments[$segment->id] = $segment->name;

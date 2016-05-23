@@ -5,7 +5,9 @@
                         $('#edit-calculer').removeClass('ui-state-disabled');
                         $('#edit-actions-addtocart').removeClass('ui-state-disabled');
 			try{document.domain = 'flyer.fr';}
-			catch(e){console.log(e);}
+			catch(e) {
+				// console.log(e);
+			}
 			updateDomain();
 			$('.refCustomer').blur(function() { $.post('cart/customer/ref/'+$(this).attr('cart'),{'ref' : $(this).val()}); });
 			$('.refjobTxt').blur(function(){ $.post('cart/job/ref/'+$(this).attr('orderItem'),{'ref' : $(this).val()}); });

@@ -24,6 +24,17 @@ define([
             }));
 
             $(this.config.containerId).find("#priceBlock").html(this.$el);
+            var taginternalName = $('.form-item-payment-method-table input[name="paymentMethod"]:checked').attr('tag-internalName');
+            switch(taginternalName){
+                case "visa":  $(this.config.containerId).find("#priceBlock #actionPayment").val(this.config.labels['paynow']);break;                
+                case "mastercard": $(this.config.containerId).find("#priceBlock #actionPayment").val(this.config.labels['paynow']);break;
+                case "paypal": $(this.config.containerId).find("#priceBlock #actionPayment").val(this.config.labels['paynow']);break;
+                case "cartebleue": $(this.config.containerId).find("#priceBlock #actionPayment").val(this.config.labels['paynow']);break;
+                case "Bancontact": $(this.config.containerId).find("#priceBlock #actionPayment").val(this.config.labels['paynow']);break;
+                case "transfer": $(this.config.containerId).find("#priceBlock #actionPayment").val(this.config.labels['paylater']);break;
+                case "cheque": $(this.config.containerId).find("#priceBlock #actionPayment").val(this.config.labels['paylater']);break;
+                case "invoice": $(this.config.containerId).find("#priceBlock #actionPayment").val(this.config.labels['paylater']);break;
+            }
         },
         actionPayment : function(){
             if(!this.model.get("paymentId")){                
@@ -32,7 +43,7 @@ define([
                 return false;
             }
             if(!($('#edit-agree').is(':checked'))) {
-                console.log('non');
+                //console.log('non');
                 myPayment.errorView.render(this.config.labels['agreeMessage']);
                 $(window).scrollTop($(this.config.containerId).offset().top);
                 return false;

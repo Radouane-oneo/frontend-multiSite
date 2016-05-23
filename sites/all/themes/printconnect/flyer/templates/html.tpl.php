@@ -43,14 +43,7 @@
  */
 ?>
 
-<?php 
-$current = current_path();
-if( $current == 'node' ) {
-	drupal_goto('<front>');
-}
-?>
-
-<!DOCTYPE>
+<!DOCTYPE html>
 <html>
 
 <head profile="<?php print $grddl_profile; ?>">
@@ -153,7 +146,7 @@ ga('send', 'pageview', { 'dimension2': 'klant' });
 ?>
 <script>
      var dataLayer = [{
-	'eventID': '<?=$customerCurrent->id ?>', // event id, existing client (other delivery method)
+	'eventID': '<?=$eventID ?>', // event id, existing client (other delivery method)
 	'orderID': '<?=arg(2) ?>', // unique order id
         'orderValue': '<?=$order->subTotalAmount ?>', // order total, vat excl
         'orderProduct': <?=json_encode($productcontent)?>, // all ordered jobs

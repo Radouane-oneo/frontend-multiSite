@@ -761,6 +761,9 @@ function getLabels($edit = false, $productId) {
         "productdescription" =>t('info for ' . $productId),
         "linkToControl" =>t('linkToControl'),
         "linkTextControl" =>t('linkTextControl'),
+        "infoTitle" =>t('About Custom format'),
+        "infoDescription" =>t('Content about the restrictions of custom format.'),
+	"infoGlobalSurface" => t('globalSurface'),
         
     );
 
@@ -957,29 +960,33 @@ function pcproducts_flush_caches() {
 }
 
 function pcproducts_cron() {
-  //_pcproducts_rebuildaliasses();
+  _pcproducts_rebuildaliasses();
 }
 
 function revert_vertical($items, $numCols) {
+    $items = array_map("unserialize", array_unique(array_map("serialize", $items)));
+		
     $nbr = count($items) / $numCols;
-	$nbr = is_double($nbr) ? $nbr + 1 : $nbr;
+	$nbr = is_double($nbr) ? intval($nbr) + 1 : $nbr;
 	
 	$result = array();
-	
 	foreach ($items as $key => $value) {
 		$result[] = array($key%$nbr, $value);
 	}
 	
-	uasort($result, function ($a, $b) {
-        if ($a == $b) {
-        return 0;
-	    }
-	    return ($a < $b) ? -1 : 1;
-    });
+	$vals = array();
+	foreach ($result as $key => $value) {
+		for ($i=0; $i<$nbr; $i++) {
+			if($value[0] == $i)
+			$vals[$i][] = $value[1];
+		}
+	}
 	
 	$items = array();
-	foreach ($result as $r) {
-	    $items[] = $r[1];
+	foreach ($vals as $v) {
+		foreach ($v as $vi => $vv) {
+			$items[] = $vv;
+		}
 	}
 	
    	return $items;
@@ -990,15 +997,13 @@ function pcproducts_calculator_form($form, &$form_state) {
     $items = array();
 
     $products = $products->items;
-	
-    usort($products, function ($a, $b) {
-        return strcmp($a->name, $b->name);
+    usort($products, function (Product $a, Product $b) {
+		return strcmp($a->name, $b->name);
     });
 	
-	foreach ($products as $product) {
+    foreach ($products as $product) {
       $items[$product->id] = $product->name;
     }
-	
 	
   $form['about'] = array(
       '#type' => 'item',
@@ -1061,7 +1066,7 @@ function pcproducts_calculator_form($form, &$form_state) {
 }
 
 function pcproducts_calculator_form_callback(&$form, &$form_state) {
-  	return $form;
+  return $form;
 }
 
 function pcproducts_calculator_form_submit(&$form, &$form_state) {
@@ -1080,7 +1085,7 @@ function pcproducts_calculator_form_submit(&$form, &$form_state) {
 function _pcproducts_rebuildaliasses() {
 
   $languages = \printconnect\Drupal\Functions::GetLanguages();
-  
+
   foreach ($languages as $language) {
 
     $products = Factory::GetAll($language);
@@ -1274,6 +1279,10 @@ function pcproducts_filter($code) {
 }
 
 function pcproducts_pcmenumain() {
+  // desactiver l'onglet produits A-Z
+   return ;
+ /* $shop = \printconnect\Shop\Configuration\Factory::Current();
+  if(35 === $shop->id) return ;*/
   $alphaArray = _pcproducts_alpha_array();
   
   $menuItems['product'] = array(

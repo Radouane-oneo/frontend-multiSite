@@ -7372,6 +7372,19 @@ top: -1px;
     border-radius: 0;
 }
 
+.page-templates .button-wrapper input.design[type="submit"] {
+    background: #79b61a url("images/button_action.png") no-repeat scroll 35px  center;
+    font-size: 16px;
+    width: 330px;
+    border-radius: 0;
+    display: inline-block;
+    height: 35px;
+    line-height: 35px;
+    margin-right: 0;
+    min-width: 220px;
+    box-sizing: inherit;
+}
+
 div div#edit-info.detail div.store div.description table.vacations { 
 border-collapse: inherit !important;
 }

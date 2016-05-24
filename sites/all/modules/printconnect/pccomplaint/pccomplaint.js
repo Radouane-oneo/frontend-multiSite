@@ -88,7 +88,7 @@
         }
              
     });
-    jQuery("#edit-orderid").blur(function(e){       
+    jQuery("#edit-orderid").change(function(e){       
         actionComplaint(e, 'orderid');  
     });
     function actionComplaint(e, action){ 

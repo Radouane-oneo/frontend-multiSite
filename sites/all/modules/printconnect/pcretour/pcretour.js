@@ -58,9 +58,7 @@
           jQuery('#content .complaintform .required').each(function() {//console.log(jQuery(this));
               var _this = jQuery(this);
               if(_this.val() == "" || _this.val() == 0) { 
-                  jQuery('html, body').animate({
-                        scrollTop: jQuery("#edit-orderid").offset().top
-                    }, 800);
+                
                   _this.addClass("error");
                   _this.parent().append('<div class="errorMsg">'+Drupal.t("this field is requierd")+'</div>');
                   errorField = true;
@@ -74,8 +72,11 @@
           }
           if (errorField)  
           {
-              e.stopPropagation();
-              e.preventDefault();
+            jQuery('html, body').animate({
+                    scrollTop: jQuery("#edit-orderid").offset().top
+                }, 800);
+            e.stopPropagation();
+            e.preventDefault();
           }
           else{
                                             
@@ -99,7 +100,7 @@
           }
       });
       
-    jQuery("#edit-orderid").blur(function(e){       
+    jQuery("#edit-orderid").change(function(e){       
         actionComplaint(e, 'orderid');  
     });
     function actionComplaint(e, action){  

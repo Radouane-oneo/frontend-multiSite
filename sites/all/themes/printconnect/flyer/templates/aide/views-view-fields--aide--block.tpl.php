@@ -1,6 +1,6 @@
 <?php //dsm($fields);?>
 
-
+coco
 <?php if(!empty($fields['body']->content)):?>	
     <h2><?php print $fields['title']->content; ?></h2>
     <div class="accordion-item">

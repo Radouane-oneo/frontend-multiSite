@@ -99,7 +99,7 @@
             span.innerText = txt.textContent;  
             if(Dropzone.instances[0]) Dropzone.instances[0].disable();
           //  jQuery("#errorUpload").text(Drupal.t('merci de remplir le numero de la commande')); 
-            jQuery("#errorMsg").css({ "display":"inline"});
+            jQuery("#errorMsg").css({ "display":"inline-block"});
             e.stopPropagation();
             e.preventDefault();
         }else if (jQuery('#edit-orderid').val().length > 8){

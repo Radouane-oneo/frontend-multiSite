@@ -777,3 +777,63 @@
   text-decoration: underline;
 }
 
+
+/*************************Style deux boutton********************************/
+.btn-2
+{
+  font-family: Open Sans;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 9px 12px 9px 12px;
+  text-decoration: none;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 2px;
+  display: inline-block;
+  line-height: normal;
+  cursor: pointer;
+  -webkit-transition: all .2s ease-in-out;
+  -moz-transition: all .2s ease-in-out;
+  -ms-transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+  color: #fff !important;
+}
+.main-page .wrap-block a.btn-2:hover,
+.main-page .wrap-block a.btn-2:active, 
+.main-page .wrap-block a.btn-2:visited
+{
+  color: #fff !important;
+  text-decoration: none;
+}
+
+.btn-2 .icon.icon-action-w {
+  background: url(http://d4e7wxbvl20c1.cloudfront.net/images.flyer.eu/theme2/icon-triangle-white.png) no-repeat center;
+}
+.btn-2 .icon {
+  width: 22px;
+  height: 21px;
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.btn-2.btn-orange 
+{
+  background: #f60;
+  color: #fff;
+  text-decoration: none;
+  -moz-transition-property: background-color;
+  -o-transition-property: background-color;
+  -webkit-transition-property: background-color;
+  transition-property: background-color;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  -webkit-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+}
+
+.btn-2.btn-orange:hover{
+  background: #FF8636;
+  text-decoration: none;
+}

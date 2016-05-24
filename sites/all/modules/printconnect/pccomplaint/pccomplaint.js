@@ -69,8 +69,11 @@
          })
         if (errorField)  
         {
-          e.stopPropagation();
-          e.preventDefault();
+            jQuery('html, body').animate({
+                        scrollTop: jQuery("#edit-orderid").offset().top
+                    }, 800);
+            e.stopPropagation();
+            e.preventDefault();
         }
               
         if ((jQuery('.dz-processing').length) || (jQuery('#edit-complainttype').val() == 0) || (jQuery('#edit-complainttype').val() == 3))
@@ -85,7 +88,7 @@
         }
              
     });
-    jQuery("#edit-orderid").change(function(e){       
+    jQuery("#edit-orderid").blur(function(e){       
         actionComplaint(e, 'orderid');  
     });
     function actionComplaint(e, action){ 
@@ -149,7 +152,8 @@
                             jQuery("#errorMsg").css({ "display":"none"});
                             jQuery('#edit-orderid').parent().find('.errorMsg').remove();
                             jQuery("#errorMsg").css({ "display":"none"});
-                            jQuery("#edit-orderid").removeClass('error');                            
+                            jQuery("#edit-orderid").removeClass('error'); 
+                            jQuery("#edit-jobid").empty();
                             jQuery.each(data.orderItems, function(i,orderitem) {                                
                                 if (!orderitem.discountId)
                                 {

@@ -47,7 +47,7 @@ function pccomplaint_form($form, &$form_state) {
         '#attributes' => array('class' => array('complaint')),
     );
     $form['complaint']['description'] = array(
-        '#markup' => '<div class="descComplait">' .t('desccomplaint').'</div>'
+      //  '#markup' => '<div class="descComplait">' .t('desccomplaint').'</div>'
     );
     $form['complaint']['form'] = array(
         '#type' => 'container',

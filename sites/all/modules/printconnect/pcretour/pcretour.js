@@ -110,7 +110,7 @@
             span.innerText = '';
             txt = document.createTextNode(Drupal.t('messageErrorOrderId'));
             span.innerText = txt.textContent; 
-            jQuery("#errorMsg").css({ "display":"inline"});
+            jQuery("#errorMsg").css({ "display":"inline-block"});
         }else if (jQuery('#edit-orderid').val().length > 8){
             jQuery('#edit-orderid').addClass("error");
             jQuery('#edit-orderid').parent().find('.errorMsg').remove();

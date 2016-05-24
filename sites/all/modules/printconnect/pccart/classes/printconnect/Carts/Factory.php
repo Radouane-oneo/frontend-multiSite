@@ -440,6 +440,7 @@ class Factory {
 	$object = new Item();
       $object->cart = $cart->id;
       $object->productId = $cart->productId;
+      $object->designTemplateId = $cart->templateId;
       $object->product_price_group = $priceGroup;
       $object->quantity = $quantity;
       $object->description = '';

@@ -7372,6 +7372,19 @@ top: -1px;
     border-radius: 0;
 }
 
+.page-templates .button-wrapper input.design[type="submit"] {
+    background: #79b61a url("images/button_action.png") no-repeat scroll 35px  center;
+    font-size: 16px;
+    width: 330px;
+    border-radius: 0;
+    display: inline-block;
+    height: 35px;
+    line-height: 35px;
+    margin-right: 0;
+    min-width: 220px;
+    box-sizing: inherit;
+}
+
 div div#edit-info.detail div.store div.description table.vacations { 
 border-collapse: inherit !important;
 }
@@ -8395,6 +8408,10 @@ form#pccheckout-payment-form .overview table.sticky-enabled tr.last-child td{
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
 	border-radius: 0;
+	text-transform: lowercase;
+}
+#accordion-list .ui-accordion-header:first-letter{
+	text-transform: uppercase;
 }
 
 #accordion-list .ui-accordion-header .ui-icon{
@@ -12636,7 +12653,7 @@ form#pccheckout-payment-form fieldset legend{
     display:none;
     margin-top:20px;
 }
-#remerciement span{
+#remerciement >span{
     color: rgb(255, 102, 0);
     font-size: 47px;
 }

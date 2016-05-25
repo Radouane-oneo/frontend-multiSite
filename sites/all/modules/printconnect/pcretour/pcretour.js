@@ -57,7 +57,8 @@
           }
           jQuery('#content .complaintform .required').each(function() {//console.log(jQuery(this));
               var _this = jQuery(this);
-              if(_this.val() == "" || _this.val() == 0) {                   
+              if(_this.val() == "" || _this.val() == 0) { 
+                
                   _this.addClass("error");
                   _this.parent().append('<div class="errorMsg">'+Drupal.t("this field is requierd")+'</div>');
                   errorField = true;
@@ -71,8 +72,11 @@
           }
           if (errorField)  
           {
-              e.stopPropagation();
-              e.preventDefault();
+            jQuery('html, body').animate({
+                    scrollTop: jQuery("#edit-orderid").offset().top
+                }, 800);
+            e.stopPropagation();
+            e.preventDefault();
           }
           else{
                                             
@@ -110,7 +114,7 @@
             span.innerText = '';
             txt = document.createTextNode(Drupal.t('messageErrorOrderId'));
             span.innerText = txt.textContent; 
-            jQuery("#errorMsg").css({ "display":"inline"});
+            jQuery("#errorMsg").css({ "display":"inline-block"});
         }else if (jQuery('#edit-orderid').val().length > 8){
             jQuery('#edit-orderid').addClass("error");
             jQuery('#edit-orderid').parent().find('.errorMsg').remove();

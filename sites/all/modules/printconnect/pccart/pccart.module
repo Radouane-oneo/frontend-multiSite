@@ -305,7 +305,7 @@ function new_cart_loadpage() {
         var GlobalLandId = ".$language->id.";
         var GlobalLabels = ".json_encode($labels).";
         var GlobalPrefix = '".$language->prefix."';
-        var GlobalVat = 0.21;
+        var GlobalVat = " . (isset($_SESSION['shop_vat']) ? $_SESSION['shop_vat'] : 0.21) . ";
         var isConnected = " . (isset($_SESSION['customerid']) ? 1 : 0) . ";
         var GlobalDesigntoolLink = '".variable_get('pc_designtoolurl')."';
     </script>";

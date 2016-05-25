@@ -11889,6 +11889,8 @@ input.ui-button.payment {
     display: inline-block;
     vertical-align: top;
     margin-bottom: 0;
+    
+    overflow: visible;
 }
 .page-myprintconnect-orders .details .price {
     padding: 18px 10px 0;
@@ -11903,13 +11905,33 @@ input.ui-button.payment {
     padding: 0;
     font-size: 13px;
     line-height: 15px;
+    
+    
+    position: relative;
 }
 .page-myprintconnect-orders .details .description .item-list ul li label {
 	font-size: 12px;
     float: left;
     margin-right: 10px;
+}
+.page-myprintconnect-orders .details .description .item-list ul li label:not(.labeloption) {
     font-weight: 700;
 }
+.page-myprintconnect-orders .details .description .item-list ul li label.labeloption {
+    font-family: 'Open Sans',sans-serif;
+    font-weight: 400;
+    float: none;
+}
+
+.page-myprintconnect-orders label.labeloption .price {
+	color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    float: inherit;
+    padding: inherit;
+}
+
 .page-myprintconnect-orders .overview table tbody tr {
     background: #fff;
     border-radius: 0;

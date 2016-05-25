@@ -199,6 +199,10 @@ $items['cart/%/submit'] = array(
 // main function to load cart page
 function new_cart_loadpage() {
     global $language;
+	
+	$shop = \printconnect\Shop\Configuration\Factory::Current();
+    \printconnect\Shop\Configuration\Factory::LoadConfiguration($shop);
+	
     $labels = array(
         "formatBrut" => t('Format brut'),
         "formatFini" => t('Format fini'),
@@ -305,7 +309,7 @@ function new_cart_loadpage() {
         var GlobalLandId = ".$language->id.";
         var GlobalLabels = ".json_encode($labels).";
         var GlobalPrefix = '".$language->prefix."';
-        var GlobalVat = " . (isset($_SESSION['shop_vat']) ? $_SESSION['shop_vat'] : 0.21) . ";
+        var GlobalVat = " . $shop->defaultvat . ";
         var isConnected = " . (isset($_SESSION['customerid']) ? 1 : 0) . ";
         var GlobalDesigntoolLink = '".variable_get('pc_designtoolurl')."';
     </script>";

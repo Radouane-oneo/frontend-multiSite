@@ -69,8 +69,11 @@
          })
         if (errorField)  
         {
-          e.stopPropagation();
-          e.preventDefault();
+            jQuery('html, body').animate({
+                        scrollTop: jQuery("#edit-orderid").offset().top
+                    }, 800);
+            e.stopPropagation();
+            e.preventDefault();
         }
               
         if ((jQuery('.dz-processing').length) || (jQuery('#edit-complainttype').val() == 0) || (jQuery('#edit-complainttype').val() == 3))
@@ -99,7 +102,7 @@
             span.innerText = txt.textContent;  
             if(Dropzone.instances[0]) Dropzone.instances[0].disable();
           //  jQuery("#errorUpload").text(Drupal.t('merci de remplir le numero de la commande')); 
-            jQuery("#errorMsg").css({ "display":"inline"});
+            jQuery("#errorMsg").css({ "display":"inline-block"});
             e.stopPropagation();
             e.preventDefault();
         }else if (jQuery('#edit-orderid').val().length > 8){
@@ -149,7 +152,8 @@
                             jQuery("#errorMsg").css({ "display":"none"});
                             jQuery('#edit-orderid').parent().find('.errorMsg').remove();
                             jQuery("#errorMsg").css({ "display":"none"});
-                            jQuery("#edit-orderid").removeClass('error');                            
+                            jQuery("#edit-orderid").removeClass('error'); 
+                            jQuery("#edit-jobid").empty();
                             jQuery.each(data.orderItems, function(i,orderitem) {                                
                                 if (!orderitem.discountId)
                                 {

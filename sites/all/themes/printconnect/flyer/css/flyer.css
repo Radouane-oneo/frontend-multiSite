@@ -8327,7 +8327,8 @@ form#pccheckout-payment-form .overview table.sticky-enabled td:first-child{
 form#pccheckout-payment-form .overview table.sticky-enabled tr.last-child td{
 	border-top: 0;
 }
-#block-menu-block-1{
+#block-menu-block-1,
+.bloc_help_cat{
 	float: left;
 	margin-right: 15px;
 	width: 217px;
@@ -8338,7 +8339,8 @@ form#pccheckout-payment-form .overview table.sticky-enabled tr.last-child td{
 	border-radius: 3px;
 }
 
-#block-menu-block-1 h2{
+#block-menu-block-1 h2,
+.bloc_help_cat h2{
 	text-indent: 15px;
 	line-height: 43px;
 	text-transform: uppercase;
@@ -8349,19 +8351,22 @@ form#pccheckout-payment-form .overview table.sticky-enabled tr.last-child td{
 	padding: 0;
 	margin: 0;
 }
-#block-menu-block-1 ul.menu{
+#block-menu-block-1 ul.menu,
+.bloc_help_cat ul.menu{
 	padding: 0;
 	margin: 0;
 	background-color: #fafafa;
 }
 
-#block-menu-block-1 ul.menu li{
+#block-menu-block-1 ul.menu li,
+.bloc_help_cat ul.menu li{
 	padding: 10px 0;
 	margin: 0;
 	border-top: 1px solid #ececec;
 	list-style: none;
 }
-#block-menu-block-1 ul.menu li a{
+#block-menu-block-1 ul.menu li a,
+.bloc_help_cat ul.menu li a{
 	padding: 0 0 0 35px;
 	line-height: 16px;
 	font-size: 13px;
@@ -8372,7 +8377,9 @@ form#pccheckout-payment-form .overview table.sticky-enabled tr.last-child td{
     padding: 0 5px 0 35px;
 }
 #block-menu-block-1 ul.menu li a:hover,
-#block-menu-block-1 ul.menu li a.active{
+#block-menu-block-1 ul.menu li a.active,
+.bloc_help_cat ul.menu li a:hover,
+.bloc_help_cat ul.menu li a.active{
 	color: #ff6600;
 	background-position: 20px 5px;
 	font-weight: normal;

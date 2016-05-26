@@ -43,15 +43,16 @@
             jQuery(file.previewElement).hide();
         }
     });    
-    
+     if(Dropzone.instances[0]) Dropzone.instances[0].disable(); 
         jQuery('.dropzoneupload').click(function(){
             if (   (jQuery('#edit-orderid').val() == '') ||
             isNaN(jQuery('#edit-orderid').val()) || 
             jQuery('#edit-orderid').val().length > 8){
+              if(Dropzone.instances[0]) Dropzone.instances[0].disable(); 
               jQuery("#errorUpload").html("<span style='color:red'>"+Drupal.t('merci de remplir le numero de la commande')+"</span>");
               jQuery('#edit-orderid').focus();
-              if(Dropzone.instances[0]) Dropzone.instances[0].disable(); 
-    }   
+              
+            }   
         });
          
     jQuery("#edit-submit").click(function(e){        

@@ -20,7 +20,7 @@
             e.preventDefault();
         }
     });
-    jQuery("#edit-postalcode").keydown(function (e) {
+    jQuery("#pcretour-form #edit-postalcode").keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
         if (jQuery.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
              // Allow: Ctrl+A
@@ -36,8 +36,8 @@
         }
         // Ensure that it is a number and stop the keypress
         if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-            jQuery('#edit-postalcode').parent().append('<div class="errorMsg">'+Drupal.t("nomber error")+'</div>');
-            jQuery('#edit-postalcode').addClass("error");
+            jQuery('#pcretour-form #edit-postalcode').parent().append('<div class="errorMsg">'+Drupal.t("nomber error")+'</div>');
+            jQuery('#pcretour-form #edit-postalcode').addClass("error");
             e.preventDefault();
         }
     });

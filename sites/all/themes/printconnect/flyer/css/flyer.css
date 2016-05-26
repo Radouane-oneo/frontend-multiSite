@@ -8327,7 +8327,8 @@ form#pccheckout-payment-form .overview table.sticky-enabled td:first-child{
 form#pccheckout-payment-form .overview table.sticky-enabled tr.last-child td{
 	border-top: 0;
 }
-#block-menu-block-1{
+#block-menu-block-1,
+.bloc_help_cat{
 	float: left;
 	margin-right: 15px;
 	width: 217px;

@@ -368,9 +368,10 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         }
       $rows[] = '<label class="labelOrder">' . $config->groupName . '</label>' . $title;
     }
-
+	
+	$rows[] = '<div style="margin-bottom: 10px"></div>';
     foreach ($item->options as $option) {
-      $rows[] = '<label>' . $option->optionName . '</label>';// . theme('price', array('value' => $option->convertedPrice, 'block' => TRUE));
+      $rows[] = '<label class="labeloption">' . $option->optionName . '<div style="text-align: right; position: absolute; right: -155px; top: 0px">' .theme('price', array('value' => $option->price)). '</div></label>';// . theme('price', array('value' => $option->convertedPrice, 'block' => TRUE));
     }
 
     $form['order']['details']['item'][$item->id]['description']['config'] = array(

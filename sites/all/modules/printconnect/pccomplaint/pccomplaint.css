@@ -18,7 +18,7 @@
 }
 .blocpicture{
     float: left;
-    width: 155px;
+    width: 190px;
 }
    
 .blocdropdrag .dropzone {
@@ -26,7 +26,7 @@
     border: 2px dashed #e7e3e3;
     min-height: 106px;
     padding: 4px;
-    width: 445px;
+    width: 428px;
     border-radius: 4px 4px 4px 4px;
     -moz-border-radius: 4px 4px 4px 4px;
     -webkit-border-radius: 4px 4px 4px 4px;
@@ -50,7 +50,7 @@
 }
 
 .bloccomplaint .labelorder {
-    width: 150px;
+    width: 170px;
     text-transform: uppercase;
 }
 
@@ -62,7 +62,8 @@
     box-sizing: border-box;
 }
 
-.bloccomplaint .form-item {
+.bloccomplaint .form-item, 
+.bloccomplaint .identification .select2-container {
     margin: 0 0 0 20px;
 }
 
@@ -70,10 +71,13 @@
     color: red;
 }
 
+.identification {
+    position: relative;
+}
+
 .identification .txtJobId {
-    float: right;
-    margin: 5px 193px 0 0;
     color: #bcbbbb;
+    margin: 5px 0 0 421px;
 }
 
 .orderIssue .labelorder,
@@ -95,7 +99,7 @@
 
 .blocpicture p {
     color: #bcbbbb;
-    line-height: 20px;
+    line-height: 16px;
     padding-right: 10px;
 }
 
@@ -106,8 +110,8 @@
 }
 
 .complaintSubmit {
-    padding: 30px 42px;
-    width: 420px;
+    padding: 30px 27px;
+    width: 427px;
     float: right;
 }
 
@@ -138,15 +142,19 @@
 }
 
 .identification #errorMsg {
-    margin: 5px 0 0 173px;
+    line-height: 14px;
     color: red;
+    width: 200px;
+    position: absolute;
+    left: 193px;
+    top: 45px;
 }
 
 .orderIssue #errorMsg {
     position: absolute;
     color: red;
-    top: 42px;
-    left: 173px;
+    top: 108px;
+    left: 202px;
 }
 
 .orderIssue #errorMsg,

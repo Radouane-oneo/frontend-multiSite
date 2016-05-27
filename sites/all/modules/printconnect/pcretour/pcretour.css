@@ -60,13 +60,15 @@
 }
 
 .bloccomplaint .labelorder {
-    width: 130px;
+    width: 165px;
     text-transform: uppercase;
+    line-height: 16px;
 }
 .bloccomplaint .labelorderleft {
     margin-left: 14px;
     text-transform: uppercase;
     width: 95px;
+    line-height: 14px;
 }
 .bloccomplaint input[type="text"],
 .bloccomplaint .select2-container > a.select2-choice,
@@ -95,21 +97,14 @@
 .bloccomplaint .labelorderleft span {
     color: red;
 }
-.identification .txtJobId {
-    float: right;
-    margin: 5px 212px 0 0;
-    color: #bcbbbb;
+
+.identification {
+    position: relative;
 }
 
-.orderIssue .labelorder,
-.compensation .labelorder {
-    line-height: 41px;
-}
-.orderIssue .labelorder, 
-.orderIssue .form-type-select,
-.compensation .labelorder,
-.compensation .form-type-select {
-    vertical-align: top;
+.identification .txtJobId {
+    color: #bcbbbb;
+    margin: 5px 0 0 413px;
 }
 
 .orderIssue {
@@ -134,7 +129,7 @@
     padding: 30px 42px;
     width: 430px;
     float: right;
-    margin-right: 24px;
+    margin-right: -13px;
 }
 
 .complaintSubmit input.ui-button {
@@ -164,8 +159,12 @@
 }
 
 .identification #errorMsg {
-    margin: 5px 0 0 152px;
+    line-height: 14px;
     color: red;
+    width: 200px;
+    position: absolute;
+    left: 187px;
+    top: 44px;
 }
 
 .orderIssue #errorMsg {

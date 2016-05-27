@@ -38,18 +38,33 @@
             }
         },
         error: function (file, response) {
-            jQuery("#errorUpload").html("<span style='color:red'>"+Drupal.t(response)+"</span>");
-            jQuery("#errorUpload").show();
+            var translateResponse;
+            if (response == "You can't upload files of this type.") translateResponse = Drupal.t("You can't upload files of this type");
+            if (response == "You can not upload any more files.") translateResponse = Drupal.t("You can not upload any more files");
+         
+            var re = 'File is too big';
+            var nameList = response.split(re);
+            if (nameList.length == 2) translateResponse = Drupal.t('File is too big');
+            
+            if(translateResponse){
+                jQuery("#errorUpload").html("<span style='color:red'>"+translateResponse+"</span>");
+                jQuery("#errorUpload").show();
+            }
             jQuery(file.previewElement).hide();
         }
     });    
-    if (jQuery('#edit-orderid').val() == '' || isNaN(jQuery('#edit-orderid').val()) || jQuery('#edit-orderid').val().length > 8){
+     if(Dropzone.instances[0]) Dropzone.instances[0].disable(); 
         jQuery('.dropzoneupload').click(function(){
+            if (   (jQuery('#edit-orderid').val() == '') ||
+            isNaN(jQuery('#edit-orderid').val()) || 
+            jQuery('#edit-orderid').val().length > 8){
+              if(Dropzone.instances[0]) Dropzone.instances[0].disable(); 
               jQuery("#errorUpload").html("<span style='color:red'>"+Drupal.t('merci de remplir le numero de la commande')+"</span>");
               jQuery('#edit-orderid').focus();
+              
+            }   
         });
-        if(Dropzone.instances[0]) Dropzone.instances[0].disable(); 
-    }    
+         
     jQuery("#edit-submit").click(function(e){        
         jQuery('#content .complaintform .required').removeClass("error");
         jQuery(".errorMsg").hide();
@@ -69,8 +84,11 @@
          })
         if (errorField)  
         {
-          e.stopPropagation();
-          e.preventDefault();
+            jQuery('html, body').animate({
+                        scrollTop: jQuery("#edit-orderid").offset().top
+                    }, 800);
+            e.stopPropagation();
+            e.preventDefault();
         }
               
         if ((jQuery('.dz-processing').length) || (jQuery('#edit-complainttype').val() == 0) || (jQuery('#edit-complainttype').val() == 3))
@@ -99,7 +117,7 @@
             span.innerText = txt.textContent;  
             if(Dropzone.instances[0]) Dropzone.instances[0].disable();
           //  jQuery("#errorUpload").text(Drupal.t('merci de remplir le numero de la commande')); 
-            jQuery("#errorMsg").css({ "display":"inline"});
+            jQuery("#errorMsg").css({ "display":"inline-block"});
             e.stopPropagation();
             e.preventDefault();
         }else if (jQuery('#edit-orderid').val().length > 8){
@@ -113,26 +131,6 @@
             jQuery('#box-progress').show();
             jQuery.ajax({           
                 url: href,
-//                success: function(data){
-//                    if (data == 'false') 
-//                    {   console.log('NotValidOrder');
-//                        displayerror();
-//                    }
-//                    else
-//                    {   console.log('ordervalid');
-//                        jQuery('#box-progress').hide();
-//                        jQuery("#errorMsg").css({ "display":"none"});
-//                        jQuery("#edit-orderid").removeClass('error');
-//                        if(Dropzone.instances[0]) Dropzone.instances[0].enable();
-//                        console.log('success');
-//                        jQuery("#errorUpload").css({ "display":"none"});
-//                        if (action == 'submit'){
-//                            jQuery("#pccomplaint-form").submit();
-//                            jQuery("#pccomplaint-form .complaintSubmit").css({ "display":"none"});
-//                            jQuery(".complaintSuccess").css({ "display":"block"});
-//                        }
-//                }
-//                },
                 success: function(data){
                     
                     if (!data.id) 
@@ -149,7 +147,8 @@
                             jQuery("#errorMsg").css({ "display":"none"});
                             jQuery('#edit-orderid').parent().find('.errorMsg').remove();
                             jQuery("#errorMsg").css({ "display":"none"});
-                            jQuery("#edit-orderid").removeClass('error');                            
+                            jQuery("#edit-orderid").removeClass('error'); 
+                            jQuery("#edit-jobid").empty();
                             jQuery.each(data.orderItems, function(i,orderitem) {                                
                                 if (!orderitem.discountId)
                                 {
@@ -171,9 +170,9 @@
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                     jQuery('#box-progress').hide();
-                    jQuery('#edit-orderid').addClass("error");
-                    txt = document.createTextNode(Drupal.t('NotValidOrder'));
-                    span.innerText = txt.textContent; 
+                    //jQuery('#edit-orderid').addClass("error");
+                    //txt = document.createTextNode(Drupal.t('NotValidOrdercoco'));
+                    //span.innerText = txt.textContent; 
                     if(Dropzone.instances[0]) Dropzone.instances[0].disable();
                   //  jQuery("#errorUpload").text(Drupal.t('merci de remplir le numero de la commande')); 
                     jQuery("#errorMsg").css({ "display":"inline"});

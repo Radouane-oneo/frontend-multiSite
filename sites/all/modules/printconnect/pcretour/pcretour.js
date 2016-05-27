@@ -1,5 +1,5 @@
  jQuery(document).ready(function(e) {
-     jQuery("#edit-number").keydown(function (e) {
+     jQuery("#pcretour-form  #edit-number").keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
         if (jQuery.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
              // Allow: Ctrl+A
@@ -15,9 +15,13 @@
         }
         // Ensure that it is a number and stop the keypress
         if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-            jQuery('#edit-number').parent().append('<div class="errorMsg">'+Drupal.t("nomber error")+'</div>');
-            jQuery('#edit-number').addClass("error");
+            jQuery('#pcretour-form  #edit-number').parent().append('<div class="errorMsg">'+Drupal.t("number error")+'</div>');
+            jQuery('#pcretour-form  #edit-number').addClass("error");
             e.preventDefault();
+        }
+        else{
+            jQuery('#pcretour-form  #edit-number').removeClass("error");
+            jQuery(".errorMsg").hide();
         }
     });
     jQuery("#pcretour-form #edit-postalcode").keydown(function (e) {
@@ -36,9 +40,13 @@
         }
         // Ensure that it is a number and stop the keypress
         if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-            jQuery('#pcretour-form #edit-postalcode').parent().append('<div class="errorMsg">'+Drupal.t("nomber error")+'</div>');
+            jQuery('#pcretour-form #edit-postalcode').parent().append('<div class="errorMsg">'+Drupal.t("number error")+'</div>');
             jQuery('#pcretour-form #edit-postalcode').addClass("error");
             e.preventDefault();
+        }
+        else{
+            jQuery('#pcretour-form  #edit-postalcode').removeClass("error");
+            jQuery(".errorMsg").hide();
         }
     });
     jQuery('#edit-jobid').click(function (e){

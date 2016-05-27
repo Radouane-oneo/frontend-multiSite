@@ -38,8 +38,18 @@
             }
         },
         error: function (file, response) {
-            jQuery("#errorUpload").html("<span style='color:red'>"+Drupal.t(response)+"</span>");
-            jQuery("#errorUpload").show();
+            var translateResponse;
+            if (response == "You can't upload files of this type.") translateResponse = Drupal.t("You can't upload files of this type");
+            if (response == "You can not upload any more files.") translateResponse = Drupal.t("You can not upload any more files");
+         
+            var re = 'File is too big';
+            var nameList = response.split(re);
+            if (nameList.length == 2) translateResponse = Drupal.t('File is too big');
+            
+            if(translateResponse){
+                jQuery("#errorUpload").html("<span style='color:red'>"+translateResponse+"</span>");
+                jQuery("#errorUpload").show();
+            }
             jQuery(file.previewElement).hide();
         }
     });    

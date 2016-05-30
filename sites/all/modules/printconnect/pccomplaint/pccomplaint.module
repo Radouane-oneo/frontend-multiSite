@@ -159,7 +159,7 @@ function pccomplaint_form($form, &$form_state) {
         '#suffix' => '</h3>', 
     );
     $form['complaint']['form']['like']['labelorder'] = array(
-        '#markup' => t('compensation')."<span> *</span>",
+        '#markup' => t('compensation label')."<span> *</span>",
         '#prefix' => '<div class="compensation"><div class="labelorder">',
         '#suffix' => '</div>', 
     );
@@ -215,7 +215,7 @@ function pccomplaint_notify($form_state, $mailto) {
     $url = "http://admin.printconcept.com/order/index/order/".$orderId;
     $params['url'] = $url;
     $params['orderId'] = $orderId;
-    $params['jobid'] = $form_state['values']['jobid'];
+    $params['jobid'] = $_POST['jobid'];
     $complainttypes = array (
       // '0' => t('complaint type'),
        "0"=>t('not delivered'),

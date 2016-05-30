@@ -199,7 +199,7 @@
 }
 
 .dropzone .dz-preview.dz-image-preview {
-    background: transparent;
+    background: transparent !important;
 }
 
 .dropzone .dz-preview .dz-image {

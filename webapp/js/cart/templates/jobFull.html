@@ -50,12 +50,14 @@
 						<% }); %>
 
 						<% if(model.options.length>0) { %>
+							<li style="margin-bottom: 10px"></li>
 							<% _.each(model.options, function(option, i){ %>
 								<li class="<%= (i == model.options.length-1)?'last':'' %>" style="position: relative">
 									<%= option.optionName %>
 									<div style="text-align: right; position: absolute; right: -155px; top: 0px">+ <%= priceTpl({price:option.price}) %> </div>
 								</li>
 							<% }); %>
+							<li style="margin-bottom: 10px"></li>
 						<% } %>
 
 						</ul>

@@ -94,7 +94,7 @@ function pcretour_form($form, &$form_state) {
         '#prefix' => '<h3>',
         '#suffix' => '</h3>', 
     );
-    //line 1
+    //line 1  
     $form['retour']['form']['youradress']['labelstreet'] = array(
         '#markup' => t('labelstreet')."<span> *</span>",
         '#prefix' => '<div class="youradress"><div class="labelorder">',
@@ -102,7 +102,7 @@ function pcretour_form($form, &$form_state) {
     );
     $form['retour']['form']['youradress']['street'] = array(
         '#type' => 'textfield',
-        '#attributes' => array('class' => array('required'), 'placeholder' => t('street')),
+        '#attributes' => array('class' => array('required'), 'placeholder' => t('street retour')),
     );
     $form['retour']['form']['youradress']['labelnumber'] = array(
         '#markup' => t('labelnumber')."<span> *</span>",
@@ -223,7 +223,6 @@ function pcretour_notify($form_state, $mailto) {
     $params['city'] = $form_state["values"]["city"];
     $params['postalcode'] = $form_state["values"]["postalcode"];
     $params['numberboxselect'] = $form_state['values']['numberboxselect'];
-     
     //drupal_mail('pccomplaint', 'notice', $from, NULL, $params);
     $subject = t('RetourSubject').' '.$params['orderId'];
     $message = '<br/><b>' . t('Retour mail') . '</b>: ';
@@ -232,13 +231,13 @@ function pcretour_notify($form_state, $mailto) {
     $message .= '<br/><b>' . t('jobid') . '</b>: <br/>';
     $message .= $params['jobid'];
     $message .= '<br/><b>' . t('Sender Addess') . '</b>: ';
-    $message .= '<br/><b>' . t('Street') . '</b>: ';
+    $message .= '<br/><b>' . t('labelstreet') . '</b>: ';
     $message .= $params['street'];
-    $message .= '<br/><b>' . t('Number') . '</b>: ';
+    $message .= '<br/><b>' . t('labelnumber') . '</b>: ';
     $message .= $params['number'];
-    $message .= '<br/><b>' . t('Postal code') . '</b>: ';
+    $message .= '<br/><b>' . t('postalcodeL') . '</b>: ';
     $message .= $params['postalcode'];
-    $message .= '<br/><b>' . t('city') . '</b>: ';
+    $message .= '<br/><b>' . t('labelcity') . '</b>: ';
     $message .= $params['city'];
     $message .= '<br/><b>' . t('Country') . '</b>: ';
     $message .= t('belgium');

@@ -63,6 +63,14 @@
               jQuery('#edit-orderid').parent().append('<div class="errorMsg">'+Drupal.t("Fill in 8 digits without OR prefix")+'</div>');
               errorField = true;
           }
+          if (jQuery('#edit-numberboxselect').val() >= 20){   
+              jQuery('#edit-numberboxselect').addClass("error");
+              jQuery('#edit-numberboxselect').parent().append('<div class="errorMsg">'+Drupal.t("message erreur box max")+'</div>');
+          }
+          else{
+              jQuery('#edit-numberboxselect').removeClass("error");
+              jQuery(".errorMsg").hide();
+          }
           jQuery('#content .complaintform .required').each(function() {//console.log(jQuery(this));
               var _this = jQuery(this);
               if(_this.val() == "" || _this.val() == 0) { 

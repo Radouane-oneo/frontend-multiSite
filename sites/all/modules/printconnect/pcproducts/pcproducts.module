@@ -998,7 +998,7 @@ function pcproducts_calculator_form($form, &$form_state) {
 
     $products = $products->items;
     usort($products, function (Product $a, Product $b) {
-		return strcmp(strtolower($a->name), strtolower($b->name));
+		return strcmp(strtolower(trim($a->name)), strtolower(trim($b->name)));
     });
 	
     foreach ($products as $product) {

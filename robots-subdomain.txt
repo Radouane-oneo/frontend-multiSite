@@ -20,3 +20,7 @@ User-agent: *
 Crawl-delay: 10
 Disallow: / 
 Noindex: /
+
+
+User-agent: Twitterbot
+Allow: *

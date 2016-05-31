@@ -1,6 +1,8 @@
 <?php 
 	//header('Content-Type: application/json');
 	//print '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<';
+	
+	try {
 	$title       = $content['body']['#object']->title;
 	$description = $content['body']['#object']->field_description_meta["und"][0]["metatags_quick"];
 	
@@ -85,7 +87,7 @@
 			
 			$size = getimagesize($img);
 			
-			if($size[0] > 500) {
+			if(isset($size[0]) && $size[0] > 500) {
 				$type = 'summary_large_image';
 			}
 			//print '<script> console.log(\'image\', \'' .. '\')</script>';
@@ -102,6 +104,7 @@
 		
 	}
 	
+	} catch(Exception $e) {}
 	
 	//print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>';
 	//die();

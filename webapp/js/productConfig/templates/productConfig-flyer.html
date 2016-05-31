@@ -164,7 +164,9 @@
             var i = 0;
            	var setattr = false;
             _.each(model.toolBoxGroup.pricing, function(price){
-            if(i == 0 || i == Object.keys(model.toolBoxGroup.pricing).length - 1) {
+            if(i == 0 
+            	|| (i == Object.keys(model.toolBoxGroup.pricing).length - 1 && Object.keys(model.toolBoxGroup.pricing).length - 1 <= 9)
+            	|| (i == 9 && Object.keys(model.toolBoxGroup.pricing).length - 1 > 9)) {
             	var setattr = true;
             } else {
             	var setattr = false;

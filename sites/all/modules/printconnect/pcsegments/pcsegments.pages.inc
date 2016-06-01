@@ -55,11 +55,11 @@ function pcsegments_segment($id) {
         '#path' => $banner,
  );
     
-  $build['text'] = array(
+  /*$build['text'] = array(
       '#prefix' => '<p>',
       '#suffix' => '</p>',
       '#markup' => $segment->name->longDescription,
-  );
+  );*/
   if ($segment->products && count($segment->products)) {
     $products = array();
     $i = 0;

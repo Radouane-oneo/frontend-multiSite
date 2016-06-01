@@ -27,6 +27,9 @@
  * @ingroup views_templates
  */
 ?>
+
+<?php //print drupal_get_title();die; ?>
+
 <div class="<?php print $classes; ?>">
   <?php print render($title_prefix); ?>
   <?php if ($title): ?>

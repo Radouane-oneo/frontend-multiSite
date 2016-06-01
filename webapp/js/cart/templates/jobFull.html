@@ -19,7 +19,7 @@
 				<% if(model.isDummyUpload){ %>
 					<img src="/sites/all/modules/printconnect/pccart/images/dummpupload_img.png">
 				<% }else{ %>
-					<img src="https://dt-printconcept-devpreprdproduction.s3.amazonaws.com/<%= model.files[0].thumbnail %>">
+					<img src="https://dt-printconcept-production.s3.amazonaws.com/<%= model.files[0].thumbnail %>">
 					<a href="<%= config.designtoolLink %><%= model.configuration.designtoolPreviewLink %>" target="blank" class="previewlink"><%= config.labels["previsualis"] %></a>
 					<a href="<%= config.designtoolLink %><%= designtoolLink %>" class="designtool iframe fancybox.iframe"><%= config.labels["updatePage"] %></a>	
 				<%}%>

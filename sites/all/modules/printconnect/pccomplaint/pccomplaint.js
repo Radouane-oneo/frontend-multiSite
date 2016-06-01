@@ -149,14 +149,15 @@
                             jQuery("#errorMsg").css({ "display":"none"});
                             jQuery("#edit-orderid").removeClass('error'); 
                             jQuery("#edit-jobid").empty();
+                             jQuery("#edit-jobid").append(jQuery("<option>").attr("value", '').attr("data-box", '').text(''));
                             jQuery.each(data.orderItems, function(i,orderitem) {                                
                                 if (!orderitem.discountId)
                                 {
                                   jQuery("#edit-jobid").append(jQuery("<option>").attr("value", orderitem.id).attr("data-box", orderitem.tracking.length).text(orderitem.id));
                                 }
                              });
-                            jQuery('.form-item-jobid .select2-chosen').html(data.orderItems[0].id);
-                            jQuery("#s2id_edit-jobid .select2-chosen").find('option:eq(0)').prop('selected',true);
+                           // jQuery('.form-item-jobid .select2-chosen').html(data.orderItems[0].id);
+                          //  jQuery("#s2id_edit-jobid .select2-chosen").find('option:eq(0)').prop('selected',true);
                             if (action == 'submit'){
                                 jQuery("#pccomplaint-form").submit();
                                 jQuery("#pccomplaint-form .complaintSubmit").css({ "display":"none"});

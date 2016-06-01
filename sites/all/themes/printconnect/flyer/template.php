@@ -23,25 +23,29 @@ function flyer_preprocess_page(&$variables) {
     global $conf;
     $parts = explode('.', $host);
     $subdomain = $parts[0];
-    //            || (stristr($host, 'stg-flyer') == TRUE)
-//            || (stristr($host, 'stg.oneo') == TRUE)
-//            || (stristr($host, 'dev-flyerfr') == TRUE)
-//            || (stristr($host, 'dev.flyer') == TRUE)
-//            || (stristr($host, 'preprd') == TRUE)) {
-   $domainValid = array('flyer.be','flyer.fr','flyer.nl','flyer.lu','www.flyer.be','www.flyer.fr','www.flyer.nl','www.flyer.lu');
-   if ((isset($conf['cobrandedshops']) && array_key_exists($subdomain, $conf['cobrandedshops']))
-           || (!in_array($host, $domainValid))
-           ||(arg(0) == 'complaint')
-           ||(arg(0) == 'retour')){
-        $meta_robot = array(
-            '#tag' => 'meta',
-            '#attributes' => array(
-              'name' => 'robots',
-              'content' => 'noindex, nofollow'
-            ),
-        );
-        drupal_add_html_head($meta_robot, 'robots');
-    }
+    $domainValid = array('flyer.be','flyer.fr','flyer.nl','flyer.lu','www.flyer.be','www.flyer.fr','www.flyer.nl','www.flyer.lu');
+    if ((isset($conf['cobrandedshops']) && array_key_exists($subdomain, $conf['cobrandedshops']))
+            || (!in_array($host, $domainValid))
+            ||(arg(0) == 'complaint')
+            ||(arg(0) == 'retour')){
+         $meta_robot = array(
+             '#tag' => 'meta',
+             '#attributes' => array(
+               'name' => 'robots',
+               'content' => 'noindex, nofollow'
+             ),
+         );
+         drupal_add_html_head($meta_robot, 'robots');
+     }
+   //  $path_alias = drupal_get_path_alias();
+//echo 'lolo'.drupal_get_current_module_name();die('ttt');
+   // if ($path_alias == 'thepathofmypage') {
+//        $meta_head_blog = array(
+//            '#type' => 'markup',
+//            '#markup' => '<meta name="title" content="My metatag title"><meta name="description" content="My metatag desc">',
+//        );
+//        drupal_add_html_head($meta_head_blog, 'metaHeadBlog');
+  //  }
 }
 
 /**

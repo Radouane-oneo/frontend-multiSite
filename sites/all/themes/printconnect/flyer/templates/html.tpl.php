@@ -41,7 +41,9 @@
  *
  * @ingroup themeable
  */
-?><!DOCTYPE html>
+?>
+
+<!DOCTYPE html>
 <html>
 
 <head profile="<?php print $grddl_profile; ?>">

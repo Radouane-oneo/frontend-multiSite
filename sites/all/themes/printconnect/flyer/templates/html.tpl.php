@@ -110,10 +110,14 @@ ga('send', 'pageview', { 'dimension2': 'klant' });
 <body class="<?php print $classes . (isset($node_css_class) ? $node_css_class : ''); ?>" <?php print $attributes;?>>
 <?php if (arg(3) == 'confirmation') :
     $order = \printconnect\Orders\Factory::Get(arg(2), false);
-//var_dump($order->id);die;
     $customerCurrent = \printconnect\Customers\Factory::Current();
     $allOrderCustomer = \printconnect\Orders\Factory::GetOrders($customerCurrent);
+    $orderID = $_SESSION['orderID'];
     $eventID = $_SESSION['orderID'];
+    
+    if( ($language->prefix == 'befr')  || ($language->prefix == 'benl') ): ?>
+        <script language='JavaScript1.1' src='//pixel.mathtag.com/event/js?mt_id=982376&mt_adid=161076&v1=<?=$eventID ?>&v2=<?=$order->subTotalAmount ?>'></script>
+   <?php endif;
     switch ($order->orderItemShipping->shippingTypeTag){
         case 'shippingTypeStore':
             $eventID = 346589;

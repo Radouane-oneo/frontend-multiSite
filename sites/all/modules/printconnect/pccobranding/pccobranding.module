@@ -8,8 +8,9 @@ function pccobranding_boot() {
     $parts = explode('.', $host);
     $subdomain = $parts[0];
     $copartner = FALSE;
-
+    $_SESSION['fromCoBrand'] = '';
     if (isset($conf['cobrandedshops']) && array_key_exists($subdomain, $conf['cobrandedshops'])) {
+	$_SESSION['fromCoBrand'] = $subdomain;
         foreach ($conf['cobrandedshops'][$subdomain] as $key => $value) {
             $conf['orig'][$key] = $conf[$key];
             $conf[$key] = $value;

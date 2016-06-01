@@ -8415,11 +8415,9 @@ form#pccheckout-payment-form .overview table.sticky-enabled tr.last-child td{
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
 	border-radius: 0;
-	text-transform: lowercase;
+	text-transform: none;
 }
-#accordion-list .ui-accordion-header:first-letter{
-	text-transform: uppercase;
-}
+
 
 #accordion-list .ui-accordion-header .ui-icon{
 	background: url(images/ui-icon.png) no-repeat 0 0 !important;

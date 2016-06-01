@@ -70,6 +70,8 @@ use_existing_jquery=false,
 f=false,d=document;return{use_existing_jquery:function(){return use_existing_jquery;},library_tolerance:function(){return library_tolerance;},finish:function(){if(!f){f=true;var a=d.getElementById('_vis_opt_path_hides');if(a)a.parentNode.removeChild(a);}},finished:function(){return f;},load:function(a){var b=d.createElement('script');b.src=a;b.type='text/javascript';b.innerText;b.onerror=function(){_vwo_code.finish();};d.getElementsByTagName('head')[0].appendChild(b);},init:function(){settings_timer=setTimeout('_vwo_code.finish()',settings_tolerance);this.load('//dev.visualwebsiteoptimizer.com/j.php?a='+account_id+'&amp;u='+encodeURIComponent(d.URL)+'&amp;r='+Math.random());var a=d.createElement('style'),b='body{opacity:0 !important;filter:alpha(opacity=0) !important;background:none !important;}',h=d.getElementsByTagName('head')[0];a.setAttribute('id','_vis_opt_path_hides');a.setAttribute('type','text/css');if(a.styleSheet)a.styleSheet.cssText=b;else a.appendChild(d.createTextNode(b));h.appendChild(a);return settings_timer;}};}());_vwo_settings_timer=_vwo_code.init();
 </script>
 <!-- End Visual Website Optimizer Asynchronous Code -->
+
+<!-- dans le cas du shop flyer.lu -->
 <?php if ($language->prefix == 'lufr'): ?>
 <script type="text/javascript">
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -77,34 +79,34 @@ f=false,d=document;return{use_existing_jquery:function(){return use_existing_jqu
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 </script>
-<?php $customer = printconnect\Customers\Factory::Current();?>
-<?php  if ($customer == NULL): ?>
+<?php $customerCurrent = printconnect\Customers\Factory::Current();?>
+<?php  if ($customerCurrent == NULL): ?>
 <script type="text/javascript">
 ga('create', 'UA-17846296-1', 'auto', { 'siteSpeedSampleRate': 100 });
 ga('require', 'displayfeatures');
 ga('send', 'pageview');
 </script>
 <?php endif; ?> 
-<?php  if ($customer): ?>
+<?php  if ($customerCurrent): ?>
 <script type="text/javascript">
-ga('create', 'UA-17846296-1', 'auto', { 'siteSpeedSampleRate': 100, 'userId': '<?=$customer->id ?>' });
+ga('create', 'UA-17846296-1', 'auto', { 'siteSpeedSampleRate': 100, 'userId': '<?=$customerCurrent->id ?>' });
 ga('require', 'displayfeatures');
-ga('send', 'pageview', { 'dimension1': '<?=$customer->id ?>' });
+ga('send', 'pageview', { 'dimension1': '<?=$customerCurrent->id ?>' });
 </script>
 <?php 
-$customerCurrent = \printconnect\Customers\Factory::Current();
 $allOrderCustomer = \printconnect\Orders\Factory::GetOrders($customerCurrent);
-if ($allOrderCustomer->get_count() == 0) {  ?>
+if ($allOrderCustomer->get_count() == 0) :  ?>
 <script type="text/javascript">
 ga('send', 'pageview', { 'dimension3': 'lead' });
 </script>
-<?php }else{?>
+<?php else :?>
 <script type="text/javascript">
 ga('send', 'pageview', { 'dimension2': 'klant' });
 </script> 
-<?php } ?>
 <?php endif; ?> 
 <?php endif; ?> 
+<?php endif; ?> 
+<!-- end le cas du shop flyer.lu -->
 </head>
 
 <body class="<?php print $classes . (isset($node_css_class) ? $node_css_class : ''); ?>" <?php print $attributes;?>>
@@ -112,8 +114,7 @@ ga('send', 'pageview', { 'dimension2': 'klant' });
     $order = \printconnect\Orders\Factory::Get(arg(2), false);
     $customerCurrent = \printconnect\Customers\Factory::Current();
     $allOrderCustomer = \printconnect\Orders\Factory::GetOrders($customerCurrent);
-    $orderID = $_SESSION['orderID'];
-    $eventID = $_SESSION['orderID'];
+    $eventID = arg(2);
     
     if( ($language->prefix == 'befr')  || ($language->prefix == 'benl') ): ?>
         <script language='JavaScript1.1' src='//pixel.mathtag.com/event/js?mt_id=982376&mt_adid=161076&v1=<?=$eventID ?>&v2=<?=$order->subTotalAmount ?>'></script>

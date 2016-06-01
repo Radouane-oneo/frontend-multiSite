@@ -410,16 +410,16 @@ function flyer_preprocess_html(&$vars) {
             unset($javascript['sites/all/modules/printconnect/pcvat/pcvat.js']);
         }        
         
-        uasort($javascript, 'drupal_sort_css_js');
-        $weight = 0;        
-        uasort($javascript, 'drupal_sort_css_js');  
-        $i = 0;
-        foreach ($javascript as $name => $script) {
-          $javascript[$name]['weight'] = $i++;
-          $javascript[$name]['group'] = JS_DEFAULT;
-          $javascript[$name]['every_page'] = FALSE;
-          $javascript[$name]['scope'] = 'footer';
-        }        
+//        uasort($javascript, 'drupal_sort_css_js');
+//        $weight = 0;        
+//        uasort($javascript, 'drupal_sort_css_js');  
+//        $i = 0;
+//        foreach ($javascript as $name => $script) {
+//          $javascript[$name]['weight'] = $i++;
+//          $javascript[$name]['group'] = JS_DEFAULT;
+//          $javascript[$name]['every_page'] = FALSE;
+//          $javascript[$name]['scope'] = 'footer';
+//        }        
 }
 
 function flyer_css_alter(&$css) {

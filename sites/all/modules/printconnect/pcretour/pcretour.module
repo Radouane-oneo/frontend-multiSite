@@ -280,8 +280,41 @@ function pcretour_notify($form_state, $mailto) {
     
 }
 function mail_retour($mailto, $from_name, $subject, $message, $orderId) {
-       
-    $mail = new PHPMailer;
+		
+	$my_module = 'pcretour';
+    $my_mail_token = microtime();
+    $system = drupal_mail_system($my_module, $my_mail_token);
+    $from = variable_get('system_mail', 'support@flyer.fr');
+    // info mail admin
+    $to = variable_get('system_mail', 'contact@agenceoneo.com');
+    $msg = array(
+        'id' => $my_module . '_' . $my_mail_token,
+        'to' => 'mohammed.b@oneoweb.com',
+        'subject' => $subject,
+        'body' => array($message),
+        'headers' => array(
+        'From' => $from,
+        'Sender' => $from,
+        'Return-Path' => $from,
+        'MIME-Version' => '1.0',
+        'Content-Type' => 'text/html; charset=UTF-8; format=flowed',
+        'Content-Transfer-Encoding' => '8Bit',
+        'X-Mailer' => 'Drupal',
+        ),
+    );
+    
+    $message = $system->format($msg);
+	$myemail = $system->mail($message);
+	
+	if($myemail) {
+		echo 'Message has been sent';
+        $_SESSION['messagesRetour'] = 'yes'; 
+	} else {
+		echo 'Message could not be sent.';
+	}
+	
+	/*
+	$mail = new PHPMailer;
     $mail->SMTPDebug = 3;                               // Enable verbose debug output
 
     $mail->isSMTP();                                      // Set mailer to use SMTP
@@ -306,7 +339,9 @@ function mail_retour($mailto, $from_name, $subject, $message, $orderId) {
         } else {
             echo 'Message has been sent';
             $_SESSION['messagesRetour'] = 'yes';        
-        }        
+        }    
+	
+	*/    
 }
 
  function _pcretour_order_callback($order){

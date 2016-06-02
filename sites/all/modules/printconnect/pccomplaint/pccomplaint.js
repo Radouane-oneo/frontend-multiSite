@@ -148,8 +148,8 @@
                             jQuery('#edit-orderid').parent().find('.errorMsg').remove();
                             jQuery("#errorMsg").css({ "display":"none"});
                             jQuery("#edit-orderid").removeClass('error'); 
-                            jQuery("#edit-jobid").empty();
-                             jQuery("#edit-jobid").append(jQuery("<option>").attr("value", '').attr("data-box", '').text(''));
+                            //jQuery("#edit-jobid").empty();
+                            //jQuery("#edit-jobid").append(jQuery("<option>").attr("value", '').attr("data-box", '').text(''));
                             jQuery.each(data.orderItems, function(i,orderitem) {                                
                                 if (!orderitem.discountId)
                                 {

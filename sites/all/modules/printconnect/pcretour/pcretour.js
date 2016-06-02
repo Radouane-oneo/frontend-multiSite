@@ -1,7 +1,11 @@
  jQuery(document).ready(function(e) {
      jQuery("#pcretour-form  #edit-number").keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
-        if (jQuery.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+        console.log(e.keyCode);
+        var character = String.fromCharCode(e.keyCode);
+        if (
+        	"²&é\"'(-è_çà)=°+~#{[|`\\^@]}*^$ù!:;,¨£µ%§/.?¤<>".indexOf(character) != -1 ||
+        	jQuery.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190, 20, 16]) !== -1 ||
              // Allow: Ctrl+A
             (e.keyCode == 65 && e.ctrlKey === true) ||
              // Allow: Ctrl+C
@@ -14,7 +18,8 @@
                  return;
         }
         // Ensure that it is a number and stop the keypress
-        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+        if (!e.altKey && !e.ctrlKey && (e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            jQuery('#pcretour-form  #edit-number').parent().find('.errorMsg').remove();
             jQuery('#pcretour-form  #edit-number').parent().append('<div class="errorMsg">'+Drupal.t("number error")+'</div>');
             jQuery('#pcretour-form  #edit-number').addClass("error");
             e.preventDefault();
@@ -26,7 +31,10 @@
     });
     jQuery("#pcretour-form #edit-postalcode").keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
-        if (jQuery.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+        var character = String.fromCharCode(e.keyCode);
+        if (
+        	"²&é\"'(-è_çà)=°+~#{[|`\\^@]}*^$ù!:;,¨£µ%§/.?¤<>".indexOf(character) != -1 ||
+        	jQuery.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190, 20, 16]) !== -1 ||
              // Allow: Ctrl+A
             (e.keyCode == 65 && e.ctrlKey === true) ||
              // Allow: Ctrl+C
@@ -39,7 +47,8 @@
                  return;
         }
         // Ensure that it is a number and stop the keypress
-        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+        if (!e.altKey && !e.ctrlKey && (e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+        	jQuery('#pcretour-form #edit-postalcode').parent().find('.errorMsg').remove();
             jQuery('#pcretour-form #edit-postalcode').parent().append('<div class="errorMsg">'+Drupal.t("number error")+'</div>');
             jQuery('#pcretour-form #edit-postalcode').addClass("error");
             e.preventDefault();
@@ -78,7 +87,7 @@
               if(_this.val() == "" || _this.val() == 0) { 
                 
                   _this.addClass("error");
-                  _this.parent().append('<div class="errorMsg">'+Drupal.t("this field is requierd")+'</div>');
+                  _this.parent().append('<div class="errorMsg">'+Drupal.t("this field is required")+'</div>');
                   errorField = true;
               }          
           })
@@ -169,6 +178,7 @@
                             jQuery('.select2-chosen').html(data.orderItems[0].id);
                             jQuery('#edit-numberboxselect').val(data.orderItems[0].tracking.length);
                             jQuery(".form-item-jobid .select2-chosen").find('option:eq(0)').prop('selected',true);
+                            
                         }
                         else{
                             displayerror();

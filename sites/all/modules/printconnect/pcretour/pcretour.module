@@ -113,6 +113,7 @@ function pcretour_form($form, &$form_state) {
         '#type' => 'textfield',
         '#attributes' => array('class' => array('required'), 'placeholder' => t('number')),
         '#suffix' => '</div>',
+        '#size' => 7,
     );
     //line 2 
       $form['retour']['form']['youradress']['labelcity'] = array(
@@ -131,7 +132,7 @@ function pcretour_form($form, &$form_state) {
     );
     $form['retour']['form']['youradress']['postalcode'] = array(
         '#type' => 'textfield',
-        '#attributes' => array('class' => array('required'), 'placeholder' => t('postalcode')),
+        '#attributes' => array('class' => array('required'), 'placeholder' => t('postalcode'), 'maxlength' => 7, 'size' => 7),
     );
 
     $form['retour']['form']['youradress']['errorMsg'] = array(
@@ -170,7 +171,9 @@ function pcretour_form($form, &$form_state) {
     $form['retour']['form']['numberbox']['numberboxselect'] = array(
         '#type' => 'textfield',
      //   '#attributes' => array( 'readonly' => 'readonly'),
+     	'#attributes' => array('class' => array('required')),
         '#suffix' => '</div>', 
+        '#default_value' => 1
     );
     
         

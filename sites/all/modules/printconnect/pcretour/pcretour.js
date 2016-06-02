@@ -1,7 +1,6 @@
  jQuery(document).ready(function(e) {
      jQuery("#pcretour-form  #edit-number").keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
-        console.log(e.keyCode);
         var character = String.fromCharCode(e.keyCode);
         if (
         	"²&é\"'(-è_çà)=°+~#{[|`\\^@]}*^$ù!:;,¨£µ%§/.?¤<>".indexOf(character) != -1 ||

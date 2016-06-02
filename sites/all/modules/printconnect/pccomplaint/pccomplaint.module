@@ -268,7 +268,68 @@ function pccomplaint_notify($form_state, $mailto) {
    // drupal_set_message('This form has been emailed to '. $from);    
 }
 function mail_attachment($filenames, $path, $mailto, $from_mail, $from_name, $replyto, $subject, $message, $orderId) {
-       
+     
+	$my_module = 'pccomplaint';
+    $my_mail_token = microtime();
+    $system = drupal_mail_system($my_module, $my_mail_token);
+    $from = variable_get('system_mail', 'support@flyer.fr');
+    // info mail admin
+    $to = variable_get('system_mail', 'contact@agenceoneo.com');
+    
+	$dir = "uploads";
+    $dir_separator = DIRECTORY_SEPARATOR;
+	$files = array();
+    foreach ($filenames as $filename) {         
+        $filepath  = dirname(__FILE__).$dir_separator.$dir.$dir_separator.$orderId.$dir_separator.$filename;
+		$fileinfos = pathinfo ($filepath);
+		
+		$files[] = array(
+	        'filepath'    => $filepath,
+	        'filename'    => $fileinfos['basename'],
+	        'filemime'    => mime_content_type($filepath),
+	        'disposition' => 'attachement',
+	        'list'        => TRUE
+	      );
+		        
+    }
+	
+	$msg = array(
+	  'id' => $module . '_' . $token,
+	  'to' => $mailto,
+	  'subject' => $subject,
+	  'body' => array($message),
+	  'headers' => array(
+	    'From' => $from,
+	    'Sender' => $from,
+	    'Return-Path' => $from,
+	    'MIME-Version' => '1.0',
+	    'Content-Type' => 'text/html; charset=UTF-8',
+	  ),
+	  'params' => array(
+	    'attachments' => $files
+	  ),
+	);
+	
+	// print_r($msg);die;
+	
+    $message = $system->format($msg);
+	$myemail = $system->mail($message);
+	
+	if($myemail) {
+		foreach (scandir(dirname(__FILE__).$dir_separator.$dir.$dir_separator.$form_state["values"]["orderid"].$dir_separator) as $item) {
+            if ($item == '.' || $item == '..') continue;
+            unlink(dirname(__FILE__).$dir_separator.$dir.$dir_separator.$form_state["values"]["orderid"].$dir_separator.$item);
+        }
+        $pathfolder = dirname(__FILE__).$dir_separator.$dir.$dir_separator.$form_state["values"]["orderid"];
+   
+        shell_exec("rm -rf $pathfolder");
+        echo 'Message has been sent';
+        $_SESSION['messages'] = 'yes'; 
+	} else {
+		echo 'Message could not be sent.';
+	}
+	
+	/* 
     $mail = new PHPMailer;
     $mail->SMTPDebug = 3;                               // Enable verbose debug output
 
@@ -281,7 +342,7 @@ function mail_attachment($filenames, $path, $mailto, $from_mail, $from_name, $re
   //  $mail->Port = 465; 
     $mail->Port = 587;  // TCP port to connect to
     $mail->setFrom($mailto, t('complaint flyer'));
-    $mail->addAddress($mailto, 'Joe User');     // Add a recipient
+    $mail->addAddress('mohammed.b@oneoweb.com', 'Joe User');     // Add a recipient
     //$mail->addReplyTo('info@example.com', 'Information');
     //$mail->addCC('cc@example.com');
     //$mail->addBCC('bcc@example.com');
@@ -313,7 +374,9 @@ function mail_attachment($filenames, $path, $mailto, $from_mail, $from_name, $re
             shell_exec("rm -rf $pathfolder");
             echo 'Message has been sent';
             $_SESSION['messages'] = 'yes';            
-        }        
+        }      
+	 
+	*/  
 }
 
 function pc_resize_image($file, $w, $h, $crop=FALSE) {

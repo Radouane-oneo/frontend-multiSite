@@ -203,7 +203,8 @@ function pcretour_form_validate($form, &$form_state) {
    
 }
 function pcretour_form_submit($form, &$form_state) {
-    pcretour_notify($form_state, 'flyermailer@gmail.com');    
+    //pcretour_notify($form_state, 'flyermailer@gmail.com'); 
+    pcretour_notify($form_state, 'info@flyer.be'); 
 }
 function pcretour_notify($form_state, $mailto) {
     $params = array();    

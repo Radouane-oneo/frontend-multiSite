@@ -408,7 +408,18 @@ function flyer_preprocess_html(&$vars) {
 
         if($args[0]=="myprintconnect" && $args[1]=="editBillingaddresses" ) { 
             unset($javascript['sites/all/modules/printconnect/pcvat/pcvat.js']);
-        }
+        }        
+        
+//        uasort($javascript, 'drupal_sort_css_js');
+//        $weight = 0;        
+//        uasort($javascript, 'drupal_sort_css_js');  
+//        $i = 0;
+//        foreach ($javascript as $name => $script) {
+//          $javascript[$name]['weight'] = $i++;
+//          $javascript[$name]['group'] = JS_DEFAULT;
+//          $javascript[$name]['every_page'] = FALSE;
+//          $javascript[$name]['scope'] = 'footer';
+//        }        
 }
 
 function flyer_css_alter(&$css) {
@@ -440,6 +451,35 @@ function flyer_css_alter(&$css) {
 		unset($css['sites/all/modules/printconnect/pcrotator/pcrotator.css']);
 		unset($css['sites/all/modules/contrib/block_tab/css/block_tab.css']);
 	}
+        
+        
+         // Sort CSS items, so that they appear in the correct order.
+         // This is taken from drupal_get_css().
+         uasort($css, 'drupal_sort_css_js');
+
+         // The Print style sheets
+         // I will populate this array with the print css (usually I have only one but just in case…)
+         $print = array();
+
+         // I will add some weight to the new $css array so every element keeps its position
+         $weight = 0;
+         foreach ($css as $name => $style) {
+           // I leave untouched the conditional stylesheets
+           // and put all the rest inside a 0 group
+           if ($css[$name]['browsers']['!IE']) {
+             $css[$name]['group'] = 0;
+             $css[$name]['weight'] = ++$weight;
+             $css[$name]['every_page'] = TRUE;
+           }
+           // I move all the print style sheets to a new array
+           if ($css[$name]['media'] == 'print') {
+             // remove and add to a new array
+             $print[$name] = $css[$name];
+             unset($css[$name]);
+           }
+         }
+         // I merge the regular array and the print array
+         $css = array_merge($css, $print);         
 }
 /*
 * Canonical Link fix

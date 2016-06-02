@@ -3,7 +3,6 @@ use \printconnect\Dal;
 use printconnect\Orders\Factory;
 function pccomplaint_menu() {
   $items = array();
-
   $items['complaint'] = array( 
     'title' => 'complaint page', //page title
     'description' => '',
@@ -202,6 +201,7 @@ function pccomplaint_form_validate($form, &$form_state) {
 }
 function pccomplaint_form_submit($form, &$form_state) {
    pccomplaint_notify($form_state, 'flyermailer@gmail.com');
+   //pccomplaint_notify($form_state, 'info@flyer.be');
 }
 function pccomplaint_notify($form_state, $mailto) {
     $params = array();    
@@ -216,6 +216,7 @@ function pccomplaint_notify($form_state, $mailto) {
     $params['url'] = $url;
     $params['orderId'] = $orderId;
     $params['jobid'] = $_POST['jobid'];
+ //   echo $params['jobid']; die;
     $complainttypes = array (
       // '0' => t('complaint type'),
        "0"=>t('not delivered'),

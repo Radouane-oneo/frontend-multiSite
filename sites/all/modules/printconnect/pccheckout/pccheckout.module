@@ -408,7 +408,7 @@ function new_checkout_and_delivery_loadpage() {
     </script>";
     $script .= "<style>#box-progress{display: block;}</style>";
     $script .= '<link rel="stylesheet" href="/webapp/js/libs/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />';
-    $script .= '<script data-main="/webapp/js/checkout/main" src="/webapp/js/libs/requirejs/require.js"></script>';
+   // $script .= '<script data-main="/webapp/js/checkout/main" src="/webapp/js/libs/requirejs/require.js"></script>';
     $script .= '<div id="myCheckout"></div>';
 
     return $script;

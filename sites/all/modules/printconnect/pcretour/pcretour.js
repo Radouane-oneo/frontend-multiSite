@@ -60,7 +60,7 @@
     jQuery('#edit-jobid').click(function (e){
         var _this = jQuery(this); 
         var optionSelected = jQuery("option:selected", this);
-        jQuery('#edit-numberboxselect').val(optionSelected.attr("data-box"));        
+        //jQuery('#edit-numberboxselect').val(optionSelected.attr("data-box"));        
     });
     jQuery('#edit-submit').click(function (e){        
           jQuery('#content .complaintform .required').removeClass("error");
@@ -175,7 +175,7 @@
                                 }
                              });
                             jQuery('.select2-chosen').html(data.orderItems[0].id);
-                            jQuery('#edit-numberboxselect').val(data.orderItems[0].tracking.length);
+                            //jQuery('#edit-numberboxselect').val(data.orderItems[0].tracking.length);
                             jQuery(".form-item-jobid .select2-chosen").find('option:eq(0)').prop('selected',true);
                             
                         }

@@ -295,7 +295,7 @@ function mail_attachment($filenames, $path, $mailto, $from_mail, $from_name, $re
 	
 	$msg = array(
 	  'id' => $module . '_' . $token,
-	  'to' => 'mohammed.b@oneoweb.com',
+	  'to' => $mailto,
 	  'subject' => $subject,
 	  'body' => array($message),
 	  'headers' => array(

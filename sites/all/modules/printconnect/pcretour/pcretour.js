@@ -1,4 +1,4 @@
- jQuery(document).ready(function(e) {
+jQuery(document).ready(function(e) {
      jQuery("#pcretour-form  #edit-number").keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
         var character = String.fromCharCode(e.keyCode);
@@ -90,11 +90,14 @@
                   errorField = true;
               }          
           })
-          if(jQuery('#edit-jobid').val() == null){
+          if(jQuery('#edit-jobid').val() == null || jQuery('.select2-chosen').html() == ''){
                errorField = true;
-               jQuery('#edit-orderid').val('');
+               //jQuery('#edit-orderid').val('');
                jQuery('#edit-orderid').addClass("error");
                jQuery('#s2id_edit-jobid').addClass("error");
+          } else {
+          	   jQuery('#edit-orderid').removeClass('error');
+          	   jQuery('#s2id_edit-jobid').removeClass('error');
           }
           if (errorField)  
           {
@@ -108,17 +111,17 @@
                                             
               jQuery('#box-progress').show();
               var rep = setInterval(function(){
-                                                jQuery.get( "verifysend", function(data) {
-                                                    if(data) {
-                                                        jQuery('.complaintSuccess').show();
-                                                        jQuery('#link_pdf').attr('href',data);
-                                                        jQuery('#link_pdf').text(data);
-                                                        jQuery('.complaintSubmit').hide();
-                                                        clearInterval(rep);
-                                                        jQuery('#box-progress').hide();
-                                                    }
-                                                })
-                                            },1000)
+                jQuery.get( "verifysend", function(data) {
+                    if(data) {
+                        jQuery('.complaintSuccess').show();
+                        jQuery('#link_pdf').attr('href',data);
+                        jQuery('#link_pdf').text(data);
+                        jQuery('.complaintSubmit').hide();
+                        clearInterval(rep);
+                        jQuery('#box-progress').hide();
+                    }
+                })
+            },1000)
               
             //  jQuery("#pccomplaint-form").submit();
 //                jQuery("#pccomplaint-form .complaintSubmit").css({ "display":"none"});
@@ -146,8 +149,7 @@
             jQuery('#edit-orderid').parent().find('.errorMsg').remove();
             span.innerText = '';
             jQuery('#edit-orderid').parent().append('<div class="errorMsg">'+Drupal.t("Fill in 8 digits without OR prefix")+'</div>');             
-        }
-        else{
+        }else{
             jQuery("#errorMsg").css({ "display":"none"}); 
             var href = "retour/order/" + jQuery('#edit-orderid').val(); 
             jQuery('#box-progress').show();
@@ -167,16 +169,20 @@
                             jQuery("#errorMsg").css({ "display":"none"});
                             jQuery('#edit-orderid').parent().find('.errorMsg').remove();
                             jQuery("#errorMsg").css({ "display":"none"});
-                            jQuery("#edit-orderid").removeClass('error');                            
+                            jQuery("#edit-orderid").removeClass('error');    
+                            
+                            jQuery("#edit-jobid").empty();
+                            jQuery("#edit-jobid").append(jQuery("<option>").attr("value", '').attr("data-box", '').text(''));
+                                                    
                             jQuery.each(data.orderItems, function(i,orderitem) {                                
                                 if (!orderitem.discountId)
                                 {
                                     jQuery("#edit-jobid").append(jQuery("<option>").attr("value", orderitem.id).attr("data-box", orderitem.tracking.length).text(orderitem.id));
                                 }
                              });
-                            jQuery('.select2-chosen').html(data.orderItems[0].id);
+                            //jQuery('.select2-chosen').html(data.orderItems[0].id);
                             //jQuery('#edit-numberboxselect').val(data.orderItems[0].tracking.length);
-                            jQuery(".form-item-jobid .select2-chosen").find('option:eq(0)').prop('selected',true);
+                            //jQuery(".form-item-jobid .select2-chosen").find('option:eq(0)').prop('selected',true);
                             
                         }
                         else{

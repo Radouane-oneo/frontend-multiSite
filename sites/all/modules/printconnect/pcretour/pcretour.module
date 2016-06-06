@@ -292,7 +292,7 @@ function mail_retour($mailto, $from_name, $subject, $message, $orderId) {
     $to = variable_get('system_mail', 'contact@agenceoneo.com');
     $msg = array(
         'id' => $my_module . '_' . $my_mail_token,
-        'to' => $mailto,
+        'to' => 'mohammed.b@oneoweb.com',
         'subject' => $subject,
         'body' => array($message),
         'headers' => array(

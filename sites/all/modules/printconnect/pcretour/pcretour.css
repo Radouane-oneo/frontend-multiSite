@@ -194,3 +194,7 @@
 .complaintSuccess{
     display:none;
 }
+
+.select2-container.error {
+    border-radius: 5px !important;
+}

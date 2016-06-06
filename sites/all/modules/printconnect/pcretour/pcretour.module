@@ -1,6 +1,9 @@
 <?php
+
 use \printconnect\Dal;
 use printconnect\Orders\Factory;
+
+//
 function pcretour_menu() {
   $items = array();
   $items['retour'] = array( 
@@ -26,6 +29,7 @@ function pcretour_menu() {
   );
   return $items;
 }
+
 function pcretour_form_verifysend(){
     if($_SESSION['messagesRetour']) {
         echo $_SESSION['urlPDF'];
@@ -35,6 +39,10 @@ function pcretour_form_verifysend(){
     die;
 }
 function pcretour_form($form, &$form_state) {
+	
+	if ($_SESSION['pc_language'] != 'nl-BE' && $_SESSION['pc_language'] != 'fr-Be' && $_SESSION['pc_language'] != 'fr-FR' )
+	return false;
+	
     $form['retour'] = array(
         '#type' => 'container',
         '#attributes' => array('class' => array('complaint')),

@@ -26,8 +26,8 @@ function pcsegments_menu() {
   );
 
   $items["segments/%"] = array(
-      /*'title callback' => '_pcsegments_getsegmentname',
-      'title arguments' => array(1),*/
+      'title callback' => '_pcsegments_getsegmentname',
+      'title arguments' => array(1),
       'description' => t('Segment'),
       'page callback' => 'pcsegments_segment',
       'page arguments' => array(1),
@@ -303,13 +303,13 @@ function _pcsegments_getsegmentname($id) {
         '#markup' => '<meta name="description" content="'.t($meta).'">',
     );
     drupal_add_html_head($meta_head_blog, 'metaHeadBlog');
-  try {
-    printconnect_ensureinitialized();
-    $segment = \printconnect\Segments\Factory::Get($id);
-    return html_entity_decode($segment->name->name);
-  } catch (\Exception $ex) {
-    
-  }
+//  try {
+//    printconnect_ensureinitialized();
+//    $segment = \printconnect\Segments\Factory::Get($id);
+//    return html_entity_decode($segment->name->name);
+//  } catch (\Exception $ex) {
+//    
+//  }
 }
 
 function pcsegments_pcmenumain() {

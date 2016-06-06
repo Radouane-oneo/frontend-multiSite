@@ -26,8 +26,8 @@ function flyer_preprocess_page(&$variables) {
     $domainValid = array('flyer.be','flyer.fr','flyer.nl','flyer.lu','www.flyer.be','www.flyer.fr','www.flyer.nl','www.flyer.lu');
     if ((isset($conf['cobrandedshops']) && array_key_exists($subdomain, $conf['cobrandedshops']))
             || (!in_array($host, $domainValid))
-            ||(arg(0) == 'complaint')
-            ||(arg(0) == 'retour')){
+            ||( strtolower( arg(0) ) == 'complaint')
+            ||( strtolower( arg(0) ) == 'retour')){
          $meta_robot = array(
              '#tag' => 'meta',
              '#attributes' => array(
@@ -315,10 +315,10 @@ function flyer_preprocess_html(&$vars) {
 	unset($javascript['misc/jquery.js']);
 	unset($javascript['sites/all/modules/printconnect/pccart/pccart.js']);
         $args = arg();
-      if($args[0]=="complaint") {
+      if(strtolower( $args[0] ) == "complaint" ) {
             unset($javascript['sites/all/modules/printconnect/pcretour/pcretour.js']);
       }
-        if($args[0]=="cart" || $args[0]=="payment" || $args[0]=="retour" || ($args[0]=="checkout" && $args[1]=="invoiceanddelivery")) {
+        if($args[0]=="cart" || $args[0]=="payment" || strtolower( $args[0] ) == "retour" || ($args[0]=="checkout" && $args[1]=="invoiceanddelivery")) {
             unset($javascript['sites/all/modules/printconnect/pccomplaint/dropzone.js']);
             unset($javascript['sites/all/modules/printconnect/pccomplaint/pccomplaint.js']);
             unset($javascript['sites/all/libraries/fancybox/fancybox/jquery.fancybox-1.3.4.js']);
@@ -425,11 +425,11 @@ function flyer_preprocess_html(&$vars) {
 function flyer_css_alter(&$css) {
 	$args = arg();
 	
-	if($args[0]=="complaint") {
+	if(strtolower( $args[0] ) == "complaint") {
         unset($css['sites/all/modules/printconnect/pcretour/pcretour.css']);
   	}
 
-	  if($args[0]=="retour") {
+	  if(strtolower( $args[0] ) == "retour" ) {
 	    unset($css['sites/all/modules/printconnect/pccomplaint/pccomplaint.css']);
 	  }
 

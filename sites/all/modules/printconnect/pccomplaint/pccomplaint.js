@@ -82,6 +82,17 @@
                 errorField = true;
             }          
          })
+         
+         if(jQuery('#edit-jobid').val() == null || jQuery('#edit-jobid').val() == ''){
+               errorField = true;
+               //jQuery('#edit-orderid').val('');
+               jQuery('#edit-orderid').addClass("error");
+               jQuery('#s2id_edit-jobid').addClass("error");
+          } else {
+          	   jQuery('#edit-orderid').removeClass('error');
+          	   jQuery('#s2id_edit-jobid').removeClass('error');
+          }
+         
         if (errorField)  
         {
             jQuery('html, body').animate({
@@ -89,17 +100,19 @@
                     }, 800);
             e.stopPropagation();
             e.preventDefault();
-        }
+        } else {
               
-        if ((jQuery('.dz-processing').length) || (jQuery('#edit-complainttype').val() == 0) || (jQuery('#edit-complainttype').val() == 3))
-        {
-            actionComplaint(e,'submit');           
-        }
-        else{
-            jQuery("#errorUpload").show();
-            jQuery("#errorUpload").html("<span style='color:red'>"+Drupal.t('image requierd')+"</span>");
-            e.stopPropagation();
-            e.preventDefault();
+	        if ((jQuery('.dz-processing').length) || (jQuery('#edit-complainttype').val() == 0) || (jQuery('#edit-complainttype').val() == 3))
+	        {
+	            actionComplaint(e,'submit');           
+	        }
+	        else{
+	            jQuery("#errorUpload").show();
+	            jQuery("#errorUpload").html("<span style='color:red'>"+Drupal.t('image requierd')+"</span>");
+	            e.stopPropagation();
+	            e.preventDefault();
+        	}
+        	
         }
              
     });
@@ -147,22 +160,27 @@
                             jQuery("#errorMsg").css({ "display":"none"});
                             jQuery('#edit-orderid').parent().find('.errorMsg').remove();
                             jQuery("#errorMsg").css({ "display":"none"});
-                            jQuery("#edit-orderid").removeClass('error'); 
-                            //jQuery("#edit-jobid").empty();
-                            //jQuery("#edit-jobid").append(jQuery("<option>").attr("value", '').attr("data-box", '').text(''));
+                            jQuery("#edit-orderid").removeClass('error');
+                            
+                            if (action == 'submit'){
+                                jQuery("#pccomplaint-form").submit();
+                                jQuery("#pccomplaint-form .complaintSubmit").css({ "display":"none"});
+                                jQuery(".complaintSuccess").css({ "display":"block"});
+                            }   
+                             
+                            jQuery("#edit-jobid").empty();
+                            jQuery("#edit-jobid").append(jQuery("<option>").attr("value", '').attr("data-box", '').text(''));
                             jQuery.each(data.orderItems, function(i,orderitem) {                                
                                 if (!orderitem.discountId)
                                 {
                                   jQuery("#edit-jobid").append(jQuery("<option>").attr("value", orderitem.id).attr("data-box", orderitem.tracking.length).text(orderitem.id));
                                 }
                              });
-                           // jQuery('.form-item-jobid .select2-chosen').html(data.orderItems[0].id);
-                          //  jQuery("#s2id_edit-jobid .select2-chosen").find('option:eq(0)').prop('selected',true);
-                            if (action == 'submit'){
-                                jQuery("#pccomplaint-form").submit();
-                                jQuery("#pccomplaint-form .complaintSubmit").css({ "display":"none"});
-                                jQuery(".complaintSuccess").css({ "display":"block"});
-                            }                            
+                             
+                           	// jQuery('#edit-jobid').parent().find('.select2-chosen').html(data.orderItems[0].id);
+                            // jQuery('#edit-jobid').parent().find(".form-item-jobid .select2-chosen").find('option:eq(0)').prop('selected',true);
+                            // jQuery("#edit-jobid option:eq(0)").prop('selected', true);
+                                                     
                         }
                         else{
                             displayerror();

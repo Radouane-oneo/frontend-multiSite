@@ -115,12 +115,12 @@ function pccomplaint_form($form, &$form_state) {
     $form['complaint']['form']['about']['complainttype'] = array(
         '#type' => 'select',
         '#options' => $options,
-        '#attributes' => array('class' => array('select-city-adress', 'required')),
+        '#attributes' => array('class' => array('complainttype', 'required')),
     );
     $form['complaint']['form']['about']['descriptionabout'] = array(
         '#type' => 'textarea',
         '#rows' => 8,
-        '#attributes' => array('class' => array('select-city-adress'), 'placeholder' => t('Description about')), 
+        '#attributes' => array('class' => array('descriptionabout'), 'placeholder' => t('Description about')), 
     );
     $form['complaint']['form']['about']['errorMsg'] = array(
         '#markup' => "<span id='errorMsg'>".t('errorMsg')."</span>",
@@ -169,12 +169,12 @@ function pccomplaint_form($form, &$form_state) {
     $form['complaint']['form']['like']['compensation'] = array(
         '#type' => 'select',
         '#options' => $options,
-        '#attributes' => array('class' => array('select-city-adress'), 'placeholder' => t('compensation')),
+        '#attributes' => array('class' => array('compensation'), 'placeholder' => t('compensation')),
     );
     $form['complaint']['form']['like']['descriptionlike'] = array(
         '#type' => 'textarea',
         '#rows' => 8,
-        '#attributes' => array('class' => array('select-city-adress'), 'placeholder' => t('Comments complaint')),
+        '#attributes' => array('class' => array('descriptionlike'), 'placeholder' => t('Comments complaint')),
         '#suffix' => '</div>', 
  
     );

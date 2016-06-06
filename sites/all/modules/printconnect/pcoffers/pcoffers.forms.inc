@@ -14,13 +14,14 @@ function pcoffers_offer_form($form, &$form_state, $hash) {
   $form['offer']['items'] = array(
       '#type' => 'container',
   );
-
+//var_dump($items);die;
   foreach ($items as $item) {
 
-    $price = $item->convertedUnitAmount;
+    //$price = $item->convertedUnitAmount;
+    $price = $item->unitAmount;
     $options = array();
     foreach ($item->options as $option) {
-      $price+=$option->convertedUnitAmount;
+      $price+=$option->subTotalAmount;
       $options[] = $option->description;
     }
 
@@ -67,7 +68,7 @@ function pcoffers_offer_form($form, &$form_state, $hash) {
 
     $form['offer']['items'][$item->id]['description']['price'] = array(
         '#theme' => 'price',
-        '#value' => $price,
+        '#value' => $item->unitAmount,
     );
 
     if ($item->comment !== null) {
@@ -114,8 +115,8 @@ function pcoffers_offer_form($form, &$form_state, $hash) {
 
   $form['offer']['footer']['priceblock']['block'] = array(
       '#theme' => 'priceblock',
-      '#subtotal' => $offer->convertedSubTotalAmount,
-      '#vatAmount' => $offer->convertedVatAmount,
+      '#subtotal' => $offer->subTotalAmount,
+      '#vatAmount' => $offer->vatAmount,
   );
 
   $today = new DateTime();
@@ -127,7 +128,7 @@ function pcoffers_offer_form($form, &$form_state, $hash) {
 
     $form['offer']['actions']['price'] = array(
         '#theme' => 'price',
-        '#value' => $offer->convertedTotalAmount,
+        '#value' => $offer->totalAmount,
         '#title' => t('Total incl. VAT'),
     );
 
@@ -234,7 +235,7 @@ function _pcoffers_offers_form() {
     $rows[] = array(
          $link,
         format_date(strtotime($offer->creationDate), 'medium', 'd-m-y'),
-        theme('price', array('value' => $offer->convertedTotalAmount)),
+        theme('price', array('value' => $offer->subTotalAmount)),
         render($detail),
         $status,
     );

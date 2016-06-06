@@ -102,7 +102,7 @@
             e.preventDefault();
         } else {
               
-	        if (jQuery('.dz-processing').length > 0 && ((jQuery('.dz-processing').length) || (jQuery('#edit-complainttype').val() == 0) || (jQuery('#edit-complainttype').val() == 3)))
+	        if ((jQuery('.dz-processing').length) || (jQuery('#edit-complainttype').val() == 0) || (jQuery('#edit-complainttype').val() == 3))
 	        {
 	            actionComplaint(e,'submit');           
 	        }

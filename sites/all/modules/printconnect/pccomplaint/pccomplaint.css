@@ -211,3 +211,7 @@
     position: absolute;
     width: 190px;
 }
+
+.select2-container.error {
+    border-radius: 5px !important;
+}

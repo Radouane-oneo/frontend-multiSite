@@ -171,7 +171,8 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
           '#markup' => "<div class='salesId'><span class='livraison'>".strtoupper(t('salesId')).":</span><span class='senddate'>".$order->user->salesId."</span></div>"
       );
   }
-    if ($order->ogms != ''){
+
+    if ($order->orderItemsPayment[0]->internalName == 'transfer'){
         $form['transaction'] = array(
               '#type' => 'container',
               '#attributes' => array('class' => array('headerorder'))

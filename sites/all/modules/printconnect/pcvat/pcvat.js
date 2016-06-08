@@ -113,8 +113,6 @@
         var control = $(this);
         $(control).vatfieldValidate(false);
         $('.number, .country', this).blur(function (){
-          if($(this).parents('form').attr('id') == 'pccustomers-newaddress-billingaddresses-form')
-              return;
           $(control).vatfieldValidate(true);
         });
       });

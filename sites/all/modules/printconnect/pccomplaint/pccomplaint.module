@@ -200,8 +200,8 @@ function pccomplaint_form($form, &$form_state) {
 function pccomplaint_form_validate($form, &$form_state) {
 }
 function pccomplaint_form_submit($form, &$form_state) {
-   pccomplaint_notify($form_state, 'flyermailer@gmail.com');
-   //pccomplaint_notify($form_state, 'info@flyer.be');
+   //pccomplaint_notify($form_state, 'flyermailer@gmail.com');
+   pccomplaint_notify($form_state, 'info@flyer.be');
 }
 function pccomplaint_notify($form_state, $mailto) {
 	$params = array();    

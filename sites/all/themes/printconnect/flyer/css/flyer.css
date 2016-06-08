@@ -109,7 +109,7 @@ select {
 	padding: 10px;
 	border-radius: 3px;
 }
-#pccustomers-newaddress-form label,
+.pccustomers-newaddress-form label,
 #pccustomers-address-form label,
 #pccustomers-address-billingaddresses-form label, 
 #pccustomers-newaddress-billingaddresses-form label {
@@ -124,20 +124,20 @@ select {
 	width: 140px;
 	white-space: nowrap;
 }
-#pccustomers-newaddress-form input[type="text"],
-#pccustomers-newaddress-form input[type="password"],
+.pccustomers-newaddress-form input[type="text"],
+.pccustomers-newaddress-form input[type="password"],
 #pccustomers-address-form input[type="text"],
 #pccustomers-changepassword-form input[type="text"],
 #pccustomers-changepassword-form input[type="password"] {
 	width: 458px;
 }
-#pccustomers-newaddress-form .form-item-postalCode,
+.pccustomers-newaddress-form .form-item-postalCode,
 #pccustomers-address-form .form-item-postalCode, 
-#pccustomers-newaddress-form .form-item-city, 
+.pccustomers-newaddress-form .form-item-city, 
 #pccustomers-address-form .form-item-city {
 	float: left;
 }
-#pccustomers-newaddress-form .form-item-postalCode input, 
+.pccustomers-newaddress-form .form-item-postalCode input, 
 #pccustomers-address-form .form-item-postalCode input ,
 #pccustomers-address-billingaddresses-form .form-item-postalCode input,
 #pccustomers-newaddress-billingaddresses-form .form-item-postalCode input 
@@ -145,7 +145,7 @@ select {
 	width: 100px;
 	border-radius: 3px 0 0 3px;
 }
-#pccustomers-newaddress-form .form-item-city input, 
+.pccustomers-newaddress-form .form-item-city input, 
 #pccustomers-address-form .form-item-city input,
 #pccustomers-address-billingaddresses-form .form-item-city input,
 #pccustomers-newaddress-billingaddresses-form .form-item-city input {
@@ -153,60 +153,60 @@ select {
 	border-radius: 0 3px 3px 0;
 	width: 338px;
 }
-#pccustomers-newaddress-form .form-item-street, 
+.pccustomers-newaddress-form .form-item-street, 
 #pccustomers-address-form .form-item-street,
 #pccustomers-address-form .wrap_postal_codeCity .form-item-postalCode,
 #pccustomers-address-form .wrap_postal_codeCity .form-item-city
 {
 	margin-bottom: 0;
 }
-#pccustomers-newaddress-form .form-item-country, 
+.pccustomers-newaddress-form .form-item-country, 
 #pccustomers-address-form .form-item-country ,
 #pccustomers-address-billingaddresses-form .form-item-country,
 #pccustomers-newaddress-billingaddresses-form .form-item-country {
 	clear: left;
 }
-#pccustomers-newaddress-form input[type="submit"], 
+.pccustomers-newaddress-form input[type="submit"], 
 #pccustomers-address-form input[type="submit"], 
 #pccustomers-changepassword-form input[type="submit"] {
 	min-width: 200px;
 }
-#pccustomers-newaddress-form .form-type-checkbox, 
+.pccustomers-newaddress-form .form-type-checkbox, 
 #pccustomers-address-form .form-type-checkbox {
 	line-height: 18px;
 	height: 18px;
 }
-#pccustomers-newaddress-form input[type="checkbox"], 
+.pccustomers-newaddress-form input[type="checkbox"], 
 #pccustomers-address-form input[type="checkbox"] {
 	margin-left: 160px;
 }
-#pccustomers-newaddress-form label.option, 
+.pccustomers-newaddress-form label.option, 
 #pccustomers-address-form label.option,
 #pccustomers-newaddress-billingaddresses-form label.option{
 	display: inline;
 	float: none;
 	text-transform: none;
 }
-#pccustomers-newaddress-form input[type="submit"], 
+.pccustomers-newaddress-form input[type="submit"], 
 #pccustomers-address-form input[type="submit"] {
 	clear: left;
 	margin-bottom: 10px;
 	top: 5px;
 }
-#pccustomers-newaddress-form select,
+.pccustomers-newaddress-form select,
 #pccustomers-address-form select,
 #pccustomers-newaddress-billingaddresses-form select,
 #pccustomers-address-billingaddresses-form select,
 #pccustomers-newaddress-billingaddresses-form select {
 	width: 480px;
 }
-#pccustomers-newaddress-form input.country, 
+.pccustomers-newaddress-form input.country, 
 #pccustomers-address-form input.country {
 	width: 20px;
 	padding-right: 9px;
 	border-radius: 3px 0 0 3px;
 }
-#pccustomers-newaddress-form input.number, 
+.pccustomers-newaddress-form input.number, 
 #pccustomers-address-form input.number {
 	width: 418px;
 	border-left: none;
@@ -7413,7 +7413,7 @@ display: none;
 }
 
 
-.ie10 #pccustomers-newaddress-form .form-item-city {
+.ie10 .pccustomers-newaddress-form .form-item-city {
 	position:absolute;
 	left:282px;
 	top:198px;	
@@ -7427,7 +7427,7 @@ display: none;
 	
 }
 
-.ie10 #pccustomers-newaddress-form .form-item-postalCode{
+.ie10 .pccustomers-newaddress-form .form-item-postalCode{
 	float:none !important;	
 }
 
@@ -7606,17 +7606,17 @@ a.storeUp:hover , a.storeDown:hover {
 	line-height:18px !important;
 }
 
-.ie10 #pccustomers-newaddress-form .form-item-city {
+.ie10 .pccustomers-newaddress-form .form-item-city {
 	position:absolute;
 	left:282px;
 	top:198px;
 	
 }
-.ie10 #pccustomers-newaddress-form .form-item-city input {
+.ie10 .pccustomers-newaddress-form .form-item-city input {
 	padding-bottom:9px !important;	
 }
 
-.ie10 #pccustomers-newaddress-form .form-item-city {
+.ie10 .pccustomers-newaddress-form .form-item-city {
 	position:absolute;
 	left:282px;
 	top:198px;
@@ -7636,7 +7636,7 @@ a.storeUp:hover , a.storeDown:hover {
 	position:relative;
 	top:0px;
 }
-.ie10 #pccustomers-newaddress-form .form-item-city input.city.error {
+.ie10 .pccustomers-newaddress-form .form-item-city input.city.error {
 	padding-bottom:9px !important;	
 	position:relative;
 	top:6px;
@@ -7672,15 +7672,15 @@ div.store div.description table.openinghours caption{
 	position:relative;
 	top:0px;
 }
- .ie10 #pccustomers-newaddress-form .form-item-city input.city.error {
+ .ie10 .pccustomers-newaddress-form .form-item-city input.city.error {
 	padding-bottom:9px !important;	
 	position:relative;
 	top:0px;
 
 }
-.ie10  #pccustomers-newaddress-form input.error ,
+.ie10  .pccustomers-newaddress-form input.error ,
 .ie10 #pccustomers-address-form input.error,
-.ie10 #pccustomers-newaddress-form select.error ,
+.ie10 .pccustomers-newaddress-form select.error ,
 .ie10  #pccustomers-address-form select.error
  {
 	border-color:#d7d7d7 !important;
@@ -10958,7 +10958,7 @@ p.requieredfields span.form-required {
 }
 
 /* Page Adresses */
-.page-myprintconnect-addresses #pccustomers-newaddress-form > div ,
+.page-myprintconnect-addresses .pccustomers-newaddress-form > div ,
 .page-myprintconnect-mybillingaddress-new #pccustomers-newaddress-billingaddresses-form > div,
 .page-myprintconnect-addresses #pccustomers-address-form > div,
 .page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form > div,
@@ -10978,7 +10978,7 @@ p.requieredfields span.form-required {
     margin-top: 39px;
     padding: 10px 19px!important;*/
 }
-#pccustomers-newaddress-form input[type="submit"], 
+.pccustomers-newaddress-form input[type="submit"], 
 #pccustomers-address-form input[type="submit"],
 .page-myprintconnect-addresses #pccustomers-address-form input.button.form-submit {
 	background: #71ad00;
@@ -10987,26 +10987,26 @@ p.requieredfields span.form-required {
     margin-bottom: 0; 
     top: 0; 
 }
-#pccustomers-newaddress-form input[type="submit"], 
+.pccustomers-newaddress-form input[type="submit"], 
 #pccustomers-address-form input[type="submit"] {
 	background-image: none;
 }
 
  
-#pccustomers-newaddress-form input[type="text"]#edit-lastname {
+.pccustomers-newaddress-form input[type="text"]#edit-lastname {
     width: 218px;
 }
-#pccustomers-newaddress-form input[type="text"]#edit-name {
+.pccustomers-newaddress-form input[type="text"]#edit-name {
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
 }
-#pccustomers-newaddress-form input[type="text"]#edit-lastname { 
+.pccustomers-newaddress-form input[type="text"]#edit-lastname { 
     border-radius: 0px 3px 3px 0px;
     -moz-border-radius: 0px 3px 3px 0px;
     -webkit-border-radius: 0px 3px 3px 0px;
 }
-#pccustomers-newaddress-form label, 
+.pccustomers-newaddress-form label, 
 #pccustomers-address-form label,
 #pccustomers-address-billingaddresses-form label,
 #pccustomers-newaddress-billingaddresses-form label
@@ -11035,16 +11035,16 @@ p.requieredfields span.form-required {
 }
 
 
-#pccustomers-newaddress-form .form-item-name,
-#pccustomers-newaddress-form .form-item-lastname {
+.pccustomers-newaddress-form .form-item-name,
+.pccustomers-newaddress-form .form-item-lastname {
     margin-top: 0;
     float: left;
 }
-#pccustomers-newaddress-form .form-item-lastname > label { display: none;}
-#pccustomers-newaddress-form .form-item-phone {
+.pccustomers-newaddress-form .form-item-lastname > label { display: none;}
+.pccustomers-newaddress-form .form-item-phone {
     clear: both;
 }
-#pccustomers-newaddress-form .form-item-company {
+.pccustomers-newaddress-form .form-item-company {
     display: block;
     padding-top: 10px;
     border-top: 1px solid #d6d6d6;
@@ -11054,15 +11054,15 @@ p.requieredfields span.form-required {
     padding-top: 10px;
     border-top: 1px solid #d6d6d6;
 }
-#pccustomers-newaddress-form .form-item-postalCode,
-#pccustomers-newaddress-form .form-item-city,
+.pccustomers-newaddress-form .form-item-postalCode,
+.pccustomers-newaddress-form .form-item-city,
 #pccustomers-address-billingaddresses-form .form-item-postalCode,
 #pccustomers-address-billingaddresses-form .form-item-city,
 #pccustomers-newaddress-billingaddresses-form .form-item-postalCode, 
 #pccustomers-newaddress-billingaddresses-form .form-item-city {
     float: left;
 }
-#pccustomers-newaddress-form .form-item-postalCode,
+.pccustomers-newaddress-form .form-item-postalCode,
 #pccustomers-address-billingaddresses-form .form-item-postalCode, 
 #pccustomers-newaddress-billingaddresses-form .form-item-postalCode {
 	clear: both;

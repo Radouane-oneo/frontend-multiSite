@@ -58,6 +58,7 @@
 	    } else {
 		$('.messages ul').append('<li class="customErrors">'+vatplaceholder+'</li>');
 	    }
+            $('.messages').parents('div').css({ "display":"block"});
 	    $('html, body').animate({
               scrollTop:$(".messages.error").offset().top
             }, 'slow');

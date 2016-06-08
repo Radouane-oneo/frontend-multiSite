@@ -65,8 +65,14 @@
 						<span data-orderItem="<%= model.id %>" class="removecart"></span>
 					</div>
 					<%
-					var directLink = "http://" + document.location.host + "/" + config.prefix + "/products/" + model.configuration['productId'] + "/" + encodeURIComponent(_.map(model.configuration.config, function(conf){ return conf.toolboxItemId; }).join(",")) + "/" + encodeURIComponent(model.options.join(",")) + "/" + model.quantity+"/"+model.id;
-            		%>
+                                        var options = [];
+                                        for(op in model.options) {
+                                         options.push(model.options[op].option);
+                                        }
+					var directLink = "http://" + document.location.host + "/" + config.prefix + "/products/" + model.configuration['productId'] + "/" + encodeURIComponent(_.map(model.configuration.config, function(conf){ return conf.toolboxItemId; }).join(",")) + "/" + encodeURIComponent(options.join(",")) + "/" + model.quantity+"/"+model.id;
+                                                                             
+                                      
+                                        %>
                     
                     <% if (model.customWidth == 0 && model.customHeight == 0){%>
                     <div class="edit-job" style="line-height: 18px;">

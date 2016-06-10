@@ -162,7 +162,7 @@ function pcsamplepacks_request_form($form, $form_state) {
     );
     $form['country'] = array(
         '#type' => 'select',
-        '#title' => t('Countryrr'),
+        '#title' => t('Country'),
         '#options' => $countries,
         '#default_value' => $defaultAddress ? $defaultAddress->country : $shopConfig->defaultCountry,
         '#required' => TRUE,

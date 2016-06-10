@@ -3171,6 +3171,48 @@ a.ui-button.inactivebtn{
     border-radius: 0;
     border: none;
 }
+.page-myprintconnect-offers input.large.cart {
+    background: #79b61a url("images/button_addcart.png") no-repeat 65px center;
+    font-size: 16px !important;
+    height: 50px !important;
+    margin: 0 !important;
+    font-weight: 400 !important;
+    text-align: center !important;
+    width: 50% !important;
+    display: inline-block !important;
+    padding-left: 40px !important;  
+    border: none;
+}
+.page-myprintconnect-offers .region-content .form-actions span.price {
+	float: left;
+    color: #fff;
+    font-size: 60px;
+    line-height: 50px;
+    padding-left: 15px;
+    line-height: normal\9;
+    width: 50%;
+    box-sizing: border-box;
+}
+
+.page-myprintconnect-offers .region-content .form-actions span.price label{
+	font-size: 14px;
+    margin-right: 5px;
+    text-align: right;
+    line-height: 50px;
+    float: left;
+    clear: right;
+    color: #fff;
+    font-weight: normal;
+    margin: 0;
+}
+.page-myprintconnect-offers .region-content .form-actions span.price .value{
+	font-size: 30px;
+    font-weight: bold;
+    color: #fff;
+    float: right;
+    margin-right: 15px;
+}
+
 .page-products #edit-actions .button-wrapper {
     background-color: #79b61a;
     width: 50%;
@@ -5673,13 +5715,11 @@ div.error, table tr.error {
 	max-width: 220px;
 }
 .region-content .form-actions span.price {
-	float: right;
-
+	float: left;
 	color: #fff;
 	font-size: 60px;
 	line-height: 50px;
-
-	padding-left : 90px;
+	padding-left : 10px;
 	line-height: normal\9; /* IE HACK */
 }
 /*.region-content .form-actions span.price .currency {

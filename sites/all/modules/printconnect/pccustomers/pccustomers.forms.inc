@@ -781,7 +781,7 @@ function pccustomers_address_Billingaddresses_form_submit($form, &$form_state) {
  */
 function pccustomers_newaddress_form($form, $form_state) {
   _pccustomers_ensureloggedin();
-
+  $form['#attributes'] = array('class' => array('pccustomers-newaddress-form'));
   $form['name'] = array(
       '#type' => 'textfield',
       '#title' => t('FullName'),

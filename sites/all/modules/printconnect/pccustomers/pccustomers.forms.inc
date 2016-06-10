@@ -1,5 +1,5 @@
 <?php
-
+use \printconnect\Dal;
 use printconnect\Customers\Addresses;
 use printconnect\Customers\Factory;
 use printconnect\Drupal\Forms;
@@ -368,7 +368,11 @@ function pccustomers_changepassword_form($form, &$form_state) {
 function pccustomers_changepassword_form_validate($form, &$form_state) {
   try {
     $customer = $form_state['storage']['customer'];
-    if (!Factory::GetByEmailAndPassword($customer->email, $form_state['values']['oldPassword'])) {
+    $response = null;
+    $response = Dal::SendRequest('customer/email/'.$customer->email.'/password/'.$form_state['values']['oldPassword']);
+
+   // if (!Factory::GetByEmailAndPassword($customer->email, $form_state['values']['oldPassword'])) {die;
+   if( $response->code == 404){
       form_set_error('oldPassword', t('Your old password is not correct.'));
     }
 
@@ -392,7 +396,7 @@ function pccustomers_changepassword_form_submit($form, &$form_state) {
 
   Factory::ChangePassword($customer);
   drupal_set_message(t('Your password has been changed'));
-  drupal_goto('myprintconnect/profile');
+ // drupal_goto('myprintconnect/profile');
 }
 
 /**
@@ -777,7 +781,6 @@ function pccustomers_address_Billingaddresses_form_submit($form, &$form_state) {
  */
 function pccustomers_newaddress_form($form, $form_state) {
   _pccustomers_ensureloggedin();
-
   $form['#attributes'] = array('class' => array('pccustomers-newaddress-form'));
   $form['name'] = array(
       '#type' => 'textfield',

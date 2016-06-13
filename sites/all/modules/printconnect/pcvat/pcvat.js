@@ -58,6 +58,7 @@
 	    } else {
 		$('.messages ul').append('<li class="customErrors">'+vatplaceholder+'</li>');
 	    }
+            $('.messages').parents('div').css({ "display":"block"});
 	    $('html, body').animate({
               scrollTop:$(".messages.error").offset().top
             }, 'slow');
@@ -113,8 +114,6 @@
         var control = $(this);
         $(control).vatfieldValidate(false);
         $('.number, .country', this).blur(function (){
-          if($(this).parents('form').attr('id') == 'pccustomers-newaddress-billingaddresses-form')
-              return;
           $(control).vatfieldValidate(true);
         });
       });

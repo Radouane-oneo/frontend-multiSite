@@ -65,7 +65,7 @@
     line-height: 16px;
 }
 .bloccomplaint .labelorderleft {
-    margin-left: 14px;
+    margin-left: 19px;
     text-transform: uppercase;
     width: 95px;
     line-height: 14px;
@@ -78,9 +78,13 @@
     box-sizing: border-box;
 }
 
+.bloccomplaint input[type="text"] {
+	height: 41px;
+}
+
 .bloccomplaint input#edit-number,
 .bloccomplaint input#edit-postalcode{
-    width: 108px  !important;
+    width: 102px  !important;
 }
 
 .bloccomplaint .form-item,
@@ -126,7 +130,7 @@
 }
 
 .complaintSubmit {
-    padding: 30px 42px;
+	padding: 30px 42px;
     width: 430px;
     float: right;
     margin-right: -13px;
@@ -137,6 +141,8 @@
     width: 100%;
     line-height: 41px;
     padding: 0;
+	margin-left: -2px;
+    width: calc(100% - 1px);
 }
 
 .complaintSuccess {

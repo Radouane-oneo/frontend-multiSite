@@ -66,8 +66,8 @@ class Factory {
     }
   }
 
-  public static function GetByEmailAndPassword($email, $password) {
-    try {
+  public static function GetByEmailAndPassword($email, $password) {   
+    try {   
       $customer = new Customer(array('email' => $email, 'password' => $password));
       Dal::Load($customer, 'customer', array('email' => $email, 'password' => $password), FALSE);
       return $customer;

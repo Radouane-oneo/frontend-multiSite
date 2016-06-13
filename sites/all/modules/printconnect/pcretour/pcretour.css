@@ -76,6 +76,9 @@
     width: 203px !important;
     color: #bcbbbb;
     box-sizing: border-box;
+    
+    font-size: 12px;
+    font-family: 'Open Sans',sans-serif;
 }
 
 .bloccomplaint input[type="text"] {

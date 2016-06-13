@@ -225,3 +225,13 @@
 .select2-container.error {
     border-radius: 5px !important;
 }
+
+.no-search .select2-search {
+    display:none
+}
+
+textarea {
+	color: #bcbbbb;
+    font-family: 'Open Sans',sans-serif;
+    font-size: 12px;
+}

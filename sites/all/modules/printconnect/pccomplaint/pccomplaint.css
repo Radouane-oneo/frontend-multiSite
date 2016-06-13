@@ -230,7 +230,7 @@
     display:none
 }
 
-textarea {
+#pccomplaint-form textarea {
 	color: #bcbbbb;
     font-family: 'Open Sans',sans-serif;
     font-size: 12px;

@@ -10,9 +10,11 @@ function pcoffers_offer_form($form, &$form_state, $hash) {
 
   $items = $offer->offerItems;
   $offerItemsAdditional = $offer->offerItemsAdditional;
+
   $form['offer']['items'] = array(
       '#type' => 'container',
   );
+//var_dump($items);die;
   foreach ($items as $item) {
 
     //$price = $item->convertedUnitAmount;
@@ -22,6 +24,7 @@ function pcoffers_offer_form($form, &$form_state, $hash) {
       $price+=$option->subTotalAmount;
       $options[] = $option->description;
     }
+
 
 
     $form['offer']['items'][$item->id] = array(
@@ -128,6 +131,7 @@ function pcoffers_offer_form($form, &$form_state, $hash) {
         '#value' => $offer->totalAmount,
         '#title' => t('Total incl. VAT'),
     );
+
     if ($offer->status->tag == 'offerStatusOpen') {
       $form['offer']['actions']['submit'] = array(
           '#type' => 'submit',
@@ -151,6 +155,7 @@ function pcoffers_offer_form($form, &$form_state, $hash) {
 
 function pcoffers_offer_form_submit($form, &$form_state) {
   $offer = $form_state['storage']['offer'];
+
   $cart = Factory::CreateCart($offer);
 
   if ($cart === false) {
@@ -220,6 +225,7 @@ function _pcoffers_offers_form() {
       $status = t('Expired');
     }
 
+    
     //drupal_set_message(print_r($offer));
     
     //$status = $offer->status;

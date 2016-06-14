@@ -164,7 +164,6 @@ namespace printconnect {
       }
       $hash = $dal->GetHash($entity, $params, $language);
       $data = false;
-    
       if ($cache) {
         if (array_key_exists($hash, self::$_cache)) {
           $data = self::$_cache[$hash];
@@ -202,7 +201,6 @@ namespace printconnect {
 
       $hash = $dal->GetHash($entity, $params, $language);
       $items = false;
-    
       if ($entity == 'cart' || $cache) {
         if (array_key_exists($hash, self::$_cache)) {
            $items = self::$_cache[$hash];
@@ -232,7 +230,6 @@ namespace printconnect {
             }
             self::$_cache[$hash] = serialize($items);
         } else {
-            
           $items = unserialize($items);
         }
       } else {

@@ -144,6 +144,7 @@ use printconnect\Dal\ForbiddenException;
 //      $json = $this->fromCache($url);
  $json = $this->Call($url);
       $items = json_decode($json);
+        //if ($entity == 'offer'){var_dump($url);die;}
       if ($entity == 'pickuppoint/service/store' || $entity == 'pickuppointdetail/service/store') {
 	$json = utf8_encode($json);
 	$items = json_decode($json);

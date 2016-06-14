@@ -19,7 +19,7 @@ use printconnect\Carts\Cart;
     public static function GetById($hash) {
       try {
         $offer = new Offer(array('hash' => $hash));
-        Dal::Load($offer, 'offer', array('hash' => $hash));
+        Dal::Load($offer, 'offer', array('hash' => $hash), FALSE);
         return $offer;
       } catch (\Exception $ex) {
         return false;

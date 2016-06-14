@@ -211,7 +211,19 @@
         jQuery("#errorMsg").css({ "display":"inline"});
         jQuery('#errorMsg').focus(); 
     }
-  
+	
+	setTimeout(function() {
+		
+		jQuery('#edit-complainttype').select2({
+	    	dropdownCssClass : 'no-search'
+		});	
+		
+		jQuery('#edit-compensation').select2({
+		    dropdownCssClass : 'no-search'
+		});
+		
+	}, 500);
+	  
  });
 
 

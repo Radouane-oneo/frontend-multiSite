@@ -18,15 +18,15 @@
 }
 .blocpicture{
     float: left;
-    width: 165px;
+    width: 191px;
 }
    
 .blocdropdrag .dropzone {
-    background: url("/sites/all/themes/printconnect/flyer/css/images/uploadicon.png") no-repeat center 15px;
+    background: url("/sites/all/themes/printconnect/flyer/css/images/uploadicon.png") no-repeat center 30px;
     border: 2px dashed #e7e3e3;
     min-height: 106px;
     padding: 4px;
-    width: 453px;
+    width: 427px;
     border-radius: 4px 4px 4px 4px;
     -moz-border-radius: 4px 4px 4px 4px;
     -webkit-border-radius: 4px 4px 4px 4px;
@@ -60,6 +60,19 @@
     width: 203px !important;
     color: #bcbbbb;
     box-sizing: border-box;
+     
+    color: #999; 
+    
+    font-size: 12px;
+    font-family: 'Open Sans',sans-serif;
+}
+
+.bloccomplaint input[type="text"] {
+	height: 41px;
+}
+
+.bloccomplaint textarea {
+    resize: none;
 }
 
 .bloccomplaint .form-item, 
@@ -105,8 +118,9 @@
 
 .dropzone .dz-message {
     margin: 0 !important;
-    line-height: 106px;
+    line-height: 145px;
     color: #bcbbbb;
+    margin-bottom: -30px !important;
 }
 
 .complaintSubmit {
@@ -117,9 +131,10 @@
 
 .complaintSubmit input.ui-button {
     background: #73b900;
-    width: 100%;
+    width: calc(100% + 2px);
     line-height: 41px;
     padding: 0;
+    margin-left: -2px;
 }
 
 .complaintSuccess {
@@ -214,4 +229,14 @@
 
 .select2-container.error {
     border-radius: 5px !important;
+}
+
+.no-search .select2-search {
+    display:none
+}
+
+#pccomplaint-form textarea {
+	color: #bcbbbb;
+    font-family: 'Open Sans',sans-serif;
+    font-size: 12px;
 }

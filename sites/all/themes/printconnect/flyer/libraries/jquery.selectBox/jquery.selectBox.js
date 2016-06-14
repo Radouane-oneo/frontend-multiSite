@@ -18,11 +18,7 @@ if (jQuery)(function($) {
 			//
 			var init = function(select, data) {
 					
-					console.log('seelect', $(select).attr('class'));
 					if($(select).hasClass('product') && jQuery('select.product').parents('#block-pcproducts-calculator').size() == 1) {
-						console.log('seelect', 'she has it eeeh eeh');
-						
-						
 						/* var options = vertical_align(select, 4);
 						$(select).empty();
 						$(select).append(options); */
@@ -137,9 +133,6 @@ if (jQuery)(function($) {
 			    $(data).find('option:first-child').remove();
 			    //shift(data);
 			    
-			    console.log('she', data.length);
-			    console.log('she', $(data).find('option').size());
-			    
 				var nbr = data.length / numCols;
 				nbr = (nbr % 1 != 0) ? Math.floor(nbr) + 1 : nbr;
 			    
@@ -147,8 +140,6 @@ if (jQuery)(function($) {
 			    $.each(data, function(i, v) {
 					items[i] = [i%nbr, v];
 				});
-				
-				console.log('she', items);
 				
 				var vals = [];
 				$.each(items, function(k, v) {
@@ -160,8 +151,6 @@ if (jQuery)(function($) {
 					}
 				});
 				
-				console.log('she', vals);
-				
 				var items = [];
 				$.each(vals, function(k, v) {
 					$.each(v, function(vi, vv) {
@@ -170,11 +159,8 @@ if (jQuery)(function($) {
 				});
 				
 				first = $(first).attr('selected', 'selected')[0];
-				console.log(first);
 				//items.unshift(first);
 				
-				console.log('she', items);
-			    
 			    return items;
 			};
 			

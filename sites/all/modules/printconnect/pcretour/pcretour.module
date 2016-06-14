@@ -40,8 +40,8 @@ function pcretour_form_verifysend(){
 }
 function pcretour_form($form, &$form_state) {
 	
-	if ($_SESSION['pc_language'] != 'nl-BE' && $_SESSION['pc_language'] != 'fr-Be' )
-	return false;
+	//if ($_SESSION['pc_language'] != 'nl-BE' && $_SESSION['pc_language'] != 'fr-Be'  )
+	//return false;
 	
     $form['retour'] = array(
         '#type' => 'container',

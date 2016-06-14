@@ -283,11 +283,12 @@ function pccustomers_profile_form_validate($form, &$form_state) {
       $customer->language = 1;
     }
 
-    Factory::Validate(clone $customer);
+    //Factory::Validate(clone $customer);
     $form_state['storage']['customer'] = $customer;
   } catch (\printconnect\Dal\Exception $ex) {
    // Forms::HandleException($ex, $form);
-    return TRUE;
+      //return TRUE;
+      return FALSE;
   }
 }
 
@@ -375,7 +376,11 @@ function pccustomers_changepassword_form_validate($form, &$form_state) {
    if( $response->code == 404){
       form_set_error('oldPassword', t('Your old password is not correct.'));
     }
-
+    
+    if (!isset($form_state['values']['password']) || strlen($form_state['values']['password']) < 5) {
+        form_set_error('newpassword', t('Password not long enough'));
+        return;
+     }
     if ($form_state['values']['password'] != $form_state['values']['passwordConfirm']) {
       form_set_error('', t("Your passwords don't match."));
     }
@@ -908,7 +913,7 @@ function pccustomers_newaddress_form($form, $form_state) {
 function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
  _pccustomers_ensureloggedin();
     $countries = array (
-       "0" => t('select'),
+       "0" => t('- Select -'),
        "21"=>t('Belgique'),
        "73"=>t('France'),
        "150"=>t('Pays-Bas'),

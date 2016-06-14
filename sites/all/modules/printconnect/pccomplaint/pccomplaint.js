@@ -214,6 +214,10 @@
 	
 	setTimeout(function() {
 		
+		jQuery('#edit-jobid').select2({
+	    	placeholder: jQuery('#edit-jobid').attr('placeholder')
+		});
+		
 		jQuery('#edit-complainttype').select2({
 	    	dropdownCssClass : 'no-search'
 		});	

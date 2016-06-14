@@ -124,12 +124,21 @@ select {
 	width: 140px;
 	white-space: nowrap;
 }
+#pccustomers-newaddress-billingaddresses-form .form-item-name input[type="text"],
+#pccustomers-newaddress-billingaddresses-form .form-item-street input[type="text"],
+#pccustomers-newaddress-billingaddresses-form .form-item-company input[type="text"],
+#pccustomers-address-billingaddresses-form .form-item-name input[type="text"],
+#pccustomers-address-billingaddresses-form .form-item-street input[type="text"],
+#pccustomers-address-billingaddresses-form .form-item-company input[type="text"],
 .pccustomers-newaddress-form input[type="text"],
 .pccustomers-newaddress-form input[type="password"],
 #pccustomers-address-form input[type="text"],
 #pccustomers-changepassword-form input[type="text"],
 #pccustomers-changepassword-form input[type="password"] {
 	width: 458px;
+}
+#pccustomers-address-billingaddresses-form  #edit-vatnumber-number, #pccustomers-newaddress-billingaddresses-form  #edit-vatnumber-number {
+  width: 402px;
 }
 .pccustomers-newaddress-form .form-item-postalCode,
 #pccustomers-address-form .form-item-postalCode, 
@@ -5681,6 +5690,9 @@ div.error, table tr.error {
 
 	padding-left : 90px;
 	line-height: normal\9; /* IE HACK */
+}
+#pcoffers-offer-form div div#edit-actions.form-actions.form-wrapper span.price  {
+	font-size: 55px !important;
 }
 /*.region-content .form-actions span.price .currency {
 	font-size: 30px;

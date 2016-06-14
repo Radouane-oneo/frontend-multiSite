@@ -407,7 +407,7 @@ function flyer_preprocess_html(&$vars) {
         }
 
         if($args[0]=="myprintconnect" && $args[1]=="editBillingaddresses" ) { 
-            unset($javascript['sites/all/modules/printconnect/pcvat/pcvat.js']);
+         //   unset($javascript['sites/all/modules/printconnect/pcvat/pcvat.js']);
         }        
         
 //        uasort($javascript, 'drupal_sort_css_js');

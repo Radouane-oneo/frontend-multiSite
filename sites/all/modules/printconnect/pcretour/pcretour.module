@@ -73,7 +73,7 @@ function pcretour_form($form, &$form_state) {
     );
     
     $form['retour']['form']['order']['jobid'] = array(
-        '#markup' =>'<select id="edit-jobid" name="jobid"></select>',
+        '#markup' =>'<select id="edit-jobid" name="jobid" placeholder="' .t('txtJobId'). '"><option></option></select>',
 //        '#attributes' => array('placeholder' => t('jobnumber')),
     );
 // $form['retour']['form']['order']['jobid'] = array(
@@ -88,7 +88,7 @@ function pcretour_form($form, &$form_state) {
     );
 
     $form['retour']['form']['order']['txtJobId'] = array(
-        '#markup' => "<span class='txtJobId'>".t('txtJobId')."</span>",
+        '#markup' => "<!-- <span class='txtJobId'>".t('txtJobId')."</span> -->",
         '#suffix' => '</div>',
     );
     

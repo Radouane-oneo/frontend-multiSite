@@ -90,7 +90,9 @@ jQuery(document).ready(function(e) {
                   errorField = true;
               }          
           })
-          if(jQuery('#edit-jobid').val() == null || jQuery('.select2-chosen').html() == ''){
+          if(jQuery('#edit-jobid').val() == null 
+          	 || jQuery('.select2-chosen').html() == '' 
+          	 || jQuery('.select2-chosen').html() == jQuery('#edit-jobid').attr('placeholder')){
                errorField = true;
                //jQuery('#edit-orderid').val('');
                jQuery('#edit-orderid').addClass("error");
@@ -134,7 +136,7 @@ jQuery(document).ready(function(e) {
     });
     function actionComplaint(e, action){  
         jQuery('#edit-jobid').find('option').remove();
-        jQuery('.select2-chosen').html('');
+        //jQuery('.select2-chosen').html('');
         jQuery('#content .complaintform .required').removeClass("error");
         jQuery("#edit-jobid").removeClass("error");
         jQuery(".errorMsg").hide();
@@ -207,5 +209,13 @@ jQuery(document).ready(function(e) {
         jQuery("#errorMsg").css({ "display":"inline"});
         jQuery('#errorMsg').focus(); 
       }
+      
+      setTimeout(function() {
+		
+		jQuery('#edit-jobid').select2({
+	    	placeholder: jQuery('#edit-jobid').attr('placeholder')
+		});
+		
+	  }, 500);
   
  });

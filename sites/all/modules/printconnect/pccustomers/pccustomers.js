@@ -265,7 +265,7 @@ var registerClicked = false;
           }
           });  
           //start validation vatnumber
-          if ($('#isUserCompany:checked').length > 0) { console.log('opopop');             
+          if ($('#isUserCompany:checked').length > 0) {          
             var number = $('.number');
             var company = $('#companyInput');
             if (number.val() == '' || company.val() == '') {

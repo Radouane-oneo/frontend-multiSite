@@ -612,7 +612,6 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#default_value' => $Billingaddresses->country,
       '#attributes' => array('class' => array('select-country-adress')),
   );
-  
   $form['isCompany'] = array(
         '#type' => 'checkbox',
         '#title' => t('Are you a company ?'),
@@ -620,10 +619,10 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
             'id' => 'isUserCompany',
             'checked'=> false
         ),
-	'#suffix' => '<div class="" style="display:none;">
+	'#suffix' => '<div class="newmessageerror" style="display:none;">
             <div class="messages error vatAlreadyUsed">
                 <ul>
-                    <li>'.t('vat Already used').'</li>
+                   
                 </ul>
             </div>
         </div>'
@@ -913,7 +912,6 @@ function pccustomers_newaddress_form($form, $form_state) {
 }
 function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
  _pccustomers_ensureloggedin();
-
     $countries = array (
        "0" => t('- Select -'),
        "21"=>t('Belgique'),
@@ -1016,10 +1014,10 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
             'id' => 'isUserCompany',
             'checked'=> 'false'
         ),
-	'#suffix' => '<div class="" style="display:none;">
+	'#suffix' => '<div class="newmessageerror" style="display:none;">
             <div class="messages error vatAlreadyUsed">
                 <ul>
-                    <li>'.t('vat Already used').'</li>
+                    
                 </ul>
             </div>
         </div>'
@@ -1123,6 +1121,9 @@ function pccustomers_newaddress_form_validate($form, &$form_state) {
 
 
 function pccustomers_newaddress_form_Billingaddresses_validate($form, &$form_state) {
+  if ($form_state['values']["country"] == 0){
+       form_set_error('country', t('country message error'));
+  }
   if($form_state['values']['vatNumber']){
       if(!empty($form_state['values']['company'])){
         if(strlen($form_state['values']['vatNumber'])== 2 && is_string($form_state['values']['vatNumber'])){

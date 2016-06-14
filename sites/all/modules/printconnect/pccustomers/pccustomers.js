@@ -1,9 +1,9 @@
 var registerClicked = false;
 (function ($) {
     $(document).ready(function () {
-      $("#pccustomers-newaddress-form, #pccustomers-newaddress-billingaddresses-form").submit(function() {
-          $("#pccustomers-newaddress-form #edit-submit, #pccustomers-newaddress-billingaddresses-form #edit-submit").prop('disabled', true);
-      });
+//      $("#pccustomers-newaddress-form, #pccustomers-newaddress-billingaddresses-form").submit(function() {
+//          $("#pccustomers-newaddress-form #edit-submit, #pccustomers-newaddress-billingaddresses-form #edit-submit").prop('disabled', true);
+//      });
         $('#pccustomers-address-billingaddresses-form #edit-country').trigger('change');
       $("#pccustomers-login-form .register-button").click(function(ev) {
           if(registerClicked) {
@@ -114,8 +114,7 @@ var registerClicked = false;
             }
         });
       /* ========== PCCUSTOMER form validation ========== */
- 
-      $('.save-button').click(function (e) {
+      $('#pccustomers-address-billingaddresses-form').submit(function (e) {
       	  $('.vatAlreadyUsed').parent().hide(); 
 	  $('.messages.error').each(function(){
               if(!$(this).hasClass('vatAlreadyUsed')) {
@@ -126,7 +125,24 @@ var registerClicked = false;
           $('#content form .required').removeClass("error");
           var errorMarkup = "<div class='messages error'><ul>";
           var errorMsgs = new Array();
- 
+          if ($('#isUserCompany:checked').length > 0) { 
+                var number = $('.number');
+                var company = $('#companyInput');
+                if (number.val() == '' || company.val() == '') {                           
+                    e.preventDefault();
+                    number.addClass('error');
+                    company.addClass('error');
+                    $('.customErrors').remove();
+                    if ($('.messages').length == 0){
+                        $('.region-content').before('<div class="messages error"><ul><li class="customErrors">'+vatplaceholder+'</li></ul></div>');
+                    } else {
+                        $('.messages ul').append('<li class="customErrors">'+Drupal.t("Sociéte et numero de tva sont requit")+'</li>');
+                    }
+                    $('.newmessageerror').show();
+                    return false
+                }                
+            }
+           
           var isoList = {
             21 : "BE",
             73 : "FR",
@@ -249,7 +265,7 @@ var registerClicked = false;
           }
           });  
           //start validation vatnumber
-          if ($('#isUserCompany:checked').length > 0) {              
+          if ($('#isUserCompany:checked').length > 0) {          
             var number = $('.number');
             var company = $('#companyInput');
             if (number.val() == '' || company.val() == '') {
@@ -447,6 +463,12 @@ function ValidatePostalCode(iso,value) {
                                    e.preventDefault();
                                     number.addClass('error');
                                     company.addClass('error');
+                                    $('.customErrors').remove();
+                                    if ($('.messages').length == 0){
+                                        $('.region-content').before('<div class="messages error"><ul><li class="customErrors">'+vatplaceholder+'</li></ul></div>');
+                                    } else {
+                                        $('.messages ul').append('<li class="customErrors">'+Drupal.t("Sociéte et numero de tva sont requit")+'</li>');
+                                    }
 
                                }
                            }

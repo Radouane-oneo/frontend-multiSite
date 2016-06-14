@@ -129,7 +129,7 @@ function pcoffers_form_pccustomers_dashboard_form_alter(&$form, &$form_state) {
 
       $rows[] = array(
           format_date(strtotime($offer->creationDate), 'medium', 'y-m-d'),
-          theme('price', array('value' => $offer->convertedTotalAmount)),
+          theme('price', array('value' => $offer->subTotalAmount)),
           $link,
       );
 

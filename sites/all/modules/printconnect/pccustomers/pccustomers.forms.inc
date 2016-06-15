@@ -643,7 +643,7 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#type' => 'vatfield',
       '#title' => t('Vat number'),
       '#attributes' => array('class' => array('vat')),
-         '#default_value' => $Billingaddresses->vatNumber,
+      '#default_value' => $Billingaddresses->vatNumber,
 
   );
   $form['actions'] = array(

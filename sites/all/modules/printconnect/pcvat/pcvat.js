@@ -2,9 +2,9 @@
     var validate;
     
     $.fn.vatfieldValidate = function(change){
-        if ($('#edit-country').val() == '') {
-            $('#edit-vatnumber-country').val('');
-        }
+//        if ($('#edit-country').val() == '') {
+//            $('#edit-vatnumber-country').val('');
+//        }
         $('.vatAlreadyUsed').parent().hide();
         $('.number', control).removeClass('error');
         var vatFormats = [{'BE': 10},{'NL' : 12},{'LU' : 8},{'FR' : 11}];
@@ -47,9 +47,8 @@
                 });
                 if (decision == false) 
                 {
-                    console.log('decisionFalse');
                     number.addClass('error');
-                    number.val('');
+                   // number.val('');
                     var vatplaceholder = Drupal.t('insert a valid vat number please');
                     $('.customErrors').remove();
                     if ($('.messages.error ul li').length == 0) {

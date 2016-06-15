@@ -5,6 +5,14 @@ var registerClicked = false;
 //      $("#pccustomers-newaddress-form, #pccustomers-newaddress-billingaddresses-form").submit(function() {
 //          $("#pccustomers-newaddress-form #edit-submit, #pccustomers-newaddress-billingaddresses-form #edit-submit").prop('disabled', true);
 //      });
+    console.log('uuuuuuuu');
+    $("#pccustomers-newaddress-billingaddresses-form").submit(function() {
+        console.log('oooooooo');
+        decision = $('.form-type-vatfield').vatfieldValidate(true);
+        if(!decision) return false;
+        $('.newmessageerror').remove();
+        $('input.error').attr('style',$('input.error').attr('style') + ';border-color:black !important;');
+    });
         $('#pccustomers-address-billingaddresses-form #edit-country').trigger('change');
       $("#pccustomers-login-form .register-button").click(function(ev) {
           if(registerClicked) {

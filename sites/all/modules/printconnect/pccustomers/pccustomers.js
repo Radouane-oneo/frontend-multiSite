@@ -1,6 +1,7 @@
 var registerClicked = false;
 (function ($) {
     $(document).ready(function () {
+        $('#pccustomers-newaddress-billingaddresses-form #edit-country').change();
 //      $("#pccustomers-newaddress-form, #pccustomers-newaddress-billingaddresses-form").submit(function() {
 //          $("#pccustomers-newaddress-form #edit-submit, #pccustomers-newaddress-billingaddresses-form #edit-submit").prop('disabled', true);
 //      });
@@ -116,6 +117,10 @@ var registerClicked = false;
         });
       /* ========== PCCUSTOMER form validation ========== */
       $('#pccustomers-address-billingaddresses-form').submit(function (e) {
+          
+          decision = $('.form-type-vatfield').vatfieldValidate(true);
+          if(!decision) return false;
+          
           console.log('yyyyyyyyyyy');
       	  $('.vatAlreadyUsed').parent().hide(); 
 	  $('.messages.error').each(function(){

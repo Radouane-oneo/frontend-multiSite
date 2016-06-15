@@ -47,6 +47,7 @@
                 });
                 if (decision == false) 
                 {
+                    console.log('decisionFalse');
                     number.addClass('error');
                    // number.val('');
                     var vatplaceholder = Drupal.t('insert a valid vat number please');
@@ -116,6 +117,7 @@
                 }, 'slow');
             }
         }
+        return decision;
     }
 
     Drupal.behaviors.pcvat = {

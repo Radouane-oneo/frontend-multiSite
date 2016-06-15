@@ -18,6 +18,8 @@ define([
                 this.template = _.template(shippingDetailPickupTemplate);
             this.render();
             this.model.on("change",this.render,this);
+
+            this.externEvents();
         },
         render:function(){
             this.setElement(this.template({
@@ -35,13 +37,21 @@ define([
             if(this.model.get("shippingAddresses").orderItemShipping.orderShippingAddress) {
                 var customerAddressId = this.model.get("shippingAddresses").orderItemShipping.orderShippingAddress.shippingAddress;
                 $("#edit-shipping-detail-current-select").val(customerAddressId);
-                $("#edit-shipping-detail-current-select").change();
+                $("#edit-shipping-detail-current-select").change(); 
             }
+            this.externEvents();
         },
         changeName: function(e){
             var shippingAddresses = $.extend(true, {}, this.model.get("shippingAddresses"));
             shippingAddresses.orderItemShipping.orderShippingAddress.name = $(e.currentTarget).val();
             this.model.set({"shippingAddresses": shippingAddresses},{silent: true});
+            $('#collecter').html($(e.currentTarget).val());
+        },
+        externEvents: function(){
+            var _this = this;
+            $('#edit-shipping-detail-contact').blur(function(e){
+                _this.changeName(e);
+            });
         },
         errors : function(){
             if(this.$("input#edit-shipping-detail-contact").length > 0) {

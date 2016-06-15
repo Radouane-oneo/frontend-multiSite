@@ -321,7 +321,7 @@ function flyer_preprocess_html(&$vars) {
         if($args[0]=="cart" || $args[0]=="payment" || strtolower( $args[0] ) == "retour" || ($args[0]=="checkout" && $args[1]=="invoiceanddelivery")) {
             unset($javascript['sites/all/modules/printconnect/pccomplaint/dropzone.js']);
             unset($javascript['sites/all/modules/printconnect/pccomplaint/pccomplaint.js']);
-            unset($javascript['sites/all/libraries/fancybox/fancybox/jquery.fancybox-1.3.4.js']);
+            //unset($javascript['sites/all/libraries/fancybox/fancybox/jquery.fancybox-1.3.4.js']);
             unset($javascript['sites/all/modules/contrib/fancybox/js/fancybox.js']);
             //unset($javascript['sites/all/themes/printconnect/flyer/libraries/scrollBarPlugin/jquery.mCustomScrollbar.min.js']);
             //unset($javascript['sites/all/themes/printconnect/flyer/libraries/scrollBarPlugin/jquery.mCustomScrollbar.concat.min.js']);

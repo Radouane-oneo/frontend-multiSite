@@ -130,10 +130,12 @@ function pccontact_stors_form($form, &$form_state) {
   $form['email'] = array(
       '#type' => 'textfield',
       '#required' => TRUE,
+      '#element_validate' => array('contact_stors_email_validate'),
       '#default_value' => $customer ? $customer->email : '',
       '#attributes' => array(
           'data-mailError' => t('email is required'),
-          'placeholder' => t('Email*'))
+          'placeholder' => t('Email*')
+	  )
   );
   $form['socity'] = array(
       '#type' => 'textfield',
@@ -182,6 +184,13 @@ function pccontact_stors_form($form, &$form_state) {
   $form['#id'] = 'pccontact_stors_form';
   $form['#attributes'] = array('data-globalError' => t('this fields are required'));
   return $form;
+}
+
+function contact_stors_email_validate($element, &$form_state, $form) {
+  $value = $element['#value'];
+  if (!valid_email_address($value)) {
+    form_error($element);
+  }
 }
 
 function pccontact_stors_form_submit($form, &$form_state) {

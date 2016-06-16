@@ -7587,8 +7587,9 @@ a.storeUp , a.storeDown{
 	width:25px;
 	height:16px;
 	background:url(images/subMenuSpriteIconsModified.png) no-repeat;
-	z-index: 10000000;
-        left: 188px;
+	/* z-index: 10000000; */
+	z-index: 10;
+    left: 188px;
 	text-indent:-9999px;
 	display:block;
 }

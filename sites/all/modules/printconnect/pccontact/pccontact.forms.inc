@@ -188,6 +188,7 @@ function pccontact_stors_form($form, &$form_state) {
 
 function contact_stors_email_validate($element, &$form_state, $form) {
   $value = $element['#value'];
+  
   if (!valid_email_address($value)) {
     form_error($element, t('Email is not valid identification'));
   }

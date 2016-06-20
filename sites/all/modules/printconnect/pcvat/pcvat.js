@@ -87,7 +87,7 @@
                                 number.addClass('error');
                                 number.val('');
                                 if ($('.messages.error ul li').length != 0) {
-                                    $('.messages.error').remove();
+                                  //  $('.messages.error').remove();
                                 }
                                 $('.newmessageerror').html('<div class="messages error"><ul><li class="customErrors">'+Drupal.t('vat Already used')+'</li></ul></div>');
                                 $('.newmessageerror').show();
@@ -95,7 +95,7 @@
                             else{
                                 console.log('correct vat');
                                 if ($('.messages.error ul li').length != 0) {
-                                    $('.messages.error').remove();
+                                   // $('.messages.error').remove();
                                 }
                             }
                         }

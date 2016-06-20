@@ -9,9 +9,11 @@ var registerClicked = false;
     $("#pccustomers-newaddress-billingaddresses-form").submit(function() {
         console.log('oooooooo');
         decision = $('.form-type-vatfield').vatfieldValidate(true);
-        if(!decision) return false;
+          if(!decision && typeof decision !='undefined') {
+              return false;
+          }
         $('.newmessageerror').remove();
-        $('input.error').attr('style',$('input.error').attr('style') + ';border-color:black !important;');
+       // $('input.error').attr('style',$('input.error').attr('style') + ';border-color:black !important;');
     });
         $('#pccustomers-address-billingaddresses-form #edit-country').trigger('change');
       $("#pccustomers-login-form .register-button").click(function(ev) {
@@ -124,12 +126,11 @@ var registerClicked = false;
             }
         });
       /* ========== PCCUSTOMER form validation ========== */
-      $('#pccustomers-address-billingaddresses-form').submit(function (e) {
-          
+      $('#pccustomers-address-billingaddresses-form, #pccheckout-personal-form').submit(function (e) {
           decision = $('.form-type-vatfield').vatfieldValidate(true);
-          if(!decision) return false;
-          
-          console.log('yyyyyyyyyyy');
+          if(!decision && typeof decision !='undefined') {
+              return false;
+          }
       	  $('.vatAlreadyUsed').parent().hide(); 
 	  $('.messages.error').each(function(){
               if(!$(this).hasClass('vatAlreadyUsed')) {

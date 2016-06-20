@@ -768,7 +768,7 @@ function getLabels($edit = false, $productId) {
         
     );
 
-    for($i=0; $i <= 114; $i++) {
+    for($i=0; $i <= 115; $i++) {
         $labels['toolBoxDescription_'.$i] = t('description on toolbox ' . $i);
     }
 

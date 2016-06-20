@@ -326,7 +326,7 @@ function new_checkout_and_delivery_loadpage() {
       "changeBA" => t("Change invoice address"),
       "selectBA" => t("Select from addressbook"),
       "OrCreateBA" => t("Ou créez une nouvelle adresse en remplissant le formulaire ci-dessous."),
-      "addNewBA" => t("Add an address"),
+      "addNewBA" => t("Add an Billing address"),
       "BAName" => t("Name"),
       "StreetBA" => t("Street"),
       "CityBA" => t("City"),

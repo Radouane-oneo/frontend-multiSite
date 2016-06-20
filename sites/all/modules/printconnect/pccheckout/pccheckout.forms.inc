@@ -172,13 +172,13 @@ function pccheckout_personal_form($form, &$form_state) {
             'id' => 'isUserCompany',
             'checked'=> 'false'
         ),
-	'#suffix' => '<div class="" style="display:none;">
-	    <div class="messages error vatAlreadyUsed">
-  	        <ul>
-		    <li>'.t('vat Already used').'</li>
-  	        </ul>
-	    </div>
-	</div>'
+        '#suffix' => '<div class="newmessageerror" style="display:none;">
+            <div class="messages error vatAlreadyUsed">
+                <ul>
+                   
+                </ul>
+            </div>
+        </div>'
     );
 
     $form['company']['company'] = array(

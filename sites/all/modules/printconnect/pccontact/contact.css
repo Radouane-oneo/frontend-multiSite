@@ -56,7 +56,7 @@ background-color: #fff !important;
     color: #A9A9A9;
 }
 
-#fieldContainer, #infoContainer {
+#fieldContainer, #infoContainer2 {
     background: #ffffff;
 }
 
@@ -446,7 +446,7 @@ body.page-contact-general{
     margin: 0;
 }
 
-#pccontact_general_form #infoContainer{
+#pccontact_general_form #infoContainer2{
     padding: 20px 30px;
     border-bottom: 1px solid #e6e6e6;
 }

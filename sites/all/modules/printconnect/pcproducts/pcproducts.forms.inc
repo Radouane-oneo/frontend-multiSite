@@ -15,7 +15,7 @@ use printconnect\Shipping;
 
 
 function pcproducts_products_form($form, &$form_state) {
- header('Cache-Control: public, max-age=' . 3600);
+ //header('Cache-Control: public, max-age=' . 3600);
  $banner = variable_get('pc_images') . '/productpage_banners/prod-banner.png';
     $form['banner'] = array(
         '#type' => 'container',
@@ -106,7 +106,7 @@ function pcproducts_products_form($form, &$form_state) {
   $form['products']['list']['#markup'] = theme('item_list', array('items' => $items, 'attributes' => array('class' => array('clearfix'))));
 
   
-  $form['#cache'] = TRUE;
+  //$form['#cache'] = TRUE;
   return $form;
   
 }

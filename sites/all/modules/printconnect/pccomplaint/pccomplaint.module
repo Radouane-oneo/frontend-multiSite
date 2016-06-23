@@ -3,7 +3,6 @@ use \printconnect\Dal;
 use printconnect\Orders\Factory;
 function pccomplaint_menu() {
   $items = array();
-
   $items['complaint'] = array( 
     'title' => 'complaint page', //page title
     'description' => '',
@@ -47,7 +46,7 @@ function pccomplaint_form($form, &$form_state) {
         '#attributes' => array('class' => array('complaint')),
     );
     $form['complaint']['description'] = array(
-        '#markup' => '<div class="descComplait">' .t('desccomplaint').'</div>'
+      //  '#markup' => '<div class="descComplait">' .t('desccomplaint').'</div>'
     );
     $form['complaint']['form'] = array(
         '#type' => 'container',
@@ -74,7 +73,7 @@ function pccomplaint_form($form, &$form_state) {
         '#attributes' => array('class' => array('required'), 'placeholder' => t('orderid')),
     );
     $form['complaint']['form']['order']['jobid'] = array(
-        '#markup' =>'<select id="edit-jobid" name="jobid"></select>',
+        '#markup' =>'<select id="edit-jobid" name="jobid" placeholder="' .t('txtJobId'). '"><option></option></select>',
 //        '#attributes' => array('placeholder' => t('jobnumber')),
     );
 //    $form['complaint']['form']['order']['jobid'] = array(
@@ -87,7 +86,7 @@ function pccomplaint_form($form, &$form_state) {
     );
 
     $form['complaint']['form']['order']['txtJobId'] = array(
-        '#markup' => "<span class='txtJobId'>".t('txtJobId')."</span>",
+        '#markup' => "<!-- <span class='txtJobId'>".t('txtJobId')."</span> -->",
         '#suffix' => '</div>',
     );
     
@@ -116,12 +115,12 @@ function pccomplaint_form($form, &$form_state) {
     $form['complaint']['form']['about']['complainttype'] = array(
         '#type' => 'select',
         '#options' => $options,
-        '#attributes' => array('class' => array('select-city-adress', 'required')),
+        '#attributes' => array('class' => array('complainttype', 'required')),
     );
     $form['complaint']['form']['about']['descriptionabout'] = array(
         '#type' => 'textarea',
         '#rows' => 8,
-        '#attributes' => array('class' => array('select-city-adress'), 'placeholder' => t('Description about')), 
+        '#attributes' => array('class' => array('descriptionabout'), 'placeholder' => t('Description about')), 
     );
     $form['complaint']['form']['about']['errorMsg'] = array(
         '#markup' => "<span id='errorMsg'>".t('errorMsg')."</span>",
@@ -159,7 +158,7 @@ function pccomplaint_form($form, &$form_state) {
         '#suffix' => '</h3>', 
     );
     $form['complaint']['form']['like']['labelorder'] = array(
-        '#markup' => t('compensation')."<span> *</span>",
+        '#markup' => t('compensation label')."<span> *</span>",
         '#prefix' => '<div class="compensation"><div class="labelorder">',
         '#suffix' => '</div>', 
     );
@@ -170,12 +169,12 @@ function pccomplaint_form($form, &$form_state) {
     $form['complaint']['form']['like']['compensation'] = array(
         '#type' => 'select',
         '#options' => $options,
-        '#attributes' => array('class' => array('select-city-adress'), 'placeholder' => t('compensation')),
+        '#attributes' => array('class' => array('compensation'), 'placeholder' => t('compensation')),
     );
     $form['complaint']['form']['like']['descriptionlike'] = array(
         '#type' => 'textarea',
         '#rows' => 8,
-        '#attributes' => array('class' => array('select-city-adress'), 'placeholder' => t('Comments')),
+        '#attributes' => array('class' => array('descriptionlike'), 'placeholder' => t('Comments complaint')),
         '#suffix' => '</div>', 
  
     );
@@ -201,13 +200,14 @@ function pccomplaint_form($form, &$form_state) {
 function pccomplaint_form_validate($form, &$form_state) {
 }
 function pccomplaint_form_submit($form, &$form_state) {
-   pccomplaint_notify($form_state, 'flyermailer@gmail.com');
+   //pccomplaint_notify($form_state, 'flyermailer@gmail.com');
+   pccomplaint_notify($form_state, 'info@flyer.be');
 }
 function pccomplaint_notify($form_state, $mailto) {
-    $params = array();    
+	$params = array();    
     $order = \printconnect\Orders\Factory::Get($form_state["values"]["orderid"], false);
     $customer = \printconnect\Customers\Factory::Get($order->customer);
-   
+   	
     $params['firstName'] = $customer->firstName;
     $params['email'] = $customer->email;
     $params['phone'] = $customer->phone;
@@ -215,7 +215,8 @@ function pccomplaint_notify($form_state, $mailto) {
     $url = "http://admin.printconcept.com/order/index/order/".$orderId;
     $params['url'] = $url;
     $params['orderId'] = $orderId;
-    $params['jobid'] = $form_state['values']['jobid'];
+    $params['jobid'] = $_POST['jobid'];
+ //   echo $params['jobid']; die;
     $complainttypes = array (
       // '0' => t('complaint type'),
        "0"=>t('not delivered'),
@@ -267,7 +268,68 @@ function pccomplaint_notify($form_state, $mailto) {
    // drupal_set_message('This form has been emailed to '. $from);    
 }
 function mail_attachment($filenames, $path, $mailto, $from_mail, $from_name, $replyto, $subject, $message, $orderId) {
-       
+     
+	$my_module = 'pccomplaint';
+    $my_mail_token = microtime();
+    $system = drupal_mail_system($my_module, $my_mail_token);
+    $from = variable_get('system_mail', 'support@flyer.fr');
+    // info mail admin
+    $to = variable_get('system_mail', 'contact@agenceoneo.com');
+    
+	$dir = "uploads";
+    $dir_separator = DIRECTORY_SEPARATOR;
+	$files = array();
+    foreach ($filenames as $filename) {         
+        $filepath  = dirname(__FILE__).$dir_separator.$dir.$dir_separator.$orderId.$dir_separator.$filename;
+		$fileinfos = pathinfo ($filepath);
+		
+		$files[] = array(
+	        'filepath'    => $filepath,
+	        'filename'    => $fileinfos['basename'],
+	        'filemime'    => mime_content_type($filepath),
+	        'disposition' => 'attachement',
+	        'list'        => TRUE
+	      );
+		        
+    }
+	
+	$msg = array(
+	  'id' => $module . '_' . $token,
+	  'to' => $mailto,
+	  'subject' => $subject,
+	  'body' => array($message),
+	  'headers' => array(
+	    'From' => $from,
+	    'Sender' => $from,
+	    'Return-Path' => $from,
+	    'MIME-Version' => '1.0',
+	    'Content-Type' => 'text/html; charset=UTF-8',
+	  ),
+	  'params' => array(
+	    'attachments' => $files
+	  ),
+	);
+	
+	// print_r($msg);die;
+	
+    $message = $system->format($msg);
+	$myemail = $system->mail($message);
+	
+	if($myemail) {
+		foreach (scandir(dirname(__FILE__).$dir_separator.$dir.$dir_separator.$form_state["values"]["orderid"].$dir_separator) as $item) {
+            if ($item == '.' || $item == '..') continue;
+            unlink(dirname(__FILE__).$dir_separator.$dir.$dir_separator.$form_state["values"]["orderid"].$dir_separator.$item);
+        }
+        $pathfolder = dirname(__FILE__).$dir_separator.$dir.$dir_separator.$form_state["values"]["orderid"];
+   
+        shell_exec("rm -rf $pathfolder");
+        echo 'Message has been sent';
+        $_SESSION['messages'] = 'yes'; 
+	} else {
+		echo 'Message could not be sent.';
+	}
+	
+	/* 
     $mail = new PHPMailer;
     $mail->SMTPDebug = 3;                               // Enable verbose debug output
 
@@ -280,7 +342,7 @@ function mail_attachment($filenames, $path, $mailto, $from_mail, $from_name, $re
   //  $mail->Port = 465; 
     $mail->Port = 587;  // TCP port to connect to
     $mail->setFrom($mailto, t('complaint flyer'));
-    $mail->addAddress($mailto, 'Joe User');     // Add a recipient
+    $mail->addAddress('mohammed.b@oneoweb.com', 'Joe User');     // Add a recipient
     //$mail->addReplyTo('info@example.com', 'Information');
     //$mail->addCC('cc@example.com');
     //$mail->addBCC('bcc@example.com');
@@ -312,7 +374,9 @@ function mail_attachment($filenames, $path, $mailto, $from_mail, $from_name, $re
             shell_exec("rm -rf $pathfolder");
             echo 'Message has been sent';
             $_SESSION['messages'] = 'yes';            
-        }        
+        }      
+	 
+	*/  
 }
 
 function pc_resize_image($file, $w, $h, $crop=FALSE) {

@@ -217,7 +217,13 @@ define([
                     "quantity" : quantity
                 });
 	    }
+            // scrol to bottom
+            this.scroltoBotom();
             return false;
+        },
+        scroltoBotom: function(){
+            var TOP = $('#bloc-shipping').offset().top - $('#templates').height() - 220;
+            $('html,body').animate({scrollTop: TOP},'slow');
         },
         calculCF: function(e){
             var minHCF = this.config.labels['minHCF'];

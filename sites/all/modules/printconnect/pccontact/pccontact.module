@@ -49,8 +49,7 @@ function pccontact_menu() {
   $items['contact/general'] = array(
       'page callback' => 'drupal_get_form',
       'page arguments' => array('pccontact_general_form', 1),
-      'access arguments' => array('access content'),
-      'file' => 'pccontact.forms.inc',
+      'access arguments' => array('access content')
   );
    $items['popup/ajax'] = array(
         'page callback' => 'ajax_back',
@@ -737,7 +736,7 @@ function pccontact_general_form($form, &$form_state, $key = 'general') {
   );
   
   $form['container']['title'] = array(
-      '#prefix' => '<div id ="infoContainer">',
+      '#prefix' => '<div id ="infoContainer2">',
       '#markup' => '<p id="titleContact">
           <strong> '.t('HEB JE EEN VRAAG').' ?</strong>
           </p><p id ="sub1"> '.t('Zinnetje over customer service').'</p>',

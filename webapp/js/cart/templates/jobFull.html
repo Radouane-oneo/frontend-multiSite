@@ -50,12 +50,14 @@
 						<% }); %>
 
 						<% if(model.options.length>0) { %>
+							<li style="margin-bottom: 10px"></li>
 							<% _.each(model.options, function(option, i){ %>
 								<li class="<%= (i == model.options.length-1)?'last':'' %>" style="position: relative">
 									<%= option.optionName %>
 									<div style="text-align: right; position: absolute; right: -155px; top: 0px">+ <%= priceTpl({price:option.price}) %> </div>
 								</li>
 							<% }); %>
+							<li style="margin-bottom: 10px"></li>
 						<% } %>
 
 						</ul>
@@ -63,8 +65,14 @@
 
 				</div>
 				<%
-                var directLink = "http://" + document.location.host + "/" + config.prefix + "/products/" + model.configuration['productId'] + "/" + encodeURIComponent(_.map(model.configuration.config, function(conf){ return conf.toolboxItemId; }).join(",")) + "/" + encodeURIComponent(model.options.join(",")) + "/" + model.quantity+"/"+model.id;
-            	%>
+                                    var options = [];
+                                    for(op in model.options) {
+                                     options.push(model.options[op].option);
+                                    }
+                                    var directLink = "http://" + document.location.host + "/" + config.prefix + "/products/" + model.configuration['productId'] + "/" + encodeURIComponent(_.map(model.configuration.config, function(conf){ return conf.toolboxItemId; }).join(",")) + "/" + encodeURIComponent(options.join(",")) + "/" + model.quantity+"/"+model.id;
+                                         
+                                
+                                %>
 				<% if (model.customWidth == 0 && model.customHeight == 0){%>
 				    <a href="<%= directLink %>" class="updateProduct"><%= config.labels["updateProduct"] %></a>				
 				<%}%>

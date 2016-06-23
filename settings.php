@@ -526,7 +526,7 @@ $conf['404_fast_html'] = '<html xmlns="http://www.w3.org/1999/xhtml"><head><titl
 # $conf['allow_authorize_operations'] = FALSE;
 
 
-$conf['pc_url'] = 'http://admin.printconcept.com/rest/';
+$conf['pc_url'] = 'http://admin.preprd.printconcept.com/rest/';
 $conf['pc_designtoolurl'] = 'http://designtool.prd.flyer.fr';
 
 $conf['pc_apikey'] = '829dc7b162f77ed761be6cac0ae8782c0ee1866b'; // flyer

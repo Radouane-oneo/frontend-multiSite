@@ -191,7 +191,7 @@ define([
                     "vatNumber": this.$('#countryIsoBA').val() + this.$('#vatNumberBA').val()
                     
                 }, 'POST').done(function(result) {
-		    if (result.id != $('#baEditSelect').val() && $('#baEditSelect').val() != 0) {
+		    if ($('#baEditSelect').val() != 0) {
                         var newBillngAccountList = jQuery.extend(true, {}, me.model.get('billingAccouts'));
 		        newBillngAccountList = _.without(newBillngAccountList, _.findWhere(newBillngAccountList, {id: parseInt($('#baEditSelect').val())}));
                         newBillngAccountList[_.toArray(newBillngAccountList).length] = result;

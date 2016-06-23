@@ -23,25 +23,29 @@ function flyer_preprocess_page(&$variables) {
     global $conf;
     $parts = explode('.', $host);
     $subdomain = $parts[0];
-    //            || (stristr($host, 'stg-flyer') == TRUE)
-//            || (stristr($host, 'stg.oneo') == TRUE)
-//            || (stristr($host, 'dev-flyerfr') == TRUE)
-//            || (stristr($host, 'dev.flyer') == TRUE)
-//            || (stristr($host, 'preprd') == TRUE)) {
-   $domainValid = array('flyer.be','flyer.fr','flyer.nl','flyer.lu','www.flyer.be','www.flyer.fr','www.flyer.nl','www.flyer.lu');
-   if ((isset($conf['cobrandedshops']) && array_key_exists($subdomain, $conf['cobrandedshops']))
-           || (!in_array($host, $domainValid))
-           ||(arg(0) == 'complaint')
-           ||(arg(0) == 'retour')){
-        $meta_robot = array(
-            '#tag' => 'meta',
-            '#attributes' => array(
-              'name' => 'robots',
-              'content' => 'noindex, nofollow'
-            ),
-        );
-        drupal_add_html_head($meta_robot, 'robots');
-    }
+    $domainValid = array('flyer.be','flyer.fr','flyer.nl','flyer.lu','www.flyer.be','www.flyer.fr','www.flyer.nl','www.flyer.lu');
+    if ((isset($conf['cobrandedshops']) && array_key_exists($subdomain, $conf['cobrandedshops']))
+            || (!in_array($host, $domainValid))
+            ||( strtolower( arg(0) ) == 'complaint')
+            ||( strtolower( arg(0) ) == 'retour')){
+         $meta_robot = array(
+             '#tag' => 'meta',
+             '#attributes' => array(
+               'name' => 'robots',
+               'content' => 'noindex, nofollow'
+             ),
+         );
+         drupal_add_html_head($meta_robot, 'robots');
+     }
+   //  $path_alias = drupal_get_path_alias();
+//echo 'lolo'.drupal_get_current_module_name();die('ttt');
+   // if ($path_alias == 'thepathofmypage') {
+//        $meta_head_blog = array(
+//            '#type' => 'markup',
+//            '#markup' => '<meta name="title" content="My metatag title"><meta name="description" content="My metatag desc">',
+//        );
+//        drupal_add_html_head($meta_head_blog, 'metaHeadBlog');
+  //  }
 }
 
 /**
@@ -311,13 +315,13 @@ function flyer_preprocess_html(&$vars) {
 	unset($javascript['misc/jquery.js']);
 	unset($javascript['sites/all/modules/printconnect/pccart/pccart.js']);
         $args = arg();
-      if($args[0]=="complaint") {
+      if(strtolower( $args[0] ) == "complaint" ) {
             unset($javascript['sites/all/modules/printconnect/pcretour/pcretour.js']);
       }
-        if($args[0]=="cart" || $args[0]=="payment" || $args[0]=="retour" || ($args[0]=="checkout" && $args[1]=="invoiceanddelivery")) {
+        if($args[0]=="cart" || $args[0]=="payment" || strtolower( $args[0] ) == "retour" || ($args[0]=="checkout" && $args[1]=="invoiceanddelivery")) {
             unset($javascript['sites/all/modules/printconnect/pccomplaint/dropzone.js']);
             unset($javascript['sites/all/modules/printconnect/pccomplaint/pccomplaint.js']);
-            unset($javascript['sites/all/libraries/fancybox/fancybox/jquery.fancybox-1.3.4.js']);
+            //unset($javascript['sites/all/libraries/fancybox/fancybox/jquery.fancybox-1.3.4.js']);
             unset($javascript['sites/all/modules/contrib/fancybox/js/fancybox.js']);
             //unset($javascript['sites/all/themes/printconnect/flyer/libraries/scrollBarPlugin/jquery.mCustomScrollbar.min.js']);
             //unset($javascript['sites/all/themes/printconnect/flyer/libraries/scrollBarPlugin/jquery.mCustomScrollbar.concat.min.js']);
@@ -403,18 +407,29 @@ function flyer_preprocess_html(&$vars) {
         }
 
         if($args[0]=="myprintconnect" && $args[1]=="editBillingaddresses" ) { 
-            unset($javascript['sites/all/modules/printconnect/pcvat/pcvat.js']);
-        }
+         //   unset($javascript['sites/all/modules/printconnect/pcvat/pcvat.js']);
+        }        
+        
+//        uasort($javascript, 'drupal_sort_css_js');
+//        $weight = 0;        
+//        uasort($javascript, 'drupal_sort_css_js');  
+//        $i = 0;
+//        foreach ($javascript as $name => $script) {
+//          $javascript[$name]['weight'] = $i++;
+//          $javascript[$name]['group'] = JS_DEFAULT;
+//          $javascript[$name]['every_page'] = FALSE;
+//          $javascript[$name]['scope'] = 'footer';
+//        }        
 }
 
 function flyer_css_alter(&$css) {
 	$args = arg();
 	
-	if($args[0]=="complaint") {
+	if(strtolower( $args[0] ) == "complaint") {
         unset($css['sites/all/modules/printconnect/pcretour/pcretour.css']);
   	}
 
-	  if($args[0]=="retour") {
+	  if(strtolower( $args[0] ) == "retour" ) {
 	    unset($css['sites/all/modules/printconnect/pccomplaint/pccomplaint.css']);
 	  }
 
@@ -436,6 +451,35 @@ function flyer_css_alter(&$css) {
 		unset($css['sites/all/modules/printconnect/pcrotator/pcrotator.css']);
 		unset($css['sites/all/modules/contrib/block_tab/css/block_tab.css']);
 	}
+        
+        
+         // Sort CSS items, so that they appear in the correct order.
+         // This is taken from drupal_get_css().
+         uasort($css, 'drupal_sort_css_js');
+
+         // The Print style sheets
+         // I will populate this array with the print css (usually I have only one but just in case…)
+         $print = array();
+
+         // I will add some weight to the new $css array so every element keeps its position
+         $weight = 0;
+         foreach ($css as $name => $style) {
+           // I leave untouched the conditional stylesheets
+           // and put all the rest inside a 0 group
+           if ($css[$name]['browsers']['!IE']) {
+             $css[$name]['group'] = 0;
+             $css[$name]['weight'] = ++$weight;
+             $css[$name]['every_page'] = TRUE;
+           }
+           // I move all the print style sheets to a new array
+           if ($css[$name]['media'] == 'print') {
+             // remove and add to a new array
+             $print[$name] = $css[$name];
+             unset($css[$name]);
+           }
+         }
+         // I merge the regular array and the print array
+         $css = array_merge($css, $print);         
 }
 /*
 * Canonical Link fix

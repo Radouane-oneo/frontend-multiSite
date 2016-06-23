@@ -60,13 +60,15 @@
 }
 
 .bloccomplaint .labelorder {
-    width: 130px;
+    width: 165px;
     text-transform: uppercase;
+    line-height: 16px;
 }
 .bloccomplaint .labelorderleft {
-    margin-left: 14px;
+    margin-left: 19px;
     text-transform: uppercase;
     width: 95px;
+    line-height: 14px;
 }
 .bloccomplaint input[type="text"],
 .bloccomplaint .select2-container > a.select2-choice,
@@ -74,11 +76,18 @@
     width: 203px !important;
     color: #bcbbbb;
     box-sizing: border-box;
+    
+    font-size: 12px;
+    font-family: 'Open Sans',sans-serif;
+}
+
+.bloccomplaint input[type="text"] {
+	height: 41px;
 }
 
 .bloccomplaint input#edit-number,
 .bloccomplaint input#edit-postalcode{
-    width: 108px  !important;
+    width: 102px  !important;
 }
 
 .bloccomplaint .form-item,
@@ -95,21 +104,14 @@
 .bloccomplaint .labelorderleft span {
     color: red;
 }
-.identification .txtJobId {
-    float: right;
-    margin: 5px 212px 0 0;
-    color: #bcbbbb;
+
+.identification {
+    position: relative;
 }
 
-.orderIssue .labelorder,
-.compensation .labelorder {
-    line-height: 41px;
-}
-.orderIssue .labelorder, 
-.orderIssue .form-type-select,
-.compensation .labelorder,
-.compensation .form-type-select {
-    vertical-align: top;
+.identification .txtJobId {
+    color: #bcbbbb;
+    margin: 5px 0 0 413px;
 }
 
 .orderIssue {
@@ -131,10 +133,10 @@
 }
 
 .complaintSubmit {
-    padding: 30px 42px;
+	padding: 30px 42px;
     width: 430px;
     float: right;
-    margin-right: 24px;
+    margin-right: -13px;
 }
 
 .complaintSubmit input.ui-button {
@@ -142,6 +144,8 @@
     width: 100%;
     line-height: 41px;
     padding: 0;
+	margin-left: -2px;
+    width: calc(100% - 1px);
 }
 
 .complaintSuccess {
@@ -164,8 +168,12 @@
 }
 
 .identification #errorMsg {
-    margin: 5px 0 0 152px;
+    line-height: 14px;
     color: red;
+    width: 200px;
+    position: absolute;
+    left: 187px;
+    top: 44px;
 }
 
 .orderIssue #errorMsg {
@@ -194,4 +202,8 @@
 }
 .complaintSuccess{
     display:none;
+}
+
+.select2-container.error {
+    border-radius: 5px !important;
 }

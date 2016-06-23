@@ -1,9 +1,20 @@
 var registerClicked = false;
 (function ($) {
     $(document).ready(function () {
-      $("#pccustomers-newaddress-form, #pccustomers-newaddress-billingaddresses-form").submit(function() {
-          $("#pccustomers-newaddress-form #edit-submit, #pccustomers-newaddress-billingaddresses-form #edit-submit").prop('disabled', true);
-      });
+        $('#pccustomers-newaddress-billingaddresses-form #edit-country').change();
+//      $("#pccustomers-newaddress-form, #pccustomers-newaddress-billingaddresses-form").submit(function() {
+//          $("#pccustomers-newaddress-form #edit-submit, #pccustomers-newaddress-billingaddresses-form #edit-submit").prop('disabled', true);
+//      });
+    console.log('uuuuuuuu');
+    $("#pccustomers-newaddress-billingaddresses-form").submit(function() {
+        console.log('oooooooo');
+        decision = $('.form-type-vatfield').vatfieldValidate(true);
+          if(!decision && typeof decision !='undefined') {
+              return false;
+          }
+        $('.newmessageerror').remove();
+       // $('input.error').attr('style',$('input.error').attr('style') + ';border-color:black !important;');
+    });
         $('#pccustomers-address-billingaddresses-form #edit-country').trigger('change');
       $("#pccustomers-login-form .register-button").click(function(ev) {
           if(registerClicked) {
@@ -76,6 +87,7 @@ var registerClicked = false;
                 } else {
 		    globalEroorVat = false;
 		    $("#edit-vatnumber-number").removeClass('error');
+                    console.log('decisionTrueCustomer');
                     $.ajax({
                         type: 'GET',
                         url: Drupal.settings.basePath +'checkout/getBillingAccoutFromVat',
@@ -114,8 +126,11 @@ var registerClicked = false;
             }
         });
       /* ========== PCCUSTOMER form validation ========== */
- 
-      $('.save-button').click(function (e) {
+      $('#pccustomers-address-billingaddresses-form, #pccheckout-personal-form').submit(function (e) {
+          decision = $('.form-type-vatfield').vatfieldValidate(true);
+          if(!decision && typeof decision !='undefined') {
+              return false;
+          }
       	  $('.vatAlreadyUsed').parent().hide(); 
 	  $('.messages.error').each(function(){
               if(!$(this).hasClass('vatAlreadyUsed')) {
@@ -125,8 +140,8 @@ var registerClicked = false;
           
           $('#content form .required').removeClass("error");
           var errorMarkup = "<div class='messages error'><ul>";
-          var errorMsgs = new Array();
- 
+          var errorMsgs = new Array();     
+           
           var isoList = {
             21 : "BE",
             73 : "FR",
@@ -249,13 +264,24 @@ var registerClicked = false;
           }
           });  
           //start validation vatnumber
-          if ($('#isUserCompany:checked').length > 0) {              
+           
+          if ($('#isUserCompany:checked').length > 0) {          
             var number = $('.number');
             var company = $('#companyInput');
+            console.log('rrrrrr'+number.val());
             if (number.val() == '' || company.val() == '') {
-                 e.preventDefault();
-                  number.addClass('error');
-                  company.addClass('error');
+                e.preventDefault();
+                number.addClass('error');
+                company.addClass('error');
+                $('.customErrors').remove();
+//                if ($('.messages').length == 0){
+//                    $('.region-content').before('<div class="messages error"><ul><li class="customErrors">coco</li></ul></div>');
+//                } else {
+//                    $('.messages ul').append('<li class="customErrors">'+Drupal.t("Sociéte et numero de tva sont requit")+'</li>');
+//                }
+//                $('.newmessageerror').show();
+                e.stopPropagation();
+                e.preventDefault();
             }
             else{
                 var vatNumberBA = $("#edit-vatnumber-number").val().replace(/\./g, "").replace(/ /g,"");
@@ -403,7 +429,9 @@ var registerClicked = false;
         if(jQuery(this).is(':checked'))  {
           jQuery('#companyInput , #edit-vatnumber-number').addClass('required');
         } else {
+          $('.newmessageerror').hide();
           jQuery('#companyInput , #edit-vatnumber-number').removeClass('required');
+          jQuery('.country, #companyInput , #edit-vatnumber-number').removeClass('error');
         }
       }); 
     });
@@ -440,16 +468,22 @@ function ValidatePostalCode(iso,value) {
     });
     
          $('#pccustomers-newaddress-billingaddresses-form').submit(function (e) {
-                           var number = $('.number');
-                           var company = $('#companyInput');
-                           if (UserCompany == "yes") {
-                               if (number.val() == '' || company.val() == '') {
-                                   e.preventDefault();
-                                    number.addClass('error');
-                                    company.addClass('error');
+            var number = $('.number');
+            var company = $('#companyInput');
+            if (UserCompany == "yes") {
+                if (number.val() == '' || company.val() == '') {
+                    e.preventDefault();
+                     number.addClass('error');
+                     company.addClass('error');
+                     $('.customErrors').remove();
+                     if ($('.messages').length == 0){
+                         $('.region-content').before('<div class="messages error"><ul><li class="customErrors">'+vatplaceholder+'</li></ul></div>');
+                     } else {
+                         $('.messages ul').append('<li class="customErrors">'+Drupal.t("Sociéte et numero de tva sont requit")+'</li>');
+                     }
 
-                               }
-                           }
+                }
+            }
            });
         
         
@@ -461,7 +495,7 @@ function ValidatePostalCode(iso,value) {
             });
     }
   }
-   $('#edit-vatnumber-country').val('');
+  // $('#edit-vatnumber-country').val('');
    if ($('#edit-country').val() != 0) {
        var url = Drupal.settings.basePath + '?q=js/country/' + $("#edit-country").val();
            $.getJSON(url, null, function (data) {

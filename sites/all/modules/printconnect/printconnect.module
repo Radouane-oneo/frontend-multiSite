@@ -1,12 +1,24 @@
 <?php
 
 function printconnect_init() {
+    
 
   global $language;
   global $conf;
   global $browscap;
   global $base_url;
-  
+  $host = $_SERVER['HTTP_HOST'];
+  $parts = explode('.', $host);
+  $subdomain = $parts[0];
+  $domainValid = array('flyer.be','flyer.fr','flyer.nl','flyer.lu','www.flyer.be','www.flyer.fr','www.flyer.nl','www.flyer.lu');
+  if ((isset($conf['cobrandedshops']) && array_key_exists($subdomain, $conf['cobrandedshops']))
+          || (in_array($host, $domainValid)))
+  {
+        $num_updated = db_update('system')
+        ->fields(array( 'status' => 0 ))
+        ->condition('name', 'dblog', '=')
+        ->execute();
+  }
   $uriRequest = @split('/', request_uri());
   unset($uriRequest[0]);
   $urlPermant = '';

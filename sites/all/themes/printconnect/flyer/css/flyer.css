@@ -109,7 +109,7 @@ select {
 	padding: 10px;
 	border-radius: 3px;
 }
-#pccustomers-newaddress-form label,
+.pccustomers-newaddress-form label,
 #pccustomers-address-form label,
 #pccustomers-address-billingaddresses-form label, 
 #pccustomers-newaddress-billingaddresses-form label {
@@ -124,20 +124,29 @@ select {
 	width: 140px;
 	white-space: nowrap;
 }
-#pccustomers-newaddress-form input[type="text"],
-#pccustomers-newaddress-form input[type="password"],
+#pccustomers-newaddress-billingaddresses-form .form-item-name input[type="text"],
+#pccustomers-newaddress-billingaddresses-form .form-item-street input[type="text"],
+#pccustomers-newaddress-billingaddresses-form .form-item-company input[type="text"],
+#pccustomers-address-billingaddresses-form .form-item-name input[type="text"],
+#pccustomers-address-billingaddresses-form .form-item-street input[type="text"],
+#pccustomers-address-billingaddresses-form .form-item-company input[type="text"],
+.pccustomers-newaddress-form input[type="text"],
+.pccustomers-newaddress-form input[type="password"],
 #pccustomers-address-form input[type="text"],
 #pccustomers-changepassword-form input[type="text"],
 #pccustomers-changepassword-form input[type="password"] {
 	width: 458px;
 }
-#pccustomers-newaddress-form .form-item-postalCode,
+#pccustomers-address-billingaddresses-form  #edit-vatnumber-number, #pccustomers-newaddress-billingaddresses-form  #edit-vatnumber-number {
+  width: 402px;
+}
+.pccustomers-newaddress-form .form-item-postalCode,
 #pccustomers-address-form .form-item-postalCode, 
-#pccustomers-newaddress-form .form-item-city, 
+.pccustomers-newaddress-form .form-item-city, 
 #pccustomers-address-form .form-item-city {
 	float: left;
 }
-#pccustomers-newaddress-form .form-item-postalCode input, 
+.pccustomers-newaddress-form .form-item-postalCode input, 
 #pccustomers-address-form .form-item-postalCode input ,
 #pccustomers-address-billingaddresses-form .form-item-postalCode input,
 #pccustomers-newaddress-billingaddresses-form .form-item-postalCode input 
@@ -145,7 +154,7 @@ select {
 	width: 100px;
 	border-radius: 3px 0 0 3px;
 }
-#pccustomers-newaddress-form .form-item-city input, 
+.pccustomers-newaddress-form .form-item-city input, 
 #pccustomers-address-form .form-item-city input,
 #pccustomers-address-billingaddresses-form .form-item-city input,
 #pccustomers-newaddress-billingaddresses-form .form-item-city input {
@@ -153,60 +162,60 @@ select {
 	border-radius: 0 3px 3px 0;
 	width: 338px;
 }
-#pccustomers-newaddress-form .form-item-street, 
+.pccustomers-newaddress-form .form-item-street, 
 #pccustomers-address-form .form-item-street,
 #pccustomers-address-form .wrap_postal_codeCity .form-item-postalCode,
 #pccustomers-address-form .wrap_postal_codeCity .form-item-city
 {
 	margin-bottom: 0;
 }
-#pccustomers-newaddress-form .form-item-country, 
+.pccustomers-newaddress-form .form-item-country, 
 #pccustomers-address-form .form-item-country ,
 #pccustomers-address-billingaddresses-form .form-item-country,
 #pccustomers-newaddress-billingaddresses-form .form-item-country {
 	clear: left;
 }
-#pccustomers-newaddress-form input[type="submit"], 
+.pccustomers-newaddress-form input[type="submit"], 
 #pccustomers-address-form input[type="submit"], 
 #pccustomers-changepassword-form input[type="submit"] {
 	min-width: 200px;
 }
-#pccustomers-newaddress-form .form-type-checkbox, 
+.pccustomers-newaddress-form .form-type-checkbox, 
 #pccustomers-address-form .form-type-checkbox {
 	line-height: 18px;
 	height: 18px;
 }
-#pccustomers-newaddress-form input[type="checkbox"], 
+.pccustomers-newaddress-form input[type="checkbox"], 
 #pccustomers-address-form input[type="checkbox"] {
 	margin-left: 160px;
 }
-#pccustomers-newaddress-form label.option, 
+.pccustomers-newaddress-form label.option, 
 #pccustomers-address-form label.option,
 #pccustomers-newaddress-billingaddresses-form label.option{
 	display: inline;
 	float: none;
 	text-transform: none;
 }
-#pccustomers-newaddress-form input[type="submit"], 
+.pccustomers-newaddress-form input[type="submit"], 
 #pccustomers-address-form input[type="submit"] {
 	clear: left;
 	margin-bottom: 10px;
 	top: 5px;
 }
-#pccustomers-newaddress-form select,
+.pccustomers-newaddress-form select,
 #pccustomers-address-form select,
 #pccustomers-newaddress-billingaddresses-form select,
 #pccustomers-address-billingaddresses-form select,
 #pccustomers-newaddress-billingaddresses-form select {
 	width: 480px;
 }
-#pccustomers-newaddress-form input.country, 
+.pccustomers-newaddress-form input.country, 
 #pccustomers-address-form input.country {
 	width: 20px;
 	padding-right: 9px;
 	border-radius: 3px 0 0 3px;
 }
-#pccustomers-newaddress-form input.number, 
+.pccustomers-newaddress-form input.number, 
 #pccustomers-address-form input.number {
 	width: 418px;
 	border-left: none;
@@ -3171,6 +3180,48 @@ a.ui-button.inactivebtn{
     border-radius: 0;
     border: none;
 }
+.page-myprintconnect-offers input.large.cart {
+    background: #79b61a url("images/button_addcart.png") no-repeat 65px center;
+    font-size: 16px !important;
+    height: 50px !important;
+    margin: 0 !important;
+    font-weight: 400 !important;
+    text-align: center !important;
+    width: 50% !important;
+    display: inline-block !important;
+    padding-left: 40px !important;  
+    border: none;
+}
+.page-myprintconnect-offers .region-content .form-actions span.price {
+	float: left;
+    color: #fff;
+    font-size: 60px;
+    line-height: 50px;
+    padding-left: 15px;
+    line-height: normal\9;
+    width: 50%;
+    box-sizing: border-box;
+}
+
+.page-myprintconnect-offers .region-content .form-actions span.price label{
+	font-size: 14px;
+    margin-right: 5px;
+    text-align: right;
+    line-height: 50px;
+    float: left;
+    clear: right;
+    color: #fff;
+    font-weight: normal;
+    margin: 0;
+}
+.page-myprintconnect-offers .region-content .form-actions span.price .value{
+	font-size: 30px;
+    font-weight: bold;
+    color: #fff;
+    float: right;
+    margin-right: 15px;
+}
+
 .page-products #edit-actions .button-wrapper {
     background-color: #79b61a;
     width: 50%;
@@ -5673,14 +5724,15 @@ div.error, table tr.error {
 	max-width: 220px;
 }
 .region-content .form-actions span.price {
-	float: right;
-
+	float: left;
 	color: #fff;
 	font-size: 60px;
 	line-height: 50px;
-
-	padding-left : 90px;
+	padding-left : 10px;
 	line-height: normal\9; /* IE HACK */
+}
+#pcoffers-offer-form div div#edit-actions.form-actions.form-wrapper span.price  {
+	font-size: 55px !important;
 }
 /*.region-content .form-actions span.price .currency {
 	font-size: 30px;
@@ -6134,6 +6186,21 @@ body {
 .selectBox-arrow {
 	border-left: 1px solid #eee !important;
 }
+
+.product-selectBox-dropdown-menu {
+	-webkit-columns: 4;
+    -moz-columns: 4;
+    columns: 4;
+    -webkit-column-gap: 2em;
+    -moz-column-gap: 2em;
+    column-gap: 2em;
+}
+.product-selectBox-dropdown-menu li {
+	-webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+ }
+
 /* 
 .product-selectBox-dropdown-menu li span {
 	width: 24px;
@@ -6242,13 +6309,6 @@ background-position: -658px top;
 	background-position: -772px top;
 } */
 
-.selectBox-options, .selectBox-options LI {
-	-webkit-column-count: 4;
-    -moz-column-count: 4;
-    column-count: 4;
-    
-    /* display: inline-table !important;	*/
-}
 
 .product-selectBox-dropdown-menu li {
 	float: left !important;
@@ -6265,6 +6325,17 @@ background-position: -658px top;
 .product-selectBox-dropdown-menu li a[rel="0"] {
 	border-bottom: none !important;
 }
+
+
+ .selectBox-options LI:not(.selectBox-selected):not(:first-child) {
+    display: inline-block !important;
+	float: none !important;
+}
+
+.product-selectBox-dropdown-menu {
+	overflow: hidden !important;
+}
+
 
 ul.testlijst li span.iconItem{
 	display: inline-block;
@@ -7353,6 +7424,19 @@ top: -1px;
     border-radius: 0;
 }
 
+.page-templates .button-wrapper input.design[type="submit"] {
+    background: #79b61a url("images/button_action.png") no-repeat scroll 35px  center;
+    font-size: 16px;
+    width: 330px;
+    border-radius: 0;
+    display: inline-block;
+    height: 35px;
+    line-height: 35px;
+    margin-right: 0;
+    min-width: 220px;
+    box-sizing: inherit;
+}
+
 div div#edit-info.detail div.store div.description table.vacations { 
 border-collapse: inherit !important;
 }
@@ -7381,7 +7465,7 @@ display: none;
 }
 
 
-.ie10 #pccustomers-newaddress-form .form-item-city {
+.ie10 .pccustomers-newaddress-form .form-item-city {
 	position:absolute;
 	left:282px;
 	top:198px;	
@@ -7395,7 +7479,7 @@ display: none;
 	
 }
 
-.ie10 #pccustomers-newaddress-form .form-item-postalCode{
+.ie10 .pccustomers-newaddress-form .form-item-postalCode{
 	float:none !important;	
 }
 
@@ -7503,8 +7587,9 @@ a.storeUp , a.storeDown{
 	width:25px;
 	height:16px;
 	background:url(images/subMenuSpriteIconsModified.png) no-repeat;
-	z-index: 10000000;
-        left: 188px;
+	/* z-index: 10000000; */
+	z-index: 10;
+    left: 188px;
 	text-indent:-9999px;
 	display:block;
 }
@@ -7574,17 +7659,17 @@ a.storeUp:hover , a.storeDown:hover {
 	line-height:18px !important;
 }
 
-.ie10 #pccustomers-newaddress-form .form-item-city {
+.ie10 .pccustomers-newaddress-form .form-item-city {
 	position:absolute;
 	left:282px;
 	top:198px;
 	
 }
-.ie10 #pccustomers-newaddress-form .form-item-city input {
+.ie10 .pccustomers-newaddress-form .form-item-city input {
 	padding-bottom:9px !important;	
 }
 
-.ie10 #pccustomers-newaddress-form .form-item-city {
+.ie10 .pccustomers-newaddress-form .form-item-city {
 	position:absolute;
 	left:282px;
 	top:198px;
@@ -7604,7 +7689,7 @@ a.storeUp:hover , a.storeDown:hover {
 	position:relative;
 	top:0px;
 }
-.ie10 #pccustomers-newaddress-form .form-item-city input.city.error {
+.ie10 .pccustomers-newaddress-form .form-item-city input.city.error {
 	padding-bottom:9px !important;	
 	position:relative;
 	top:6px;
@@ -7640,15 +7725,15 @@ div.store div.description table.openinghours caption{
 	position:relative;
 	top:0px;
 }
- .ie10 #pccustomers-newaddress-form .form-item-city input.city.error {
+ .ie10 .pccustomers-newaddress-form .form-item-city input.city.error {
 	padding-bottom:9px !important;	
 	position:relative;
 	top:0px;
 
 }
-.ie10  #pccustomers-newaddress-form input.error ,
+.ie10  .pccustomers-newaddress-form input.error ,
 .ie10 #pccustomers-address-form input.error,
-.ie10 #pccustomers-newaddress-form select.error ,
+.ie10 .pccustomers-newaddress-form select.error ,
 .ie10  #pccustomers-address-form select.error
  {
 	border-color:#d7d7d7 !important;
@@ -8295,7 +8380,8 @@ form#pccheckout-payment-form .overview table.sticky-enabled td:first-child{
 form#pccheckout-payment-form .overview table.sticky-enabled tr.last-child td{
 	border-top: 0;
 }
-#block-menu-block-1{
+#block-menu-block-1,
+.bloc_help_cat{
 	float: left;
 	margin-right: 15px;
 	width: 217px;
@@ -8306,7 +8392,8 @@ form#pccheckout-payment-form .overview table.sticky-enabled tr.last-child td{
 	border-radius: 3px;
 }
 
-#block-menu-block-1 h2{
+#block-menu-block-1 h2,
+.bloc_help_cat h2{
 	text-indent: 15px;
 	line-height: 43px;
 	text-transform: uppercase;
@@ -8317,19 +8404,22 @@ form#pccheckout-payment-form .overview table.sticky-enabled tr.last-child td{
 	padding: 0;
 	margin: 0;
 }
-#block-menu-block-1 ul.menu{
+#block-menu-block-1 ul.menu,
+.bloc_help_cat ul.menu{
 	padding: 0;
 	margin: 0;
 	background-color: #fafafa;
 }
 
-#block-menu-block-1 ul.menu li{
+#block-menu-block-1 ul.menu li,
+.bloc_help_cat ul.menu li{
 	padding: 10px 0;
 	margin: 0;
 	border-top: 1px solid #ececec;
 	list-style: none;
 }
-#block-menu-block-1 ul.menu li a{
+#block-menu-block-1 ul.menu li a,
+.bloc_help_cat ul.menu li a{
 	padding: 0 0 0 35px;
 	line-height: 16px;
 	font-size: 13px;
@@ -8340,7 +8430,9 @@ form#pccheckout-payment-form .overview table.sticky-enabled tr.last-child td{
     padding: 0 5px 0 35px;
 }
 #block-menu-block-1 ul.menu li a:hover,
-#block-menu-block-1 ul.menu li a.active{
+#block-menu-block-1 ul.menu li a.active,
+.bloc_help_cat ul.menu li a:hover,
+.bloc_help_cat ul.menu li a.active{
 	color: #ff6600;
 	background-position: 20px 5px;
 	font-weight: normal;
@@ -8376,7 +8468,11 @@ form#pccheckout-payment-form .overview table.sticky-enabled tr.last-child td{
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
 	border-radius: 0;
+	text-transform: none;
 }
+/*#accordion-list .ui-accordion-header:first-letter{
+	text-transform: uppercase;
+}*/
 
 #accordion-list .ui-accordion-header .ui-icon{
 	background: url(images/ui-icon.png) no-repeat 0 0 !important;
@@ -10917,7 +11013,7 @@ p.requieredfields span.form-required {
 }
 
 /* Page Adresses */
-.page-myprintconnect-addresses #pccustomers-newaddress-form > div ,
+.page-myprintconnect-addresses .pccustomers-newaddress-form > div ,
 .page-myprintconnect-mybillingaddress-new #pccustomers-newaddress-billingaddresses-form > div,
 .page-myprintconnect-addresses #pccustomers-address-form > div,
 .page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form > div,
@@ -10937,7 +11033,7 @@ p.requieredfields span.form-required {
     margin-top: 39px;
     padding: 10px 19px!important;*/
 }
-#pccustomers-newaddress-form input[type="submit"], 
+.pccustomers-newaddress-form input[type="submit"], 
 #pccustomers-address-form input[type="submit"],
 .page-myprintconnect-addresses #pccustomers-address-form input.button.form-submit {
 	background: #71ad00;
@@ -10946,26 +11042,26 @@ p.requieredfields span.form-required {
     margin-bottom: 0; 
     top: 0; 
 }
-#pccustomers-newaddress-form input[type="submit"], 
+.pccustomers-newaddress-form input[type="submit"], 
 #pccustomers-address-form input[type="submit"] {
 	background-image: none;
 }
 
  
-#pccustomers-newaddress-form input[type="text"]#edit-lastname {
+.pccustomers-newaddress-form input[type="text"]#edit-lastname {
     width: 218px;
 }
-#pccustomers-newaddress-form input[type="text"]#edit-name {
+.pccustomers-newaddress-form input[type="text"]#edit-name {
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
 }
-#pccustomers-newaddress-form input[type="text"]#edit-lastname { 
+.pccustomers-newaddress-form input[type="text"]#edit-lastname { 
     border-radius: 0px 3px 3px 0px;
     -moz-border-radius: 0px 3px 3px 0px;
     -webkit-border-radius: 0px 3px 3px 0px;
 }
-#pccustomers-newaddress-form label, 
+.pccustomers-newaddress-form label, 
 #pccustomers-address-form label,
 #pccustomers-address-billingaddresses-form label,
 #pccustomers-newaddress-billingaddresses-form label
@@ -10973,7 +11069,7 @@ p.requieredfields span.form-required {
     text-align: left;
     padding-left: 10px;
     padding-right: 0;
-    width: 158px;
+    width: 157px;
 }
 
 .page-myprintconnect-editbillingaddresses #pccustomers-address-billingaddresses-form .form-item-isCompany input#isUserCompany,
@@ -10994,16 +11090,16 @@ p.requieredfields span.form-required {
 }
 
 
-#pccustomers-newaddress-form .form-item-name,
-#pccustomers-newaddress-form .form-item-lastname {
+.pccustomers-newaddress-form .form-item-name,
+.pccustomers-newaddress-form .form-item-lastname {
     margin-top: 0;
     float: left;
 }
-#pccustomers-newaddress-form .form-item-lastname > label { display: none;}
-#pccustomers-newaddress-form .form-item-phone {
+.pccustomers-newaddress-form .form-item-lastname > label { display: none;}
+.pccustomers-newaddress-form .form-item-phone {
     clear: both;
 }
-#pccustomers-newaddress-form .form-item-company {
+.pccustomers-newaddress-form .form-item-company {
     display: block;
     padding-top: 10px;
     border-top: 1px solid #d6d6d6;
@@ -11013,15 +11109,15 @@ p.requieredfields span.form-required {
     padding-top: 10px;
     border-top: 1px solid #d6d6d6;
 }
-#pccustomers-newaddress-form .form-item-postalCode,
-#pccustomers-newaddress-form .form-item-city,
+.pccustomers-newaddress-form .form-item-postalCode,
+.pccustomers-newaddress-form .form-item-city,
 #pccustomers-address-billingaddresses-form .form-item-postalCode,
 #pccustomers-address-billingaddresses-form .form-item-city,
 #pccustomers-newaddress-billingaddresses-form .form-item-postalCode, 
 #pccustomers-newaddress-billingaddresses-form .form-item-city {
     float: left;
 }
-#pccustomers-newaddress-form .form-item-postalCode,
+.pccustomers-newaddress-form .form-item-postalCode,
 #pccustomers-address-billingaddresses-form .form-item-postalCode, 
 #pccustomers-newaddress-billingaddresses-form .form-item-postalCode {
 	clear: both;
@@ -11674,9 +11770,13 @@ input.ui-button.payment {
 
 .labelAdd_facturation , .labelAdd_adresse{
 	margin-top: 10px;
-	display: block;
+	display: inline-block;
 }
 
+#fancybox-content, #fancybox-wrap{
+        /*width: 425px !important;*/
+    min-height: 890px;
+}
 #pccustomers-newaddress-billingaddresses-form .form-item-isCompany input{
 	margin-left: 10px;
     vertical-align: middle;
@@ -11853,6 +11953,8 @@ input.ui-button.payment {
     display: inline-block;
     vertical-align: top;
     margin-bottom: 0;
+    
+    overflow: visible;
 }
 .page-myprintconnect-orders .details .price {
     padding: 18px 10px 0;
@@ -11867,13 +11969,33 @@ input.ui-button.payment {
     padding: 0;
     font-size: 13px;
     line-height: 15px;
+    
+    
+    position: relative;
 }
 .page-myprintconnect-orders .details .description .item-list ul li label {
 	font-size: 12px;
     float: left;
     margin-right: 10px;
+}
+.page-myprintconnect-orders .details .description .item-list ul li label:not(.labeloption) {
     font-weight: 700;
 }
+.page-myprintconnect-orders .details .description .item-list ul li label.labeloption {
+    font-family: 'Open Sans',sans-serif;
+    font-weight: 400;
+    float: none;
+}
+
+.page-myprintconnect-orders label.labeloption .price {
+	color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    float: inherit;
+    padding: inherit;
+}
+
 .page-myprintconnect-orders .overview table tbody tr {
     background: #fff;
     border-radius: 0;
@@ -12617,7 +12739,7 @@ form#pccheckout-payment-form fieldset legend{
     display:none;
     margin-top:20px;
 }
-#remerciement span{
+#remerciement >span{
     color: rgb(255, 102, 0);
     font-size: 47px;
 }

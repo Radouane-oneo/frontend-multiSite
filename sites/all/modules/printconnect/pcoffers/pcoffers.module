@@ -124,12 +124,12 @@ function pcoffers_form_pccustomers_dashboard_form_alter(&$form, &$form_state) {
         $link = l($offer->number, "myprintconnect/offers/$offer->hash", array('html' => TRUE, 'attributes' => array('class' => array('open'))));
       }
       else{
-        $link = $offer->number;
+        $link = l($offer->number, "myprintconnect/offers/$offer->hash", array('html' => TRUE, 'attributes' => array('class' => array('open'))));;
       }
 
       $rows[] = array(
           format_date(strtotime($offer->creationDate), 'medium', 'y-m-d'),
-          theme('price', array('value' => $offer->convertedTotalAmount)),
+          theme('price', array('value' => $offer->subTotalAmount)),
           $link,
       );
 

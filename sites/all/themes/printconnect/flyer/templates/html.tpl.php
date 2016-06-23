@@ -41,7 +41,9 @@
  *
  * @ingroup themeable
  */
-?><!DOCTYPE html>
+?>
+
+<!DOCTYPE html>
 <html>
 
 <head profile="<?php print $grddl_profile; ?>">
@@ -68,6 +70,8 @@ use_existing_jquery=false,
 f=false,d=document;return{use_existing_jquery:function(){return use_existing_jquery;},library_tolerance:function(){return library_tolerance;},finish:function(){if(!f){f=true;var a=d.getElementById('_vis_opt_path_hides');if(a)a.parentNode.removeChild(a);}},finished:function(){return f;},load:function(a){var b=d.createElement('script');b.src=a;b.type='text/javascript';b.innerText;b.onerror=function(){_vwo_code.finish();};d.getElementsByTagName('head')[0].appendChild(b);},init:function(){settings_timer=setTimeout('_vwo_code.finish()',settings_tolerance);this.load('//dev.visualwebsiteoptimizer.com/j.php?a='+account_id+'&amp;u='+encodeURIComponent(d.URL)+'&amp;r='+Math.random());var a=d.createElement('style'),b='body{opacity:0 !important;filter:alpha(opacity=0) !important;background:none !important;}',h=d.getElementsByTagName('head')[0];a.setAttribute('id','_vis_opt_path_hides');a.setAttribute('type','text/css');if(a.styleSheet)a.styleSheet.cssText=b;else a.appendChild(d.createTextNode(b));h.appendChild(a);return settings_timer;}};}());_vwo_settings_timer=_vwo_code.init();
 </script>
 <!-- End Visual Website Optimizer Asynchronous Code -->
+
+<!-- dans le cas du shop flyer.lu -->
 <?php if ($language->prefix == 'lufr'): ?>
 <script type="text/javascript">
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -75,43 +79,46 @@ f=false,d=document;return{use_existing_jquery:function(){return use_existing_jqu
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 </script>
-<?php $customer = printconnect\Customers\Factory::Current();?>
-<?php  if ($customer == NULL): ?>
+<?php $customerCurrent = printconnect\Customers\Factory::Current();?>
+<?php  if ($customerCurrent == NULL): ?>
 <script type="text/javascript">
 ga('create', 'UA-17846296-1', 'auto', { 'siteSpeedSampleRate': 100 });
 ga('require', 'displayfeatures');
 ga('send', 'pageview');
 </script>
 <?php endif; ?> 
-<?php  if ($customer): ?>
+<?php  if ($customerCurrent): ?>
 <script type="text/javascript">
-ga('create', 'UA-17846296-1', 'auto', { 'siteSpeedSampleRate': 100, 'userId': '<?=$customer->id ?>' });
+ga('create', 'UA-17846296-1', 'auto', { 'siteSpeedSampleRate': 100, 'userId': '<?=$customerCurrent->id ?>' });
 ga('require', 'displayfeatures');
-ga('send', 'pageview', { 'dimension1': '<?=$customer->id ?>' });
+ga('send', 'pageview', { 'dimension1': '<?=$customerCurrent->id ?>' });
 </script>
 <?php 
-$customerCurrent = \printconnect\Customers\Factory::Current();
 $allOrderCustomer = \printconnect\Orders\Factory::GetOrders($customerCurrent);
-if ($allOrderCustomer->get_count() == 0) {  ?>
+if ($allOrderCustomer->get_count() == 0) :  ?>
 <script type="text/javascript">
 ga('send', 'pageview', { 'dimension3': 'lead' });
 </script>
-<?php }else{?>
+<?php else :?>
 <script type="text/javascript">
 ga('send', 'pageview', { 'dimension2': 'klant' });
 </script> 
-<?php } ?>
 <?php endif; ?> 
 <?php endif; ?> 
+<?php endif; ?> 
+<!-- end le cas du shop flyer.lu -->
 </head>
 
 <body class="<?php print $classes . (isset($node_css_class) ? $node_css_class : ''); ?>" <?php print $attributes;?>>
 <?php if (arg(3) == 'confirmation') :
     $order = \printconnect\Orders\Factory::Get(arg(2), false);
-//var_dump($order->id);die;
     $customerCurrent = \printconnect\Customers\Factory::Current();
     $allOrderCustomer = \printconnect\Orders\Factory::GetOrders($customerCurrent);
-    $eventID = $_SESSION['orderID'];
+    $eventID = arg(2);
+    
+    if( ($language->prefix == 'befr')  || ($language->prefix == 'benl') ): ?>
+        <script language='JavaScript1.1' src='//pixel.mathtag.com/event/js?mt_id=982376&mt_adid=161076&v1=<?=$eventID ?>&v2=<?=$order->subTotalAmount ?>'></script>
+   <?php endif;
     switch ($order->orderItemShipping->shippingTypeTag){
         case 'shippingTypeStore':
             $eventID = 346589;
@@ -144,7 +151,7 @@ ga('send', 'pageview', { 'dimension2': 'klant' });
 ?>
 <script>
      var dataLayer = [{
-	'eventID': '<?=$customerCurrent->id ?>', // event id, existing client (other delivery method)
+	'eventID': '<?=$eventID ?>', // event id, existing client (other delivery method)
 	'orderID': '<?=arg(2) ?>', // unique order id
         'orderValue': '<?=$order->subTotalAmount ?>', // order total, vat excl
         'orderProduct': <?=json_encode($productcontent)?>, // all ordered jobs
@@ -226,9 +233,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
   </div>
   <?php print $page_top; ?>
   <?php print $page; ?>
-  <?php print $page_bottom; ?>
-
-	<!-- <?php if (arg(3) == 'confirmation') :
+  <?php print $page_bottom;?>
+    
+  <?php if (arg(0) == 'cart'): ?>
+    <script data-main="/webapp/js/cart/main" src="/webapp/js/libs/requirejs/require.js"></script>
+  <?php endif; ?>   
+  <?php if (arg(0) == 'checkout'): ?>
+    <script data-main="/webapp/js/checkout/main" src="/webapp/js/libs/requirejs/require.js"></script>
+  <?php endif; ?>
+  <?php if (arg(0) == 'payment'): ?>
+    <script data-main="/webapp/js/payment/main" src="/webapp/js/libs/requirejs/require.js"></script>
+  <?php endif; ?>
+  <?php if (arg(0) == 'products'): ?>
+    <script data-main="/webapp/js/productConfig/main" src="/webapp/js/libs/requirejs/require.js"></script>
+  <?php endif; ?>
+    
+    <!--<?php if (arg(3) == 'confirmation') :
 	    $order = \printconnect\Orders\Factory::Get($_SESSION['orderID'], false);
 	    ?>
 	    <div id="#hiddenPricesPayment" style="display: none;">

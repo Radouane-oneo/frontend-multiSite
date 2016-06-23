@@ -10,9 +10,12 @@ class Factory {
     public static function GetCartJson()
     {
         $response = NULL;
-        if (isset($_SESSION['cartid'])) {
+	$current = self::Current(FALSE);
+	if ($current && $current->id) {
+	  $response = Dal::SendRequest('new-cart/id/'. $current->id);
+	} elseif (!empty($_SESSION['cartid'])) {
             $response = Dal::SendRequest('new-cart/id/'. $_SESSION['cartid']);
-        }elseif($_SESSION['customerid']) {
+        }elseif(!empty($_SESSION['customerid'])) {
             $response = Dal::SendRequest('new-cart/customer/'. $_SESSION['customerid']);
         }
         if(!$response) {
@@ -440,6 +443,7 @@ class Factory {
 	$object = new Item();
       $object->cart = $cart->id;
       $object->productId = $cart->productId;
+      $object->designTemplateId = $cart->templateId;
       $object->product_price_group = $priceGroup;
       $object->quantity = $quantity;
       $object->description = '';

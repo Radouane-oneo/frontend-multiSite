@@ -234,7 +234,7 @@ function new_payment_loadpage() {
         $script .= "<style>#box-progress{display: block;}</style>";
 
         $script .= '<link rel="stylesheet" href="/webapp/js/libs/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />';
-        $script .= '<script data-main="/webapp/js/payment/main" src="/webapp/js/libs/requirejs/require.js"></script>';
+        //$script .= '<script data-main="/webapp/js/payment/main" src="/webapp/js/libs/requirejs/require.js"></script>';
         $script .= '<div id="myPayment"></div>';
 
         return $script;

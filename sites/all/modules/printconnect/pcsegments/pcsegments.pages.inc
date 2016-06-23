@@ -3,7 +3,7 @@
 function pcsegments_segments() {
 
   drupal_add_js(array('pcsegments' => array('selected' => 1)), 'setting');
-
+      
   $build = array();
   $items = array();
 
@@ -55,11 +55,11 @@ function pcsegments_segment($id) {
         '#path' => $banner,
  );
     
-  $build['text'] = array(
+  /*$build['text'] = array(
       '#prefix' => '<p>',
       '#suffix' => '</p>',
       '#markup' => $segment->name->longDescription,
-  );
+  );*/
   if ($segment->products && count($segment->products)) {
     $products = array();
     $i = 0;

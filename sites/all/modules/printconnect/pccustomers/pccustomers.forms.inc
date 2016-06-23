@@ -1,5 +1,5 @@
 <?php
-
+use \printconnect\Dal;
 use printconnect\Customers\Addresses;
 use printconnect\Customers\Factory;
 use printconnect\Drupal\Forms;
@@ -283,11 +283,12 @@ function pccustomers_profile_form_validate($form, &$form_state) {
       $customer->language = 1;
     }
 
-    Factory::Validate(clone $customer);
+    //Factory::Validate(clone $customer);
     $form_state['storage']['customer'] = $customer;
   } catch (\printconnect\Dal\Exception $ex) {
    // Forms::HandleException($ex, $form);
-    return TRUE;
+      //return TRUE;
+      return FALSE;
   }
 }
 
@@ -368,10 +369,18 @@ function pccustomers_changepassword_form($form, &$form_state) {
 function pccustomers_changepassword_form_validate($form, &$form_state) {
   try {
     $customer = $form_state['storage']['customer'];
-    if (!Factory::GetByEmailAndPassword($customer->email, $form_state['values']['oldPassword'])) {
+    $response = null;
+    $response = Dal::SendRequest('customer/email/'.$customer->email.'/password/'.$form_state['values']['oldPassword']);
+
+   // if (!Factory::GetByEmailAndPassword($customer->email, $form_state['values']['oldPassword'])) {die;
+   if( $response->code == 404){
       form_set_error('oldPassword', t('Your old password is not correct.'));
     }
-
+    
+    if (!isset($form_state['values']['password']) || strlen($form_state['values']['password']) < 5) {
+        form_set_error('newpassword', t('Password not long enough'));
+        return;
+     }
     if ($form_state['values']['password'] != $form_state['values']['passwordConfirm']) {
       form_set_error('', t("Your passwords don't match."));
     }
@@ -392,7 +401,7 @@ function pccustomers_changepassword_form_submit($form, &$form_state) {
 
   Factory::ChangePassword($customer);
   drupal_set_message(t('Your password has been changed'));
-  drupal_goto('myprintconnect/profile');
+ // drupal_goto('myprintconnect/profile');
 }
 
 /**
@@ -603,7 +612,6 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#default_value' => $Billingaddresses->country,
       '#attributes' => array('class' => array('select-country-adress')),
   );
-  
   $form['isCompany'] = array(
         '#type' => 'checkbox',
         '#title' => t('Are you a company ?'),
@@ -611,10 +619,10 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
             'id' => 'isUserCompany',
             'checked'=> false
         ),
-	'#suffix' => '<div class="" style="display:none;">
+	'#suffix' => '<div class="newmessageerror" style="display:none;">
             <div class="messages error vatAlreadyUsed">
                 <ul>
-                    <li>'.t('vat Already used').'</li>
+                   
                 </ul>
             </div>
         </div>'
@@ -635,7 +643,7 @@ function pccustomers_address_Billingaddresses_form($form, $form_state, $Billinga
       '#type' => 'vatfield',
       '#title' => t('Vat number'),
       '#attributes' => array('class' => array('vat')),
-         '#default_value' => $Billingaddresses->vatNumber,
+      '#default_value' => $Billingaddresses->vatNumber,
 
   );
   $form['actions'] = array(
@@ -777,7 +785,7 @@ function pccustomers_address_Billingaddresses_form_submit($form, &$form_state) {
  */
 function pccustomers_newaddress_form($form, $form_state) {
   _pccustomers_ensureloggedin();
-
+  $form['#attributes'] = array('class' => array('pccustomers-newaddress-form'));
   $form['name'] = array(
       '#type' => 'textfield',
       '#title' => t('FullName'),
@@ -904,9 +912,8 @@ function pccustomers_newaddress_form($form, $form_state) {
 }
 function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
  _pccustomers_ensureloggedin();
-
     $countries = array (
-       "0" => t('select'),
+       "0" => t('- Select -'),
        "21"=>t('Belgique'),
        "73"=>t('France'),
        "150"=>t('Pays-Bas'),
@@ -1007,10 +1014,10 @@ function pccustomers_newaddress_Billingaddresses_form($form, $form_state) {
             'id' => 'isUserCompany',
             'checked'=> 'false'
         ),
-	'#suffix' => '<div class="" style="display:none;">
+	'#suffix' => '<div class="newmessageerror" style="display:none;">
             <div class="messages error vatAlreadyUsed">
                 <ul>
-                    <li>'.t('vat Already used').'</li>
+                    
                 </ul>
             </div>
         </div>'
@@ -1114,6 +1121,9 @@ function pccustomers_newaddress_form_validate($form, &$form_state) {
 
 
 function pccustomers_newaddress_form_Billingaddresses_validate($form, &$form_state) {
+  if ($form_state['values']["country"] == 0){
+       form_set_error('country', t('country message error'));
+  }
   if($form_state['values']['vatNumber']){
       if(!empty($form_state['values']['company'])){
         if(strlen($form_state['values']['vatNumber'])== 2 && is_string($form_state['values']['vatNumber'])){

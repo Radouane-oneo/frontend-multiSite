@@ -171,7 +171,8 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
           '#markup' => "<div class='salesId'><span class='livraison'>".strtoupper(t('salesId')).":</span><span class='senddate'>".$order->user->salesId."</span></div>"
       );
   }
-    if ($order->ogms != ''){
+
+    if ($order->orderItemsPayment[0]->internalName == 'transfer'){
         $form['transaction'] = array(
               '#type' => 'container',
               '#attributes' => array('class' => array('headerorder'))
@@ -368,9 +369,10 @@ $cart = \printconnect\Carts\Factory::Current(FALSE);
         }
       $rows[] = '<label class="labelOrder">' . $config->groupName . '</label>' . $title;
     }
-
+	
+	$rows[] = '<div style="margin-bottom: 10px"></div>';
     foreach ($item->options as $option) {
-      $rows[] = '<label>' . $option->optionName . '</label>';// . theme('price', array('value' => $option->convertedPrice, 'block' => TRUE));
+      $rows[] = '<label class="labeloption">' . $option->optionName . '<div style="text-align: right; position: absolute; right: -155px; top: 0px">' .theme('price', array('value' => $option->price)). '</div></label>';// . theme('price', array('value' => $option->convertedPrice, 'block' => TRUE));
     }
 
     $form['order']['details']['item'][$item->id]['description']['config'] = array(

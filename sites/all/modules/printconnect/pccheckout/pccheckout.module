@@ -326,7 +326,7 @@ function new_checkout_and_delivery_loadpage() {
       "changeBA" => t("Change invoice address"),
       "selectBA" => t("Select from addressbook"),
       "OrCreateBA" => t("Ou créez une nouvelle adresse en remplissant le formulaire ci-dessous."),
-      "addNewBA" => t("Add an address"),
+      "addNewBA" => t("Add an Billing address"),
       "BAName" => t("Name"),
       "StreetBA" => t("Street"),
       "CityBA" => t("City"),
@@ -408,7 +408,7 @@ function new_checkout_and_delivery_loadpage() {
     </script>";
     $script .= "<style>#box-progress{display: block;}</style>";
     $script .= '<link rel="stylesheet" href="/webapp/js/libs/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />';
-    $script .= '<script data-main="/webapp/js/checkout/main" src="/webapp/js/libs/requirejs/require.js"></script>';
+   // $script .= '<script data-main="/webapp/js/checkout/main" src="/webapp/js/libs/requirejs/require.js"></script>';
     $script .= '<div id="myCheckout"></div>';
 
     return $script;

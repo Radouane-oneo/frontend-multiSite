@@ -295,13 +295,21 @@ function _pcsegments_rebuildaliasses() {
 }
 
 function _pcsegments_getsegmentname($id) {
-  try {
-    printconnect_ensureinitialized();
-    $segment = \printconnect\Segments\Factory::Get($id);
-    return html_entity_decode($segment->name->name);
-  } catch (\Exception $ex) {
-    
-  }
+    global $language;
+    //<meta name="title" content="'.t('metatagSegmentID').$language->language.$id.'">
+    $meta = t('metatagSegment').$language->language.$id;
+    $meta_head_blog = array(
+        '#type' => 'markup',
+        '#markup' => '<meta name="description" content="'.t($meta).'">',
+    );
+    drupal_add_html_head($meta_head_blog, 'metaHeadBlog');
+//  try {
+//    printconnect_ensureinitialized();
+//    $segment = \printconnect\Segments\Factory::Get($id);
+//    return html_entity_decode($segment->name->name);
+//  } catch (\Exception $ex) {
+//    
+//  }
 }
 
 function pcsegments_pcmenumain() {
